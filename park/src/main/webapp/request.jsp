@@ -138,7 +138,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</tr>
 		<tr>
 			<td>cardTypeId</td>
-			<td>会员卡类型</td>
+			<td>会员卡类型id</td>
 		</tr>
 		<tr>
 			<td>cardBalance</td>
@@ -308,7 +308,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<table border="1" cellpadding="10" cellspacing="0">
 		<tr>
 			<td>cardTypeId</td>
-			<td>会员卡类型（传此参数为修改）</td>
+			<td>会员卡类型id（传此参数为修改）</td>
 		</tr>
 		<tr>
 			<td>cardTypeName</td>
@@ -354,6 +354,40 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 }
 </textarea>
 
+<div data-id="memberCardUpLevel" style="float: left;">
+	<span style="font-weight: bold;">请求参数：</span>
+	<table border="1" cellpadding="10" cellspacing="0">
+		<tr>
+			<td>cardId</td>
+			<td>会员id</td>
+		</tr>
+		<tr>
+			<td>cardTypeId</td>
+			<td>要升级的会员卡类型id</td>
+		</tr>
+		<tr>
+			<td>balanceStyle</td>
+			<td>支付类型（1：支付宝  2：微信）</td>
+		</tr>
+		<tr>
+			<td>upLevelMoney</td>
+			<td>升级费用（元）</td>
+		</tr>
+		<tr>
+			<td>subMoney</td>
+			<td>优惠价格（元）</td>
+		</tr>
+		<tr>
+			<td>remark</td>
+			<td>备注</td>
+		</tr>
+		<tr>
+			<td>salesId</td>
+			<td>销售员id</td>
+		</tr>
+	</table>
+</div>
+
 <!-- 充值会员卡 -->
 <textarea rows="15" cols="55" data-id="memberCardCZ">
 {
@@ -365,6 +399,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    "salesId": 1
 }
 </textarea>
+
+<div data-id="memberCardCZ" style="float: left;">
+	<span style="font-weight: bold;">请求参数：</span>
+	<table border="1" cellpadding="10" cellspacing="0">
+		<tr>
+			<td>cardId</td>
+			<td>会员id</td>
+		</tr>
+		<tr>
+			<td>balanceStyle</td>
+			<td>支付类型（1：支付宝  2：微信）</td>
+		</tr>
+		<tr>
+			<td>czMoney</td>
+			<td>充值金额（元）</td>
+		</tr>
+		<tr>
+			<td>subMoney</td>
+			<td>优惠价格</td>
+		</tr>
+		<tr>
+			<td>remark</td>
+			<td>备注</td>
+		</tr>
+		<tr>
+			<td>salesId</td>
+			<td>销售员id</td>
+		</tr>
+	</table>
+</div>
 
 <!-- 补办会员卡 -->
 <textarea rows="15" cols="55" data-id="memberCardBuBan">
@@ -378,6 +442,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 }
 </textarea>
 
+<div data-id=memberCardBuBan style="float: left;">
+	<span style="font-weight: bold;">请求参数：</span>
+	<table border="1" cellpadding="10" cellspacing="0">
+		<tr>
+			<td>cardId</td>
+			<td>会员id</td>
+		</tr>
+		<tr>
+			<td>balanceStyle</td>
+			<td>支付类型（1：支付宝  2：微信）</td>
+		</tr>
+		<tr>
+			<td>buBanMoney</td>
+			<td>补办需要的金额（元）</td>
+		</tr>
+		<tr>
+			<td>subMoney</td>
+			<td>优惠价格</td>
+		</tr>
+		<tr>
+			<td>remark</td>
+			<td>备注</td>
+		</tr>
+		<tr>
+			<td>salesId</td>
+			<td>销售员id</td>
+		</tr>
+	</table>
+</div>
+
 <!-- 流水日志(充值/消费) -->
 <textarea rows="15" cols="55" data-id="getBalances">
 {
@@ -389,6 +483,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 }
 </textarea>
 
+<div data-id=getBalances style="float: left;">
+	<span style="font-weight: bold;">请求参数：</span>
+	<table border="1" cellpadding="10" cellspacing="0">
+		<tr>
+			<td>balanceType</td>
+			<td>类型 1：充值  2：消费【条件】</td>
+		</tr>
+		<tr>
+			<td>createTimeStart</td>
+			<td>流水操作开始时间【条件】</td>
+		</tr>
+		<tr>
+			<td>createTimeEnd</td>
+			<td>流水操作结束时间【条件】</td>
+		</tr>
+		<tr>
+			<td>memberMobile</td>
+			<td>会员手机号【条件】</td>
+		</tr>
+		<tr>
+			<td>cardId</td>
+			<td>会员卡id【条件】</td>
+		</tr>
+	</table>
+</div>
+
 <!-- 获取发票列表 -->
 <textarea rows="15" cols="55" data-id="getInvoices">
 {
@@ -396,12 +516,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 }
 </textarea>
 
+<div data-id=getInvoices style="float: left;">
+	<span style="font-weight: bold;">请求参数：</span>
+	<table border="1" cellpadding="10" cellspacing="0">
+		<tr>
+			<td>status</td>
+			<td>打印状态	1：领取，2：未领取</td>
+		</tr>
+	</table>
+</div>
+
 <!-- 领取发票 -->
 <textarea rows="15" cols="55" data-id="updateGetInvoices">
 {
    "invoiceIds": ""
 }
 </textarea>
+
+<div data-id=updateGetInvoices style="float: left;">
+	<span style="font-weight: bold;">请求参数：</span>
+	<table border="1" cellpadding="10" cellspacing="0">
+		<tr>
+			<td>invoiceIds</td>
+			<td>领取的发票id（多个逗号分隔）</td>
+		</tr>
+	</table>
+</div>
 
          
     </div>
