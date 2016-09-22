@@ -69,6 +69,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		String nowDate = DateUtil.getNowDate();
 		if(memberId == null) throw new MessageException("会员id为null！");
 		UserMember userMemberDB = baseDao.getToEvict(UserMember.class, memberId);
+		if(userMemberDB == null) throw new MessageException("会员信息不存在！");
 		userMemberDB.setMemberName(userMember.getMemberName());
 		userMemberDB.setMemberMobile(userMember.getMemberMobile());
 		userMemberDB.setUpdateTime(nowDate);

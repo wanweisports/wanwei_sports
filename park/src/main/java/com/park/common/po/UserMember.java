@@ -26,9 +26,10 @@ public class UserMember implements java.io.Serializable {
 	private String memberBirthday;
 	private String memberPayPassword;
 	private String memberStatus;
+	private String memberType;
 	private String memberAddress;
 	private String memberRemark;
-	private Integer cardId = 0;
+	private Integer cardId;
 	private String createTime;
 	private String updateTime;
 	private Integer salesId;
@@ -43,7 +44,7 @@ public class UserMember implements java.io.Serializable {
 	public UserMember(String operationId, String memberName,
 			String memberMobile, String memberMobile2, String memberSex,
 			String memberIdcard, String memberBirthday,
-			String memberPayPassword, String memberStatus,
+			String memberPayPassword, String memberStatus, String memberType,
 			String memberAddress, String memberRemark, Integer cardId,
 			String createTime, String updateTime, Integer salesId) {
 		this.operationId = operationId;
@@ -55,6 +56,7 @@ public class UserMember implements java.io.Serializable {
 		this.memberBirthday = memberBirthday;
 		this.memberPayPassword = memberPayPassword;
 		this.memberStatus = memberStatus;
+		this.memberType = memberType;
 		this.memberAddress = memberAddress;
 		this.memberRemark = memberRemark;
 		this.cardId = cardId;
@@ -154,6 +156,15 @@ public class UserMember implements java.io.Serializable {
 
 	public void setMemberStatus(String memberStatus) {
 		this.memberStatus = memberStatus;
+	}
+
+	@Column(name = "memberType", length = 1)
+	public String getMemberType() {
+		return this.memberType;
+	}
+
+	public void setMemberType(String memberType) {
+		this.memberType = memberType;
 	}
 
 	@Column(name = "memberAddress")

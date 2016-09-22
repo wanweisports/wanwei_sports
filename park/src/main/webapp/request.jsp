@@ -60,6 +60,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 {
    "memberId": null,
    "memberName": "会员名称", 
+   "memberType": "1",
    "memberMobile": "15110275787", 
    "memberMobile2": "15111111111", 
    "memberIdcard": "510603199007307957", 
@@ -81,6 +82,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<tr>
 			<td>memberName</td>
 			<td>会员名称</td>
+		</tr>
+		<tr>
+			<td>memberType</td>
+			<td>支付类型（1.预付类型   2.记账类型）</td>
 		</tr>
 		<tr>
 			<td>memberMobile</td>
