@@ -187,7 +187,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</tr>
 		<tr>
 			<td>balanceStyle</td>
-			<td>支付方式（1：支付宝  2：微信）</td>
+			<td>支付方式（1：现金  2：支付宝  3：微信）</td>
 		</tr>
 		<tr>
 			<td>salesId</td>
@@ -413,7 +413,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</tr>
 		<tr>
 			<td>balanceStyle</td>
-			<td>支付类型（1：支付宝  2：微信）</td>
+			<td>支付类型（1：现金  2：支付宝  3：微信）</td>
 		</tr>
 		<tr>
 			<td>upLevelMoney</td>
@@ -455,7 +455,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</tr>
 		<tr>
 			<td>balanceStyle</td>
-			<td>支付类型（1：支付宝  2：微信）</td>
+			<td>支付类型（1：现金  2：支付宝  3：微信）</td>
 		</tr>
 		<tr>
 			<td>czMoney</td>
@@ -497,7 +497,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</tr>
 		<tr>
 			<td>balanceStyle</td>
-			<td>支付类型（1：支付宝  2：微信）</td>
+			<td>支付类型（1：现金  2：支付宝  3：微信）</td>
 		</tr>
 		<tr>
 			<td>buBanMoney</td>
