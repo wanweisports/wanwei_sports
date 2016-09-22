@@ -26,17 +26,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div>
   	接口功能：
   	<input type="button" value="注册/修改会员" onclick="method('memberInfo', 'member/saveMember.do', this)" id="first" />
+  	<input type="button" value="更新会员信息" onclick="method('updateMemberName', 'member/updateMemberName.do', this)" />
   	<input type="button" value="会员卡充值" onclick="method('memberCz', 'member/saveMemberCar.do', this)" />
+  	<input type="button" value="获取会员卡类型名称列表" onclick="method('memberTypeNames', 'member/getMemberCarTypeNames.do', this)" />
   	<input type="button" value="获取会员卡类型列表" onclick="method('memberTypes', 'member/getMemberCarTypes.do', this)" />
   	<input type="button" value="获取单个会员卡类型" onclick="method('memberType', 'member/getMemberCarType.do', this)" />
   	<input type="button" value="注册会员--打印发票" onclick="method('invoice', 'member/saveInvoice.do', this)" />
   	<input type="button" value="获取会员列表" onclick="method('members', 'member/getUserMembers.do', this)" />
   	<input type="button" value="获取单个会员" onclick="method('memberAndCard', 'member/getMemberAndCard.do', this)" />
   	<input type="button" value="增加会员卡类型" onclick="method('addMemberCardType', 'member/saveMemberCardType.do', this)" />
+	<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   	<input type="button" value="升级会员卡" onclick="method('memberCardUpLevel', 'member/memberCardUpLevel.do', this)" />
   	<input type="button" value="充值会员卡" onclick="method('memberCardCZ', 'member/memberCardCZ.do', this)" />
-  	<input type="button" value="补办会员卡" onclick="method('memberCardBuBan', 'member/memberCardBuBan.do', this)" /><br/><br/> 
-  	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  	<input type="button" value="补办会员卡" onclick="method('memberCardBuBan', 'member/memberCardBuBan.do', this)" /> 
   	<input type="button" value="流水日志(充值/消费)" onclick="method('getBalances', 'member/getBalances.do', this)" />
   	<input type="button" value="获取发票列表" onclick="method('getInvoices', 'member/getInvoices.do', this)" />
   	<input type="button" value="领取发票" onclick="method('updateGetInvoices', 'member/updateGetInvoices.do', this)" />
@@ -115,6 +117,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</table>
 </div>
 
+<!-- 注册会员 -->
+<textarea rows="15" cols="50" data-id="updateMemberName">
+{
+   "memberId": null,
+   "memberName": "新会员名称", 
+   "memberMobile": "15110275787"
+}
+</textarea>
+
+<div data-id="updateMemberName" style="float: left;">
+	<span style="font-weight: bold;">请求参数：</span>
+	<table border="1" cellpadding="10" cellspacing="0">
+		<tr>
+			<td>memberId</td>
+			<td>会员id</td>
+		</tr>
+		<tr>
+			<td>memberName</td>
+			<td>会员名称</td>
+		</tr>
+		<tr>
+			<td>memberMobile</td>
+			<td>会员手机</td>
+		</tr>
+	</table>
+</div>
+
 <!-- 会员卡充值 -->
 <textarea rows="15" cols="50" data-id="memberCz">
 {
@@ -167,12 +196,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</table>
 </div>
 
-<!-- 会员卡类型列表 -->
-<textarea rows="15" cols="50" data-id="memberTypes">
+<!-- 会员卡类型名称列表 -->
+<textarea rows="15" cols="50" data-id="memberTypeNames">
 {
    
 }
 </textarea>
+
+<!-- 会员卡类型列表-->
+<textarea rows="15" cols="50" data-id="memberTypes">
+{
+   "cardTypeStatus": ""
+}
+</textarea>
+
+<div data-id="memberTypes" style="float: left;">
+	<span style="font-weight: bold;">请求参数：</span>
+	<table border="1" cellpadding="10" cellspacing="0">
+		<tr>
+			<td>cardTypeStatus</td>
+			<td>类型状态	1：可用，2：锁定</td>
+		</tr>
+	</table>
+</div>
 
 <!-- 单个会员卡类型信息-->
 <textarea rows="15" cols="50" data-id="memberType">

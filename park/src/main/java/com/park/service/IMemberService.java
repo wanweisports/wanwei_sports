@@ -19,9 +19,13 @@ public interface IMemberService {
 	
 	public Integer saveMember(UserMember userMember);
 	
+	public void updateMemberName(UserMember userMember);
+	
 	public Map<String, Object> saveMemberCar(MemberCard memberCard, OtherBalance otherBalance);
 	
-	public List<Map<String, Object>> getMemberCarTypes();
+	public List<Map<String, Object>> getMemberCarTypeNames();
+	
+	public PageBean getMemberCarTypes(MemberInputView memberInputView);
 	
 	public MemberCardType getMemberCardType(int cardTypeId);
 	

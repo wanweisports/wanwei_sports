@@ -64,6 +64,18 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	}
 	
 	@Override
+	public void updateMemberName(UserMember userMember) {
+		Integer memberId = userMember.getMemberId();
+		String nowDate = DateUtil.getNowDate();
+		if(memberId == null) throw new MessageException("会员id为null！");
+		UserMember userMemberDB = baseDao.getToEvict(UserMember.class, memberId);
+		userMemberDB.setMemberName(userMember.getMemberName());
+		userMemberDB.setMemberMobile(userMember.getMemberMobile());
+		userMemberDB.setUpdateTime(nowDate);
+		baseDao.save(userMemberDB, userMemberDB.getMemberId());
+	}
+	
+	@Override
 	public Map<String, Object> saveMemberCar(MemberCard memberCard, OtherBalance otherBalance) {
 		UserMember userMember = getUserMember(memberCard.getMemberId());
 		if(userMember == null) throw new MessageException("会员信息不存在！");
@@ -96,8 +108,20 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	}
 	
 	@Override
-	public List<Map<String, Object>> getMemberCarTypes() {
-		return baseDao.queryBySql("SELECT cardTypeId, cardTypeName, cardTypeMonth, cardTypeMoney, cardTypeDiscount, cardTypeWeek, cardTypeTimeStart, cardTypeTimeEnd FROM member_card_type WHERE cardTypeStatus = ?", IDBConstant.LOGIC_STATUS_YES);
+	public List<Map<String, Object>> getMemberCarTypeNames() {
+		return baseDao.queryBySql("SELECT cardTypeId, cardTypeName FROM member_card_type WHERE cardTypeStatus = ?", IDBConstant.LOGIC_STATUS_YES);
+	}
+	
+	@Override
+	public PageBean getMemberCarTypes(MemberInputView memberInputView) {
+		String cardTypeStatus = memberInputView.getCardTypeStatus();
+		StringBuilder headSql = new StringBuilder("SELECT cardTypeId, cardTypeName, cardTypeStatus, cardTypeMonth, cardTypeMoney, cardTypeDiscount, cardTypeWeek, cardTypeTimeStart, cardTypeTimeEnd, salesId, DATE_FORMAT(createTime,'%Y-%m-%d') createTime");
+		StringBuilder bodySql = new StringBuilder(" FROM member_card_type");
+		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
+		if(StrUtil.isNotBlank(cardTypeStatus)){
+			whereSql.append(" AND cardTypeStatus = :cardTypeStatus");
+		}
+		return super.getPageBean(headSql, bodySql, whereSql, memberInputView);
 	}
 	
 	@Override

@@ -9,6 +9,8 @@ public class MemberInputView extends BaseInputView {
 	private String cardNo;
 	
 	private String cardTypeId;
+	
+	private String cardTypeStatus;
 
 	public String getMemberMobile() {
 		return memberMobile;
@@ -41,5 +43,15 @@ public class MemberInputView extends BaseInputView {
 	public void setCardTypeId(String cardTypeId) {
 		this.cardTypeId = cardTypeId;
 	}
+
+	public String getCardTypeStatus() {
+		return cardTypeStatus;
+	}
+
+	public void setCardTypeStatus(String cardTypeStatus) {
+		this.cardTypeStatus = cardTypeStatus;
+	}
+	
+	
 
 }

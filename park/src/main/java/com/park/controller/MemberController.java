@@ -50,6 +50,21 @@ public class MemberController extends BaseController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value = "updateMemberName", method = RequestMethod.POST)
+	public ResponseBean updateMemberName(String param){
+		try {
+			memberService.updateMemberName(super.getData(param, UserMember.class));
+			return new ResponseBean(true);
+		} catch (MessageException e) {
+			e.printStackTrace();
+			return new ResponseBean(e.getMessage());
+		}catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
+	}
+	
+	@ResponseBody
 	@RequestMapping(value = "saveMemberCar", method = RequestMethod.POST)
 	public ResponseBean saveMemberCar(String param){
 		try {
@@ -65,12 +80,23 @@ public class MemberController extends BaseController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value = "getMemberCarTypeNames", method = RequestMethod.POST)
+	public ResponseBean getMemberCarTypeNames(String param, HttpServletResponse response) {
+		try {
+			Map<String, Object> memberCarTypes = new HashMap<String, Object>();
+			memberCarTypes.put("memberCarTypes", memberService.getMemberCarTypeNames());
+			return new ResponseBean(memberCarTypes);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
+	}
+	
+	@ResponseBody
 	@RequestMapping(value = "getMemberCarTypes", method = RequestMethod.POST)
 	public ResponseBean getMemberCarTypes(String param, HttpServletResponse response) {
 		try {
-			Map<String, Object> memberCarTypes = new HashMap<String, Object>();
-			memberCarTypes.put("memberCarTypes", memberService.getMemberCarTypes());
-			return new ResponseBean(memberCarTypes);
+			return new ResponseBean(JsonUtils.fromJsonDF(memberService.getMemberCarTypes(super.getData(param, MemberInputView.class))));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseBean(false);
