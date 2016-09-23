@@ -116,9 +116,9 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	@Override
 	public PageBean getMemberCarTypes(MemberInputView memberInputView) {
 		String cardTypeStatus = memberInputView.getCardTypeStatus();
-		StringBuilder headSql = new StringBuilder("SELECT cardTypeId, cardTypeName, cardTypeStatus, cardTypeMonth, cardTypeMoney, cardTypeDiscount, cardTypeWeek, cardTypeTimeStart, cardTypeTimeEnd, salesId, DATE_FORMAT(createTime,'%Y-%m-%d') createTime");
-		StringBuilder bodySql = new StringBuilder(" FROM member_card_type");
-		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
+		StringBuilder headSql = new StringBuilder("SELECT uo.operatorName, cardTypeId, cardTypeName, cardTypeStatus, cardTypeMonth, cardTypeMoney, cardTypeDiscount, cardTypeWeek, cardTypeTimeStart, cardTypeTimeEnd, salesId, DATE_FORMAT(mct.createTime,'%Y-%m-%d') createTime");
+		StringBuilder bodySql = new StringBuilder(" FROM member_card_type mct, user_operator uo");
+		StringBuilder whereSql = new StringBuilder(" WHERE mct.salesId = uo.id");
 		if(StrUtil.isNotBlank(cardTypeStatus)){
 			whereSql.append(" AND cardTypeStatus = :cardTypeStatus");
 		}
@@ -168,9 +168,9 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		String memberIdcard = memberInputView.getMemberIdcard();
 		String cardNo = memberInputView.getCardNo();
 		String cardTypeId = memberInputView.getCardTypeId();
-		StringBuilder headSql = new StringBuilder("SELECT um.memberId, mc.cardId, um.memberName, um.memberMobile, um.memberIdcard, mc.cardNo, mc.cardTypeId, mc.cardDeadline, mc.cardBalance, mc.cardStatus, mc.salesId, DATE_FORMAT(mc.createTime,'%Y-%m-%d') createTime");
-		StringBuilder bodySql = new StringBuilder(" FROM user_member um, member_card mc");
-		StringBuilder whereSql = new StringBuilder(" WHERE um.cardId = mc.cardId");
+		StringBuilder headSql = new StringBuilder("SELECT uo.operatorName, um.memberId, mc.cardId, um.memberName, um.memberMobile, um.memberIdcard, mc.cardNo, mc.cardTypeId, mc.cardDeadline, mc.cardBalance, mc.cardStatus, mc.salesId, DATE_FORMAT(mc.createTime,'%Y-%m-%d') createTime");
+		StringBuilder bodySql = new StringBuilder(" FROM user_member um, member_card mc, user_operator uo");
+		StringBuilder whereSql = new StringBuilder(" WHERE um.cardId = mc.cardId AND mc.salesId = uo.id");
 		if(StrUtil.isNotBlank(memberMobile)){
 			whereSql.append(" AND um.memberMobile = :memberMobile");
 		}
@@ -330,9 +330,9 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		String memberMobile = balanceInputView.getMemberMobile();
 		String cardId = balanceInputView.getCardId();
 		
-		StringBuilder headSql = new StringBuilder("SELECT balanceId, balanceNo, memberName, balanceServiceType, balanceStyle, balanceServiceName, realAmount, balanceStatus, ob.salesId, DATE_FORMAT(ob.createTime,'%Y-%m-%d') createTime");
-		StringBuilder bodySql = new StringBuilder(" FROM other_balance ob, member_card mc, user_member um");
-		StringBuilder whereSql = new StringBuilder(" WHERE ob.balanceServiceId = mc.cardId AND mc.cardId = um.cardId");
+		StringBuilder headSql = new StringBuilder("SELECT balanceId, balanceNo, memberName, balanceServiceType, balanceStyle, balanceServiceName, realAmount, balanceStatus, ob.salesId, uo.operatorName, DATE_FORMAT(ob.createTime,'%Y-%m-%d') createTime");
+		StringBuilder bodySql = new StringBuilder(" FROM other_balance ob, member_card mc, user_member um, user_operator uo");
+		StringBuilder whereSql = new StringBuilder(" WHERE ob.balanceServiceId = mc.cardId AND mc.cardId = um.cardId AND ob.salesId = uo.id");
 		if(StrUtil.isNotBlank(balanceType)){
 			whereSql.append(" AND ob.balanceType IN(:balanceTypeArr)");
 		}
@@ -361,9 +361,9 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	public PageBean getInvoices(InvoiceInputView invoiceInputView){
 		String status = invoiceInputView.getStatus();
 		
-		StringBuilder headSql = new StringBuilder("SELECT *");
-		StringBuilder bodySql = new StringBuilder(" FROM other_invoice");
-		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
+		StringBuilder headSql = new StringBuilder("SELECT oi.*, uo.operatorName");
+		StringBuilder bodySql = new StringBuilder(" FROM other_invoice oi, user_operator uo");
+		StringBuilder whereSql = new StringBuilder(" WHERE oi.salesId = uo.id");
 		
 		if(StrUtil.isNotBlank(status)){
 			whereSql.append(" AND invoiceState = :status");

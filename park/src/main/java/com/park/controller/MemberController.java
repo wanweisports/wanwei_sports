@@ -3,10 +3,9 @@ package com.park.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +14,7 @@ import com.park.common.bean.BalanceInputView;
 import com.park.common.bean.InvoiceInputView;
 import com.park.common.bean.MemberCardOpInputView;
 import com.park.common.bean.MemberInputView;
+import com.park.common.bean.PageBean;
 import com.park.common.bean.ResponseBean;
 import com.park.common.exception.MessageException;
 import com.park.common.po.MemberCard;
@@ -22,6 +22,7 @@ import com.park.common.po.MemberCardType;
 import com.park.common.po.OtherBalance;
 import com.park.common.po.OtherInvoice;
 import com.park.common.po.UserMember;
+import com.park.common.po.UserOperator;
 import com.park.common.util.JsonUtils;
 import com.park.service.IMemberService;
 
@@ -36,7 +37,10 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "saveMember", method = RequestMethod.POST)
 	public ResponseBean saveMember(String param){
 		try {
-			Integer memberId = memberService.saveMember(super.getData(param, UserMember.class));
+			UserOperator userOperator = super.getUserInfo();
+			UserMember userMember = super.getData(param, UserMember.class);
+			userMember.setSalesId(userOperator.getId());
+			Integer memberId = memberService.saveMember(userMember);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("memberId", memberId);
 			return new ResponseBean(data);
@@ -80,27 +84,32 @@ public class MemberController extends BaseController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "getMemberCarTypeNames", method = RequestMethod.POST)
-	public ResponseBean getMemberCarTypeNames(String param, HttpServletResponse response) {
+	@RequestMapping(value = "getMemberCarTypeNames")
+	public ResponseBean getMemberCarTypeNames() {
 		try {
-			Map<String, Object> memberCarTypes = new HashMap<String, Object>();
-			memberCarTypes.put("memberCarTypes", memberService.getMemberCarTypeNames());
-			return new ResponseBean(memberCarTypes);
+			//model.addAttribute("memberCarTypes", memberService.getMemberCarTypeNames());
+			Map<String, Object> data = new HashMap<String, Object>();
+			data.put("memberCarTypeNames", memberService.getMemberCarTypeNames());
+			return new ResponseBean(data);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseBean(false);
 		}
+		
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "getMemberCarTypes", method = RequestMethod.POST)
-	public ResponseBean getMemberCarTypes(String param, HttpServletResponse response) {
+	@RequestMapping(value = "getMemberCarTypes")
+	public String getMemberCarTypes(MemberInputView memberInputView, Model model) {
 		try {
-			return new ResponseBean(JsonUtils.fromJsonDF(memberService.getMemberCarTypes(super.getData(param, MemberInputView.class))));
+			PageBean pageBean = memberService.getMemberCarTypes(memberInputView);
+			model.addAttribute("list", pageBean.getList());
+			model.addAttribute("count", pageBean.getCount());
+			model.addAttribute("lastPage", pageBean.getLastPage());
+			model.addAttribute("currentPage", pageBean.getCurrentPage());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseBean(false);
 		}
+		return "Member/MemberCarTypeList";
 	}
 	
 	@ResponseBody
@@ -131,15 +140,20 @@ public class MemberController extends BaseController {
 		}
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "getUserMembers", method = RequestMethod.POST)
-	public ResponseBean getUserMembers(String param, HttpServletResponse response) {
+	@RequestMapping(value = "getUserMembers")
+	public String getUserMembers(MemberInputView memberInputView, Model model) {
 		try {
-			return new ResponseBean(JsonUtils.fromJsonDF(memberService.getUserMembers(super.getData(param, MemberInputView.class))));
+			PageBean pageBean = memberService.getUserMembers(memberInputView);
+			model.addAttribute("list", pageBean.getList());
+			model.addAttribute("count", pageBean.getCount());
+			model.addAttribute("lastPage", pageBean.getLastPage());
+			model.addAttribute("currentPage", pageBean.getCurrentPage());
+			//return new ResponseBean(JsonUtils.fromJsonDF(memberService.getUserMembers(super.getData(param, MemberInputView.class))));
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseBean(false);
+			//return new ResponseBean(false);
 		}
+		return "Member/MemberList";
 	}
 	
 	@ResponseBody
@@ -224,26 +238,32 @@ public class MemberController extends BaseController {
 		}
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "getBalances", method = RequestMethod.POST)
-	public ResponseBean getBalances(String param, HttpServletResponse response) {
+	@RequestMapping(value = "getBalances")
+	public String getBalances(BalanceInputView balanceInputView, Model model) {
 		try {
-			return new ResponseBean(JsonUtils.fromJsonDF(memberService.getBalances(super.getData(param, BalanceInputView.class))));
+			PageBean pageBean = memberService.getBalances(balanceInputView);
+			model.addAttribute("list", pageBean.getList());
+			model.addAttribute("count", pageBean.getCount());
+			model.addAttribute("lastPage", pageBean.getLastPage());
+			model.addAttribute("currentPage", pageBean.getCurrentPage());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseBean(false);
 		}
+		return "Balance/BalanceList";
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "getInvoices", method = RequestMethod.POST)
-	public ResponseBean getInvoices(String param, HttpServletResponse response) {
+	@RequestMapping(value = "getInvoices")
+	public String getInvoices(InvoiceInputView invoiceInputView, Model model) {
 		try {
-			return new ResponseBean(JsonUtils.fromJsonDF(memberService.getInvoices(super.getData(param, InvoiceInputView.class))));
+			PageBean pageBean = memberService.getInvoices(invoiceInputView);
+			model.addAttribute("list", pageBean.getList());
+			model.addAttribute("count", pageBean.getCount());
+			model.addAttribute("lastPage", pageBean.getLastPage());
+			model.addAttribute("currentPage", pageBean.getCurrentPage());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseBean(false);
 		}
+		return "Invoice/InvoiceList";
 	}
 	
 	@ResponseBody

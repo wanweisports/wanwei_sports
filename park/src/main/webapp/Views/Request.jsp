@@ -4,7 +4,7 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML content "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
     <base href="<%=basePath%>">
@@ -19,28 +19,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+	<jsp:include page="/Views/Common/Resources.jsp" /> <%-- 引用公共资源 --%>
   </head>
   
   <body>
   <hr/>
   <div>
   	接口功能：
+  	Submit:
+  	<input type="button" value="获取会员卡类型列表" onclick="method('memberTypes', 'member/getMemberCarTypes.do', this, true)" />
+  	<input type="button" value="获取会员列表" onclick="method('members', 'member/getUserMembers.do', this, true)" />
+  	<input type="button" value="流水日志列表(充值/消费)" onclick="method('getBalances', 'member/getBalances.do', this, true)" />
+  	<input type="button" value="获取发票列表" onclick="method('getInvoices', 'member/getInvoices.do', this, true)" />
+  	<br/><br/> 
+  	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  	Ajax:
   	<input type="button" value="注册/修改会员" onclick="method('memberInfo', 'member/saveMember.do', this)" id="first" />
   	<input type="button" value="更新会员信息" onclick="method('updateMemberName', 'member/updateMemberName.do', this)" />
   	<input type="button" value="会员卡充值" onclick="method('memberCz', 'member/saveMemberCar.do', this)" />
   	<input type="button" value="获取会员卡类型名称列表" onclick="method('memberTypeNames', 'member/getMemberCarTypeNames.do', this)" />
-  	<input type="button" value="获取会员卡类型列表" onclick="method('memberTypes', 'member/getMemberCarTypes.do', this)" />
   	<input type="button" value="获取单个会员卡类型" onclick="method('memberType', 'member/getMemberCarType.do', this)" />
   	<input type="button" value="注册会员--打印发票" onclick="method('invoice', 'member/saveInvoice.do', this)" />
-  	<input type="button" value="获取会员列表" onclick="method('members', 'member/getUserMembers.do', this)" />
   	<input type="button" value="获取单个会员" onclick="method('memberAndCard', 'member/getMemberAndCard.do', this)" />
   	<input type="button" value="增加会员卡类型" onclick="method('addMemberCardType', 'member/saveMemberCardType.do', this)" />
 	<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   	<input type="button" value="升级会员卡" onclick="method('memberCardUpLevel', 'member/memberCardUpLevel.do', this)" />
   	<input type="button" value="充值会员卡" onclick="method('memberCardCZ', 'member/memberCardCZ.do', this)" />
   	<input type="button" value="补办会员卡" onclick="method('memberCardBuBan', 'member/memberCardBuBan.do', this)" /> 
-  	<input type="button" value="流水日志(充值/消费)" onclick="method('getBalances', 'member/getBalances.do', this)" />
-  	<input type="button" value="获取发票列表" onclick="method('getInvoices', 'member/getInvoices.do', this)" />
   	<input type="button" value="领取发票" onclick="method('updateGetInvoices', 'member/updateGetInvoices.do', this)" />
   </div>
   <hr/>
@@ -223,6 +228,42 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<td>类型状态	1：可用，2：锁定</td>
 		</tr>
 	</table>
+	
+	<span style="font-weight: bold;">返回参数：</span>
+	<table border="1" cellpadding="10" cellspacing="0">
+		<tr>
+			<td>cardTypeName</td>
+			<td>会员类别</td>
+		</tr>
+		<tr>
+			<td>cardTypeMonth</td>
+			<td>会员周期</td>
+		</tr>
+		<tr>
+			<td>cardTypeWeek</td>
+			<td>每周限制</td>
+		</tr>
+		<tr>
+			<td>cardTypeTimeStart-cardTypeTimeEnd</td>
+			<td>时间限制（如：8:00-12:00）</td>
+		</tr>
+		<tr>
+			<td>cardTypeDiscount</td>
+			<td>会员折扣</td>
+		</tr>
+		<tr>
+			<td>cardTypeMoney</td>
+			<td>价格(元)</td>
+		</tr>
+		<tr>
+			<td>cardTypeStatus</td>
+			<td>状态（类型状态	1：可用，2：锁定）</td>
+		</tr>
+		<tr>
+			<td>operatorName</td>
+			<td>操作人</td>
+		</tr>
+	</table>
 </div>
 
 <!-- 单个会员卡类型信息-->
@@ -317,6 +358,54 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<tr>
 			<td>cardTypeId</td>
 			<td>会员卡类型【条件】</td>
+		</tr>
+	</table>
+	
+	<span style="font-weight: bold;">返回参数：</span>
+	<table border="1" cellpadding="10" cellspacing="0">
+		<tr>
+			<td>memberId</td>
+			<td>序号</td>
+		</tr>
+		<tr>
+			<td>memberName</td>
+			<td>姓名</td>
+		</tr>
+		<tr>
+			<td>memberMobile</td>
+			<td>手机号码</td>
+		</tr>
+		<tr>
+			<td>memberIdcard</td>
+			<td>身份证号</td>
+		</tr>
+		<tr>
+			<td>cardNo</td>
+			<td>会员卡号</td>
+		</tr>
+		<tr>
+			<td>cardTypeName</td>
+			<td>会员类型</td>
+		</tr>
+		<tr>
+			<td>cardDeadline</td>
+			<td>有效期至</td>
+		</tr>
+		<tr>
+			<td>cardBalance</td>
+			<td>余额(元)</td>
+		</tr>
+		<tr>
+			<td>cardStatus</td>
+			<td>状态（1：有效  2：无效）</td>
+		</tr>
+		<tr>
+			<td>operatorName</td>
+			<td>操作人</td>
+		</tr>
+		<tr>
+			<td>createTime</td>
+			<td>注册时间</td>
 		</tr>
 	</table>
 </div>
@@ -558,6 +647,42 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<td>会员卡id【条件】</td>
 		</tr>
 	</table>
+	
+	<span style="font-weight: bold;">返回参数：</span>
+	<table border="1" cellpadding="10" cellspacing="0">
+		<tr>
+			<td>balanceType</td>
+			<td>序号</td>
+		</tr>
+		<tr>
+			<td>balanceNo</td>
+			<td>交易流水号</td>
+		</tr>
+		<tr>
+			<td>memberName</td>
+			<td>会员姓名</td>
+		</tr>
+		<tr>
+			<td>balanceServiceTypeName</td>
+			<td>订单类型</td>
+		</tr>
+		<tr>
+			<td>balanceStyleName</td>
+			<td>支付方式</td>
+		</tr>
+		<tr>
+			<td>realAmount</td>
+			<td>支付金额</td>
+		</tr>
+		<tr>
+			<td>balanceStatus</td>
+			<td>订单状态（1：已收全款  2：未付款）</td>
+		</tr>
+		<tr>
+			<td>operatorName</td>
+			<td>操作人</td>
+		</tr>
+	</table>
 </div>
 
 <!-- 获取发票列表 -->
@@ -573,6 +698,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<tr>
 			<td>status</td>
 			<td>打印状态	1：领取，2：未领取</td>
+		</tr>
+	</table>
+	
+	<span style="font-weight: bold;">返回参数：</span>
+	<table border="1" cellpadding="10" cellspacing="0">
+		<tr>
+			<td>invoiceId</td>
+			<td>序号</td>
+		</tr>
+		<tr>
+			<td>invoiceHeader</td>
+			<td>发票抬头</td>
+		</tr>
+		<tr>
+			<td>invoiceMoney</td>
+			<td>发票金额</td>
+		</tr>
+		<tr>
+			<td>invoiceContent</td>
+			<td>发票内容</td>
+		</tr>
+		<tr>
+			<td>invoiceRemark</td>
+			<td>备注</td>
+		</tr>
+		<tr>
+			<td>invoiceState</td>
+			<td>状态(1: 已领取  2：未领取)</td>
+		</tr>
+		<tr>
+			<td>operatorName</td>
+			<td>操作人</td>
 		</tr>
 	</table>
 </div>
@@ -596,24 +753,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
          
     </div>
-   <script type="text/javascript" src="<%=basePath %>public/lib/jquery-1.12.3.min.js"></script>
+   <script type="text/javascript" src="<%=basePath %>Content/lib/jquery-1.12.3.min.js"></script>
    <script type="text/javascript">
     $(function(){
     	$("#first").click();
     }); 
     var paramId_;
-    function method(paramId, method, obj){
+    var flag = false;
+    function method(paramId, method, obj, f){
     	$("#method").val(method);
     	paramId_ = paramId;
     	$("#methodName").html($(obj).val());
     	$("*[data-id]").hide();
     	$("*[data-id='"+paramId+"']").show();
+    	flag = f;
     }
    	function request() {
    		$("#result").html("请求中...");
-		$.post("<%=basePath%>"+$("#method").val(), {param: $("textarea[data-id='"+paramId_+"']").val()}, function(data){
-			$("#result").html(JSON.stringify(data));
-		}, 'json');
+   		if(!flag){
+			$.post($("#method").val(), {param: $("textarea[data-id='"+paramId_+"']").val()}, function(data){
+				$("#result").html(JSON.stringify(data));
+			}, 'json');
+		}else{
+			requestHtml();
+		}
+	}
+	
+	function requestHtml() {
+   		$("#result").html("请求中...");
+		$.post($("#method").val(), $.parseJSON($("textarea[data-id='"+paramId_+"']").val()), function(data){
+			$("#result").html(data);
+		}, 'html');
 	}
    </script>
   </body>

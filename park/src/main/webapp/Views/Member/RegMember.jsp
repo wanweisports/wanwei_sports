@@ -17,15 +17,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="description" content="">
     <meta name="keywords" content="万维体育,wanweitiyu,智能体育场馆,体育场馆,预订,收银,万维">
     <meta name="author" content="北京万维体育">
-
-    
-
-    <script src="public/lib/html5shiv/html5.min.js"></script>
-    <link href="public/lib/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <!--STYLE_PLACEHOLDER-->
-    
-<!--STYLE_PLACEHOLDER-->
-<link href="public/style/home/index.css" rel="stylesheet" type="text/css">
+	
+	<jsp:include page="/Views/Common/Resources.jsp" /> <%-- 引用公共资源 --%>
 
 </head>
 <body>
@@ -33,18 +26,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <header class="ww-header">
     <div class="header">
         <div class="ww-logo">
-            <img src="public/images/logo.png" class="logo-icon">
+            <img src="content/images/logo.png" class="logo-icon">
         </div>
         <ul class="ww-nav">
             <li class="nav-home ">
                 <a href="/">
-                    <img src="public/images/navigator/home.png">
+                    <img src="content/images/navigator/home.png">
                     <span>工作面板</span>
                 </a>
             </li>
             <li class="nav-active">
                 <a href="javascript:;">
-                    <img src="public/images/navigator/users.png">
+                    <img src="content/images/navigator/users.png"> 
                     <span>会员管理</span>
                 </a>
                 <ul class="nav-sub">
@@ -56,7 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </li>
             <li class="">
                 <a href="javascript:;">
-                    <img src="public/images/navigator/venue.png">
+                    <img src="content/images/navigator/venue.png">
                     <span>场地预订</span>
                 </a>
                 <ul class="nav-sub">
@@ -70,7 +63,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </li>
             <li class="">
                 <a href="javascript:;">
-                    <img src="public/images/navigator/cart.png">
+                    <img src="content/images/navigator/cart.png">
                     <span>商品管理</span>
                 </a>
                 <ul class="nav-sub">
@@ -82,7 +75,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </li>
             <li class="">
                 <a href="javascript:;">
-                    <img src="public/images/navigator/chart.png">
+                    <img src="content/images/navigator/chart.png">
                     <span>数据统计</span>
                 </a>
                 <ul class="nav-sub">
@@ -96,7 +89,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </li>
             <li class="">
                 <a href="javascript:;">
-                    <img src="public/images/navigator/settings.png">
+                    <img src="content/images/navigator/settings.png">
                     <span>系统设置</span>
                 </a>
                 <ul class="nav-sub">
@@ -111,7 +104,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </li>
             <li class="">
                 <a href="javascript:;">
-                    <img src="public/images/navigator/user.png">
+                    <img src="content/images/navigator/user.png">
                     <span>个人中心</span>
                 </a>
                 <ul class="nav-sub">
@@ -281,13 +274,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     </div>
 
-    
-
-    <!--SCRIPT_PLACEHOLDER-->
-    <script type="text/javascript" src="public/lib/jquery-1.12.3.min.js"></script>
-    <script type="text/javascript" src="public/lib/request.js"></script>
-    <script src="public/lib/bootstrap/bootstrap.min.js"></script>
-    <!--<script src="public/app/common/jquery.capacityFixed.js"></script>-->
+    <!--<script src="content/app/common/jquery.capacityFixed.js"></script>-->
     <script>
         $(document).ready(function(){
             //$(".ww-header").capacityFixed();

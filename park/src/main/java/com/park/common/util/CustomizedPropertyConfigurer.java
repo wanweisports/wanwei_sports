@@ -11,7 +11,7 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 public class CustomizedPropertyConfigurer extends PropertyPlaceholderConfigurer {  
   
     private static Map<String, Object> ctxPropertiesMap;  
-  
+   
     @Override  
     protected void processProperties(ConfigurableListableBeanFactory beanFactory, Properties props)throws BeansException {  
         super.processProperties(beanFactory, props);  

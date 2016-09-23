@@ -6,16 +6,18 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * UserOperator entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "user_operator", catalog = "park")
+@Table(name = "user_operator", catalog = "park", uniqueConstraints = @UniqueConstraint(columnNames = "operatorId"))
 public class UserOperator implements java.io.Serializable {
 
 	// Fields
 
+	private Integer id;
 	private String operatorId;
 	private String operatorName;
 	private String operatorPwd;
@@ -29,9 +31,16 @@ public class UserOperator implements java.io.Serializable {
 	public UserOperator() {
 	}
 
+	/** minimal constructor */
+	public UserOperator(String operatorId) {
+		this.operatorId = operatorId;
+	}
+
 	/** full constructor */
-	public UserOperator(String operatorName, String operatorPwd, String status,
-			String createTime, String updateTime) {
+	public UserOperator(String operatorId, String operatorName,
+			String operatorPwd, String status, String createTime,
+			String updateTime) {
+		this.operatorId = operatorId;
 		this.operatorName = operatorName;
 		this.operatorPwd = operatorPwd;
 		this.status = status;
@@ -42,6 +51,15 @@ public class UserOperator implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	@Column(name = "operatorId", unique = true, nullable = false, length = 32)
 	public String getOperatorId() {
 		return this.operatorId;

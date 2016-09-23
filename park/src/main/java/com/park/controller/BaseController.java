@@ -4,11 +4,18 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import com.park.common.po.UserOperator;
 import com.park.common.util.JsonUtils;
 
 public class BaseController {
@@ -74,5 +81,30 @@ public class BaseController {
 	protected <T> T getData(String json, Class<T> clazz) {
 		return JsonUtils.fromJson(json, clazz);
 	}
+	
+	protected String redirect(String path) {
+        return new StringBuilder(UrlBasedViewResolver.REDIRECT_URL_PREFIX).append(path).toString();
+    }
+
+    protected String forward(String path) {
+        return new StringBuilder(UrlBasedViewResolver.FORWARD_URL_PREFIX).append(path).toString();
+    }
+
+    private HttpServletRequest getRequest() {
+        return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+    }
+
+    protected UserOperator getUserInfo() {
+        UserOperator userInfo = getUserInfo(getRequest().getSession());
+        if(userInfo == null){
+        	userInfo = new UserOperator();
+        	userInfo.setOperatorId("1"); //这里测试固定为1
+        }
+        return userInfo;
+    }
+
+    protected UserOperator getUserInfo(HttpSession session) {
+        return (UserOperator) session.getAttribute("loginUser");
+    }
 	
 }
