@@ -596,7 +596,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
          
     </div>
-   <script type="text/javascript" src="<%=basePath %>js/jquery-1.8.2.min.js"></script>
+   <script type="text/javascript" src="<%=basePath %>public/lib/jquery-1.12.3.min.js"></script>
    <script type="text/javascript">
     $(function(){
     	$("#first").click();
