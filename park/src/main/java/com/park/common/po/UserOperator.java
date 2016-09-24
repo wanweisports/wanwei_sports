@@ -21,6 +21,7 @@ public class UserOperator implements java.io.Serializable {
 	private String operatorId;
 	private String operatorName;
 	private String operatorPwd;
+	private String operatorMobile;
 	private String status;
 	private String createTime;
 	private String updateTime;
@@ -38,11 +39,12 @@ public class UserOperator implements java.io.Serializable {
 
 	/** full constructor */
 	public UserOperator(String operatorId, String operatorName,
-			String operatorPwd, String status, String createTime,
-			String updateTime) {
+			String operatorPwd, String operatorMobile, String status,
+			String createTime, String updateTime) {
 		this.operatorId = operatorId;
 		this.operatorName = operatorName;
 		this.operatorPwd = operatorPwd;
+		this.operatorMobile = operatorMobile;
 		this.status = status;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
@@ -85,6 +87,15 @@ public class UserOperator implements java.io.Serializable {
 
 	public void setOperatorPwd(String operatorPwd) {
 		this.operatorPwd = operatorPwd;
+	}
+
+	@Column(name = "operatorMobile", length = 16)
+	public String getOperatorMobile() {
+		return this.operatorMobile;
+	}
+
+	public void setOperatorMobile(String operatorMobile) {
+		this.operatorMobile = operatorMobile;
 	}
 
 	@Column(name = "status", length = 1)

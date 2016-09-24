@@ -19,6 +19,7 @@ public class UserMember implements java.io.Serializable {
 	private Integer memberId;
 	private String operationId;
 	private String memberName;
+	private String memberType;
 	private String memberMobile;
 	private String memberMobile2;
 	private String memberSex;
@@ -26,10 +27,8 @@ public class UserMember implements java.io.Serializable {
 	private String memberBirthday;
 	private String memberPayPassword;
 	private String memberStatus;
-	private String memberType;
 	private String memberAddress;
 	private String memberRemark;
-	private Integer cardId;
 	private String createTime;
 	private String updateTime;
 	private Integer salesId;
@@ -41,14 +40,15 @@ public class UserMember implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public UserMember(String operationId, String memberName,
+	public UserMember(String operationId, String memberName, String memberType,
 			String memberMobile, String memberMobile2, String memberSex,
 			String memberIdcard, String memberBirthday,
-			String memberPayPassword, String memberStatus, String memberType,
-			String memberAddress, String memberRemark, Integer cardId,
-			String createTime, String updateTime, Integer salesId) {
+			String memberPayPassword, String memberStatus,
+			String memberAddress, String memberRemark, String createTime,
+			String updateTime, Integer salesId) {
 		this.operationId = operationId;
 		this.memberName = memberName;
+		this.memberType = memberType;
 		this.memberMobile = memberMobile;
 		this.memberMobile2 = memberMobile2;
 		this.memberSex = memberSex;
@@ -56,10 +56,8 @@ public class UserMember implements java.io.Serializable {
 		this.memberBirthday = memberBirthday;
 		this.memberPayPassword = memberPayPassword;
 		this.memberStatus = memberStatus;
-		this.memberType = memberType;
 		this.memberAddress = memberAddress;
 		this.memberRemark = memberRemark;
-		this.cardId = cardId;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
 		this.salesId = salesId;
@@ -93,6 +91,15 @@ public class UserMember implements java.io.Serializable {
 
 	public void setMemberName(String memberName) {
 		this.memberName = memberName;
+	}
+
+	@Column(name = "memberType", length = 1)
+	public String getMemberType() {
+		return this.memberType;
+	}
+
+	public void setMemberType(String memberType) {
+		this.memberType = memberType;
 	}
 
 	@Column(name = "memberMobile", length = 16)
@@ -158,15 +165,6 @@ public class UserMember implements java.io.Serializable {
 		this.memberStatus = memberStatus;
 	}
 
-	@Column(name = "memberType", length = 1)
-	public String getMemberType() {
-		return this.memberType;
-	}
-
-	public void setMemberType(String memberType) {
-		this.memberType = memberType;
-	}
-
 	@Column(name = "memberAddress")
 	public String getMemberAddress() {
 		return this.memberAddress;
@@ -183,15 +181,6 @@ public class UserMember implements java.io.Serializable {
 
 	public void setMemberRemark(String memberRemark) {
 		this.memberRemark = memberRemark;
-	}
-
-	@Column(name = "cardId")
-	public Integer getCardId() {
-		return this.cardId;
-	}
-
-	public void setCardId(Integer cardId) {
-		this.cardId = cardId;
 	}
 
 	@Column(name = "createTime", length = 20)

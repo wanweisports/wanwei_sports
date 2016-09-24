@@ -286,12 +286,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- 注册会员-发票 -->
 <textarea rows="15" cols="50" data-id="invoice">
 {
-   "invoiceServiceType": 1,
+   "invoiceServiceType": 10,
    "invoiceServiceId": 13,
    "invoiceHeader": "北京市资产雷达有限公司",
    "invoiceMoney": 500,
    "invoiceContent": "注册会员：500    本公司打印",
    "invoiceRemark": "发票备注",
+   "invoiceState": 1
    "salesId": 1
 }
 </textarea>
@@ -322,6 +323,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<tr>
 			<td>invoiceRemark</td>
 			<td>发票内容备注</td>
+		</tr>
+		<tr>
+			<td>invoiceState</td>
+			<td>打印发票（1：打印  2：不打印）</td>
 		</tr>
 		<tr>
 			<td>salesId</td>
@@ -432,6 +437,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 {
    "cardTypeId": null,
    "cardTypeName": "至尊卡",
+   "cardType": "2",
    "cardTypeStatus": "1",
    "cardTypeMonth": "5",
    "cardTypeWeek": "1,2,3,4,5,6,7",
@@ -453,6 +459,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<tr>
 			<td>cardTypeName</td>
 			<td>会员卡名称</td>
+		</tr>
+		<tr>
+			<td>cardTypeStatus</td>
+			<td>会员卡支付类型（1.预付类型   2.记账类型）</td>
+		</tr>
+		<tr>
+			<td>cardTypeName</td>
+			<td>会员卡状态	1：可用，2：锁定</td>
 		</tr>
 		<tr>
 			<td>cardTypeMonth</td>

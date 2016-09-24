@@ -98,7 +98,7 @@ public class BaseController {
         UserOperator userInfo = getUserInfo(getRequest().getSession());
         if(userInfo == null){
         	userInfo = new UserOperator();
-        	userInfo.setOperatorId("1"); //这里测试固定为1
+        	userInfo.setId(1); //这里测试固定为1
         }
         return userInfo;
     }

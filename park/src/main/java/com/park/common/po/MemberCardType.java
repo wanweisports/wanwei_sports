@@ -1,13 +1,13 @@
 package com.park.common.po;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Transient;
+
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 /**
  * MemberCardType entity. @author MyEclipse Persistence Tools
@@ -20,6 +20,7 @@ public class MemberCardType implements java.io.Serializable {
 
 	private Integer cardTypeId;
 	private String cardTypeName;
+	private String cardType;
 	private String cardTypeStatus;
 	private String cardTypeMonth;
 	private String cardTypeWeek;
@@ -34,6 +35,7 @@ public class MemberCardType implements java.io.Serializable {
 	
 	@Transient
 	private String cardTypeTime;
+
 	// Constructors
 
 	/** default constructor */
@@ -41,20 +43,22 @@ public class MemberCardType implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public MemberCardType(String cardTypeName, String cardTypeStatus,
-			Double cardTypeMoney) {
+	public MemberCardType(String cardTypeName, String cardType,
+			String cardTypeStatus, Double cardTypeMoney) {
 		this.cardTypeName = cardTypeName;
+		this.cardType = cardType;
 		this.cardTypeStatus = cardTypeStatus;
 		this.cardTypeMoney = cardTypeMoney;
 	}
 
 	/** full constructor */
-	public MemberCardType(String cardTypeName, String cardTypeStatus,
-			String cardTypeMonth, String cardTypeWeek,
+	public MemberCardType(String cardTypeName, String cardType,
+			String cardTypeStatus, String cardTypeMonth, String cardTypeWeek,
 			String cardTypeTimeStart, String cardTypeTimeEnd,
 			Double cardTypeMoney, Double cardTypeCredit, String createTime,
 			String updateTime, Integer salesId, Double cardTypeDiscount) {
 		this.cardTypeName = cardTypeName;
+		this.cardType = cardType;
 		this.cardTypeStatus = cardTypeStatus;
 		this.cardTypeMonth = cardTypeMonth;
 		this.cardTypeWeek = cardTypeWeek;
@@ -87,6 +91,15 @@ public class MemberCardType implements java.io.Serializable {
 
 	public void setCardTypeName(String cardTypeName) {
 		this.cardTypeName = cardTypeName;
+	}
+
+	@Column(name = "cardType", nullable = false, length = 1)
+	public String getCardType() {
+		return this.cardType;
+	}
+
+	public void setCardType(String cardType) {
+		this.cardType = cardType;
 	}
 
 	@Column(name = "cardTypeStatus", nullable = false, length = 1)
@@ -187,16 +200,17 @@ public class MemberCardType implements java.io.Serializable {
 	public void setCardTypeDiscount(Double cardTypeDiscount) {
 		this.cardTypeDiscount = cardTypeDiscount;
 	}
-
+	
 	@Transient
 	public String getCardTypeTime() {
 		return cardTypeTime;
 	}
-
+	
 	@Transient
 	public void setCardTypeTime(String cardTypeTime) {
 		this.cardTypeTime = cardTypeTime;
 	}
+	
 	
 
 }

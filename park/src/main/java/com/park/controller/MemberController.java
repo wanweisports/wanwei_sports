@@ -72,7 +72,10 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "saveMemberCar", method = RequestMethod.POST)
 	public ResponseBean saveMemberCar(String param){
 		try {
-			Map<String, Object> balanceMap = memberService.saveMemberCar(super.getData(param, MemberCard.class), super.getData(param, OtherBalance.class));
+			UserOperator userOperator = super.getUserInfo();
+			MemberCard memberCard = super.getData(param, MemberCard.class);
+			memberCard.setSalesId(userOperator.getId());
+			Map<String, Object> balanceMap = memberService.saveMemberCar(memberCard, super.getData(param, OtherBalance.class));
 			return new ResponseBean(balanceMap);
 		} catch (MessageException e) {
 			e.printStackTrace();
@@ -127,7 +130,10 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "saveInvoice", method = RequestMethod.POST)
 	public ResponseBean saveInvoice(String param) {
 		try {
-			Integer invoiceId = memberService.saveInvoice(super.getData(param, OtherInvoice.class));
+			UserOperator userOperator = super.getUserInfo();
+			OtherInvoice invoice = super.getData(param, OtherInvoice.class);
+			invoice.setSalesId(userOperator.getId());
+			Integer invoiceId = memberService.saveInvoice(invoice);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("invoiceId", invoiceId);
 			return new ResponseBean(data);
@@ -174,7 +180,10 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "saveMemberCardType", method = RequestMethod.POST)
 	public ResponseBean saveMemberCardType(String param) {
 		try {
-			Integer cardTypeId = memberService.saveMemberCardType(super.getData(param, MemberCardType.class));
+			UserOperator userOperator = super.getUserInfo();
+			MemberCardType memberCardType = super.getData(param, MemberCardType.class);
+			memberCardType.setSalesId(userOperator.getId());
+			Integer cardTypeId = memberService.saveMemberCardType(memberCardType);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("cardTypeId", cardTypeId);
 			return new ResponseBean(data);

@@ -80,16 +80,18 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	public Map<String, Object> saveMemberCar(MemberCard memberCard, OtherBalance otherBalance) {
 		UserMember userMember = getUserMember(memberCard.getMemberId());
 		if(userMember == null) throw new MessageException("会员信息不存在！");
-		if(userMember.getCardId() != null && userMember.getCardId() != 0) throw new MessageException("该会员已绑定了会员卡！");
+		if(getMemberCards(userMember.getMemberId()).size() > 0) throw new MessageException("该会员已绑定了会员卡！");
 		MemberCardType memberCarType = getMemberCardType(memberCard.getCardTypeId());
 		if(memberCarType == null) throw new MessageException("会员卡类型不存在！");
 		memberCard.setCardDeadline(DateUtil.cardDeadline(memberCarType.getCardTypeMonth())); //计算会员卡截至日期(0:无限制)
 		String nowDate = DateUtil.getNowDate();
+		memberCard.setMemberId(userMember.getMemberId());
 		memberCard.setCardNo(getCardNo()); //会员卡编号	唯一的;
 		memberCard.setCreateTime(nowDate);
+		memberCard.setCardStatus(IDBConstant.LOGIC_STATUS_YES); //默认有效
 		baseDao.save(memberCard, memberCard.getCardId());
-		userMember.setCardId(memberCard.getCardId());
-		baseDao.save(userMember, userMember.getMemberId());
+		/*userMember.setCardId(memberCard.getCardId());
+		baseDao.save(userMember, userMember.getMemberId());*/
 		otherBalance.setBalanceServiceType(IDBConstant.BALANCE_SERVICE_TYPE_REG);
 		otherBalance.setBalanceServiceId(memberCard.getCardId());
 		otherBalance.setBalanceNo(getBalanceNo());
@@ -111,6 +113,11 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	@Override
 	public List<Map<String, Object>> getMemberCarTypeNames() {
 		return baseDao.queryBySql("SELECT cardTypeId, cardTypeName FROM member_card_type WHERE cardTypeStatus = ?", IDBConstant.LOGIC_STATUS_YES);
+	}
+	
+	@Override
+	public List<MemberCard> getMemberCards(int memberId){
+		return baseDao.queryByHql("FROM MemberCard WHERE memberId=?", memberId);
 	}
 	
 	@Override
@@ -150,9 +157,12 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	@Override
 	public Integer saveInvoice(OtherInvoice invoice) {
 		if(getInvoice(invoice.getInvoiceServiceType(), invoice.getInvoiceServiceId()) != null) throw new MessageException("已打印！");
-		invoice.setInvoiceState(IDBConstant.LOGIC_STATUS_NO); //打印发票，默认未领取
 		invoice.setCreateTime(DateUtil.getNowDate());
-		invoice.setPrintTime(DateUtil.getNowDate());
+		if(IDBConstant.LOGIC_STATUS_YES.equals(invoice.getInvoiceState())){ //打印
+			invoice.setPrintTime(DateUtil.getNowDate());
+			//调用打印接口
+			
+		}
 		baseDao.save(invoice, null);
 		return invoice.getInvoiceId();
 	}
@@ -170,7 +180,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		String cardTypeId = memberInputView.getCardTypeId();
 		StringBuilder headSql = new StringBuilder("SELECT uo.operatorName, um.memberId, mc.cardId, um.memberName, um.memberMobile, um.memberIdcard, mc.cardNo, mc.cardTypeId, mc.cardDeadline, mc.cardBalance, mc.cardStatus, mc.salesId, DATE_FORMAT(mc.createTime,'%Y-%m-%d') createTime");
 		StringBuilder bodySql = new StringBuilder(" FROM user_member um, member_card mc, user_operator uo");
-		StringBuilder whereSql = new StringBuilder(" WHERE um.cardId = mc.cardId AND mc.salesId = uo.id");
+		StringBuilder whereSql = new StringBuilder(" WHERE um.memberId = mc.memberId AND mc.salesId = uo.id");
 		if(StrUtil.isNotBlank(memberMobile)){
 			whereSql.append(" AND um.memberMobile = :memberMobile");
 		}
@@ -196,7 +206,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	public Map<String, Object> getUserMemberAndCard(int memberId) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT um.memberId, mc.cardId, um.memberName, um.memberSex, um.memberBirthday, um.memberAddress, um.memberRemark, um.memberMobile, um.memberMobile2, um.memberIdcard, mc.cardNo, mc.cardTypeId, mc.cardDeadline, mc.cardBalance, mc.cardStatus, mc.salesId, DATE_FORMAT(mc.createTime,'%Y-%m-%d') createTime, mct.cardTypeDiscount, mct.cardTypeWeek, mct.cardTypeTimeStart, mct.cardTypeTimeEnd, mct.cardTypeName");
-		sql.append(" FROM user_member um, member_card mc, member_card_type mct WHERE um.cardId = mc.cardId AND mc.cardTypeId = mct.cardTypeId AND um.memberId = ?");
+		sql.append(" FROM user_member um, member_card mc, member_card_type mct WHERE um.memberId = mc.memberId AND mc.cardTypeId = mct.cardTypeId AND um.memberId = ?");
 		Map<String, Object> memberMap = baseDao.queryBySqlFirst(sql.toString(), memberId);
 		if(memberMap == null) throw new MessageException("会员信息不存在！");
 		return getType(memberMap);
@@ -332,7 +342,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		
 		StringBuilder headSql = new StringBuilder("SELECT balanceId, balanceNo, memberName, balanceServiceType, balanceStyle, balanceServiceName, realAmount, balanceStatus, ob.salesId, uo.operatorName, DATE_FORMAT(ob.createTime,'%Y-%m-%d') createTime");
 		StringBuilder bodySql = new StringBuilder(" FROM other_balance ob, member_card mc, user_member um, user_operator uo");
-		StringBuilder whereSql = new StringBuilder(" WHERE ob.balanceServiceId = mc.cardId AND mc.cardId = um.cardId AND ob.salesId = uo.id");
+		StringBuilder whereSql = new StringBuilder(" WHERE ob.balanceServiceId = mc.cardId AND mc.memberId = um.memberId AND ob.salesId = uo.id");
 		if(StrUtil.isNotBlank(balanceType)){
 			whereSql.append(" AND ob.balanceType IN(:balanceTypeArr)");
 		}

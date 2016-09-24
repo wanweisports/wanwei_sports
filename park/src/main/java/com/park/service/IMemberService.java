@@ -25,6 +25,8 @@ public interface IMemberService {
 	
 	public List<Map<String, Object>> getMemberCarTypeNames();
 	
+	public List<MemberCard> getMemberCards(int memberId);
+	
 	public PageBean getMemberCarTypes(MemberInputView memberInputView);
 	
 	public MemberCardType getMemberCardType(int cardTypeId);

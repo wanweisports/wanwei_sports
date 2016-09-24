@@ -36,12 +36,9 @@ public class OtherResource implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public OtherResource(Integer resourceServiceId, String resourceServiceType,
-			String resourceType, String resourceName) {
+	public OtherResource(Integer resourceServiceId, String resourceServiceType) {
 		this.resourceServiceId = resourceServiceId;
 		this.resourceServiceType = resourceServiceType;
-		this.resourceType = resourceType;
-		this.resourceName = resourceName;
 	}
 
 	/** full constructor */
@@ -101,7 +98,7 @@ public class OtherResource implements java.io.Serializable {
 		this.resourceSeq = resourceSeq;
 	}
 
-	@Column(name = "resourceType", nullable = false, length = 16)
+	@Column(name = "resourceType", length = 16)
 	public String getResourceType() {
 		return this.resourceType;
 	}
@@ -110,7 +107,7 @@ public class OtherResource implements java.io.Serializable {
 		this.resourceType = resourceType;
 	}
 
-	@Column(name = "resourceName", nullable = false, length = 64)
+	@Column(name = "resourceName", length = 64)
 	public String getResourceName() {
 		return this.resourceName;
 	}

@@ -34,6 +34,12 @@ public class OtherInvoice implements java.io.Serializable {
 	public OtherInvoice() {
 	}
 
+	/** minimal constructor */
+	public OtherInvoice(String invoiceServiceType, Integer invoiceServiceId) {
+		this.invoiceServiceType = invoiceServiceType;
+		this.invoiceServiceId = invoiceServiceId;
+	}
+
 	/** full constructor */
 	public OtherInvoice(String invoiceServiceType, Integer invoiceServiceId,
 			String invoiceHeader, String invoiceContent, Double invoiceMoney,
@@ -63,7 +69,7 @@ public class OtherInvoice implements java.io.Serializable {
 		this.invoiceId = invoiceId;
 	}
 
-	@Column(name = "invoiceServiceType", length = 16)
+	@Column(name = "invoiceServiceType", nullable = false, length = 16)
 	public String getInvoiceServiceType() {
 		return this.invoiceServiceType;
 	}
@@ -72,7 +78,7 @@ public class OtherInvoice implements java.io.Serializable {
 		this.invoiceServiceType = invoiceServiceType;
 	}
 
-	@Column(name = "invoiceServiceId")
+	@Column(name = "invoiceServiceId", nullable = false)
 	public Integer getInvoiceServiceId() {
 		return this.invoiceServiceId;
 	}

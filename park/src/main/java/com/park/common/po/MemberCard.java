@@ -1,16 +1,12 @@
 package com.park.common.po;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
-import java.beans.Transient;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
-import com.park.common.constant.IDBConstant;
 
 /**
  * MemberCard entity. @author MyEclipse Persistence Tools
@@ -23,16 +19,14 @@ public class MemberCard implements java.io.Serializable {
 
 	private Integer cardId;
 	private String cardNo;
+	private Integer memberId;
 	private Double cardBalance;
 	private String cardDeadline;
-	private String cardStatus = IDBConstant.LOGIC_STATUS_YES;
+	private String cardStatus;
 	private Integer cardTypeId;
 	private String createTime;
 	private String updateTime;
 	private Integer salesId;
-	
-	@javax.persistence.Transient
-	private Integer memberId;
 
 	// Constructors
 
@@ -47,10 +41,11 @@ public class MemberCard implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public MemberCard(String cardNo, Double cardBalance, String cardDeadline,
-			String cardStatus, Integer cardTypeId, String createTime,
-			String updateTime, Integer salesId) {
+	public MemberCard(String cardNo, Integer memberId, Double cardBalance,
+			String cardDeadline, String cardStatus, Integer cardTypeId,
+			String createTime, String updateTime, Integer salesId) {
 		this.cardNo = cardNo;
+		this.memberId = memberId;
 		this.cardBalance = cardBalance;
 		this.cardDeadline = cardDeadline;
 		this.cardStatus = cardStatus;
@@ -79,6 +74,15 @@ public class MemberCard implements java.io.Serializable {
 
 	public void setCardNo(String cardNo) {
 		this.cardNo = cardNo;
+	}
+
+	@Column(name = "memberId")
+	public Integer getMemberId() {
+		return this.memberId;
+	}
+
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
 	}
 
 	@Column(name = "cardBalance", precision = 10)
@@ -117,7 +121,7 @@ public class MemberCard implements java.io.Serializable {
 		this.cardTypeId = cardTypeId;
 	}
 
-	@Column(name = "createTime", length = 19)
+	@Column(name = "createTime", length = 20)
 	public String getCreateTime() {
 		return this.createTime;
 	}
@@ -126,7 +130,7 @@ public class MemberCard implements java.io.Serializable {
 		this.createTime = createTime;
 	}
 
-	@Column(name = "updateTime", length = 19)
+	@Column(name = "updateTime", length = 20)
 	public String getUpdateTime() {
 		return this.updateTime;
 	}
@@ -143,17 +147,5 @@ public class MemberCard implements java.io.Serializable {
 	public void setSalesId(Integer salesId) {
 		this.salesId = salesId;
 	}
-	
-	@javax.persistence.Transient
-	public Integer getMemberId() {
-		return memberId;
-	}
-
-	@javax.persistence.Transient
-	public void setMemberId(Integer memberId) {
-		this.memberId = memberId;
-	}
-	
-	
 
 }
