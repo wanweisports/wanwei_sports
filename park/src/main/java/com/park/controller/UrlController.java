@@ -21,6 +21,11 @@ public class UrlController extends BaseController {
 		return "Request2";
 	}
 
+	@RequestMapping("/users/membersQuery")
+	public String MembersList() {
+		return "Members/MembersList";
+	}
+
 }
 
 
