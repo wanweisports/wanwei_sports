@@ -16,6 +16,11 @@ public class UrlController extends BaseController {
 		return "member/RegMember";
 	}
 
+	@RequestMapping("/users/membersQuery")
+	public String MembersList() {
+		return "Members/MembersList";
+	}
+
 }
 
 
