@@ -1,13 +1,13 @@
 package com.park.common.po;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Transient;
-
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * MemberCardType entity. @author MyEclipse Persistence Tools
@@ -31,7 +31,7 @@ public class MemberCardType implements java.io.Serializable {
 	private String createTime;
 	private String updateTime;
 	private Integer salesId;
-	private Double cardTypeDiscount;
+	private Integer cardTypeDiscount;
 	
 	@Transient
 	private String cardTypeTime;
@@ -56,7 +56,7 @@ public class MemberCardType implements java.io.Serializable {
 			String cardTypeStatus, String cardTypeMonth, String cardTypeWeek,
 			String cardTypeTimeStart, String cardTypeTimeEnd,
 			Double cardTypeMoney, Double cardTypeCredit, String createTime,
-			String updateTime, Integer salesId, Double cardTypeDiscount) {
+			String updateTime, Integer salesId, Integer cardTypeDiscount) {
 		this.cardTypeName = cardTypeName;
 		this.cardType = cardType;
 		this.cardTypeStatus = cardTypeStatus;
@@ -192,12 +192,12 @@ public class MemberCardType implements java.io.Serializable {
 		this.salesId = salesId;
 	}
 
-	@Column(name = "cardTypeDiscount", precision = 10)
-	public Double getCardTypeDiscount() {
+	@Column(name = "cardTypeDiscount")
+	public Integer getCardTypeDiscount() {
 		return this.cardTypeDiscount;
 	}
 
-	public void setCardTypeDiscount(Double cardTypeDiscount) {
+	public void setCardTypeDiscount(Integer cardTypeDiscount) {
 		this.cardTypeDiscount = cardTypeDiscount;
 	}
 	

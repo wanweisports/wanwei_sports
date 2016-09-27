@@ -31,6 +31,11 @@ public class ResponseBean {
 		this.message = message;
 	}
 	
+	public ResponseBean(String code, String message) {
+		this.code = code;
+		this.message = message;
+	}
+	
 	public String getCode() {
 		return code;
 	}

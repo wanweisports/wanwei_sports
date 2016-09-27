@@ -3,6 +3,8 @@ package com.park.common.po;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Transient;
+
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -32,6 +34,9 @@ public class UserMember implements java.io.Serializable {
 	private String createTime;
 	private String updateTime;
 	private Integer salesId;
+	
+	@Transient
+	private String cardNo;
 
 	// Constructors
 
@@ -209,5 +214,17 @@ public class UserMember implements java.io.Serializable {
 	public void setSalesId(Integer salesId) {
 		this.salesId = salesId;
 	}
+
+	@Transient
+	public String getCardNo() {
+		return cardNo;
+	}
+
+	@Transient
+	public void setCardNo(String cardNo) {
+		this.cardNo = cardNo;
+	}
+	
+	
 
 }

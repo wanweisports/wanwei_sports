@@ -18,14 +18,15 @@ public class MemberCard implements java.io.Serializable {
 	// Fields
 
 	private Integer cardId;
-	private String cardNo;
 	private Integer memberId;
+	private String cardNo;
 	private Double cardBalance;
 	private String cardDeadline;
 	private String cardStatus;
 	private Integer cardTypeId;
 	private String createTime;
 	private String updateTime;
+	private String cardRemark;
 	private Integer salesId;
 
 	// Constructors
@@ -41,17 +42,19 @@ public class MemberCard implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public MemberCard(String cardNo, Integer memberId, Double cardBalance,
+	public MemberCard(Integer memberId, String cardNo, Double cardBalance,
 			String cardDeadline, String cardStatus, Integer cardTypeId,
-			String createTime, String updateTime, Integer salesId) {
-		this.cardNo = cardNo;
+			String createTime, String updateTime, String cardRemark,
+			Integer salesId) {
 		this.memberId = memberId;
+		this.cardNo = cardNo;
 		this.cardBalance = cardBalance;
 		this.cardDeadline = cardDeadline;
 		this.cardStatus = cardStatus;
 		this.cardTypeId = cardTypeId;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
+		this.cardRemark = cardRemark;
 		this.salesId = salesId;
 	}
 
@@ -67,15 +70,6 @@ public class MemberCard implements java.io.Serializable {
 		this.cardId = cardId;
 	}
 
-	@Column(name = "cardNo", unique = true, length = 32)
-	public String getCardNo() {
-		return this.cardNo;
-	}
-
-	public void setCardNo(String cardNo) {
-		this.cardNo = cardNo;
-	}
-
 	@Column(name = "memberId")
 	public Integer getMemberId() {
 		return this.memberId;
@@ -83,6 +77,15 @@ public class MemberCard implements java.io.Serializable {
 
 	public void setMemberId(Integer memberId) {
 		this.memberId = memberId;
+	}
+
+	@Column(name = "cardNo", unique = true, length = 32)
+	public String getCardNo() {
+		return this.cardNo;
+	}
+
+	public void setCardNo(String cardNo) {
+		this.cardNo = cardNo;
 	}
 
 	@Column(name = "cardBalance", precision = 10)
@@ -137,6 +140,15 @@ public class MemberCard implements java.io.Serializable {
 
 	public void setUpdateTime(String updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	@Column(name = "cardRemark")
+	public String getCardRemark() {
+		return this.cardRemark;
+	}
+
+	public void setCardRemark(String cardRemark) {
+		this.cardRemark = cardRemark;
 	}
 
 	@Column(name = "salesId")

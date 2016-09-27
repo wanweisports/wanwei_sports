@@ -24,13 +24,13 @@
         }
         ajaxLock = true;
 
-        $.post('/users/submitTicketsPrint', conditions, function (res) {
-            if (res.status == 200) {
-                location.assign('/users/membersQuery');
+        $.post('saveInvoice', conditions, function (res) {
+            if (res.code == 1) {
+                location.assign('MembersInfo');
                 $("#confirmModal").modal("hide");
                 ajaxLock = false;
             } else {
-                alert("注册失败");
+                alert(res.message);
                 ajaxLock = false;
             }
         });
@@ -47,12 +47,15 @@
         }
         ajaxLock = true;
 
-        $.post('/users/submitMembersRecharge', conditions, function (res) {
-            if (res.status == 200) {
+        $.post('saveMemberCar', conditions, function (res) {
+            if (res.code == 1) {
                 $("#confirmModal").modal("show");
                 ajaxLock = false;
+                $.each(res.data, function(key, item){
+                	$("#member_card_ticket_form").find("input[name='"+key+"']").val(item);
+                });
             } else {
-                alert("注册失败");
+                alert(res.message);
                 ajaxLock = false;
             }
         });

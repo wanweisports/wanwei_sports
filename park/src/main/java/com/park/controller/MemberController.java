@@ -16,7 +16,9 @@ import com.park.common.bean.MemberCardOpInputView;
 import com.park.common.bean.MemberInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.bean.ResponseBean;
+import com.park.common.constant.IPlatformConstant;
 import com.park.common.exception.MessageException;
+import com.park.common.exception.RotaryException;
 import com.park.common.po.MemberCard;
 import com.park.common.po.MemberCardType;
 import com.park.common.po.OtherBalance;
@@ -27,7 +29,6 @@ import com.park.common.util.JsonUtils;
 import com.park.service.IMemberService;
 
 @Controller
-@RequestMapping("member")
 public class MemberController extends BaseController {
 	
 	@Autowired
@@ -35,10 +36,9 @@ public class MemberController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "saveMember", method = RequestMethod.POST)
-	public ResponseBean saveMember(String param){
+	public ResponseBean saveMember(UserMember userMember){
 		try {
 			UserOperator userOperator = super.getUserInfo();
-			UserMember userMember = super.getData(param, UserMember.class);
 			userMember.setSalesId(userOperator.getId());
 			Integer memberId = memberService.saveMember(userMember);
 			Map<String, Object> data = new HashMap<String, Object>();
@@ -55,9 +55,9 @@ public class MemberController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "updateMemberName", method = RequestMethod.POST)
-	public ResponseBean updateMemberName(String param){
+	public ResponseBean updateMemberName(UserMember userMember){
 		try {
-			memberService.updateMemberName(super.getData(param, UserMember.class));
+			memberService.updateMemberName(userMember);
 			return new ResponseBean(true);
 		} catch (MessageException e) {
 			e.printStackTrace();
@@ -70,12 +70,11 @@ public class MemberController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "saveMemberCar", method = RequestMethod.POST)
-	public ResponseBean saveMemberCar(String param){
+	public ResponseBean saveMemberCar(MemberCard memberCard, OtherBalance otherBalance){
 		try {
 			UserOperator userOperator = super.getUserInfo();
-			MemberCard memberCard = super.getData(param, MemberCard.class);
 			memberCard.setSalesId(userOperator.getId());
-			Map<String, Object> balanceMap = memberService.saveMemberCar(memberCard, super.getData(param, OtherBalance.class));
+			Map<String, Object> balanceMap = memberService.saveMemberCar(memberCard, otherBalance);
 			return new ResponseBean(balanceMap);
 		} catch (MessageException e) {
 			e.printStackTrace();
@@ -117,9 +116,9 @@ public class MemberController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "getMemberCarType", method = RequestMethod.POST)
-	public ResponseBean getMemberCarType(String param) {
+	public ResponseBean getMemberCarType(Integer cardTypeId) {
 		try {
-			return new ResponseBean(memberService.getMemberCardTypeMap(super.getData(param, MemberCardType.class).getCardTypeId()));
+			return new ResponseBean(memberService.getMemberCardTypeMap(cardTypeId));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseBean(false);
@@ -128,12 +127,11 @@ public class MemberController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "saveInvoice", method = RequestMethod.POST)
-	public ResponseBean saveInvoice(String param) {
+	public ResponseBean saveInvoice(OtherInvoice otherInvoice) {
 		try {
 			UserOperator userOperator = super.getUserInfo();
-			OtherInvoice invoice = super.getData(param, OtherInvoice.class);
-			invoice.setSalesId(userOperator.getId());
-			Integer invoiceId = memberService.saveInvoice(invoice);
+			otherInvoice.setSalesId(userOperator.getId());
+			Integer invoiceId = memberService.saveInvoice(otherInvoice);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("invoiceId", invoiceId);
 			return new ResponseBean(data);
@@ -146,7 +144,7 @@ public class MemberController extends BaseController {
 		}
 	}
 	
-	@RequestMapping(value = "getUserMembers")
+	@RequestMapping(value = "memberList")
 	public String getUserMembers(MemberInputView memberInputView, Model model) {
 		try {
 			PageBean pageBean = memberService.getUserMembers(memberInputView);
@@ -154,34 +152,38 @@ public class MemberController extends BaseController {
 			model.addAttribute("count", pageBean.getCount());
 			model.addAttribute("lastPage", pageBean.getLastPage());
 			model.addAttribute("currentPage", pageBean.getCurrentPage());
+			model.addAttribute("pageSize", pageBean.getPageSize());
+			model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames());
+			model.addAllAttributes(JsonUtils.fromJsonDF(memberInputView));
 			//return new ResponseBean(JsonUtils.fromJsonDF(memberService.getUserMembers(super.getData(param, MemberInputView.class))));
 		} catch (Exception e) {
 			e.printStackTrace();
 			//return new ResponseBean(false);
 		}
-		return "Member/MemberList";
+		return "Members/MembersList";
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "getMemberAndCard", method = RequestMethod.POST)
-	public ResponseBean getMemberAndCard(String param) {
+	@RequestMapping(value = "memberInfo")
+	public String getMemberAndCard(Integer memberId, Model model) {
 		try {
-			return new ResponseBean(JsonUtils.fromJsonDF(memberService.getUserMemberAndCard(super.getData(param, UserMember.class).getMemberId())));
+			model.addAllAttributes(memberService.getUserMemberAndCard(memberId));
+			model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames());
+			//return new ResponseBean(JsonUtils.fromJsonDF(memberService.getUserMemberAndCard(super.getData(param, UserMember.class).getMemberId())));
 		} catch (MessageException e) {
 			e.printStackTrace();
-			return new ResponseBean(e.getMessage());
+			//return new ResponseBean(e.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseBean(false);
+			//return new ResponseBean(false);
 		}
+		return "Members/MembersInfo";
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "saveMemberCardType", method = RequestMethod.POST)
-	public ResponseBean saveMemberCardType(String param) {
+	public ResponseBean saveMemberCardType(MemberCardType memberCardType) {
 		try {
 			UserOperator userOperator = super.getUserInfo();
-			MemberCardType memberCardType = super.getData(param, MemberCardType.class);
 			memberCardType.setSalesId(userOperator.getId());
 			Integer cardTypeId = memberService.saveMemberCardType(memberCardType);
 			Map<String, Object> data = new HashMap<String, Object>();
@@ -198,9 +200,9 @@ public class MemberController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "memberCardUpLevel", method = RequestMethod.POST)
-	public ResponseBean memberCardUpLevel(String param) {
+	public ResponseBean memberCardUpLevel(MemberCardOpInputView memberCardOpInputView) {
 		try {
-			Integer cardId = memberService.updateMemberCardUpLevel(super.getData(param, MemberCardOpInputView.class));
+			Integer cardId = memberService.updateMemberCardUpLevel(memberCardOpInputView);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("cardId", cardId);
 			return new ResponseBean(data);
@@ -215,9 +217,9 @@ public class MemberController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "memberCardCZ", method = RequestMethod.POST)
-	public ResponseBean memberCardCZ(String param) {
+	public ResponseBean memberCardCZ(MemberCardOpInputView memberCardOpInputView) {
 		try {
-			Integer cardId = memberService.updateMemberCardCZ(super.getData(param, MemberCardOpInputView.class));
+			Integer cardId = memberService.updateMemberCardCZ(memberCardOpInputView);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("cardId", cardId);
 			return new ResponseBean(data);
@@ -232,9 +234,9 @@ public class MemberController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "memberCardBuBan", method = RequestMethod.POST)
-	public ResponseBean memberCardBuBan(String param) {
+	public ResponseBean memberCardBuBan(MemberCardOpInputView memberCardOpInputView) {
 		try {
-			Integer cardId = memberService.updateMemberCardBuBan(super.getData(param, MemberCardOpInputView.class));
+			Integer cardId = memberService.updateMemberCardBuBan(memberCardOpInputView);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("cardId", cardId);
 			return new ResponseBean(data);
@@ -277,9 +279,9 @@ public class MemberController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "updateGetInvoices", method = RequestMethod.POST)
-	public ResponseBean updateGetInvoices(String param) {
+	public ResponseBean updateGetInvoices(String invoiceIds) {
 		try {
-			memberService.updateGetInvoices(super.getData(param, InvoiceInputView.class).getInvoiceIds());
+			memberService.updateGetInvoices(invoiceIds);
 			return new ResponseBean(true);
 		} catch (MessageException e) {
 			e.printStackTrace();

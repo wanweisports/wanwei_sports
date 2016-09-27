@@ -15,6 +15,7 @@ import com.park.common.bean.MemberCardOpInputView;
 import com.park.common.bean.MemberInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.constant.IDBConstant;
+import com.park.common.constant.IPlatformConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.MemberCard;
 import com.park.common.po.MemberCardType;
@@ -80,33 +81,42 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	public Map<String, Object> saveMemberCar(MemberCard memberCard, OtherBalance otherBalance) {
 		UserMember userMember = getUserMember(memberCard.getMemberId());
 		if(userMember == null) throw new MessageException("会员信息不存在！");
-		if(getMemberCards(userMember.getMemberId()).size() > 0) throw new MessageException("该会员已绑定了会员卡！");
-		MemberCardType memberCarType = getMemberCardType(memberCard.getCardTypeId());
-		if(memberCarType == null) throw new MessageException("会员卡类型不存在！");
-		memberCard.setCardDeadline(DateUtil.cardDeadline(memberCarType.getCardTypeMonth())); //计算会员卡截至日期(0:无限制)
-		String nowDate = DateUtil.getNowDate();
-		memberCard.setMemberId(userMember.getMemberId());
-		memberCard.setCardNo(getCardNo()); //会员卡编号	唯一的;
-		memberCard.setCreateTime(nowDate);
-		memberCard.setCardStatus(IDBConstant.LOGIC_STATUS_YES); //默认有效
-		baseDao.save(memberCard, memberCard.getCardId());
-		/*userMember.setCardId(memberCard.getCardId());
-		baseDao.save(userMember, userMember.getMemberId());*/
-		otherBalance.setBalanceServiceType(IDBConstant.BALANCE_SERVICE_TYPE_REG);
-		otherBalance.setBalanceServiceId(memberCard.getCardId());
-		otherBalance.setBalanceNo(getBalanceNo());
-		otherBalance.setCreateTime(nowDate);
-		otherBalance.setServiceDate(nowDate);
-		otherBalance.setBalanceType(IDBConstant.BALANCE_TYPE_OTHER);
-		otherBalance.setSalesId(memberCard.getSalesId());
-		baseDao.save(otherBalance, null);
+		if(getMemberCards(userMember.getMemberId()).size() == 0){// throw new RotaryException("该会员已绑定了会员卡！");
+			MemberCardType memberCarType = getMemberCardType(memberCard.getCardTypeId());
+			if(memberCarType == null) throw new MessageException("会员卡类型不存在！");
+			if(this.getMemberCard(memberCard.getCardNo()) != null ) throw new MessageException("会员卡号重复，请刷新页面！");
+			memberCard.setCardDeadline(DateUtil.cardDeadline(memberCarType.getCardTypeMonth())); //计算会员卡截至日期(0:无限制)
+			String nowDate = DateUtil.getNowDate();
+			memberCard.setMemberId(userMember.getMemberId());
+			//memberCard.setCardNo(getCardNo()); //会员卡编号	唯一的;
+			memberCard.setCreateTime(nowDate);
+			memberCard.setCardStatus(IDBConstant.LOGIC_STATUS_YES); //默认有效
+			memberCard.setCardBalance(memberCard.getCardBalance()+otherBalance.getGivingAmount()); //会员卡金额（充值+赠送）
+			baseDao.save(memberCard, memberCard.getCardId());
+			otherBalance.setBalanceServiceType(IDBConstant.BALANCE_SERVICE_TYPE_REG);
+			otherBalance.setBalanceServiceId(memberCard.getCardId());
+			otherBalance.setBalanceNo(getBalanceNo());
+			otherBalance.setCreateTime(nowDate);
+			otherBalance.setServiceDate(nowDate);
+			otherBalance.setBalanceType(IDBConstant.BALANCE_TYPE_OTHER);
+			otherBalance.setSalesId(memberCard.getSalesId());
+			//计算最终支付金额
+			otherBalance.setOldAmount(memberCard.getCardBalance());
+			otherBalance.setRealAmount(memberCard.getCardBalance()+memberCarType.getCardTypeMoney()-otherBalance.getSubAmount());
+			//订单状态（暂定）
+			otherBalance.setBalanceStatus(IDBConstant.BALANCE_STATUS_ALL);
+			baseDao.save(otherBalance, null);
+		}else{
+			memberCard = getMemberCards(memberCard.getMemberId()).get(0);
+			otherBalance = getOtherBalance(IDBConstant.BALANCE_SERVICE_TYPE_REG, memberCard.getCardId());
+		}
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("cardId", memberCard.getCardId());
 		data.put("balanceNo", otherBalance.getBalanceNo());
 		data.put("balanceServiceType", otherBalance.getBalanceServiceType());
 		data.put("balanceServiceTypeName", dictService.getDictValueByNameKey(IDBConstant.BALANCE_SERVICE_TYPE, otherBalance.getBalanceServiceType()));
 		data.put("createTime", otherBalance.getCreateTime());
-		data.put("balanceStatus", dictService.getDictValueByNameKey(IDBConstant.BALANCE_SERVICE_TYPE, otherBalance.getBalanceStatus()));
+		data.put("balanceStatusName", dictService.getDictValueByNameKey(IDBConstant.BALANCE_STATUS, otherBalance.getBalanceStatus()));
 		return data;
 	}
 	
@@ -118,6 +128,16 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	@Override
 	public List<MemberCard> getMemberCards(int memberId){
 		return baseDao.queryByHql("FROM MemberCard WHERE memberId=?", memberId);
+	}
+	
+	@Override
+	public MemberCard getMemberCard(String cardNo){
+		return baseDao.queryByHqlFirst("FROM MemberCard WHERE cardNo=?", cardNo);
+	}
+	
+	@Override
+	public OtherBalance getOtherBalance(String balanceServiceType, Integer balanceServiceId){
+		return baseDao.queryByHqlFirst("FROM OtherBalance WHERE balanceServiceType=? AND balanceServiceId=?", balanceServiceType, balanceServiceId);
 	}
 	
 	@Override
@@ -205,8 +225,8 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	@Override
 	public Map<String, Object> getUserMemberAndCard(int memberId) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT um.memberId, mc.cardId, um.memberName, um.memberSex, um.memberBirthday, um.memberAddress, um.memberRemark, um.memberMobile, um.memberMobile2, um.memberIdcard, mc.cardNo, mc.cardTypeId, mc.cardDeadline, mc.cardBalance, mc.cardStatus, mc.salesId, DATE_FORMAT(mc.createTime,'%Y-%m-%d') createTime, mct.cardTypeDiscount, mct.cardTypeWeek, mct.cardTypeTimeStart, mct.cardTypeTimeEnd, mct.cardTypeName");
-		sql.append(" FROM user_member um, member_card mc, member_card_type mct WHERE um.memberId = mc.memberId AND mc.cardTypeId = mct.cardTypeId AND um.memberId = ?");
+		sql.append("SELECT operatorName, um.memberId, mc.cardId, um.memberName, um.memberType, um.memberSex, um.memberBirthday, um.memberAddress, um.memberRemark, um.memberMobile, um.memberMobile2, um.memberIdcard, mc.cardNo, mc.cardTypeId, mc.cardDeadline, mc.cardBalance, mc.cardStatus, mc.salesId, DATE_FORMAT(mc.createTime,'%Y-%m-%d') createTime, mct.cardTypeDiscount, mct.cardTypeWeek, mct.cardTypeTimeStart, mct.cardTypeTimeEnd, mct.cardTypeName");
+		sql.append(" FROM user_member um, member_card mc, member_card_type mct, user_operator uo WHERE um.memberId = mc.memberId AND mc.cardTypeId = mct.cardTypeId AND mct.salesId = uo.Id AND um.memberId = ?");
 		Map<String, Object> memberMap = baseDao.queryBySqlFirst(sql.toString(), memberId);
 		if(memberMap == null) throw new MessageException("会员信息不存在！");
 		return getType(memberMap);
@@ -390,12 +410,18 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		baseDao.updateBySql("UPDATE other_invoice o SET invoiceState=:invoiceState WHERE o.invoiceId IN(:invoiceIdArr)", params);
 	}
 	
+	@Override
+	public Map<String, Object> getRegMember(int memberId) {
+		return baseDao.queryBySqlFirst("SELECT memberId, memberName, memberMobile FROM user_member WHERE memberId = ?", memberId);
+	}
+	
 	private Map<String, Object> getType(Map<String, Object> map) {
 		map.put("cardStatusName", dictService.getDictValueByNameKey(IDBConstant.STATUS, StrUtil.objToStr(map.get("cardStatus"))));
 		return map;
 	}
 	
-	private String getCardNo() {
+	@Override
+	public String getCardNo() {
 		do {
 			StringBuffer no = new StringBuffer();
 			for(int i = 0; i < 6; i++){

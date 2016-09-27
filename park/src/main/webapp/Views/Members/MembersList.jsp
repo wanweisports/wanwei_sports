@@ -2,12 +2,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> <%-- JSTL表达式（判断，循环，输出） --%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 
-<%
-    String path = request.getContextPath();
-    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
-
-<jsp:include page="/Views/Shared/Header.jsp">
+<jsp:include page="/Views/Shared/Header.jsp" />
+ 
 <div class="ww-wrapper">
     <div class="wrapper">
         <ol class="breadcrumb">
@@ -22,14 +18,14 @@
                             <div class="form-group">
                                 <label for="member_mobile" class="col-sm-4 control-label">手机号码</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="member_mobile" name="member_mobile"
+                                    <input type="text" class="form-control" id="member_mobile" name="memberMobile"
                                         placeholder="请输入手机号码">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="card_no" class="col-sm-4 control-label">会员卡号</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="card_no" name="card_no"
+                                    <input type="text" class="form-control" id="card_no" name="cardNo"
                                         placeholder="请输入会员卡号">
                                 </div>
                             </div>
@@ -38,18 +34,23 @@
                             <div class="form-group">
                                 <label for="member_idcard" class="col-sm-4 control-label">身份证号</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="member_idcard" name="member_idcard"
+                                    <input type="text" class="form-control" id="member_idcard" name="memberIdcard"
                                         placeholder="请输入身份证号">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="member_type" class="col-sm-4 control-label">会员类型</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" id="member_type" name="member_type">
+                                    <select class="form-control" id="member_type" name="cardTypeId">
                                         <option value="">全部类型</option>
+                                        <c:forEach var="type" items="${memberCarTypeNames}">
+                                        	<option value="${type.cardTypeId}">${type.cardTypeName}</option>
+                                        </c:forEach>
+                                        <!-- 
                                         <option value="1">金卡会员</option>
                                         <option value="2">银卡会员</option>
                                         <option value="3">普卡会员</option>
+                                         -->
                                     </select>
                                 </div>
                             </div>
@@ -58,14 +59,14 @@
                             <div class="form-group">
                                 <label for="payment_type" class="col-sm-4 control-label">支付类型</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" id="payment_type" name="payment_type">
+                                    <select class="form-control" id="payment_type" name="memberType">
                                         <option value="">全部类型</option>
                                         <option value="1">预付类型</option>
                                         <option value="2">记账类型</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" onclick="window.location.href='memberList?'+$('#member_filter_form').serialize();">
                                 <div class="col-sm-12">
                                     <a href="javascript:;" class="btn btn-primary member-filter">
                                         <span class="glyphicon glyphicon-search"></span> 检索会员
@@ -116,7 +117,7 @@
                                 <td>${member.operatorName}</td>
                                 <td>${member.createTime}</td>
                                 <td>
-                                    <a class="btn btn-primary" href="/users/membersView/${member.memberId}">
+                                    <a class="btn btn-primary" href="memberInfo?memberId=${member.memberId}">
                                         <span class="glyphicon glyphicon-arrow-right"></span> 查看
                                     </a>
                                 </td>
@@ -126,12 +127,12 @@
                         </table>
                         <nav class="pull-right">
                             <p class="pull-left" style="margin: 24px 14px;">
-                                <span>10条/页</span>
-                                <span>总15条</span>
+                                <span>${pageSize}条/页</span>
+                                <span>总${count}条</span>
                             </p>
                             <ul class="pagination pull-right">
-                                <li><a href="javascript:;"><span>首页</span></a></li>
-                                <li><a href="javascript:;"><span>上一页</span></a></li>
+                                <li><a href="javascript:;" onclick="window.location.href='memberList?page=1'"><span>首页</span></a></li>
+                                <li><a href="javascript:;" onclick="window.location.href='memberList?page=${currentPage-1}'"><span>上一页</span></a></li>
                                 <li><a href="javascript:;">1</a></li>
                                 <li class="active"><a href="javascript:;">2</a></li>
                                 <li><a href="javascript:;">3</a></li>
@@ -141,8 +142,8 @@
                                 <li><a href="javascript:;">13</a></li>
                                 <li><a href="javascript:;">14</a></li>
                                 <li><a href="javascript:;">15</a></li>
-                                <li><a href="javascript:;"><span>下一页</span></a></li>
-                                <li><a href="javascript:;"><span>末页</span></a></li>
+                                <li><a href="javascript:;" onclick="window.location.href='memberList?page=${currentPage+1}'"><span>下一页</span></a></li>
+                                <li><a href="javascript:;" onclick="window.location.href='memberList?page=${lastPage}'"><span>末页</span></a></li>
                             </ul>
                         </nav>
                     </div>
@@ -151,6 +152,7 @@
         </div>
     </div>
 </div>
-<jsp:include page="/Views/Shared/Common.jsp">
-<script src="/Content/app/members/users_members.js"></script>
-<jsp:include page="/Views/Shared/Footer.jsp">
+<jsp:include page="/Views/Shared/Common.jsp" />
+<script src="Content/app/members/users_members.js"></script>
+<jsp:include page="/Views/Shared/Footer.jsp" />
+

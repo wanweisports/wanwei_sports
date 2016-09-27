@@ -1,125 +1,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> <%-- JSTL表达式（判断，循环，输出） --%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-	<base href="<%=basePath%>"> 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<jsp:include page="/Views/Shared/Header.jsp" />
 
-    <title>万维体育 wanweitiyu.com - 智能场馆运营的革命</title>
-
-    <meta name="description" content="">
-    <meta name="keywords" content="万维体育,wanweitiyu,智能体育场馆,体育场馆,预订,收银,万维">
-    <meta name="author" content="北京万维体育">
-	
-	<jsp:include page="/Views/Common/Resources.jsp" /> <%-- 引用公共资源 --%>
-
-</head>
-<body>
-    <div class="container-fluid">
-        <header class="ww-header">
-    <div class="header">
-        <div class="ww-logo">
-            <img src="content/images/logo.png" class="logo-icon">
-        </div>
-        <ul class="ww-nav">
-            <li class="nav-home ">
-                <a href="/">
-                    <img src="content/images/navigator/home.png">
-                    <span>工作面板</span>
-                </a>
-            </li>
-            <li class="nav-active">
-                <a href="javascript:;">
-                    <img src="content/images/navigator/users.png"> 
-                    <span>会员管理</span>
-                </a>
-                <ul class="nav-sub">
-                    <li><a href="/users/membersAdd">新会员注册</a></li>
-                    <li><a href="/users/membersQuery">会员查询</a></li>
-                    <li><a href="/users/membersTicket">发票登记</a></li>
-                    <li><a href="/users/membersCategory">会员类型设置</a></li>
-                </ul>
-            </li>
-            <li class="">
-                <a href="javascript:;">
-                    <img src="content/images/navigator/venue.png">
-                    <span>场地预订</span>
-                </a>
-                <ul class="nav-sub">
-                    <li><a href="/venue/sequenceReserve">现场预订</a></li>
-                    <li><a href="/venue/batchReserve">批量预订</a></li>
-                    <!--<li><a href="#">包场预订</a></li>-->
-                    <li><a href="/venue/sequencePDA">热点概率分析</a></li>
-                    <li><a href="/venue/sportsSettings">场地类型</a></li>
-                    <li><a href="/venue/sitesSettings">场地设置</a></li>
-                </ul>
-            </li>
-            <li class="">
-                <a href="javascript:;">
-                    <img src="content/images/navigator/cart.png">
-                    <span>商品管理</span>
-                </a>
-                <ul class="nav-sub">
-                    <li><a href="/goods/settings">商品设置</a></li>
-                    <li><a href="/goods/stockManagement">进销存管理</a></li>
-                    <li><a href="/goods/market">商品销售</a></li>
-                    <!--<li><a href="#">商品订单</a></li>-->
-                </ul>
-            </li>
-            <li class="">
-                <a href="javascript:;">
-                    <img src="content/images/navigator/chart.png">
-                    <span>数据统计</span>
-                </a>
-                <ul class="nav-sub">
-                    <li><a href="/data/membersRegister">会员注册统计</a></li>
-                    <!--<li><a href="/data/orderLogs">订单日志统计</a></li>-->
-                    <!--<li><a href="/data/performanceEvaluation">用户业绩统计</a></li>-->
-                    <li><a href="/data/businessIncome">营业收入统计</a></li>
-                    <!--<li><a href="/data/venuePercentage">场地利用率统计</a></li>-->
-                    <li><a href="/data/membersAttendance">签到记录</a></li>
-                </ul>
-            </li>
-            <li class="">
-                <a href="javascript:;">
-                    <img src="content/images/navigator/settings.png">
-                    <span>系统设置</span>
-                </a>
-                <ul class="nav-sub">
-                    <li><a href="#">用户设置</a></li>
-                    <li><a href="#">角色设置</a></li>
-                    <li><a href="/settings/common">基础设置</a></li>
-                    <li><a href="#">场地设置</a></li>
-                    <li><a href="#">会员设置</a></li>
-                    <li><a href="#">通知设置</a></li>
-                    <li><a href="#">数据库导入导出</a></li>
-                </ul>
-            </li>
-            <li class="">
-                <a href="javascript:;">
-                    <img src="content/images/navigator/user.png">
-                    <span>个人中心</span>
-                </a>
-                <ul class="nav-sub">
-                    <li><a href="#">个人信息</a></li>
-                    <li><a href="#">忘记密码</a></li>
-                    <li><a href="#">消息记录</a></li>
-                    <li><a href="#">关于我们</a></li>
-                    <li><a href="#">退出</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-</header>
-
-        
 <div class="ww-wrapper">
     <div class="wrapper">
         <ol class="breadcrumb">
@@ -138,7 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="cardNo" name="cardNo"
-                                       placeholder="会员卡号" value="A6E570878344477F8BFEF645FC3635B5" readonly>
+                                       placeholder="会员卡号" value="${cardNo}" readonly>
                             </div>
                         </div>
                         <div class="form-group">
@@ -157,12 +41,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="memberMobile" class="col-sm-4 control-label">
+                            <label for="member_mobile" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 手机号码
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="memberMobile" name="member_mobile"
+                                <input type="text" class="form-control" id="member_mobile" name="memberMobile"
                                        placeholder="请输入手机号码" autocomplete="off"
                                        data-val="true" data-val-required="手机号码不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
@@ -171,15 +55,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="memberMobile2" class="col-sm-4 control-label">备用手机</label>
+                            <label for="member_mobile2" class="col-sm-4 control-label">备用手机</label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="memberMobile2" name="memberMobile2"
+                                <input type="text" class="form-control" id="member_mobile2" name="memberMobile2"
                                        placeholder="请输入备用手机号码" autocomplete="off"
                                        data-val="true" data-val-required="备用手机号码不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
                                        data-val-regex="备用手机号码格式错误">
-                                <div data-valmsg-for="memberMobile2" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="member_mobile2" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -261,7 +145,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <div class="col-sm-offset-4 col-sm-8">
                                 <p class="sc-submit-tips"></p>
                                 <button type="button" class="btn btn-primary" id="btn_reg">
-                                    <span class="glyphicon glyphicon-ok"></span> 注册会员
+                                    <span class="glyphicon glyphicon-ok"></span>  注册 & 绑卡
                                 </button>
                             </div>
                         </div>
@@ -272,31 +156,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
 </div>
 
-    </div>
+<jsp:include page="/Views/Shared/Common.jsp" />
+<script src="Content/app/members/users_members.js"></script>
+<jsp:include page="/Views/Shared/Footer.jsp" />
 
-    <!--<script src="content/app/common/jquery.capacityFixed.js"></script>-->
-    <script>
-        $(document).ready(function(){
-            //$(".ww-header").capacityFixed();
-
-            $(".ww-nav > li").not(".nav-home").hover(function () {
-                $(this).addClass("nav-moon");
-            }, function () {
-                $(this).removeClass("nav-moon");
-            });
-            
-            //注册会员
-            $("#btn_reg").click(function(){
-            	$.requestHttp("member/saveMember.do", $("#member_form"), function(data){
-            		alert(JSON.stringify(data));
-            	});
-            });
-            
-        });
-        
-    </script>
-    
-<!--SCRIPT_PLACEHOLDER-->
-
-</body>
-</html>
+<script type="text/javascript">
+	$(function(){
+		$("#btn_reg").click(function (){
+			              //接口名                 form表单对象               回调函数
+			$.requestHttp("saveMember", $("#member_form"), function(d){
+				alert(JSON.stringify(d));
+				if(d.code == 1){ //操作成功
+					window.location.href = 'membersInfoCar?cardNo='+'${cardNo}&memberId='+d.data.memberId;
+				}
+			});
+		});
+	});
+</script>

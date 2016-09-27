@@ -1,10 +1,19 @@
 package com.park.controller;
 
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.park.service.IMemberService;
 
 @Controller
 public class UrlController extends BaseController {
+	
+	@Autowired
+	private IMemberService memberService;
 	
 	@RequestMapping("request")
 	public String toRequest() {
@@ -12,8 +21,9 @@ public class UrlController extends BaseController {
 	}
 	
 	@RequestMapping("regMember")
-	public String toRegMember() {
-		return "member/RegMember";
+	public String toRegMember(Model model) {
+		model.addAttribute("cardNo", memberService.getCardNo()); //注册会员之前，生成会员号
+		return "Members/RegMember";
 	}
 	
 	@RequestMapping("request2")
@@ -21,9 +31,19 @@ public class UrlController extends BaseController {
 		return "Request2";
 	}
 
-	@RequestMapping("/users/membersQuery")
-	public String MembersList() {
+	//列表页需要获取数据再返回, 因为回填到页面，必须先获取到数据再返回到页面，并不能直接返回到页面，除非Ajax请求可以先返回到页面。
+	/*@RequestMapping("/users/membersQuery")
+	public String MembersList() { 
 		return "Members/MembersList";
+	}*/
+	
+	@RequestMapping("membersInfoCar")
+	public String toMembersInfoCar(Integer memberId, String cardNo, Model model) {
+		Map<String, Object> regMember = memberService.getRegMember(memberId);
+		regMember.put("cardNo", cardNo);
+		model.addAllAttributes(regMember);
+		model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames());
+		return "Members/MembersInfoCar";
 	}
 
 }

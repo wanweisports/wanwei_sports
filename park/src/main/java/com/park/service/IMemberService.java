@@ -27,6 +27,10 @@ public interface IMemberService {
 	
 	public List<MemberCard> getMemberCards(int memberId);
 	
+	public MemberCard getMemberCard(String cardNo);
+	
+	public OtherBalance getOtherBalance(String balanceServiceType, Integer balanceServiceId);
+	
 	public PageBean getMemberCarTypes(MemberInputView memberInputView);
 	
 	public MemberCardType getMemberCardType(int cardTypeId);
@@ -58,4 +62,8 @@ public interface IMemberService {
 	public PageBean getInvoices(InvoiceInputView invoiceInputView);
 	
 	public void updateGetInvoices(String invoiceIds);
+	
+	public Map<String, Object> getRegMember(int memberId);
+	
+	public String getCardNo();
 }

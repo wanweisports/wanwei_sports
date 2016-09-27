@@ -27,26 +27,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div>
   	接口功能：
   	Submit:
-  	<input type="button" value="获取会员卡类型列表" onclick="method('memberTypes', 'member/getMemberCarTypes.do', this, true)" />
-  	<input type="button" value="获取会员列表" onclick="method('members', 'member/getUserMembers.do', this, true)" />
-  	<input type="button" value="流水日志列表(充值/消费)" onclick="method('getBalances', 'member/getBalances.do', this, true)" />
-  	<input type="button" value="获取发票列表" onclick="method('getInvoices', 'member/getInvoices.do', this, true)" />
+  	<input type="button" value="获取会员卡类型列表" onclick="method('memberTypes', 'getMemberCarTypes.do', this, true)" />
+  	<input type="button" value="获取会员列表(MemberList.jsp)" onclick="method('members', 'memberList.do', this, true)" />
+  	<input type="button" value="流水日志列表(充值/消费)" onclick="method('getBalances', 'getBalances.do', this, true)" />
+  	<input type="button" value="获取发票列表" onclick="method('getInvoices', 'getInvoices.do', this, true)" />
+  	<input type="button" value="获取单个会员(MembersInfo.jsp)" onclick="method('memberAndCard', 'memberInfo.do', this, true)" />
   	<br/><br/> 
   	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   	Ajax:
-  	<input type="button" value="注册/修改会员" onclick="method('memberInfo', 'member/saveMember.do', this)" id="first" />
-  	<input type="button" value="更新会员信息" onclick="method('updateMemberName', 'member/updateMemberName.do', this)" />
-  	<input type="button" value="会员卡充值" onclick="method('memberCz', 'member/saveMemberCar.do', this)" />
-  	<input type="button" value="获取会员卡类型名称列表" onclick="method('memberTypeNames', 'member/getMemberCarTypeNames.do', this)" />
-  	<input type="button" value="获取单个会员卡类型" onclick="method('memberType', 'member/getMemberCarType.do', this)" />
-  	<input type="button" value="注册会员--打印发票" onclick="method('invoice', 'member/saveInvoice.do', this)" />
-  	<input type="button" value="获取单个会员" onclick="method('memberAndCard', 'member/getMemberAndCard.do', this)" />
-  	<input type="button" value="增加会员卡类型" onclick="method('addMemberCardType', 'member/saveMemberCardType.do', this)" />
+  	<input type="button" value="注册/修改会员(RegMember.jsp)" onclick="method('memberInfo', 'saveMember.do', this)" id="first" />
+  	<input type="button" value="更新会员信息" onclick="method('updateMemberName', 'updateMemberName.do', this)" />
+  	<input type="button" value="会员卡充值(办卡)(MembersInfoCar.jsp)" onclick="method('memberCz', 'saveMemberCar.do', this)" />
+  	<input type="button" value="获取会员卡类型名称列表" onclick="method('memberTypeNames', 'getMemberCarTypeNames.do', this)" />
+  	<input type="button" value="获取单个会员卡类型" onclick="method('memberType', 'getMemberCarType.do', this)" />
+  	<input type="button" value="注册会员--打印发票" onclick="method('invoice', 'saveInvoice.do', this)" />
+  	
+  	<input type="button" value="增加会员卡类型" onclick="method('addMemberCardType', 'saveMemberCardType.do', this)" />
 	<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  	<input type="button" value="升级会员卡" onclick="method('memberCardUpLevel', 'member/memberCardUpLevel.do', this)" />
-  	<input type="button" value="充值会员卡" onclick="method('memberCardCZ', 'member/memberCardCZ.do', this)" />
-  	<input type="button" value="补办会员卡" onclick="method('memberCardBuBan', 'member/memberCardBuBan.do', this)" /> 
-  	<input type="button" value="领取发票" onclick="method('updateGetInvoices', 'member/updateGetInvoices.do', this)" />
+  	<input type="button" value="升级会员卡" onclick="method('memberCardUpLevel', 'memberCardUpLevel.do', this)" />
+  	<input type="button" value="充值会员卡" onclick="method('memberCardCZ', 'memberCardCZ.do', this)" />
+  	<input type="button" value="补办会员卡" onclick="method('memberCardBuBan', 'memberCardBuBan.do', this)" /> 
+  	<input type="button" value="领取发票" onclick="method('updateGetInvoices', 'updateGetInvoices.do', this)" />
   </div>
   <hr/>
   <div>
@@ -430,6 +431,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<td>会员id</td>
 		</tr>
 	</table>
+	
+	<span style="font-weight: bold;">返回参数：</span>
+	<table border="1" cellpadding="10" cellspacing="0">
+		<tr>
+			<td></td>
+			<td>
+				um.memberId, mc.cardId, um.memberName, um.memberType, um.memberSex, 
+				um.memberBirthday, um.memberAddress, um.memberRemark, um.memberMobile, 
+				um.memberMobile2, um.memberIdcard, mc.cardNo, mc.cardTypeId, mc.cardDeadline, 
+				mc.cardBalance, mc.cardStatus, mc.salesId, DATE_FORMAT(mc.createTime,'%Y-%m-%d') createTime, 
+				mct.cardTypeDiscount, mct.cardTypeWeek, mct.cardTypeTimeStart, mct.cardTypeTimeEnd, 
+				mct.cardTypeName
+			</td>
+		</tr>
+	</table>
 </div>
 
 <!-- 增加会员卡类型 -->
@@ -767,7 +783,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
          
     </div>
-   <script type="text/javascript" src="<%=basePath %>Content/lib/jquery-1.12.3.min.js"></script>
    <script type="text/javascript">
     $(function(){
     	$("#first").click();
