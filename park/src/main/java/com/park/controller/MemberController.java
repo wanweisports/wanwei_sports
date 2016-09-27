@@ -47,7 +47,7 @@ public class MemberController extends BaseController {
 		} catch (MessageException e) {
 			e.printStackTrace();
 			return new ResponseBean(e.getMessage());
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseBean(false);
 		}
@@ -62,7 +62,7 @@ public class MemberController extends BaseController {
 		} catch (MessageException e) {
 			e.printStackTrace();
 			return new ResponseBean(e.getMessage());
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseBean(false);
 		}
@@ -190,7 +190,7 @@ public class MemberController extends BaseController {
 		} catch (MessageException e) {
 			e.printStackTrace();
 			return new ResponseBean(e.getMessage());
-		}  catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseBean(false);
 		}
@@ -207,7 +207,7 @@ public class MemberController extends BaseController {
 		} catch (MessageException e) {
 			e.printStackTrace();
 			return new ResponseBean(e.getMessage());
-		}  catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseBean(false);
 		}
@@ -224,7 +224,7 @@ public class MemberController extends BaseController {
 		} catch (MessageException e) {
 			e.printStackTrace();
 			return new ResponseBean(e.getMessage());
-		}  catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseBean(false);
 		}
@@ -241,7 +241,7 @@ public class MemberController extends BaseController {
 		} catch (MessageException e) {
 			e.printStackTrace();
 			return new ResponseBean(e.getMessage());
-		}  catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseBean(false);
 		}
@@ -284,7 +284,7 @@ public class MemberController extends BaseController {
 		} catch (MessageException e) {
 			e.printStackTrace();
 			return new ResponseBean(e.getMessage());
-		}  catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseBean(false);
 		}

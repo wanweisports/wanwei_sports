@@ -15,6 +15,11 @@ public class UrlController extends BaseController {
 	public String toRegMember() {
 		return "member/RegMember";
 	}
+	
+	@RequestMapping("request2")
+	public String toRequest2() {
+		return "Request2";
+	}
 
 }
 

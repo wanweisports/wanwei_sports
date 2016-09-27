@@ -9,6 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+	<title>会员列表</title>
 	<jsp:include page="/Views/Common/Resources.jsp" /> <%-- 引用公共资源 --%>
     <script src="Content/app/common/base.js"></script> <%-- 单独资源 --%>
 
