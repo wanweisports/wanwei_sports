@@ -19,6 +19,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+	<link href="Content/lib/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="Content/style/home/index.css" rel="stylesheet" type="text/css">
   </head>
   
   <body>
@@ -283,6 +285,82 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<tr>
 			<td>cardTypeId</td>
 			<td>会员卡类型</td>
+		</tr>
+	</table>
+	
+	<span style="font-weight: bold;">返回参数：</span>
+	<table border="1" cellpadding="10" cellspacing="0">
+		<tr>
+			<td>memberId</td>
+			<td>序号</td>
+		</tr>
+		<tr>
+			<td>memberName</td>
+			<td>姓名</td>
+		</tr>
+		<tr>
+			<td>memberMobile</td>
+			<td>手机号码</td>
+		</tr>
+		<tr>
+			<td>memberIdcard</td>
+			<td>身份证号</td>
+		</tr>
+		<tr>
+			<td>cardNo</td>
+			<td>会员卡号</td>
+		</tr>
+		<tr>
+			<td>cardTypeName</td>
+			<td>会员类型</td>
+		</tr>
+		<tr>
+			<td>cardDeadline</td>
+			<td>有效期至</td>
+		</tr>
+		<tr>
+			<td>cardBalance</td>
+			<td>余额(元)</td>
+		</tr>
+		<tr>
+			<td>cardStatus</td>
+			<td>状态（1：有效  2：无效）</td>
+		</tr>
+		<tr>
+			<td>cardTypeCredit</td>
+			<td>信用额度		可以抵账的额度</td>
+		</tr>
+		<tr>
+			<td>cardTypeMonth</td>
+			<td>类别周期月限制（月）	0：不限制</td>
+		</tr>
+		<tr>
+			<td>cardTypeWeek</td>
+			<td>1-7：周一~周日（多个逗号分隔【也就是name值相同】）</td>
+		</tr>
+		<tr>
+			<td>cardTypeTimeStart</td>
+			<td>开始时间许可（多个逗号分隔【也就是name值相同】）</td>
+		</tr>
+		<tr>
+			<td>cardTypeTimeEnd</td>
+			<td>结束时间许可（多个逗号分隔【也就是name值相同】）</td>
+		</tr>
+		<tr>
+			<td>cardTypeAhead</td>
+			<td>可提前预订的时间</td>
+		</tr>
+		<tr>
+			<td>cardType</td>
+			<td>会员卡支付类型（1.预付类型   2.记账类型）</td>
+		</tr>
+		<tr>
+			<td>operatorName</td>
+			<td>操作人</td>
+		</tr>
+		<tr>
+			<td>createTime</td>
+			<td>注册时间</td>
 		</tr>
 	</table>
 </div>
@@ -794,7 +872,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
          
     </div>
-   <script type="text/javascript">
+    
+<script src="Content/lib/jquery/jquery-1.12.3.min.js"></script>
+<script src="Content/lib/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript">
     $(function(){
     	$("#first").click();
     }); 
@@ -811,7 +892,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    	function request() {
    		$("#result").html("请求中...");
    		if(!flag){
-			$.post($("#method").val(), {param: $("textarea[data-id='"+paramId_+"']").val()}, function(data){
+			$.post($("#method").val(), $.parseJSON($("textarea[data-id='"+paramId_+"']").val()), function(data){
 				$("#result").html(JSON.stringify(data));
 			}, 'json');
 		}else{
