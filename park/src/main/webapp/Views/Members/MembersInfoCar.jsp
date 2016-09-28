@@ -3,103 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 
 <jsp:include page="/Views/Shared/Header.jsp" />
- 
-<div class="container-fluid">
-        <header class="ww-header">
-    <div class="header">
-        <div class="ww-logo">
-            <img src="Content/images/logo.png" class="logo-icon">
-        </div>
-        <ul class="ww-nav">
-            <li class="nav-home ">
-                <a href="/">
-                    <img src="Content/images/navigator/home.png">
-                    <span>工作面板</span>
-                </a>
-            </li>
-            <li class="nav-active">
-                <a href="javascript:;">
-                    <img src="Content/images/navigator/users.png">
-                    <span>会员管理</span>
-                </a>
-                <ul class="nav-sub">
-                    <li><a href="/users/membersAdd">新会员注册</a></li>
-                    <li><a href="/users/membersQuery">会员查询</a></li>
-                    <li><a href="/users/membersOperations">会员操作</a></li>
-                    <li><a href="/users/membersTicket">发票登记</a></li>
-                    <li><a href="/users/membersLoans">应收款管理</a></li>
-                    <li><a href="/users/membersCategory">会员类型设置</a></li>
-                </ul>
-            </li>
-            <li class="">
-                <a href="javascript:;">
-                    <img src="Content/images/navigator/venue.png">
-                    <span>场地预订</span>
-                </a>
-                <ul class="nav-sub">
-                    <li><a href="/venue/sequenceReserve">现场预订</a></li>
-                    <li><a href="/venue/batchReserve">批量预订</a></li>
-                    <!--<li><a href="#">包场预订</a></li>-->
-                    <li><a href="/venue/sequencePDA">热点概率分析</a></li>
-                    <li><a href="/venue/sitesSettings">场地设置</a></li>
-                    <li><a href="/venue/sportsSettings">场地类型设置</a></li>
-                </ul>
-            </li>
-            <li class="">
-                <a href="javascript:;">
-                    <img src="Content/images/navigator/cart.png">
-                    <span>商品管理</span>
-                </a>
-                <ul class="nav-sub">
-                    <li><a href="/goods/settings">商品设置</a></li>
-                    <li><a href="/goods/stockManagement">进销存管理</a></li>
-                    <li><a href="/goods/market">商品销售</a></li>
-                    <!--<li><a href="#">商品订单</a></li>-->
-                </ul>
-            </li>
-            <li class="">
-                <a href="javascript:;">
-                    <img src="Content/images/navigator/chart.png">
-                    <span>数据统计</span>
-                </a>
-                <ul class="nav-sub">
-                    <li><a href="/data/membersRegister">会员注册统计</a></li>
-                    <li><a href="/data/orderLogs">订单日志统计</a></li>
-                    <!--<li><a href="/data/performanceEvaluation">用户业绩统计</a></li>-->
-                    <li><a href="/data/businessIncome">营业收入统计</a></li>
-                    <!--<li><a href="/data/venuePercentage">场地利用率统计</a></li>-->
-                    <li><a href="/data/membersAttendance">签到记录</a></li>
-                </ul>
-            </li>
-            <li class="">
-                <a href="javascript:;">
-                    <img src="Content/images/navigator/settings.png">
-                    <span>系统设置</span>
-                </a>
-                <ul class="nav-sub">
-                    <li><a href="/settings/systemUsers">用户设置</a></li>
-                    <li><a href="/settings/systemRoles">角色设置</a></li>
-                    <li><a href="/settings/common">基础设置</a></li>
-                    <li><a href="/settings/notification">通知设置</a></li>
-                    <!--<li><a href="#">数据库导入导出</a></li>-->
-                </ul>
-            </li>
-            <li class="">
-                <a href="javascript:;">
-                    <img src="Content/images/navigator/user.png">
-                    <span>个人中心</span>
-                </a>
-                <ul class="nav-sub">
-                    <li><a href="/center/profileComplete">我的信息</a></li>
-                    <li><a href="/center/passwordModification">修改密码</a></li>
-                    <!--<li><a href="#">消息记录</a></li>-->
-                    <!--<li><a href="#">关于我们</a></li>-->
-                    <li><a href="javascript:;" class="ww-logout">退出登录</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-</header>
+        
 <div class="ww-wrapper">
     <div class="wrapper">
         <ol class="breadcrumb">
@@ -189,7 +93,7 @@
                                     <div data-valmsg-for="member_type" data-valmsg-replace="true"></div>
                                 </div>
                                 <div class="col-sm-2">
-                                    <a href="/users/membersCategory" class="btn btn-primary">
+                                    <a href="member/getMemberCarTypes" class="btn btn-primary">
                                         <span class="glyphicon glyphicon-plus"></span>
                                     </a>
                                 </div>
@@ -453,8 +357,8 @@
 	$(function(){
 		//更新
 		$("#gengxinModal").click(function(){
-			              //接口名                 form表单对象               回调函数
-			$.requestHttp("updateMemberName", $("#member_form"), function(d){
+			              //接口名                                                   form表单对象               回调函数
+			$.requestHttp("member/updateMemberName", $("#member_form"), function(d){
 				alert(JSON.stringify(d));
 				window.location.reload(true);
 			});
@@ -462,8 +366,8 @@
 	
 		//绑卡
 		$("#btn_reg_card").click(function (){
-			              //接口名                 form表单对象               回调函数
-			$.requestHttp("saveMemberCar", $("#member_card_form"), function(d){
+			              //接口名                                            form表单对象               回调函数
+			$.requestHttp("member/saveMemberCar", $("#member_card_form"), function(d){
 				alert(JSON.stringify(d));
 			});
 		});

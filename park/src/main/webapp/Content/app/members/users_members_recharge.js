@@ -24,9 +24,9 @@
         }
         ajaxLock = true;
 
-        $.post('saveInvoice', conditions, function (res) {
+        $.post('member/saveInvoice', conditions, function (res) {
             if (res.code == 1) {
-                location.assign('MembersInfo');
+                location.assign('member/memberList');
                 $("#confirmModal").modal("hide");
                 ajaxLock = false;
             } else {
@@ -47,7 +47,7 @@
         }
         ajaxLock = true;
 
-        $.post('saveMemberCar', conditions, function (res) {
+        $.post('member/saveMemberCar', conditions, function (res) {
             if (res.code == 1) {
                 $("#confirmModal").modal("show");
                 ajaxLock = false;

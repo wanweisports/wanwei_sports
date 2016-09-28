@@ -42,12 +42,12 @@
                     <span>会员管理</span>
                 </a>
                 <ul class="nav-sub">
-                    <li><a href="regMember">新会员注册</a></li>
-                    <li><a href="/users/membersQuery">会员查询</a></li>
+                    <li><a href="member/regMember">新会员注册</a></li>
+                    <li><a href="member/memberList">会员查询</a></li>
                     <li><a href="/users/membersOperations">会员操作</a></li>
-                    <li><a href="/users/membersTicket">发票登记</a></li>
+                    <li><a href="member/getInvoices">发票登记</a></li>
                     <li><a href="/users/membersLoans">应收款管理</a></li>
-                    <li><a href="/users/membersCategory">会员类型设置</a></li>
+                    <li><a href="member/getMemberCarTypes">会员类型设置</a></li>
                 </ul>
             </li>
             <li class="">

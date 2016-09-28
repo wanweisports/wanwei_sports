@@ -164,10 +164,10 @@
 	$(function(){
 		$("#btn_reg").click(function (){
 			              //接口名                 form表单对象               回调函数
-			$.requestHttp("saveMember", $("#member_form"), function(d){
+			$.requestHttp("member/saveMember", $("#member_form"), function(d){
 				alert(JSON.stringify(d));
 				if(d.code == 1){ //操作成功
-					window.location.href = 'membersInfoCar?cardNo='+'${cardNo}&memberId='+d.data.memberId;
+					window.location.href = 'member/membersInfoCar?cardNo='+'${cardNo}&memberId='+d.data.memberId;
 				}
 			});
 		});

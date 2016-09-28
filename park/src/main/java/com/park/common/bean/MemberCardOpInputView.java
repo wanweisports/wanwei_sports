@@ -10,6 +10,8 @@ public class MemberCardOpInputView extends BaseInputView {
 	
 	private String czMoney;
 	
+	private String givingAmount;
+	
 	private String upLevelMoney;
 	
 	private String subMoney;
@@ -18,7 +20,7 @@ public class MemberCardOpInputView extends BaseInputView {
 	
 	private String remark;
 	
-	private String salesId;
+	private Integer salesId;
 
 	public String getCardId() {
 		return cardId;
@@ -84,14 +86,20 @@ public class MemberCardOpInputView extends BaseInputView {
 		this.remark = remark;
 	}
 
-	public String getSalesId() {
+	public Integer getSalesId() {
 		return salesId;
 	}
 
-	public void setSalesId(String salesId) {
+	public void setSalesId(Integer salesId) {
 		this.salesId = salesId;
 	}
-	
-	
+
+	public String getGivingAmount() {
+		return givingAmount;
+	}
+
+	public void setGivingAmount(String givingAmount) {
+		this.givingAmount = givingAmount;
+	}
 	
 }

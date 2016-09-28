@@ -117,7 +117,7 @@
                                 <td>${member.operatorName}</td>
                                 <td>${member.createTime}</td>
                                 <td>
-                                    <a class="btn btn-primary" href="memberInfo?memberId=${member.memberId}">
+                                    <a class="btn btn-primary" href="member/memberInfo?memberId=${member.memberId}">
                                         <span class="glyphicon glyphicon-arrow-right"></span> 查看
                                     </a>
                                 </td>
@@ -131,8 +131,8 @@
                                 <span>总${count}条</span>
                             </p>
                             <ul class="pagination pull-right">
-                                <li><a href="javascript:;" onclick="window.location.href='memberList?page=1'"><span>首页</span></a></li>
-                                <li><a href="javascript:;" onclick="window.location.href='memberList?page=${currentPage-1}'"><span>上一页</span></a></li>
+                                <li><a href="javascript:;" onclick="window.location.href='member/memberList?page=1'"><span>首页</span></a></li>
+                                <li><a href="javascript:;" onclick="window.location.href='member/memberList?page=${currentPage-1}'"><span>上一页</span></a></li>
                                 <li><a href="javascript:;">1</a></li>
                                 <li class="active"><a href="javascript:;">2</a></li>
                                 <li><a href="javascript:;">3</a></li>
@@ -142,8 +142,8 @@
                                 <li><a href="javascript:;">13</a></li>
                                 <li><a href="javascript:;">14</a></li>
                                 <li><a href="javascript:;">15</a></li>
-                                <li><a href="javascript:;" onclick="window.location.href='memberList?page=${currentPage+1}'"><span>下一页</span></a></li>
-                                <li><a href="javascript:;" onclick="window.location.href='memberList?page=${lastPage}'"><span>末页</span></a></li>
+                                <li><a href="javascript:;" onclick="window.location.href='member/memberList?page=${currentPage+1}'"><span>下一页</span></a></li>
+                                <li><a href="javascript:;" onclick="window.location.href='member/memberList?page=${lastPage}'"><span>末页</span></a></li>
                             </ul>
                         </nav>
                     </div>

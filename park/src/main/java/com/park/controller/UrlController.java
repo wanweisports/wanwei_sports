@@ -20,7 +20,7 @@ public class UrlController extends BaseController {
 		return "Request";
 	}
 	
-	@RequestMapping("regMember")
+	@RequestMapping("member/regMember")
 	public String toRegMember(Model model) {
 		model.addAttribute("cardNo", memberService.getCardNo()); //注册会员之前，生成会员号
 		return "Members/RegMember";
@@ -37,7 +37,7 @@ public class UrlController extends BaseController {
 		return "Members/MembersList";
 	}*/
 	
-	@RequestMapping("membersInfoCar")
+	@RequestMapping("member/membersInfoCar")
 	public String toMembersInfoCar(Integer memberId, String cardNo, Model model) {
 		Map<String, Object> regMember = memberService.getRegMember(memberId);
 		regMember.put("cardNo", cardNo);

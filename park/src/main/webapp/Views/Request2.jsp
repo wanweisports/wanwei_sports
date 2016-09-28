@@ -19,7 +19,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-	<jsp:include page="/Views/Common/Resources.jsp" /> <%-- 引用公共资源 --%>
   </head>
   
   <body>

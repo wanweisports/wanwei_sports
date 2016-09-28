@@ -16,9 +16,7 @@ import com.park.common.bean.MemberCardOpInputView;
 import com.park.common.bean.MemberInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.bean.ResponseBean;
-import com.park.common.constant.IPlatformConstant;
 import com.park.common.exception.MessageException;
-import com.park.common.exception.RotaryException;
 import com.park.common.po.MemberCard;
 import com.park.common.po.MemberCardType;
 import com.park.common.po.OtherBalance;
@@ -29,6 +27,7 @@ import com.park.common.util.JsonUtils;
 import com.park.service.IMemberService;
 
 @Controller
+@RequestMapping("member")
 public class MemberController extends BaseController {
 	
 	@Autowired
@@ -108,10 +107,12 @@ public class MemberController extends BaseController {
 			model.addAttribute("count", pageBean.getCount());
 			model.addAttribute("lastPage", pageBean.getLastPage());
 			model.addAttribute("currentPage", pageBean.getCurrentPage());
+			model.addAttribute("pageSize", pageBean.getPageSize());
+			model.addAllAttributes(JsonUtils.fromJsonDF(memberInputView));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "Member/MemberCarTypeList";
+		return "Members/MembersCarTypeList";
 	}
 	
 	@ResponseBody
@@ -202,6 +203,8 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "memberCardUpLevel", method = RequestMethod.POST)
 	public ResponseBean memberCardUpLevel(MemberCardOpInputView memberCardOpInputView) {
 		try {
+			UserOperator userOperator = super.getUserInfo();
+			memberCardOpInputView.setSalesId(userOperator.getId());
 			Integer cardId = memberService.updateMemberCardUpLevel(memberCardOpInputView);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("cardId", cardId);
@@ -219,6 +222,8 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "memberCardCZ", method = RequestMethod.POST)
 	public ResponseBean memberCardCZ(MemberCardOpInputView memberCardOpInputView) {
 		try {
+			UserOperator userOperator = super.getUserInfo();
+			memberCardOpInputView.setSalesId(userOperator.getId());
 			Integer cardId = memberService.updateMemberCardCZ(memberCardOpInputView);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("cardId", cardId);
@@ -236,6 +241,8 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "memberCardBuBan", method = RequestMethod.POST)
 	public ResponseBean memberCardBuBan(MemberCardOpInputView memberCardOpInputView) {
 		try {
+			UserOperator userOperator = super.getUserInfo();
+			memberCardOpInputView.setSalesId(userOperator.getId());
 			Integer cardId = memberService.updateMemberCardBuBan(memberCardOpInputView);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("cardId", cardId);
@@ -257,10 +264,11 @@ public class MemberController extends BaseController {
 			model.addAttribute("count", pageBean.getCount());
 			model.addAttribute("lastPage", pageBean.getLastPage());
 			model.addAttribute("currentPage", pageBean.getCurrentPage());
+			model.addAttribute("pageSize", pageBean.getPageSize());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "Balance/BalanceList";
+		return "Members/BalanceList";
 	}
 	
 	@RequestMapping(value = "getInvoices")
@@ -271,10 +279,11 @@ public class MemberController extends BaseController {
 			model.addAttribute("count", pageBean.getCount());
 			model.addAttribute("lastPage", pageBean.getLastPage());
 			model.addAttribute("currentPage", pageBean.getCurrentPage());
+			model.addAttribute("pageSize", pageBean.getPageSize());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "Invoice/InvoiceList";
+		return "Members/InvoiceList";
 	}
 	
 	@ResponseBody

@@ -19,7 +19,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-	<jsp:include page="/Views/Common/Resources.jsp" /> <%-- 引用公共资源 --%>
   </head>
   
   <body>
@@ -27,27 +26,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div>
   	接口功能：
   	Submit:
-  	<input type="button" value="获取会员卡类型列表" onclick="method('memberTypes', 'getMemberCarTypes.do', this, true)" />
-  	<input type="button" value="获取会员列表(MemberList.jsp)" onclick="method('members', 'memberList.do', this, true)" />
-  	<input type="button" value="流水日志列表(充值/消费)" onclick="method('getBalances', 'getBalances.do', this, true)" />
-  	<input type="button" value="获取发票列表" onclick="method('getInvoices', 'getInvoices.do', this, true)" />
-  	<input type="button" value="获取单个会员(MembersInfo.jsp)" onclick="method('memberAndCard', 'memberInfo.do', this, true)" />
+  	<input type="button" value="获取会员卡类型列表" onclick="method('memberTypes', 'member/getMemberCarTypes.do', this, true)" />
+  	<input type="button" value="获取会员列表(MemberList.jsp)" onclick="method('members', 'member/memberList.do', this, true)" />
+  	<input type="button" value="流水日志列表(充值/消费)" onclick="method('getBalances', 'member/getBalances.do', this, true)" />
+  	<input type="button" value="获取发票列表" onclick="method('getInvoices', 'member/getInvoices.do', this, true)" />
+  	<input type="button" value="获取单个会员(MembersInfo.jsp)" onclick="method('memberAndCard', 'member/memberInfo.do', this, true)" />
   	<br/><br/> 
   	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   	Ajax:
-  	<input type="button" value="注册/修改会员(RegMember.jsp)" onclick="method('memberInfo', 'saveMember.do', this)" id="first" />
-  	<input type="button" value="更新会员信息" onclick="method('updateMemberName', 'updateMemberName.do', this)" />
-  	<input type="button" value="会员卡充值(办卡)(MembersInfoCar.jsp)" onclick="method('memberCz', 'saveMemberCar.do', this)" />
-  	<input type="button" value="获取会员卡类型名称列表" onclick="method('memberTypeNames', 'getMemberCarTypeNames.do', this)" />
-  	<input type="button" value="获取单个会员卡类型" onclick="method('memberType', 'getMemberCarType.do', this)" />
-  	<input type="button" value="注册会员--打印发票" onclick="method('invoice', 'saveInvoice.do', this)" />
+  	<input type="button" value="注册/修改会员(RegMember.jsp)" onclick="method('memberInfo', 'member/saveMember.do', this)" id="first" />
+  	<input type="button" value="更新会员信息" onclick="method('updateMemberName', 'member/updateMemberName.do', this)" />
+  	<input type="button" value="会员卡充值(办卡)(MembersInfoCar.jsp)" onclick="method('memberCz', 'member/saveMemberCar.do', this)" />
+  	<input type="button" value="获取会员卡类型名称列表" onclick="method('memberTypeNames', 'member/getMemberCarTypeNames.do', this)" />
+  	<input type="button" value="获取单个会员卡类型" onclick="method('memberType', 'member/getMemberCarType.do', this)" />
+  	<input type="button" value="注册会员--打印发票" onclick="method('invoice', 'member/saveInvoice.do', this)" />
   	
-  	<input type="button" value="增加会员卡类型" onclick="method('addMemberCardType', 'saveMemberCardType.do', this)" />
+  	<input type="button" value="增加会员卡类型" onclick="method('addMemberCardType', 'member/saveMemberCardType.do', this)" />
 	<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  	<input type="button" value="升级会员卡" onclick="method('memberCardUpLevel', 'memberCardUpLevel.do', this)" />
-  	<input type="button" value="充值会员卡" onclick="method('memberCardCZ', 'memberCardCZ.do', this)" />
-  	<input type="button" value="补办会员卡" onclick="method('memberCardBuBan', 'memberCardBuBan.do', this)" /> 
-  	<input type="button" value="领取发票" onclick="method('updateGetInvoices', 'updateGetInvoices.do', this)" />
+  	<input type="button" value="升级会员卡" onclick="method('memberCardUpLevel', 'member/memberCardUpLevel.do', this)" />
+  	<input type="button" value="充值会员卡" onclick="method('memberCardCZ', 'member/memberCardCZ.do', this)" />
+  	<input type="button" value="补办会员卡" onclick="method('memberCardBuBan', 'member/memberCardBuBan.do', this)" /> 
+  	<input type="button" value="领取发票" onclick="method('updateGetInvoices', 'member/updateGetInvoices.do', this)" />
   </div>
   <hr/>
   <div>
@@ -242,11 +241,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</tr>
 		<tr>
 			<td>cardTypeWeek</td>
-			<td>每周限制</td>
+			<td>每周限制（如：1,6,7）【代表周一、六、日，个数与开始时间、结束时间相同↓】</td>
 		</tr>
 		<tr>
-			<td>cardTypeTimeStart-cardTypeTimeEnd</td>
-			<td>时间限制（如：8:00-12:00）</td>
+			<td>cardTypeTimeStart</td>
+			<td>开始时间（如：08:00,09:00,08:00）</td>
+		</tr>
+		<tr>
+			<td>cardTypeTimeEnd</td>
+			<td>结束时间（如：10:00,12:00,09:00）</td>
 		</tr>
 		<tr>
 			<td>cardTypeDiscount</td>
@@ -477,11 +480,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<td>会员卡名称</td>
 		</tr>
 		<tr>
-			<td>cardTypeStatus</td>
+			<td>cardType</td>
 			<td>会员卡支付类型（1.预付类型   2.记账类型）</td>
 		</tr>
 		<tr>
-			<td>cardTypeName</td>
+			<td>cardTypeStatus</td>
 			<td>会员卡状态	1：可用，2：锁定</td>
 		</tr>
 		<tr>
@@ -490,7 +493,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</tr>
 		<tr>
 			<td>cardTypeWeek</td>
-			<td>1-7：周一~周日</td>
+			<td>1-7：周一~周日（多个逗号分隔【也就是name值相同】）</td>
+		</tr>
+		<tr>
+			<td>cardTypeTimeStart</td>
+			<td>开始时间许可（多个逗号分隔【也就是name值相同】）</td>
+		</tr>
+		<tr>
+			<td>cardTypeTimeEnd</td>
+			<td>结束时间许可（多个逗号分隔【也就是name值相同】）</td>
 		</tr>
 		<tr>
 			<td>cardTypeMoney</td>

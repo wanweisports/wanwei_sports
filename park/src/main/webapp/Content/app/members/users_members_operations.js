@@ -29,10 +29,13 @@
         }
         $(this).attr("working", "working");
 
-        $.post('/users/submitMembersRefreshCard', conditions, function (res) {
+        $.post('member/memberCardBuBan', conditions, function (res) {
             $(this).attr("working", "");
-            if (res.status == 200) {
+            if (res.code == 1) {
                 alert("补办成功!");
+                window.location.reload();
+            }else{
+            	alert(res.message);
             }
         }).fail(function () {
             $(this).attr("working", "");
@@ -51,10 +54,13 @@
         }
         $(this).attr("working", "working");
 
-        $.post('/users/submitMembersRecharge', conditions, function (res) {
+        $.post('member/memberCardCZ', conditions, function (res) {
             $(this).attr("working", "");
-            if (res.status == 200) {
+            if (res.code == 1) {
                 alert("充值成功!");
+                window.location.reload();
+            }else{
+            	alert(res.message);
             }
         }).fail(function () {
             $(this).attr("working", "");
@@ -73,10 +79,13 @@
         }
         $(this).attr("working", "working");
 
-        $.post('/users/submitMembersUpgradeCard', conditions, function (res) {
+        $.post('member/memberCardUpLevel', conditions, function (res) {
             $(this).attr("working", "");
-            if (res.status == 200) {
+            if (res.code == 1) {
                 alert("升级成功!");
+                window.location.reload();
+            }else{
+            	alert(res.message);
             }
         }).fail(function () {
             $(this).attr("working", "");

@@ -15,7 +15,6 @@ import com.park.common.bean.MemberCardOpInputView;
 import com.park.common.bean.MemberInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.constant.IDBConstant;
-import com.park.common.constant.IPlatformConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.MemberCard;
 import com.park.common.po.MemberCardType;
@@ -91,6 +90,12 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			//memberCard.setCardNo(getCardNo()); //会员卡编号	唯一的;
 			memberCard.setCreateTime(nowDate);
 			memberCard.setCardStatus(IDBConstant.LOGIC_STATUS_YES); //默认有效
+			
+			//原始金额（充值金额|升级金额|补办金额）
+			otherBalance.setOldAmount(memberCard.getCardBalance());
+			//实际价格（最终支付金额）
+			otherBalance.setRealAmount(memberCard.getCardBalance()+memberCarType.getCardTypeMoney()-otherBalance.getSubAmount());
+			
 			memberCard.setCardBalance(memberCard.getCardBalance()+otherBalance.getGivingAmount()); //会员卡金额（充值+赠送）
 			baseDao.save(memberCard, memberCard.getCardId());
 			otherBalance.setBalanceServiceType(IDBConstant.BALANCE_SERVICE_TYPE_REG);
@@ -100,9 +105,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			otherBalance.setServiceDate(nowDate);
 			otherBalance.setBalanceType(IDBConstant.BALANCE_TYPE_OTHER);
 			otherBalance.setSalesId(memberCard.getSalesId());
-			//计算最终支付金额
-			otherBalance.setOldAmount(memberCard.getCardBalance());
-			otherBalance.setRealAmount(memberCard.getCardBalance()+memberCarType.getCardTypeMoney()-otherBalance.getSubAmount());
+			
 			//订单状态（暂定）
 			otherBalance.setBalanceStatus(IDBConstant.BALANCE_STATUS_ALL);
 			baseDao.save(otherBalance, null);
@@ -143,7 +146,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	@Override
 	public PageBean getMemberCarTypes(MemberInputView memberInputView) {
 		String cardTypeStatus = memberInputView.getCardTypeStatus();
-		StringBuilder headSql = new StringBuilder("SELECT uo.operatorName, cardTypeId, cardTypeName, cardTypeStatus, cardTypeMonth, cardTypeMoney, cardTypeDiscount, cardTypeWeek, cardTypeTimeStart, cardTypeTimeEnd, salesId, DATE_FORMAT(mct.createTime,'%Y-%m-%d') createTime");
+		StringBuilder headSql = new StringBuilder("SELECT uo.operatorName, cardTypeId, cardType, cardTypeAhead, cardTypeCredit, cardTypeName, cardTypeStatus, cardTypeMonth, cardTypeMoney, cardTypeDiscount, cardTypeWeek, cardTypeTimeStart, cardTypeTimeEnd, salesId, DATE_FORMAT(mct.createTime,'%Y-%m-%d') createTime");
 		StringBuilder bodySql = new StringBuilder(" FROM member_card_type mct, user_operator uo");
 		StringBuilder whereSql = new StringBuilder(" WHERE mct.salesId = uo.id");
 		if(StrUtil.isNotBlank(cardTypeStatus)){
@@ -159,7 +162,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	
 	@Override
 	public Map<String, Object> getMemberCardTypeMap(int cardTypeId) {
-		Map<String, Object> memberCardType = baseDao.queryBySqlFirst("SELECT cardTypeId, cardTypeName, cardTypeMonth, cardTypeMoney, cardTypeDiscount, cardTypeWeek, cardTypeTimeStart, cardTypeTimeEnd FROM member_card_type WHERE cardTypeId = ?", cardTypeId);
+		Map<String, Object> memberCardType = baseDao.queryBySqlFirst("SELECT cardTypeId, cardTypeName, cardTypeMonth, cardTypeAhead, cardTypeCredit, cardType, cardTypeMoney, cardTypeDiscount, cardTypeWeek, cardTypeTimeStart, cardTypeTimeEnd, cardTypeStatus FROM member_card_type WHERE cardTypeId = ?", cardTypeId);
 		memberCardType.put("cardDeadline", DateUtil.getAddMonth(StrUtil.objToStr(memberCardType.get("cardTypeMonth"))));
 		return memberCardType;
 	}
@@ -183,6 +186,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			//调用打印接口
 			
 		}
+		invoice.setInvoiceState(IDBConstant.LOGIC_STATUS_NO); //默认未打印
 		baseDao.save(invoice, null);
 		return invoice.getInvoiceId();
 	}
@@ -234,12 +238,12 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	
 	@Override
 	public Integer saveMemberCardType(MemberCardType memberCardType) {
-		String[] cardTypeTimes = memberCardType.getCardTypeTime().split("-");
+		//String[] cardTypeTimes = memberCardType.getCardTypeTime().split("-");
 		if(memberCardType.getCardTypeId() == null){
 			if(baseDao.getUniqueObjectResult("SELECT 1 FROM member_card_type WHERE cardTypeName = ?", memberCardType.getCardTypeName()) != null) throw new MessageException("会员卡类型名称已存在！");
 		}
-		memberCardType.setCardTypeTimeStart(cardTypeTimes[0]);
-		memberCardType.setCardTypeTimeEnd(cardTypeTimes[1]);
+		/*memberCardType.setCardTypeTimeStart(cardTypeTimes[0]);
+		memberCardType.setCardTypeTimeEnd(cardTypeTimes[1]);*/
 		memberCardType.setCreateTime(DateUtil.getNowDate());
 		baseDao.save(memberCardType, memberCardType.getCardTypeId());
 		return memberCardType.getCardTypeId();
@@ -250,8 +254,9 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		String cardId = memberCardOpInputView.getCardId();
 		String cardTypeId = memberCardOpInputView.getCardTypeId();
 		String balanceStyle = memberCardOpInputView.getBalanceStyle();
-		String upLevelMoney = memberCardOpInputView.getUpLevelMoney();
-		String subMoney = memberCardOpInputView.getSubMoney();
+		Double upLevelMoney = StrUtil.objToDouble(memberCardOpInputView.getUpLevelMoney());
+		Double subMoney = StrUtil.objToDouble(memberCardOpInputView.getSubMoney());
+		Double givingAmount = StrUtil.objToDouble(memberCardOpInputView.getGivingAmount());
 		String remark = memberCardOpInputView.getRemark();
 		int salesId = StrUtil.objToInt(memberCardOpInputView.getSalesId());
 		MemberCard memberCard = getMemberCard(StrUtil.objToInt(cardId));
@@ -265,15 +270,18 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		memberCard.setCardStatus(IDBConstant.LOGIC_STATUS_YES); //升级会员卡后，默认会员卡为可用状态
 		memberCard.setSalesId(salesId); //升级会员卡后，操作员覆盖为当前的
 		memberCard.setUpdateTime(nowDate);
+		memberCard.setCardRemark(remark);
+		memberCard.setCardBalance(memberCard.getCardBalance()+givingAmount);
 		baseDao.save(memberCard, memberCard.getCardId());
 		OtherBalance balance = new OtherBalance();
 		balance.setBalanceNo(getBalanceNo());
 		balance.setBalanceServiceId(memberCard.getCardId());
 		balance.setBalanceServiceType(IDBConstant.BALANCE_SERVICE_TYPE_CARD_UP);
 		balance.setBalanceStyle(balanceStyle);
-		balance.setOldAmount(StrUtil.objToDouble(upLevelMoney));
-		balance.setSubAmount(StrUtil.objToDouble(subMoney));
+		balance.setOldAmount(upLevelMoney);
+		balance.setSubAmount(subMoney);
 		balance.setRealAmount(balance.getOldAmount()-balance.getSubAmount());
+		balance.setGivingAmount(givingAmount);
 		balance.setBalanceType(IDBConstant.BALANCE_TYPE_OTHER);
 		balance.setServiceDate(nowDate);
 		balance.setCreateTime(nowDate);
@@ -287,16 +295,18 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	public Integer updateMemberCardCZ(MemberCardOpInputView memberCardOpInputView) {
 		String cardId = memberCardOpInputView.getCardId();
 		String balanceStyle = memberCardOpInputView.getBalanceStyle();
-		String czMoney = memberCardOpInputView.getCzMoney();
-		String subMoney = memberCardOpInputView.getSubMoney();
+		Double czMoney = StrUtil.objToDouble(memberCardOpInputView.getCzMoney());
+		Double subMoney = StrUtil.objToDouble(memberCardOpInputView.getSubMoney());
+		Double givingAmount = StrUtil.objToDouble(memberCardOpInputView.getGivingAmount());
 		String remark = memberCardOpInputView.getRemark();
-		int salesId = StrUtil.objToInt(memberCardOpInputView.getSalesId());
+		Integer salesId = memberCardOpInputView.getSalesId();
+		
 		MemberCard memberCard = getMemberCard(StrUtil.objToInt(cardId));
 		if(memberCard == null) throw new MessageException("会员卡信息不存在！");
 		
 		String nowDate = DateUtil.getNowDate();
 		
-		memberCard.setCardBalance(memberCard.getCardBalance()+StrUtil.objToDouble(czMoney));
+		memberCard.setCardBalance(memberCard.getCardBalance()+czMoney+givingAmount);
 		memberCard.setUpdateTime(nowDate);
 		baseDao.save(memberCard, memberCard.getCardId());
 		
@@ -305,9 +315,10 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		balance.setBalanceServiceId(memberCard.getCardId());
 		balance.setBalanceServiceType(IDBConstant.BALANCE_SERVICE_TYPE_CARD_CZ);
 		balance.setBalanceStyle(balanceStyle);
-		balance.setOldAmount(StrUtil.objToDouble(czMoney));
-		balance.setSubAmount(StrUtil.objToDouble(subMoney));
-		balance.setRealAmount(balance.getOldAmount()-balance.getSubAmount());
+		balance.setOldAmount(czMoney);
+		balance.setSubAmount(subMoney);
+		balance.setRealAmount(czMoney-subMoney);
+		balance.setGivingAmount(givingAmount);
 		balance.setBalanceType(IDBConstant.BALANCE_TYPE_CZ);
 		balance.setServiceDate(nowDate);
 		balance.setCreateTime(nowDate);
@@ -321,8 +332,9 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	public Integer updateMemberCardBuBan(MemberCardOpInputView memberCardOpInputView) {
 		String cardId = memberCardOpInputView.getCardId();
 		String balanceStyle = memberCardOpInputView.getBalanceStyle();
-		String buBanMoney = memberCardOpInputView.getBuBanMoney();
-		String subMoney = memberCardOpInputView.getSubMoney();
+		Double buBanMoney = StrUtil.objToDouble(memberCardOpInputView.getBuBanMoney());
+		Double subMoney = StrUtil.objToDouble(memberCardOpInputView.getSubMoney());
+		Double givingAmount = StrUtil.objToDouble(memberCardOpInputView.getGivingAmount());
 		String remark = memberCardOpInputView.getRemark();
 		int salesId = StrUtil.objToInt(memberCardOpInputView.getSalesId());
 		MemberCard memberCard = getMemberCard(StrUtil.objToInt(cardId));
@@ -333,6 +345,8 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		memberCard.setCardStatus(IDBConstant.LOGIC_STATUS_YES); //补办会员卡后，默认会员卡为可用状态
 		memberCard.setSalesId(salesId); //补办会员卡后，操作员覆盖为当前的
 		memberCard.setUpdateTime(nowDate);
+		memberCard.setCardRemark(remark);
+		memberCard.setCardBalance(memberCard.getCardBalance()+givingAmount);
 		baseDao.save(memberCard, memberCard.getCardId());
 		
 		OtherBalance balance = new OtherBalance();
@@ -340,9 +354,10 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		balance.setBalanceServiceId(memberCard.getCardId());
 		balance.setBalanceServiceType(IDBConstant.BALANCE_SERVICE_TYPE_CARD_BUBAN);
 		balance.setBalanceStyle(balanceStyle);
-		balance.setOldAmount(StrUtil.objToDouble(buBanMoney));
-		balance.setSubAmount(StrUtil.objToDouble(subMoney));
-		balance.setRealAmount(balance.getOldAmount()-balance.getSubAmount());
+		balance.setOldAmount(buBanMoney);
+		balance.setSubAmount(subMoney);
+		balance.setRealAmount(buBanMoney-balance.getSubAmount());
+		balance.setGivingAmount(givingAmount);
 		balance.setBalanceType(IDBConstant.BALANCE_TYPE_OTHER);
 		balance.setServiceDate(nowDate);
 		balance.setCreateTime(nowDate);

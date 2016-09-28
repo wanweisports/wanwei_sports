@@ -186,7 +186,7 @@
                                 <input type="text" class="form-control" value="${cardBalance }" disabled>
                             </div>
                             <div class="col-sm-2">
-                                <a href="/users/membersOrders" class="btn btn-primary" title="收支明细">
+                                <a href="member/getBalances?cardId=${cardId }" class="btn btn-primary" title="收支明细">
                                     <span class="glyphicon glyphicon-th-list"></span>
                                 </a>
                             </div>
@@ -263,7 +263,7 @@
 
 <div class="modal fade" id="bubanModal" tabindex="-1" role="dialog" aria-labelledby="bubanModalLabel">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <form class="modal-content refresh-card-form">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -275,10 +275,11 @@
                     <div class="panel-body">
                         <div class="col-sm-6">
                             <div class="form-group">
+                            	<input type="hidden" name="cardId" value="${cardId }" >
                                 <label for="refresh_money" class="col-sm-4 control-label">补办价格</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="refresh_money" name="refresh_money"
+                                    <input type="text" class="form-control" id="refresh_money" name="buBanMoney"
                                            placeholder="请输入补办价格(元)" autocomplete="off"
                                            data-val="true" data-val-required="补办价格不能为空"
                                            data-val-regex-pattern="^[1-9][0-9]*$"
@@ -290,13 +291,11 @@
                                 <label class="col-sm-4 control-label">支付方式</label>
 
                                 <div class="col-sm-8">
-                                    <select class="form-control" id="pay_type" name="pay_type">
+                                    <select class="form-control" id="pay_type" name="balanceStyle">
                                         <option value="">请选择</option>
-                                        <option value="">现金</option>
-                                        <option value="">支付宝</option>
-                                        <option value="">微信</option>
-                                        <option value="">银行卡</option>
-                                        <option value="">支票</option>
+                                        <option value="1">现金</option>
+                                        <option value="2">支付宝</option>
+                                        <option value="3">微信</option>
                                     </select>
                                 </div>
                             </div>
@@ -306,7 +305,7 @@
                                 <label for="refresh_discount" class="col-sm-4 control-label">优惠金额</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="refresh_discount" name="refresh_discount"
+                                    <input type="text" class="form-control" id="refresh_discount" name="subMoney"
                                            placeholder="请输入优惠金额(元)" autocomplete="off"
                                            data-val-regex-pattern="^[1-9][0-9]*$"
                                            data-val-regex="优惠金额格式错误">
@@ -317,7 +316,7 @@
                                 <label for="refresh_send" class="col-sm-4 control-label">赠送金额</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="refresh_send" name="refresh_send"
+                                    <input type="text" class="form-control" id="refresh_send" name="givingAmount"
                                            placeholder="请输入赠送金额(元)" autocomplete="off"
                                            data-val-regex-pattern="^[1-9][0-9]*$"
                                            data-val-regex="refresh_send">
@@ -330,7 +329,7 @@
                                 <label class="col-sm-2 control-label">会员卡号</label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" value="FD000011" disabled>
+                                    <input type="text" class="form-control" value="${cardNo}" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -346,17 +345,17 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                <button type="button" class="btn btn-primary refresh-card-submit" data-dismiss="modal">
                     <span class="glyphicon glyphicon-ok"></span> 确认 & 付款
                 </button>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 
 <div class="modal fade" id="chongzhiModal" tabindex="-1" role="dialog" aria-labelledby="chongzhiModalLabel">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <form class="modal-content recharge-card-form">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -368,10 +367,11 @@
                     <div class="panel-body">
                         <div class="col-sm-6">
                             <div class="form-group">
+                            	<input type="hidden" name="cardId" value="${cardId }" >
                                 <label for="recharge_money" class="col-sm-4 control-label">充值金额</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="recharge_money" name="recharge_money"
+                                    <input type="text" class="form-control" id="recharge_money" name="czMoney"
                                            placeholder="请输入充值金额(元)" autocomplete="off"
                                            data-val="true" data-val-required="充值金额不能为空"
                                            data-val-regex-pattern="^[1-9][0-9]*$"
@@ -383,13 +383,11 @@
                                 <label for="recharge_type" class="col-sm-4 control-label">支付方式</label>
 
                                 <div class="col-sm-8">
-                                    <select class="form-control" id="recharge_type" name="recharge_type">
-                                        <option value="0">请选择</option>
+                                    <select class="form-control" id="recharge_type" name="balanceStyle">
+                                        <option value="">请选择</option>
                                         <option value="1">现金</option>
                                         <option value="2">支付宝</option>
                                         <option value="3">微信</option>
-                                        <option value="4">银行卡</option>
-                                        <option value="5">支票</option>
                                     </select>
                                     <div data-valmsg-for="pay_type" data-valmsg-replace="true"></div>
                                 </div>
@@ -400,7 +398,7 @@
                                 <label for="recharge_discount" class="col-sm-4 control-label">优惠金额</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="recharge_discount" name="recharge_discount"
+                                    <input type="text" class="form-control" id="recharge_discount" name="subMoney"
                                            value="" placeholder="请输入优惠金额">
                                 </div>
                             </div>
@@ -408,7 +406,7 @@
                                 <label for="recharge_send" class="col-sm-4 control-label">赠送金额</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="recharge_send" name="recharge_send"
+                                    <input type="text" class="form-control" id="recharge_send" name="givingAmount"
                                            value="" placeholder="请输入赠送金额">
                                 </div>
                             </div>
@@ -418,7 +416,7 @@
                                 <label for="recharge_remark" class="col-sm-2 control-label">备注</label>
 
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" id="recharge_remark" name="recharge_remark" rows="3" placeholder="备注"></textarea>
+                                    <textarea class="form-control" id="recharge_remark" name="remark" rows="3" placeholder="备注"></textarea>
                                 </div>
                             </div>
                             <div class="alert alert-info" role="alert">合计金额: 19元(会员折扣: 95折)</div>
@@ -427,17 +425,17 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                <button type="button" class="btn btn-primary recharge-card-submit" data-dismiss="modal">
                     <span class="glyphicon glyphicon-ok"></span> 确认 & 付款
                 </button>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 
 <div class="modal fade" id="shengjiModal" tabindex="-1" role="dialog" aria-labelledby="shengjiModalLabel">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <form class="modal-content upgrade-card-form">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -449,12 +447,14 @@
                     <div class="panel-body">
                         <div class="col-sm-6">
                             <div class="form-group">
+                            	<input type="hidden" name="cardId" value="${cardId }" >
                                 <label for="member_type" class="col-sm-4 control-label">会员类型</label>
 
                                 <div class="col-sm-8">
-                                    <select class="form-control" id="member_type" name="member_type">
-                                        <option value="1" selected>普通会员</option>
-                                        <option value="2">教师会员</option>
+                                    <select class="form-control" id="member_type" name="cardTypeId">
+                                        <c:forEach var="type" items="${memberCarTypeNames}">
+                                       	<option value="${type.cardTypeId}">${type.cardTypeName}</option>
+                                    </c:forEach>
                                     </select>
                                     <div data-valmsg-for="memberlevel" data-valmsg-replace="true"></div>
                                 </div>
@@ -477,7 +477,7 @@
                                 <label for="upper_money" class="col-sm-4 control-label">升级费用</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="upper_money" name="upper_money">
+                                    <input type="text" class="form-control" id="upper_money" name="upLevelMoney">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -486,11 +486,9 @@
                                 <div class="col-sm-8">
                                     <select class="form-control" id="upper_type" name="upper_type">
                                         <option value="">请选择</option>
-                                        <option value="">现金</option>
-                                        <option value="">支付宝</option>
-                                        <option value="">微信</option>
-                                        <option value="">银行卡</option>
-                                        <option value="">支票</option>
+                                        <option value="1">现金</option>
+                                        <option value="2">支付宝</option>
+                                        <option value="3">微信</option>
                                     </select>
                                 </div>
                             </div>
@@ -521,14 +519,14 @@
                                 <label for="upper_discount" class="col-sm-4 control-label">优惠费用</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="upper_discount" name="upper_discount">
+                                    <input type="text" class="form-control" id="upper_discount" name="subMoney">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="upper_send" class="col-sm-4 control-label">赠送费用</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="upper_send" name="upper_send">
+                                    <input type="text" class="form-control" id="upper_send" name="givingAmount">
                                 </div>
                             </div>
                         </div>
@@ -537,7 +535,7 @@
                                 <label for="upper_remark" class="col-sm-2 control-label">备注</label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="upper_remark" name="upper_remark" value="">
+                                    <input type="text" class="form-control" id="upper_remark" name="remark" value="">
                                 </div>
                             </div>
                             <div class="alert alert-info" role="alert">合计金额: 0元(会员折扣: 95折)</div>
@@ -546,11 +544,11 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                <button type="button" class="btn btn-primary upgrade-card-submit" data-dismiss="modal">
                     <span class="glyphicon glyphicon-ok"></span> 确认 & 付款
                 </button>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 
@@ -572,13 +570,14 @@
  
 <jsp:include page="/Views/Shared/Common.jsp" />
 <script src="Content/app/members/users_members.js"></script>
+<script src="Content/app/members/users_members_operations.js"></script>
 <jsp:include page="/Views/Shared/Footer.jsp" />
 
 <script type="text/javascript">
 	$(function(){
 		$("#gengxinModal").click(function (){
 			              //接口名                 form表单对象               回调函数
-			$.requestHttp("saveMember", $("#user_form"), function(data){
+			$.requestHttp("member/saveMember", $("#user_form"), function(data){
 				alert(JSON.stringify(data));
 				window.location.reload(true);
 			});
