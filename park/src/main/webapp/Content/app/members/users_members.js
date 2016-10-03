@@ -5,6 +5,6 @@
 
         var conditions = $("#member_filter_form").serialize();
 
-        location.assign('/users/membersQuery?' + conditions);
+        location.assign('/member/memberList?' + conditions);
     });
 })(jQuery);

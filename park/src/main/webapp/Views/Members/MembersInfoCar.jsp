@@ -8,7 +8,7 @@
     <div class="wrapper">
         <ol class="breadcrumb">
             <li><a href="/">首页</a></li>
-            <li><a href="/users/membersAdd">新会员注册</a></li>
+            <li><a href="member/regMember">新会员注册</a></li>
             <li class="active">会员充值</li>
         </ol>
         <form id="member_form" class="form-horizontal" action="" method="post" novalidate onsubmit="return false;">
@@ -59,8 +59,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
-                                <button type="button" class="btn btn-primary sc-submit" data-toggle="modal"
-                                        data-target="#gengxinModal" id="gengxinModal">
+                                <button type="button" class="btn btn-primary genxin-submit" data-toggle="modal">
                                     <span class="glyphicon glyphicon-ok"></span> 更新会员信息
                                 </button>
                             </div>
@@ -102,21 +101,14 @@
                                 <label class="col-sm-4 control-label">会员折扣</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" value="" disabled>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">每周许可</label>
-
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" value="" disabled>
+                                    <input type="text" class="form-control" name='cardTypeDiscount' value="" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4 control-label">信用额度</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" value="" disabled>
+                                    <input type="text" class="form-control" name='cardTypeCredit' value="" disabled>
                                 </div>
                             </div>
                         </div>
@@ -125,21 +117,21 @@
                                 <label class="col-sm-4 control-label">会费(元)</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" value="" disabled>
+                                    <input type="text" class="form-control" name="cardTypeMoney" value="" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4 control-label">截止日期</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" value="" disabled>
+                                    <input type="text" class="form-control" name="cardDeadline" value="" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-4 control-label">每日许可</label>
+                                <label class="col-sm-4 control-label">提前天数</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" value="" disabled>
+                                    <input type="text" class="form-control" name="cardTypeAhead" value="" disabled>
                                 </div>
                             </div>
                         </div>
@@ -182,7 +174,9 @@
 
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="recharge_discount" name="subAmount"
-                                           value="" placeholder="请输入优惠金额">
+                                           value="" placeholder="请输入优惠金额"
+                                           data-val-regex-pattern="^[1-9][0-9]*$"
+                                           data-val-regex="优惠金额格式错误">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -190,7 +184,9 @@
 
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="recharge_send" name="givingAmount"
-                                           value="" placeholder="请输入赠送金额">
+                                           value="" placeholder="请输入赠送金额"
+                                           data-val-regex-pattern="^[1-9][0-9]*$"
+                                           data-val-regex="赠送金额格式错误">
                                 </div>
                             </div>
                         </div>
@@ -202,7 +198,9 @@
                                     <textarea class="form-control" id="recharge_remark" name="cardRemark" rows="3" placeholder="备注"></textarea>
                                 </div>
                             </div>
-                            <div class="alert alert-info" role="alert">合计金额: 1000元</div>
+                            <div class="alert alert-info" role="alert">
+                                合计金额(充值金额 + 赠送金额 - 优惠金额 - 会费): <span class=total-money>0</span>元
+                            </div>
                             <div class="form-group sc-ui-submit">
                                 <div class="col-sm-offset-4 col-sm-8">
                                     <p class="sc-submit-tips"></p>
@@ -344,32 +342,34 @@
                 <h4 class="modal-title" id="gengxinModalLabel">提示框</h4>
             </div>
             <div class="modal-body">
-                <div class="alert alert-success" role="alert">会员信息更新成功?</div>
+                <div class="alert alert-success" role="alert">会员信息更新成功!</div>
             </div>
         </div>
     </div>
 </div>
  </div>
 <jsp:include page="/Views/Shared/Common.jsp" />
+<script src="Content/lib/jquery/jquery.validate/jquery.validate.js"></script>
+<script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js"></script>
 <script src="Content/app/members/users_members_recharge.js"></script>
 <jsp:include page="/Views/Shared/Footer.jsp" />
 <script type="text/javascript">
 	$(function(){
 		//更新
-		$("#gengxinModal").click(function(){
+		/*$("#gengxinModal").click(function(){
 			              //接口名                                                   form表单对象               回调函数
 			$.requestHttp("member/updateMemberName", $("#member_form"), function(d){
 				alert(JSON.stringify(d));
 				window.location.reload(true);
 			});
-		});
+		});*/
 	
 		//绑卡
-		$("#btn_reg_card").click(function (){
+		/*$("#btn_reg_card").click(function (){
 			              //接口名                                            form表单对象               回调函数
 			$.requestHttp("member/saveMemberCar", $("#member_card_form"), function(d){
 				alert(JSON.stringify(d));
 			});
-		});
+		});*/
 	});
 </script>

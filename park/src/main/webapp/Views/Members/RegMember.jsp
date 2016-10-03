@@ -3,6 +3,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 
 <jsp:include page="/Views/Shared/Header.jsp" />
+<link href="Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
+<link href="Content/style/members/users_members_add.css" rel="stylesheet" type="text/css">
 
 <div class="ww-wrapper">
     <div class="wrapper">
@@ -10,7 +12,7 @@
             <li><a href="/">首页</a></li>
             <li class="active">新会员注册</li>
         </ol>
-        <form id="member_form" class="form-horizontal" action="#" method="post" novalidate>
+        <form id="member_form" class="form-horizontal" action="" method="post" novalidate>
             <div class="panel panel-default">
                 <div class="panel-heading">会员信息</div>
                 <div class="panel-body">
@@ -50,8 +52,8 @@
                                        placeholder="请输入手机号码" autocomplete="off"
                                        data-val="true" data-val-required="手机号码不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
-                                       data-val-regex="手机号码格式错误" value="">
-                                <div data-valmsg-for="member_mobile" data-valmsg-replace="true"></div>
+                                       data-val-regex="手机号码格式错误">
+                                <div data-valmsg-for="memberMobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -63,7 +65,7 @@
                                        data-val="true" data-val-required="备用手机号码不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
                                        data-val-regex="备用手机号码格式错误">
-                                <div data-valmsg-for="member_mobile2" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="memberMobile2" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -102,9 +104,13 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="date" class="form-control" id="memberBirthday" name="memberBirthday"
-                                       placeholder="请选择会员生日" autocomplete="off"
-                                       data-val="true" data-val-required="会员生日不能为空">
+                                <div class="input-group date form_datetime">
+                                    <input type="text" class="form-control" id="memberBirthday" name="memberBirthday"
+                                           data-val="true" data-val-required="会员生日不能为空" readonly>
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
                                 <div data-valmsg-for="memberBirthday" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -144,7 +150,7 @@
                         <div class="form-group sc-ui-submit">
                             <div class="col-sm-offset-4 col-sm-8">
                                 <p class="sc-submit-tips"></p>
-                                <button type="button" class="btn btn-primary" id="btn_reg">
+                                <button type="button" class="btn btn-primary register-member" id="btn_reg">
                                     <span class="glyphicon glyphicon-ok"></span>  注册 & 绑卡
                                 </button>
                             </div>
@@ -157,19 +163,17 @@
 </div>
 
 <jsp:include page="/Views/Shared/Common.jsp" />
-<script src="Content/app/members/users_members.js"></script>
-<jsp:include page="/Views/Shared/Footer.jsp" />
-
-<script type="text/javascript">
-	$(function(){
-		$("#btn_reg").click(function (){
-			              //接口名                 form表单对象               回调函数
-			$.requestHttp("member/saveMember", $("#member_form"), function(d){
-				alert(JSON.stringify(d));
-				if(d.code == 1){ //操作成功
-					window.location.href = 'member/membersInfoCar?cardNo='+'${cardNo}&memberId='+d.data.memberId;
-				}
-			});
-		});
-	});
+<script src="Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script src="Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.zh-CN.min.js"></script>
+<script src="Content/lib/jquery/jquery.validate/jquery.validate.js"></script>
+<script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js"></script>
+<script src="Content/app/members/users_members_add.js"></script>
+<script>
+    $(".form_datetime").datepicker({
+        format: "yyyy-mm-dd",
+        todayBtn: true,
+        language: "zh-CN",
+        orientation: "bottom auto"
+    });
 </script>
+<jsp:include page="/Views/Shared/Footer.jsp" />

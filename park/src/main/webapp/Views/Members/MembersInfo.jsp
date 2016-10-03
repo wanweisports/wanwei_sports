@@ -92,12 +92,12 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="member_idcard" name="cardTypeId"
+                                <input type="text" class="form-control" id="member_idcard" name="memberIdcard"
                                        placeholder="请输入18位身份证号" autocomplete="off"
                                        data-val="true" data-val-required="身份证号不能为空"
                                        data-val-regex-pattern="^\d{18}$|^\d{17}(\d|X|x)$"
                                        data-val-regex="身份证号格式错误"
-                                       value="${cardTypeId }">
+                                       value="${memberIdcard }">
                                 <div data-valmsg-for="member_idcard" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -109,7 +109,7 @@
                             <div class="col-sm-8">
                                 <label class="radio-inline">
                                     <input type="radio" name="memberSex" id="member_sex1" value="1"
-                                           > 男
+                                           checked> 男
                                 </label>
                                 <label class="radio-inline">
                                     <input type="radio" name="memberSex" id="member_sex2" value="2"
@@ -569,8 +569,6 @@
 </div>
  
 <jsp:include page="/Views/Shared/Common.jsp" />
-<script src="Content/app/members/users_members.js"></script>
-<script src="Content/app/members/users_members_operations.js"></script>
 <jsp:include page="/Views/Shared/Footer.jsp" />
 
 <script type="text/javascript">
