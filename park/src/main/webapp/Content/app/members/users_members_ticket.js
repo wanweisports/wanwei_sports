@@ -5,7 +5,7 @@
 
         var conditions = $("#ticket_filter_form").serialize();
 
-        location.assign('/users/membersTicket?' + conditions);
+        location.assign('member/getInvoices?' + conditions);
     });
 
     var ajaxLock = false;
@@ -23,8 +23,13 @@
         }
         ajaxLock = true;
 
-        $.post('/users/membersTicketGet', {}, function (res) {
-            if (res.status == 200) {
+        var val = [];
+        for (var i = 0; i < $tickets.size(); i++) {
+            val.push($tickets.eq(i).val());
+        }
+
+        $.post('member/updateGetInvoices', {invoiceIds: val.join(",")}, function (res) {
+            if (res.code == 1) {
                 location.reload();
             } else {
                 alert("领取失败");
