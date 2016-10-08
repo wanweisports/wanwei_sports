@@ -7,35 +7,51 @@
 <div class="ww-wrapper">
     <div class="wrapper">
         <ol class="breadcrumb">
-            <li><a href="/">首页</a></li>
+            <li><a href="/">工作平台</a></li>
             <li class="active">会员查询</li>
         </ol>
         <div>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form id="member_filter_form" class="form-horizontal" onsubmit="return false;">
+                    <form id="member_filter_form" class="form-horizontal" method="post" novalidate
+                          onsubmit="return false;">
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="member_mobile" class="col-sm-4 control-label">手机号码</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="member_mobile" name="memberMobile"
-                                        placeholder="请输入手机号码">
+                                        placeholder="请输入手机号码" value="${memberMobile}">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="card_no" class="col-sm-4 control-label">会员卡号</label>
+                                <label for="payment_type" class="col-sm-4 control-label">支付类型</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="card_no" name="cardNo"
-                                        placeholder="请输入会员卡号">
+                                    <select class="form-control" id="payment_type" name="memberType">
+                                        <c:if test="${!memberType}">
+                                            <option value="" selected>全部类型</option>
+                                            <option value="1">预付类型</option>
+                                            <option value="2">记账类型</option>
+                                        </c:if>
+                                        <c:if test="${memberType == 1}">
+                                            <option value="">全部类型</option>
+                                            <option value="1" selected>预付类型</option>
+                                            <option value="2">记账类型</option>
+                                        </c:if>
+                                        <c:if test="${memberType == 2}">
+                                            <option value="">全部类型</option>
+                                            <option value="1">预付类型</option>
+                                            <option value="2" selected>记账类型</option>
+                                        </c:if>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="member_idcard" class="col-sm-4 control-label">身份证号</label>
+                                <label for="card_no" class="col-sm-4 control-label">会员卡号</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="member_idcard" name="memberIdcard"
-                                        placeholder="请输入身份证号">
+                                    <input type="text" class="form-control" id="card_no" name="cardNo"
+                                           placeholder="请输入会员卡号" value="${cardNo}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -44,32 +60,29 @@
                                     <select class="form-control" id="member_type" name="cardTypeId">
                                         <option value="">全部类型</option>
                                         <c:forEach var="type" items="${memberCarTypeNames}">
-                                        	<option value="${type.cardTypeId}">${type.cardTypeName}</option>
+                                            <c:if test="${type.cardTypeId == cardTypeId}">
+                                                <option value="${type.cardTypeId}" selected>${type.cardTypeName}</option>
+                                            </c:if>
+                                            <c:if test="${type.cardTypeId != cardTypeId}">
+                                                <option value="${type.cardTypeId}">${type.cardTypeName}</option>
+                                            </c:if>
                                         </c:forEach>
-                                        <!-- 
-                                        <option value="1">金卡会员</option>
-                                        <option value="2">银卡会员</option>
-                                        <option value="3">普卡会员</option>
-                                         -->
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="payment_type" class="col-sm-4 control-label">支付类型</label>
+                                <label for="member_idcard" class="col-sm-4 control-label">身份证号</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" id="payment_type" name="memberType">
-                                        <option value="">全部类型</option>
-                                        <option value="1">预付类型</option>
-                                        <option value="2">记账类型</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="member_idcard" name="memberIdcard"
+                                           placeholder="请输入身份证号" value="${memberIdcard}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <a href="javascript:;" class="btn btn-primary member-filter">
-                                        <span class="glyphicon glyphicon-search"></span> 检索会员
+                                        <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                                     </a>
                                 </div>
                             </div>
@@ -83,7 +96,7 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>#</th>
+                                <!--<th>#</th>-->
                                 <th>姓名</th>
                                 <th>手机号码</th>
                                 <th>会员卡号</th>
@@ -99,7 +112,7 @@
                             <tbody>
                             <c:forEach var="member" items="${list}">
                             <tr>
-                                <td>${member.memberId}</td>
+                                <!--<td>${member.memberId}</td>-->
                                 <td>${member.memberName}</td>
                                 <td>${member.memberMobile}</td>
                                 <td>${member.cardNo}</td>
@@ -118,7 +131,7 @@
                                 <td>${member.createTime}</td>
                                 <td>
                                     <a class="btn btn-primary" href="member/memberInfo?memberId=${member.memberId}">
-                                        <span class="glyphicon glyphicon-arrow-right"></span> 查看
+                                        <span class="glyphicon glyphicon-share-alt"></span> 查看
                                     </a>
                                 </td>
                             </tr>
@@ -131,19 +144,62 @@
                                 <span>总${count}条</span>
                             </p>
                             <ul class="pagination pull-right">
-                                <li><a href="javascript:;" onclick="window.location.href='member/memberList?page=1'"><span>首页</span></a></li>
-                                <li><a href="javascript:;" onclick="window.location.href='member/memberList?page=${currentPage-1}'"><span>上一页</span></a></li>
-                                <li><a href="javascript:;">1</a></li>
-                                <li class="active"><a href="javascript:;">2</a></li>
-                                <li><a href="javascript:;">3</a></li>
-                                <li><a href="javascript:;">...</a></li>
-                                <li><a href="javascript:;">11</a></li>
-                                <li><a href="javascript:;">12</a></li>
-                                <li><a href="javascript:;">13</a></li>
-                                <li><a href="javascript:;">14</a></li>
-                                <li><a href="javascript:;">15</a></li>
-                                <li><a href="javascript:;" onclick="window.location.href='member/memberList?page=${currentPage+1}'"><span>下一页</span></a></li>
-                                <li><a href="javascript:;" onclick="window.location.href='member/memberList?page=${lastPage}'"><span>末页</span></a></li>
+                                <c:if test="${isFirstPage}">
+                                    <li class="disabled">
+                                        <a href="javascript:;" data-index="1">
+                                            <span>首页</span>
+                                        </a>
+                                    </li>
+                                    <li class="disabled">
+                                        <a href="javascript:;" data-index="1">
+                                            <span>上一页</span>
+                                        </a>
+                                    </li>
+                                </c:if>
+                                <c:if test="${!isFirstPage}">
+                                    <li>
+                                        <a class="page-first" href="javascript:;" data-index="1">
+                                            <span>首页</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="page-prev" href="javascript:;" data-index="${currentPage - 1}">
+                                            <span>上一页</span>
+                                        </a>
+                                    </li>
+                                </c:if>
+                                <c:forEach var="i" begin="1" end="${lastPage}">
+                                    <c:if test="${i == currentPage}">
+                                        <li class="active"><a href="javascript:;" data-index="${i}">${i}</a></li>
+                                    </c:if>
+                                    <c:if test="${i != currentPage}">
+                                        <li><a class="page-index" href="javascript:;" data-index="${i}">${i}</a></li>
+                                    </c:if>
+                                </c:forEach>
+                                <c:if test="${isLastPage}">
+                                    <li class="disabled">
+                                        <a href="javascript:;" data-index="1">
+                                            <span>下一页</span>
+                                        </a>
+                                    </li>
+                                    <li class="disabled">
+                                        <a href="javascript:;" data-index="1">
+                                            <span>末页</span>
+                                        </a>
+                                    </li>
+                                </c:if>
+                                <c:if test="${!isLastPage}">
+                                    <li>
+                                        <a class="page-next" href="javascript:;" data-index="${currentPage + 1}">
+                                            <span>下一页</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="page-last" href="javascript:;" data-index="${lastPage}">
+                                            <span>末页</span>
+                                        </a>
+                                    </li>
+                                </c:if>
                             </ul>
                         </nav>
                     </div>
@@ -153,6 +209,6 @@
     </div>
 </div>
 <jsp:include page="/Views/Shared/Common.jsp" />
-<script src="Content/app/members/users_members.js"></script>
+<script src="Content/app/members/members_list_query.js"></script>
 <jsp:include page="/Views/Shared/Footer.jsp" />
 

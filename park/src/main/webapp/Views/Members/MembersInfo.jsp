@@ -7,12 +7,12 @@
 <div class="ww-wrapper">
     <div class="wrapper">
         <ol class="breadcrumb">
-            <li><a href="/">首页</a></li>
-            <li><a href="/users/membersQuery">会员查询</a></li>
+            <li><a href="/">工作平台</a></li>
+            <li><a href="/member/memberList">会员查询</a></li>
             <li class="active">会员详情</li>
         </ol>
-        <form id="member_form" class="form-horizontal" action="#" method="post" novalidate
-              onsubmit="return false;">
+        <form id="member_form" class="form-horizontal" method="post" novalidate onsubmit="return false;">
+            <input type="hidden" name="memberId" value="${memberId}" />
             <div class="panel panel-default">
                 <div class="panel-heading">会员信息</div>
                 <div class="panel-body">
@@ -20,7 +20,6 @@
                         <div class="form-group">
                             <label for="card_id" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 会员卡号
-                                <input type="hidden" name="memberId" value="${memberId }" />
                             </label>
 
                             <div class="col-sm-8">
@@ -34,13 +33,13 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="member_mobile" name=memberMobile
+                                <input type="text" class="form-control" id="member_mobile" name="memberMobile"
                                        placeholder="请输入手机号码" autocomplete="off"
                                        data-val="true" data-val-required="手机号码不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
                                        data-val-regex="手机号码格式错误"
-                                       value="${memberMobile }">
-                                <div data-valmsg-for="member_mobile" data-valmsg-replace="true"></div>
+                                       value="${memberMobile}">
+                                <div data-valmsg-for="memberMobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -49,11 +48,10 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="member_mobile2" name="memberMobile2"
                                        placeholder="请输入备用手机号码" autocomplete="off"
-                                       data-val="true" data-val-required="备用手机号码不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
                                        data-val-regex="备用手机号码格式错误"
                                        value="${memberMobile2}">
-                                <div data-valmsg-for="member_mobile2" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="memberMobile2" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -63,10 +61,16 @@
 
                             <div class="col-sm-8">
                                 <select class="form-control" id="payment_type" name="memberType" disabled>
-                                    <option value="1" selected>预付类型</option>
-                                    <option value="2">记账类型</option>
+                                    <c:if test="${memberType == 1}">
+                                        <option value="1" selected>预付类型</option>
+                                        <option value="2">记账类型</option>
+                                    </c:if>
+                                    <c:if test="${memberType == 2}">
+                                        <option value="1">预付类型</option>
+                                        <option value="2" selected>记账类型</option>
+                                    </c:if>
                                 </select>
-                                <div data-valmsg-for="payment_type" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="memberType" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -82,23 +86,20 @@
                                        data-val="true" data-val-required="会员姓名不能为空"
                                        data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,10}$"
                                        data-val-regex="会员姓名长度只能2~12个字符"
-                                       value="${memberName }">
-                                <div data-valmsg-for="member_name" data-valmsg-replace="true"></div>
+                                       value="${memberName}">
+                                <div data-valmsg-for="memberName" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="member_idcard" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 身份证号
-                            </label>
+                            <label for="member_idcard" class="col-sm-4 control-label">身份证号</label>
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="member_idcard" name="memberIdcard"
                                        placeholder="请输入18位身份证号" autocomplete="off"
-                                       data-val="true" data-val-required="身份证号不能为空"
                                        data-val-regex-pattern="^\d{18}$|^\d{17}(\d|X|x)$"
                                        data-val-regex="身份证号格式错误"
-                                       value="${memberIdcard }">
-                                <div data-valmsg-for="member_idcard" data-valmsg-replace="true"></div>
+                                       value="${memberIdcard}">
+                                <div data-valmsg-for="memberIdcard" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -107,15 +108,23 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <label class="radio-inline">
-                                    <input type="radio" name="memberSex" id="member_sex1" value="1"
-                                           checked> 男
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="memberSex" id="member_sex2" value="2"
-                                           > 女
-                                </label>
-                                <div data-valmsg-for="member_sex" data-valmsg-replace="true"></div>
+                                <c:if test="${memberSex == 1}">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="memberSex" id="member_sex1" value="1" checked> 男
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="memberSex" id="member_sex2" value="2"> 女
+                                    </label>
+                                </c:if>
+                                <c:if test="${memberSex == 2}">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="memberSex" id="member_sex1" value="1"> 男
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="memberSex" id="member_sex2" value="2" checked> 女
+                                    </label>
+                                </c:if>
+                                <div data-valmsg-for="memberSex" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -126,7 +135,8 @@
                             <div class="col-sm-8">
                                 <div class="input-group date form_datetime">
                                     <input type="text" class="form-control" id="member_birthday" name="memberBirthday"
-                                           data-val="true" data-val-required="会员生日不能为空" value="${memberBirthday }" readonly>
+                                           data-val="true" data-val-required="会员生日不能为空"
+                                           value="${memberBirthday}" readonly>
                                     <span class="input-group-addon">
                                         <i class="glyphicon glyphicon-calendar"></i>
                                     </span>
@@ -141,7 +151,7 @@
 
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="member_address" name="memberAddress"
-                                       placeholder="请输入联系地址" value="${memberAddress }">
+                                       placeholder="请输入联系地址" value="${memberAddress}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -149,7 +159,7 @@
 
                             <div class="col-sm-10">
                             <textarea class="form-control" id="member_remark" name="memberRemark" rows="3"
-                                      placeholder="备注">${memberRemark }</textarea>
+                                      placeholder="备注">${memberRemark}</textarea>
                             </div>
                         </div>
                     </div>
@@ -166,8 +176,13 @@
 
                             <div class="col-sm-8">
                                 <select class="form-control" id="member_card_type1" name="cardTypeId" disabled>
-                                   	<c:forEach var="type" items="${memberCarTypeNames}">
-                                       	<option <c:if test="${type.cardTypeId==cardTypeId}">selected</c:if> value="${type.cardTypeId}">${type.cardTypeName}</option>
+                                    <c:forEach var="type" items="${memberCarTypeNames}">
+                                        <c:if test="${type.cardTypeId == cardTypeId}">
+                                            <option value="${type.cardTypeId}" selected>${type.cardTypeName}</option>
+                                        </c:if>
+                                        <c:if test="${type.cardTypeId != cardTypeId}">
+                                            <option value="${type.cardTypeId}">${type.cardTypeName}</option>
+                                        </c:if>
                                     </c:forEach>
                                 </select>
                             </div>
@@ -176,33 +191,33 @@
                             <label class="col-sm-4 control-label">会员折扣</label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" value="${cardTypeDiscount }折" disabled>
+                                <input type="text" class="form-control" value="${cardTypeDiscount / 10.0}折" disabled>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">余额(元)</label>
 
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" value="${cardBalance }" disabled>
+                                <input type="text" class="form-control" value="${cardBalance}" disabled>
                             </div>
                             <div class="col-sm-2">
-                                <a href="member/getBalances?cardId=${cardId }" class="btn btn-primary" title="收支明细">
+                                <a href="member/getBalances?cardId=${cardId}" class="btn btn-primary" title="收支明细">
                                     <span class="glyphicon glyphicon-th-list"></span>
                                 </a>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <!--<div class="form-group">
                             <label class="col-sm-4 control-label">每周许可</label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" value="${cardTypeWeek }" disabled>
+                                <input type="text" class="form-control" value="${cardTypeWeek}" disabled>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="form-group">
                             <label class="col-sm-4 control-label">操作人</label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" value="${operatorName }" disabled>
+                                <input type="text" class="form-control" value="${operatorName}" disabled>
                             </div>
                         </div>
                     </div>
@@ -211,22 +226,26 @@
                             <label class="col-sm-4 control-label">会员状态</label>
 
                             <div class="col-sm-8">
-
-                                <input type="text" class="form-control" value="${cardStatus }" disabled>
+                                <c:if test="${cardStatus == 1}">
+                                    <input type="text" class="form-control" value="有效" disabled>
+                                </c:if>
+                                <c:if test="${cardStatus == 2}">
+                                    <input type="text" class="form-control" value="锁定" disabled>
+                                </c:if>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">有效期至</label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" value="${cardDeadline }" disabled>
+                                <input type="text" class="form-control" value="${cardDeadline}" disabled>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">注册时间</label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" value="${createTime }" disabled>
+                                <input type="text" class="form-control" value="${createTime}" disabled>
                             </div>
                         </div>
                     </div>
@@ -567,13 +586,5 @@
 <script src="Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.zh-CN.min.js"></script>
 <script src="Content/lib/jquery/jquery.validate/jquery.validate.js"></script>
 <script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js"></script>
-<script src="Content/app/members/users_members_view.js"></script>
-<script>
-    $(".form_datetime").datepicker({
-        format: "yyyy-mm-dd",
-        todayBtn: true,
-        language: "zh-CN",
-        orientation: "bottom auto"
-    });
-</script>
+<script src="Content/app/members/members_info_view.js"></script>
 <jsp:include page="/Views/Shared/Footer.jsp" />

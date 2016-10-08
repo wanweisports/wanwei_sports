@@ -8,36 +8,41 @@
 <div class="ww-wrapper">
     <div class="wrapper">
         <ol class="breadcrumb">
-            <li><a href="/">首页</a></li>
-            <li><a href="/users/membersQuery">会员查询</a></li>
-            <li><a href="/users/membersView/1">会员详情</a></li>
+            <li><a href="/">工作平台</a></li>
+            <li><a href="/member/memberList">会员查询</a></li>
+            <li><a href="member/memberInfo?memberId=${memberId}">会员详情</a></li>
             <li class="active">订单明细</li>
         </ol>
-        <a href="/users/membersConsume" class="btn btn-primary pull-right" style="margin-top: -58px;">
+        <a href="/member/membersConsume" class="btn btn-primary pull-right" style="margin-top: -58px;">
             <span class="glyphicon glyphicon-th-list"></span> 消费明细
         </a>
         <div class="panel panel-default">
             <div class="panel-body">
-                <form class="form-inline">
+                <form class="form-inline" id="balance_filter_form" onsubmit="return false;">
                     <div class="form-group">
-                        <select class="form-control">
-                            <option>订单类型</option>
-                            <option>注册会员</option>
-                            <option>会员充值</option>
+                        <select class="form-control" name="balanceType">
+                            <option value="">订单类型</option>
+                            <option value="10" <c:if test="${balanceType == 10}">selected</c:if>>注册会员</option>
+                            <option value="11" <c:if test="${balanceType == 11}">selected</c:if>>会员充值</option>
+                            <option value="12" <c:if test="${balanceType == 12}">selected</c:if>>会员升级</option>
+                            <option value="13" <c:if test="${balanceType == 13}">selected</c:if>>会员补办</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="date" class="form-control" placeholder="开始时间">
+                        <input type="date" class="form-control" placeholder="开始时间" name="createTimeStart"
+                                value="${createTimeStart}">
                     </div>
                     <div class="form-group">
-                        <input type="date" class="form-control" placeholder="结束时间">
+                        <input type="date" class="form-control" placeholder="结束时间" name="createTimeEnd"
+                               value="${createTimeEnd}">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="手机号">
+                        <input type="text" class="form-control" placeholder="手机号" name="memberMobile"
+                               value="${memberMobile}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-search"></span> 检索订单
+                        <a href="javascript:;" class="btn btn-primary balance-filter">
+                            <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>
                 </form>
@@ -48,7 +53,6 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>序号</th>
                                 <th>交易流水号</th>
                                 <th>会员姓名</th>
                                 <th>订单类型</th>
@@ -60,17 +64,16 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="balance" items="${list }">
+                            <c:forEach var="balance" items="${list}">
 	                            <tr>
-	                                <td>${balance.balanceId }</td>
-	                                <td>${balance.balanceNo }</td>
-	                                <td>${balance.memberName }</td>
-	                                <td>${balance.balanceServiceTypeName }</td>
-	                                <td>${balance.balanceStyleName }</td>
-	                                <td>${balance.realAmount }</td>
-	                                <td>${balance.balanceStatus }</td>
-	                                <td>${balance.operatorName }</td>
-	                                <td>${balance.createTime }</td>
+	                                <td>${balance.balanceNo}</td>
+	                                <td>${balance.memberName}</td>
+	                                <td>${balance.balanceServiceTypeName}</td>
+	                                <td>${balance.balanceStyleName}</td>
+	                                <td>${balance.realAmount}</td>
+	                                <td>${balance.balanceStatus}</td>
+	                                <td>${balance.operatorName}</td>
+	                                <td>${balance.createTime}</td>
 	                            </tr>
                             </c:forEach>
                             </tbody>
@@ -81,19 +84,62 @@
                                 <span>总${count}条</span>
                             </p>
                             <ul class="pagination pull-right">
-                                <li><a href="javascript:;" onclick="window.location.href='member/getBalances?page=1'"><span>首页</span></a></li>
-                                <li><a href="javascript:;" onclick="window.location.href='member/getBalances?page=${currentPage-1}'"><span>上一页</span></a></li>
-                                <li><a href="javascript:;">1</a></li>
-                                <li class="active"><a href="javascript:;">2</a></li>
-                                <li><a href="javascript:;">3</a></li>
-                                <li><a href="javascript:;">...</a></li>
-                                <li><a href="javascript:;">11</a></li>
-                                <li><a href="javascript:;">12</a></li>
-                                <li><a href="javascript:;">13</a></li>
-                                <li><a href="javascript:;">14</a></li>
-                                <li><a href="javascript:;">15</a></li>
-                                <li><a href="javascript:;" onclick="window.location.href='member/getBalances?page=${currentPage+1}'"><span>下一页</span></a></li>
-                                <li><a href="javascript:;" onclick="window.location.href='member/getBalances?page=${lastPage}'"><span>末页</span></a></li>
+                                <c:if test="${isFirstPage}">
+                                    <li class="disabled">
+                                        <a href="javascript:;" data-index="1">
+                                            <span>首页</span>
+                                        </a>
+                                    </li>
+                                    <li class="disabled">
+                                        <a href="javascript:;" data-index="1">
+                                            <span>上一页</span>
+                                        </a>
+                                    </li>
+                                </c:if>
+                                <c:if test="${!isFirstPage}">
+                                    <li>
+                                        <a class="page-first" href="javascript:;" data-index="1">
+                                            <span>首页</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="page-prev" href="javascript:;" data-index="${currentPage - 1}">
+                                            <span>上一页</span>
+                                        </a>
+                                    </li>
+                                </c:if>
+                                <c:forEach var="i" begin="1" end="${lastPage}">
+                                    <c:if test="${i == currentPage}">
+                                        <li class="active"><a href="javascript:;" data-index="${i}">${i}</a></li>
+                                    </c:if>
+                                    <c:if test="${i != currentPage}">
+                                        <li><a class="page-index" href="javascript:;" data-index="${i}">${i}</a></li>
+                                    </c:if>
+                                </c:forEach>
+                                <c:if test="${isLastPage}">
+                                    <li class="disabled">
+                                        <a href="javascript:;" data-index="1">
+                                            <span>下一页</span>
+                                        </a>
+                                    </li>
+                                    <li class="disabled">
+                                        <a href="javascript:;" data-index="1">
+                                            <span>末页</span>
+                                        </a>
+                                    </li>
+                                </c:if>
+                                <c:if test="${!isLastPage}">
+                                    <li>
+                                        <a class="page-next" href="javascript:;" data-index="${currentPage + 1}">
+                                            <span>下一页</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="page-last" href="javascript:;" data-index="${lastPage}">
+                                            <span>末页</span>
+                                        </a>
+                                    </li>
+                                </c:if>
                             </ul>
                         </nav>
                     </div>
@@ -104,6 +150,6 @@
 </div>
 
 <jsp:include page="/Views/Shared/Common.jsp" />
-<script src="Content/app/members/users_members.js"></script>
+<script src="Content/app/members/members_balance_list.js"></script>
 <jsp:include page="/Views/Shared/Footer.jsp" />
 

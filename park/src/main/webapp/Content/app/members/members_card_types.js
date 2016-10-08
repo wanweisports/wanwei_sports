@@ -1,4 +1,5 @@
 (function ($) {
+    // 表单校验设置
     $('#card_type_form').validate({
         ignore: ":hidden"
     });
@@ -44,40 +45,32 @@
     $("#save_card_type").on("click", function (e) {
         e.preventDefault();
 
-        if (ajaxLock) {
+        var $form = $("#card_type_form");
+        var conditions = $form.serialize();
+
+        if ($form.attr("submitting") == "submitting" || !$form.valid()) {
             return false;
         }
-        ajaxLock = true;
-        
-        //未选择的星期，后面的开始时间和结束变为不可提交，防止数据混乱。
-        opWeekTime(ajaxLock);
-        
-        var conditions = $("#card_type_form").serialize();
+        $form.attr("submitting", "submitting");
         
         $.post('member/saveMemberCardType', conditions, function (res) {
+            $form.attr("submitting", "");
+
             if (res.code == 1) {
                 location.reload();
             } else {
-                alert(res.message);
-                ajaxLock = false;
-                //如果添加失败，则变为可用，以便用户重新操作。
-                opWeekTime(ajaxLock);
+                alert("会员设置保存失败, 请稍后重试");
             }
         });
     });
-    
-    function opWeekTime(disabled){
-    	$.each($("input[name='cardTypeWeek']"), function(index, item){
-        	if(!$(this).is(":checked")){
-        		$(this).parent().parent().find("option").prop("disabled", disabled);
-        	}
-        });
-    }
 
+    // 会员卡类型信息弹窗
     function renderCardTypeData(data) {
-    	$.each(data, function(key, item){
-        	$("#card_type_form").find("input[name='"+key+"']").not(":radio").not(":checkbox").val(item);
-        	$("#card_type_form").find("select[name='"+key+"']").not(".timeWeek").val(item);
+        var $form = $("#card_type_form");
+
+        $.each(data, function (key, item) {
+            $form.find("input[name='" + key + "']").not(":radio").not(":checkbox").val(item);
+            $form.find("select[name='" + key + "']").not(".timeWeek").val(item);
         });
 
         if (data.cardTypeStatus) {
@@ -88,15 +81,15 @@
         var timeStart = data.cardTypeTimeStart.split(",");
         var timeEnd = data.cardTypeTimeEnd.split(",");
         var selectIndex = 0;
-        $.each($("input[name='cardTypeWeek']"), function(index, item){
-   		 	if(data.cardTypeWeek.indexOf($(this).val()) >= 0){
-        		$(this).prop("checked", true);
-        		$(this).parent().parent().find("select[name='cardTypeTimeStart']").val(timeStart[selectIndex]);
-        		$(this).parent().parent().find("select[name='cardTypeTimeEnd']").val(timeEnd[selectIndex]);
-    			selectIndex++;
-        	}else{
-        		$(this).prop("checked", false);
-        	}
+        $.each($("input[name='cardTypeWeek']"), function () {
+            if(data.cardTypeWeek.indexOf($(this).val()) >= 0) {
+                $(this).prop("checked", true);
+                $(this).parent().parent().find("select[name='cardTypeTimeStart']").val(timeStart[selectIndex]);
+                $(this).parent().parent().find("select[name='cardTypeTimeEnd']").val(timeEnd[selectIndex]);
+                selectIndex++;
+            }else{
+                $(this).prop("checked", false);
+            }
         });
     }
 
@@ -110,7 +103,7 @@
             if (res.code == 1) {
                 renderCardTypeData(res.data);
             } else {
-                alert(res.message);
+                alert("卡类型信息查询失败, 请稍后重试");
                 ajaxLock = false;
             }
         });

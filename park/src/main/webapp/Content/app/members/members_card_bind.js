@@ -1,4 +1,5 @@
 (function ($) {
+    // 表单校验配置
     $(document).ready(function () {
         $('#member_form').validate({
             ignore: ":hidden"
@@ -9,20 +10,21 @@
     $(".genxin-submit").on("click", function (e) {
         e.preventDefault();
 
-        var conditions = $("#member_form").serialize();
+        var $form = $("#member_form");
+        var conditions = $form.serialize();
 
-        if (ajaxLock || !$("#member_form").valid()) {
+        if ($form.attr("submitting") == "submitting" || !$form.valid()) {
             return false;
         }
-        ajaxLock = true;
+        $form.attr("submitting", "submitting");
 
         $.post('member/updateMemberName', conditions, function (res) {
+            $form.attr("submitting", "");
+
             if (res.code == 1) {
-                $("#gengxinModal").modal("show");
-                ajaxLock = false;
+                $("#tips_modal").modal("show");
             } else {
-                alert(res.message);
-                ajaxLock = false;
+                alert("会员信息更新失败, 请稍后重试");
             }
         });
     });
@@ -40,10 +42,33 @@
                 $('[name="cardTypeMoney"]').val(data.cardTypeMoney || 0);
                 $('[name="cardDeadline"]').val(data.cardDeadline);
                 $('[name="cardTypeAhead"]').val(data.cardTypeAhead || 0);
-
-                //$(".total-money").html();
             } else {
-                alert(res.message);
+                alert("会员类别详情查询失败, 请稍后重试");
+            }
+        });
+    });
+
+    // 会员绑卡充值
+    $(".register-recahrge").on("click", function (e) {
+        e.preventDefault();
+
+        var $form = $("#member_card_form");
+        var conditions = $form.serialize();
+
+        if ($form.attr("submitting") == "submitting" || !$form.valid()) {
+            return false;
+        }
+        $form.attr("submitting", "submitting");
+
+        $.post('member/saveMemberCar', conditions, function (res) {
+            $form.attr("submitting", "");
+            if (res.code == 1) {
+                $("#confirmModal").modal("show");
+                $.each(res.data, function(key, item){
+                    $("#member_card_ticket_form").find("input[name='" + key + "']").val(item);
+                });
+            } else {
+                alert("会员卡充值失败, 请稍后重试");
             }
         });
     });
@@ -61,51 +86,28 @@
         }
     });
 
-    var ajaxLock = false;
     // 打印小票
     $(".print-ticket").on("click", function (e) {
         e.preventDefault();
 
-        var conditions = $("#member_card_ticket_form").serialize();
+        var $form = $("#member_card_ticket_form");
+        var conditions = $form.serialize();
 
-        if (ajaxLock) {
+        if ($form.attr("submitting") == "submitting" || !$form.valid()) {
             return false;
         }
-        ajaxLock = true;
+        $form.attr("submitting", "submitting");
 
         $.post('member/saveInvoice', conditions, function (res) {
+            $form.attr("submitting", "");
+
             if (res.code == 1) {
+                // 打印收款单 [未完成]
+
                 location.assign('member/memberList');
                 $("#confirmModal").modal("hide");
-                ajaxLock = false;
             } else {
-                alert(res.message);
-                ajaxLock = false;
-            }
-        });
-    });
-
-    // 注册充值
-    $(".register-recahrge").on("click", function (e) {
-        e.preventDefault();
-
-        var conditions = $("#member_card_form").serialize();
-
-        if (ajaxLock) {
-            return false;
-        }
-        ajaxLock = true;
-
-        $.post('member/saveMemberCar', conditions, function (res) {
-            if (res.code == 1) {
-                $("#confirmModal").modal("show");
-                ajaxLock = false;
-                $.each(res.data, function(key, item){
-                	$("#member_card_ticket_form").find("input[name='"+key+"']").val(item);
-                });
-            } else {
-                alert(res.message);
-                ajaxLock = false;
+                alert("打印流水单失败, 请稍后重试");
             }
         });
     });

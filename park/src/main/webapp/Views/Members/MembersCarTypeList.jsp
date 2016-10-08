@@ -6,28 +6,41 @@
  <div class="ww-wrapper">
     <div class="wrapper">
         <ol class="breadcrumb">
-            <li><a href="#">首页</a></li>
+            <li><a href="/">工作平台</a></li>
             <li class="active">会员类型设置</li>
         </ol>
         <div>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form class="form-inline col-sm-8" id="card_filter_form" onsubmit="return false;">
+                    <form id="card_filter_form" class="form-inline col-sm-8" onsubmit="return false;">
                         <div class="form-group">
                             <select class="form-control" style="width:200px;" name="cardTypeStatus">
-                                <option value="">全部状态</option>
-                                <option value="1">正常</option>
-                                <option value="2">锁定</option>
+                                <c:if test="${!cardTypeStatus}">
+                                    <option value="" selected>全部状态</option>
+                                    <option value="1">正常</option>
+                                    <option value="2">锁定</option>
+                                </c:if>
+                                <c:if test="${cardTypeStatus == 1}">
+                                    <option value="">全部状态</option>
+                                    <option value="1" selected>正常</option>
+                                    <option value="2">锁定</option>
+                                </c:if>
+                                <c:if test="${cardTypeStatus == 2}">
+                                    <option value="">全部状态</option>
+                                    <option value="1">正常</option>
+                                    <option value="2" selected>锁定</option>
+                                </c:if>
                             </select>
                         </div>
                         <div class="form-group">
                             <a href="javascript:;" class="btn btn-primary card-type-filter">
-                                <span class="glyphicon glyphicon-filter"></span> 筛选 / 显示
+                                <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
                             </a>
                         </div>
                     </form>
                     <div class="col-sm-4 text-right">
-                        <button type="button" class="btn btn-primary card-type-add" data-toggle="modal" data-target="#addModal">
+                        <button type="button" class="btn btn-primary card-type-add" data-toggle="modal"
+                                data-target="#addModal">
                             <span class="glyphicon glyphicon-plus"></span> 增加会员类型
                         </button>
                     </div>
@@ -57,14 +70,14 @@
                                 <tr>
                                     <td>
                                         <a class="type-item" href="#addModal" data-toggle="modal" data-id="${type.cardTypeId}">
-                                            ${type.cardTypeName }
+                                            ${type.cardTypeName}
                                         </a>
                                     </td>
                                     <td>
-                                    <c:if test="${type.cardType=='1'}">预存类型</c:if>
-                                    <c:if test="${type.cardType=='2'}">记账类型</c:if>
+                                    <c:if test="${type.cardType == '1'}">预存类型</c:if>
+                                    <c:if test="${type.cardType == '2'}">记账类型</c:if>
                                     </td>
-                                    <td>${type.cardTypeMonth }个月</td>
+                                    <td>${type.cardTypeMonth}个月</td>
                                     <td>
                                         <%-- fn函数：切分逗号分隔的开始时间和结束时间为数组【c:set：定义变量】 --%>
                                         <c:set var="timeStart" value="${fn:split(type.cardTypeTimeStart, ',')}" />
@@ -74,10 +87,10 @@
                                             周${week}: ${timeStart[status.index]}-${timeEnd[status.index]}<br> <%-- status.index：循环的下标,从0开始 --%>
                                         </c:forEach>
                                     </td>
-                                    <td>${type.cardTypeDiscount/10.0}折</td>
-                                    <td>${type.cardTypeAhead }天</td>
-                                    <td>${type.cardTypeMoney }</td>
-                                    <td>${type.cardTypeCredit }</td>
+                                    <td>${type.cardTypeDiscount / 10.0}折</td>
+                                    <td>${type.cardTypeAhead}天</td>
+                                    <td>${type.cardTypeMoney}</td>
+                                    <td>${type.cardTypeCredit}</td>
 
                                     <c:if test="${type.cardTypeStatus=='1'}">
                                         <td class="text-success">正常</td>
@@ -86,11 +99,10 @@
                                         <td class="text-danger">锁定</td>
                                     </c:if>
                                     
-                                    <td>${type.operatorName }</td>
-                                    <td>${type.createTime }</td>
+                                    <td>${type.operatorName}</td>
+                                    <td>${type.createTime}</td>
                                 </tr>
                             </c:forEach>
-                            
                             </tbody>
                         </table>
                     </div>
@@ -110,7 +122,7 @@
                 <h4 class="modal-title" id="addModalLabel">设置会员类别</h4>
             </div>
             <div class="modal-body" style="overflow: hidden;">
-                <form id="card_type_form" class="form-horizontal" action="" method="post" onsubmit="return false;">
+                <form id="card_type_form" class="form-horizontal" method="post" onsubmit="return false;">
                     <input type="hidden" name="cardTypeId" id="card_type_id">
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -432,6 +444,6 @@
 <jsp:include page="/Views/Shared/Common.jsp" />
 <script src="Content/lib/jquery/jquery.validate/jquery.validate.js"></script>
 <script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js"></script>
-<script src="Content/app/members/users_members_category.js?__inline"></script>
+<script src="Content/app/members/members_card_types.js?__inline"></script>
 <jsp:include page="/Views/Shared/Footer.jsp" />
 
