@@ -1,21 +1,30 @@
 (function ($) {
-    var ajaxLock = false;
+    // 表单校验配置
+    $(document).ready(function () {
+        $('#member_form').validate({
+            ignore: ":hidden"
+        });
+    });
+
+    // 登录跳转
     $(".login-btn").on("click", function (e) {
         e.preventDefault();
 
-        var conditions = $("#login_form").serialize();
+        var $form = $("#login_form");
+        var conditions = $form.serialize();
 
-        if (ajaxLock) {
+        if ($form.attr("submitting") == "submitting" || !$form.valid()) {
             return false;
         }
-        ajaxLock = true;
+        $form.attr("submitting", "submitting");
 
         $.post('/passport/submitUserLogin', conditions, function (res) {
-            if (res.status == 200) {
+            $form.attr("submitting", "");
+
+            if (res.code == 1) {
                 location.assign($('[name="return_url"]').val());
             } else {
-                ajaxLock = false;
-                alert("登录失败");
+                alert("用户登录失败, 请稍后重试");
             }
         });
     });
