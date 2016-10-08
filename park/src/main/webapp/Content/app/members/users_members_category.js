@@ -1,11 +1,43 @@
 (function ($) {
+    $('#card_type_form').validate({
+        ignore: ":hidden"
+    });
+
     // 筛选会员类型
     $(".card-type-filter").on("click", function (e) {
         e.preventDefault();
 
         var conditions = $("#card_filter_form").serialize();
 
-        location.assign('/users/membersCategory?' + conditions);
+        location.assign('/member/getMemberCarTypes?' + conditions);
+    });
+
+    // 增加会员类型
+    $(".card-type-add").on("click", function (e) {
+        e.preventDefault();
+
+        $("#card_type_id").val("");
+        $("#card_type_name").val("");
+        $("#card_type_month").val(0);
+        $("#card_type_discount").val(0);
+        $("#card_type_money").val(0);
+        $("#card_type_overdraw").val(0);
+        $("#card_payment_type").val(1);
+        $("#card_type_ahead").val(0);
+        $("#cardTypeStatus1").prop("checked", true);
+    });
+
+    // 支付类型改变
+    $("#card_payment_type").on("change", function (e) {
+        e.preventDefault();
+
+        var val = $(this).val();
+
+        if (val == 1) {
+            $(".card-type-overdraw").hide();
+        } else {
+            $(".card-type-overdraw").show();
+        }
     });
 
     var ajaxLock = false;
@@ -43,30 +75,6 @@
     }
 
     function renderCardTypeData(data) {
-        /*if (data.card_type_name) {
-            $("#card_type_name").val(data.card_type_name);
-        }
-        if (data.card_type_month) {
-            $("#card_type_month").val(data.card_type_month);
-        }
-        if (data.card_type_time_start) {
-            $("#card_type_time_start").val(data.card_type_time_start);
-        }
-        if (data.card_type_time_end) {
-            $("#card_type_time_end").val(data.card_type_time_end);
-        }
-        if (data.card_type_discount) {
-            $("#card_type_discount").val(data.card_type_discount);
-        }
-        if (data.card_type_money) {
-            $("#card_type_money").val(data.card_type_money);
-        }
-        if (data.card_type_overdraw) {
-            $("#card_type_overdraw").val(data.card_type_overdraw);
-        }
-        if (data.card_payment_type) {
-            $("#card_payment_type").val(data.card_payment_type);
-        }*/
     	$.each(data, function(key, item){
         	$("#card_type_form").find("input[name='"+key+"']").not(":radio").not(":checkbox").val(item);
         	$("#card_type_form").find("select[name='"+key+"']").not(".timeWeek").val(item);

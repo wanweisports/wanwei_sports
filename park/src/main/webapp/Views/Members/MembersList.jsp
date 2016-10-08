@@ -66,7 +66,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group" onclick="window.location.href='memberList?'+$('#member_filter_form').serialize();">
+                            <div class="form-group">
                                 <div class="col-sm-12">
                                     <a href="javascript:;" class="btn btn-primary member-filter">
                                         <span class="glyphicon glyphicon-search"></span> 检索会员

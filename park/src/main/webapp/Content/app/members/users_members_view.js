@@ -7,7 +7,7 @@
 
     // 注册用户
     var ajaxLock = false;
-    $(".register-member").on("click", function (e) {
+    $(".gengxin-modal").on("click", function (e) {
         e.preventDefault();
 
         var conditions = $("#member_form").serialize();
@@ -19,10 +19,10 @@
 
         $.post('member/saveMember', conditions, function (res) {
             if (res.code == 1) {
-                location.assign('member/membersInfoCar?memberId=' + res.data.memberId +
-                    '&cardNo=' + $("#cardNo").val());
+                $("#gengxinModal").modal("show");
+                ajaxLock = false;
             } else {
-                alert("注册失败");
+                alert("更新失败");
                 ajaxLock = false;
             }
         });

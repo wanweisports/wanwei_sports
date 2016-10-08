@@ -3,8 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 
 <jsp:include page="/Views/Shared/Header.jsp" />
- 
-     
+
 <div class="ww-wrapper">
     <div class="wrapper">
         <ol class="breadcrumb">
@@ -16,7 +15,7 @@
                 <div class="panel-body">
                     <form class="form-inline col-sm-8" id="ticket_filter_form" onsubmit="return false;">
                         <div class="form-group">
-                            <select class="form-control" style="width:200px;" name="invoice_state">
+                            <select class="form-control" style="width:200px;" name="status">
                                 <option value="">发票状态</option>
                                 <option value="1">已领取</option>
                                 <option value="2">未领取</option>
@@ -46,7 +45,7 @@
                             <thead>
                             <tr>
                                 <th>选择</th>
-                                <th>序号</th>
+                                <th>流水号</th>
                                 <th>发票抬头</th>
                                 <th>发票金额</th>
                                 <th>发票内容</th>
@@ -69,9 +68,14 @@
 	                                <td>${invoice.invoiceMoney }</td>
 	                                <td>${invoice.invoiceContent }</td>
 	                                <td>${invoice.invoiceRemark }</td>
-	                                
-	                                <td class="text-success">${invoice.invoiceState }</td>
-	                                <td class="text-success">${invoice.printTime }</td>
+                                    <c:if test="${invoice.invoiceState==1}">
+                                    <td class="text-success">已打印</td>
+                                        <td class="text-success">${invoice.printTime }</td>
+                                    </c:if>
+                                    <c:if test="${invoice.invoiceState==2}">
+                                    <td class="text-danger">未打印</td>
+                                        <td class="text-danger">--</td>
+                                    </c:if>
 	                                
 	                                <td>${invoice.operatorName}</td>
 	                                <td>${invoice.createTime}</td>
@@ -109,6 +113,6 @@
 </div>
 
 <jsp:include page="/Views/Shared/Common.jsp" />
-<script src="Content/app/members/users_members.js"></script>
+<script src="Content/app/members/users_members_ticket.js"></script>
 <jsp:include page="/Views/Shared/Footer.jsp" />
 
