@@ -6,12 +6,13 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * SiteInfo entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "site_info", catalog = "park")
+@Table(name = "site_info", catalog = "park", uniqueConstraints = @UniqueConstraint(columnNames = "siteNo"))
 public class SiteInfo implements java.io.Serializable {
 
 	// Fields
@@ -21,8 +22,10 @@ public class SiteInfo implements java.io.Serializable {
 	private String siteNo;
 	private String siteRemark;
 	private Integer siteType;
+	private String siteStatus;
 	private String createTime;
 	private String updateTime;
+	private Integer salesId;
 
 	// Constructors
 
@@ -32,13 +35,16 @@ public class SiteInfo implements java.io.Serializable {
 
 	/** full constructor */
 	public SiteInfo(String siteName, String siteNo, String siteRemark,
-			Integer siteType, String createTime, String updateTime) {
+			Integer siteType, String siteStatus, String createTime,
+			String updateTime, Integer salesId) {
 		this.siteName = siteName;
 		this.siteNo = siteNo;
 		this.siteRemark = siteRemark;
 		this.siteType = siteType;
+		this.siteStatus = siteStatus;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
+		this.salesId = salesId;
 	}
 
 	// Property accessors
@@ -62,7 +68,7 @@ public class SiteInfo implements java.io.Serializable {
 		this.siteName = siteName;
 	}
 
-	@Column(name = "siteNo", length = 32)
+	@Column(name = "siteNo", unique = true, length = 32)
 	public String getSiteNo() {
 		return this.siteNo;
 	}
@@ -89,6 +95,15 @@ public class SiteInfo implements java.io.Serializable {
 		this.siteType = siteType;
 	}
 
+	@Column(name = "siteStatus", length = 1)
+	public String getSiteStatus() {
+		return this.siteStatus;
+	}
+
+	public void setSiteStatus(String siteStatus) {
+		this.siteStatus = siteStatus;
+	}
+
 	@Column(name = "createTime", length = 20)
 	public String getCreateTime() {
 		return this.createTime;
@@ -105,6 +120,15 @@ public class SiteInfo implements java.io.Serializable {
 
 	public void setUpdateTime(String updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	@Column(name = "salesId")
+	public Integer getSalesId() {
+		return this.salesId;
+	}
+
+	public void setSalesId(Integer salesId) {
+		this.salesId = salesId;
 	}
 
 }

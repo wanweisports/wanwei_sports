@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.ui.Model;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import com.park.common.bean.PageBean;
 import com.park.common.po.UserOperator;
 import com.park.common.util.JsonUtils;
 
@@ -107,4 +109,12 @@ public class BaseController {
         return (UserOperator) session.getAttribute("loginUser");
     }
 	
+    protected void setPageInfo(Model model, PageBean pageBean){
+    	model.addAttribute("list", pageBean.getList());
+		model.addAttribute("count", pageBean.getCount());
+		model.addAttribute("lastPage", pageBean.getLastPage());
+		model.addAttribute("currentPage", pageBean.getCurrentPage());
+		model.addAttribute("pageSize", pageBean.getPageSize());
+    }
+    
 }

@@ -19,7 +19,7 @@ public interface IDBConstant {
     public static final String SEX_NAN = "1";//男
     public static final String SEX_NV = "2";//女
     
-    public static final String BALANCE_STYLE = "BALANCE_STYLE";//状态
+    public static final String BALANCE_STYLE = "BALANCE_STYLE";//支付方式
 
     public static final String BALANCE_STYLE_XJ = "1";//现金
     public static final String BALANCE_STYLE_ZFB = "2";//支付宝
@@ -42,5 +42,11 @@ public interface IDBConstant {
     public static final String BALANCE_STATUS_ALL = "1";//已收全款
     public static final String BALANCE_STATUS_NOT = "2";//未付款
     public static final String BALANCE_STATUS_ONE = "3";//部分收款
+    
+    public static final String GOOD_STATE = "GOOD_STATE";//支付方式
+
+    public static final String GOOD_STATE_ING = "1";//在售
+    public static final String GOOD_STATE_BOOKING = "2";//预售
+    public static final String GOOD_STATE_OUT = "3";//下架
 	
 }

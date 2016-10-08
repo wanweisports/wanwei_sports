@@ -22,9 +22,11 @@ public class SiteSport implements java.io.Serializable {
 	private Double sportDeposit;
 	private String startTime;
 	private String endTime;
+	private String sportStatus;
 	private String sportCustom;
 	private String createTime;
 	private String updateTime;
+	private Integer salesId;
 
 	// Constructors
 
@@ -34,16 +36,19 @@ public class SiteSport implements java.io.Serializable {
 
 	/** full constructor */
 	public SiteSport(String sportName, Double sportMoney, Double sportDeposit,
-			String startTime, String endTime, String sportCustom,
-			String createTime, String updateTime) {
+			String startTime, String endTime, String sportStatus,
+			String sportCustom, String createTime, String updateTime,
+			Integer salesId) {
 		this.sportName = sportName;
 		this.sportMoney = sportMoney;
 		this.sportDeposit = sportDeposit;
 		this.startTime = startTime;
 		this.endTime = endTime;
+		this.sportStatus = sportStatus;
 		this.sportCustom = sportCustom;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
+		this.salesId = salesId;
 	}
 
 	// Property accessors
@@ -103,6 +108,15 @@ public class SiteSport implements java.io.Serializable {
 		this.endTime = endTime;
 	}
 
+	@Column(name = "sportStatus", length = 1)
+	public String getSportStatus() {
+		return this.sportStatus;
+	}
+
+	public void setSportStatus(String sportStatus) {
+		this.sportStatus = sportStatus;
+	}
+
 	@Column(name = "sportCustom", length = 1)
 	public String getSportCustom() {
 		return this.sportCustom;
@@ -128,6 +142,15 @@ public class SiteSport implements java.io.Serializable {
 
 	public void setUpdateTime(String updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	@Column(name = "salesId")
+	public Integer getSalesId() {
+		return this.salesId;
+	}
+
+	public void setSalesId(Integer salesId) {
+		this.salesId = salesId;
 	}
 
 }

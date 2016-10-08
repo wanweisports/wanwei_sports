@@ -21,9 +21,10 @@ public class GoodInfo implements java.io.Serializable {
 	private String goodName;
 	private String goodPic;
 	private String goodType;
+	private String goodMoneyType;
 	private Double goodPrice;
 	private String goodDiscount;
-	private String goodState;
+	private String goodStatus;
 	private Integer goodCount;
 	private String goodRemark;
 	private String createTime;
@@ -45,16 +46,18 @@ public class GoodInfo implements java.io.Serializable {
 
 	/** full constructor */
 	public GoodInfo(String goodNo, String goodName, String goodPic,
-			String goodType, Double goodPrice, String goodDiscount,
-			String goodState, Integer goodCount, String goodRemark,
-			String createTime, String updateTime, Integer salesId) {
+			String goodType, String goodMoneyType, Double goodPrice,
+			String goodDiscount, String goodStatus, Integer goodCount,
+			String goodRemark, String createTime, String updateTime,
+			Integer salesId) {
 		this.goodNo = goodNo;
 		this.goodName = goodName;
 		this.goodPic = goodPic;
 		this.goodType = goodType;
+		this.goodMoneyType = goodMoneyType;
 		this.goodPrice = goodPrice;
 		this.goodDiscount = goodDiscount;
-		this.goodState = goodState;
+		this.goodStatus = goodStatus;
 		this.goodCount = goodCount;
 		this.goodRemark = goodRemark;
 		this.createTime = createTime;
@@ -101,13 +104,22 @@ public class GoodInfo implements java.io.Serializable {
 		this.goodPic = goodPic;
 	}
 
-	@Column(name = "goodType", nullable = false, length = 16)
+	@Column(name = "goodType", length = 16)
 	public String getGoodType() {
 		return this.goodType;
 	}
 
 	public void setGoodType(String goodType) {
 		this.goodType = goodType;
+	}
+
+	@Column(name = "goodMoneyType", length = 1)
+	public String getGoodMoneyType() {
+		return this.goodMoneyType;
+	}
+
+	public void setGoodMoneyType(String goodMoneyType) {
+		this.goodMoneyType = goodMoneyType;
 	}
 
 	@Column(name = "goodPrice", nullable = false, precision = 10)
@@ -128,13 +140,13 @@ public class GoodInfo implements java.io.Serializable {
 		this.goodDiscount = goodDiscount;
 	}
 
-	@Column(name = "goodState", length = 1)
-	public String getGoodState() {
-		return this.goodState;
+	@Column(name = "goodStatus", length = 1)
+	public String getGoodStatus() {
+		return this.goodStatus;
 	}
 
-	public void setGoodState(String goodState) {
-		this.goodState = goodState;
+	public void setGoodStatus(String goodStatus) {
+		this.goodStatus = goodStatus;
 	}
 
 	@Column(name = "goodCount")

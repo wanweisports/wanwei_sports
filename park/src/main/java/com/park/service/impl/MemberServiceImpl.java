@@ -405,6 +405,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	@Override
 	public PageBean getInvoices(InvoiceInputView invoiceInputView){
 		String status = invoiceInputView.getStatus();
+		String invoiceHeader = invoiceInputView.getInvoiceHeader();
 		
 		StringBuilder headSql = new StringBuilder("SELECT oi.*, uo.operatorName");
 		StringBuilder bodySql = new StringBuilder(" FROM other_invoice oi, user_operator uo");
@@ -412,6 +413,9 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		
 		if(StrUtil.isNotBlank(status)){
 			whereSql.append(" AND invoiceState = :status");
+		}
+		if(StrUtil.isNotBlank(invoiceHeader)){
+			whereSql.append(" AND invoiceHeader = :invoiceHeader");
 		}
 		return super.getPageBean(headSql, bodySql, whereSql, invoiceInputView);
 	}

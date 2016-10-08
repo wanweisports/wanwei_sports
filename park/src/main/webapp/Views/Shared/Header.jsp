@@ -56,12 +56,12 @@
                     <span>场地预订</span>
                 </a>
                 <ul class="nav-sub">
-                    <li><a href="/venue/sequenceReserve">现场预订</a></li>
+                    <li><a href="site/getSiteReservationInfo">现场预订</a></li>
                     <li><a href="/venue/batchReserve">批量预订</a></li>
                     <!--<li><a href="#">包场预订</a></li>-->
                     <li><a href="/venue/sequencePDA">热点概率分析</a></li>
-                    <li><a href="/venue/sitesSettings">场地设置</a></li>
-                    <li><a href="/venue/sportsSettings">场地类型设置</a></li>
+                    <li><a href="site/getSiteInfos">场地设置</a></li>
+                    <li><a href="site/getSiteSports">场地类型设置</a></li>
                 </ul>
             </li>
             <li class="">
@@ -70,8 +70,8 @@
                     <span>商品管理</span>
                 </a>
                 <ul class="nav-sub">
-                    <li><a href="/goods/settings">商品设置</a></li>
-                    <li><a href="/goods/stockManagement">进销存管理</a></li>
+                    <li><a href="good/updateGood">商品设置</a></li>
+                    <li><a href="good/getGoods">进销存管理</a></li>
                     <li><a href="/goods/market">商品销售</a></li>
                     <!--<li><a href="#">商品订单</a></li>-->
                 </ul>

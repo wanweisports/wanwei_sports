@@ -102,13 +102,9 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "getMemberCarTypes")
 	public String getMemberCarTypes(MemberInputView memberInputView, Model model) {
 		try {
-			PageBean pageBean = memberService.getMemberCarTypes(memberInputView);
-			model.addAttribute("list", pageBean.getList());
-			model.addAttribute("count", pageBean.getCount());
-			model.addAttribute("lastPage", pageBean.getLastPage());
-			model.addAttribute("currentPage", pageBean.getCurrentPage());
-			model.addAttribute("pageSize", pageBean.getPageSize());
 			model.addAllAttributes(JsonUtils.fromJsonDF(memberInputView));
+			PageBean pageBean = memberService.getMemberCarTypes(memberInputView);
+			super.setPageInfo(model, pageBean);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -148,14 +144,10 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "memberList")
 	public String getUserMembers(MemberInputView memberInputView, Model model) {
 		try {
-			PageBean pageBean = memberService.getUserMembers(memberInputView);
-			model.addAttribute("list", pageBean.getList());
-			model.addAttribute("count", pageBean.getCount());
-			model.addAttribute("lastPage", pageBean.getLastPage());
-			model.addAttribute("currentPage", pageBean.getCurrentPage());
-			model.addAttribute("pageSize", pageBean.getPageSize());
-			model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames());
 			model.addAllAttributes(JsonUtils.fromJsonDF(memberInputView));
+			PageBean pageBean = memberService.getUserMembers(memberInputView);
+			super.setPageInfo(model, pageBean);
+			model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames());
 			//return new ResponseBean(JsonUtils.fromJsonDF(memberService.getUserMembers(super.getData(param, MemberInputView.class))));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -259,12 +251,9 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "getBalances")
 	public String getBalances(BalanceInputView balanceInputView, Model model) {
 		try {
+			model.addAllAttributes(JsonUtils.fromJsonDF(balanceInputView));
 			PageBean pageBean = memberService.getBalances(balanceInputView);
-			model.addAttribute("list", pageBean.getList());
-			model.addAttribute("count", pageBean.getCount());
-			model.addAttribute("lastPage", pageBean.getLastPage());
-			model.addAttribute("currentPage", pageBean.getCurrentPage());
-			model.addAttribute("pageSize", pageBean.getPageSize());
+			super.setPageInfo(model, pageBean);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -274,12 +263,9 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "getInvoices")
 	public String getInvoices(InvoiceInputView invoiceInputView, Model model) {
 		try {
+			model.addAllAttributes(JsonUtils.fromJsonDF(invoiceInputView));
 			PageBean pageBean = memberService.getInvoices(invoiceInputView);
-			model.addAttribute("list", pageBean.getList());
-			model.addAttribute("count", pageBean.getCount());
-			model.addAttribute("lastPage", pageBean.getLastPage());
-			model.addAttribute("currentPage", pageBean.getCurrentPage());
-			model.addAttribute("pageSize", pageBean.getPageSize());
+			super.setPageInfo(model, pageBean);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

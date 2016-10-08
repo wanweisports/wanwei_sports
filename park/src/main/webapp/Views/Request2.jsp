@@ -19,6 +19,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+		<link href="Content/lib/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="Content/style/home/index.css" rel="stylesheet" type="text/css">
   </head>
   
   <body>
@@ -229,6 +231,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 
     </div>
+    
+    <script src="Content/lib/jquery/jquery-1.12.3.min.js"></script>
+<script src="Content/lib/bootstrap/bootstrap.min.js"></script>
    <script type="text/javascript">
     $(function(){
     	$("#first").click();
