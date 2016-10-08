@@ -23,7 +23,7 @@ public interface IMemberService {
 	
 	public Map<String, Object> saveMemberCar(MemberCard memberCard, OtherBalance otherBalance);
 	
-	public List<Map<String, Object>> getMemberCarTypeNames();
+	public List<Map<String, Object>> getMemberCarTypeNames(String cardType);
 	
 	public List<MemberCard> getMemberCards(int memberId);
 	

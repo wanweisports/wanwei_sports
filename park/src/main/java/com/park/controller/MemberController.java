@@ -90,7 +90,7 @@ public class MemberController extends BaseController {
 		try {
 			//model.addAttribute("memberCarTypes", memberService.getMemberCarTypeNames());
 			Map<String, Object> data = new HashMap<String, Object>();
-			data.put("memberCarTypeNames", memberService.getMemberCarTypeNames());
+			data.put("memberCarTypeNames", memberService.getMemberCarTypeNames(null));
 			return new ResponseBean(data);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -147,7 +147,7 @@ public class MemberController extends BaseController {
 			model.addAllAttributes(JsonUtils.fromJsonDF(memberInputView));
 			PageBean pageBean = memberService.getUserMembers(memberInputView);
 			super.setPageInfo(model, pageBean);
-			model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames());
+			model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(null));
 			//return new ResponseBean(JsonUtils.fromJsonDF(memberService.getUserMembers(super.getData(param, MemberInputView.class))));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -160,7 +160,7 @@ public class MemberController extends BaseController {
 	public String getMemberAndCard(Integer memberId, Model model) {
 		try {
 			model.addAllAttributes(memberService.getUserMemberAndCard(memberId));
-			model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames());
+			model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(null));
 			//return new ResponseBean(JsonUtils.fromJsonDF(memberService.getUserMemberAndCard(super.getData(param, UserMember.class).getMemberId())));
 		} catch (MessageException e) {
 			e.printStackTrace();

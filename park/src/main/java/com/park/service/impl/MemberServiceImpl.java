@@ -124,8 +124,12 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	}
 	
 	@Override
-	public List<Map<String, Object>> getMemberCarTypeNames() {
-		return baseDao.queryBySql("SELECT cardTypeId, cardTypeName FROM member_card_type WHERE cardTypeStatus = ?", IDBConstant.LOGIC_STATUS_YES);
+	public List<Map<String, Object>> getMemberCarTypeNames(String cardType) {
+		StringBuilder sql = new StringBuilder("SELECT cardTypeId, cardTypeName FROM member_card_type WHERE cardTypeStatus = ?");
+		if(StrUtil.isNotBlank(cardType)){
+			sql.append(" AND cardType = ").append(cardType);
+		}
+		return baseDao.queryBySql(sql.toString(), IDBConstant.LOGIC_STATUS_YES);
 	}
 	
 	@Override
@@ -426,12 +430,12 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		if(ArrayUtils.isEmpty(invoiceIdArr)) throw new MessageException("请选择发票进行操作！");
 		Map params = SQLUtil.getInToSQL("invoiceIdArr", invoiceIdArr);
 		params.put("invoiceState", IDBConstant.LOGIC_STATUS_YES);
-		baseDao.updateBySql("UPDATE other_invoice o SET invoiceState=:invoiceState WHERE o.invoiceId IN(:invoiceIdArr)", params);
+		baseDao.updateBySql("UPDATE other_invoice o SET invoiceState=:invoiceState, printTime=NOW() WHERE o.invoiceId IN(:invoiceIdArr)", params);
 	}
 	
 	@Override
 	public Map<String, Object> getRegMember(int memberId) {
-		return baseDao.queryBySqlFirst("SELECT memberId, memberName, memberMobile FROM user_member WHERE memberId = ?", memberId);
+		return baseDao.queryBySqlFirst("SELECT memberId, memberName, memberMobile, memberType FROM user_member WHERE memberId = ?", memberId);
 	}
 	
 	private Map<String, Object> getType(Map<String, Object> map) {

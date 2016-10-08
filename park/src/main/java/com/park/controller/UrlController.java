@@ -42,7 +42,7 @@ public class UrlController extends BaseController {
 		Map<String, Object> regMember = memberService.getRegMember(memberId);
 		regMember.put("cardNo", cardNo);
 		model.addAllAttributes(regMember);
-		model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames());
+		model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(regMember.get("memberType").toString()));
 		return "Members/MembersInfoCar";
 	}
 
