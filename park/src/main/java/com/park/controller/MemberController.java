@@ -287,6 +287,10 @@ public class MemberController extends BaseController {
 		}
 	}
 
+    @RequestMapping(value = "getOperations")
+    public String getOperations(Model model) {
+        return "Members/MembersOperations";
+    }
 }
 
 
