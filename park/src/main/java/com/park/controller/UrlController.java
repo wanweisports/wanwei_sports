@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.park.common.bean.MemberInputView;
 import com.park.service.IMemberService;
 
 @Controller
@@ -42,7 +43,9 @@ public class UrlController extends BaseController {
 		Map<String, Object> regMember = memberService.getRegMember(memberId);
 		regMember.put("cardNo", cardNo);
 		model.addAllAttributes(regMember);
-		model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(regMember.get("memberType").toString()));
+		MemberInputView memberInputView = new  MemberInputView();
+		memberInputView.setCardType(regMember.get("memberType").toString());
+		model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(memberInputView));
 		return "Members/MembersInfoCar";
 	}
 

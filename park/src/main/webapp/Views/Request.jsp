@@ -211,9 +211,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- 会员卡类型名称列表 -->
 <textarea rows="15" cols="50" data-id="memberTypeNames">
 {
-   
+   "cardType": "1"
 }
 </textarea>
+
+<div data-id="memberTypeNames" style="float: left;">
+	<span style="font-weight: bold;">请求参数：</span>
+	<table border="1" cellpadding="10" cellspacing="0">
+		<tr>
+			<td>cardType</td>
+			<td>会员卡支付类型（1.预付类型   2.记账类型）</td>
+		</tr>
+	</table>
+</div>
 
 <!-- 会员卡类型列表-->
 <textarea rows="15" cols="50" data-id="memberTypes">

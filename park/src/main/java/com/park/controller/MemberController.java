@@ -86,11 +86,11 @@ public class MemberController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "getMemberCarTypeNames")
-	public ResponseBean getMemberCarTypeNames() {
+	public ResponseBean getMemberCarTypeNames(MemberInputView memberInputView) {
 		try {
 			//model.addAttribute("memberCarTypes", memberService.getMemberCarTypeNames());
 			Map<String, Object> data = new HashMap<String, Object>();
-			data.put("memberCarTypeNames", memberService.getMemberCarTypeNames(null));
+			data.put("memberCarTypeNames", memberService.getMemberCarTypeNames(memberInputView));
 			return new ResponseBean(data);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -147,7 +147,7 @@ public class MemberController extends BaseController {
 			model.addAllAttributes(JsonUtils.fromJsonDF(memberInputView));
 			PageBean pageBean = memberService.getUserMembers(memberInputView);
 			super.setPageInfo(model, pageBean);
-			model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(null));
+			model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(memberInputView));
 			//return new ResponseBean(JsonUtils.fromJsonDF(memberService.getUserMembers(super.getData(param, MemberInputView.class))));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -159,8 +159,11 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "memberInfo")
 	public String getMemberAndCard(Integer memberId, Model model) {
 		try {
-			model.addAllAttributes(memberService.getUserMemberAndCard(memberId));
-			model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(null));
+			Map<String, Object> userMemberAndCard = memberService.getUserMemberAndCard(memberId);
+			model.addAllAttributes(userMemberAndCard);
+			MemberInputView memberInputView = new  MemberInputView();
+			memberInputView.setCardType(userMemberAndCard.get("memberType").toString());
+			model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(memberInputView));
 			//return new ResponseBean(JsonUtils.fromJsonDF(memberService.getUserMemberAndCard(super.getData(param, UserMember.class).getMemberId())));
 		} catch (MessageException e) {
 			e.printStackTrace();

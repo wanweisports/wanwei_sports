@@ -22,6 +22,7 @@ import com.park.common.po.OtherBalance;
 import com.park.common.po.OtherInvoice;
 import com.park.common.po.UserMember;
 import com.park.common.util.DateUtil;
+import com.park.common.util.JsonUtils;
 import com.park.common.util.SQLUtil;
 import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
@@ -124,12 +125,14 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	}
 	
 	@Override
-	public List<Map<String, Object>> getMemberCarTypeNames(String cardType) {
-		StringBuilder sql = new StringBuilder("SELECT cardTypeId, cardTypeName FROM member_card_type WHERE cardTypeStatus = ?");
+	public List<Map<String, Object>> getMemberCarTypeNames(MemberInputView memberInputView) {
+		String cardType = memberInputView.getCardType();
+		
+		StringBuilder sql = new StringBuilder("SELECT cardTypeId, cardTypeName FROM member_card_type WHERE cardTypeStatus = ").append(IDBConstant.LOGIC_STATUS_YES);
 		if(StrUtil.isNotBlank(cardType)){
-			sql.append(" AND cardType = ").append(cardType);
+			sql.append(" AND cardType = :cardType");
 		}
-		return baseDao.queryBySql(sql.toString(), IDBConstant.LOGIC_STATUS_YES);
+		return baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(memberInputView));
 	}
 	
 	@Override
