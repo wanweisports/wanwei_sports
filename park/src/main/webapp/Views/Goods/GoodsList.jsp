@@ -127,7 +127,7 @@
             </div>
             <div class="modal-body" style="clear: both;">
                 <div class="panel panel-default form-horizontal">
-                	<input type="" name="goodId" />
+                	<input type="hidden" name="goodId" />
                     <div class="panel-body">
                         <div class="alert alert-info" role="alert">当前库存: <span id="nowGoodCount"></span>件</div>
                         <input type="text" class="form-control" name="goodCount" placeholder="请输入增加的库存量">

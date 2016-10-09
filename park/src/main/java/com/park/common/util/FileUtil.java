@@ -2,10 +2,14 @@ package com.park.common.util;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -57,6 +61,30 @@ public class FileUtil {
 			}
 		}
 		return null;
+	}
+	
+	public static List<MultipartFile> getMultipartFiles(MultipartHttpServletRequest multipartRequest) {
+		List<MultipartFile> multipartFiles = new ArrayList<MultipartFile>();
+		if(multipartRequest != null){
+            for (Iterator<String> it = multipartRequest.getFileNames(); it.hasNext(); ) {
+                String key = it.next();
+                MultipartFile file = multipartRequest.getFile(key);
+                String originalFilename = file.getOriginalFilename();
+                if (originalFilename.length() > 0) {
+                	multipartFiles.add(file);
+                }
+            }
+        }
+		return multipartFiles;
+	}
+	
+	public static StringBuilder saveFile(MultipartFile multipartFile) throws IOException {
+		String originalFilename = multipartFile.getOriginalFilename();
+		StringBuilder photoPath = new StringBuilder(CustomizedPropertyConfigurer.getPhotoPath().toString());
+		photoPath.append(StrUtil.getUUID());
+		photoPath.append(originalFilename.substring(originalFilename.indexOf(".")));
+		FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), new File(photoPath.toString()));
+		return photoPath;
 	}
 
 }

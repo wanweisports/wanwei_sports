@@ -72,7 +72,7 @@
                 <ul class="nav-sub">
                     <li><a href="good/updateGood">商品设置</a></li>
                     <li><a href="good/getGoods">进销存管理</a></li>
-                    <li><a href="/goods/market">商品销售</a></li>
+                    <li><a href="good/getGoodsMarket">商品销售</a></li>
                     <!--<li><a href="#">商品订单</a></li>-->
                 </ul>
             </li>

@@ -35,7 +35,7 @@
                     <tr>
                         <td>FD1321211</td>
                         <td>
-                            <img src="/public/images/demo/mp60650501_1456481736483_2.jpeg" alt="某某商品"
+                            <img src="/Content/images/demo/mp60650501_1456481736483_2.jpeg" alt="某某商品"
                                  class="img-rounded" style="width: 100px">
                         </td>
                         <td>某某商品</td>
@@ -61,7 +61,7 @@
                     <tr>
                         <td>FD1321211</td>
                         <td>
-                            <img src="/public/images/demo/mp60650501_1456481736483_3.jpeg" alt="某某商品"
+                            <img src="/Content/images/demo/mp60650501_1456481736483_3.jpeg" alt="某某商品"
                                  class="img-rounded" style="width: 100px">
                         </td>
                         <td>某某商品</td>
@@ -87,7 +87,7 @@
                     <tr>
                         <td>FD1321211</td>
                         <td>
-                            <img src="/public/images/demo/mp60650501_1456481736483_4.jpeg" alt="某某商品"
+                            <img src="/Content/images/demo/mp60650501_1456481736483_4.jpeg" alt="某某商品"
                                  class="img-rounded" style="width: 100px">
                         </td>
                         <td>某某商品</td>
@@ -113,7 +113,7 @@
                     <tr>
                         <td>FD1321211</td>
                         <td>
-                            <img src="/public/images/demo/mp60650501_1456481736483_5.jpeg" alt="某某商品"
+                            <img src="/Content/images/demo/mp60650501_1456481736483_5.jpeg" alt="某某商品"
                                  class="img-rounded" style="width: 100px">
                         </td>
                         <td>某某商品</td>
@@ -139,7 +139,7 @@
                     <tr>
                         <td>FD1321211</td>
                         <td>
-                            <img src="/public/images/demo/mp60650501_1456481736483_6.jpeg" alt="某某商品"
+                            <img src="/Content/images/demo/mp60650501_1456481736483_6.jpeg" alt="某某商品"
                                  class="img-rounded" style="width: 100px">
                         </td>
                         <td>某某商品</td>
