@@ -3,14 +3,15 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 
 <jsp:include page="/Views/Shared/Header.jsp" />
-
+ 
 <div class="ww-wrapper">
     <div class="wrapper">
         <ol class="breadcrumb">
-            <li><a href="/">首页</a></li>
+            <li><a href="/">工作平台</a></li>
             <li class="active">商品设置</li>
         </ol>
-        <form id="good_form" class="form-horizontal" action="/goods/submitGoodsSettings" method="post" novalidate>
+        <form id="good_form" class="form-horizontal"  method="post" novalidate onsubmit="return false;">
+            <input type="hidden" id="goodId" name="goodId" value="${goodId}">
             <div class="panel panel-default">
                 <div class="panel-heading">商品信息</div>
                 <div class="panel-body">
@@ -21,10 +22,10 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="good_name" name="good_name"
-                                       placeholder="商品名称" autocomplete="off"
+                                <input type="text" class="form-control" id="good_name" name="goodName"
+                                       value="${goodName}" placeholder="商品名称" autocomplete="off"
                                        data-val="true" data-val-required="商品名称不能为空">
-                                <div data-valmsg-for="good_name" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="goodName" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -34,12 +35,13 @@
 
                             <div class="col-sm-8">
                                 <label class="radio-inline">
-                                    <input type="radio" name="good_mode" id="good_mode1" value="1" checked> 计次收费
+                                    <input type="radio" name="goodMoneyType" id="good_mode1" value="1" checked> 计次收费
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="good_mode" id="good_mode2" value="2"> 计时收费
+                                    <input type="radio" name="goodMoneyType" id="good_mode2"
+                                           value="2" <c:if test="${goodMoneyType == 2}">checked</c:if>> 计时收费
                                 </label>
-                                <div data-valmsg-for="good_mode" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="goodMoneyType" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -49,12 +51,13 @@
 
                             <div class="col-sm-8">
                                 <label class="radio-inline">
-                                    <input type="radio" name="good_discount" id="good_discount1" value="2" checked> 无折扣
+                                    <input type="radio" name="goodDiscount" id="good_discount1" value="1" checked> 无折扣
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="good_discount" id="good_discount2" value="1"> 会员折扣
+                                    <input type="radio" name="goodDiscount" id="good_discount2"
+                                           value="2" <c:if test="${goodDiscount == 2}">checked</c:if>> 会员折扣
                                 </label>
-                                <div data-valmsg-for="good_discount" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="goodDiscount" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -65,10 +68,10 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="good_no" name="good_no"
-                                       placeholder="商品编号" autocomplete="off"
+                                <input type="text" class="form-control" id="good_no" name="goodNo"
+                                       value="${goodNo}" placeholder="商品编号" autocomplete="off"
                                        data-val="true" data-val-required="商品编号不能为空">
-                                <div data-valmsg-for="good_no" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="goodNo" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -77,10 +80,10 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="good_price" name="good_price"
-                                       placeholder="商品编号" autocomplete="off"
+                                <input type="text" class="form-control" id="good_price" name="goodPrice"
+                                       value="${goodPrice}" placeholder="商品价格" autocomplete="off"
                                        data-val="true" data-val-required="商品价格不能为空">
-                                <div data-valmsg-for="good_price" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="goodPrice" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -89,14 +92,14 @@
                             <label for="good_remark" class="col-sm-2 control-label">备注</label>
 
                             <div class="col-sm-10">
-                            <textarea class="form-control" id="good_remark" name="good_remark" rows="3"
-                                      placeholder="备注"></textarea>
+                            <textarea class="form-control" id="good_remark" name="goodRemark" rows="3"
+                                      placeholder="备注">${goodRemark}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
                                 <p class="sc-submit-tips"></p>
-                                <button type="submit" class="btn btn-primary col-sm-4">
+                                <button type="button" class="btn btn-primary col-sm-4 goods-setting">
                                     <span class="glyphicon glyphicon-ok"></span> 设置商品
                                 </button>
                             </div>
@@ -107,6 +110,7 @@
         </form>
     </div>
 </div>
-
+ 
 <jsp:include page="/Views/Shared/Common.jsp" />
+<script src="Content/app/goods/goods_settings.js"></script>
 <jsp:include page="/Views/Shared/Footer.jsp" />
