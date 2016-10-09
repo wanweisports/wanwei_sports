@@ -53,9 +53,8 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 			goodId = goodInfoDB.getGoodId();
 		}
 		if(multipartFiles.size() > 0){ //保存商品图片
-			MultipartFile multipartFile = multipartFiles.get(0);
 			GoodInfo goodInfoDB = getGoodInfo(goodId);
-			goodInfoDB.setGoodPic(FileUtil.saveFile(multipartFile).toString());
+			goodInfoDB.setGoodPic(FileUtil.saveFile(multipartFiles.get(0)).toString());
 			baseDao.save(goodInfoDB, goodInfoDB.getGoodId());
 		}
 		return goodId;
