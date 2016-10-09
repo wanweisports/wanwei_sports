@@ -32,12 +32,12 @@
                                             <option value="1">预付类型</option>
                                             <option value="2">记账类型</option>
                                         </c:if>
-                                        <c:if test="${memberType == 1}">
+                                        <c:if test="${memberType == '1'}">
                                             <option value="">全部类型</option>
                                             <option value="1" selected>预付类型</option>
                                             <option value="2">记账类型</option>
                                         </c:if>
-                                        <c:if test="${memberType == 2}">
+                                        <c:if test="${memberType == '2'}">
                                             <option value="">全部类型</option>
                                             <option value="1">预付类型</option>
                                             <option value="2" selected>记账类型</option>
@@ -119,14 +119,12 @@
                                 <td>${member.cardTypeName}</td>
                                 <td>${member.cardDeadline}</td>
                                 <td>${member.cardBalance}</td>
-                                <td>
-                                    <c:if test="${member.cardStatus==1}">
-                                        有效
-                                    </c:if>
-                                    <c:if test="${member.cardStatus==2}">
-                                        锁定
-                                    </c:if>
-                                </td>
+                                <c:if test="${member.cardStatus==1}">
+                                    <td class="text-success">有效</td>
+                                </c:if>
+                                <c:if test="${member.cardStatus==2}">
+                                    <td class="text-danger">锁定</td>
+                                </c:if>
                                 <td>${member.operatorName}</td>
                                 <td>${member.createTime}</td>
                                 <td>
@@ -138,7 +136,7 @@
                             </c:forEach>
                             </tbody>
                         </table>
-                        <nav class="pull-right">
+                        <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >
                             <p class="pull-left" style="margin: 24px 14px;">
                                 <span>${pageSize}条/页</span>
                                 <span>总${count}条</span>

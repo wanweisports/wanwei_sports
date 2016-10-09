@@ -15,7 +15,7 @@
                     <form id="card_filter_form" class="form-inline col-sm-8" onsubmit="return false;">
                         <div class="form-group">
                             <select class="form-control" style="width:200px;" name="cardTypeStatus">
-                                <c:if test="${!cardTypeStatus}">
+                                <c:if test="${cardTypeStatus == ''}">
                                     <option value="" selected>全部状态</option>
                                     <option value="1">正常</option>
                                     <option value="2">锁定</option>

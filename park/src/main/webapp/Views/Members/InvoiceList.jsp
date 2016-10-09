@@ -15,18 +15,18 @@
                 <div class="panel-body">
                     <form class="form-inline col-sm-8" id="ticket_filter_form" onsubmit="return false;">
                         <div class="form-group">
-                            <select class="form-control" style="width:200px;" name="invoiceState">
-                                <c:if test="${!invoiceState}">
+                            <select class="form-control" style="width:200px;" name="status">
+                                <c:if test="${status != 1 && status != 2}">
                                     <option value="" selected>全部状态</option>
                                     <option value="1">已领取</option>
                                     <option value="2">未领取</option>
                                 </c:if>
-                                <c:if test="${invoiceState == 1}">
+                                <c:if test="${status == 1}">
                                     <option value="">全部状态</option>
                                     <option value="1" selected>已领取</option>
                                     <option value="2">未领取</option>
                                 </c:if>
-                                <c:if test="${invoiceState == 2}">
+                                <c:if test="${status == 2}">
                                     <option value="">全部状态</option>
                                     <option value="1">已领取</option>
                                     <option value="2" selected>未领取</option>
@@ -56,7 +56,7 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th></th>
+                                <th>#</th>
                                 <th>流水单号</th>
                                 <th>发票抬头</th>
                                 <th>发票金额</th>
@@ -73,8 +73,12 @@
                             <c:forEach var="invoice" items="${list}">
 	                            <tr>
 	                                <td>
-	                                	<label><input type="checkbox" name="ticket_id" value="${invoice.invoiceId }"></label>
-	                                </td>
+                                        <c:if test="${invoice.invoiceState == 2}">
+                                            <label>
+                                                <input type="checkbox" name="ticket_id" value="${invoice.invoiceId}">
+                                            </label>
+	                                    </c:if>
+                                    </td>
 	                                <td>${invoice.invoiceId}</td>
 	                                <td>${invoice.invoiceHeader}</td>
 	                                <td>${invoice.invoiceMoney}</td>
@@ -96,7 +100,7 @@
                             
                             </tbody>
                         </table>
-                        <nav class="pull-right">
+                        <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >
                             <p class="pull-left" style="margin: 24px 14px;">
                                 <span>${pageSize}条/页</span>
                                 <span>总${count}条</span>

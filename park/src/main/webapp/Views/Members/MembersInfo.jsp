@@ -170,9 +170,7 @@
                 <div class="panel-body">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="member_card_type1" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 会员类型
-                            </label>
+                            <label for="member_card_type1" class="col-sm-4 control-label">会员类型</label>
 
                             <div class="col-sm-8">
                                 <select class="form-control" id="member_card_type1" name="cardTypeId" disabled>
@@ -259,7 +257,7 @@
                                 <a href="#chongzhiModal" class="btn btn-primary" data-toggle="modal">
                                     <span class="glyphicon glyphicon-usd"></span> 会员卡充值
                                 </a>
-                                <a href="#shengjiModal" class="btn btn-primary" data-toggle="modal">
+                                <a href="#shengjiModal" class="btn btn-primary shengji-modal" data-toggle="modal">
                                     <span class="glyphicon glyphicon-flash"></span> 会员卡升级
                                 </a>
                                 <a href="#bubanModal" class="btn btn-primary" data-toggle="modal">
@@ -276,7 +274,7 @@
 
 <div class="modal fade" id="bubanModal" tabindex="-1" role="dialog" aria-labelledby="bubanModalLabel">
     <div class="modal-dialog">
-        <form class="modal-content refresh-card-form">
+        <form class="modal-content refresh-card-form" onsubmit="return false;">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -288,28 +286,34 @@
                     <div class="panel-body">
                         <div class="col-sm-6">
                             <div class="form-group">
-                            	<input type="hidden" name="cardId" value="${cardId }" >
-                                <label for="refresh_money" class="col-sm-4 control-label">补办价格</label>
+                            	<input type="hidden" name="cardId" value="${cardId}" >
+                                <label for="refresh_money" class="col-sm-4 control-label">
+                                    <span class="text-danger">*</span> 金额
+                                </label>
 
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="refresh_money" name="buBanMoney"
-                                           placeholder="请输入补办价格(元)" autocomplete="off"
-                                           data-val="true" data-val-required="补办价格不能为空"
+                                           placeholder="请输入补办金额(元)" autocomplete="off"
+                                           data-val="true" data-val-required="补办金额不能为空"
                                            data-val-regex-pattern="^[1-9][0-9]*$"
-                                           data-val-regex="补办价格格式错误">
-                                    <div data-valmsg-for="refresh_money" data-valmsg-replace="true"></div>
+                                           data-val-regex="补办金额格式错误">
+                                    <div data-valmsg-for="buBanMoney" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-4 control-label">支付方式</label>
+                                <label class="col-sm-4 control-label">
+                                    <span class="text-danger">*</span> 支付
+                                </label>
 
                                 <div class="col-sm-8">
-                                    <select class="form-control" id="pay_type" name="balanceStyle">
+                                    <select class="form-control" id="pay_type" name="balanceStyle"
+                                            data-val="true" data-val-required="请选择支付方式">
                                         <option value="">请选择</option>
                                         <option value="1">现金</option>
                                         <option value="2">支付宝</option>
                                         <option value="3">微信</option>
                                     </select>
+                                    <div data-valmsg-for="balanceStyle" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
                         </div>
@@ -319,10 +323,10 @@
 
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="refresh_discount" name="subMoney"
-                                           placeholder="请输入优惠金额(元)" autocomplete="off"
+                                           placeholder="请输入优惠金额(元)" autocomplete="off" value="0"
                                            data-val-regex-pattern="^[1-9][0-9]*$"
                                            data-val-regex="优惠金额格式错误">
-                                    <div data-valmsg-for="refresh_money" data-valmsg-replace="true"></div>
+                                    <div data-valmsg-for="subMoney" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -330,29 +334,29 @@
 
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="refresh_send" name="givingAmount"
-                                           placeholder="请输入赠送金额(元)" autocomplete="off"
+                                           placeholder="请输入赠送金额(元)" autocomplete="off" value="0"
                                            data-val-regex-pattern="^[1-9][0-9]*$"
-                                           data-val-regex="refresh_send">
-                                    <div data-valmsg-for="refresh_money" data-valmsg-replace="true"></div>
+                                           data-val-regex="赠送金额格式错误">
+                                    <div data-valmsg-for="givingAmount" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">会员卡号</label>
+                                <label class="col-sm-2 control-label">新卡号</label>
 
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" value="${cardNo}" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">备注</label>
+                                <label for="refresh_remark" class="col-sm-2 control-label">补办备注</label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" value="">
+                                    <textarea class="form-control" id="refresh_remark" name="remark" rows="3"
+                                              placeholder="请输入备注" autocomplete="off"></textarea>
                                 </div>
                             </div>
-                            <div class="alert alert-info" role="alert">合计金额: 19元(会员折扣: 95折)</div>
                         </div>
                     </div>
                 </div>
@@ -368,7 +372,7 @@
 
 <div class="modal fade" id="chongzhiModal" tabindex="-1" role="dialog" aria-labelledby="chongzhiModalLabel">
     <div class="modal-dialog">
-        <form class="modal-content recharge-card-form">
+        <form class="modal-content recharge-card-form" onsubmit="return false;">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -380,8 +384,10 @@
                     <div class="panel-body">
                         <div class="col-sm-6">
                             <div class="form-group">
-                            	<input type="hidden" name="cardId" value="${cardId }" >
-                                <label for="recharge_money" class="col-sm-4 control-label">充值金额</label>
+                            	<input type="hidden" name="cardId" value="${cardId}" >
+                                <label for="recharge_money" class="col-sm-4 control-label">
+                                    <span class="text-danger">*</span> 金额
+                                </label>
 
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="recharge_money" name="czMoney"
@@ -389,20 +395,23 @@
                                            data-val="true" data-val-required="充值金额不能为空"
                                            data-val-regex-pattern="^[1-9][0-9]*$"
                                            data-val-regex="充值金额格式错误">
-                                    <div data-valmsg-for="recharge_money" data-valmsg-replace="true"></div>
+                                    <div data-valmsg-for="czMoney" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="recharge_type" class="col-sm-4 control-label">支付方式</label>
+                                <label for="recharge_type" class="col-sm-4 control-label">
+                                    <span class="text-danger">*</span> 支付
+                                </label>
 
                                 <div class="col-sm-8">
-                                    <select class="form-control" id="recharge_type" name="balanceStyle">
+                                    <select class="form-control" id="recharge_type" name="balanceStyle"
+                                            data-val="true" data-val-required="请选择支付方式">
                                         <option value="">请选择</option>
                                         <option value="1">现金</option>
                                         <option value="2">支付宝</option>
                                         <option value="3">微信</option>
                                     </select>
-                                    <div data-valmsg-for="pay_type" data-valmsg-replace="true"></div>
+                                    <div data-valmsg-for="balanceStyle" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
                         </div>
@@ -412,7 +421,10 @@
 
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="recharge_discount" name="subMoney"
-                                           value="" placeholder="请输入优惠金额">
+                                           placeholder="请输入优惠金额(元)" autocomplete="off" value="0"
+                                           data-val-regex-pattern="^[1-9][0-9]*$"
+                                           data-val-regex="优惠金额格式错误">
+                                    <div data-valmsg-for="subMoney" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -420,7 +432,10 @@
 
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="recharge_send" name="givingAmount"
-                                           value="" placeholder="请输入赠送金额">
+                                           placeholder="请输入赠送金额(元)" autocomplete="off" value="0"
+                                           data-val-regex-pattern="^[1-9][0-9]*$"
+                                           data-val-regex="赠送金额格式错误">
+                                    <div data-valmsg-for="givingAmount" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
                         </div>
@@ -429,10 +444,10 @@
                                 <label for="recharge_remark" class="col-sm-2 control-label">备注</label>
 
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" id="recharge_remark" name="remark" rows="3" placeholder="备注"></textarea>
+                                    <textarea class="form-control" id="recharge_remark" name="remark" rows="3"
+                                              placeholder="请输入备注" autocomplete="off"></textarea>
                                 </div>
                             </div>
-                            <div class="alert alert-info" role="alert">合计金额: 19元(会员折扣: 95折)</div>
                         </div>
                     </div>
                 </div>
@@ -448,7 +463,7 @@
 
 <div class="modal fade" id="shengjiModal" tabindex="-1" role="dialog" aria-labelledby="shengjiModalLabel">
     <div class="modal-dialog">
-        <form class="modal-content upgrade-card-form">
+        <form class="modal-content upgrade-card-form" onsubmit="return false;">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -460,49 +475,58 @@
                     <div class="panel-body">
                         <div class="col-sm-6">
                             <div class="form-group">
-                            	<input type="hidden" name="cardId" value="${cardId }" >
+                            	<input type="hidden" name="cardId" value="${cardId}" >
                                 <label for="member_type" class="col-sm-4 control-label">会员类型</label>
 
                                 <div class="col-sm-8">
                                     <select class="form-control" id="member_type" name="cardTypeId">
                                         <c:forEach var="type" items="${memberCarTypeNames}">
-                                       	<option value="${type.cardTypeId}">${type.cardTypeName}</option>
-                                    </c:forEach>
+                                            <c:if test="${type.cardTypeId == cardTypeId}">
+                                                <option value="${type.cardTypeId}" selected>${type.cardTypeName}</option>
+                                            </c:if>
+                                            <c:if test="${type.cardTypeId != cardTypeId}">
+                                                <option value="${type.cardTypeId}">${type.cardTypeName}</option>
+                                            </c:if>
+                                        </c:forEach>
                                     </select>
-                                    <div data-valmsg-for="memberlevel" data-valmsg-replace="true"></div>
+                                    <div data-valmsg-for="cardTypeId" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4 control-label">会员折扣</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" value="95折" disabled>
+                                    <input type="text" class="form-control" id="upgrade_discount" value="" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-4 control-label">每周许可</label>
+                                <label for="upper_money" class="col-sm-4 control-label">
+                                    <span class="text-danger">*</span> 金额
+                                </label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" value="一,二,三,四,五,六,日" disabled>
+                                    <input type="text" class="form-control" id="upper_money" name="upLevelMoney"
+                                           placeholder="请输入升级金额(元)" autocomplete="off"
+                                           data-val="true" data-val-required="升级金额不能为空"
+                                           data-val-regex-pattern="^[1-9][0-9]*$"
+                                           data-val-regex="升级金额格式错误">
+                                    <div data-valmsg-for="upLevelMoney" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="upper_money" class="col-sm-4 control-label">升级费用</label>
+                                <label for="upper_type" class="col-sm-4 control-label">
+                                    <span class="text-danger">*</span> 支付
+                                </label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="upper_money" name="upLevelMoney">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="upper_type" class="col-sm-4 control-label">支付方式</label>
-
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="upper_type" name="upper_type">
+                                    <select class="form-control" id="upper_type" name="balanceStyle"
+                                            data-val="true" data-val-required="请选择支付方式">
                                         <option value="">请选择</option>
                                         <option value="1">现金</option>
                                         <option value="2">支付宝</option>
                                         <option value="3">微信</option>
                                     </select>
+                                    <div data-valmsg-for="balanceStyle" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
                         </div>
@@ -511,35 +535,36 @@
                                 <label class="col-sm-4 control-label">会费(元)</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" value="1000" disabled>
+                                    <input type="text" class="form-control" id="upgrade_cost" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4 control-label">截止日期</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" value="2016-12-23" disabled>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">每日许可</label>
-
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" value="08:00-18:00" disabled>
+                                    <input type="text" class="form-control" id="upgrade_deadline" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="upper_discount" class="col-sm-4 control-label">优惠费用</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="upper_discount" name="subMoney">
+                                    <input type="text" class="form-control" id="upper_discount" name="subMoney"
+                                           placeholder="请输入优惠金额(元)" autocomplete="off" value="0"
+                                           data-val-regex-pattern="^[1-9][0-9]*$"
+                                           data-val-regex="优惠金额格式错误">
+                                    <div data-valmsg-for="subMoney" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="upper_send" class="col-sm-4 control-label">赠送费用</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="upper_send" name="givingAmount">
+                                    <input type="text" class="form-control" id="upper_send" name="givingAmount"
+                                           placeholder="请输入赠送金额(元)" autocomplete="off" value="0"
+                                           data-val-regex-pattern="^[1-9][0-9]*$"
+                                           data-val-regex="赠送金额格式错误">
+                                    <div data-valmsg-for="givingAmount" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
                         </div>
@@ -548,10 +573,10 @@
                                 <label for="upper_remark" class="col-sm-2 control-label">备注</label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="upper_remark" name="remark" value="">
+                                    <textarea class="form-control" id="upper_remark" name="remark" rows="3"
+                                              placeholder="请输入备注" autocomplete="off"></textarea>
                                 </div>
                             </div>
-                            <div class="alert alert-info" role="alert">合计金额: 0元(会员折扣: 95折)</div>
                         </div>
                     </div>
                 </div>

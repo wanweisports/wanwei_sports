@@ -41,7 +41,6 @@
         }
     });
 
-    var ajaxLock = false;
     $("#save_card_type").on("click", function (e) {
         e.preventDefault();
 
@@ -104,7 +103,6 @@
                 renderCardTypeData(res.data);
             } else {
                 alert("卡类型信息查询失败, 请稍后重试");
-                ajaxLock = false;
             }
         });
     });

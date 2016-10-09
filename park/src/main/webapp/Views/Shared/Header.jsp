@@ -44,9 +44,9 @@
                 <ul class="nav-sub">
                     <li><a href="member/regMember">新会员注册</a></li>
                     <li><a href="member/memberList">会员查询</a></li>
-                    <li><a href="member/getOperations">会员操作</a></li>
+                    <li><a href="member/getOperations">充值/补办/升级</a></li>
                     <li><a href="member/getInvoices">发票登记</a></li>
-                    <li><a href="#">应收款管理</a></li>
+                    <!--<li><a href="#">应收款管理</a></li>-->
                     <li><a href="member/getMemberCarTypes">会员类型设置</a></li>
                 </ul>
             </li>

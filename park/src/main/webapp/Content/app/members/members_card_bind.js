@@ -63,7 +63,7 @@
         $.post('member/saveMemberCar', conditions, function (res) {
             $form.attr("submitting", "");
             if (res.code == 1) {
-                $("#confirmModal").modal("show");
+                $("#confirm_modal").modal("show");
                 $.each(res.data, function(key, item){
                     $("#member_card_ticket_form").find("input[name='" + key + "']").val(item);
                 });

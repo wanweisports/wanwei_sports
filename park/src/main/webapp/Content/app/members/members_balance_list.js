@@ -5,7 +5,7 @@
 
         var conditions = $("#balance_filter_form").serialize();
 
-        location.assign('member/getInvoices?' + conditions);
+        location.assign('member/getBalances?' + conditions);
     });
 
     // 分页点击
@@ -14,9 +14,6 @@
 
         var href = location.href;
 
-        location.assign(
-            (href.indexOf("?") > 0) ?
-                (href + "&page=" + $(this).attr("data-index")) : (href + "?page=" + $(this).attr("data-index"))
-        );
+        location.assign(href + "&page=" + $(this).attr("data-index"));
     });
 })(jQuery);

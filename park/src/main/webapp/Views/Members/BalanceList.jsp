@@ -18,6 +18,7 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <form class="form-inline" id="balance_filter_form" onsubmit="return false;">
+                    <input type="hidden" placeholder="开始时间" name="cardId" value="${cardId}">
                     <div class="form-group">
                         <select class="form-control" name="balanceType">
                             <option value="">订单类型</option>
@@ -77,7 +78,7 @@
                             </c:forEach>
                             </tbody>
                         </table>
-                        <nav class="pull-right">
+                        <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >
                             <p class="pull-left" style="margin: 24px 14px;">
                                 <span>${pageSize }条/页</span>
                                 <span>总${count}条</span>

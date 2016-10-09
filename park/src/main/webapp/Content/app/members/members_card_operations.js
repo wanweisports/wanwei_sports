@@ -1,24 +1,35 @@
 (function ($) {
-    // 表单校验设置
-    $(document).ready(function () {
-        $('#member_form').validate({
-            ignore: ":hidden"
-        });
-    });
-
-    // 表单时间控件设置
-    $(".form_datetime").datepicker({
-        format: "yyyy-mm-dd",
-        todayBtn: true,
-        language: "zh-CN",
-        orientation: "bottom auto"
-    });
-
-    // 更新会员信息
-    $(".gengxin-modal").on("click", function (e) {
+    $(".member-card-filter").on("click", function (e) {
         e.preventDefault();
 
-        var $form = $("#member_form");
+        // 回填信息
+    });
+
+    // 切换tab
+    $(".tab-card").on("click", function (e) {
+        e.preventDefault();
+
+        var $this = $(this);
+
+        if ($this.hasClass("btn-info")) {
+            return;
+        }
+
+        $(".tab-card.btn-info").removeClass("btn-info").addClass("btn-primary");
+        $this.addClass("btn-info").removeClass("btn-primary");
+
+        $(".refresh-card-panel").hide();
+        $(".recharge-card-panel").hide();
+        $(".upgrade-card-panel").hide();
+        $("." + $this.attr("data-tab") + "-panel").show();
+    });
+
+    // 会员卡补办
+    $(".refresh-card-submit").on("click", function (e) {
+        e.preventDefault();
+
+        // 生成新的会员卡号
+        var $form = $(".refresh-card-form");
         var conditions = $form.serialize();
 
         if ($form.attr("submitting") == "submitting" || !$form.valid()) {
@@ -26,13 +37,13 @@
         }
         $form.attr("submitting", "submitting");
 
-        $.post('member/saveMember', conditions, function (res) {
+        $.post('member/memberCardBuBan', conditions, function (res) {
             $form.attr("submitting", "");
 
             if (res.code == 1) {
-                $("#gengxinModal").modal("show");
+                alert("会员补办成功");
             } else {
-                alert("会员信息更新失败, 请稍后重试");
+                alert("会员补办失败, 请稍后重试");
             }
         });
     });
@@ -53,33 +64,9 @@
             $form.attr("submitting", "");
 
             if (res.code == 1) {
-                location.reload();
+                alert("会员充值成功");
             } else {
                 alert("会员充值失败, 请稍后重试");
-            }
-        });
-    });
-
-    // 会员卡补办
-    $(".refresh-card-submit").on("click", function (e) {
-        e.preventDefault();
-
-        // 生成新的会员卡号
-        var $form = $(".refresh-card-form");
-        var conditions = $form.serialize();
-
-        if ($form.attr("submitting") == "submitting" || !$form.valid()) {
-            return false;
-        }
-        $form.attr("submitting", "submitting");
-
-        $.post('member/memberCardBuBan', conditions, function (res) {
-            $form.attr("submitting", "");
-
-            if (res.code == 1) {
-                location.reload();
-            } else {
-                alert("会员补办失败, 请稍后重试");
             }
         });
     });
@@ -97,15 +84,6 @@
             }
         });
     }
-
-    // 升级弹窗
-    $(".shengji-modal").on("click", function (e) {
-        e.preventDefault();
-
-        var id = $('[name="cardTypeId"]').val();
-
-        getMemberCarType(id);
-    });
 
     // 卡类型改变查询
     $("[name='cardTypeId']").on("change", function (e) {
@@ -133,7 +111,7 @@
             $form.attr("submitting", "");
 
             if (res.code == 1) {
-                location.reload();
+                alert("会员升级成功");
             } else {
                 alert("会员升级失败, 请稍后重试");
             }
