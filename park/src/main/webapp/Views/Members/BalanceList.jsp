@@ -12,7 +12,7 @@
             <li><a href="member/memberInfo?memberId=${memberId}">会员详情</a></li>
             <li class="active">订单明细</li>
         </ol>
-        <a href="/member/membersConsume" class="btn btn-primary pull-right" style="margin-top: -58px;">
+        <a href="/member/getConsumes?cardId=${cardId}" class="btn btn-primary pull-right" style="margin-top: -58px;">
             <span class="glyphicon glyphicon-th-list"></span> 消费明细
         </a>
         <div class="panel panel-default">
