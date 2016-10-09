@@ -35,7 +35,7 @@ public class GoodController extends BaseController {
 		if(goodId != null){
 			model.addAllAttributes(JsonUtils.fromJsonDF(goodService.getGoodInfo(goodId)));
 		}
-		return "Goods/GoodsInfo";
+		return "Goods/GoodsSettings";
 	}
 
 	@ResponseBody
@@ -66,7 +66,7 @@ public class GoodController extends BaseController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "Goods/GoodsList";
+		return "Goods/GoodsStockManagement";
 	}
 	
 	@ResponseBody
