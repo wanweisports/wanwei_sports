@@ -28,137 +28,25 @@
                 </div>
             </div>
             <div class="col-sm-12 col-md-2">
-                <a href="/goods/carts" class="btn btn-primary pull-right">
+                <a href="good/getGoodsCart" class="btn btn-primary pull-right">
                     <span class="glyphicon glyphicon-shopping-cart"></span> 购物车
                     <span class="badge">42</span>
                 </a>
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-4 col-md-3">
-                <div class="thumbnail">
-                    <img src="/public/images/demo/mp60650501_1456481736483_2.jpeg" alt="某商品">
-                    <div class="caption">
-                        <p>某某商品</p>
-                        <p>100.00元/件</p>
-                        <p><a href="javascript:;" class="btn btn-primary">加入购物车</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4 col-md-3">
-                <div class="thumbnail">
-                    <img src="/public/images/demo/mp60650501_1456481736483_3.jpeg" alt="某商品">
-                    <div class="caption">
-                        <p>某某商品</p>
-                        <p>100.00元/件</p>
-                        <p><a href="javascript:;" class="btn btn-primary">加入购物车</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4 col-md-3">
-                <div class="thumbnail">
-                    <img src="/public/images/demo/mp60650501_1456481736483_4.jpeg" alt="某商品">
-                    <div class="caption">
-                        <p>某某商品</p>
-                        <p>100.00元/件</p>
-                        <p><a href="javascript:;" class="btn btn-primary">加入购物车</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4 col-md-3">
-                <div class="thumbnail">
-                    <img src="/public/images/demo/mp60650501_1456481736483_5.jpeg" alt="某商品">
-                    <div class="caption">
-                        <p>某某商品</p>
-                        <p>100.00元/件</p>
-                        <p><a href="javascript:;" class="btn btn-primary">加入购物车</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4 col-md-3">
-                <div class="thumbnail">
-                    <img src="/public/images/demo/mp60650501_1456481736483_2.jpeg" alt="某商品">
-                    <div class="caption">
-                        <p>某某商品</p>
-                        <p>100.00元/件</p>
-                        <p><a href="javascript:;" class="btn btn-primary">加入购物车</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4 col-md-3">
-                <div class="thumbnail">
-                    <img src="/public/images/demo/mp60650501_1456481736483_3.jpeg" alt="某商品">
-                    <div class="caption">
-                        <p>某某商品</p>
-                        <p>100.00元/件</p>
-                        <p><a href="javascript:;" class="btn btn-primary">加入购物车</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4 col-md-3">
-                <div class="thumbnail">
-                    <img src="/public/images/demo/mp60650501_1456481736483_4.jpeg" alt="某商品">
-                    <div class="caption">
-                        <p>某某商品</p>
-                        <p>100.00元/件</p>
-                        <p><a href="javascript:;" class="btn btn-primary">加入购物车</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4 col-md-3">
-                <div class="thumbnail">
-                    <img src="/public/images/demo/mp60650501_1456481736483_5.jpeg" alt="某商品">
-                    <div class="caption">
-                        <p>某某商品</p>
-                        <p>100.00元/件</p>
-                        <p><a href="javascript:;" class="btn btn-primary">加入购物车</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4 col-md-3">
-                <div class="thumbnail">
-                    <img src="/public/images/demo/mp60650501_1456481736483_2.jpeg" alt="某商品">
-                    <div class="caption">
-                        <p>某某商品</p>
-                        <p>100.00元/件</p>
-                        <p><a href="javascript:;" class="btn btn-primary">加入购物车</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4 col-md-3">
-                <div class="thumbnail">
-                    <img src="/public/images/demo/mp60650501_1456481736483_3.jpeg" alt="某商品">
-                    <div class="caption">
-                        <p>某某商品</p>
-                        <p>100.00元/件</p>
-                        <p><a href="javascript:;" class="btn btn-primary">加入购物车</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4 col-md-3">
-                <div class="thumbnail">
-                    <img src="/public/images/demo/mp60650501_1456481736483_4.jpeg" alt="某商品">
-                    <div class="caption">
-                        <p>某某商品</p>
-                        <p>100.00元/件</p>
-                        <p><a href="javascript:;" class="btn btn-primary">加入购物车</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4 col-md-3">
-                <div class="thumbnail">
-                    <img src="/public/images/demo/mp60650501_1456481736483_5.jpeg" alt="某商品">
-                    <div class="caption">
-                        <p>某某商品</p>
-                        <p>100.00元/件</p>
-                        <p><a href="javascript:;" class="btn btn-primary">加入购物车</a></p>
-                    </div>
-                </div>
-            </div>
+            <c:forEach var="good" items="${goods }">
+	            <div class="col-sm-4 col-md-3">
+	                <div class="thumbnail">
+	                    <img src="${good.goodPic }" alt="${good.goodName }">
+	                    <div class="caption">
+	                        <p>${good.goodName }</p>
+	                        <p>${good.goodPrice }元/件</p>
+	                        <p><a href="javascript:;" class="btn btn-primary">加入购物车</a></p>
+	                    </div>
+	                </div>
+	            </div>
+            </c:forEach>
         </div>
     </div>
 </div>

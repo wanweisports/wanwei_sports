@@ -4,6 +4,7 @@ public class GoodInputView extends BaseInputView {
 	
 	private String goodName;
 	private String goodStatus;
+	private String goodType;
 	
 	public String getGoodName() {
 		return goodName;
@@ -16,6 +17,12 @@ public class GoodInputView extends BaseInputView {
 	}
 	public void setGoodStatus(String goodStatus) {
 		this.goodStatus = goodStatus;
+	}
+	public String getGoodType() {
+		return goodType;
+	}
+	public void setGoodType(String goodType) {
+		this.goodType = goodType;
 	}
 	
 }
