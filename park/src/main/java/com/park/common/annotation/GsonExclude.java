@@ -1,4 +1,4 @@
-﻿package com.park.common.annotation;
+package com.park.common.annotation;
 
 import java.lang.annotation.*;
 
