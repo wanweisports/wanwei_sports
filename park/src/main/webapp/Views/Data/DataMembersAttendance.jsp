@@ -8,72 +8,48 @@
     <div class="wrapper">
         <ol class="breadcrumb">
             <li><a href="/">工作平台</a></li>
-            <li><a href="/member/memberList">会员查询</a></li>
-            <li><a href="member/memberInfo?memberId=${memberId}">会员详情</a></li>
-            <li class="active">订单明细</li>
+            <li class="active">会员签到记录</li>
         </ol>
-        <a href="/member/membersConsume" class="btn btn-primary pull-right" style="margin-top: -58px;">
-            <span class="glyphicon glyphicon-th-list"></span> 消费明细
-        </a>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <form class="form-inline" id="balance_filter_form" onsubmit="return false;">
-                    <div class="form-group">
-                        <select class="form-control" name="balanceType">
-                            <option value="">订单类型</option>
-                            <option value="10" <c:if test="${balanceType == 10}">selected</c:if>>注册会员</option>
-                            <option value="11" <c:if test="${balanceType == 11}">selected</c:if>>会员充值</option>
-                            <option value="12" <c:if test="${balanceType == 12}">selected</c:if>>会员升级</option>
-                            <option value="13" <c:if test="${balanceType == 13}">selected</c:if>>会员补办</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input type="date" class="form-control" placeholder="开始时间" name="createTimeStart"
-                                value="${createTimeStart}">
-                    </div>
-                    <div class="form-group">
-                        <input type="date" class="form-control" placeholder="结束时间" name="createTimeEnd"
-                               value="${createTimeEnd}">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="手机号" name="memberMobile"
-                               value="${memberMobile}">
-                    </div>
-                    <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary balance-filter">
-                            <span class="glyphicon glyphicon-search"></span> 检索 & 显示
+        <div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <input type="date" class="form-control" placeholder="选择日期">
+                        </div>
+                        <a href="javascript:;" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-search"></span> 筛选 / 显示
                         </a>
-                    </div>
-                </form>
+                        <a href="javascript:;" class="btn btn-primary pull-right">
+                            <span class="glyphicon glyphicon-export"></span> 导出数据
+                        </a>
+                    </form>
+                </div>
             </div>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div class="table-responsive card-type-list">
+                    <div class="table-responsive">
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>交易流水号</th>
-                                <th>会员姓名</th>
-                                <th>订单类型</th>
-                                <th>支付方式</th>
-                                <th>支付金额</th>
-                                <th>订单状态</th>
-                                <th>操作人</th>
-                                <th>操作时间</th>
+                                <th>会员卡号</th>
+                                <th>姓名</th>
+                                <th>会员类型</th>
+                                <th>入口名称</th>
+                                <th>时间</th>
+                                <th>对应订单</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="balance" items="${list}">
-	                            <tr>
-	                                <td>${balance.balanceNo}</td>
-	                                <td>${balance.memberName}</td>
-	                                <td>${balance.balanceServiceTypeName}</td>
-	                                <td>${balance.balanceStyleName}</td>
-	                                <td>${balance.realAmount}</td>
-	                                <td>${balance.balanceStatus}</td>
-	                                <td>${balance.operatorName}</td>
-	                                <td>${balance.createTime}</td>
-	                            </tr>
+                            <c:forEach var="enter" items="${attendances}">
+                                <tr>
+                                    <td>${enter.card_id}</td>
+                                    <td>${enter.member_name}</td>
+                                    <td>${enter.card_type}</td>
+                                    <td>${enter.entrance}</td>
+                                    <td>${enter.entrance_time}</td>
+                                    <td>${enter.order_no}</td>
+                                </tr>
                             </c:forEach>
                             </tbody>
                         </table>
@@ -149,6 +125,4 @@
 </div>
 
 <jsp:include page="/Views/Shared/Common.jsp" />
-<script src="Content/app/members/members_balance_list.js"></script>
 <jsp:include page="/Views/Shared/Footer.jsp" />
-

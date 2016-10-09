@@ -33,7 +33,7 @@
             <li class="nav-home ">
                 <a href="/">
                     <img src="Content/images/navigator/home.png">
-                    <span>工作面板</span>
+                    <span>工作平台</span>
                 </a>
             </li>
             <li class="nav-active">
@@ -46,7 +46,7 @@
                     <li><a href="member/memberList">会员查询</a></li>
                     <li><a href="member/getOperations">会员操作</a></li>
                     <li><a href="member/getInvoices">发票登记</a></li>
-                    <li><a href="/users/membersLoans">应收款管理</a></li>
+                    <li><a href="#">应收款管理</a></li>
                     <li><a href="member/getMemberCarTypes">会员类型设置</a></li>
                 </ul>
             </li>

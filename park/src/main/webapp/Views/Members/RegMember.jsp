@@ -9,7 +9,7 @@
 <div class="ww-wrapper">
     <div class="wrapper">
         <ol class="breadcrumb">
-            <li><a href="/">首页</a></li>
+            <li><a href="/">工作平台</a></li>
             <li class="active">新会员注册</li>
         </ol>
         <form id="member_form" class="form-horizontal" action="" method="post" novalidate>
@@ -39,7 +39,7 @@
                                 <label class="radio-inline">
                                     <input type="radio" name="memberType" id="memberType2" value="2"> 记账类型
                                 </label>
-                                <div data-valmsg-for="payment_type" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="memberType" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -62,7 +62,6 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="member_mobile2" name="memberMobile2"
                                        placeholder="请输入备用手机号码" autocomplete="off"
-                                       data-val="true" data-val-required="备用手机号码不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
                                        data-val-regex="备用手机号码格式错误">
                                 <div data-valmsg-for="memberMobile2" data-valmsg-replace="true"></div>
@@ -85,14 +84,11 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="memberIdcard" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 身份证号
-                            </label>
+                            <label for="memberIdcard" class="col-sm-4 control-label">身份证号</label>
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="memberIdcard" name="memberIdcard"
                                        placeholder="请输入18位身份证号" autocomplete="off"
-                                       data-val="true" data-val-required="身份证号不能为空"
                                        data-val-regex-pattern="^\d{18}$|^\d{17}(\d|X|x)$"
                                        data-val-regex="身份证号格式错误">
                                 <div data-valmsg-for="memberIdcard" data-valmsg-replace="true"></div>
@@ -167,13 +163,5 @@
 <script src="Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.zh-CN.min.js"></script>
 <script src="Content/lib/jquery/jquery.validate/jquery.validate.js"></script>
 <script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js"></script>
-<script src="Content/app/members/users_members_add.js"></script>
-<script>
-    $(".form_datetime").datepicker({
-        format: "yyyy-mm-dd",
-        todayBtn: true,
-        language: "zh-CN",
-        orientation: "bottom auto"
-    });
-</script>
+<script src="Content/app/members/members_info_enter.js"></script>
 <jsp:include page="/Views/Shared/Footer.jsp" />
