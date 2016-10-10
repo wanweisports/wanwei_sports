@@ -39,6 +39,11 @@ public class StrUtil extends StringUtils {
         if(objStr == null) return null;
         return Double.valueOf(String.valueOf(objStr));
     }
+    
+    public static Double objToDoubleDef0(Object objStr){
+        if(objStr == null || isBlank(objStr.toString())) return 0.0;
+        return Double.valueOf(String.valueOf(objStr));
+    }
 
     public static String objToNumStr(Object objStr){
         if(objStr == null) return null;

@@ -21,6 +21,16 @@ public class MemberCardOpInputView extends BaseInputView {
 	private String remark;
 	
 	private Integer salesId;
+	
+	private String newCardNo;
+
+	public String getNewCardNo() {
+		return newCardNo;
+	}
+
+	public void setNewCardNo(String newCardNo) {
+		this.newCardNo = newCardNo;
+	}
 
 	public String getCardId() {
 		return cardId;

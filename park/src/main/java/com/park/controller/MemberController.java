@@ -24,6 +24,7 @@ import com.park.common.po.OtherInvoice;
 import com.park.common.po.UserMember;
 import com.park.common.po.UserOperator;
 import com.park.common.util.JsonUtils;
+import com.park.common.util.StrUtil;
 import com.park.service.IMemberService;
 
 @Controller
@@ -291,9 +292,34 @@ public class MemberController extends BaseController {
 	}
 
     @RequestMapping(value = "getOperations")
-    public String getOperations(Model model) {
+    public String getOperations(String cardNo, Model model) {
+    	try {
+    		if(StrUtil.isNotBlank(cardNo)){
+    			model.addAllAttributes(memberService.getOperations(cardNo));
+    		}
+    		model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(new MemberInputView()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         return "Members/MembersOperations";
     }
+    
+    @ResponseBody
+	@RequestMapping(value = "getNewCardNo", method = RequestMethod.POST)
+	public ResponseBean getNewCardNo(Model model) {
+		try {
+			Map<String, Object> data = new HashMap<String, Object>();
+			data.put("newCardNo", memberService.getCardNo());
+			return new ResponseBean(data);
+		} catch (MessageException e) {
+			e.printStackTrace();
+			return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
+	}
+    
 }
 
 

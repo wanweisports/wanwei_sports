@@ -93,6 +93,8 @@
 
         getMemberCarType(id);
     });
+    
+    $("[name='cardTypeId']").change();
 
     // 会员卡升级
     $(".upgrade-card-submit").on("click", function (e) {
@@ -117,4 +119,8 @@
             }
         });
     });
+    
+    $.post('member/getNewCardNo', function (res) {
+    	$("#newCardNo").val(res.data.newCardNo);
+    }, 'json');
 })(jQuery);

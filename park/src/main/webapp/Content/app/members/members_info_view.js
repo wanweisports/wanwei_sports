@@ -139,4 +139,8 @@
             }
         });
     });
+    
+    $.post('member/getNewCardNo', function (res) {
+    	$("#newCardNo").val(res.data.newCardNo);
+    }, 'json');
 })(jQuery);

@@ -21,13 +21,13 @@
                                 </label>
 
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="card_no" name="cardno"
+                                    <input type="text" class="form-control" id="card_no" name="cardNo" value="${cardNo}"
                                            placeholder="请输入会员卡号" autocomplete="off"
                                            data-val="true" data-val-required="会员卡号不能为空">
                                     <div data-valmsg-for="cardno" data-valmsg-replace="true"></div>
                                 </div>
                                 <div class="col-sm-4">
-                                    <a href="javascript:;" class="btn btn-primary member-card-filter">
+                                    <a href="javascript:;" class="btn btn-primary member-card-filter" onclick="window.location.href='member/getOperations?cardNo='+$('#card_no').val()">
                                         <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                                     </a>
                                 </div>
@@ -39,14 +39,14 @@
                                 <label class="col-sm-4 control-label">会员姓名</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" value="张三" disabled>
+                                    <input type="text" class="form-control" value="${memberName }" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4 control-label">手机号码</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" value="150****2134" disabled>
+                                    <input type="text" class="form-control" value="${memberMobile }" disabled>
                                 </div>
                             </div>
                         </div>
@@ -55,14 +55,14 @@
                                 <label class="col-sm-4 control-label">当前余额</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" value="10元" disabled>
+                                    <input type="text" class="form-control" value="<c:if test='${cardBalance!=null}'>${cardBalance}元</c:if>" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4 control-label">截止日期</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" value="2016-12-31" disabled>
+                                    <input type="text" class="form-control" value="${cardDeadline }" disabled>
                                 </div>
                             </div>
                         </div>
@@ -154,7 +154,7 @@
                                 <label class="col-sm-2 control-label">新卡号</label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" value="" disabled>
+                                    <input type="text" class="form-control" id="newCardNo" name="newCardNo" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -271,8 +271,9 @@
 
                             <div class="col-sm-8">
                                 <select class="form-control" id="member_type" name="cardTypeId">
-                                    <option value="1" selected>普通会员</option>
-                                    <option value="2">教师会员</option>
+                                    <c:forEach var="type" items="${memberCarTypeNames}">
+                                         <option value="${type.cardTypeId}">${type.cardTypeName}</option>
+                                    </c:forEach>
                                 </select>
                                 <div data-valmsg-for="cardTypeId" data-valmsg-replace="true"></div>
                             </div>

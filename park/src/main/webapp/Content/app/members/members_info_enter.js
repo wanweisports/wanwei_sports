@@ -31,7 +31,7 @@
             var data = res.data;
 
             if (res.code == 1) {
-                location.assign('member/membersInfoCar?memberId=' + data.memberId + '&cardNo=' + $("#cardNo").val());
+                location.assign('member/membersInfoCar?memberId=' + data.memberId); // + '&cardNo=' + $("#cardNo").val()
             } else {
                 alert("会员信息保存失败, 请稍后重试");
                 ajaxLock = false;

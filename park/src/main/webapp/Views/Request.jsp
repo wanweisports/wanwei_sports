@@ -618,6 +618,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    "balanceStyle": 1,
    "upLevelMoney": 500,
    "subMoney": 100,
+   "givingAmount": 10,
    "remark": "升级会员卡",
    "salesId": 1
 }
@@ -647,6 +648,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<td>优惠价格（元）</td>
 		</tr>
 		<tr>
+			<td>givingAmount</td>
+			<td>赠送金额（元）</td>
+		</tr>
+		<tr>
 			<td>remark</td>
 			<td>备注</td>
 		</tr>
@@ -664,6 +669,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    "balanceStyle": 1,
    "czMoney": 5000.5,
    "subMoney": 2000.2,
+   "givingAmount": 100,
    "remark": "充值会员卡5000.5，优惠2000.2",
    "salesId": 1
 }
@@ -689,6 +695,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<td>优惠价格</td>
 		</tr>
 		<tr>
+			<td>givingAmount</td>
+			<td>赠送金额（元）</td>
+		</tr>
+		<tr>
 			<td>remark</td>
 			<td>备注</td>
 		</tr>
@@ -706,6 +716,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    "balanceStyle": 1,
    "buBanMoney": 500,
    "subMoney": 0,
+   "givingAmount": 10,
    "remark": "补办会员卡500，未优惠",
    "salesId": 1
 }
@@ -729,6 +740,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<tr>
 			<td>subMoney</td>
 			<td>优惠价格</td>
+		</tr>
+		<tr>
+			<td>givingAmount</td>
+			<td>赠送金额（元）</td>
 		</tr>
 		<tr>
 			<td>remark</td>

@@ -39,9 +39,8 @@ public class UrlController extends BaseController {
 	}*/
 	
 	@RequestMapping("member/membersInfoCar")
-	public String toMembersInfoCar(Integer memberId, String cardNo, Model model) {
+	public String toMembersInfoCar(Integer memberId, Model model) {
 		Map<String, Object> regMember = memberService.getRegMember(memberId);
-		regMember.put("cardNo", cardNo);
 		model.addAllAttributes(regMember);
 		MemberInputView memberInputView = new  MemberInputView();
 		memberInputView.setCardType(regMember.get("memberType").toString());

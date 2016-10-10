@@ -65,5 +65,7 @@ public interface IMemberService {
 	
 	public Map<String, Object> getRegMember(int memberId);
 	
+	public Map<String, Object> getOperations(String cardNo);
+	
 	public String getCardNo();
 }

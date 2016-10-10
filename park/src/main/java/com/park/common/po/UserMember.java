@@ -3,8 +3,6 @@ package com.park.common.po;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Transient;
-
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -34,9 +32,7 @@ public class UserMember implements java.io.Serializable {
 	private String createTime;
 	private String updateTime;
 	private Integer salesId;
-	
-	@Transient
-	private String cardNo;
+	private String tempCardNo;
 
 	// Constructors
 
@@ -50,7 +46,7 @@ public class UserMember implements java.io.Serializable {
 			String memberIdcard, String memberBirthday,
 			String memberPayPassword, String memberStatus,
 			String memberAddress, String memberRemark, String createTime,
-			String updateTime, Integer salesId) {
+			String updateTime, Integer salesId, String tempCardNo) {
 		this.operationId = operationId;
 		this.memberName = memberName;
 		this.memberType = memberType;
@@ -66,6 +62,7 @@ public class UserMember implements java.io.Serializable {
 		this.createTime = createTime;
 		this.updateTime = updateTime;
 		this.salesId = salesId;
+		this.tempCardNo = tempCardNo;
 	}
 
 	// Property accessors
@@ -215,16 +212,13 @@ public class UserMember implements java.io.Serializable {
 		this.salesId = salesId;
 	}
 
-	@Transient
-	public String getCardNo() {
-		return cardNo;
+	@Column(name = "tempCardNo", length = 32)
+	public String getTempCardNo() {
+		return this.tempCardNo;
 	}
 
-	@Transient
-	public void setCardNo(String cardNo) {
-		this.cardNo = cardNo;
+	public void setTempCardNo(String tempCardNo) {
+		this.tempCardNo = tempCardNo;
 	}
-	
-	
 
 }

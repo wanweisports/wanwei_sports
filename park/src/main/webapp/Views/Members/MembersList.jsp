@@ -119,6 +119,9 @@
                                 <td>${member.cardTypeName}</td>
                                 <td>${member.cardDeadline}</td>
                                 <td>${member.cardBalance}</td>
+                                <c:if test="${member.cardStatus==null}">
+                                	<td></td>
+                                </c:if>
                                 <c:if test="${member.cardStatus==1}">
                                     <td class="text-success">有效</td>
                                 </c:if>
@@ -128,9 +131,16 @@
                                 <td>${member.operatorName}</td>
                                 <td>${member.createTime}</td>
                                 <td>
-                                    <a class="btn btn-primary" href="member/memberInfo?memberId=${member.memberId}">
-                                        <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                    </a>
+                                	<c:if test="${member.tempCardNo == null}">
+	                                    <a class="btn btn-primary" href="member/memberInfo?memberId=${member.memberId}">
+	                                        <span class="glyphicon glyphicon-share-alt"></span> 查看
+	                                    </a>
+                                    </c:if>
+                                    <c:if test="${member.tempCardNo != null}">
+                                    	<a class="btn btn-primary" href="member/membersInfoCar?memberId=${member.memberId}">
+	                                        <span class="glyphicon glyphicon-share-alt"></span> 绑卡
+	                                    </a>
+                                    </c:if>
                                 </td>
                             </tr>
                             </c:forEach>

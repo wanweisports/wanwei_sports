@@ -23,7 +23,7 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="cardNo" name="cardNo"
+                                <input type="text" class="form-control" id="cardNo" name="tempCardNo"
                                        placeholder="会员卡号" value="${cardNo}" readonly>
                             </div>
                         </div>

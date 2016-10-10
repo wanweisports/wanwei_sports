@@ -24,7 +24,7 @@
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="card_no" name="cardNo"
-                                       placeholder="会员卡号" value="${cardNo}" readonly>
+                                       placeholder="会员卡号" value="${tempCardNo}" readonly>
                             </div>
                         </div>
                         <div class="form-group">

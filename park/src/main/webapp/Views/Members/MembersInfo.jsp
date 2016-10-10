@@ -346,7 +346,7 @@
                                 <label class="col-sm-2 control-label">新卡号</label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" value="${cardNo}" disabled>
+                                    <input type="text" class="form-control" id="newCardNo" name="newCardNo" readonly>
                                 </div>
                             </div>
                             <div class="form-group">

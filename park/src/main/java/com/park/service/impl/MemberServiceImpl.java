@@ -84,7 +84,12 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		if(getMemberCards(userMember.getMemberId()).size() == 0){// throw new RotaryException("该会员已绑定了会员卡！");
 			MemberCardType memberCarType = getMemberCardType(memberCard.getCardTypeId());
 			if(memberCarType == null) throw new MessageException("会员卡类型不存在！");
-			if(this.getMemberCard(memberCard.getCardNo()) != null ) throw new MessageException("会员卡号重复，请刷新页面！");
+			
+			//保存之前的临时会员卡号，并清除临时卡号！
+			memberCard.setCardNo(userMember.getTempCardNo());
+			userMember.setTempCardNo(null);
+			
+			if(this.getMemberCard(memberCard.getCardNo()) != null ) throw new MessageException("会员卡号已存在！");
 			memberCard.setCardDeadline(DateUtil.cardDeadline(memberCarType.getCardTypeMonth())); //计算会员卡截至日期(0:无限制)
 			String nowDate = DateUtil.getNowDate();
 			memberCard.setMemberId(userMember.getMemberId());
@@ -99,6 +104,8 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			
 			memberCard.setCardBalance(memberCard.getCardBalance()+otherBalance.getGivingAmount()); //会员卡金额（充值+赠送）
 			baseDao.save(memberCard, memberCard.getCardId());
+			baseDao.save(userMember, userMember.getMemberId());
+			
 			otherBalance.setBalanceServiceType(IDBConstant.BALANCE_SERVICE_TYPE_REG);
 			otherBalance.setBalanceServiceId(memberCard.getCardId());
 			otherBalance.setBalanceNo(getBalanceNo());
@@ -107,7 +114,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			otherBalance.setBalanceType(IDBConstant.BALANCE_TYPE_OTHER);
 			otherBalance.setSalesId(memberCard.getSalesId());
 			
-			//订单状态（暂定）
+			//订单状态（暂定，现金直接已支付，如果是微信应该是回调）
 			otherBalance.setBalanceStatus(IDBConstant.BALANCE_STATUS_ALL);
 			baseDao.save(otherBalance, null);
 		}else{
@@ -209,9 +216,11 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		String memberIdcard = memberInputView.getMemberIdcard();
 		String cardNo = memberInputView.getCardNo();
 		String cardTypeId = memberInputView.getCardTypeId();
-		StringBuilder headSql = new StringBuilder("SELECT uo.operatorName, um.memberId, mc.cardId, um.memberName, um.memberMobile, um.memberIdcard, mc.cardNo, mc.cardTypeId, mc.cardDeadline, mc.cardBalance, mc.cardStatus, mc.salesId, DATE_FORMAT(mc.createTime,'%Y-%m-%d') createTime");
-		StringBuilder bodySql = new StringBuilder(" FROM user_member um, member_card mc, user_operator uo");
-		StringBuilder whereSql = new StringBuilder(" WHERE um.memberId = mc.memberId AND mc.salesId = uo.id");
+		StringBuilder headSql = new StringBuilder("SELECT uo.operatorName, um.memberId, mc.cardId, um.memberName, um.memberMobile, um.memberIdcard, mc.cardNo, mc.cardTypeId, mc.cardDeadline, mc.cardBalance, mc.cardStatus, mc.salesId, DATE_FORMAT(mc.createTime,'%Y-%m-%d') createTime, tempCardNo");
+		StringBuilder bodySql = new StringBuilder(" FROM user_member um");
+		bodySql.append(" LEFT JOIN member_card mc ON(um.memberId = mc.memberId)");
+		bodySql.append(" LEFT JOIN user_operator uo ON(mc.salesId = uo.id)");
+		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
 		if(StrUtil.isNotBlank(memberMobile)){
 			whereSql.append(" AND um.memberMobile = :memberMobile");
 		}
@@ -237,7 +246,11 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	public Map<String, Object> getUserMemberAndCard(int memberId) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT operatorName, um.memberId, mc.cardId, um.memberName, um.memberType, um.memberSex, um.memberBirthday, um.memberAddress, um.memberRemark, um.memberMobile, um.memberMobile2, um.memberIdcard, mc.cardNo, mc.cardTypeId, mc.cardDeadline, mc.cardBalance, mc.cardStatus, mc.salesId, DATE_FORMAT(mc.createTime,'%Y-%m-%d') createTime, mct.cardTypeDiscount, mct.cardTypeWeek, mct.cardTypeTimeStart, mct.cardTypeTimeEnd, mct.cardTypeName");
-		sql.append(" FROM user_member um, member_card mc, member_card_type mct, user_operator uo WHERE um.memberId = mc.memberId AND mc.cardTypeId = mct.cardTypeId AND mct.salesId = uo.Id AND um.memberId = ?");
+		sql.append(" FROM user_member um");
+		sql.append(" LEFT JOIN member_card mc ON(um.memberId = mc.memberId)");
+		sql.append(" LEFT JOIN member_card_type mct ON(mc.cardTypeId = mct.cardTypeId)");
+		sql.append(" LEFT JOIN user_operator uo ON(mc.salesId = uo.id)");
+		sql.append(" WHERE um.memberId = ?");
 		Map<String, Object> memberMap = baseDao.queryBySqlFirst(sql.toString(), memberId);
 		if(memberMap == null) throw new MessageException("会员信息不存在！");
 		return getType(memberMap);
@@ -262,8 +275,8 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		String cardTypeId = memberCardOpInputView.getCardTypeId();
 		String balanceStyle = memberCardOpInputView.getBalanceStyle();
 		Double upLevelMoney = StrUtil.objToDouble(memberCardOpInputView.getUpLevelMoney());
-		Double subMoney = StrUtil.objToDouble(memberCardOpInputView.getSubMoney());
-		Double givingAmount = StrUtil.objToDouble(memberCardOpInputView.getGivingAmount());
+		Double subMoney = StrUtil.objToDoubleDef0(memberCardOpInputView.getSubMoney());
+		Double givingAmount = StrUtil.objToDoubleDef0(memberCardOpInputView.getGivingAmount());
 		String remark = memberCardOpInputView.getRemark();
 		int salesId = StrUtil.objToInt(memberCardOpInputView.getSalesId());
 		MemberCard memberCard = getMemberCard(StrUtil.objToInt(cardId));
@@ -303,8 +316,8 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		String cardId = memberCardOpInputView.getCardId();
 		String balanceStyle = memberCardOpInputView.getBalanceStyle();
 		Double czMoney = StrUtil.objToDouble(memberCardOpInputView.getCzMoney());
-		Double subMoney = StrUtil.objToDouble(memberCardOpInputView.getSubMoney());
-		Double givingAmount = StrUtil.objToDouble(memberCardOpInputView.getGivingAmount());
+		Double subMoney = StrUtil.objToDoubleDef0(memberCardOpInputView.getSubMoney());
+		Double givingAmount = StrUtil.objToDoubleDef0(memberCardOpInputView.getGivingAmount());
 		String remark = memberCardOpInputView.getRemark();
 		Integer salesId = memberCardOpInputView.getSalesId();
 		
@@ -340,8 +353,8 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		String cardId = memberCardOpInputView.getCardId();
 		String balanceStyle = memberCardOpInputView.getBalanceStyle();
 		Double buBanMoney = StrUtil.objToDouble(memberCardOpInputView.getBuBanMoney());
-		Double subMoney = StrUtil.objToDouble(memberCardOpInputView.getSubMoney());
-		Double givingAmount = StrUtil.objToDouble(memberCardOpInputView.getGivingAmount());
+		Double subMoney = StrUtil.objToDoubleDef0(memberCardOpInputView.getSubMoney());
+		Double givingAmount = StrUtil.objToDoubleDef0(memberCardOpInputView.getGivingAmount());
 		String remark = memberCardOpInputView.getRemark();
 		int salesId = StrUtil.objToInt(memberCardOpInputView.getSalesId());
 		MemberCard memberCard = getMemberCard(StrUtil.objToInt(cardId));
@@ -354,6 +367,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		memberCard.setUpdateTime(nowDate);
 		memberCard.setCardRemark(remark);
 		memberCard.setCardBalance(memberCard.getCardBalance()+givingAmount);
+		memberCard.setCardNo(memberCardOpInputView.getNewCardNo()); //补办新创建会员卡号
 		baseDao.save(memberCard, memberCard.getCardId());
 		
 		OtherBalance balance = new OtherBalance();
@@ -400,6 +414,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		if(StrUtil.isNotBlank(cardId)){
 			whereSql.append(" AND mc.cardId = :cardId");
 		}
+		whereSql.append(" ORDER BY ob.createTime DESC");
 		PageBean pageBean = super.getPageBean(headSql, bodySql, whereSql, balanceInputView, SQLUtil.getInToSQL("balanceTypeArr", balanceType));
 		List<Map<String, Object>> list = pageBean.getList();
 		for(Map<String, Object> map : list){ 
@@ -438,7 +453,12 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	
 	@Override
 	public Map<String, Object> getRegMember(int memberId) {
-		return baseDao.queryBySqlFirst("SELECT memberId, memberName, memberMobile, memberType FROM user_member WHERE memberId = ?", memberId);
+		return baseDao.queryBySqlFirst("SELECT memberId, memberName, memberMobile, memberType, tempCardNo FROM user_member WHERE memberId = ?", memberId);
+	}
+	
+	@Override
+	public Map<String, Object> getOperations(String cardNo){
+		return baseDao.queryBySqlFirst("SELECT um.memberId, mc.cardNo, um.memberName, um.memberMobile, mc.cardBalance, mc.cardDeadline FROM member_card mc, user_member um WHERE mc.memberId = um.memberId AND  mc.cardNo = ?", cardNo);
 	}
 	
 	private Map<String, Object> getType(Map<String, Object> map) {
