@@ -20,12 +20,12 @@
                 <form class="form-inline" id="balance_filter_form" onsubmit="return false;">
                     <input type="hidden" placeholder="开始时间" name="cardId" value="${cardId}">
                     <div class="form-group">
-                        <select class="form-control" name="balanceType">
+                        <select class="form-control" name="balanceServiceType">
                             <option value="">订单类型</option>
-                            <option value="10" <c:if test="${balanceType == 10}">selected</c:if>>注册会员</option>
-                            <option value="11" <c:if test="${balanceType == 11}">selected</c:if>>会员充值</option>
-                            <option value="12" <c:if test="${balanceType == 12}">selected</c:if>>会员升级</option>
-                            <option value="13" <c:if test="${balanceType == 13}">selected</c:if>>会员补办</option>
+                            <option value="10" <c:if test="${balanceServiceType == 10}">selected</c:if>>注册会员</option>
+                            <option value="11" <c:if test="${balanceServiceType == 11}">selected</c:if>>会员充值</option>
+                            <option value="12" <c:if test="${balanceServiceType == 12}">selected</c:if>>会员升级</option>
+                            <option value="13" <c:if test="${balanceServiceType == 13}">selected</c:if>>会员补办</option>
                         </select>
                     </div>
                     <div class="form-group">

@@ -5,7 +5,7 @@
 
         var conditions = $("#member_filter_form").serialize();
 
-        location.assign('/member/memberList?' + conditions);
+        location.assign('member/memberList?' + conditions);
     });
 
     // 分页点击

@@ -17,6 +17,7 @@ public class OtherInvoice implements java.io.Serializable {
 	// Fields
 
 	private Integer invoiceId;
+	private String invoiceNo;
 	private String invoiceServiceType;
 	private Integer invoiceServiceId;
 	private String invoiceHeader;
@@ -41,10 +42,12 @@ public class OtherInvoice implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public OtherInvoice(String invoiceServiceType, Integer invoiceServiceId,
-			String invoiceHeader, String invoiceContent, Double invoiceMoney,
-			String invoiceRemark, String invoiceState, String createTime,
-			String printTime, Integer salesId) {
+	public OtherInvoice(String invoiceNo, String invoiceServiceType,
+			Integer invoiceServiceId, String invoiceHeader,
+			String invoiceContent, Double invoiceMoney, String invoiceRemark,
+			String invoiceState, String createTime, String printTime,
+			Integer salesId) {
+		this.invoiceNo = invoiceNo;
 		this.invoiceServiceType = invoiceServiceType;
 		this.invoiceServiceId = invoiceServiceId;
 		this.invoiceHeader = invoiceHeader;
@@ -67,6 +70,15 @@ public class OtherInvoice implements java.io.Serializable {
 
 	public void setInvoiceId(Integer invoiceId) {
 		this.invoiceId = invoiceId;
+	}
+
+	@Column(name = "invoiceNo", length = 32)
+	public String getInvoiceNo() {
+		return this.invoiceNo;
+	}
+
+	public void setInvoiceNo(String invoiceNo) {
+		this.invoiceNo = invoiceNo;
 	}
 
 	@Column(name = "invoiceServiceType", nullable = false, length = 16)

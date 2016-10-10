@@ -10,7 +10,7 @@
 
         var conditions = $("#card_filter_form").serialize();
 
-        location.assign('/member/getMemberCarTypes?' + conditions);
+        location.assign('member/getMemberCarTypes?' + conditions);
     });
 
     // 增加会员类型

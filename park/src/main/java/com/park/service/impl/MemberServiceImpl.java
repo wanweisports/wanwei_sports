@@ -15,6 +15,7 @@ import com.park.common.bean.MemberCardOpInputView;
 import com.park.common.bean.MemberInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.constant.IDBConstant;
+import com.park.common.constant.IPlatformConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.MemberCard;
 import com.park.common.po.MemberCardType;
@@ -200,7 +201,8 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			//调用打印接口
 			
 		}
-		invoice.setInvoiceState(IDBConstant.LOGIC_STATUS_NO); //默认未打印
+		invoice.setInvoiceState(IDBConstant.LOGIC_STATUS_NO); //默认未打印，改变状态需要结合打印机状态
+		invoice.setInvoiceNo(getInvoiceNo());
 		baseDao.save(invoice, null);
 		return invoice.getInvoiceId();
 	}
@@ -216,6 +218,8 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		String memberIdcard = memberInputView.getMemberIdcard();
 		String cardNo = memberInputView.getCardNo();
 		String cardTypeId = memberInputView.getCardTypeId();
+		String memberType = memberInputView.getMemberType();
+		
 		StringBuilder headSql = new StringBuilder("SELECT uo.operatorName, um.memberId, mc.cardId, um.memberName, um.memberMobile, um.memberIdcard, mc.cardNo, mc.cardTypeId, mc.cardDeadline, mc.cardBalance, mc.cardStatus, mc.salesId, DATE_FORMAT(mc.createTime,'%Y-%m-%d') createTime, tempCardNo");
 		StringBuilder bodySql = new StringBuilder(" FROM user_member um");
 		bodySql.append(" LEFT JOIN member_card mc ON(um.memberId = mc.memberId)");
@@ -232,6 +236,9 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		}
 		if(StrUtil.isNotBlank(cardTypeId)){
 			whereSql.append(" AND mc.cardTypeId = :cardTypeId");
+		}
+		if(StrUtil.isNotBlank(memberType)){
+			whereSql.append(" AND um.memberType = :memberType");
 		}
 		PageBean pageBean = super.getPageBean(headSql, bodySql, whereSql, memberInputView);
 		List<Map<String, Object>> list = pageBean.getList();
@@ -395,6 +402,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		String createTimeEnd = balanceInputView.getCreateTimeEnd();
 		String memberMobile = balanceInputView.getMemberMobile();
 		String cardId = balanceInputView.getCardId();
+		String balanceServiceType = balanceInputView.getBalanceServiceType();
 		
 		StringBuilder headSql = new StringBuilder("SELECT balanceId, balanceNo, memberName, balanceServiceType, balanceStyle, balanceServiceName, realAmount, balanceStatus, ob.salesId, uo.operatorName, DATE_FORMAT(ob.createTime,'%Y-%m-%d') createTime");
 		StringBuilder bodySql = new StringBuilder(" FROM other_balance ob, member_card mc, user_member um, user_operator uo");
@@ -407,12 +415,16 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		}
 		if(StrUtil.isNotBlank(createTimeEnd)){
 			whereSql.append(" AND ob.createTime <= :createTimeEnd");
+			balanceInputView.setCreateTimeEnd(createTimeEnd + IPlatformConstant.time24);
 		}
 		if(StrUtil.isNotBlank(memberMobile)){
 			whereSql.append(" AND um.memberMobile = :memberMobile");
 		}
 		if(StrUtil.isNotBlank(cardId)){
 			whereSql.append(" AND mc.cardId = :cardId");
+		}
+		if(StrUtil.isNotBlank(balanceServiceType)){
+			whereSql.append(" AND ob.balanceServiceType = :balanceServiceType");
 		}
 		whereSql.append(" ORDER BY ob.createTime DESC");
 		PageBean pageBean = super.getPageBean(headSql, bodySql, whereSql, balanceInputView, SQLUtil.getInToSQL("balanceTypeArr", balanceType));
@@ -478,6 +490,10 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	}
 	
 	private String getBalanceNo(){
+		return DateUtil.dateToString(new Date(), DateUtil.YYYYMMDD_HMS);
+	}
+	
+	private String getInvoiceNo(){
 		return DateUtil.dateToString(new Date(), DateUtil.YYYYMMDD_HMS);
 	}
 

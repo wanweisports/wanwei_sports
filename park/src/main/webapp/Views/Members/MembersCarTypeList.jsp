@@ -14,22 +14,10 @@
                 <div class="panel-body">
                     <form id="card_filter_form" class="form-inline col-sm-8" onsubmit="return false;">
                         <div class="form-group">
-                            <select class="form-control" style="width:200px;" name="cardTypeStatus">
-                                <c:if test="${cardTypeStatus == ''}">
-                                    <option value="" selected>全部状态</option>
-                                    <option value="1">正常</option>
-                                    <option value="2">锁定</option>
-                                </c:if>
-                                <c:if test="${cardTypeStatus == 1}">
-                                    <option value="">全部状态</option>
-                                    <option value="1" selected>正常</option>
-                                    <option value="2">锁定</option>
-                                </c:if>
-                                <c:if test="${cardTypeStatus == 2}">
-                                    <option value="">全部状态</option>
-                                    <option value="1">正常</option>
-                                    <option value="2" selected>锁定</option>
-                                </c:if>
+                            <select class="form-control" style="width:200px;" name="cardTypeStatus" id="cardTypeStatus">
+                                 <option value="" selected>全部状态</option>
+                                 <option value="1">正常</option>
+                                 <option value="2">锁定</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -446,4 +434,4 @@
 <script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js"></script>
 <script src="Content/app/members/members_card_types.js?__inline"></script>
 <jsp:include page="/Views/Shared/Footer.jsp" />
-
+<script>$("#cardTypeStatus").val('${cardTypeStatus}');</script>

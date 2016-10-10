@@ -27,21 +27,9 @@
                                 <label for="payment_type" class="col-sm-4 control-label">支付类型</label>
                                 <div class="col-sm-8">
                                     <select class="form-control" id="payment_type" name="memberType">
-                                        <c:if test="${!memberType}">
-                                            <option value="" selected>全部类型</option>
-                                            <option value="1">预付类型</option>
-                                            <option value="2">记账类型</option>
-                                        </c:if>
-                                        <c:if test="${memberType == '1'}">
-                                            <option value="">全部类型</option>
-                                            <option value="1" selected>预付类型</option>
-                                            <option value="2">记账类型</option>
-                                        </c:if>
-                                        <c:if test="${memberType == '2'}">
-                                            <option value="">全部类型</option>
-                                            <option value="1">预付类型</option>
-                                            <option value="2" selected>记账类型</option>
-                                        </c:if>
+                                         <option value="">全部类型</option>
+                                         <option value="1">预付类型</option>
+                                         <option value="2">记账类型</option>
                                     </select>
                                 </div>
                             </div>
@@ -219,4 +207,4 @@
 <jsp:include page="/Views/Shared/Common.jsp" />
 <script src="Content/app/members/members_list_query.js"></script>
 <jsp:include page="/Views/Shared/Footer.jsp" />
-
+<script>$("#payment_type").val('${memberType}');</script>

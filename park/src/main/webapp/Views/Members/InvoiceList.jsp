@@ -15,22 +15,10 @@
                 <div class="panel-body">
                     <form class="form-inline col-sm-8" id="ticket_filter_form" onsubmit="return false;">
                         <div class="form-group">
-                            <select class="form-control" style="width:200px;" name="status">
-                                <c:if test="${status != 1 && status != 2}">
-                                    <option value="" selected>全部状态</option>
-                                    <option value="1">已领取</option>
-                                    <option value="2">未领取</option>
-                                </c:if>
-                                <c:if test="${status == 1}">
-                                    <option value="">全部状态</option>
-                                    <option value="1" selected>已领取</option>
-                                    <option value="2">未领取</option>
-                                </c:if>
-                                <c:if test="${status == 2}">
-                                    <option value="">全部状态</option>
-                                    <option value="1">已领取</option>
-                                    <option value="2" selected>未领取</option>
-                                </c:if>
+                            <select class="form-control" style="width:200px;" name="status" id="status">
+                                <option value="" selected>全部状态</option>
+                                <option value="1">已领取</option>
+                                <option value="2">未领取</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -79,7 +67,7 @@
                                             </label>
 	                                    </c:if>
                                     </td>
-	                                <td>${invoice.invoiceId}</td>
+	                                <td>${invoice.invoiceNo}</td>
 	                                <td>${invoice.invoiceHeader}</td>
 	                                <td>${invoice.invoiceMoney}</td>
 	                                <td>${invoice.invoiceContent}</td>
@@ -174,4 +162,4 @@
 <jsp:include page="/Views/Shared/Common.jsp" />
 <script src="Content/app/members/members_invoice_list.js"></script>
 <jsp:include page="/Views/Shared/Footer.jsp" />
-
+<<script type="text/javascript">$("#status").val('${status}');</script>
