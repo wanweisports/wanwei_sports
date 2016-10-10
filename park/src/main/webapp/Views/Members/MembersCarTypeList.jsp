@@ -433,5 +433,5 @@
 <script src="Content/lib/jquery/jquery.validate/jquery.validate.js"></script>
 <script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js"></script>
 <script src="Content/app/members/members_card_types.js?__inline"></script>
-<jsp:include page="/Views/Shared/Footer.jsp" />
 <script>$("#cardTypeStatus").val('${cardTypeStatus}');</script>
+<jsp:include page="/Views/Shared/Footer.jsp" />

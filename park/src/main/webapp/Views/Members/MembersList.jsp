@@ -206,5 +206,5 @@
 </div>
 <jsp:include page="/Views/Shared/Common.jsp" />
 <script src="Content/app/members/members_list_query.js"></script>
-<jsp:include page="/Views/Shared/Footer.jsp" />
 <script>$("#payment_type").val('${memberType}');</script>
+<jsp:include page="/Views/Shared/Footer.jsp" />

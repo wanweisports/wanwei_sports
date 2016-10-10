@@ -92,7 +92,7 @@
                 </div>
                 <div class="panel-body">
                     <form class="form-horizontal refresh-card-form" onsubmit="return false;">
-                        <input type="hidden" id="refresh_cardId" name="cardId" value="">
+                        <input type="hidden" id="refresh_cardId" name="cardId" value="${cardId}">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="refresh_money" class="col-sm-4 control-label">
@@ -182,7 +182,7 @@
             </div>
             <div class="panel-body">
                 <form class="form-horizontal recharge-card-form" onsubmit="return false;">
-                    <input type="hidden" id="recharge_cardId" name="cardId" value="">
+                    <input type="hidden" id="recharge_cardId" name="cardId" value="${cardId}">
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="recharge_money" class="col-sm-4 control-label">
@@ -264,7 +264,7 @@
             </div>
             <div class="panel-body">
                 <form class="form-horizontal upgrade-card-form" onsubmit="return false;">
-                    <input type="hidden" id="upgrade_cardId" name="cardId" value="">
+                    <input type="hidden" id="upgrade_cardId" name="cardId" value="${cardId}">
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="member_type" class="col-sm-4 control-label">会员类型</label>
@@ -375,5 +375,9 @@
 </div>
 
 <jsp:include page="/Views/Shared/Common.jsp" />
+<script src="Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script src="Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.zh-CN.min.js"></script>
+<script src="Content/lib/jquery/jquery.validate/jquery.validate.js"></script>
+<script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js"></script>
 <script src="Content/app/members/members_card_operations.js"></script>
 <jsp:include page="/Views/Shared/Footer.jsp" />

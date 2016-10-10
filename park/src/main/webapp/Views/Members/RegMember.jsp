@@ -89,8 +89,8 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="memberIdcard" name="memberIdcard"
                                        placeholder="请输入18位身份证号" autocomplete="off"
-                                       data-val-regex-pattern="^\d{18}$|^\d{17}(\d|X|x)$"
-                                       data-val-regex="身份证号格式错误">
+                                       data-val-regex-pattern="^\d{17}(\d|X|x)$"
+                                       data-val-regex="身份证号格式错误" data-val="true">
                                 <div data-valmsg-for="memberIdcard" data-valmsg-replace="true"></div>
                             </div>
                         </div>

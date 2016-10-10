@@ -2,7 +2,16 @@
     $(".member-card-filter").on("click", function (e) {
         e.preventDefault();
 
-        // 回填信息
+        // 获取新会员卡号
+        $.post('member/getNewCardNo', function (res) {
+            var data = res.data;
+
+            if (res.status == 200) {
+                $("#newCardNo").val(data.newCardNo);
+            } else {
+                alert("新会员卡号生成失败, 请稍后重试");
+            }
+        });
     });
 
     // 切换tab
@@ -119,8 +128,4 @@
             }
         });
     });
-    
-    $.post('member/getNewCardNo', function (res) {
-    	$("#newCardNo").val(res.data.newCardNo);
-    }, 'json');
 })(jQuery);
