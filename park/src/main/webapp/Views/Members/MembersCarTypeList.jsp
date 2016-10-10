@@ -3,7 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 
 <jsp:include page="/Views/Shared/Header.jsp" />
- <div class="ww-wrapper">
+ <div class="ww-wrapper" onload="">
     <div class="wrapper">
         <ol class="breadcrumb">
             <li><a href="/">工作平台</a></li>
@@ -15,7 +15,7 @@
                     <form id="card_filter_form" class="form-inline col-sm-8" onsubmit="return false;">
                         <div class="form-group">
                             <select class="form-control" style="width:200px;" name="cardTypeStatus" id="cardTypeStatus">
-                                 <option value="" selected>全部状态</option>
+                                 <option value="">全部状态</option>
                                  <option value="1">正常</option>
                                  <option value="2">锁定</option>
                             </select>

@@ -16,7 +16,7 @@
                     <form class="form-inline col-sm-8" id="ticket_filter_form" onsubmit="return false;">
                         <div class="form-group">
                             <select class="form-control" style="width:200px;" name="status" id="status">
-                                <option value="" selected>全部状态</option>
+                                <option value="">全部状态</option>
                                 <option value="1">已领取</option>
                                 <option value="2">未领取</option>
                             </select>
