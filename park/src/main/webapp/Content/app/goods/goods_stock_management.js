@@ -22,8 +22,12 @@
 
     // 上/下架
     function goodInOrOut(goodId, up){
-        $.post("good/goodInOrOut", {goodId: goodId, up: up}, function () {
-            location.reload();
+        $.post("good/goodInOrOut", {goodId: goodId, up: up}, function (res) {
+        	if(res.code == 1){
+        		location.reload();
+        	}else{
+        		alert(res.message);
+        	}
         });
     }
 

@@ -10,7 +10,7 @@
             <li><a href="/">工作平台</a></li>
             <li class="active">商品设置</li>
         </ol>
-        <form id="good_form" class="form-horizontal"  method="post" novalidate onsubmit="return false;">
+        <form id="good_form" class="form-horizontal"  method="post" novalidate onsubmit="return false;" enctype="multipart/form-data">
             <input type="hidden" id="goodId" name="goodId" value="${goodId}">
             <div class="panel panel-default">
                 <div class="panel-heading">商品信息</div>
@@ -112,5 +112,7 @@
 </div>
  
 <jsp:include page="/Views/Shared/Common.jsp" />
+<script src="Content/lib/jquery/jquery.validate/jquery.validate.js"></script>
+<script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js"></script>
 <script src="Content/app/goods/goods_settings.js"></script>
 <jsp:include page="/Views/Shared/Footer.jsp" />

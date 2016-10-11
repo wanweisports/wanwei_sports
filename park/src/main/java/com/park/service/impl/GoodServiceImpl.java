@@ -32,7 +32,7 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 		String nowDate = DateUtil.getNowDate();
 		if(goodId == null){ //添加
 			//goodInfo.setGoodNo(getGoodNo()); //商品编号[手动输入]
-			goodInfo.setGoodStatus(IDBConstant.GOOD_STATE_BOOKING); //添加默认预售，库存0【有预售：再定】
+			goodInfo.setGoodStatus(IDBConstant.GOOD_STATE_BOOKING); //商品的预售和在售   商品刚添加完就是预售状态   上架后就是在售状态  下架后又是预售状态
 			if(goodInfo.getGoodCount() == null){
 				goodInfo.setGoodCount(0);
 			}
@@ -88,7 +88,7 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 		if(goodInfoDB == null) throw new MessageException("商品信息不存在！");
 		goodInfoDB.setGoodCount(goodInfoDB.getGoodCount()+goodInfo.getGoodCount());
 		//有库存：在售
-		if(IDBConstant.GOOD_STATE_BOOKING.equals(goodInfoDB.getGoodStatus()) && goodInfoDB.getGoodCount() > 0) goodInfoDB.setGoodStatus(IDBConstant.GOOD_STATE_ING);
+		//if(IDBConstant.GOOD_STATE_BOOKING.equals(goodInfoDB.getGoodStatus()) && goodInfoDB.getGoodCount() > 0) goodInfoDB.setGoodStatus(IDBConstant.GOOD_STATE_ING);
 		baseDao.save(goodInfoDB, goodInfoDB.getGoodId());
 	}
 	
@@ -96,13 +96,14 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 	public void updateGoodInOrOut(int goodId, boolean up){
 		GoodInfo goodInfoDB = this.getGoodInfo(goodId);
 		if(goodInfoDB == null) throw new MessageException("商品信息不存在！");
-		if(!up){ //下架
-			goodInfoDB.setGoodStatus(IDBConstant.GOOD_STATE_OUT);
+		if(!up){ //下架[变为预售]
+			goodInfoDB.setGoodStatus(IDBConstant.GOOD_STATE_BOOKING);
 		}else{
 			//有库存：在售
 			if(goodInfoDB.getGoodCount() > 0) goodInfoDB.setGoodStatus(IDBConstant.GOOD_STATE_ING);
-			//无库存：预售
-			if(goodInfoDB.getGoodCount() <= 0) goodInfoDB.setGoodStatus(IDBConstant.GOOD_STATE_BOOKING);
+			//无库存：报错提示无库存不能上架
+			//if(goodInfoDB.getGoodCount() <= 0) goodInfoDB.setGoodStatus(IDBConstant.GOOD_STATE_BOOKING);
+			else throw new MessageException("当前库存为0，不能上架");
 		}
 		baseDao.save(goodInfoDB, goodInfoDB.getGoodId());
 	}

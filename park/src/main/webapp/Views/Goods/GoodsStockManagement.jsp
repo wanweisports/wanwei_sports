@@ -66,13 +66,13 @@
                                 <td>${good.operatorName}</td>
                                 <td>${good.createTime}</td>
                                 <td>
-                                    <c:if test="${good.goodStatus == 3}">
+                                    <c:if test="${good.goodStatus == 2}">
                                         <a href="javascript:;" class="btn btn-primary goods-enter"
                                                 data-id="${good.goodId}">
                                             <span class="glyphicon glyphicon-arrow-up"></span> 上架
                                         </a>
                                     </c:if>
-                                    <c:if test="${good.goodStatus != 3}">
+                                    <c:if test="${good.goodStatus == 1}">
                                         <a href="javascript:;" class="btn btn-primary goods-outer"
                                            data-id="${good.goodId}">
                                             <span class="glyphicon glyphicon-arrow-down"></span> 下架
