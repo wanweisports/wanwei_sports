@@ -45,6 +45,8 @@ public interface IMemberService {
 	
 	public OtherInvoice getInvoice(String serviceType, int serviceId);
 	
+	public OtherInvoice getInvoice(int invoiceId);
+	
 	public PageBean getUserMembers(MemberInputView memberInputView);
 	
 	public Map<String, Object> getUserMemberAndCard(int memberId);

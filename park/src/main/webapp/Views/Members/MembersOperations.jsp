@@ -33,7 +33,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" name="cardId">
+                        <input type="hidden" name="cardId" value="${cardId}">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-sm-4 control-label">会员姓名</label>

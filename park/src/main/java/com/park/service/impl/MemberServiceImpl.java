@@ -82,6 +82,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	public Map<String, Object> saveMemberCar(MemberCard memberCard, OtherBalance otherBalance) {
 		UserMember userMember = getUserMember(memberCard.getMemberId());
 		if(userMember == null) throw new MessageException("会员信息不存在！");
+		Map<String, Object> data = new HashMap<String, Object>();
 		if(getMemberCards(userMember.getMemberId()).size() == 0){// throw new RotaryException("该会员已绑定了会员卡！");
 			MemberCardType memberCarType = getMemberCardType(memberCard.getCardTypeId());
 			if(memberCarType == null) throw new MessageException("会员卡类型不存在！");
@@ -101,9 +102,9 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			//原始金额（充值金额|升级金额|补办金额）
 			otherBalance.setOldAmount(memberCard.getCardBalance());
 			//实际价格（最终支付金额）
-			otherBalance.setRealAmount(memberCard.getCardBalance()+memberCarType.getCardTypeMoney()-otherBalance.getSubAmount());
+			otherBalance.setRealAmount(memberCard.getCardBalance()+memberCarType.getCardTypeMoney()-StrUtil.objToDoubleDef0(otherBalance.getSubAmount()));
 			
-			memberCard.setCardBalance(memberCard.getCardBalance()+otherBalance.getGivingAmount()); //会员卡金额（充值+赠送）
+			memberCard.setCardBalance(memberCard.getCardBalance()+StrUtil.objToDoubleDef0(otherBalance.getGivingAmount())); //会员卡金额（充值+赠送）
 			baseDao.save(memberCard, memberCard.getCardId());
 			baseDao.save(userMember, userMember.getMemberId());
 			
@@ -118,11 +119,18 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			//订单状态（暂定，现金直接已支付，如果是微信应该是回调）
 			otherBalance.setBalanceStatus(IDBConstant.BALANCE_STATUS_ALL);
 			baseDao.save(otherBalance, null);
+			OtherInvoice invoice = new OtherInvoice();
+			invoice.setInvoiceNo(otherBalance.getBalanceNo());
+			invoice.setSalesId(memberCard.getSalesId());
+			invoice.setInvoiceServiceType(IDBConstant.BALANCE_SERVICE_TYPE_REG);
+			invoice.setInvoiceServiceId(userMember.getMemberId());
+			//保存发票信息
+			data.put("invoiceId", saveInvoice(invoice));
 		}else{
 			memberCard = getMemberCards(memberCard.getMemberId()).get(0);
 			otherBalance = getOtherBalance(IDBConstant.BALANCE_SERVICE_TYPE_REG, memberCard.getCardId());
+			data.put("invoiceId", getInvoice(IDBConstant.BALANCE_SERVICE_TYPE_REG, userMember.getMemberId()).getInvoiceId());
 		}
-		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("cardId", memberCard.getCardId());
 		data.put("balanceNo", otherBalance.getBalanceNo());
 		data.put("balanceServiceType", otherBalance.getBalanceServiceType());
@@ -194,22 +202,41 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	
 	@Override
 	public Integer saveInvoice(OtherInvoice invoice) {
-		if(getInvoice(invoice.getInvoiceServiceType(), invoice.getInvoiceServiceId()) != null) throw new MessageException("已打印！");
-		invoice.setCreateTime(DateUtil.getNowDate());
-		if(IDBConstant.LOGIC_STATUS_YES.equals(invoice.getInvoiceState())){ //打印
+		//OtherInvoice invoiceDB = getInvoice(invoice.getInvoiceServiceType(), invoice.getInvoiceServiceId());
+		boolean isPrint = IDBConstant.LOGIC_STATUS_YES.equals(invoice.getInvoiceState());
+		if(isPrint){ //打印
 			invoice.setPrintTime(DateUtil.getNowDate());
-			//调用打印接口
-			
 		}
-		invoice.setInvoiceState(IDBConstant.LOGIC_STATUS_NO); //默认未打印，改变状态需要结合打印机状态
-		//invoice.setInvoiceNo(getInvoiceNo()); //发票的流水号和订单的流水号是一个不是两个【再议】
-		baseDao.save(invoice, null);
+		if(invoice.getInvoiceId() != null){ //修改
+			OtherInvoice invoiceDB = getInvoice(invoice.getInvoiceId());
+			if(invoiceDB != null && IDBConstant.LOGIC_STATUS_YES.equals(invoiceDB.getInvoiceState())) throw new MessageException("已经打印过了！");
+			invoiceDB.setInvoiceHeader(invoice.getInvoiceHeader());
+			invoiceDB.setInvoiceContent(invoice.getInvoiceContent());
+			invoiceDB.setInvoiceMoney(invoice.getInvoiceMoney());
+			invoiceDB.setInvoiceRemark(invoice.getInvoiceRemark());
+			invoiceDB.setInvoiceState(invoice.getInvoiceState()!=null?invoice.getInvoiceState():IDBConstant.LOGIC_STATUS_NO);
+			invoiceDB.setPrintTime(invoice.getPrintTime());
+			baseDao.save(invoiceDB, invoiceDB.getInvoiceId());
+		}else{ //新建
+			invoice.setCreateTime(DateUtil.getNowDate());
+			invoice.setInvoiceState(IDBConstant.LOGIC_STATUS_NO); //默认未打印，改变状态需要结合打印机状态
+			//invoice.setInvoiceNo(getInvoiceNo()); //发票的流水号和订单的流水号是一个不是两个
+			baseDao.save(invoice, invoice.getInvoiceId());
+		}
+		if(isPrint){
+			//调用打印接口
+		}
 		return invoice.getInvoiceId();
 	}
 	
 	@Override
 	public OtherInvoice getInvoice(String serviceType, int serviceId) {
 		return baseDao.queryByHqlFirst("FROM OtherInvoice WHERE invoiceServiceType=? AND invoiceServiceId=?", serviceType, serviceId);
+	}
+	
+	@Override
+	public OtherInvoice getInvoice(int invoiceId) {
+		return baseDao.queryByHqlFirst("FROM OtherInvoice WHERE invoiceId=?", invoiceId);
 	}
 	
 	@Override
@@ -451,6 +478,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		if(StrUtil.isNotBlank(invoiceHeader)){
 			whereSql.append(" AND invoiceHeader = :invoiceHeader");
 		}
+		whereSql.append(" ORDER BY oi.createTime DESC");
 		return super.getPageBean(headSql, bodySql, whereSql, invoiceInputView);
 	}
 	
@@ -470,7 +498,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	
 	@Override
 	public Map<String, Object> getOperations(String cardNo){
-		return baseDao.queryBySqlFirst("SELECT um.memberId, mc.cardNo, um.memberName, um.memberMobile, mc.cardBalance, mc.cardDeadline, mc.cardTypeId FROM member_card mc, user_member um WHERE mc.memberId = um.memberId AND  mc.cardNo = ?", cardNo);
+		return baseDao.queryBySqlFirst("SELECT mc.cardId, um.memberId, mc.cardNo, um.memberName, um.memberMobile, mc.cardBalance, mc.cardDeadline, mc.cardTypeId FROM member_card mc, user_member um WHERE mc.memberId = um.memberId AND  mc.cardNo = ?", cardNo);
 	}
 	
 	private Map<String, Object> getType(Map<String, Object> map) {

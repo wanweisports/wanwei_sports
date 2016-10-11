@@ -269,8 +269,7 @@
                                 </div>
                             </div>
                             <div class="row is-show-ticket" style="display: none;">
-                                <input type="hidden" name="invoiceServiceType" value="10">
-                                <input type="hidden" name="invoiceServiceId" value="${memberId}">
+                                <input type="hidden" name="invoiceId" value="${invoiceId}">
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="ticket_header" class="col-sm-4 control-label">发票抬头</label>
