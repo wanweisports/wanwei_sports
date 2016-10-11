@@ -8,7 +8,7 @@
     <div class="wrapper">
         <ol class="breadcrumb">
             <li><a href="/">工作平台</a></li>
-            <li><a href="/member/memberList">会员查询</a></li>
+            <li><a href="member/memberList">会员查询</a></li>
             <li><a href="member/memberInfo?memberId=${memberId}">会员详情</a></li>
             <li class="active">订单明细</li>
         </ol>

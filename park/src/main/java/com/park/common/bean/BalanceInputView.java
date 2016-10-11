@@ -14,6 +14,8 @@ public class BalanceInputView extends BaseInputView {
 	private String cardId;
 	
 	private String balanceServiceType;
+	
+	private String memberId;
 
 	public String getBalanceType() {
 		return balanceType;
@@ -63,4 +65,12 @@ public class BalanceInputView extends BaseInputView {
 		this.balanceServiceType = balanceServiceType;
 	}
 
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+	
 }

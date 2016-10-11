@@ -161,5 +161,5 @@
 
 <jsp:include page="/Views/Shared/Common.jsp" />
 <script src="Content/app/members/members_invoice_list.js"></script>
-<<script type="text/javascript">$("#status").val('${status}');</script>
+<script type="text/javascript">$("#status").val('${status}');</script>
 <jsp:include page="/Views/Shared/Footer.jsp" />

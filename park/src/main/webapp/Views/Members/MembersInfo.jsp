@@ -8,7 +8,7 @@
     <div class="wrapper">
         <ol class="breadcrumb">
             <li><a href="/">工作平台</a></li>
-            <li><a href="/member/memberList">会员查询</a></li>
+            <li><a href="member/memberList">会员查询</a></li>
             <li class="active">会员详情</li>
         </ol>
         <form id="member_form" class="form-horizontal" method="post" novalidate onsubmit="return false;">
@@ -199,7 +199,7 @@
                                 <input type="text" class="form-control" value="${cardBalance}" disabled>
                             </div>
                             <div class="col-sm-2">
-                                <a href="member/getBalances?cardId=${cardId}" class="btn btn-primary" title="收支明细">
+                                <a href="member/getBalances?cardId=${cardId}&memberId=${memberId}" class="btn btn-primary" title="收支明细">
                                     <span class="glyphicon glyphicon-th-list"></span>
                                 </a>
                             </div>

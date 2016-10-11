@@ -202,7 +202,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			
 		}
 		invoice.setInvoiceState(IDBConstant.LOGIC_STATUS_NO); //默认未打印，改变状态需要结合打印机状态
-		invoice.setInvoiceNo(getInvoiceNo());
+		//invoice.setInvoiceNo(getInvoiceNo()); //发票的流水号和订单的流水号是一个不是两个【再议】
 		baseDao.save(invoice, null);
 		return invoice.getInvoiceId();
 	}
