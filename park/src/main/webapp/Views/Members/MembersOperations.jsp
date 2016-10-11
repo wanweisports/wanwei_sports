@@ -272,7 +272,7 @@
                             <div class="col-sm-8">
                                 <select class="form-control" id="member_type" name="cardTypeId">
                                     <c:forEach var="type" items="${memberCarTypeNames}">
-                                         <option value="${type.cardTypeId}">${type.cardTypeName}</option>
+                                         <option value="${type.cardTypeId}" <c:if test='${cardTypeId==type.cardTypeId}'>selected</c:if>>${type.cardTypeName}</option>
                                     </c:forEach>
                                 </select>
                                 <div data-valmsg-for="cardTypeId" data-valmsg-replace="true"></div>

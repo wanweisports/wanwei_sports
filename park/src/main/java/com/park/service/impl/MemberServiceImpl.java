@@ -470,7 +470,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	
 	@Override
 	public Map<String, Object> getOperations(String cardNo){
-		return baseDao.queryBySqlFirst("SELECT um.memberId, mc.cardNo, um.memberName, um.memberMobile, mc.cardBalance, mc.cardDeadline FROM member_card mc, user_member um WHERE mc.memberId = um.memberId AND  mc.cardNo = ?", cardNo);
+		return baseDao.queryBySqlFirst("SELECT um.memberId, mc.cardNo, um.memberName, um.memberMobile, mc.cardBalance, mc.cardDeadline, mc.cardTypeId FROM member_card mc, user_member um WHERE mc.memberId = um.memberId AND  mc.cardNo = ?", cardNo);
 	}
 	
 	private Map<String, Object> getType(Map<String, Object> map) {

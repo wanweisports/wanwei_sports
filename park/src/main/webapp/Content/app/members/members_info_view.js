@@ -141,6 +141,11 @@
     });
     
     $.post('member/getNewCardNo', function (res) {
-    	$("#newCardNo").val(res.data.newCardNo);
+    	var data = res.data;
+        if (res.code == 1) {
+            $("#newCardNo").val(data.newCardNo);
+        } else {
+            alert("新会员卡号生成失败, 请稍后重试");
+        }
     }, 'json');
 })(jQuery);

@@ -1,18 +1,17 @@
 (function ($) {
-    $(".member-card-filter").on("click", function (e) {
-        e.preventDefault();
+    //$(".member-card-filter").on("click", function (e) {
+     //   e.preventDefault();
 
         // 获取新会员卡号
         $.post('member/getNewCardNo', function (res) {
             var data = res.data;
-
-            if (res.status == 200) {
+            if (res.code == 1) {
                 $("#newCardNo").val(data.newCardNo);
             } else {
                 alert("新会员卡号生成失败, 请稍后重试");
             }
         });
-    });
+    //});
 
     // 切换tab
     $(".tab-card").on("click", function (e) {
