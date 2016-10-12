@@ -12,12 +12,17 @@
     $(".page-first, .page-prev, .page-index, .page-next, .page-last").on("click", function (e) {
         e.preventDefault();
 
-        var href = location.href;
+        var conditions = location.search;
 
-        location.assign(
-            (href.indexOf("?") > 0) ?
-                (href + "&page=" + $(this).attr("data-index")) : (href + "?page=" + $(this).attr("data-index"))
-        );
+        if (conditions) {
+            if (conditions.indexOf("page=") == -1) {
+                location.assign(location.href + '&page=' + $(this).attr("data-index"));
+            } else {
+                location.assign(location.href.replace(/page=\d+/, "") + '&page=' + $(this).attr("data-index"));
+            }
+        } else {
+            location.assign('/good/getGoods?page=' + $(this).attr("data-index"));
+        }
     });
 
     // 上/下架
@@ -57,5 +62,24 @@
         $this.attr("working", "working");
 
         goodInOrOut($this.attr("data-id"), false);
+    });
+
+    // 进销存增加库存弹窗
+    $(".goods-list").on("click", ".goods-count", function () {
+        var $this = $(this);
+
+        $("input[name='goodId']").val($this.attr("data-id"));
+        $("#nowGoodCount").html($this.attr("data-count"));
+    });
+
+    // 确认增加库存
+    $("#kucunModal").on("click", ".confirm-count", function (e) {
+        e.preventDefault();
+
+        var $form = $("#good_kucun_form");
+
+        $.post("good/addGoodCount", $form.serialize(), function (res) {
+            location.reload();
+        });
     });
 })(jQuery);
