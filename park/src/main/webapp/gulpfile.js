@@ -76,5 +76,5 @@ gulp.task('js-hint', function() {
 
 gulp.task('default', ['build']);
 gulp.task('build', ['clean-files', 'stylus-compile']);
-gulp.task('watch', ['stylus-watch', 'js-watch', 'js-hint']);
+gulp.task('watch', ['stylus-watch', 'js-hint']);
 gulp.task('clean', ['clean-files']);

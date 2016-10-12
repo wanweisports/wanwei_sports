@@ -3,6 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 
 <jsp:include page="/Views/Shared/Header.jsp" />
+<link href="/Content/lib/jquery/jquery-steps/jquery.steps.css" rel="stylesheet" type="text/css">
 
 <div class="ww-wrapper">
     <div class="wrapper">
@@ -28,21 +29,25 @@
                 </div>
             </div>
             <div class="col-sm-12 col-md-2">
-                <a href="good/getGoodsCart" class="btn btn-primary pull-right">
+                <a href="good/getGoodsCart" class="btn btn-primary pull-right good-cart-count">
                     <span class="glyphicon glyphicon-shopping-cart"></span> 购物车
-                    <span class="badge">42</span>
+                    <span class="badge"></span>
                 </a>
             </div>
         </div>
-        <div class="row">
-            <c:forEach var="good" items="${goods }">
-	            <div class="col-sm-4 col-md-3">
+        <div class="row goods-buy-list">
+            <c:forEach var="good" items="${goods}">
+	            <div class="col-sm-4 col-md-3 goods-list-item">
 	                <div class="thumbnail">
-	                    <img src="${good.goodPic }" alt="${good.goodName }">
+	                    <img class="good-image" src="${good.goodPic}" alt="${good.goodName}">
 	                    <div class="caption">
-	                        <p>${good.goodName }</p>
-	                        <p>${good.goodPrice }元/件</p>
-	                        <p><a href="javascript:;" class="btn btn-primary">加入购物车</a></p>
+	                        <p class="good-name" data-text="${good.goodName}">${good.goodName}</p>
+	                        <p class="good-price" data-text="${good.goodPrice}">${good.goodPrice}元</p>
+	                        <p class="text-right">
+                                <a href="javascript:;" class="btn btn-primary good-cart-add" data-id="${good.goodId}">
+                                    <span class="glyphicon glyphicon-plus"></span> 购物车
+                                </a>
+                            </p>
 	                    </div>
 	                </div>
 	            </div>
@@ -52,4 +57,5 @@
 </div>
 
 <jsp:include page="/Views/Shared/Common.jsp" />
+<script src="/Content/app/goods/goods_market.js"></script>
 <jsp:include page="/Views/Shared/Footer.jsp" />
