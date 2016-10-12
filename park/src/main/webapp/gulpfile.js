@@ -15,14 +15,14 @@ gulp.task('stylus-compile', function() {
     gulp.src('./Content/style/**/*.styl')
         .pipe(plumber({errorHandler: notify.onError('error message: <%= error.message %>')}))
         .pipe(stylus({use: [nib()]}))
-        .pipe(gulp.dest('./Content/dist/css/'))
+        .pipe(gulp.dest('./Content/style/'))
         .pipe(notify({
             message: '<%= file.relative %> mcompiled successful',
             title: 'minify css'}))
         //.pipe(rename({suffix: '.min'}))
         .pipe(minifycss())
         .pipe(plumber.stop())
-        .pipe(gulp.dest('./Content/dist/css/'))
+        .pipe(gulp.dest('./Content/style/'))
         .pipe(notify({
             message: '<%= file.relative %> minified successful',
             title: 'minify css'}));
@@ -42,28 +42,28 @@ gulp.task('stylus-watch', function() {
     .pipe(watch(function(files) {
         return files.pipe(plumber({errorHandler: notify.onError('error message: <%= error.message %>')}))
             .pipe(stylus({use: [nib()]}))
-            .pipe(gulp.dest('./Content/dist/css/'))
+            .pipe(gulp.dest('./Content/style/'))
             .pipe(notify({
                 message: '<%= file.relative %> mcompiled successful',
                 title: 'minify css'}))
             //.pipe(rename({suffix: '.min'}))
-            .pipe(minifycss())
+            //.pipe(minifycss())
             .pipe(plumber.stop())
-            .pipe(gulp.dest('./Content/dist/css/'))
+            .pipe(gulp.dest('./Content/style/'))
             .pipe(notify({
                 message: '<%= file.relative %> minified successful',
                 title: 'minify css'}));
     }));
 });
 
-gulp.task('js-watch', function(){
+gulp.task('js-compile', function(){
     gulp.src('./Content/app/**/*.js')
         .pipe(uglifyJs())
         .pipe(notify({
             title: 'minify js',
             message: '<%= file.relative %> mcompiled successful'
         }))
-        .pipe(gulp.dest('./Content/dist/js/'));
+        .pipe(gulp.dest('./Content/dist'));
 });
 
 gulp.task('js-hint', function() {

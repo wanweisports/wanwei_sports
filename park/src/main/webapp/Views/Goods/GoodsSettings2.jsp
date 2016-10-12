@@ -3,6 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 
 <jsp:include page="/Views/Shared/Header.jsp" />
+<link href="/Content/style/goods/goods-settings.css" rel="stylesheet" type="text/css">
  
 <div class="ww-wrapper">
     <div class="wrapper">
@@ -10,14 +11,23 @@
             <li><a href="/">工作平台</a></li>
             <li class="active">商品设置</li>
         </ol>
-        <iframe id="good_form_target" name="goodFormTarget" style="display: none;"></iframe>
-        <form id="good_form" class="form-horizontal" action="/good/saveGood" method="post" novalidate
-              enctype="multipart/form-data" target="goodFormTarget">
+        <form id="good_form" class="form-horizontal"  method="post" novalidate onsubmit="return false;" enctype="multipart/form-data">
             <input type="hidden" id="goodId" name="goodId" value="${goodId}">
             <div class="panel panel-default">
                 <div class="panel-heading">商品信息</div>
                 <div class="panel-body">
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
+                        <div class="good-pic">
+                            <img src="/Content/images/empty.jpg" alt="上传图片" class="img-rounded">
+                        </div>
+                        <div class="good-upload">
+                            <a href="javascript:;" class="btn btn-primary">
+                                上传图片
+                                <input type="file" name="goodPic" id="good_pic" value="${goodPic}" class="file">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
                         <div class="form-group">
                             <label for="good_no" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 商品编号
@@ -31,32 +41,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="good_price" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 商品价格
-                            </label>
-
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="good_price" name="goodPrice"
-                                       value="${goodPrice}" placeholder="商品价格" autocomplete="off"
-                                       data-val="true" data-val-required="商品价格不能为空">
-                                <div data-valmsg-for="goodPrice" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="good_pic" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 商品图片
-                            </label>
-
-                            <div class="col-sm-8">
-                                <input type="file" id="good_pic" name="goodPic" accept="image/*"
-                                       value="${goodNo}" placeholder="商品图片" autocomplete="off"
-                                       data-val="true" data-val-required="商品图片不能为空">
-                                <div data-valmsg-for="goodPic" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
                             <label for="good_name" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 商品名称
                             </label>
@@ -66,6 +50,18 @@
                                        value="${goodName}" placeholder="商品名称" autocomplete="off"
                                        data-val="true" data-val-required="商品名称不能为空">
                                 <div data-valmsg-for="goodName" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="good_price" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 商品价格
+                            </label>
+
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="good_price" name="goodPrice"
+                                       value="${goodPrice}" placeholder="商品价格" autocomplete="off"
+                                       data-val="true" data-val-required="商品价格不能为空">
+                                <div data-valmsg-for="goodPrice" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -100,16 +96,16 @@
                                 <div data-valmsg-for="goodDiscount" data-valmsg-replace="true"></div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-12">
                         <div class="form-group">
-                            <label for="good_remark" class="col-sm-2 control-label">备注</label>
+                            <label for="good_remark" class="col-sm-4 control-label">备注</label>
 
-                            <div class="col-sm-10">
+                            <div class="col-sm-8">
                             <textarea class="form-control" id="good_remark" name="goodRemark" rows="3"
                                       placeholder="备注">${goodRemark}</textarea>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-sm-12">
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
                                 <p class="sc-submit-tips"></p>

@@ -27,7 +27,7 @@
         var $this = $(this);
         var $tickets = $("[name='ticket_id']:checked");
 
-        if ($tickets.size() == 0) {
+        if ($tickets.size() === 0) {
             return alert("请选择已领取的发票");
         }
 
