@@ -48,7 +48,7 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="file" id="good_pic" name="goodPic" accept="image/*"
+                                <input type="file" id="good_pic" name="file" accept="image/*"
                                        value="${goodNo}" placeholder="商品图片" autocomplete="off"
                                        data-val="true" data-val-required="商品图片不能为空">
                                 <div data-valmsg-for="goodPic" data-valmsg-replace="true"></div>

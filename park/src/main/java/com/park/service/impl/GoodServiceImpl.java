@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.park.common.bean.GoodInputView;
 import com.park.common.bean.PageBean;
@@ -27,7 +28,7 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 	private IBaseDao baseDao;
 	
 	@Override
-	public Integer saveGood(GoodInfo goodInfo, List<MultipartFile> multipartFiles) throws IOException {
+	public Integer saveGood(GoodInfo goodInfo, MultipartHttpServletRequest multipartRequest) throws IOException {
 		Integer goodId = goodInfo.getGoodId();
 		String nowDate = DateUtil.getNowDate();
 		if(goodId == null){ //添加
@@ -52,9 +53,10 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 			baseDao.save(goodInfoDB, goodInfoDB.getGoodId());
 			goodId = goodInfoDB.getGoodId();
 		}
+		List<MultipartFile> multipartFiles = FileUtil.getMultipartFiles(multipartRequest);
 		if(multipartFiles.size() > 0){ //保存商品图片
 			GoodInfo goodInfoDB = getGoodInfo(goodId);
-			goodInfoDB.setGoodPic(FileUtil.saveFile(multipartFiles.get(0)).toString());
+			goodInfoDB.setGoodPic(FileUtil.saveFile(multipartFiles.get(0), multipartRequest).toString());
 			baseDao.save(goodInfoDB, goodInfoDB.getGoodId());
 		}
 		return goodId;

@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
@@ -78,12 +81,20 @@ public class FileUtil {
 		return multipartFiles;
 	}
 	
-	public static StringBuilder saveFile(MultipartFile multipartFile) throws IOException {
+	public static StringBuilder saveFile(MultipartFile multipartFile, HttpServletRequest request) throws IOException {
 		String originalFilename = multipartFile.getOriginalFilename();
-		StringBuilder photoPath = new StringBuilder(CustomizedPropertyConfigurer.getPhotoPath().toString());
+		StringBuilder photoPath = new StringBuilder();
+		photoPath.append(CustomizedPropertyConfigurer.getPhotoPath().toString());
 		photoPath.append(StrUtil.getUUID());
 		photoPath.append(originalFilename.substring(originalFilename.indexOf(".")));
-		FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), new File(photoPath.toString()));
+		File file = new File(request.getSession().getServletContext().getRealPath("") + photoPath.toString());
+		if(!file.getParentFile().exists()) {
+			file.getParentFile().mkdirs();
+		}
+		if(!file.exists()) {
+			file.createNewFile();
+		}
+		FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), file);
 		return photoPath;
 	}
 

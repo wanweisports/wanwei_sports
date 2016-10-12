@@ -41,7 +41,7 @@ public class GoodController extends BaseController {
 		try {
 			UserOperator userOperator = super.getUserInfo();
 			goodInfo.setSalesId(userOperator.getId());
-			Integer goodId = goodService.saveGood(goodInfo, FileUtil.getMultipartFiles(multipartRequest)); //multipartRequest
+			Integer goodId = goodService.saveGood(goodInfo, multipartRequest);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("goodId", goodId);
 			return new ResponseBean(data);

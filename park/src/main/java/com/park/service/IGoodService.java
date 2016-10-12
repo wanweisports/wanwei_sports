@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.park.common.bean.GoodInputView;
 import com.park.common.bean.PageBean;
@@ -12,7 +13,7 @@ import com.park.common.po.GoodInfo;
 
 public interface IGoodService {
 	
-	public Integer saveGood(GoodInfo goodInfo, List<MultipartFile> multipartFiles) throws IOException;
+	public Integer saveGood(GoodInfo goodInfo, MultipartHttpServletRequest multipartRequest) throws IOException;
 
 	public GoodInfo getGoodInfo(int goodId);
 	
