@@ -37,4 +37,10 @@ public class SettingsController extends BaseController {
     public String getRoles() {
         return "Settings/SettingsSystemRoles";
     }
+
+    // 通知设置
+    @RequestMapping("settings/notification")
+    public String notification() {
+        return "Settings/SettingsNotification";
+    }
 }

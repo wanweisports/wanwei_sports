@@ -21,7 +21,7 @@
                         </div>
                         <div class="form-group">
                             <label for="good_state">&nbsp;商品状态</label>
-                            <select class="form-control" id="good_state" name="goodStatus">
+                            <select class="form-control" id="good_state" name="goodStatus" style="width: 160px;">
                                 <option value="">全部状态</option>
                                 <option value="1" <c:if test="${goodStatus == 1}">selected</c:if> >在售</option>
                                 <option value="2" <c:if test="${goodStatus == 2}">selected</c:if> >预售</option>
