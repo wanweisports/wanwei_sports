@@ -109,7 +109,7 @@
                 if ($form.attr("submitting") == "submitting" || !$form.valid()) {
                     return false;
                 }
-                if (conditions.limit.length == 0) {
+                if (conditions.limit.length === 0) {
                     alert("请选择权限");
                     return false;
                 }
