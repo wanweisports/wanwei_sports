@@ -125,9 +125,13 @@ public class SiteController extends BaseController {
 	
 	@RequestMapping("getSiteReservationInfo")
 	public String getSiteReservationInfo(Model model){
-		
-		
-		return "Sites/SiteReservation";
+		return "Reservation/ReservationsSequence";
+	}
+
+	// 批量预订
+	@RequestMapping("getSiteReservationBatch")
+	public String getSiteReservationBatch(Model model){
+		return "Reservation/ReservationsBatch";
 	}
 
 }
