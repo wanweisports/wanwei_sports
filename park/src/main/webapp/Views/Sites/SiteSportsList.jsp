@@ -3,8 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 
 <jsp:include page="/Views/Shared/Header.jsp" />
- 
-     
+
 <div class="ww-wrapper">
     <div class="wrapper">
         <ol class="breadcrumb">

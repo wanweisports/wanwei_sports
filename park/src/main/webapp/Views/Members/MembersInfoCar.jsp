@@ -343,7 +343,6 @@
         </div>
     </div>
 </div>
- </div>
 <jsp:include page="/Views/Shared/Common.jsp" />
 <script src="Content/lib/jquery/jquery.validate/jquery.validate.js"></script>
 <script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js"></script>
