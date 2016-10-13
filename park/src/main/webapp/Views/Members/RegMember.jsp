@@ -1,11 +1,30 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ page import="com.park.layout.Blocks" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> <%-- JSTL表达式（判断，循环，输出） --%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
+<%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
-<jsp:include page="/Views/Shared/Header.jsp" />
-<link href="Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
-<link href="Content/style/members/users_members_add.css" rel="stylesheet" type="text/css">
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="/Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.min.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.zh-CN.min.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
+    <script src="Content/app/members/members_info_enter.js?v=${static_resource_version}"></script>
+    <script>
+        $(document).ready(function () {
+            // 配置表单校验
+            $('#member_form').validate({
+                ignore: ":hidden"
+            });
+        });
+    </script>
+</layout:override>
+<layout:override name="<%=Blocks.BLOCK_BODY%>">
 <div class="ww-wrapper">
     <div class="wrapper">
         <ol class="breadcrumb">
@@ -146,7 +165,7 @@
                         <div class="form-group sc-ui-submit">
                             <div class="col-sm-offset-4 col-sm-8">
                                 <p class="sc-submit-tips"></p>
-                                <button type="button" class="btn btn-primary register-member" id="btn_reg">
+                                <button type="button" class="btn btn-primary register-member">
                                     <span class="glyphicon glyphicon-ok"></span>  注册 & 绑卡
                                 </button>
                             </div>
@@ -157,11 +176,9 @@
         </form>
     </div>
 </div>
+</layout:override>
 
-<jsp:include page="/Views/Shared/Common.jsp" />
-<script src="Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-<script src="Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.zh-CN.min.js"></script>
-<script src="Content/lib/jquery/jquery.validate/jquery.validate.js"></script>
-<script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js"></script>
-<script src="Content/app/members/members_info_enter.js"></script>
-<jsp:include page="/Views/Shared/Footer.jsp" />
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="nav" value="member"/>
+    <c:param name="subNav" value="register"/>
+</c:import>
