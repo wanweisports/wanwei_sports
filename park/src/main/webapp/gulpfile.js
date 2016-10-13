@@ -56,6 +56,16 @@ gulp.task('stylus-watch', function() {
     }));
 });
 
+gulp.task('js-watch', function(){
+    gulp.src('./Content/app/**/*.js')
+        //.pipe(uglifyJs())
+        .pipe(notify({
+            title: 'minify js',
+            message: '<%= file.relative %> mcompiled successful'
+        }))
+        .pipe(gulp.dest('./Content/dist'));
+});
+
 gulp.task('js-compile', function(){
     gulp.src('./Content/app/**/*.js')
         .pipe(uglifyJs())
@@ -75,6 +85,6 @@ gulp.task('js-hint', function() {
 });
 
 gulp.task('default', ['build']);
-gulp.task('build', ['clean-files', 'stylus-compile']);
-gulp.task('watch', ['stylus-watch', 'js-hint']);
+gulp.task('build', ['clean-files', 'stylus-compile', 'js-compile']);
+gulp.task('watch', ['stylus-watch', 'js-watch', 'js-hint']);
 gulp.task('clean', ['clean-files']);

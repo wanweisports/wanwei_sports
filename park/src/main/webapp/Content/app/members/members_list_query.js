@@ -1,27 +1,42 @@
 (function ($) {
-    // 检索显示会员列表
-    $(".member-filter").on("click", function (e) {
-        e.preventDefault();
+    var Members_List = {
+        opts: {
+            URL: '/member/memberList'
+        },
+        init: function () {
+            this.initEvents();
+        },
+        initEvents: function () {
+            var content = this;
 
-        var conditions = $("#member_filter_form").serialize();
+            // 检索显示会员列表
+            $(".member-filter").on("click", function (e) {
+                e.preventDefault();
 
-        location.assign('member/memberList?' + conditions);
-    });
+                var conditions = $("#member_filter_form").serialize();
 
-    // 分页点击
-    $(".page-first, .page-prev, .page-index, .page-next, .page-last").on("click", function (e) {
-        e.preventDefault();
+                location.assign(content.opts.URL + '?' + conditions);
+            });
 
-        var conditions = location.search;
+            // 分页
+            $(".page-first, .page-prev, .page-index, .page-next, .page-last").on("click", function (e) {
+                e.preventDefault();
 
-        if (conditions) {
-            if (conditions.indexOf("page=") == -1) {
-                location.assign(location.href + '&page=' + $(this).attr("data-index"));
-            } else {
-                location.assign(location.href.replace(/page=\d+/, "") + '&page=' + $(this).attr("data-index"));
-            }
-        } else {
-            location.assign('member/memberList?page=' + $(this).attr("data-index"));
+                var conditions = location.search;
+                var pageIndex = $(this).attr("data-index");
+
+                if (conditions) {
+                    if (conditions.indexOf("page=") == -1) {
+                        location.assign(content.opts.URL + '?' + conditions + '&page=' + pageIndex);
+                    } else {
+                        location.assign(content.opts.URL + '?' + conditions.replace(/(page=)\d+/, '$1' + pageIndex));
+                    }
+                } else {
+                    location.assign(content.opts.URL + '?page=' + pageIndex);
+                }
+            });
         }
-    });
+    };
+
+    Members_List.init();
 })(jQuery);
