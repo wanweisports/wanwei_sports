@@ -16,6 +16,7 @@ import com.park.common.bean.SiteInputView;
 import com.park.common.exception.MessageException;
 import com.park.common.po.SiteInfo;
 import com.park.common.po.SiteSport;
+import com.park.common.po.UserOperator;
 import com.park.common.util.JsonUtils;
 import com.park.service.ISiteService;
 
@@ -123,11 +124,34 @@ public class SiteController extends BaseController {
 		return "Sites/SiteSportsList";
 	}
 	
+	@ResponseBody
 	@RequestMapping("getSiteReservationInfo")
-	public String getSiteReservationInfo(Model model){
-		
-		
-		return "Sites/SiteReservation";
+	public ResponseBean getSiteReservationInfo(SiteInputView siteInputView, Model model){
+		try {
+			Map<String, Object> data = new HashMap<String, Object>();
+			data.putAll(JsonUtils.fromJson(siteService.getSiteReservationInfo(siteInputView)));
+			return new ResponseBean(data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;//"Sites/SiteReservation";
+	}
+	
+	@ResponseBody
+	@RequestMapping("saveReservationSite")
+	public ResponseBean saveReservationSite(SiteInputView siteInputView){
+		try {
+			UserOperator userOperator = super.getUserInfo();
+			siteInputView.setSalesId(userOperator.getId());
+			siteService.saveReservationSite(siteInputView);
+			return new ResponseBean(true);
+		} catch (MessageException e) {
+			e.printStackTrace();
+			return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
 	}
 
 }

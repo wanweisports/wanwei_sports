@@ -22,6 +22,7 @@ import com.park.common.po.MemberCardType;
 import com.park.common.po.OtherBalance;
 import com.park.common.po.OtherInvoice;
 import com.park.common.po.UserMember;
+import com.park.common.po.UserOperator;
 import com.park.common.util.DateUtil;
 import com.park.common.util.JsonUtils;
 import com.park.common.util.SQLUtil;
@@ -29,6 +30,7 @@ import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
 import com.park.service.IDictService;
 import com.park.service.IMemberService;
+import com.park.service.IOperatorService;
 
 @Service
 public class MemberServiceImpl extends BaseService implements IMemberService {
@@ -39,12 +41,24 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	@Autowired
 	private IDictService dictService;
 	
+	@Autowired
+	private IOperatorService operatorService;
+	
 	@Override
 	public Integer saveMember(UserMember userMember) {
 		Integer memberId = userMember.getMemberId();
 		String nowDate = DateUtil.getNowDate();
 		if(memberId == null){ //新增
 			userMember.setCreateTime(nowDate);
+			UserOperator operator = new UserOperator();
+			operator.setOperatorMobile(userMember.getMemberMobile());
+			operator.setOperatorId(userMember.getTempCardNo()); //会员帐号暂时使用第一次注册的会员卡号
+			operator.setOperatorPwd("123456"); //会员密码暂时设置为123456
+			operator.setStatus(IDBConstant.LOGIC_STATUS_YES);
+			operator.setCreateTime(nowDate);
+			operator.setOperatorName(userMember.getMemberName());
+			String operatorId = operatorService.saveOperator(operator, IDBConstant.ROLE_MEMBER);
+			userMember.setOperationId(operatorId);
 			baseDao.save(userMember, null);
 			return userMember.getMemberId();
 		}else{ //编辑
@@ -61,6 +75,10 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			userMemberDB.setSalesId(userMember.getSalesId());
 			userMemberDB.setUpdateTime(nowDate);
 			baseDao.save(userMemberDB, userMemberDB.getMemberId());
+			UserOperator operator = operatorService.getOperator(userMemberDB.getOperationId());
+			operator.setOperatorMobile(userMemberDB.getMemberMobile());
+			operator.setOperatorName(userMember.getMemberName());
+			baseDao.save(operator, operator.getId());
 			return userMemberDB.getMemberId();
 		}
 	}
@@ -507,6 +525,11 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	}
 	
 	@Override
+	public UserMember getMemberOperator(String operatorId) {
+		return baseDao.queryByHqlFirst("FROM UserMember WHERE operatorId = ?", operatorId);
+	}
+	
+	@Override
 	public String getCardNo() {
 		do {
 			StringBuffer no = new StringBuffer();
@@ -521,10 +544,6 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		return DateUtil.dateToString(new Date(), DateUtil.YYYYMMDD_HMS);
 	}
 	
-	private String getInvoiceNo(){
-		return DateUtil.dateToString(new Date(), DateUtil.YYYYMMDD_HMS);
-	}
-
 }
 
 

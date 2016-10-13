@@ -1,6 +1,7 @@
 package com.park.common.util;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 public class DateUtil {
 	public static final String YYYYMMDD_S = "yyyyMMdd";
 	public static final String YYYYMMDD_HMS = "yyyyMMddHHmmss";
+	public static final String HHMM = "HH:mm";
     public static final String YYYY = "yyyy";
     public static final String YYYYMM = "yyyy-MM";
     public static final String YYYYMMDD = "yyyy-MM-dd";
@@ -75,6 +77,36 @@ public class DateUtil {
 	
 	public static String getNowDate() {
 		return dateToString(new Date(), YYYYMMDDHHMMSS);
+	}
+	
+	public static Date addHHMMTime(Date time, int field, int amount) throws ParseException{
+		Calendar c = Calendar.getInstance();
+		c.setTime(time);
+		c.add(field, amount);
+		return c.getTime();
+	}
+	
+	public static Date getHHMM(String time) throws ParseException{
+		DateFormat format = new SimpleDateFormat(HHMM);
+		return format.parse(time);
+	}
+	
+	public static String getHHMM(Date time) throws ParseException{
+		DateFormat format = new SimpleDateFormat(HHMM);
+		return format.format(time);
+	}
+	
+	public static void main(String[] args) throws ParseException {
+		/*String time = "09:00";
+		String end = "12:00";
+		DateFormat format = new SimpleDateFormat("HH:mm"); 
+		Date endTime = format.parse(end);
+		Calendar c = Calendar.getInstance();
+		c.setTime(format.parse(time));
+		while(c.getTime().getTime() < endTime.getTime()){
+			c.add(Calendar.HOUR_OF_DAY, 1);
+			System.out.println(c.getTime());
+		}*/
 	}
 
 }

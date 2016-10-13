@@ -48,5 +48,13 @@ public interface IDBConstant {
     public static final String GOOD_STATE_ING = "1";//在售
     public static final String GOOD_STATE_BOOKING = "2";//预售
     public static final String GOOD_STATE_OUT = "3";//下架
-	
+    
+    public static final int ROLE_ADMIN = 1;//超级管理员
+    public static final int ROLE_MEMBER = 2;//会员
+    public static final int ROLE_COMMON = 3;//普通用户
+    
+    public static final String ORDER_SERVICE_TYPE = "ORDER_SERVICE_TYPE";//订单业务类型
+    public static final String ORDER_SERVICE_TYPE_SITE = "1";//场地
+    public static final String ORDER_SERVICE_TYPE_GOODS = "2";//商品
+    
 }
