@@ -1,9 +1,25 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ page import="com.park.layout.Blocks" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> <%-- JSTL表达式（判断，循环，输出） --%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
+<%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
-<jsp:include page="/Views/Shared/Header.jsp" />
+<layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
+    <script src="/Content/dist/members/members_card_operations.js?v=${static_resource_version}"></script>
+    <script>
+        // 表单校验配置
+        $(document).ready(function () {
+            $('#member_card_form, #refresh_card_form, #recharge_card_form, #upgrade_card_form').validate({
+                ignore: ":hidden"
+            });
+        });
+    </script>
+</layout:override>
 
+<layout:override name="<%=Blocks.BLOCK_BODY%>">
 <div class="ww-wrapper">
     <div class="wrapper">
         <ol class="breadcrumb">
@@ -13,7 +29,7 @@
         <div>
             <div class="panel panel-default member-card-panel">
                 <div class="panel-body">
-                    <form class="form-horizontal member-card-form" onsubmit="return false;">
+                    <form id="member_card_form" class="form-horizontal" onsubmit="return false;">
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="card_no" class="col-sm-2 control-label">
@@ -27,13 +43,12 @@
                                     <div data-valmsg-for="cardno" data-valmsg-replace="true"></div>
                                 </div>
                                 <div class="col-sm-4">
-                                    <a href="javascript:;" class="btn btn-primary member-card-filter" onclick="window.location.href='member/getOperations?cardNo='+$('#card_no').val()">
+                                    <a href="javascript:;" class="btn btn-primary member-card-filter">
                                         <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" name="cardId" value="${cardId}">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-sm-4 control-label">会员姓名</label>
@@ -77,7 +92,7 @@
                         <button type="button" class="btn btn-primary tab-card" data-tab="refresh-card">会员卡补办</button>
                     </div>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-info tab-card" data-tab="recharge-card">会员卡充值</button>
+                        <button type="button" class="btn btn-warning tab-card" data-tab="recharge-card">会员卡充值</button>
                     </div>
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary tab-card" data-tab="upgrade-card">会员卡升级</button>
@@ -91,7 +106,7 @@
                     <h3 class="panel-title">会员卡补办</h3>
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal refresh-card-form" onsubmit="return false;">
+                    <form id="refresh_card_form" class="form-horizontal" onsubmit="return false;">
                         <input type="hidden" id="refresh_cardId" name="cardId" value="${cardId}">
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -181,7 +196,7 @@
                 <h3 class="panel-title">会员卡充值</h3>
             </div>
             <div class="panel-body">
-                <form class="form-horizontal recharge-card-form" onsubmit="return false;">
+                <form id="recharge_card_form" class="form-horizontal" onsubmit="return false;">
                     <input type="hidden" id="recharge_cardId" name="cardId" value="${cardId}">
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -263,7 +278,7 @@
                 <h3 class="panel-title">会员卡升级</h3>
             </div>
             <div class="panel-body">
-                <form class="form-horizontal upgrade-card-form" onsubmit="return false;">
+                <form id="upgrade_card_form" class="form-horizontal" onsubmit="return false;">
                     <input type="hidden" id="upgrade_cardId" name="cardId" value="${cardId}">
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -373,11 +388,9 @@
         </div>
     </div>
 </div>
+</layout:override>
 
-<jsp:include page="/Views/Shared/Common.jsp" />
-<script src="Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-<script src="Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.zh-CN.min.js"></script>
-<script src="Content/lib/jquery/jquery.validate/jquery.validate.js"></script>
-<script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js"></script>
-<script src="Content/app/members/members_card_operations.js"></script>
-<jsp:include page="/Views/Shared/Footer.jsp" />
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="nav" value="member"/>
+    <c:param name="subNav" value="operation"/>
+</c:import>

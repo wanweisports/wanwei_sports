@@ -17,7 +17,7 @@ gulp.task('stylus-compile', function() {
         .pipe(stylus({use: [nib()]}))
         .pipe(gulp.dest('./Content/style/'))
         .pipe(notify({
-            message: '<%= file.relative %> mcompiled successful',
+            message: '<%= file.relative %> compiled successful',
             title: 'minify css'}))
         //.pipe(rename({suffix: '.min'}))
         .pipe(minifycss())
@@ -44,14 +44,14 @@ gulp.task('stylus-watch', function() {
             .pipe(stylus({use: [nib()]}))
             .pipe(gulp.dest('./Content/style/'))
             .pipe(notify({
-                message: '<%= file.relative %> mcompiled successful',
+                message: '<%= file.relative %> compiled successful',
                 title: 'minify css'}))
             //.pipe(rename({suffix: '.min'}))
             //.pipe(minifycss())
             .pipe(plumber.stop())
             .pipe(gulp.dest('./Content/style/'))
             .pipe(notify({
-                message: '<%= file.relative %> minified successful',
+                message: '<%= file.relative %> watch successful',
                 title: 'minify css'}));
     }));
 });
@@ -61,7 +61,7 @@ gulp.task('js-watch', function(){
         //.pipe(uglifyJs())
         .pipe(notify({
             title: 'minify js',
-            message: '<%= file.relative %> mcompiled successful'
+            message: '<%= file.relative %> watch successful'
         }))
         .pipe(gulp.dest('./Content/dist'));
 });
@@ -71,7 +71,7 @@ gulp.task('js-compile', function(){
         .pipe(uglifyJs())
         .pipe(notify({
             title: 'minify js',
-            message: '<%= file.relative %> mcompiled successful'
+            message: '<%= file.relative %> compiled successful'
         }))
         .pipe(gulp.dest('./Content/dist'));
 });
