@@ -6,7 +6,7 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="/Content/app/members/members_list_query.js?v=${static_resource_version}"></script>
+    <script src="/Content/dist/members/members_list_query.js?v=${static_resource_version}"></script>
     <script>
         (function ($) {
             $("#payment_type").val('${memberType}');
