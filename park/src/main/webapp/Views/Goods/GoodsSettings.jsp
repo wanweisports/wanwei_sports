@@ -23,6 +23,9 @@
     <div class="wrapper">
         <ol class="breadcrumb">
             <li><a href="/">工作平台</a></li>
+            <c:if test="${goodId > 0}">
+                <li><a href="/good/getGoods">进销存管理</a></li>
+            </c:if>
             <li class="active">商品设置</li>
         </ol>
         <iframe id="good_form_target" name="goodFormTarget" style="display: none;"></iframe>
@@ -145,5 +148,10 @@
 
 <c:import url="../Shared/Layout.jsp">
     <c:param name="nav" value="good"/>
-    <c:param name="subNav" value="setting"/>
+    <c:if test="${goodId > 0}">
+        <c:param name="subNav" value="stock"/>
+    </c:if>
+    <c:if test="${!goodId}">
+        <c:param name="subNav" value="setting"/>
+    </c:if>
 </c:import>

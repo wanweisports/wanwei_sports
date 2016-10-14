@@ -12,7 +12,7 @@
     <script>
         // 配置表单校验
         $(document).ready(function () {
-            $('#good_form').validate({
+            $('#good_kucun_form').validate({
                 ignore: ":hidden"
             });
         });
@@ -99,7 +99,7 @@
                                                data-id="${good.goodId}" data-count="${good.goodCount}">
                                                 <span class="glyphicon glyphicon-hdd"></span> 增加库存
                                             </a>
-                                            <a href="good/updateGood?goodId=${good.goodId}" class="btn btn-primary">
+                                            <a href="/good/updateGood?goodId=${good.goodId}" class="btn btn-primary">
                                                 <span class="glyphicon glyphicon-share-alt"></span> 查看
                                             </a>
                                         </td>
@@ -109,11 +109,11 @@
                             </table>
                             <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >
                                 <p class="pull-left" style="margin: 24px 14px;">
-                                    <span>${pageSize}条/页</span>
-                                    <span>总${count}条</span>
+                                    <span>${pageSize} 条/页</span>
+                                    <span>总 ${count} 条</span>
                                 </p>
                                 <ul class="pagination pull-right">
-                                    <c:if test="${isFirstPage}">
+                                    <c:if test="${currentPage == 1}">
                                         <li class="disabled">
                                             <a href="javascript:;" data-index="1">
                                                 <span>首页</span>
@@ -125,7 +125,7 @@
                                             </a>
                                         </li>
                                     </c:if>
-                                    <c:if test="${!isFirstPage}">
+                                    <c:if test="${currentPage != 1}">
                                         <li>
                                             <a class="page-first" href="javascript:;" data-index="1">
                                                 <span>首页</span>
@@ -145,7 +145,7 @@
                                             <li><a class="page-index" href="javascript:;" data-index="${i}">${i}</a></li>
                                         </c:if>
                                     </c:forEach>
-                                    <c:if test="${isLastPage}">
+                                    <c:if test="${currentPage == lastPage}">
                                         <li class="disabled">
                                             <a href="javascript:;" data-index="1">
                                                 <span>下一页</span>
@@ -157,7 +157,7 @@
                                             </a>
                                         </li>
                                     </c:if>
-                                    <c:if test="${!isLastPage}">
+                                    <c:if test="${currentPage != lastPage}">
                                         <li>
                                             <a class="page-next" href="javascript:;" data-index="${currentPage + 1}">
                                                 <span>下一页</span>
@@ -205,38 +205,6 @@
                     <button type="button" class="btn btn-primary confirm-count" data-dismiss="modal">
                         <span class="glyphicon glyphicon-ok"></span> 确 认
                     </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="shangjiaModal" tabindex="-1" role="dialog" aria-labelledby="shangjiaModalLabel">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="shangjiaModalLabel">提示信息</h4>
-                </div>
-                <div class="modal-body">
-                    <p>商品成功上架!</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="xiajiaModal" tabindex="-1" role="dialog" aria-labelledby="xiajiaModalLabel">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="xiajiaModalLabel">提示信息</h4>
-                </div>
-                <div class="modal-body">
-                    <p>商品成功下架!</p>
                 </div>
             </div>
         </div>

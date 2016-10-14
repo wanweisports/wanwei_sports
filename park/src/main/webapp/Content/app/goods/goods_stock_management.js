@@ -87,12 +87,20 @@
                 e.preventDefault();
 
                 var $form = $("#good_kucun_form");
+                var conditions = $form.serialize();
 
-                $.post("/good/addGoodCount", $form.serialize(), function (res) {
+                if ($form.attr("submitting") == "submitting" || !$form.valid()) {
+                    return false;
+                }
+                $form.attr("submitting", "submitting");
+
+                $.post("/good/addGoodCount", conditions, function (res) {
+                    $form.attr("submitting", "");
+
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        alert(res.message || "增加库存事变, 请稍后重试")
+                        alert(res.message || "增加库存失败, 请稍后重试");
                     }
                 });
             });
