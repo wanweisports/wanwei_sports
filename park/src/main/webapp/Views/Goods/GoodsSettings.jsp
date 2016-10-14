@@ -146,12 +146,16 @@
 </div>
 </layout:override>
 
+<c:if test="${goodId > 0}">
 <c:import url="../Shared/Layout.jsp">
     <c:param name="nav" value="good"/>
-    <c:if test="${goodId > 0}">
-        <c:param name="subNav" value="stock"/>
-    </c:if>
-    <c:if test="${!goodId}">
-        <c:param name="subNav" value="setting"/>
-    </c:if>
+    <c:param name="subNav" value="stock"/>
 </c:import>
+</c:if>
+
+<c:if test="${!goodId}">
+    <c:import url="../Shared/Layout.jsp">
+        <c:param name="nav" value="good"/>
+        <c:param name="subNav" value="setting"/>
+    </c:import>
+</c:if>
