@@ -45,7 +45,7 @@
                     if (res.code == 1) {
                         $("#tips_modal").modal("show");
                     } else {
-                        alert("常用设置失败, 请稍后重试");
+                        alert(res.message || "常用设置失败, 请稍后重试");
                     }
                 });
             });

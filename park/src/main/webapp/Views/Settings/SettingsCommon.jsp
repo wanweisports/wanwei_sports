@@ -1,18 +1,37 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ page import="com.park.layout.Blocks" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> <%-- JSTL表达式（判断，循环，输出） --%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
+<%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
-<jsp:include page="/Views/Shared/Header.jsp" />
-<link href="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css" rel="stylesheet" type="text/css">
-<link href="/Content/style/settings/settings_common.css" rel="stylesheet" type="text/css">
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="/Content/style/settings/settings_common.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
+    <script src="/Content/dist/settings/settings_common.js?v=${static_resource_version}"></script>
+    <script>
+        // 配置表单校验
+        $(document).ready(function () {
+            $('#common_form').validate({
+                ignore: ":hidden"
+            });
+        });
+    </script>
+</layout:override>
+<layout:override name="<%=Blocks.BLOCK_BODY%>">
 <div class="ww-wrapper">
     <div class="wrapper">
         <ol class="breadcrumb">
             <li><a href="/">工作平台</a></li>
             <li class="active">基础设置</li>
         </ol>
-        <form id="common_form" class="form-horizontal" action="" method="post" novalidate onsubmit="return false;">
+        <form id="common_form" class="form-horizontal" novalidate onsubmit="return false;">
             <div class="panel panel-default">
                 <div class="panel-heading">基础设置</div>
                 <div class="panel-body">
@@ -81,10 +100,9 @@
         </div>
     </div>
 </div>
+</layout:override>
 
-<jsp:include page="/Views/Shared/Common.jsp" />
-<script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js"></script>
-<script src="Content/lib/jquery/jquery.validate/jquery.validate.js"></script>
-<script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js"></script>
-<script src="/Content/app/settings/settings_common.js"></script>
-<jsp:include page="/Views/Shared/Footer.jsp" />
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="nav" value="setting"/>
+    <c:param name="subNav" value="base"/>
+</c:import>

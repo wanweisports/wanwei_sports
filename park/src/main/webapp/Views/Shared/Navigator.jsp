@@ -75,11 +75,11 @@
                     <span>系统设置</span>
                 </a>
                 <ul class="nav-sub">
-                    <li><a href="/settings/getUsers">用户设置</a></li>
-                    <li><a href="/settings/getRoles">角色设置</a></li>
-                    <li><a href="/settings/common">基础设置</a></li>
-                    <li><a href="/settings/notification">通知设置</a></li>
-                    <!--<li><a href="#">数据库导入导出</a></li>-->
+                    <li><a class="${param.subNav == "user" ? "active" : ""}" href="/settings/getUsers">用户设置</a></li>
+                    <li><a class="${param.subNav == "role" ? "active" : ""}" href="/settings/getRoles">角色设置</a></li>
+                    <li><a class="${param.subNav == "base" ? "active" : ""}" href="/settings/common">基础设置</a></li>
+                    <li><a class="${param.subNav == "notification" ? "active" : ""}" href="/settings/notification">通知设置</a></li>
+                    <li><a class="${param.subNav == "restore" ? "active" : ""}" href="#">数据备份</a></li>
                 </ul>
             </li>
             <li class="${param.nav == "center" ? "nav-active" : ""}">

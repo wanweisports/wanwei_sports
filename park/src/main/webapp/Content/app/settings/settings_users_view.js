@@ -41,7 +41,7 @@
                     if (res.code == 1) {
                         $("#tips_modal").modal("show");
                     } else {
-                        alert("设置用户失败, 请稍后重试");
+                        alert(res.message || "设置用户失败, 请稍后重试");
                     }
                 });
             });
