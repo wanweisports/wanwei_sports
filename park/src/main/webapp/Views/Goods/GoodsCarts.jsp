@@ -1,16 +1,26 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ page import="com.park.layout.Blocks" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> <%-- JSTL表达式（判断，循环，输出） --%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
+<%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
-<jsp:include page="/Views/Shared/Header.jsp" />
-<link href="/Content/lib/jquery/jquery-steps/jquery.steps.css" rel="stylesheet" type="text/css">
-<link href="/Content/style/goods/goods-carts.css" rel="stylesheet" type="text/css">
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="/Content/lib/jquery/jquery-steps/jquery.steps.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="/Content/style/goods/goods_carts.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/lib/jquery/jquery-steps/jquery.steps.min.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/goods/goods_carts.js?v=${static_resource_version}"></script>
+</layout:override>
+
+<layout:override name="<%=Blocks.BLOCK_BODY%>">
 <div class="ww-wrapper">
     <div class="wrapper">
         <ol class="breadcrumb">
             <li><a href="/">工作平台</a></li>
-            <li><a href="good/getGoodsMarket">商品销售</a></li>
+            <li><a href="/good/getGoodsMarket">商品销售</a></li>
             <li class="active">商品购物车</li>
         </ol>
         <div class="settings-filter">
@@ -271,8 +281,9 @@
         </div>
     </div>
 </div>
+</layout:override>
 
-<jsp:include page="/Views/Shared/Common.jsp" />
-<script src="/Content/lib/jquery/jquery-steps/jquery.steps.min.js"></script>
-<script src="/Content/app/goods/goods_carts.js"></script>
-<jsp:include page="/Views/Shared/Footer.jsp" />
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="nav" value="good"/>
+    <c:param name="subNav" value="market"/>
+</c:import>
