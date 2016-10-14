@@ -1,9 +1,28 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ page import="com.park.layout.Blocks" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> <%-- JSTL表达式（判断，循环，输出） --%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
+<%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
-<jsp:include page="/Views/Shared/Header.jsp" />
- 
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="/Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
+
+<layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
+    <script src="/Content/dist/goods/goods_settings.js?v=${static_resource_version}"></script>
+    <script>
+        // 配置表单校验
+        $(document).ready(function () {
+            $('#good_form').validate({
+                ignore: ":hidden"
+            });
+        });
+    </script>
+</layout:override>
+<layout:override name="<%=Blocks.BLOCK_BODY%>">
 <div class="ww-wrapper">
     <div class="wrapper">
         <ol class="breadcrumb">
@@ -38,7 +57,9 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="good_price" name="goodPrice"
                                        value="${goodPrice}" placeholder="商品价格" autocomplete="off"
-                                       data-val="true" data-val-required="商品价格不能为空">
+                                       data-val="true" data-val-required="商品价格不能为空"
+                                       data-val-regex-pattern="^[1-9]\d*$"
+                                       data-val-regex="商品价格格式错误">
                                 <div data-valmsg-for="goodPrice" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -124,9 +145,9 @@
         </form>
     </div>
 </div>
- 
-<jsp:include page="/Views/Shared/Common.jsp" />
-<script src="Content/lib/jquery/jquery.validate/jquery.validate.js"></script>
-<script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js"></script>
-<script src="Content/app/goods/goods_settings.js"></script>
-<jsp:include page="/Views/Shared/Footer.jsp" />
+</layout:override>
+
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="nav" value="good"/>
+    <c:param name="subNav" value="setting"/>
+</c:import>

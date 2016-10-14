@@ -49,10 +49,10 @@
                     <span>商品管理</span>
                 </a>
                 <ul class="nav-sub">
-                    <li><a href="/good/updateGood">商品设置</a></li>
-                    <li><a href="/good/getGoods">进销存管理</a></li>
-                    <li><a href="/good/getGoodsMarket">商品销售</a></li>
-                    <!--<li><a href="#">商品订单</a></li>-->
+                    <li><a class="${param.subNav == "setting" ? "active" : ""}" href="/good/updateGood">商品设置</a></li>
+                    <li><a class="${param.subNav == "stock" ? "active" : ""}" href="/good/getGoods">进销存管理</a></li>
+                    <li><a class="${param.subNav == "market" ? "active" : ""}" href="/good/getGoodsMarket">进销存管理</a></li>
+                    <li><a class="${param.subNav == "order" ? "active" : ""}" href="#">商品订单</a></li>
                 </ul>
             </li>
             <li class="${param.nav == "data" ? "nav-active" : ""}">
