@@ -17,7 +17,7 @@
                 if (res.code == 1) {
                     $("#newCardNo").val(data.newCardNo);
                 } else {
-                    alert("新会员卡号生成失败, 请稍后重试");
+                    alert(res.message || "新会员卡号生成失败, 请稍后重试");
                 }
             }, 'json');
         },
@@ -87,7 +87,7 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        alert("会员补办失败, 请稍后重试");
+                        alert(res.message || "会员补办失败, 请稍后重试");
                     }
                 });
             });
@@ -101,7 +101,7 @@
                         $("#upgrade_discount").val(data.cardTypeDiscount);
                         $("#upgrade_deadline").val(data.cardDeadline);
                     } else {
-                        alert("卡类型信息查询失败, 请稍后重试");
+                        alert(res.message || "卡类型信息查询失败, 请稍后重试");
                     }
                 });
             }
@@ -143,7 +143,7 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        alert("会员升级失败, 请稍后重试");
+                        alert(res.message || "会员升级失败, 请稍后重试");
                     }
                 });
             });

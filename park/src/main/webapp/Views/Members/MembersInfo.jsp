@@ -6,11 +6,11 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.min.js?v=${static_resource_version}"></script>
-    <script src="Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.zh-CN.min.js?v=${static_resource_version}"></script>
-    <script src="Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
-    <script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
-    <script src="Content/app/members/members_info_view.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.min.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.zh-CN.min.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
+    <script src="/Content/dist/members/members_info_view.js?v=${static_resource_version}"></script>
 
     <script>
         // 表单校验配置
