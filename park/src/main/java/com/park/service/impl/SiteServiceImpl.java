@@ -271,7 +271,8 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 			Map<String, Object> siteSport = getSiteSportName(siteId);
 			String siteName = StrUtil.objToStr(siteSport.get("siteName"));
 			
-			if(getReserveIntersection(startTime, endTime) != null) throw new MessageException("["+siteName+"]"+startTime+"-"+endTime+"时间段已有顾客预定");
+			SiteReserve reserveIntersection = getReserveIntersection(startTime, endTime, siteDate);
+			if(reserveIntersection != null) throw new MessageException("["+siteName+"]"+reserveIntersection.getSiteStartTime()+"-"+reserveIntersection.getSiteEndTime()+"时间段已有顾客预定");
 			
 			SiteReserve siteReserve = new SiteReserve();
 			siteReserve.setSiteReserveStatus(orderInfo.getPayStatus());
@@ -316,8 +317,8 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		return baseDao.queryBySqlFirst("SELECT si.siteName, ss.sportName, ss.sportMoney FROM site_info si, site_sport ss WHERE si.siteType = ss.sportId AND si.siteId=?", siteId);
 	}
 	
-	private SiteReserve getReserveIntersection(String startTime, String endTime){
-		return baseDao.queryByHqlFirst("FROM SiteReserve WHERE NOT ((TIME(siteEndTime) <= TIME(?)) OR (TIME(siteStartTime) >= TIME(?)))", startTime, endTime);
+	private SiteReserve getReserveIntersection(String startTime, String endTime, String date){
+		return baseDao.queryByHqlFirst("FROM SiteReserve WHERE data = ? AND NOT ((TIME(siteEndTime) <= TIME(?)) OR (TIME(siteStartTime) >= TIME(?)))", date, startTime, endTime);
 	}
 	
 	private String getSiteNo() {
