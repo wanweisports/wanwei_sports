@@ -1,0 +1,7 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea/
+park.iml
+park/target/
+park/src/main/webapp/node_modules
+park/src/main/webapp/Content/style/**/*.css
+park/src/main/webapp/Content/dist
