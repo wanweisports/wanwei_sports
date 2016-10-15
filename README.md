@@ -11,7 +11,7 @@
 ### 前端
     cd park/src/main/webapp
     npm install
-    gulp watch
+    gulp watch/build
     
 ## 版本控制
     

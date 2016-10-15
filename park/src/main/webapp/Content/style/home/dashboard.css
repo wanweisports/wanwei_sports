@@ -1,0 +1,413 @@
+@charset "utf-8";
+* {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+form,
+ul,
+ol,
+li,
+dl,
+dt,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+  list-style: none outside none;
+}
+a {
+  text-decoration: none;
+  color: #ccc;
+  outline: none;
+}
+a:hover {
+  text-decoration: underline;
+  color: #1298f4;
+}
+a img {
+  border: none;
+}
+.fr {
+  float: right;
+}
+.fl {
+  float: left;
+}
+body {
+  height: 100%;
+  font: 12px/1.8 "Microsoft YaHei", simsong;
+  overflow: hidden;
+}
+/*任务栏*/
+.ww-task-bar {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 29px;
+  overflow: hidden;
+  border-top: 1px solid #272c36;
+  background: #31323a;
+  opacity: 0.9;
+}
+.ww-task-bar .task-window {
+  position: absolute;
+  top: 0;
+  right: 60px;
+  left: 2px;
+  height: 28px;
+  overflow: hidden;
+  float: left;
+}
+.ww-task-bar .task-window li {
+  position: relative;
+  float: left;
+  width: 125px;
+  height: 26px;
+  margin-right: 1px;
+  overflow: hidden;
+  color: #f4f4f4;
+  border: 1px solid #272c36;
+  cursor: pointer;
+}
+.ww-task-bar .task-window b {
+  background: url("/public/images/dashboard/desktop_spr_x.png") repeat-x;
+  display: block;
+  height: 24px;
+  font-weight: normal;
+  border: 1px solid #6f758a;
+}
+.ww-task-bar .task-window b:hover {
+  border: 1px solid #9196a1;
+  background-position: 0 -25px;
+}
+.ww-task-bar .task-window b:active {
+  border: 1px solid #647382;
+  background-position: 0 -50px;
+}
+.ww-task-bar .task-window b.focus {
+  border: 1px solid #b8bfca;
+  background-position: 0 -75px;
+}
+.ww-task-bar .task-window img {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+}
+.ww-task-bar .task-window span {
+  display: block;
+  width: 95px;
+  height: 24px;
+  padding-left: 25px;
+  line-height: 25px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ww-task-bar .task-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 28px;
+  overflow: hidden;
+  float: left;
+}
+.ww-task-bar .task-panel li {
+  position: relative;
+  float: left;
+  width: 100px;
+  height: 26px;
+  text-align: center;
+  margin-right: 1px;
+  overflow: hidden;
+  color: #f4f4f4;
+  border: 1px solid #272c36;
+  cursor: pointer;
+}
+.ww-task-bar .task-panel b {
+  background: url("/public/images/dashboard/desktop_spr_x.png") repeat-x;
+  display: block;
+  height: 24px;
+  font-weight: normal;
+  border: 1px solid #6f758a;
+}
+.ww-task-bar .task-panel b:hover {
+  border: 1px solid #aeb2ba;
+  background-position: 0 -25px;
+}
+.ww-task-bar .task-panel b:active {
+  border: 1px solid #647382;
+  background-position: 0 -50px;
+}
+.ww-task-bar .task-panel b.focus {
+  border: 1px solid #b8bfca;
+  background-position: 0 -75px;
+}
+.ww-task-bar .task-panel img {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+}
+.ww-task-bar .task-panel span {
+  display: block;
+  width: 95px;
+  height: 24px;
+  line-height: 25px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.desktop-view {
+  background-position: 0 0;
+}
+.desktop-view:hover {
+  background-position: -23px 0;
+}
+.desktop-view:active {
+  background-position: -46px 0;
+}
+/*桌面*/
+.ww-desk {
+  position: absolute;
+  top: 0;
+  bottom: 30px;
+  width: 100%;
+  overflow: hidden;
+  z-index: 2;
+}
+.ww-desk ul {
+  user-select: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+}
+.ww-desk ul li {
+  user-select: none;
+  width: 80px;
+  height: 57px;
+  padding: 10px 0;
+  text-align: center;
+  position: absolute;
+  cursor: pointer;
+}
+.ww-desk ul li img {
+  border-radius: 3px;
+  display: block;
+  height: 32px;
+  width: 32px;
+  margin: auto;
+}
+.ww-desk ul li span {
+  user-select: none;
+  background: none repeat scroll 0 0 rgba(0,0,0,0.3);
+  border-radius: 10px;
+  filter: none;
+  color: #fff;
+  display: inline-block;
+  height: 20px;
+  line-height: 20px;
+  margin-top: 5px;
+  overflow: hidden;
+  padding: 0 8px;
+  position: relative;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  z-index: 1;
+}
+.ww-desk ul li em {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 80px;
+  height: 77px;
+  border-radius: 5px;
+  background: #000;
+  opacity: 0.12;
+}
+.ww-desk ul li:hover,
+.ww-desk ul li.hover {
+  display: block;
+}
+.ww-desk ul li.focus {
+  display: block;
+  opacity: 0.25;
+}
+.ww-desk .title-bar {
+  user-select: none;
+}
+/*窗口*/
+.window-container {
+  position: absolute;
+  padding: 2px;
+  overflow: hidden;
+  border-radius: 3px;
+  background: #656672;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+}
+.window-container .title-bar {
+  background-color: #ebebeb;
+  border: 1px solid #ccc;
+  position: relative;
+  z-index: 10;
+  height: 26px;
+  padding: 0 20px;
+  line-height: 26px;
+  overflow: hidden;
+  color: #393836;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+  cursor: move;
+  border-radius: 3px 3px 0 0;
+}
+.window-container .window-current {
+  background: #363740;
+  box-shadow: 0 1px 10px rgba(0,0,0,0.6);
+}
+.window-container .window-current .title-bar {
+  background-position: 0 -31px;
+}
+.window-container .title-handle {
+  overflow: hidden;
+  position: absolute;
+  right: 5px;
+  top: 4px;
+}
+.window-container .title-handle .ha-min {
+  background-position: -5px -58px;
+}
+.window-container .title-handle .ha-min:hover {
+  background-position: -5px -30px;
+}
+.window-container .title-handle .ha-max {
+  background-position: -34px -59px;
+}
+.window-container .title-handle .ha-max:hover {
+  background-position: -34px -30px;
+}
+.window-container .title-handle .ha-revert {
+  background-position: -94px -59px;
+}
+.window-container .title-handle .ha-revert:hover {
+  background-position: -94px -30px;
+}
+.window-container .title-handle .ha-close {
+  background-position: -64px -59px;
+}
+.window-container .title-handle .ha-close:hover {
+  background-position: -64px -30px;
+}
+.window-container .title-handle a {
+  float: left;
+  width: 19px;
+  height: 21px;
+  margin-left: 5px;
+  line-height: 10;
+  overflow: hidden;
+  background: url("/public/images/dashboard/sprite_main_png.png") no-repeat;
+}
+.window-container .window-frame {
+  position: absolute;
+  top: 30px;
+  right: 2px;
+  bottom: 32px;
+  left: 2px;
+  background: #fff;
+}
+.window-container .window-frame iframe {
+  position: absolute;
+  border: 0;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.window-container .set-bar {
+  width: 100%;
+  position: absolute;
+  background: #e8e8e8;
+  border-top: 1px solid #b9b9b9;
+  height: 30px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+}
+.window-container .set-bar .btn {
+  margin-top: 3px;
+  margin-right: 5px;
+  border: 1px solid #e8e8e8;
+  border-radius: 3px;
+  color: #7d7d7d;
+  cursor: pointer;
+  display: inline-block;
+  height: 20px;
+  padding: 1px;
+  position: relative;
+}
+.window-container .set-bar .btn:hover {
+  border: 1px solid #7d7d7d;
+  background: #fff;
+  color: #333;
+  text-decoration: none;
+}
+.window-container .set-bar .btn .icon {
+  left: 8px;
+  position: absolute;
+  top: 3px;
+}
+.window-container .set-bar .btn .btn-con {
+  height: 20px;
+  line-height: 21px;
+  overflow: hidden;
+  padding: 0 8px;
+}
+/*右键提示*/
+.popup-menu {
+  background: url("popup_menu.gif") repeat-y scroll 0 0 #fff;
+  border: 1px solid #aeaeae;
+  box-shadow: 0 0 6px rgba(0,0,0,0.4);
+  position: absolute;
+  width: 125px;
+}
+.popup-menu ul {
+  padding: 1px;
+  position: relative;
+}
+.popup-menu ul li {
+  height: 24px;
+  position: relative;
+  vertical-align: middle;
+}
+.popup-menu a {
+  background-position: 100px 100px;
+  border-radius: 2px;
+  color: #333;
+  display: block;
+  height: 24px;
+  line-height: 24px;
+  overflow: hidden;
+  padding-left: 35px;
+}
+.popup-menu a:hover,
+.popup-menu a .focus {
+  background-color: #3b7ce6;
+  background-position: 0 -780px;
+  color: #fff;
+  text-decoration: none;
+}

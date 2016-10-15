@@ -1,0 +1,7 @@
+.xdsoft_datetimepicker .xdsoft_timepicker {
+  width: 200px;
+}
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_prev,
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_next {
+  margin-left: 86px;
+}
