@@ -170,9 +170,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		
 		String siteDate = siteInputView.getSiteDate(); //选中场馆的时间
 		
-		StringBuffer sql = new StringBuffer("SELECT *");
-		sql.append(" FROM site_info si, site_sport ss WHERE si.siteType = ss.sportId");
-		List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(siteInputView));
+		List<Map<String, Object>> list = getSites(siteInputView);
 		
 		List<Map<String, Object>> timePeriodList = parkService.getTimePeriod(business);
 		
@@ -217,6 +215,17 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		}
 		siteReserveOutputView.setSiteInfos(siteInfos);
 		return siteReserveOutputView;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getSites(SiteInputView siteInputView){
+		Integer sportId = siteInputView.getSportId();
+		StringBuffer sql = new StringBuffer("SELECT *");
+		sql.append(" FROM site_info si, site_sport ss WHERE si.siteType = ss.sportId");
+		if(sportId != null){
+			sql.append(" AND ss.sportId = :sportId");
+		}
+		return baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(siteInputView));
 	}
 	
 	private SiteReserve getSiteReserve(String siteDate, String startTime, String endTime, int siteId){

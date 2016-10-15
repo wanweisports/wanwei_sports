@@ -1,6 +1,8 @@
 package com.park.controller;
 
+import java.text.ParseException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import com.park.common.po.SiteInfo;
 import com.park.common.po.SiteSport;
 import com.park.common.po.UserOperator;
 import com.park.common.util.JsonUtils;
+import com.park.service.IParkService;
 import com.park.service.ISiteService;
 
 @Controller
@@ -26,6 +29,9 @@ public class SiteController extends BaseController {
 	
 	@Autowired
 	private ISiteService siteService;
+	
+	@Autowired
+	private IParkService parkService;
 	
 	@ResponseBody
 	@RequestMapping(value = "saveSiteSport", method = RequestMethod.POST)
@@ -124,19 +130,36 @@ public class SiteController extends BaseController {
 		return "Sites/SiteSportsList";
 	}
 	
-	@ResponseBody
-	@RequestMapping("getSiteReservationInfo")
-	public ResponseBean getSiteReservationInfo(SiteInputView siteInputView, Model model){
+	//显示时间段，场地名
+	@RequestMapping("getSiteReservation")
+	public String getSiteReservation(SiteInputView siteInputView, Model model) throws ParseException{
+		List<Map<String, Object>> sites = siteService.getSites(siteInputView);
+		List<Map<String, Object>> timePeriod = parkService.getTimePeriod(parkService.getBusiness());
+		model.addAttribute("sites", sites);
+		model.addAttribute("timePeriod", timePeriod);
+		System.out.println(JsonUtils.toJson(sites));
+		System.out.println(JsonUtils.toJson(timePeriod));
+		return "Sites/SiteReservation";
+		
+	}
+	
+	//显示场地序列图
+	@RequestMapping("dynamicSiteReservation")
+	public ResponseBean dynamicSiteReservation(SiteInputView siteInputView, Model model){
 		try {
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.putAll(JsonUtils.fromJson(siteService.getSiteReservationInfo(siteInputView)));
 			return new ResponseBean(data);
+			/*SiteReserveOutputView siteReservationInfo = siteService.getSiteReservationInfo(siteInputView);
+			model.addAttribute("siteReservationInfo", siteReservationInfo);
+			System.out.println(JsonUtils.toJson(siteService.getSiteReservationInfo(siteInputView)));*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;//"Sites/SiteReservation";
+		return new ResponseBean(false);//"Sites/SiteReservation";
 	}
 	
+	//预定场地
 	@ResponseBody
 	@RequestMapping("saveReservationSite")
 	public ResponseBean saveReservationSite(SiteInputView siteInputView){

@@ -34,4 +34,6 @@ public interface ISiteService {
 	
 	public void saveReservationSite(SiteInputView siteInputView);
 	
+	public List<Map<String, Object>> getSites(SiteInputView siteInputView);
+	
 }
