@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.park.common.bean.PageBean;
 import com.park.common.bean.ResponseBean;
 import com.park.common.bean.SiteInputView;
+import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.SiteInfo;
 import com.park.common.po.SiteSport;
@@ -136,17 +137,19 @@ public class SiteController extends BaseController {
 	//显示时间段，场地名
 	@RequestMapping("getSiteReservationInfo")
 	public String getSiteReservation(SiteInputView siteInputView, Model model) throws ParseException{
+		siteInputView.setSportStatus(IDBConstant.LOGIC_STATUS_YES);
 		List<Map<String, Object>> siteSports = siteService.getSiteSportNames(siteInputView);
 		if(siteSports.size() > 0){
 			Map<String, Object> sportMap = siteSports.get(0);
 			Integer sportId = StrUtil.objToInt(sportMap.get("sportId"));
 			siteInputView.setSportId(sportId);
+			siteInputView.setSiteStatus(IDBConstant.LOGIC_STATUS_YES);
 			List<Map<String, Object>> sites = siteService.getSites(siteInputView);
 			List<Map<String, Object>> timePeriod = parkService.getTimePeriod(parkService.getBusiness());
 			model.addAttribute("sites", sites);
 			model.addAttribute("timePeriod", timePeriod);
 			model.addAttribute("curDate", DateUtil.dateToString(new Date(), null));
-			model.addAttribute("cursportId", sportId);
+			model.addAttribute("curSportId", sportId);
 			System.out.println(JsonUtils.toJson(sites));
 			System.out.println(JsonUtils.toJson(timePeriod));
 		}

@@ -9,6 +9,7 @@ public class ReserveInfo{
 	private String operatorMobile;
 	private String opType;
 	private String operatorId;
+	private String reserveType;
 	
 	
 	public String getStartTime() {
@@ -52,6 +53,12 @@ public class ReserveInfo{
 	}
 	public void setOperatorId(String operatorId) {
 		this.operatorId = operatorId;
+	}
+	public String getReserveType() {
+		return reserveType;
+	}
+	public void setReserveType(String reserveType) {
+		this.reserveType = reserveType;
 	}
 	
 }

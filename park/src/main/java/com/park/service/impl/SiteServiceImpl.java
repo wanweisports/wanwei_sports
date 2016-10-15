@@ -199,6 +199,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 					reserveInfo.setOperatorName(siteReserve.getName());
 					reserveInfo.setOperatorMobile(siteReserve.getMobile());
 					reserveInfo.setOpType(siteReserve.getOpType());
+					reserveInfo.setReserveType(siteReserve.getReserveType());
 					reserveInfo.setSiteReserveStatus(siteReserve.getSiteReserveStatus());
 				}else{
 					if(siteStartTime.getTime() <= DateUtil.getHHMM(startTime).getTime() && siteEndTime.getTime() >= DateUtil.getHHMM(endTime).getTime()){
@@ -221,10 +222,14 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	@Override
 	public List<Map<String, Object>> getSites(SiteInputView siteInputView){
 		Integer sportId = siteInputView.getSportId();
+		String siteStatus = siteInputView.getSiteStatus();
 		StringBuffer sql = new StringBuffer("SELECT *");
 		sql.append(" FROM site_info si, site_sport ss WHERE si.siteType = ss.sportId");
 		if(sportId != null){
 			sql.append(" AND ss.sportId = :sportId");
+		}
+		if(StrUtil.isNotBlank(siteStatus)){
+			sql.append(" AND si.siteStatus = :siteStatus");
 		}
 		return baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(siteInputView));
 	}
