@@ -207,7 +207,8 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 						reserveInfo.setSiteReserveStatus("4");
 					}
 				}
-				reserveInfo.setTime(startTime+"-"+endTime);
+				reserveInfo.setStartTime(startTime);
+				reserveInfo.setEndTime(endTime);
 				reserveInfos.add(reserveInfo);
 			}
 			site.setReserveInfos(reserveInfos);
@@ -320,6 +321,13 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 			od.setOrderId(orderId);
 			baseDao.save(od, od.getOrderDetailId());
 		}
+	}
+	
+	@Override
+	public Integer updateLockSite(SiteInputView siteInputView){
+		String lockSiteJson = siteInputView.getLockSiteJson();
+		return 0;
+		
 	}
 	
 	private Map<String, Object> getSiteSportName(int siteId){

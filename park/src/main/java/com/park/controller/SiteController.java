@@ -1,6 +1,7 @@
 package com.park.controller;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,9 @@ import com.park.common.exception.MessageException;
 import com.park.common.po.SiteInfo;
 import com.park.common.po.SiteSport;
 import com.park.common.po.UserOperator;
+import com.park.common.util.DateUtil;
 import com.park.common.util.JsonUtils;
+import com.park.common.util.StrUtil;
 import com.park.service.IParkService;
 import com.park.service.ISiteService;
 
@@ -133,17 +136,26 @@ public class SiteController extends BaseController {
 	//显示时间段，场地名
 	@RequestMapping("getSiteReservationInfo")
 	public String getSiteReservation(SiteInputView siteInputView, Model model) throws ParseException{
-		List<Map<String, Object>> sites = siteService.getSites(siteInputView);
-		List<Map<String, Object>> timePeriod = parkService.getTimePeriod(parkService.getBusiness());
-		model.addAttribute("sites", sites);
-		model.addAttribute("timePeriod", timePeriod);
-		System.out.println(JsonUtils.toJson(sites));
-		System.out.println(JsonUtils.toJson(timePeriod));
+		List<Map<String, Object>> siteSports = siteService.getSiteSportNames(siteInputView);
+		if(siteSports.size() > 0){
+			Map<String, Object> sportMap = siteSports.get(0);
+			Integer sportId = StrUtil.objToInt(sportMap.get("sportId"));
+			siteInputView.setSportId(sportId);
+			List<Map<String, Object>> sites = siteService.getSites(siteInputView);
+			List<Map<String, Object>> timePeriod = parkService.getTimePeriod(parkService.getBusiness());
+			model.addAttribute("sites", sites);
+			model.addAttribute("timePeriod", timePeriod);
+			model.addAttribute("curDate", DateUtil.dateToString(new Date(), null));
+			model.addAttribute("cursportId", sportId);
+			System.out.println(JsonUtils.toJson(sites));
+			System.out.println(JsonUtils.toJson(timePeriod));
+		}
 		return "Reservation/ReservationsSequence";
 		
 	}
 	
 	//显示场地序列图
+	@ResponseBody
 	@RequestMapping("dynamicSiteReservation")
 	public ResponseBean dynamicSiteReservation(SiteInputView siteInputView, Model model){
 		try {
@@ -181,6 +193,23 @@ public class SiteController extends BaseController {
 	@RequestMapping("getSiteReservationBatch")
 	public String getSiteReservationBatch(Model model){
 		return "Reservation/ReservationsBatch";
+	}
+	
+	//锁定场地
+	@RequestMapping("lockSite")
+	public ResponseBean lockSite(SiteInputView siteInputView){
+		try {
+			UserOperator userOperator = super.getUserInfo();
+			siteInputView.setSalesId(userOperator.getId());
+			siteService.updateLockSite(siteInputView);
+			return new ResponseBean(true);
+		} catch (MessageException e) {
+			e.printStackTrace();
+			return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
 	}
 
 }

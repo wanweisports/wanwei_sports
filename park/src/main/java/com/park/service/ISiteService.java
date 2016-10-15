@@ -36,4 +36,6 @@ public interface ISiteService {
 	
 	public List<Map<String, Object>> getSites(SiteInputView siteInputView);
 	
+	public Integer updateLockSite(SiteInputView siteInputView);
+	
 }

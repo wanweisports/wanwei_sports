@@ -32,6 +32,8 @@ public class SiteInputView extends BaseInputView {
 	
 	private String payType;
 	
+	private String lockSiteJson;
+	
 	public Integer getSiteId() {
 		return siteId;
 	}
@@ -150,6 +152,14 @@ public class SiteInputView extends BaseInputView {
 
 	public void setPayType(String payType) {
 		this.payType = payType;
+	}
+
+	public String getLockSiteJson() {
+		return lockSiteJson;
+	}
+
+	public void setLockSiteJson(String lockSiteJson) {
+		this.lockSiteJson = lockSiteJson;
 	}
 	
 }
