@@ -14,16 +14,16 @@
         <div>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form class="form-inline col-sm-8">
+                    <form class="form-inline">
                         <div class="form-group">
                             <label>场地类型</label>
-                            <select class="form-control">
+                            <select class="form-control" style="width: 160px;">
                                 <option>全部类型</option>
                                 <c:forEach var="sport" items="${siteSportNames}">
                                 	<option value="${sport.sportId}">${sport.sportName}</option>
                                 </c:forEach>
                             </select>
-                            <a href="site/getSiteSports" class="btn btn-info">
+                            <a href="site/getSiteSports" class="btn btn-primary">
                                 <span class="glyphicon glyphicon-plus"></span>
                             </a>
                         </div>
@@ -33,15 +33,15 @@
                         </div>
                         <div class="form-group">
                             <a href="javascript:;" class="btn btn-primary">
-                                <span class="glyphicon glyphicon-search"></span> 检索
+                                <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
+                            </a>
+                        </div>
+                        <div class="form-group pull-right">
+                            <a href="#myModal" data-toggle="modal" data-original-title="" class="btn btn-primary pull-right">
+                                <span class="glyphicon glyphicon-plus"></span> 增加场地
                             </a>
                         </div>
                     </form>
-                    <div class="col-sm-4 text-right">
-                        <a href="#myModal" data-toggle="modal" data-original-title="" class="btn btn-primary pull-right">
-                            <span class="glyphicon glyphicon-plus"></span> 增加场地
-                        </a>
-                    </div>
                 </div>
             </div>
             <div class="panel panel-default">
@@ -64,10 +64,10 @@
                             
                             <c:forEach var="site" items="${list}">
                             	<tr>
-	                                <td>${site.siteId }</td>
-	                                <td>${site.siteName }</td>
-	                                <td>${site.sportName }</td>
-	                                <td>${site.siteRemark }</td>
+	                                <td>${site.siteId}</td>
+	                                <td>${site.siteName}</td>
+	                                <td>${site.sportName}</td>
+	                                <td>${site.siteRemark}</td>
 	                                
 	                                <td class="text-success">${site.siteStatus }</td>
 	                                

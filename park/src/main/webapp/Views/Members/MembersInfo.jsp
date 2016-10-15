@@ -1,17 +1,36 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ page import="com.park.layout.Blocks" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> <%-- JSTL表达式（判断，循环，输出） --%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
+<%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
-<jsp:include page="/Views/Shared/Header.jsp" />
- 
+<layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.min.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.zh-CN.min.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
+    <script src="/Content/dist/members/members_info_view.js?v=${static_resource_version}"></script>
+
+    <script>
+        // 表单校验配置
+        $(document).ready(function () {
+            $('#member_form, .refresh-card-form, .recharge-card-form, .upgrade-card-form').validate({
+                ignore: ":hidden"
+            });
+        });
+    </script>
+</layout:override>
+
+<layout:override name="<%=Blocks.BLOCK_BODY%>">
 <div class="ww-wrapper">
     <div class="wrapper">
         <ol class="breadcrumb">
             <li><a href="/">工作平台</a></li>
-            <li><a href="member/memberList">会员查询</a></li>
+            <li><a href="/member/memberList">会员查询</a></li>
             <li class="active">会员详情</li>
         </ol>
-        <form id="member_form" class="form-horizontal" method="post" novalidate onsubmit="return false;">
+        <form id="member_form" class="form-horizontal" novalidate onsubmit="return false;">
             <input type="hidden" name="memberId" value="${memberId}" />
             <div class="panel panel-default">
                 <div class="panel-heading">会员信息</div>
@@ -199,7 +218,7 @@
                                 <input type="text" class="form-control" value="${cardBalance}" disabled>
                             </div>
                             <div class="col-sm-2">
-                                <a href="member/getBalances?cardId=${cardId}&memberId=${memberId}" class="btn btn-primary" title="收支明细">
+                                <a href="/member/getBalances?cardId=${cardId}&memberId=${memberId}" class="btn btn-primary" title="收支明细">
                                     <span class="glyphicon glyphicon-th-list"></span>
                                 </a>
                             </div>
@@ -236,7 +255,12 @@
                             <label class="col-sm-4 control-label">有效期至</label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" value="${cardDeadline}" disabled>
+                                <c:if test="${cardDeadline != 0}">
+                                    <input type="text" class="form-control" value="${cardDeadline}" disabled>
+                                </c:if>
+                                <c:if test="${cardDeadline == 0}">
+                                    <input type="text" class="form-control" value="无限制" disabled>
+                                </c:if>
                             </div>
                         </div>
                         <div class="form-group">
@@ -600,11 +624,9 @@
         </div>
     </div>
 </div>
- 
-<jsp:include page="/Views/Shared/Common.jsp" />
-<script src="Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-<script src="Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.zh-CN.min.js"></script>
-<script src="Content/lib/jquery/jquery.validate/jquery.validate.js"></script>
-<script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js"></script>
-<script src="Content/app/members/members_info_view.js"></script>
-<jsp:include page="/Views/Shared/Footer.jsp" />
+</layout:override>
+
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="nav" value="member"/>
+    <c:param name="subNav" value="list"/>
+</c:import>

@@ -1,19 +1,50 @@
 (function ($) {
-    // 筛选余额列表
-    $(".balance-filter").on("click", function (e) {
-        e.preventDefault();
+    var Members_Balance_List = {
+        opts: {
+            URL: '/member/getBalances'
+        },
+        init: function () {
+            this.initEvents();
 
-        var conditions = $("#balance_filter_form").serialize();
+            // 表单时间控件设置
+            $(".form_datetime").datepicker({
+                format: "yyyy-mm-dd",
+                todayBtn: true,
+                language: "zh-CN",
+                orientation: "bottom auto"
+            });
+        },
+        initEvents: function () {
+            var content = this;
 
-        location.assign('member/getBalances?' + conditions);
-    });
+            // 筛选余额列表
+            $(".balance-filter").on("click", function (e) {
+                e.preventDefault();
 
-    // 分页点击
-    $(".page-first, .page-prev, .page-index, .page-next, .page-last").on("click", function (e) {
-        e.preventDefault();
+                var conditions = $("#balance_filter_form").serialize();
 
-        var href = location.href;
+                location.assign(content.opts.URL + '?' + conditions);
+            });
 
-        location.assign(href + "&page=" + $(this).attr("data-index"));
-    });
+            // 分页
+            $(".page-first, .page-prev, .page-index, .page-next, .page-last").on("click", function (e) {
+                e.preventDefault();
+
+                var conditions = location.search;
+                var pageIndex = $(this).attr("data-index");
+
+                if (conditions) {
+                    if (conditions.indexOf("page=") == -1) {
+                        location.assign(content.opts.URL + '?' + conditions + '&page=' + pageIndex);
+                    } else {
+                        location.assign(content.opts.URL + '?' + conditions.replace(/(page=)\d+/, '$1' + pageIndex));
+                    }
+                } else {
+                    location.assign(content.opts.URL + '?page=' + pageIndex);
+                }
+            });
+        }
+    };
+
+    Members_Balance_List.init();
 })(jQuery);

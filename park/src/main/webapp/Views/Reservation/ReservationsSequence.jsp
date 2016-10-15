@@ -3,7 +3,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 
 <jsp:include page="/Views/Shared/Header.jsp" />
-<link href="Content/style/reservations/reservations_sequence.css" rel="stylesheet" type="text/css">
+<link href="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css" rel="stylesheet" type="text/css">
+<link href="/Content/style/reservations/reservations_sequence.css" rel="stylesheet" type="text/css">
 
 
 <div class="ww-wrapper">
@@ -26,9 +27,15 @@
                                 <li><a href="javascript:;">周日(08-07)</a></li>
                                 <li><a href="javascript:;">周一(08-08)</a></li>
                                 <li>
-                                    <a href="javascript:;">
-                                        <span class="glyphicon glyphicon-calendar"></span> 其他日期
+                                    <a href="javascript:;" class="other-date">
+                                        <span class="glyphicon glyphicon-calendar"></span> 选择日期
                                     </a>
+                                    <div class="other-date-calendar"
+                                         style="position: absolute; display: none; z-index: 1;">
+                                        <input type="text" class="form-control" id="other_date" name="otherDate"
+                                               autocomplete="off">
+                                    </div>
+
                                 </li>
                             </ul>
                         </div>
@@ -276,4 +283,6 @@
 </div>
 
 <jsp:include page="/Views/Shared/Common.jsp" />
+<script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js"></script>
+<script src="/Content/app/reservations/reservations_sequence.js"></script>
 <jsp:include page="/Views/Shared/Footer.jsp" />

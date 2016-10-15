@@ -3,6 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 
 <jsp:include page="/Views/Shared/Header.jsp" />
+<link href="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css" rel="stylesheet" type="text/css">
 
 <div class="ww-wrapper">
     <div class="wrapper">
@@ -11,7 +12,7 @@
             <li class="active">批量预订</li>
         </ol>
         <div>
-            <form action="" method="post" novalidate onsubmit="return false;">
+            <form id="batch_form" action="" method="post" novalidate onsubmit="return false;">
                 <div class="panel panel-default sc-booking-user">
                     <div class="panel-heading">基本信息</div>
                     <div class="panel-body">
@@ -248,4 +249,8 @@
 </div>
 
 <jsp:include page="/Views/Shared/Common.jsp" />
+<script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js"></script>
+<script src="Content/lib/jquery/jquery.validate/jquery.validate.js"></script>
+<script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js"></script>
+<script src="/Content/app/reservations/reservations_batch.js"></script>
 <jsp:include page="/Views/Shared/Footer.jsp" />

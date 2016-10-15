@@ -131,7 +131,7 @@ public class SiteController extends BaseController {
 	}
 	
 	//显示时间段，场地名
-	@RequestMapping("getSiteReservation")
+	@RequestMapping("getSiteReservationInfo")
 	public String getSiteReservation(SiteInputView siteInputView, Model model) throws ParseException{
 		List<Map<String, Object>> sites = siteService.getSites(siteInputView);
 		List<Map<String, Object>> timePeriod = parkService.getTimePeriod(parkService.getBusiness());
@@ -139,7 +139,7 @@ public class SiteController extends BaseController {
 		model.addAttribute("timePeriod", timePeriod);
 		System.out.println(JsonUtils.toJson(sites));
 		System.out.println(JsonUtils.toJson(timePeriod));
-		return "Sites/SiteReservation";
+		return "Reservation/ReservationsSequence";
 		
 	}
 	
@@ -175,6 +175,12 @@ public class SiteController extends BaseController {
 			e.printStackTrace();
 			return new ResponseBean(false);
 		}
+	}
+
+	// 批量预订
+	@RequestMapping("getSiteReservationBatch")
+	public String getSiteReservationBatch(Model model){
+		return "Reservation/ReservationsBatch";
 	}
 
 }

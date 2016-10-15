@@ -1,61 +1,111 @@
 (function ($) {
-    // 检索显示列表
-    $(".goods-filter").on("click", function (e) {
-        e.preventDefault();
+    var Good_List = {
+        opts: {
+            URL: '/good/getGoods'
+        },
+        init: function () {
+            this.initEvents();
+        },
+        initEvents: function () {
+            var content = this;
 
-        var conditions = $("#goods_filter_form").serialize();
+            // 检索显示列表
+            $(".goods-filter").on("click", function (e) {
+                e.preventDefault();
 
-        location.assign('/good/getGoods?' + conditions);
-    });
+                var conditions = $("#goods_filter_form").serialize();
 
-    // 分页点击
-    $(".page-first, .page-prev, .page-index, .page-next, .page-last").on("click", function (e) {
-        e.preventDefault();
+                location.assign(content.opts.URL + '?' + conditions);
+            });
 
-        var href = location.href;
+            // 分页点击
+            $(".page-first, .page-prev, .page-index, .page-next, .page-last").on("click", function (e) {
+                e.preventDefault();
 
-        location.assign(
-            (href.indexOf("?") > 0) ?
-                (href + "&page=" + $(this).attr("data-index")) : (href + "?page=" + $(this).attr("data-index"))
-        );
-    });
+                var conditions = location.search;
 
-    // 上/下架
-    function goodInOrOut(goodId, up){
-        $.post("good/goodInOrOut", {goodId: goodId, up: up}, function (res) {
-        	if(res.code == 1){
-        		location.reload();
-        	}else{
-        		alert(res.message);
-        	}
-        });
-    }
+                if (conditions) {
+                    if (conditions.indexOf("page=") == -1) {
+                        location.assign(location.href + '&page=' + $(this).attr("data-index"));
+                    } else {
+                        location.assign(location.href.replace(/page=\d+/, "") + '&page=' + $(this).attr("data-index"));
+                    }
+                } else {
+                    location.assign('/good/getGoods?page=' + $(this).attr("data-index"));
+                }
+            });
 
-    // 进销存上架
-    $(".goods-list").on("click", ".goods-enter", function (e) {
-        e.preventDefault();
+            // 上/下架
+            function goodInOrOut(goodId, up){
+                $.post("/good/goodInOrOut", {goodId: goodId, up: up}, function (res) {
+                    if(res.code == 1){
+                        location.reload();
+                    }else{
+                        alert(res.message || '上/下架失败, 请稍后重试');
+                    }
+                });
+            }
 
-        var $this = $(this);
+            // 进销存上架
+            $(".goods-list").on("click", ".goods-enter", function (e) {
+                e.preventDefault();
 
-        if ($this.attr("working") == "working") {
-            return false;
+                var $this = $(this);
+
+                if ($this.attr("working") == "working") {
+                    return false;
+                }
+                $this.attr("working", "working");
+
+                goodInOrOut($this.attr("data-id"), true);
+            });
+
+            // 进销存下架
+            $(".goods-list").on("click", ".goods-outer", function (e) {
+                e.preventDefault();
+
+                var $this = $(this);
+
+                if ($this.attr("working") == "working") {
+                    return false;
+                }
+                $this.attr("working", "working");
+
+                goodInOrOut($this.attr("data-id"), false);
+            });
+
+            // 进销存增加库存弹窗
+            $(".goods-list").on("click", ".goods-count", function () {
+                var $this = $(this);
+
+                $("input[name='goodId']").val($this.attr("data-id"));
+                $("#nowGoodCount").html($this.attr("data-count"));
+            });
+
+            // 确认增加库存
+            $("#kucunModal").on("click", ".confirm-count", function (e) {
+                e.preventDefault();
+
+                var $form = $("#good_kucun_form");
+                var conditions = $form.serialize();
+
+                if ($form.attr("submitting") == "submitting" || !$form.valid()) {
+                    return false;
+                }
+                $form.attr("submitting", "submitting");
+
+                $.post("/good/addGoodCount", conditions, function (res) {
+                    $form.attr("submitting", "");
+
+                    if (res.code == 1) {
+                        location.reload();
+                    } else {
+                        alert(res.message || "增加库存失败, 请稍后重试");
+                    }
+                });
+            });
         }
-        $this.attr("working", "working");
+    };
 
-        goodInOrOut($this.attr("data-id"), true);
-    });
-
-    // 进销存下架
-    $(".goods-list").on("click", ".goods-outer", function (e) {
-        e.preventDefault();
-
-        var $this = $(this);
-
-        if ($this.attr("working") == "working") {
-            return false;
-        }
-        $this.attr("working", "working");
-
-        goodInOrOut($this.attr("data-id"), false);
-    });
+    Good_List.init();
 })(jQuery);
