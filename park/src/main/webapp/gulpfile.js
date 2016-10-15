@@ -56,7 +56,7 @@ gulp.task('stylus-watch', function() {
     }));
 });
 
-gulp.task('js-watch', function(){
+gulp.task('js-watch', function () {
     gulp.src('./Content/app/**/*.js')
         //.pipe(uglifyJs())
         .pipe(notify({

@@ -37,7 +37,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            
+
                             <c:forEach var="sport" items="${list }">
 	                            <tr>
 	                                <td>${sport.sportId }</td>
@@ -45,7 +45,7 @@
 	                                <td>${sport.sportMoney }</td>
 	                                <td>${sport.sportDeposit }</td>
 	                                <td>${sport.startTime }-${sport.endTime }</td>
-	                                
+
 	                                <td class="text-success">${sport.sportStatus }</td>
 	                                
 	                                <td>${sport.operatorName }</td>
@@ -57,7 +57,7 @@
 	                                </td>
 	                            </tr>
                             </c:forEach>
-                            
+
                             </tbody>
                         </table>
                     </div>

@@ -1,26 +1,47 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ page import="com.park.layout.Blocks" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> <%-- JSTL表达式（判断，循环，输出） --%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
+<%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
-<jsp:include page="/Views/Shared/Header.jsp" />
-<link href="Content/style/reservations/reservations_sports_settings.css" rel="stylesheet" type="text/css">
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="/Content/style/reservations/reservations_sports_settings.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
+    <script src="/Content/dist/reservations/reservations_sports.js?v=${static_resource_version}"></script>
+    <script>
+        // 配置表单校验
+        $(document).ready(function () {
+            $('#sports_form').validate({
+                ignore: ":hidden"
+            });
+        });
+    </script>
+</layout:override>
+
+<layout:override name="<%=Blocks.BLOCK_BODY%>">
 <div class="ww-wrapper">
     <div class="wrapper">
         <ol class="breadcrumb">
-            <li><a href="/">首页</a></li>
+            <li><a href="/">工作平台</a></li>
             <li class="active">场地类型</li>
         </ol>
         <div>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <a href="#myModal" data-toggle="modal" class="btn btn-primary">
+                    <button data-toggle="modal" class="btn btn-primary sports-add">
                         <span class="glyphicon glyphicon-plus"></span> 增加场地类型
-                    </a>
+                    </button>
                 </div>
             </div>
 
-            <div class="panel panel-default">
+            <div class="panel panel-default sports-list">
                 <div class="panel-body">
                     <div class="table-responsive">
                         <table class="table">
@@ -37,24 +58,25 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="sport" items="${sports}">
+                            <c:forEach var="sport" items="${list}">
                                 <tr>
-                                    <td>${sport.sport_name}</td>
-                                    <td>${sport.sport_money}</td>
-                                    <td>${sport.sport_deposit}</td>
-                                    <td>${sport.start_time}-${sport.end_time}</td>
-                                    <c:if test="${sport.sport_status == 1}">
+                                    <td>${sport.sportName}</td>
+                                    <td>${sport.sportMoney}</td>
+                                    <td>${sport.sportDeposit}</td>
+                                    <td>${sport.startTime}-${sport.endTime}</td>
+                                    <c:if test="${sport.sportStatus == 1}">
                                         <td class="text-success">开放</td>
                                     </c:if>
-                                    <c:if test="${sport.sport_status == 2}">
+                                    <c:if test="${sport.sportStatus == 2}">
                                         <td class="text-danger">关闭</td>
                                     </c:if>
-                                    <td>李晓丹</td>
-                                    <td>2016-09-03</td>
+                                    <td>${sport.operatorName}</td>
+                                    <td>${sport.createTime}</td>
                                     <td>
-                                        <a href="#myModal" data-toggle="modal" data-original-title="" class="btn btn-primary">
+                                        <button data-toggle="modal" class="btn btn-primary sports-update"
+                                                data-id="${sport.sportId}">
                                             <i class="glyphicon glyphicon-edit"></i> 修改
-                                        </a>
+                                        </button>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -67,63 +89,88 @@
     </div>
 </div>
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="settingModal" tabindex="-1" role="dialog" aria-labelledby="settingModalLabel">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">设置场地类型</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="settingModalLabel">设置场地类型</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal">
+                <form id="sports_form" class="form-horizontal" onsubmit="return false;">
+                    <input type="hidden" id="sport_id" name="sportId">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">场地类型</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" placeholder="场地类型">
+                            <input type="text" class="form-control" id="sport_name" name="sportName"
+                                   placeholder="场地类型" autocomplete="off"
+                                   data-val="true" data-val-required="场地类型不能为空">
+                            <div data-valmsg-for="sportName" data-valmsg-replace="true"></div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">单价/小时</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" placeholder="单价/小时">
+                            <input type="text" class="form-control" id="sport_money" name="sportMoney"
+                                   placeholder="单价/小时" autocomplete="off"
+                                   data-val="true" data-val-required="单价/小时不能为空">
+                            <div data-valmsg-for="sportMoney" data-valmsg-replace="true"></div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">预订押金</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" placeholder="预订押金">
+                            <input type="text" class="form-control" id="sport_deposit" name="sportDeposit"
+                                   placeholder="预订押金" autocomplete="off"
+                                   data-val="true" data-val-required="预订押金不能为空">
+                            <div data-valmsg-for="sportDeposit" data-valmsg-replace="true"></div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">开放时间</label>
                         <div class="col-sm-5">
-                            <input class="form-control" type="text" placeholder="开始时间">
+                            <input class="form-control" type="text" id="start_time" name="startTime"
+                                   placeholder="开始时间" autocomplete="off"
+                                   data-val="true" data-val-required="开始时间不能为空"
+                                   data-val-regex-pattern="^\d{2}:\d{2}$"
+                                   data-val-regex="开始时间格式错误">
+                            <div data-valmsg-for="startTime" data-valmsg-replace="true"></div>
                         </div>
                         <div class="col-sm-5">
-                            <input class="form-control" type="text" placeholder="结束时间">
+                            <input class="form-control" type="text" id="end_time" name="endTime"
+                                   placeholder="结束时间" autocomplete="off"
+                                   data-val="true" data-val-required="结束时间不能为空"
+                                   data-val-regex-pattern="^\d{2}:\d{2}$"
+                                   data-val-regex="结束时间格式错误">
+                            <div data-valmsg-for="endTime" data-valmsg-replace="true"></div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">类型状态</label>
                         <div class="col-sm-10">
                             <label class="radio-inline">
-                                <input type="radio" name="sport_status" value="1" checked> 开放
+                                <input type="radio" id="sport_status1" name="sportStatus" value="1" checked> 开放
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="sport_status" value="2"> 关闭
+                                <input type="radio" id="sport_status2" name="sportStatus" value="2"> 关闭
                             </label>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary sports-confirm">
                     <span class="glyphicon glyphicon-ok"></span> 确 定
                 </button>
             </div>
         </div>
     </div>
 </div>
+</layout:override>
 
-<jsp:include page="/Views/Shared/Common.jsp" />
-<jsp:include page="/Views/Shared/Footer.jsp" />
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="nav" value="site"/>
+    <c:param name="subNav" value="sports"/>
+</c:import>

@@ -35,12 +35,12 @@
                     <span>场地预订</span>
                 </a>
                 <ul class="nav-sub">
-                    <li><a href="/site/getSiteReservationInfo">现场预订</a></li>
-                    <li><a href="/site/getSiteReservationBatch">批量预订</a></li>
-                    <!--<li><a href="#">包场预订</a></li>-->
-                    <li><a href="/venue/sequencePDA">热点概率分析</a></li>
-                    <li><a href="/site/getSiteInfos">场地设置</a></li>
-                    <li><a href="/site/getSiteSports">场地类型设置</a></li>
+                    <li><a class="${param.subNav == "sequence" ? "active" : ""}" href="/site/getSiteReservationInfo">现场预订</a></li>
+                    <li><a class="${param.subNav == "batch" ? "active" : ""}" href="/site/getSiteReservationBatch">批量预订</a></li>
+                    <!--<li><a class="${param.subNav == "block" ? "active" : ""}" href="#">包场预订</a></li>-->
+                    <li><a class="${param.subNav == "percent" ? "active" : ""}" href="/venue/sequencePDA">热点概率分析</a></li>
+                    <li><a class="${param.subNav == "site" ? "active" : ""}" href="/site/getSiteInfos">场地设置</a></li>
+                    <li><a class="${param.subNav == "sports" ? "active" : ""}" href="/site/getSiteSports">场地类型设置</a></li>
                 </ul>
             </li>
             <li class="${param.nav == "good" ? "nav-active" : ""}">

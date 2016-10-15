@@ -120,7 +120,7 @@ public class SiteController extends BaseController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "Sites/SiteSportsList";
+		return "Reservation/ReservationsSportsSettings";
 	}
 	
 	@RequestMapping("getSiteReservationInfo")
