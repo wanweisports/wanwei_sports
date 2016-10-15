@@ -32,7 +32,7 @@ public class SiteInputView extends BaseInputView {
 	
 	private String payType;
 	
-	private String lockSiteJson;
+	private String siteOperationJson;
 	
 	public Integer getSiteId() {
 		return siteId;
@@ -154,12 +154,12 @@ public class SiteInputView extends BaseInputView {
 		this.payType = payType;
 	}
 
-	public String getLockSiteJson() {
-		return lockSiteJson;
+	public String getSiteOperationJson() {
+		return siteOperationJson;
 	}
 
-	public void setLockSiteJson(String lockSiteJson) {
-		this.lockSiteJson = lockSiteJson;
+	public void setSiteOperationJson(String siteOperationJson) {
+		this.siteOperationJson = siteOperationJson;
 	}
-	
+
 }

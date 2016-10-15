@@ -149,10 +149,12 @@ public class SiteController extends BaseController {
 			siteInputView.setSiteStatus(IDBConstant.LOGIC_STATUS_YES);
 			List<Map<String, Object>> sites = siteService.getSites(siteInputView);
 			List<Map<String, Object>> timePeriod = parkService.getTimePeriod(parkService.getBusiness());
+			model.addAttribute("siteSports", siteSports);
 			model.addAttribute("sites", sites);
 			model.addAttribute("timePeriod", timePeriod);
 			model.addAttribute("curDate", DateUtil.dateToString(new Date(), null));
 			model.addAttribute("curSportId", sportId);
+			System.out.println(JsonUtils.toJson(siteSports));
 			System.out.println(JsonUtils.toJson(sites));
 			System.out.println(JsonUtils.toJson(timePeriod));
 		}

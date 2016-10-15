@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.park.common.bean.PageBean;
 import com.park.common.bean.SiteInputView;
+import com.park.common.bean.SiteOperationInfo;
+import com.park.common.bean.SiteOperationInputView;
 import com.park.common.bean.out.ReserveInfo;
 import com.park.common.bean.out.Site;
 import com.park.common.bean.out.SiteReserveOutputView;
@@ -240,50 +242,61 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	
 	@Override
 	public void saveReservationSite(SiteInputView siteInputView){
-		String[] siteIds = siteInputView.getSiteIds().split(",");
+		String siteOperationJson = siteInputView.getSiteOperationJson();
+		SiteOperationInputView siteOperation = JsonUtils.fromJsonDF(siteOperationJson, SiteOperationInputView.class);
+		List<SiteOperationInfo> siteOperationInfo = siteOperation.getSiteOperationInfo();
+		Integer memberId = siteOperation.getMemberId();
+		String name = siteOperation.getName();
+		String mobile = siteOperation.getMobile();
+		String opType = siteOperation.getOpType(); //1.会员 2.散客
+		String reserveType = siteOperation.getReserveType(); //1.PC  2.手机网页  3.打电话
+		
+		/*String[] siteIds = siteInputView.getSiteIds().split(",");
 		String[] times = siteInputView.getTimes().split(",");
 		String opType = siteInputView.getOpType();
-		String reserveType = siteInputView.getReserveType();
-		Integer salesId = siteInputView.getSalesId();
 		String siteDate = siteInputView.getSiteDate();
-		String payType = siteInputView.getPayType();
+		String payType = siteInputView.getPayType();*/ //先生成订单，在修改订单
+		
+		Integer salesId = siteInputView.getSalesId();
+		
 		
 		String nowDate = DateUtil.getNowDate();
 		
 		UserMember member = null;
 		OrderInfo orderInfo = new OrderInfo();
 		if(IDBConstant.LOGIC_STATUS_YES.equals(opType)){
-			member = memberService.getUserMember(siteInputView.getMemberId());
+			member = memberService.getUserMember(siteOperation.getMemberId());
 			orderInfo.setMemberId(member.getMemberId());
 		}else{
 			orderInfo.setMemberId(0); //散客
 		}
 		
 		orderInfo.setOrderServiceType(IDBConstant.ORDER_SERVICE_TYPE_SITE);
-		if(IDBConstant.BALANCE_STYLE_XJ.equals(payType)){
+		/*if(IDBConstant.BALANCE_STYLE_XJ.equals(payType)){
 			orderInfo.setPayStatus(IDBConstant.LOGIC_STATUS_YES); //已支付【现金直接已支付】
-		}else{
+		}else{*/
 			orderInfo.setPayStatus(IDBConstant.LOGIC_STATUS_NO); //未支付
-		}
-		orderInfo.setPayType(payType);
+		//}
+		//orderInfo.setPayType(payType);
 		orderInfo.setSalesId(salesId);
 		
 		List<SiteReserve> siteReserves = new ArrayList<SiteReserve>();
-		
-		
 		List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
 		
-		
-		for(int i = 0; i < siteIds.length; i++){
+		//for(int i = 0; i < siteIds.length; i++){
+		for(SiteOperationInfo siteInfo : siteOperationInfo){
 			OrderDetail orderDetail = new OrderDetail();
 			
-			Integer siteId = StrUtil.objToInt(siteIds[i]);
-			String[] timeSN = times[i].split("-");
+			Integer siteId = siteInfo.getSiteId();
 			
-			String startTime = timeSN[0];
-			String endTime = timeSN[1];
+			String startTime = siteInfo.getStartTime();
+			String endTime = siteInfo.getEndTime();
+			String siteDate = siteInfo.getSiteDate();
 			
 			Map<String, Object> siteSport = getSiteSportName(siteId);
+			/*if(DateUtil.getHHMM(startTime)  ){ //DateUtil.getHHMM(endTime) 
+				
+			}*/
 			String siteName = StrUtil.objToStr(siteSport.get("siteName"));
 			
 			SiteReserve reserveIntersection = getReserveIntersection(startTime, endTime, siteDate);
@@ -302,8 +315,12 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 			if(member != null){
 				siteReserve.setName(member.getMemberName());
 				siteReserve.setMobile(member.getMemberMobile());
-				siteReserve.setOpType(opType);
+				siteReserve.setMemberId(memberId);
+			}else{
+				siteReserve.setMobile(mobile);
+				siteReserve.setName(name);
 			}
+			siteReserve.setOpType(opType);
 			siteReserves.add(siteReserve);
 			
 			orderDetail.setItemName(siteSport.get("sportName")+siteName); //羽毛球场地1
@@ -330,17 +347,18 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	
 	@Override
 	public Integer updateLockSite(SiteInputView siteInputView){
-		String lockSiteJson = siteInputView.getLockSiteJson();
+		//String lockSiteJson = siteInputView.getLockSiteJson();
+		
 		return 0;
 		
 	}
 	
 	private Map<String, Object> getSiteSportName(int siteId){
-		return baseDao.queryBySqlFirst("SELECT si.siteName, ss.sportName, ss.sportMoney FROM site_info si, site_sport ss WHERE si.siteType = ss.sportId AND si.siteId=?", siteId);
+		return baseDao.queryBySqlFirst("SELECT si.siteName, ss.sportName, ss.sportMoney, ss.startTime, ss.endTime FROM site_info si, site_sport ss WHERE si.siteType = ss.sportId AND si.siteId=?", siteId);
 	}
 	
 	private SiteReserve getReserveIntersection(String startTime, String endTime, String date){
-		return baseDao.queryByHqlFirst("FROM SiteReserve WHERE data = ? AND NOT ((TIME(siteEndTime) <= TIME(?)) OR (TIME(siteStartTime) >= TIME(?)))", date, startTime, endTime);
+		return baseDao.queryByHqlFirst("FROM SiteReserve WHERE siteDate = ? AND NOT ((TIME(siteEndTime) <= TIME(?)) OR (TIME(siteStartTime) >= TIME(?)))", date, startTime, endTime);
 	}
 	
 	private String getSiteNo() {
