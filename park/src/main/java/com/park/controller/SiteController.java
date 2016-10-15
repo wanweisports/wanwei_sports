@@ -140,8 +140,11 @@ public class SiteController extends BaseController {
 		siteInputView.setSportStatus(IDBConstant.LOGIC_STATUS_YES);
 		List<Map<String, Object>> siteSports = siteService.getSiteSportNames(siteInputView);
 		if(siteSports.size() > 0){
-			Map<String, Object> sportMap = siteSports.get(0);
-			Integer sportId = StrUtil.objToInt(sportMap.get("sportId"));
+			Integer sportId = siteInputView.getSportId();
+			if(sportId == null){ //未选择，默认第一个
+				Map<String, Object> sportMap = siteSports.get(0);
+				sportId = StrUtil.objToInt(sportMap.get("sportId"));
+			}
 			siteInputView.setSportId(sportId);
 			siteInputView.setSiteStatus(IDBConstant.LOGIC_STATUS_YES);
 			List<Map<String, Object>> sites = siteService.getSites(siteInputView);
