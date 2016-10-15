@@ -119,7 +119,7 @@ public class SiteController extends BaseController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "Sites/SitesList";
+		return "Reservation/ReservationsSitesSettings";
 	}
 	
 	@RequestMapping("getSiteSports")
@@ -197,6 +197,12 @@ public class SiteController extends BaseController {
 	public String getSiteReservationBatch(Model model){
 		return "Reservation/ReservationsBatch";
 	}
+
+    // 热点
+    @RequestMapping("getReservationsSequencePDA")
+    public String getReservationsSequencePDA(Model model){
+        return "Reservation/ReservationsSequencePDA";
+    }
 	
 	//锁定场地
 	@RequestMapping("lockSite")

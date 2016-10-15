@@ -2,8 +2,7 @@
     var Site_Reservations = {
         tpl: {
             show: function () {
-                return '<p class="ordered-channel-#ORDEREDCHANNEL#"></p><p class="ordered-user">#USRETYPE#</p>' +
-                    '<p class="ordered-mobile">手机: #USERMOBILE#</p>';
+                return '<span>#USERNAME#</span><span>#USERMOBILE#</span>';
             },
             bookingInfo: function () {
                 return '<li class="list-group-item booking-order-no">预订编号: #ORDERNO#</li>' +
@@ -14,7 +13,7 @@
         },
         init: function () {
             this.initDatePicker();
-            //this.loadVenuesList();
+            this.loadVenuesList();
             //this.initEvents();
             //this.toolbarMenu();
             //this.sequenceCharts();
@@ -292,28 +291,74 @@
         loadVenuesList: function () {
             var content = this;
 
-            $.getJSON('/venue/Query' + location.search, function (res) {
-                if (res.status == 200) {
-                    var venues = res.data;
-                    var $bookingTips = $(".sc-booking-tips");
+            $.post('/site/dynamicSiteReservation', {siteDate: '2016-10-13'}, function (res) {
+                var sites = res.data;
 
-                    for (var i = 0; i < venues.length; i++) {
-                        var venue = venues[i];
-                        var $area = $('[data-area-value="' + venue.sitenumber + '"]');
-                        var timeSelector = '[data-time-start="' + venue.starttime + '"]' +
-                            '[data-time-end="' + venue.endtime + '"]';
-                        var stateClass = $bookingTips.find('[data-value="' + venue.state + '"] span').attr("class");
+                if (res.code == 1) {
+                    for (var i = 0; i < sites.siteInfos.length; i++) {
+                        var site = sites.siteInfos[i];
+                        var data = site.reserveInfos;
+                        for (var j = 0; j < data.length; j++) {
+                            var venue = data[j];
 
-                        // 场地预订的情况
-                        if (stateClass == "locked") {
-                            $area.find(timeSelector).removeClass().addClass(stateClass + "-icon " + stateClass)
-                                .attr("data-id", venue.reservenumber).html("");
-                        } else {
-                            $area.find(timeSelector).removeClass().addClass(stateClass + "-icon " + stateClass)
-                                .attr("data-id", venue.reservenumber).html(content.tpl.show()
-                                .replace(/#USRETYPE#/, (venue.userclass != "3") ? "会员" : "散客")
-                                .replace(/#ORDEREDCHANNEL#/, (venue.schedulchannel != "1") ? "mobile" : "pc")
-                                .replace(/#USERMOBILE#/, "*" + venue.phone.substr(-4)));
+                            var $site = $('[data-id="' + site.siteId + '"]' +
+                                '[data-start="' + venue.startTime + '"]' +
+                                '[data-end="' + venue.endTime + '"]');
+
+                            // 场地预订的情况
+                            if (venue.siteReserveStatus == 1) {
+                                if (venue.reserveType == 1) {
+                                    $site.removeClass().addClass('ordered computer')
+                                        .html(content.tpl.show()
+                                            .replace(/#USERNAME#/, venue.operatorName.substr(1) + "*")
+                                            .replace(/#USERMOBILE#/, "*" + venue.operatorMobile.substr(-4))
+                                        );
+                                } else if (venue.reserveType == 2) {
+                                    $site.removeClass().addClass('ordered mobile')
+                                        .html(content.tpl.show()
+                                            .replace(/#USERNAME#/, venue.operatorName.substr(1) + "*")
+                                            .replace(/#USERMOBILE#/, "*" + venue.operatorMobile.substr(-4))
+                                        );
+                                } else if (venue.reserveType == 3) {
+                                    $site.removeClass().addClass('ordered phone')
+                                        .html(content.tpl.show()
+                                            .replace(/#USERNAME#/, venue.operatorName.substr(1) + "*")
+                                            .replace(/#USERMOBILE#/, "*" + venue.operatorMobile.substr(-4))
+                                        );
+                                }
+
+                            }
+                            if (venue.siteReserveStatus == 2) {
+                                if (venue.reserveType == 1) {
+                                    $site.removeClass().addClass('unpaid computer')
+                                        .html(content.tpl.show()
+                                            .replace(/#USERNAME#/, venue.operatorName.substr(1) + "*")
+                                            .replace(/#USERMOBILE#/, "*" + venue.operatorMobile.substr(-4))
+                                        );
+                                } else if (venue.reserveType == 2) {
+                                    $site.removeClass().addClass('unpaid mobile')
+                                        .html(content.tpl.show()
+                                            .replace(/#USERNAME#/, venue.operatorName.substr(1) + "*")
+                                            .replace(/#USERMOBILE#/, "*" + venue.operatorMobile.substr(-4))
+                                        );
+                                } else if (venue.reserveType == 3) {
+                                    $site.removeClass().addClass('unpaid phone')
+                                        .html(content.tpl.show()
+                                            .replace(/#USERNAME#/, venue.operatorName.substr(1) + "*")
+                                            .replace(/#USERMOBILE#/, "*" + venue.operatorMobile.substr(-4))
+                                        );
+                                }
+
+                            }
+                            if (venue.siteReserveStatus == 3) {
+                                $site.removeClass().addClass("locked");
+                            }
+                            if (venue.siteReserveStatus == 4) {
+                                $site.removeClass().addClass("disabled");
+                            }
+                            if (venue.siteReserveStatus == 5) {
+                                $site.removeClass().addClass("null");
+                            }
                         }
                     }
                 }

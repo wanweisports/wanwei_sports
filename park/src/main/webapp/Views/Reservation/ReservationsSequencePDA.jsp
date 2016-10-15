@@ -1,10 +1,79 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ page import="com.park.layout.Blocks" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> <%-- JSTL表达式（判断，循环，输出） --%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
+<%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
-<jsp:include page="/Views/Shared/Header.jsp" />
-<link href="Content/style/reservations/reservations_sequence_pda.css" rel="stylesheet" type="text/css">
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="/Content/style/reservations/reservations_sequence_pda.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="Content/lib/echarts/echarts.min.js?v=${static_resource_version}"></script>
+    <script>
+        function drawChart2() {
+            var option = {
+                tooltip: {},
+                legend: {
+                    data:['咨询量', '预订量']
+                },
+                xAxis: {
+                    data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+                },
+                yAxis: {},
+                series: [{
+                    name: '咨询量',
+                    type: 'line',
+                    data: [5, 20, 36, 10, 10, 20, 40]
+                }, {
+                    name: '预订量',
+                    type: 'line',
+                    data: [15, 10, 46, 20, 13, 24, 44]
+                }]
+            };
+
+            var chart = echarts.init(document.getElementById('line_chart'));
+            chart.setOption(option);
+            var chart2 = echarts.init(document.getElementById('line_chart2'));
+            chart2.setOption(option);
+        }
+
+
+        function drawChart3() {
+
+            var option = {
+                tooltip: {},
+                legend: {
+                    data:['咨询量', '预订量']
+                },
+                xAxis: {
+                    data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+                },
+                yAxis: {},
+                series: [{
+                    name: '咨询量',
+                    type: 'bar',
+                    data: [5, 20, 36, 10, 10, 20, 40]
+                }, {
+                    name: '预订量',
+                    type: 'bar',
+                    data: [15, 10, 46, 20, 13, 24, 44]
+                }]
+            };
+
+            var chart = echarts.init(document.getElementById('column_chart'));
+            chart.setOption(option);
+            var chart2 = echarts.init(document.getElementById('column_chart2'));
+            chart2.setOption(option);
+        }
+
+        drawChart2();
+        drawChart3();
+    </script>
+</layout:override>
+
+<layout:override name="<%=Blocks.BLOCK_BODY%>">
 <div class="ww-wrapper">
     <div class="wrapper">
         <ol class="breadcrumb">
@@ -271,67 +340,9 @@
         </div>
     </div>
 </div>
+</layout:override>
 
-<jsp:include page="/Views/Shared/Common.jsp" />
-<script src="Content/lib/echarts/echarts.min.js"></script>
-<script>
-    function drawChart2() {
-        var option = {
-            tooltip: {},
-            legend: {
-                data:['咨询量', '预订量']
-            },
-            xAxis: {
-                data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
-            },
-            yAxis: {},
-            series: [{
-                name: '咨询量',
-                type: 'line',
-                data: [5, 20, 36, 10, 10, 20, 40]
-            }, {
-                name: '预订量',
-                type: 'line',
-                data: [15, 10, 46, 20, 13, 24, 44]
-            }]
-        };
-
-        var chart = echarts.init(document.getElementById('line_chart'));
-        chart.setOption(option);
-        var chart2 = echarts.init(document.getElementById('line_chart2'));
-        chart2.setOption(option);
-    }
-
-
-    function drawChart3() {
-
-        var option = {
-            tooltip: {},
-            legend: {
-                data:['咨询量', '预订量']
-            },
-            xAxis: {
-                data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
-            },
-            yAxis: {},
-            series: [{
-                name: '咨询量',
-                type: 'bar',
-                data: [5, 20, 36, 10, 10, 20, 40]
-            }, {
-                name: '预订量',
-                type: 'bar',
-                data: [15, 10, 46, 20, 13, 24, 44]
-            }]
-        };
-
-        var chart = echarts.init(document.getElementById('column_chart'));
-        chart.setOption(option);
-        var chart2 = echarts.init(document.getElementById('column_chart2'));
-        chart2.setOption(option);
-    }
-
-    drawChart2();
-    drawChart3();
-</script>
-<jsp:include page="/Views/Shared/Footer.jsp" />
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="nav" value="site"/>
+    <c:param name="subNav" value="pda"/>
+</c:import>
