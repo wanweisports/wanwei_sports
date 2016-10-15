@@ -1,19 +1,3 @@
-# 万维体育管理系统
+# wanwei_sports
 
-------
-
-## 介绍
-
-## 环境搭建
-
-### 后端
-
-### 前端
-    cd park/src/main/webapp
-    npm install
-    gulp watch
-    
-## 版本控制
-    
-> * v0.1.0 最基本的场馆管系统的功能模块
-> * v0.2.0 统计模块
+aa

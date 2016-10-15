@@ -13,6 +13,7 @@ import com.park.common.po.MemberCardType;
 import com.park.common.po.OtherBalance;
 import com.park.common.po.OtherInvoice;
 import com.park.common.po.UserMember;
+import com.park.common.po.UserOperator;
 
 
 public interface IMemberService {
@@ -68,6 +69,8 @@ public interface IMemberService {
 	public Map<String, Object> getRegMember(int memberId);
 	
 	public Map<String, Object> getOperations(String cardNo);
+
+	public UserMember getMemberOperator(String operatorId);
 	
 	public String getCardNo();
 }

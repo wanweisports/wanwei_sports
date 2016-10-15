@@ -16,7 +16,6 @@ import com.park.common.bean.ResponseBean;
 import com.park.common.exception.MessageException;
 import com.park.common.po.GoodInfo;
 import com.park.common.po.UserOperator;
-import com.park.common.util.FileUtil;
 import com.park.common.util.JsonUtils;
 import com.park.service.IGoodService;
 
