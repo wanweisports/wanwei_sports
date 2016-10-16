@@ -3,6 +3,7 @@ package com.park.service.impl;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,8 @@ import com.park.common.bean.out.Site;
 import com.park.common.bean.out.SiteReserveOutputView;
 import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
+import com.park.common.po.MemberCard;
+import com.park.common.po.MemberCardType;
 import com.park.common.po.OrderDetail;
 import com.park.common.po.OrderInfo;
 import com.park.common.po.ParkBusiness;
@@ -183,6 +186,8 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 			Site site = new Site();
 			site.setSiteId(StrUtil.objToStr(map.get("siteId")));
 			site.setSiteName(StrUtil.objToStr(map.get("siteName")));
+			Date siteStartTime = DateUtil.getHHMM(StrUtil.objToStr(map.get("startTime")));
+			Date siteEndTime = DateUtil.getHHMM(StrUtil.objToStr(map.get("endTime")));
 			
 			List<ReserveInfo> reserveInfos = new ArrayList<ReserveInfo>();
 			for(Map<String, Object> p : timePeriodList){
@@ -191,9 +196,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 				String startTime = StrUtil.objToStr(p.get("startTime"));
 				String endTime = StrUtil.objToStr(p.get("endTime"));
 				
-				Date siteStartTime = DateUtil.getHHMM(StrUtil.objToStr(map.get("startTime")));
-				Date siteEndTime = DateUtil.getHHMM(StrUtil.objToStr(map.get("endTime")));
-				SiteReserve siteReserve = getSiteReserve(siteDate, startTime, endTime, StrUtil.objToInt(map.get("siteId")));
+				SiteReserve siteReserve = getSiteReserve(siteDate, startTime, endTime, StrUtil.objToInt(site.getSiteId()));
 				if(siteReserve != null){
 					/*if(siteReserve.getOperatorId() != null){
 						reserveInfo = operatorService.getOperatorNameInfo(siteReserve.getOperatorId());
@@ -203,7 +206,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 					reserveInfo.setOpType(siteReserve.getOpType());
 					reserveInfo.setReserveType(siteReserve.getReserveType());
 					reserveInfo.setSiteReserveStatus(siteReserve.getSiteReserveStatus());
-				}else{
+				}else{  //每个开始-结束数据段在 场地类型时间 之类
 					if(siteStartTime.getTime() <= DateUtil.getHHMM(startTime).getTime() && siteEndTime.getTime() >= DateUtil.getHHMM(endTime).getTime()){
 						reserveInfo.setSiteReserveStatus("5");
 					}else{
@@ -241,10 +244,9 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	}
 	
 	@Override
-	public void saveReservationSite(SiteInputView siteInputView){
-		String siteOperationJson = siteInputView.getSiteOperationJson();
-		SiteOperationInputView siteOperation = JsonUtils.fromJsonDF(siteOperationJson, SiteOperationInputView.class);
-		List<SiteOperationInfo> siteOperationInfo = siteOperation.getSiteOperationInfo();
+	public void saveReservationSite(SiteInputView siteInputView) throws ParseException{
+		SiteOperationInputView siteOperation = JsonUtils.fromJsonDF(siteInputView.getSiteOperationJson(), SiteOperationInputView.class);
+		List<SiteOperationInfo> siteOperationInfos = siteOperation.getSiteOperationInfo();
 		Integer memberId = siteOperation.getMemberId();
 		String name = siteOperation.getName();
 		String mobile = siteOperation.getMobile();
@@ -284,19 +286,25 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
 		
 		//for(int i = 0; i < siteIds.length; i++){
-		for(SiteOperationInfo siteInfo : siteOperationInfo){
+		for(SiteOperationInfo siteOpInfo : siteOperationInfos){
 			OrderDetail orderDetail = new OrderDetail();
 			
-			Integer siteId = siteInfo.getSiteId();
+			Integer siteId = siteOpInfo.getSiteId();
 			
-			String startTime = siteInfo.getStartTime();
-			String endTime = siteInfo.getEndTime();
-			String siteDate = siteInfo.getSiteDate();
+			String startTime = siteOpInfo.getStartTime();
+			String endTime = siteOpInfo.getEndTime();
+			String siteDate = siteOpInfo.getSiteDate();
 			
 			Map<String, Object> siteSport = getSiteSportName(siteId);
-			/*if(DateUtil.getHHMM(startTime)  ){ //DateUtil.getHHMM(endTime) 
-				
-			}*/
+			
+			//场馆类型开场时间
+			String sportStartTimeStr = StrUtil.objToStr(siteSport.get("startTime"));
+			String sportEndTimeStr = StrUtil.objToStr(siteSport.get("endTime"));
+			Date sportStartTime = DateUtil.getHHMM(sportStartTimeStr);
+			Date sportEndTime = DateUtil.getHHMM(sportEndTimeStr);
+			
+			//不在场馆类型时间内
+			if(!(sportStartTime.getTime() <= DateUtil.getHHMM(startTime).getTime() && sportEndTime.getTime() >= DateUtil.getHHMM(endTime).getTime())) throw new MessageException("场馆["+siteSport.get("siteName")+"]开场时间为："+sportStartTimeStr+"-"+sportEndTimeStr+"，请选择正确的时间");
 			String siteName = StrUtil.objToStr(siteSport.get("siteName"));
 			
 			SiteReserve reserveIntersection = getReserveIntersection(startTime, endTime, siteDate);
@@ -351,6 +359,37 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		
 		return 0;
 		
+	}
+	
+	@Override
+	public Map<String, Object> calculateSiteMoney(SiteInputView siteInputView){
+		SiteOperationInputView siteOperation = JsonUtils.fromJsonDF(siteInputView.getSiteOperationJson(), SiteOperationInputView.class);
+		List<SiteOperationInfo> siteOperationInfos = siteOperation.getSiteOperationInfo();
+		Integer memberId = siteOperation.getMemberId();
+		String opType = siteOperation.getOpType(); //1.会员 2.散客
+		
+		double discount = 100;
+		if(IDBConstant.LOGIC_STATUS_YES.equals(opType)){ //会员打折
+			//获取会员的会员卡，（如果后期有多张会员卡，则需要在前端用户选择哪张卡，把会员卡id传到后台查询折扣）
+			List<MemberCard> memberCards = memberService.getMemberCards(memberId);
+			if(memberCards.size() > 0){ //memberCards.size()==0：没有会员卡按不打折计算   throw new MessageException("该用户没有绑定会员卡");
+				MemberCardType memberCardType = memberService.getMemberCardType(memberCards.get(0).getCardTypeId());
+				discount = memberCardType.getCardTypeDiscount();
+			}
+		}
+		
+		Double originalPrice = 0.0; //原价
+		for(SiteOperationInfo siteOpInfo : siteOperationInfos){
+			Map<String, Object> siteSport = getSiteSportName(siteOpInfo.getSiteId());
+			originalPrice += StrUtil.objToDouble(siteSport.get("sportMoney"));
+		}
+		Double presentPrice = originalPrice * (discount/100); //打折后的价格
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("originalPrice", originalPrice);
+		resultMap.put("presentPrice", presentPrice);
+		
+		return resultMap;
 	}
 	
 	private Map<String, Object> getSiteSportName(int siteId){

@@ -6,7 +6,6 @@ public class SiteOperationInfo {
 	private String startTime;
 	private String endTime;
 	private String siteDate;
-	private String reserveType;
 	
 	public Integer getSiteId() {
 		return siteId;
@@ -31,12 +30,6 @@ public class SiteOperationInfo {
 	}
 	public void setSiteDate(String siteDate) {
 		this.siteDate = siteDate;
-	}
-	public String getReserveType() {
-		return reserveType;
-	}
-	public void setReserveType(String reserveType) {
-		this.reserveType = reserveType;
 	}
 	
 }

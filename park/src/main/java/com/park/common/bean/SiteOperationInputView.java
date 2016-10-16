@@ -10,6 +10,7 @@ public class SiteOperationInputView {
 	private String name;
 	private String mobile;
 	private String reserveType;
+	private String payType; //支付方式 1：现金  2：支付宝  3：微信
 
 	public List<SiteOperationInfo> getSiteOperationInfo() {
 		return siteOperationInfo;
@@ -57,6 +58,14 @@ public class SiteOperationInputView {
 
 	public void setReserveType(String reserveType) {
 		this.reserveType = reserveType;
+	}
+
+	public String getPayType() {
+		return payType;
+	}
+
+	public void setPayType(String payType) {
+		this.payType = payType;
 	}
 	
 }
