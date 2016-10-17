@@ -223,8 +223,7 @@ public class SiteController extends BaseController {
 	@RequestMapping("calculateSiteMoney")
 	public ResponseBean calculateSiteMoney(SiteInputView siteInputView){
 		try {
-			siteService.calculateSiteMoney(siteInputView);
-			return new ResponseBean(true);
+			return new ResponseBean(siteService.calculateSiteMoney(siteInputView));
 		} catch (MessageException e) {
 			e.printStackTrace();
 			return new ResponseBean(e.getMessage());
