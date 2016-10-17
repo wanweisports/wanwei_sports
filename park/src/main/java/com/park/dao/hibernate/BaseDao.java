@@ -286,6 +286,18 @@ public class BaseDao extends HibernateDaoSupport implements IBaseDao {
             }
         });
     }
+    
+    @Override
+    public <T> List<T> queryByHql(final String hql, final Map<String, Object> map) {
+        return getHibernateTemplate().execute(new HibernateCallback<List>() {
+
+            public List doInHibernate(Session s) throws HibernateException, SQLException {
+                Query query = getHqlQuery(s, hql, map);
+                List list = query.list();
+                return list;
+            }
+        });
+    }
 
     @Override
     public <T> T queryByHqlFirst(final String hql, final Object... params) {

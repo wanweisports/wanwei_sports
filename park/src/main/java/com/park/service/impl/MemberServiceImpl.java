@@ -530,6 +530,16 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	}
 	
 	@Override
+	public List<Map<String, Object>> getMemberNames(MemberInputView memberInputView){
+		String memberName = memberInputView.getMemberName();
+		StringBuffer sql = new StringBuffer("SELECT memberId, memberName, memberMobile FROM user_member WHERE 1=1");
+		if(StrUtil.isNotBlank(memberName)){
+			sql.append(" AND memberName = :memberName");
+		}
+		return baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(memberInputView));
+	}
+	
+	@Override
 	public String getCardNo() {
 		do {
 			StringBuffer no = new StringBuffer();
