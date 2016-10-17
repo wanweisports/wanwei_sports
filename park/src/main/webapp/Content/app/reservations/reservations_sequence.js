@@ -153,19 +153,19 @@
                             // 未支付
                             if (reserveInfo.siteReserveStatus == 2) {
                                 if (reserveInfo.reserveType == 1) {
-                                    $site.removeClass().addClass('ordered computer')
+                                    $site.removeClass().addClass('unpaid computer')
                                         .html(content.opts.Reservation_Tpl
                                             .replace(/#USERNAME#/, reserveInfo.operatorName.substr(1) + "*")
                                             .replace(/#USERMOBILE#/, "*" + reserveInfo.operatorMobile.substr(-4))
                                         );
                                 } else if (reserveInfo.reserveType == 2) {
-                                    $site.removeClass().addClass('ordered mobile')
+                                    $site.removeClass().addClass('unpaid mobile')
                                         .html(content.opts.Reservation_Tpl
                                             .replace(/#USERNAME#/, reserveInfo.operatorName.substr(1) + "*")
                                             .replace(/#USERMOBILE#/, "*" + reserveInfo.operatorMobile.substr(-4))
                                         );
                                 } else if (reserveInfo.reserveType == 3) {
-                                    $site.removeClass().addClass('ordered phone')
+                                    $site.removeClass().addClass('unpaid phone')
                                         .html(content.opts.Reservation_Tpl
                                             .replace(/#USERNAME#/, reserveInfo.operatorName.substr(1) + "*")
                                             .replace(/#USERMOBILE#/, "*" + reserveInfo.operatorMobile.substr(-4))
@@ -236,8 +236,7 @@
                         startTime: $sel.attr("data-start"),
                         endTime: $sel.attr("data-end"),
                         siteDate: content.opts.Current_Date,
-                        siteId: $sel.attr("data-id"),
-                        reserveType: 1
+                        siteId: $sel.attr("data-id")
                     });
                 }
 
@@ -263,11 +262,22 @@
                 }
 
                 content.opts.data = data;
+                $.post('/site/calculateSiteMoney', {
+                    siteOperationJson: JSON.stringify({siteOperationInfo: content.opts.data, opType: 2})
+                }, function (res) {
+                    var data = res.data;
+
+                    if (res.code == 1) {
+                        $("#reservations_amount").val(data.originalPrice);
+                    }
+                });
+
                 $reservationsSteps.modal("show");
             });
         },
         // 预订弹窗弹窗
         initReservationsSteps: function () {
+            var content = this;
             var $reservationsSteps = $("#zhifuModal");
 
             // 初始化支付流程步骤
@@ -282,6 +292,24 @@
                 e.preventDefault();
 
                 $reservationsSteps.find(".reservations-steps").steps("next", 1);
+
+                $.post('/site/saveReservationSite', {
+                    siteOperationJson: JSON.stringify({
+                        siteOperationInfo: content.opts.data,
+                        opType: 2,
+                        reserveType: 1,
+                        //memberId: 1,
+                        name: "张三",
+                        mobile: "13051788101"
+                    })
+                }, function (res) {
+                    var data = res.data;
+
+                    console.log(res);
+
+                    if (res.code == 1) {
+                    }
+                });
             });
 
             // 确认支付

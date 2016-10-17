@@ -153,9 +153,9 @@
                                     <form id="reservations_user_form" class="form-horizontal" novalidate onsubmit="return false;">
                                         <input type="hidden" id="reservations_op_type" name="opType" value="2">
                                         <div class="form-group">
-                                            <label for="reservations_user_name" class="col-sm-3 control-label">姓名</label>
+                                            <label for="reservations_name" class="col-sm-3 control-label">姓名</label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control" id="reservations_user_name"
+                                                <input type="text" class="form-control" id="reservations_name"
                                                        name="name" placeholder="姓名" value="散客" autocomplete="off"
                                                        data-val="true" data-val-required="姓名不能为空">
                                                 <div data-valmsg-for="name" data-valmsg-replace="true"></div>
@@ -167,9 +167,9 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="reservations_user_mobile" class="col-sm-3 control-label">手机号</label>
+                                            <label for="reservations_mobile" class="col-sm-3 control-label">手机号</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="reservations_user_mobile" name="mobile"
+                                                <input type="text" class="form-control" id="reservations_mobile" name="mobile"
                                                        placeholder="手机号码" autocomplete="off"
                                                        data-val="true" data-val-required="手机号码不能为空"
                                                        data-val-regex-pattern="^1\d{10}$"
@@ -178,10 +178,10 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="pay_goods_amount" class="col-sm-3 control-label">预计(元)</label>
+                                            <label for="reservations_amount" class="col-sm-3 control-label">预计(元)</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="pay_goods_amount" name="amount"
-                                                       placeholder="预计价格" value="" autocomplete="off" readonly>
+                                                <input type="text" class="form-control" id="reservations_amount" name="amount"
+                                                       placeholder="预计价格" value="" autocomplete="off" disabled>
                                             </div>
                                         </div>
                                         <p class="sc-submit-tips"></p>
