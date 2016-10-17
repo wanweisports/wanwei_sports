@@ -15,6 +15,8 @@ public class MemberInputView extends BaseInputView {
 	private String cardType;
 	
 	private String memberType;
+	
+	private String memberName;
 
 	public String getMemberMobile() {
 		return memberMobile;
@@ -70,6 +72,14 @@ public class MemberInputView extends BaseInputView {
 
 	public void setMemberType(String memberType) {
 		this.memberType = memberType;
+	}
+
+	public String getMemberName() {
+		return memberName;
+	}
+
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
 	}
 
 }

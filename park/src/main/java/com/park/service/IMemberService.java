@@ -72,5 +72,7 @@ public interface IMemberService {
 
 	public UserMember getMemberOperator(String operatorId);
 	
+	public List<Map<String, Object>> getMemberNames(MemberInputView memberInputView);
+	
 	public String getCardNo();
 }

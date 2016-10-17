@@ -16,6 +16,7 @@ import com.park.common.bean.MemberCardOpInputView;
 import com.park.common.bean.MemberInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.bean.ResponseBean;
+import com.park.common.bean.SiteInputView;
 import com.park.common.exception.MessageException;
 import com.park.common.po.MemberCard;
 import com.park.common.po.MemberCardType;
@@ -319,6 +320,23 @@ public class MemberController extends BaseController {
 			return new ResponseBean(false);
 		}
 	}
+    
+    //获取会员名称列表
+  	@ResponseBody
+  	@RequestMapping("getMemberNames")
+  	public ResponseBean getMemberNames(MemberInputView memberInputView){
+  		try {
+  			Map<String, Object> data = new HashMap<String, Object>();
+			data.put("memberNames", memberService.getMemberNames(memberInputView));
+  			return new ResponseBean(data);
+  		} catch (MessageException e) {
+  			e.printStackTrace();
+  			return new ResponseBean(e.getMessage());
+  		} catch (Exception e) {
+  			e.printStackTrace();
+  			return new ResponseBean(false);
+  		}
+  	}
     
 }
 

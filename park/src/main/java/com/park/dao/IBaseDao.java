@@ -39,6 +39,8 @@ public interface IBaseDao {
     public <T> List<T> queryByHql(final String hql, final Integer pageNumber, final Integer pageSize, final Object ...params);
 
     public <T> List<T> queryByHql(final String hql, final Object ...params);
+    
+    public <T> List<T> queryByHql(final String hql, final Map<String, Object> map);
 
     public <T> T queryByHqlFirst(final String hql, final Object... params);
 
