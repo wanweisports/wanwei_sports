@@ -6,6 +6,7 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
     <script src="/Content/dist/reservations/reservations_sites.js?v=${static_resource_version}"></script>
     <script>
@@ -28,7 +29,7 @@
         <div>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form id="site_filter_form" class="form-inline col-sm-8" onsubmit="return false;">
+                    <form id="site_filter_form" class="form-inline col-sm-10" onsubmit="return false;">
                         <div class="form-group">
                             <label>场地类型</label>
                             <select class="form-control" name="sportId" style="width: 160px;">
@@ -52,10 +53,10 @@
                             </a>
                         </div>
                     </form>
-                    <div class="col-sm-4 text-right">
-                        <a href="javascript:;" data-toggle="modal" class="btn btn-primary pull-right site-add">
+                    <div class="col-sm-2 text-right">
+                        <button data-toggle="modal" class="btn btn-primary pull-right site-add">
                             <span class="glyphicon glyphicon-plus"></span> 增加场地
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -65,7 +66,6 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>序号</th>
                                 <th>场地名称</th>
                                 <th>场地类型</th>
                                 <th>备注</th>
@@ -76,9 +76,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="site" items="${list}" varStatus="p">
+                            <c:forEach var="site" items="${list}">
                                 <tr>
-                                    <td>${p.index}</td>
                                     <td>${site.siteName}</td>
                                     <td>${site.sportName}</td>
                                     <td>${site.siteRemark}</td>
@@ -93,10 +92,10 @@
                                     <td>${site.operatorName}</td>
                                     <td>${site.createTime}</td>
                                     <td>
-                                        <a href="javascript:;" data-toggle="modal" class="btn btn-primary site-update"
-                                           onclick="getSiteInfo('${site.siteId}')">
+                                        <button data-toggle="modal" class="btn btn-primary site-update"
+                                            data-id="${site.siteId}">
                                             <i class="glyphicon glyphicon-edit"></i> 修改
-                                        </a>
+                                        </button>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -126,13 +125,16 @@
                             <span class="text-danger">*</span> 场地类型
                         </label>
                         <div class="col-sm-10">
-                            <select class="form-control" id="site_type" name="siteType">
+                            <select class="form-control" id="site_type" name="siteType"
+                                    data-val="true" data-val-required="场地类型不能为空">
+                                <option value="">选择类型</option>
                                 <c:forEach var="sport" items="${siteSportNames}">
                                     <c:if test="${sport.sportStatus == 1}">
                                         <option value="${sport.sportId}">${sport.sportName}</option>
                                     </c:if>
                                 </c:forEach>
                             </select>
+                            <div data-valmsg-for="siteType" data-valmsg-replace="true"></div>
                         </div>
                     </div>
                     <div class="form-group">

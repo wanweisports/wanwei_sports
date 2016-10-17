@@ -1,4 +1,4 @@
-(function ($) {
+(function ($, moment) {
     var Site_Reservations = {
         tpl: {
             show: function () {
@@ -11,15 +11,31 @@
                     '<li class="list-group-item booking-time">预订时间: #STARTTIME#~#ENDTIME#</li>';
             }
         },
+        opts: {
+            Current_Date: $("#current_date").val(),
+            Current_Sport: $("#current_sport").val(),
+            Reservation_Tpl: '<span>#USERNAME#</span><span>#USERMOBILE#</span>',
+            Reservation_Date_Tpl: '<li class="reservation-date-picker #DATEACTIVE#" data-value="#DATEVALUE#">' +
+                '<a href="javascript:;">#DATETEXT#</a></li>'
+        },
         init: function () {
             this.initDatePicker();
-            this.loadVenuesList();
+            this.initMenuDate();
+            this.loadReservations();
+            this.initSequenceEvents();
+            this.initMenuButtons();
+            this.initReservationsSteps();
+
+            //this.loadVenuesList();
             //this.initEvents();
             //this.toolbarMenu();
             //this.sequenceCharts();
             //this.bookingPayPop();
         },
+        // 初始化时间选择控件
         initDatePicker: function () {
+            var content = this;
+
             $('#other_date').datetimepicker({
                 timepicker: false,
                 lang: "zh",
@@ -27,10 +43,11 @@
                 inline: true,
                 defaultDate: new Date(),
                 onSelectDate: function (ct, $el) {
-                    console.log(ct);
-                    console.log($el.val());
+                    content.opts.Current_Date = $el.val();
+                    $(".other-date .icon-text").text(content.opts.Current_Date);
+                    content.loadReservations();
+
                     $(".other-date-calendar").hide();
-                    //location.reload();
                 }
             });
 
@@ -44,6 +61,245 @@
                 }
             });
         },
+        // 初始化菜单日期
+        initMenuDate: function () {
+            var content = this;
+
+            var date = moment(content.opts.Current_Date);
+            var Weeks = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+            var htmlArr = [];
+
+            htmlArr.push(
+                content.opts.Reservation_Date_Tpl
+                    .replace(/#DATEACTIVE#/, 'active')
+                    .replace(/#DATEVALUE#/, date.format('YYYY-MM-DD'))
+                    .replace(/#DATETEXT#/, '今天(' + date.format('MM-DD') + ')')
+            );
+
+            for (var i = 0; i < 6; i++) {
+                date.add(1, 'd');
+
+                htmlArr.push(
+                    content.opts.Reservation_Date_Tpl
+                        .replace(/#DATEACTIVE#/, '')
+                        .replace(/#DATEVALUE#/, date.format('YYYY-MM-DD'))
+                        .replace(/#DATETEXT#/, (i !== 0 ? Weeks[date.format('e')] : "明天") + '(' + date.format('MM-DD') + ')')
+                );
+            }
+
+            $(".other-date-select").before(htmlArr.join(''));
+
+            $(".sequence-date").on("click", ".reservation-date-picker", function (e) {
+                e.preventDefault();
+
+                var $this = $(this);
+
+                if ($this.hasClass("active")) {
+                    return;
+                }
+
+                $this.addClass("active").siblings().removeClass("active");
+
+                content.opts.Current_Date = $this.attr("data-value");
+                content.loadReservations();
+            });
+        },
+        // 加载当前所选日期的场地预订情况
+        loadReservations: function () {
+            var content = this;
+
+            $.post('/site/dynamicSiteReservation', {
+                siteDate: content.opts.Current_Date,
+                sportId: content.opts.Current_Sport
+            }, function (res) {
+                var data = res.data;
+
+                if (res.code == 1) {
+                    var siteInfos = data.siteInfos;
+                    for (var i = 0; i < siteInfos.length; i++) {
+                        var siteInfo = siteInfos[i];
+                        var reserveInfos = siteInfo.reserveInfos;
+                        for (var j = 0; j < reserveInfos.length; j++) {
+                            var reserveInfo = reserveInfos[j];
+
+                            var $site = $('[data-id="' + siteInfo.siteId + '"]' +
+                                '[data-start="' + reserveInfo.startTime + '"]' +
+                                '[data-end="' + reserveInfo.endTime + '"]');
+
+                            // 场地已预订
+                            if (reserveInfo.siteReserveStatus == 1) {
+                                if (reserveInfo.reserveType == 1) {  // PC预订
+                                    $site.removeClass().addClass('ordered computer')
+                                        .html(content.opts.Reservation_Tpl
+                                            .replace(/#USERNAME#/, reserveInfo.operatorName.substr(1) + "*")
+                                            .replace(/#USERMOBILE#/, "*" + reserveInfo.operatorMobile.substr(-4))
+                                        );
+                                } else if (reserveInfo.reserveType == 2) {  // 微信预订
+                                    $site.removeClass().addClass('ordered mobile')
+                                        .html(content.opts.Reservation_Tpl
+                                            .replace(/#USERNAME#/, reserveInfo.operatorName.substr(1) + "*")
+                                            .replace(/#USERMOBILE#/, "*" + reserveInfo.operatorMobile.substr(-4))
+                                        );
+                                } else if (reserveInfo.reserveType == 3) {  // 电话预订
+                                    $site.removeClass().addClass('ordered phone')
+                                        .html(content.opts.Reservation_Tpl
+                                            .replace(/#USERNAME#/, reserveInfo.operatorName.substr(1) + "*")
+                                            .replace(/#USERMOBILE#/, "*" + reserveInfo.operatorMobile.substr(-4))
+                                        );
+                                }
+
+                            }
+
+                            // 未支付
+                            if (reserveInfo.siteReserveStatus == 2) {
+                                if (reserveInfo.reserveType == 1) {
+                                    $site.removeClass().addClass('ordered computer')
+                                        .html(content.opts.Reservation_Tpl
+                                            .replace(/#USERNAME#/, reserveInfo.operatorName.substr(1) + "*")
+                                            .replace(/#USERMOBILE#/, "*" + reserveInfo.operatorMobile.substr(-4))
+                                        );
+                                } else if (reserveInfo.reserveType == 2) {
+                                    $site.removeClass().addClass('ordered mobile')
+                                        .html(content.opts.Reservation_Tpl
+                                            .replace(/#USERNAME#/, reserveInfo.operatorName.substr(1) + "*")
+                                            .replace(/#USERMOBILE#/, "*" + reserveInfo.operatorMobile.substr(-4))
+                                        );
+                                } else if (reserveInfo.reserveType == 3) {
+                                    $site.removeClass().addClass('ordered phone')
+                                        .html(content.opts.Reservation_Tpl
+                                            .replace(/#USERNAME#/, reserveInfo.operatorName.substr(1) + "*")
+                                            .replace(/#USERMOBILE#/, "*" + reserveInfo.operatorMobile.substr(-4))
+                                        );
+                                }
+
+                            }
+
+                            // 已锁定
+                            if (reserveInfo.siteReserveStatus == 3) {
+                                $site.removeClass().addClass("locked");
+                            }
+
+                            // 不可使用
+                            if (reserveInfo.siteReserveStatus == 4) {
+                                $site.removeClass().addClass("disabled");
+                            }
+
+                            // 空场地
+                            if (reserveInfo.siteReserveStatus == 5) {
+                                $site.removeClass().addClass("null");
+                            }
+                        }
+                    }
+                }
+            });
+        },
+        // 初始化时序图的事件绑定
+        initSequenceEvents: function () {
+            var $sequenceTable = $(".sequence-show");
+
+            // 空闲场地预订
+            $sequenceTable.on("click", "td.null", function (e) {
+                e.preventDefault();
+
+                var $this = $(this);
+
+                $this.addClass("selected").removeClass("null").html("");
+            });
+
+            // 已选择的取消
+            $sequenceTable.on("click", "td.selected", function (e) {
+                e.preventDefault();
+
+                var $this = $(this);
+
+                $this.addClass("null").removeClass("selected").html("");
+            });
+        },
+        // 初始化菜单操作
+        initMenuButtons: function () {
+            var content = this;
+            var $reservationsSteps = $("#zhifuModal");
+
+            function _findSelectedArea() {
+                var $sequenceTable = $(".sequence-show");
+                var $selected = $sequenceTable.find('td.selected');
+                var data = [];
+
+                if ($selected.size() === 0) {
+                    return data;
+                }
+
+                for (var i = 0; i < $selected.size(); i++) {
+                    var $sel = $selected.eq(i);
+
+                    data.push({
+                        startTime: $sel.attr("data-start"),
+                        endTime: $sel.attr("data-end"),
+                        siteDate: content.opts.Current_Date,
+                        siteId: $sel.attr("data-id"),
+                        reserveType: 1
+                    });
+                }
+
+                return data;
+            }
+
+            // 锁场
+            $(".sequence-lock").on("click", function (e) {
+                e.preventDefault();
+
+                console.log(_findSelectedArea());
+                $(".tips-modal").modal("show");
+            });
+
+            // 预订
+            $(".sequence-order").on("click", function (e) {
+                e.preventDefault();
+
+                var data = _findSelectedArea();
+
+                if (data.length === 0) {
+                    return alert("请选择场地");
+                }
+
+                content.opts.data = data;
+                $reservationsSteps.modal("show");
+            });
+        },
+        // 预订弹窗弹窗
+        initReservationsSteps: function () {
+            var $reservationsSteps = $("#zhifuModal");
+
+            // 初始化支付流程步骤
+            $reservationsSteps.find(".reservations-steps").steps({
+                enableFinishButton: false,
+                enablePagination: false,
+                enableAllSteps: false
+            });
+
+            // 去支付
+            $(".reservations-pay").on("click", function (e) {
+                e.preventDefault();
+
+                $reservationsSteps.find(".reservations-steps").steps("next", 1);
+            });
+
+            // 确认支付
+            $(".reservations-pay-confirm").on("click", function (e) {
+                e.preventDefault();
+
+                $reservationsSteps.modal("hide");
+                location.reload();
+            });
+        },
+
+
+
+
+
+
+
+
         // 锁场
         // date: 锁定的日期, siteList: 锁定的场次列表, callback: 锁场结果返回
         lockVenueSites: function (date, siteList, callback) {
@@ -287,82 +543,6 @@
 
             content.makeDayBookings();
             content.makeWeekBookings();
-        },
-        loadVenuesList: function () {
-            var content = this;
-
-            $.post('/site/dynamicSiteReservation', {siteDate: '2016-10-13'}, function (res) {
-                var sites = res.data;
-
-                if (res.code == 1) {
-                    for (var i = 0; i < sites.siteInfos.length; i++) {
-                        var site = sites.siteInfos[i];
-                        var data = site.reserveInfos;
-                        for (var j = 0; j < data.length; j++) {
-                            var venue = data[j];
-
-                            var $site = $('[data-id="' + site.siteId + '"]' +
-                                '[data-start="' + venue.startTime + '"]' +
-                                '[data-end="' + venue.endTime + '"]');
-
-                            // 场地预订的情况
-                            if (venue.siteReserveStatus == 1) {
-                                if (venue.reserveType == 1) {
-                                    $site.removeClass().addClass('ordered computer')
-                                        .html(content.tpl.show()
-                                            .replace(/#USERNAME#/, venue.operatorName.substr(1) + "*")
-                                            .replace(/#USERMOBILE#/, "*" + venue.operatorMobile.substr(-4))
-                                        );
-                                } else if (venue.reserveType == 2) {
-                                    $site.removeClass().addClass('ordered mobile')
-                                        .html(content.tpl.show()
-                                            .replace(/#USERNAME#/, venue.operatorName.substr(1) + "*")
-                                            .replace(/#USERMOBILE#/, "*" + venue.operatorMobile.substr(-4))
-                                        );
-                                } else if (venue.reserveType == 3) {
-                                    $site.removeClass().addClass('ordered phone')
-                                        .html(content.tpl.show()
-                                            .replace(/#USERNAME#/, venue.operatorName.substr(1) + "*")
-                                            .replace(/#USERMOBILE#/, "*" + venue.operatorMobile.substr(-4))
-                                        );
-                                }
-
-                            }
-                            if (venue.siteReserveStatus == 2) {
-                                if (venue.reserveType == 1) {
-                                    $site.removeClass().addClass('unpaid computer')
-                                        .html(content.tpl.show()
-                                            .replace(/#USERNAME#/, venue.operatorName.substr(1) + "*")
-                                            .replace(/#USERMOBILE#/, "*" + venue.operatorMobile.substr(-4))
-                                        );
-                                } else if (venue.reserveType == 2) {
-                                    $site.removeClass().addClass('unpaid mobile')
-                                        .html(content.tpl.show()
-                                            .replace(/#USERNAME#/, venue.operatorName.substr(1) + "*")
-                                            .replace(/#USERMOBILE#/, "*" + venue.operatorMobile.substr(-4))
-                                        );
-                                } else if (venue.reserveType == 3) {
-                                    $site.removeClass().addClass('unpaid phone')
-                                        .html(content.tpl.show()
-                                            .replace(/#USERNAME#/, venue.operatorName.substr(1) + "*")
-                                            .replace(/#USERMOBILE#/, "*" + venue.operatorMobile.substr(-4))
-                                        );
-                                }
-
-                            }
-                            if (venue.siteReserveStatus == 3) {
-                                $site.removeClass().addClass("locked");
-                            }
-                            if (venue.siteReserveStatus == 4) {
-                                $site.removeClass().addClass("disabled");
-                            }
-                            if (venue.siteReserveStatus == 5) {
-                                $site.removeClass().addClass("null");
-                            }
-                        }
-                    }
-                }
-            });
         },
         // 日期选择弹窗
         makeDayBookings: function () {
@@ -769,4 +949,4 @@
     };
 
     Site_Reservations.init();
-})(jQuery);
+})(jQuery, moment);

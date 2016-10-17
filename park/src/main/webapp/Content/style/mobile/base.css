@@ -1,0 +1,334 @@
+@charset "utf-8";
+html,
+body {
+  -webkit-font-smoothing: antialiased;
+  width: 100%;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  background: #f5faff;
+  color: #888;
+  overflow-x: hidden;
+}
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: none;
+}
+.weui_cells {
+  font-size: 14px;
+}
+.weui_cells .weui_label {
+  width: 5em;
+}
+.weui_btn_primary {
+  background-color: #2faef6;
+}
+.weui_btn_primary:not(.weui_btn_disabled):active {
+  background-color: #2faef6;
+}
+.weui_btn_plain_primary {
+  color: #2faef6;
+  border: 1px solid #2faef6;
+}
+.weui_btn_plain_primary:not(.weui_btn_disabled):active {
+  color: #2faef6;
+  border: 1px solid #2faef6;
+}
+.weui_cells_radio .weui_check:checked+.weui_icon_checked:before {
+  color: #2faef6;
+}
+.weui_icon_success:before {
+  color: #2faef6;
+}
+.weui_switch:checked {
+  border-color: #2faef6;
+  background-color: #2faef6;
+}
+.weui_cell_ft {
+  font-size: 12px;
+}
+.weui_btn_dialog.primary {
+  color: #2faef6;
+}
+.weui_actionsheet {
+  max-height: 100%;
+  overflow: auto;
+}
+.weui_mask.info-container {
+  overflow: auto;
+}
+.weui_input {
+  padding-left: 15px;
+}
+[v-cloak] {
+  display: none;
+}
+.highlight-color {
+  color: #2faef6 !important;
+}
+.stress-color {
+  color: #ff8a38 !important;
+}
+.stress-background {
+  background-color: #ff8a38 !important;
+}
+.warning-color {
+  color: #ef4f4f !important;
+}
+.default-color {
+  color: #888 !important;
+}
+.tips-color {
+  color: #999 !important;
+}
+.f10 {
+  font-size: 10px !important;
+}
+.f12 {
+  font-size: 12px !important;
+}
+.f14 {
+  font-size: 14px !important;
+}
+.f16 {
+  font-size: 16px !important;
+}
+.f18 {
+  font-size: 18px !important;
+}
+.f20 {
+  font-size: 20px !important;
+}
+.f22 {
+  font-size: 22px !important;
+}
+.stress {
+  font-weight: 700;
+}
+.text-center {
+  text-align: center;
+}
+.block-center {
+  margin: 0 auto;
+}
+.float-clear {
+  clear: both;
+}
+.position-height {
+  height: 100px;
+  height: 1.3333rem;
+}
+.position-height120 {
+  height: 120px;
+  height: 1.6rem;
+}
+.position-height140 {
+  height: 140px;
+  height: 1.8667rem;
+}
+.car-btn-disabled {
+  background: #009dd9;
+  color: rgba(255,255,255,0.6);
+  opacity: 0.6;
+}
+.car-insure-companies-title {
+  margin-top: 60px;
+  margin-top: 0.8rem;
+  text-align: center;
+}
+.car-insure-companies {
+  background: #fff;
+}
+.car-insure-companies .car-insure-companies-group {
+  border: 1px solid #ddd;
+}
+.car-insure-companies .car-insure-companies-group:first-child {
+  border-bottom-style: none;
+}
+.car-insure-companies .car-insure-companies-item {
+  display: inline-block;
+  width: 32%;
+  border-right: 1px solid #ddd;
+}
+.car-insure-companies .car-insure-companies-item:last-child {
+  border-right-style: none;
+}
+.car-insure-companies .car-insure-companies-item img {
+  width: 100%;
+}
+.car-input-enter {
+  position: fixed !important;
+  top: 330px !important;
+  top: 4.4rem !important;
+  border: 1px solid #ff8a38 !important;
+  background: #fff !important;
+  z-index: 999 !important;
+  width: 90% !important;
+  height: 80px !important;
+  height: 1.0667rem !important;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  left: 3% !important;
+}
+.car-insure-header {
+  background: #2faef6;
+  color: #fff;
+  padding-top: 18px;
+  padding-top: 0.24rem;
+  padding-bottom: 18px;
+  padding-bottom: 0.24rem;
+  padding-left: 20px;
+  padding-left: 0.2667rem;
+  padding-right: 20px;
+  padding-right: 0.2667rem;
+  text-align: center;
+}
+.car-insure-header .left {
+  float: left;
+  width: 52px;
+  width: 0.6933rem;
+}
+.car-insure-header .left img {
+  height: 38px;
+  height: 0.5067rem;
+  margin-top: 10px;
+  margin-top: 0.1333rem;
+}
+.car-insure-header .right {
+  float: right;
+  margin-top: 4px;
+  margin-top: 0.0533rem;
+  color: #fff;
+}
+.car-insure-header .title {
+  font-size: 18px;
+}
+.car-insure-header .left-title {
+  margin-left: -52px;
+  margin-left: -0.6933rem;
+}
+.car-insure-navbar {
+  position: relative;
+  height: 100%;
+}
+.car-insure-navbar .navbar-tab {
+  display: block;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background: #fff;
+}
+.car-insure-navbar .navbar-tab .navbar-tab-item {
+  position: relative;
+  display: block;
+  padding: 30px 0;
+  padding: 0.4rem 0;
+  text-align: center;
+  color: #888;
+  font-size: 18px;
+  border: 1px solid #ddd;
+  border-left-style: none;
+  border-top-style: none;
+  font-weight: 700;
+  float: left;
+  width: 33%;
+}
+.car-insure-navbar .navbar-tab .navbar-tab-item:last-child {
+  border-right-style: none;
+}
+.car-insure-navbar .navbar-content {
+  box-sizing: border-box;
+  height: 100%;
+  padding-top: 100px;
+  padding-top: 1.3333rem;
+  padding-bottom: 50px;
+  padding-bottom: 0.6667rem;
+  overflow: auto;
+}
+.car-insure-main .car-insure-logo {
+  text-align: center;
+  padding-top: 140px;
+  padding-top: 1.8667rem;
+  padding-bottom: 95px;
+  padding-bottom: 1.2667rem;
+}
+.car-insure-main .car-insure-logo .logo {
+  width: 375px;
+  width: 5rem;
+}
+.car-insure-running .car-insure-running-container {
+  background: #f5faff;
+  color: #000;
+  opacity: 1 !important;
+}
+.car-insure-running .car-insure-running-container .car-insure-main {
+  text-align: center;
+}
+.car-insure-running .car-insure-running-container .car-insure-main img {
+  display: block;
+  margin: 0 auto;
+  margin-top: 30px;
+  margin-top: 0.4rem;
+  margin-bottom: 30px;
+  margin-bottom: 0.4rem;
+}
+.car-insure-running .car-insure-running-container .car-insure-main .title {
+  margin-top: 20px;
+  margin-top: 0.2667rem;
+  font-size: 16px;
+  font-weight: 700;
+}
+.car-insure-running .car-insure-running-container .car-insure-main .tips {
+  color: #4c4c4c;
+  background: #fc2;
+  text-align: left;
+  padding: 20px;
+  padding: 0.2667rem;
+  margin: 20px;
+  margin: 0.2667rem;
+  border-radius: 20px;
+  border-radius: 0.2667rem;
+  -webkit-border-radius: 0.2667rem;
+  -moz-border-radius: 0.2667rem;
+  border-radius: 0.2667rem;
+}
+.car-insure-footer {
+  background: #fff;
+  color: #999;
+  border: 1px solid #ddd;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
+.car-insure-footer .nav-container {
+  text-align: center;
+}
+.car-insure-footer .nav-container .nav-item {
+  float: left;
+  width: 33%;
+  color: #999;
+}
+.car-insure-footer .nav-container .nav-item img {
+  display: block;
+  margin: 0 auto;
+  margin-top: 6px;
+  margin-top: 0.08rem;
+  height: 50px;
+  height: 0.6667rem;
+}
+.car-insure-footer .nav-container .nav-item span {
+  display: block;
+  font-size: 12px;
+  color: #999;
+}
+.car-insure-footer .nav-container .nav-active {
+  color: #2faef6;
+}
+.car-insure-footer .nav-container .nav-active span {
+  color: #2faef6;
+}
