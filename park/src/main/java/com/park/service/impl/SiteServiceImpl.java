@@ -244,7 +244,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	}
 	
 	@Override
-	public void saveReservationSite(SiteInputView siteInputView) throws ParseException{
+	public Integer saveReservationSite(SiteInputView siteInputView) throws ParseException{
 		SiteOperationInputView siteOperation = JsonUtils.fromJsonDF(siteInputView.getSiteOperationJson(), SiteOperationInputView.class);
 		List<SiteOperationInfo> siteOperationInfos = siteOperation.getSiteOperationInfo();
 		Integer memberId = siteOperation.getMemberId();
@@ -351,6 +351,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 			od.setOrderId(orderId);
 			baseDao.save(od, od.getOrderDetailId());
 		}
+		return orderId;
 	}
 	
 	@Override

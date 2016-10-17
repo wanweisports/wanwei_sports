@@ -32,7 +32,7 @@ public interface ISiteService {
 	
 	public SiteReserveOutputView getSiteReservationInfo(SiteInputView siteInputView) throws ParseException;
 	
-	public void saveReservationSite(SiteInputView siteInputView) throws ParseException;
+	public Integer saveReservationSite(SiteInputView siteInputView) throws ParseException;
 	
 	public List<Map<String, Object>> getSites(SiteInputView siteInputView);
 	
