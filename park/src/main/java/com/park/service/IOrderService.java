@@ -9,4 +9,8 @@ public interface IOrderService {
 
 	public Integer saveOrderInfo(OrderInfo orderInfo, List<OrderDetail> orderDetails);
 	
+	public Integer updateConfirmOrder(OrderInfo orderInfo);
+	
+	public OrderInfo getOrderInfo(Integer orderId);
+	
 }

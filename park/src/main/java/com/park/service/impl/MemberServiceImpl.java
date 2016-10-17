@@ -536,6 +536,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		if(StrUtil.isNotBlank(memberName)){
 			sql.append(" AND memberName = :memberName");
 		}
+		sql.append(" AND memberStatus = ").append(IDBConstant.LOGIC_STATUS_YES);
 		return baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(memberInputView));
 	}
 	

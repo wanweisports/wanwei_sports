@@ -244,7 +244,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	}
 	
 	@Override
-	public void saveReservationSite(SiteInputView siteInputView) throws ParseException{
+	public Integer saveReservationSite(SiteInputView siteInputView) throws ParseException{
 		SiteOperationInputView siteOperation = JsonUtils.fromJsonDF(siteInputView.getSiteOperationJson(), SiteOperationInputView.class);
 		List<SiteOperationInfo> siteOperationInfos = siteOperation.getSiteOperationInfo();
 		Integer memberId = siteOperation.getMemberId();
@@ -351,6 +351,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 			od.setOrderId(orderId);
 			baseDao.save(od, od.getOrderDetailId());
 		}
+		return orderId;
 	}
 	
 	@Override
@@ -390,6 +391,14 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		resultMap.put("presentPrice", presentPrice);
 		
 		return resultMap;
+	}
+	
+	@Override
+	public Integer updateConfirmOrder(OrderInfo orderInfo){
+		Integer orderId = orderService.updateConfirmOrder(orderInfo);
+		 //同步更新到序列图表的状态
+		baseDao.updateBySql("UPDATE site_reserve SET siteReserveStatus = ? WHERE orderId = ?", IDBConstant.LOGIC_STATUS_YES, orderId);
+		return orderId;
 	}
 	
 	private Map<String, Object> getSiteSportName(int siteId){

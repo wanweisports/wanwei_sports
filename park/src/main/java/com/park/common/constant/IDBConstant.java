@@ -8,6 +8,7 @@ public interface IDBConstant {
 
     public static final String LOGIC_STATUS_YES = "1";//是
     public static final String LOGIC_STATUS_NO = "2";//否
+    public static final String LOGIC_STATUS_OTHER = "3"; //其他
     
     public static final String STATUS = "STATUS";//状态
 
@@ -56,5 +57,6 @@ public interface IDBConstant {
     public static final String ORDER_SERVICE_TYPE = "ORDER_SERVICE_TYPE";//订单业务类型
     public static final String ORDER_SERVICE_TYPE_SITE = "1";//场地
     public static final String ORDER_SERVICE_TYPE_GOODS = "2";//商品
+    public static final String ORDER_SERVICE_TYPE_BLOCK_SITE = "3";//包场
     
 }
