@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
-Source Server Version : 50528
-Source Host           : localhost:3306
+Source Server Version : 60011
+Source Host           : 127.0.0.1:3306
 Source Database       : park
 
 Target Server Type    : MYSQL
-Target Server Version : 50528
+Target Server Version : 60011
 File Encoding         : 65001
 
-Date: 2016-10-15 12:10:17
+Date: 2016-10-17 22:50:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -118,7 +118,7 @@ CREATE TABLE `order_detail` (
   `itemMoneyType` varchar(1) DEFAULT NULL COMMENT '当时的计费方式（1. 计次收费  2. 计时收费）',
   `itemDiscount` int(11) DEFAULT NULL COMMENT '当时的商品折扣（0-100）',
   PRIMARY KEY (`orderDetailId`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='订单详情表';
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='订单详情表';
 
 -- ----------------------------
 -- Records of order_detail
@@ -126,6 +126,11 @@ CREATE TABLE `order_detail` (
 INSERT INTO `order_detail` VALUES ('13', '10', '1', '羽毛球万能的场地', '50.00', '10:00', '11:00', null, '2', null);
 INSERT INTO `order_detail` VALUES ('14', '10', '1', '羽毛球万能的场地', '50.00', '12:00', '13:00', null, '2', null);
 INSERT INTO `order_detail` VALUES ('15', '10', '2', '篮球场地2', '1.00', '13:00', '14:00', null, '2', null);
+INSERT INTO `order_detail` VALUES ('16', '11', '1', '羽毛球万能的场地', '50.00', '10: 00', '11: 00', null, '2', null);
+INSERT INTO `order_detail` VALUES ('17', '12', '1', '羽毛球万能的场地', '50.00', '09:00', '10:00', null, '2', null);
+INSERT INTO `order_detail` VALUES ('18', '12', '1', '羽毛球万能的场地', '50.00', '10:00', '11:00', null, '2', null);
+INSERT INTO `order_detail` VALUES ('19', '13', '1', '羽毛球万能的场地', '50.00', '08:00', '09:00', null, '2', null);
+INSERT INTO `order_detail` VALUES ('20', '14', '1', '羽毛球万能的场地', '50.00', '08:00', '09:00', null, '2', null);
 
 -- ----------------------------
 -- Table structure for order_info
@@ -136,23 +141,31 @@ CREATE TABLE `order_info` (
   `orderNo` varchar(32) DEFAULT NULL COMMENT '订单号',
   `operatorId` varchar(32) DEFAULT NULL COMMENT '登录帐号',
   `memberId` int(11) DEFAULT NULL COMMENT '会员id（0为散客）',
-  `orderServiceType` varchar(10) DEFAULT NULL COMMENT '订单业务类型（1. 场地  2.包场  3. 商品）',
+  `orderServiceType` varchar(10) DEFAULT NULL COMMENT '订单业务类型（1. 场地   2. 商品   3.包场）',
   `orderStatus` varchar(1) DEFAULT NULL COMMENT '订单状态',
-  `payStatus` varchar(1) DEFAULT NULL COMMENT '支付状态',
+  `payStatus` varchar(1) DEFAULT NULL COMMENT '支付状态（1：已支付  2：未支付  3：部分支付）',
   `payType` varchar(1) DEFAULT NULL COMMENT '支付类型',
   `payTime` varchar(20) DEFAULT NULL COMMENT '支付时间',
-  `orderSumPrice` decimal(10,2) DEFAULT NULL COMMENT '订单总价',
+  `orderSumPrice` decimal(10,2) DEFAULT NULL COMMENT '订单应付总价',
+  `paySumPrice` decimal(10,2) DEFAULT NULL COMMENT '支付总价',
+  `subAmount` decimal(10,2) DEFAULT NULL COMMENT '优惠金额(元)',
+  `additionalPrice` decimal(10,2) DEFAULT NULL COMMENT '附加费用',
+  `checkNo` varchar(64) DEFAULT NULL COMMENT '支票号',
   `orderRemark` text COMMENT '订单描述',
   `createTime` varchar(20) DEFAULT NULL COMMENT '创建时间',
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`orderId`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='订单表';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='订单表';
 
 -- ----------------------------
 -- Records of order_info
 -- ----------------------------
-INSERT INTO `order_info` VALUES ('10', '20161013180443', null, '9', '1', null, '1', '1', null, '101.00', null, '2016-10-13 18:04:43', null, '1');
+INSERT INTO `order_info` VALUES ('10', '20161013180443', null, '9', '1', null, '1', '1', null, '101.00', null, null, null, null, null, '2016-10-13 18:04:43', null, '1');
+INSERT INTO `order_info` VALUES ('11', '20161016214601', null, '4', '1', null, '2', null, null, '50.00', null, null, null, null, null, '2016-10-16 21:46:01', null, '1');
+INSERT INTO `order_info` VALUES ('12', '20161017214245', null, '0', '1', null, '2', null, null, '100.00', null, null, null, null, null, '2016-10-17 21:42:45', null, '1');
+INSERT INTO `order_info` VALUES ('13', '20161017214356', null, '0', '1', null, '2', null, null, '50.00', null, null, null, null, null, '2016-10-17 21:43:56', null, '1');
+INSERT INTO `order_info` VALUES ('14', '20161017214544', null, '0', '1', null, '1', '1', '2016-10-17 22:33:55', '100.00', '100.00', '10.00', '10.00', '110119ABC', null, '2016-10-17 21:45:44', '2016-10-17 22:33:55', '1');
 
 -- ----------------------------
 -- Table structure for other_balance
@@ -355,7 +368,7 @@ CREATE TABLE `site_reserve` (
   `memberId` int(11) DEFAULT NULL COMMENT '会员id',
   `orderId` int(11) DEFAULT NULL COMMENT '订单id',
   PRIMARY KEY (`siteReserveId`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='场地序列图表';
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COMMENT='场地序列图表';
 
 -- ----------------------------
 -- Records of site_reserve
@@ -363,6 +376,11 @@ CREATE TABLE `site_reserve` (
 INSERT INTO `site_reserve` VALUES ('15', '1', '发送', '11111111111', '1', '1', '2016-10-13', '10:00', '11:00', '1', '2016-10-13 18:04:43', null, '1', '9', '10');
 INSERT INTO `site_reserve` VALUES ('16', '1', '发送', '11111111111', '1', '1', '2016-10-13', '12:00', '13:00', '1', '2016-10-13 18:04:43', null, '1', '9', '10');
 INSERT INTO `site_reserve` VALUES ('17', '2', '发送', '11111111111', '1', '1', '2016-10-13', '13:00', '14:00', '1', '2016-10-13 18:04:43', null, '1', '9', '10');
+INSERT INTO `site_reserve` VALUES ('18', '1', 'asd1', '15110275787', '1', '2', '2016-10-13', '10: 00', '11: 00', '1', '2016-10-16 21:46:01', null, '1', '4', '11');
+INSERT INTO `site_reserve` VALUES ('19', '1', '张三', '13051788101', '2', '2', '2016-10-17', '09:00', '10:00', '1', '2016-10-17 21:42:45', null, '1', '0', '12');
+INSERT INTO `site_reserve` VALUES ('20', '1', '张三', '13051788101', '2', '2', '2016-10-17', '10:00', '11:00', '1', '2016-10-17 21:42:45', null, '1', '0', '12');
+INSERT INTO `site_reserve` VALUES ('21', '1', '张三', '13051788101', '2', '2', '2016-10-17', '08:00', '09:00', '1', '2016-10-17 21:43:56', null, '1', '0', '13');
+INSERT INTO `site_reserve` VALUES ('22', '1', '张三', '13051788101', '2', '1', '2016-10-18', '08:00', '09:00', '1', '2016-10-17 21:45:44', null, '1', '0', '14');
 
 -- ----------------------------
 -- Table structure for site_sport
