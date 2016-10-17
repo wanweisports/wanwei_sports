@@ -149,10 +149,12 @@ public class SiteController extends BaseController {
 			siteInputView.setSiteStatus(IDBConstant.LOGIC_STATUS_YES);
 			List<Map<String, Object>> sites = siteService.getSites(siteInputView);
 			List<Map<String, Object>> timePeriod = parkService.getTimePeriod(parkService.getBusiness());
+			model.addAttribute("siteSports", siteSports);
 			model.addAttribute("sites", sites);
 			model.addAttribute("timePeriod", timePeriod);
 			model.addAttribute("curDate", DateUtil.dateToString(new Date(), null));
 			model.addAttribute("curSportId", sportId);
+			System.out.println(JsonUtils.toJson(siteSports));
 			System.out.println(JsonUtils.toJson(sites));
 			System.out.println(JsonUtils.toJson(timePeriod));
 		}
@@ -160,7 +162,7 @@ public class SiteController extends BaseController {
 		
 	}
 	
-	//显示场地序列图
+	//Ajax动态显示场地序列图
 	@ResponseBody
 	@RequestMapping("dynamicSiteReservation")
 	public ResponseBean dynamicSiteReservation(SiteInputView siteInputView, Model model){
@@ -168,13 +170,10 @@ public class SiteController extends BaseController {
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.putAll(JsonUtils.fromJson(siteService.getSiteReservationInfo(siteInputView)));
 			return new ResponseBean(data);
-			/*SiteReserveOutputView siteReservationInfo = siteService.getSiteReservationInfo(siteInputView);
-			model.addAttribute("siteReservationInfo", siteReservationInfo);
-			System.out.println(JsonUtils.toJson(siteService.getSiteReservationInfo(siteInputView)));*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return new ResponseBean(false);//"Sites/SiteReservation";
+		return new ResponseBean(false);
 	}
 	
 	//预定场地
@@ -208,12 +207,29 @@ public class SiteController extends BaseController {
     }
 	
 	//锁定场地
+	@ResponseBody
 	@RequestMapping("lockSite")
 	public ResponseBean lockSite(SiteInputView siteInputView){
 		try {
 			UserOperator userOperator = super.getUserInfo();
 			siteInputView.setSalesId(userOperator.getId());
 			siteService.updateLockSite(siteInputView);
+			return new ResponseBean(true);
+		} catch (MessageException e) {
+			e.printStackTrace();
+			return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
+	}
+	
+	//计算预定场地价格
+	@ResponseBody
+	@RequestMapping("calculateSiteMoney")
+	public ResponseBean calculateSiteMoney(SiteInputView siteInputView){
+		try {
+			siteService.calculateSiteMoney(siteInputView);
 			return new ResponseBean(true);
 		} catch (MessageException e) {
 			e.printStackTrace();
