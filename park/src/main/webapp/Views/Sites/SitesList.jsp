@@ -37,7 +37,7 @@
                             </a>
                         </div>
                         <div class="form-group pull-right">
-                            <a href="#myModal" data-toggle="modal" data-original-title="" class="btn btn-primary pull-right">
+                            <a href="javascript:;" data-toggle="modal" class="btn btn-primary pull-right">
                                 <span class="glyphicon glyphicon-plus"></span> 增加场地
                             </a>
                         </div>
