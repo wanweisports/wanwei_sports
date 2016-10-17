@@ -6,20 +6,54 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
-    <link href="/Content/lib/jquery/jquery-steps/jquery.steps.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/style/goods/goods_carts.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
-<layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="/Content/lib/jquery/jquery-steps/jquery.steps.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/app/goods/goods_carts.js?v=${static_resource_version}"></script>
-</layout:override>
+<layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>"></layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
-
+<div id="main" class="container">
+    <div class="weui-flex">
+        <div class="weui-flex__item">
+            <div class="placeholder">LOGO</div>
+        </div>
+    </div>
+    <div class="weui-flex">
+        <div class="weui-grids">
+            <a href="javascript:;" class="weui-grid">
+                <div class="weui-grid__icon">
+                    <img src="/Content/images/mobile/list.png?v=${static_resource_version}" alt="场地预订">
+                </div>
+                <p class="weui-grid__label">场地预订</p>
+            </a>
+            <a href="javascript:;" class="weui-grid">
+                <div class="weui-grid__icon">
+                    <img src="/Content/images/mobile/users.png?v=${static_resource_version}" alt="用户信息">
+                </div>
+                <p class="weui-grid__label">账户编辑</p>
+            </a>
+            <a href="javascript:;" class="weui-grid">
+                <div class="weui-grid__icon">
+                    <img src="/Content/images/mobile/users.png?v=${static_resource_version}" alt="用户信息">
+                </div>
+                <p class="weui-grid__label">修改密码</p>
+            </a>
+            <a href="javascript:;" class="weui-grid">
+                <div class="weui-grid__icon">
+                    <img src="/Content/images/mobile/edit.png?v=${static_resource_version}" alt="用户信息">
+                </div>
+                <p class="weui-grid__label">会员卡</p>
+            </a>
+            <a href="javascript:;" class="weui-grid">
+                <div class="weui-grid__icon">
+                    <img src="/Content/images/mobile/message.png?v=${static_resource_version}" alt="系统消息">
+                </div>
+                <p class="weui-grid__label">系统消息</p>
+            </a>
+        </div>
+    </div>
+</div>
 </layout:override>
 
 <c:import url="../Shared/Layout.jsp">
-    <c:param name="nav" value="dashboard"/>
-    <c:param name="subNav" value="index"/>
+    <c:param name="title" value="万为体育"/>
 </c:import>
