@@ -19,15 +19,7 @@
     </script>
 </layout:override>
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
-<div class="ww-wrapper">
-    <div class="wrapper">
-        <ol class="breadcrumb">
-            <li><a href="/">工作平台</a></li>
-            <c:if test="${goodId > 0}">
-                <li><a href="/good/getGoods">进销存管理</a></li>
-            </c:if>
-            <li class="active">商品设置</li>
-        </ol>
+    <div class="container-fluid" style="text-align: left">
         <iframe id="good_form_target" name="goodFormTarget" style="display: none;"></iframe>
         <form id="good_form" class="form-horizontal" action="/good/saveGood" method="post" novalidate
               enctype="multipart/form-data" target="goodFormTarget">
@@ -143,18 +135,17 @@
             </div>
         </form>
     </div>
-</div>
 </layout:override>
 
 <c:if test="${goodId > 0}">
-<c:import url="../Shared/Layout.jsp">
-    <c:param name="nav" value="good"/>
-    <c:param name="subNav" value="stock"/>
-</c:import>
+    <c:import url="../Shared/Layout_New.jsp">
+        <c:param name="nav" value="good"/>
+        <c:param name="subNav" value="stock"/>
+    </c:import>
 </c:if>
 
 <c:if test="${!goodId}">
-    <c:import url="../Shared/Layout.jsp">
+    <c:import url="../Shared/Layout_New.jsp">
         <c:param name="nav" value="good"/>
         <c:param name="subNav" value="setting"/>
     </c:import>

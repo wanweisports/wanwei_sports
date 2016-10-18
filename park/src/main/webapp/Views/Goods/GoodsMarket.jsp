@@ -10,12 +10,7 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
-<div class="ww-wrapper">
-    <div class="wrapper">
-        <ol class="breadcrumb">
-            <li><a href="/">工作平台</a></li>
-            <li class="active">商品销售</li>
-        </ol>
+    <div class="container-fluid" style="text-align: left;">
         <div class="row" style="margin-bottom: 10px">
             <div class="col-sm-12 col-md-10">
                 <div class="btn-group btn-group-justified">
@@ -61,10 +56,9 @@
             </div>
         </div>
     </div>
-</div>
 </layout:override>
 
-<c:import url="../Shared/Layout.jsp">
+<c:import url="../Shared/Layout_New.jsp">
     <c:param name="nav" value="good"/>
     <c:param name="subNav" value="market"/>
 </c:import>

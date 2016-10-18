@@ -48,6 +48,11 @@ public class UrlController extends BaseController {
 		return "Members/MembersInfoCar";
 	}
 
+	@RequestMapping("request3")
+	public String request3() {
+		return "Test/SettingsCommon";
+	}
+
 }
 
 
