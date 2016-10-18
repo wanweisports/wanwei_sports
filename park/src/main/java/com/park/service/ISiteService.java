@@ -7,7 +7,9 @@ import java.util.Map;
 import com.park.common.bean.PageBean;
 import com.park.common.bean.SiteInputView;
 import com.park.common.bean.out.SiteReserveOutputView;
+import com.park.common.po.OrderInfo;
 import com.park.common.po.SiteInfo;
+import com.park.common.po.SiteReserve;
 import com.park.common.po.SiteSport;
 
 public interface ISiteService {
@@ -39,5 +41,9 @@ public interface ISiteService {
 	public Integer updateLockSite(SiteInputView siteInputView);
 	
 	public Map<String, Object> calculateSiteMoney(SiteInputView siteInputView);
+	
+	public Integer updateConfirmOrder(OrderInfo orderInfo);
+	
+	public List<SiteReserve> getReservesByOrderId(int orderId);
 	
 }

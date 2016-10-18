@@ -18,6 +18,7 @@ import com.park.common.bean.ResponseBean;
 import com.park.common.bean.SiteInputView;
 import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
+import com.park.common.po.OrderInfo;
 import com.park.common.po.SiteInfo;
 import com.park.common.po.SiteSport;
 import com.park.common.po.UserOperator;
@@ -185,7 +186,7 @@ public class SiteController extends BaseController {
 			siteInputView.setSalesId(userOperator.getId());
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("orderId", siteService.saveReservationSite(siteInputView));
-			return new ResponseBean(true);
+			return new ResponseBean(data);
 		} catch (MessageException e) {
 			e.printStackTrace();
 			return new ResponseBean(e.getMessage());
@@ -231,6 +232,23 @@ public class SiteController extends BaseController {
 	public ResponseBean calculateSiteMoney(SiteInputView siteInputView){
 		try {
 			return new ResponseBean(siteService.calculateSiteMoney(siteInputView));
+		} catch (MessageException e) {
+			e.printStackTrace();
+			return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
+	}
+	
+	//确认场地订单
+	@ResponseBody
+	@RequestMapping("confirmOrder")
+	public ResponseBean confirmOrder(OrderInfo orderInfo){
+		try {
+			Map<String, Object> data = new HashMap<String, Object>();
+			data.put("orderId", siteService.updateConfirmOrder(orderInfo));
+			return new ResponseBean(data);
 		} catch (MessageException e) {
 			e.printStackTrace();
 			return new ResponseBean(e.getMessage());

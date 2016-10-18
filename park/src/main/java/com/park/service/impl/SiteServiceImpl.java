@@ -332,7 +332,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 			siteReserves.add(siteReserve);
 			
 			orderDetail.setItemName(siteSport.get("sportName")+siteName); //羽毛球场地1
-			orderDetail.setItemPrice(StrUtil.objToDouble(siteSport.get("sportMoney")));
+			orderDetail.setItemPrice(StrUtil.objToDouble(siteSport.get("sportMoney"))); //这里只是原始价格，需要确认订单，需要计算打折价覆盖到这个字段
 			orderDetail.setItemMoneyType(IDBConstant.LOGIC_STATUS_NO); //计时收费
 			orderDetail.setItemStartTime(siteReserve.getSiteStartTime());
 			orderDetail.setItemEndTime(siteReserve.getSiteEndTime());
@@ -369,8 +369,14 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		Integer memberId = siteOperation.getMemberId();
 		String opType = siteOperation.getOpType(); //1.会员 2.散客
 		
+		Map<String, Object> resultMap = getPrice(siteOperationInfos, memberId, opType);
+		
+		return resultMap;
+	}
+
+	private Map<String, Object> getPrice(List<SiteOperationInfo> siteOperationInfos, Integer memberId, String opType) {
 		double discount = 100;
-		if(IDBConstant.LOGIC_STATUS_YES.equals(opType)){ //会员打折
+		if(IDBConstant.LOGIC_STATUS_YES.equals(opType) && memberId != null){ //会员打折
 			//获取会员的会员卡，（如果后期有多张会员卡，则需要在前端用户选择哪张卡，把会员卡id传到后台查询折扣）
 			List<MemberCard> memberCards = memberService.getMemberCards(memberId);
 			if(memberCards.size() > 0){ //memberCards.size()==0：没有会员卡按不打折计算   throw new MessageException("该用户没有绑定会员卡");
@@ -389,8 +395,33 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("originalPrice", originalPrice);
 		resultMap.put("presentPrice", presentPrice);
-		
 		return resultMap;
+	}
+	
+	@Override
+	public Integer updateConfirmOrder(OrderInfo orderInfo){
+		//找到打折价，进行计算覆盖订单应付总价和打折价字段
+		List<SiteReserve> siteReserves = getReservesByOrderId(orderInfo.getOrderId());
+		//查询根据会员id查询会员
+		List<SiteOperationInfo> siteOperationInfos = new ArrayList<SiteOperationInfo>();
+		for(SiteReserve siteReserve : siteReserves){
+			SiteOperationInfo siteOperationInfo = new SiteOperationInfo();
+			siteOperationInfo.setSiteId(siteReserve.getSalesId());
+			siteOperationInfos.add(siteOperationInfo);
+		}
+		//计算打折价格
+		Map<String, Object> priceMap = getPrice(siteOperationInfos, siteReserves.get(0).getMemberId(), IDBConstant.LOGIC_STATUS_YES);
+		orderInfo.setOrderSumPrice(StrUtil.objToDouble(priceMap.get("presentPrice")));
+		
+		Integer orderId = orderService.updateConfirmOrder(orderInfo);
+		 //同步更新到序列图表的状态
+		baseDao.updateBySql("UPDATE site_reserve SET siteReserveStatus = ? WHERE orderId = ?", IDBConstant.LOGIC_STATUS_YES, orderId);
+		return orderId;
+	}
+	
+	@Override
+	public List<SiteReserve> getReservesByOrderId(int orderId){
+		return baseDao.queryByHql("FROM SiteReserve WHERE orderId = ?", orderId);
 	}
 	
 	private Map<String, Object> getSiteSportName(int siteId){

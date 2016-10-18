@@ -34,6 +34,8 @@ public class SiteInputView extends BaseInputView {
 	
 	private String siteOperationJson;
 	
+	private Integer orderId;
+	
 	public Integer getSiteId() {
 		return siteId;
 	}
@@ -160,6 +162,14 @@ public class SiteInputView extends BaseInputView {
 
 	public void setSiteOperationJson(String siteOperationJson) {
 		this.siteOperationJson = siteOperationJson;
+	}
+
+	public Integer getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(Integer orderId) {
+		this.orderId = orderId;
 	}
 
 }

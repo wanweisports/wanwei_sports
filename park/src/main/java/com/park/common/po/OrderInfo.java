@@ -26,6 +26,10 @@ public class OrderInfo implements java.io.Serializable {
 	private String payType;
 	private String payTime;
 	private Double orderSumPrice;
+	private Double paySumPrice;
+	private Double subAmount;
+	private Double additionalPrice;
+	private String checkNo;
 	private String orderRemark;
 	private String createTime;
 	private String updateTime;
@@ -41,8 +45,9 @@ public class OrderInfo implements java.io.Serializable {
 	public OrderInfo(String orderNo, String operatorId, Integer memberId,
 			String orderServiceType, String orderStatus, String payStatus,
 			String payType, String payTime, Double orderSumPrice,
-			String orderRemark, String createTime, String updateTime,
-			Integer salesId) {
+			Double paySumPrice, Double subAmount, Double additionalPrice,
+			String checkNo, String orderRemark, String createTime,
+			String updateTime, Integer salesId) {
 		this.orderNo = orderNo;
 		this.operatorId = operatorId;
 		this.memberId = memberId;
@@ -52,6 +57,10 @@ public class OrderInfo implements java.io.Serializable {
 		this.payType = payType;
 		this.payTime = payTime;
 		this.orderSumPrice = orderSumPrice;
+		this.paySumPrice = paySumPrice;
+		this.subAmount = subAmount;
+		this.additionalPrice = additionalPrice;
+		this.checkNo = checkNo;
 		this.orderRemark = orderRemark;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
@@ -149,6 +158,42 @@ public class OrderInfo implements java.io.Serializable {
 
 	public void setOrderSumPrice(Double orderSumPrice) {
 		this.orderSumPrice = orderSumPrice;
+	}
+
+	@Column(name = "paySumPrice", precision = 10)
+	public Double getPaySumPrice() {
+		return this.paySumPrice;
+	}
+
+	public void setPaySumPrice(Double paySumPrice) {
+		this.paySumPrice = paySumPrice;
+	}
+
+	@Column(name = "subAmount", precision = 10)
+	public Double getSubAmount() {
+		return this.subAmount;
+	}
+
+	public void setSubAmount(Double subAmount) {
+		this.subAmount = subAmount;
+	}
+
+	@Column(name = "additionalPrice", precision = 10)
+	public Double getAdditionalPrice() {
+		return this.additionalPrice;
+	}
+
+	public void setAdditionalPrice(Double additionalPrice) {
+		this.additionalPrice = additionalPrice;
+	}
+
+	@Column(name = "checkNo", length = 64)
+	public String getCheckNo() {
+		return this.checkNo;
+	}
+
+	public void setCheckNo(String checkNo) {
+		this.checkNo = checkNo;
 	}
 
 	@Column(name = "orderRemark", length = 65535)
