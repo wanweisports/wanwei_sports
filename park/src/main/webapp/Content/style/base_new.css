@@ -168,57 +168,58 @@ table td {
   color: #004c7e;
 }
 /* 导航样式 */
-.navigator-container .navigator {
-  width: 166px;
+.navigator-container {
+  width: 164px;
   height: 100%;
   border: 0;
-}
-.navigator-container .navigator .navigator-list {
   text-align: center;
-  vertical-align: top;
   background: #d4ecfc;
 }
-.navigator-container .navigator .navigator-list table.list {
+.navigator-container .navigator table.list {
   width: 162px;
-  height: 100%;
+  height: auto;
+  position: fixed;
   table-layout: fixed;
 }
-.navigator-container .navigator .navigator-list table.list .list-title {
+.navigator-container .navigator table.list .list-title {
   height: 28px;
   background: url("/Content/images/new/list_top.gif");
 }
-.navigator-container .navigator .navigator-list table.list .list-data {
+.navigator-container .navigator table.list .list-data {
   height: 92px;
   vertical-align: top;
 }
-.navigator-container .navigator .navigator-list table.list .list-data .base-data {
+.navigator-container .navigator table.list .list-data .base-data {
   width: 100%;
   height: 40px;
   margin-top: 4px;
 }
-.navigator-container .navigator .navigator-list table.list .list-data .base-data td {
+.navigator-container .navigator table.list .list-data .base-data td {
   height: 20px;
 }
-.navigator-container .navigator .navigator-list table.list .list-data .more-data {
+.navigator-container .navigator table.list .list-data .more-data {
   width: 100%;
   height: 50px;
 }
-.navigator-container .navigator .navigator-list table.list .list-nav-header td {
+.navigator-container .navigator table.list .list-nav-header td {
   height: 25px;
   background: url("/Content/images/new/list_task.jpg");
 }
-.navigator-container .navigator .navigator-list table.list .list-nav-item td {
+.navigator-container .navigator table.list .list-nav-item td {
   border-bottom: 1px dotted #004c7e;
   height: 25px;
 }
-.navigator-container .navigator .navigator-list table.list .list-nav-item.active,
-.navigator-container .navigator .navigator-list table.list .list-nav-item:hover {
-  background: #60a9e0;
-  color: #fff;
+.navigator-container .navigator table.list .list-nav-item.active,
+.navigator-container .navigator table.list .list-nav-item:hover {
+  background: url("/Content/images/new/right.png") no-repeat 16px center;
+  background-size: auto 16px;
 }
-.navigator-container .navigator .navigator-list table.list .list-nav-item.last-nav-item td {
+.navigator-container .navigator table.list .list-nav-item.last-nav-item td {
   border-bottom: none;
   height: 30px;
+}
+.navigator-container .navigator table.list-nav {
+  bottom: 0;
 }
 /* 内容容器 */
 .container-wrapper {

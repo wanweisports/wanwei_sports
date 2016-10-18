@@ -139,49 +139,51 @@ table
                                 color #004C7E
 /* 导航样式 */
 .navigator-container
+    width 164px
+    height 100%
+    border 0
+    text-align center
+    background #D4ECFC
     .navigator
-        width 166px
-        height 100%
-        border 0
-        .navigator-list
-            text-align center
-            vertical-align top
-            background #D4ECFC
-            table.list
-                width 162px
-                height 100%
-                table-layout fixed
-                .list-title
-                    height 28px
-                    background url('/Content/images/new/list_top.gif')
-                .list-data
-                    height 92px
-                    vertical-align top
-                    .base-data
-                        width 100%
-                        height 40px
-                        margin-top 4px
-                        td
-                            height 20px
-                    .more-data
-                        width 100%
-                        height 50px
-                .list-nav-header
+        table.list
+            width 162px
+            height auto
+            position fixed
+            table-layout fixed
+            .list-title
+                height 28px
+                background url('/Content/images/new/list_top.gif')
+            .list-data
+                height 92px
+                vertical-align top
+                .base-data
+                    width 100%
+                    height 40px
+                    margin-top 4px
                     td
-                        height 25px
-                        background url('/Content/images/new/list_task.jpg')
-                .list-nav-item
+                        height 20px
+                .more-data
+                    width 100%
+                    height 50px
+            .list-nav-header
+                td
+                    height 25px
+                    background url('/Content/images/new/list_task.jpg')
+            .list-nav-item
+                td
+                    border-bottom 1px dotted #004C7E
+                    height 25px
+                &.active
+                &:hover
+                    background url("/Content/images/new/right.png") no-repeat 16px center
+                    background-size auto 16px
+                &.last-nav-item
                     td
-                        border-bottom 1px dotted #004C7E
-                        height 25px
-                    &.active
-                    &:hover
-                        background #60A9E0
-                        color #FFFFFF
-                    &.last-nav-item
-                        td
-                            border-bottom none
-                            height 30px
+                        border-bottom none
+                        height 30px
+        table.list-nav
+            bottom 0
+
 /* 内容容器 */
 .container-wrapper
     overflow auto
