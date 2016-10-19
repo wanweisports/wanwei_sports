@@ -1,18 +1,33 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ page import="com.park.layout.Blocks" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> <%-- JSTL表达式（判断，循环，输出） --%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
+<%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
-<jsp:include page="/Views/Shared/Header.jsp" />
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
 
-<div class="ww-wrapper">
-    <div class="wrapper">
-        <ol class="breadcrumb">
-            <li><a href="/">工作平台</a></li>
-            <li class="active">我的信息</li>
-        </ol>
-        <form id="center_form" class="form-horizontal" action="/center/submitProfileComplete" method="post" novalidate>
+<layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/passport/passport_profile.js?v=${static_resource_version}"></script>
+    <script>
+        $(document).ready(function () {
+            // 配置表单校验
+            $('#center_form').validate({
+                ignore: ":hidden"
+            });
+        });
+    </script>
+</layout:override>
+<layout:override name="<%=Blocks.BLOCK_BODY%>">
+    <div class="container-fluid" style="text-align: left">
+        <form id="center_form" class="form-horizontal" novalidate onsubmit="return false;">
             <div class="panel panel-default">
-                <div class="panel-heading">个人信息</div>
+                <div class="panel-heading">我的信息</div>
                 <div class="panel-body">
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -23,8 +38,7 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="user_name" name="user_name"
                                        placeholder="请输入姓名" autocomplete="off"
-                                       data-val="true" data-val-required="姓名不能为空"
-                                       value="<%= user.user_name %>">
+                                       data-val="true" data-val-required="姓名不能为空">
                                 <div data-valmsg-for="user_name" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -38,8 +52,7 @@
                                        placeholder="请输入手机号码" autocomplete="off"
                                        data-val="true" data-val-required="手机号码不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
-                                       data-val-regex="手机号码格式错误"
-                                       value="<%= user.user_mobile %>">
+                                       data-val-regex="手机号码格式错误">
                                 <div data-valmsg-for="user_mobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -49,10 +62,14 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="date" class="form-control" id="user_birthday" name="user_birthday"
-                                       placeholder="请选择会员生日" autocomplete="off"
-                                       data-val="true" data-val-required="会员生日不能为空">
-                                <div data-valmsg-for="user_birthday" data-valmsg-replace="true"></div>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="user_birthday" name="userBirthday"
+                                           data-val="true" data-val-required="生日不能为空" placeholder="生日">
+                                    <span class="input-group-addon user-birthday-select">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                                <div data-valmsg-for="userBirthday" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -67,8 +84,7 @@
                                        placeholder="请输入18位身份证号" autocomplete="off"
                                        data-val="true" data-val-required="身份证号不能为空"
                                        data-val-regex-pattern="^\d{18}$|^\d{17}(\d|X|x)$"
-                                       data-val-regex="身份证号格式错误"
-                                       value="<%= user.user_idcard %>">
+                                       data-val-regex="身份证号格式错误">
                                 <div data-valmsg-for="user_idcard" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -97,10 +113,10 @@
                                        placeholder="请输入联系地址">
                             </div>
                         </div>
-                        <div class="form-group sc-ui-submit">
+                        <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
                                 <p class="sc-submit-tips"></p>
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary profile-submit">
                                     <span class="glyphicon glyphicon-ok"></span> 完善信息
                                 </button>
                             </div>
@@ -110,7 +126,9 @@
             </div>
         </form>
     </div>
-</div>
+</layout:override>
 
-<jsp:include page="/Views/Shared/Common.jsp" />
-<jsp:include page="/Views/Shared/Footer.jsp" />
+<c:import url="../Shared/Layout_New.jsp">
+    <c:param name="nav" value="passport"/>
+    <c:param name="subNav" value="profile"/>
+</c:import>

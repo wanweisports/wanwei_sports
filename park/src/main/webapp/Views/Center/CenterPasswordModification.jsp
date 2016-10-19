@@ -1,17 +1,28 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ page import="com.park.layout.Blocks" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> <%-- JSTL表达式（判断，循环，输出） --%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
+<%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
-<jsp:include page="/Views/Shared/Header.jsp" />
-
-<div class="ww-wrapper">
-    <div class="wrapper">
-        <ol class="breadcrumb">
-            <li><a href="/">工作平台</a></li>
-            <li class="active">修改密码</li>
-        </ol>
-        <form id="center_form" class="form-horizontal" action="/center/submitPasswordModification" method="post" novalidate>
+<layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/passport/passport_modify_password.js?v=${static_resource_version}"></script>
+    <script>
+        $(document).ready(function () {
+            // 配置表单校验
+            $('#center_form').validate({
+                ignore: ":hidden"
+            });
+        });
+    </script>
+</layout:override>
+<layout:override name="<%=Blocks.BLOCK_BODY%>">
+    <div class="container-fluid" style="text-align: left">
+        <form id="center_form" class="form-horizontal" novalidate onsubmit="return false;">
             <div class="panel panel-default">
+                <div class="panel-heading">密码修改</div>
                 <div class="panel-body">
                     <div class="col-sm-offset-2 col-sm-8">
                         <div class="form-group">
@@ -50,11 +61,11 @@
                                 <div data-valmsg-for="confirm_password" data-valmsg-replace="true"></div>
                             </div>
                         </div>
-                        <div class="form-group sc-ui-submit">
+                        <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
                                 <p class="sc-submit-tips"></p>
-                                <button type="submit" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-ok"></span> 完善信息
+                                <button type="submit" class="btn btn-primary password-confirm">
+                                    <span class="glyphicon glyphicon-ok"></span> 确 定
                                 </button>
                             </div>
                         </div>
@@ -64,6 +75,9 @@
         </form>
     </div>
 </div>
+</layout:override>
 
-<jsp:include page="/Views/Shared/Common.jsp" />
-<jsp:include page="/Views/Shared/Footer.jsp" />
+<c:import url="../Shared/Layout_New.jsp">
+    <c:param name="nav" value="passport"/>
+    <c:param name="subNav" value="password"/>
+</c:import>

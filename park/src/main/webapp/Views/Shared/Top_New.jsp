@@ -10,7 +10,7 @@
                 <table class="top-header-logo">
                     <tr>
                         <td>
-                            <img src="/Content/images/new/top_lf.jpg?v=${static_resource_version}" alt="logo">
+                            <img src="/Content/images/new/logo.png?v=${static_resource_version}" alt="logo">
                         </td>
                     </tr>
                 </table>
@@ -18,21 +18,21 @@
             <td class="top-header-right">
                 <table>
                     <tr>
-                        <td class="top-header-date">今天是2010年1月26日 星期二 11:11</td>
+                        <td class="top-header-date">今天是2016年10月19日 星期三</td>
                     </tr>
                     <tr>
                         <td class="top-header-title">
                             <div>
-                                <p>智能场馆管理系统</p>
+                                <p>场馆运营管理系统</p>
                             </div>
                         </td>
                         <td class="top-header-menu">
                             <div class="menu">
                                 <ul>
-                                    <li><a href=""><span>完善信息</span></a></li>
-                                    <li><a href=""><span>密码修改</span></a></li>
-                                    <li><a href=""><span>安全退出</span></a></li>
-                                    <li><a href=""><span>操作指南</span></a></li>
+                                    <li><a href="/passport/profile"><span>完善信息</span></a></li>
+                                    <li><a href="/passport/modifyPassword"><span>密码修改</span></a></li>
+                                    <li><a class="user-logout" href="javascript:;"><span>安全退出</span></a></li>
+                                    <li><a href="/error/questions"><span>操作指南</span></a></li>
                                 </ul>
                             </div>
                         </td>
@@ -52,12 +52,12 @@
             <td class="top-menu-list">
                 <div>
                     <ul>
-                        <li><a href="#"><span>会员办理</span></a></li>
-                        <li><a href="#"><span>场地预订</span></a></li>
-                        <li><a href="#"><span>批量预订</span></a></li>
-                        <li><a href="#"><span>商品销售</span></a></li>
-                        <li><a href="#"><span>营业收支</span></a></li>
-                        <li><a href="#"><span>数据备份</span></a></li>
+                        <li><a href=""><span>会员办理</span></a></li>
+                        <li><a href=""><span>场地预订</span></a></li>
+                        <li><a href=""><span>批量预订</span></a></li>
+                        <li><a href=""><span>商品销售</span></a></li>
+                        <li><a href=""><span>营业收支</span></a></li>
+                        <li><a href=""><span>数据备份</span></a></li>
                     </ul>
                 </div>
             </td>

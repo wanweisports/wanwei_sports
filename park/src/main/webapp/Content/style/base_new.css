@@ -57,12 +57,15 @@ table td {
 }
 .top-container table.top-header .top-header-left {
   background: url("/Content/images/new/top_bg.jpg") repeat-x;
-  width: 289px;
+  width: 200px;
   height: 57px;
 }
 .top-container table.top-header .top-header-left .top-header-logo {
   width: 100%;
   border: none;
+}
+.top-container table.top-header .top-header-left .top-header-logo img {
+  height: 56px;
 }
 .top-container table.top-header .top-header-right {
   background: url("/Content/images/new/top_bg.jpg");
@@ -80,7 +83,6 @@ table td {
   height: 28px;
 }
 .top-container table.top-header .top-header-right table .top-header-title div {
-  text-align: left;
   background: url("/Content/images/new/top_lable.jpg") no-repeat;
   width: 126px;
   height: 28px;
@@ -88,6 +90,7 @@ table td {
 }
 .top-container table.top-header .top-header-right table .top-header-title div p {
   margin-top: 8px;
+  text-align: center;
 }
 .top-container table.top-header .top-header-right table .top-header-menu .menu {
   background: url("/Content/images/new/top_menu.jpg") no-repeat;
