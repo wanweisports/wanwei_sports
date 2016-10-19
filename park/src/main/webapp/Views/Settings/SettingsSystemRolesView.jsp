@@ -14,17 +14,19 @@
     <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
     <script src="/Content/app/settings/settings_roles_view.js?v=${static_resource_version}"></script>
+    <script>
+        // 配置表单校验
+        $(document).ready(function () {
+            $('#roles_form').validate({
+                ignore: ":hidden"
+            });
+        });
+    </script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
-<div class="ww-wrapper">
-    <div class="wrapper">
-        <ol class="breadcrumb">
-            <li><a href="/">工作平台</a></li>
-            <li><a href="/settings/getRoles">角色查询</a></li>
-            <li class="active">角色设置</li>
-        </ol>
-        <form id="roles_form" class="form-horizontal" action="" method="post" novalidate onsubmit="return false;">
+    <div class="container-fluid" style="text-align: left">
+        <form id="roles_form" class="form-horizontal" novalidate onsubmit="return false;">
             <div class="panel panel-default">
                 <div class="panel-heading">角色信息</div>
                 <div class="panel-body">
@@ -99,26 +101,25 @@
             </div>
         </form>
     </div>
-</div>
 
-<div class="modal fade" id="tips_modal" tabindex="-1" role="dialog" aria-labelledby="tipsModalLabel">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title" id="tipsModalLabel">提示框</h4>
-            </div>
-            <div class="modal-body">
-                <div class="alert alert-success tips-content" role="alert">角色设置保存成功!</div>
+    <div class="modal fade" id="tips_modal" tabindex="-1" role="dialog" aria-labelledby="tipsModalLabel">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="tipsModalLabel">提示框</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-success tips-content" role="alert">角色设置保存成功!</div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </layout:override>
 
-<c:import url="../Shared/Layout.jsp">
+<c:import url="../Shared/Layout_New.jsp">
     <c:param name="nav" value="setting"/>
     <c:param name="subNav" value="role"/>
 </c:import>

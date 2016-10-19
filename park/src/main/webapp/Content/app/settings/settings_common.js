@@ -43,7 +43,7 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $("#tips_modal").modal("show");
+                        $("#tips_modal").modal({show: true, backdrop: false});
                     } else {
                         alert(res.message || "常用设置失败, 请稍后重试");
                     }

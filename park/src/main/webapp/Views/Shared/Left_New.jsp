@@ -209,9 +209,9 @@
             <tr class="list-nav-list setting" style="${param.nav == "setting" ? "" : "display:none;"}">
                 <td>
                     <table style="width: 100%;">
-                        <tr class="list-nav-item">
+                        <tr class="list-nav-item setting ${param.subNav == "base" ? "active" : ""}">
                             <td>
-                                <span><a href="#">基础设置</a></span>
+                                <span><a href="/settings/common">基础设置</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item setting">
@@ -219,9 +219,9 @@
                                 <span><a href="#">用户设置</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item setting">
+                        <tr class="list-nav-item setting ${param.subNav == "role" ? "active" : ""}">
                             <td>
-                                <span><a href="#">角色设置</a></span>
+                                <span><a href="/settings/getRoles">角色设置</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item setting">
@@ -229,9 +229,14 @@
                                 <span><a href="#">通知管理</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item setting">
+                        <tr class="list-nav-item setting ${param.subNav == "database" ? "active" : ""}">
                             <td>
-                                <span><a href="#">数据备份</a></span>
+                                <span><a href="/settings/database">数据库操作</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item setting ${param.subNav == "logs" ? "active" : ""}">
+                            <td>
+                                <span><a href="/settings/systemLogs">系统日志</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item setting last-nav-item">
