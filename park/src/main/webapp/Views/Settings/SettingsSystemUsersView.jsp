@@ -14,16 +14,18 @@
     <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
-    <script src="/Content/dist/settings/settings_users_view.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/settings/settings_users_view.js?v=${static_resource_version}"></script>
+    <script>
+        // 配置表单校验
+        $(document).ready(function () {
+            $('#users_form').validate({
+                ignore: ":hidden"
+            });
+        });
+    </script>
 </layout:override>
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
-<div class="ww-wrapper">
-    <div class="wrapper">
-        <ol class="breadcrumb">
-            <li><a href="/">工作平台</a></li>
-            <li><a href="/settings/getUsers">用户查询</a></li>
-            <li class="active">用户设置</li>
-        </ol>
+    <div class="container-fluid" style="text-align: left">
         <form id="users_form" class="form-horizontal" action="" method="post" novalidate onsubmit="return false;">
             <div class="panel panel-default">
                 <div class="panel-heading">用户信息</div>
@@ -119,10 +121,9 @@
             </div>
         </form>
     </div>
-</div>
 </layout:override>
 
-<c:import url="../Shared/Layout.jsp">
+<c:import url="../Shared/Layout_New.jsp">
     <c:param name="nav" value="setting"/>
     <c:param name="subNav" value="user"/>
 </c:import>

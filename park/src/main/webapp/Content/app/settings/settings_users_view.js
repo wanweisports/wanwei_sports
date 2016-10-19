@@ -35,11 +35,11 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/settings/users', conditions, function (res) {
+                $.post('', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $("#tips_modal").modal("show");
+                        $("#tips_modal").modal({show: true, backdrop: false});
                     } else {
                         alert(res.message || "设置用户失败, 请稍后重试");
                     }

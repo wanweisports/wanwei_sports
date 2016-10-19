@@ -214,9 +214,9 @@
                                 <span><a href="/settings/common">基础设置</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item setting">
+                        <tr class="list-nav-item setting ${param.subNav == "user" ? "active" : ""}">
                             <td>
-                                <span><a href="#">用户设置</a></span>
+                                <span><a href="settings/getUsers">用户设置</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item setting ${param.subNav == "role" ? "active" : ""}">
@@ -224,9 +224,9 @@
                                 <span><a href="/settings/getRoles">角色设置</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item setting">
+                        <tr class="list-nav-item setting ${param.subNav == "notification" ? "active" : ""}">
                             <td>
-                                <span><a href="#">通知管理</a></span>
+                                <span><a href="/settings/notification">通知管理</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item setting ${param.subNav == "database" ? "active" : ""}">
