@@ -177,17 +177,17 @@
                     <table style="width: 100%;">
                         <tr class="list-nav-item data ${param.subNav == "register" ? "active" : ""}">
                             <td>
-                                <span><a href="/data/membersRegister">会员办理统计</a></span>
+                                <span><a href="/data/getMembersRegister">会员办理统计</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item data">
+                        <!--<tr class="list-nav-item data">
                             <td>
                                 <span><a href="">订单日志</a></span>
                             </td>
-                        </tr>
-                        <tr class="list-nav-item data">
+                        </tr>-->
+                        <tr class="list-nav-item data ${param.subNav == "business" ? "active" : ""}">
                             <td>
-                                <span><a href="#">营业收支</a></span>
+                                <span><a href="/data/getBusinessIncome">营业收支</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item data ${param.subNav == "attendance" ? "active" : ""}">

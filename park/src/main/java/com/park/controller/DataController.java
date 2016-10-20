@@ -17,4 +17,10 @@ public class DataController extends BaseController {
     public String getMembersAttendance() {
         return "Data/DataMembersAttendance";
     }
+
+    // 营业收支
+    @RequestMapping("data/getBusinessIncome")
+    public String getBusinessIncome() {
+        return "Data/DataBusinessIncome";
+    }
 }
