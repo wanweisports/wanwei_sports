@@ -6,7 +6,7 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="/Content/dist/good/goods_market.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/good/goods_market.js?v=${static_resource_version}"></script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">

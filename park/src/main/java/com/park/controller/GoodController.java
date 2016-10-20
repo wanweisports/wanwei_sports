@@ -114,5 +114,10 @@ public class GoodController extends BaseController {
 		}
 		return "Goods/GoodsCarts";
 	}
+
+	@RequestMapping(value = "getGoodsStockDetails")
+	public String getGoodsStockDetails() {
+		return "Goods/GoodStockDetails";
+	}
 	
 }

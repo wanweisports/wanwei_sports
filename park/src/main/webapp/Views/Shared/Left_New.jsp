@@ -156,9 +156,9 @@
                                 <span><a href="/good/getGoodsMarket">商品销售</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item good ${param.subNav == "order" ? "active" : ""}">
+                        <tr class="list-nav-item good ${param.subNav == "detail" ? "active" : ""}">
                             <td>
-                                <span><a href="#">商品订单</a></span>
+                                <span><a href="/good/getGoodsStockDetails">库存明细日志</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item good last-nav-item">

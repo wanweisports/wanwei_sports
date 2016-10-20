@@ -8,7 +8,7 @@
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
-    <script src="/Content/dist/goods/goods_stock_management.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/goods/goods_stock_management.js?v=${static_resource_version}"></script>
     <script>
         // 配置表单校验
         $(document).ready(function () {
