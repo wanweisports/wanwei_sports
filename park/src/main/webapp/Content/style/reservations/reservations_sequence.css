@@ -8,6 +8,47 @@
   padding: 2.5% 2.5% 0 2.5%;
   width: 100%;
 }
+.sports-list {
+  float: left;
+}
+.sports-list .sports-item .sports-icon {
+  height: 24px;
+}
+.sports-list .sports-item.btn-default .sports-active {
+  display: none;
+}
+.sports-list .sports-item.btn-default .sports-inactive {
+  display: inline;
+}
+.sports-list .sports-item.btn-primary {
+  background: #fff;
+  color: #3187bf;
+}
+.sports-list .sports-item.btn-primary .sports-active {
+  display: inline;
+}
+.sports-list .sports-item.btn-primary .sports-inactive {
+  display: none;
+}
+.date-list {
+  float: left;
+  margin-left: 15px;
+  min-height: 25px;
+  margin-bottom: 10px;
+}
+.date-list .navbar-collapse {
+  padding: 0;
+}
+.date-list .navbar-collapse .nav li a {
+  line-height: 16px;
+  padding: 10px 14px !important;
+}
+.sequence-btns {
+  float: right;
+}
+.sequence-btns .btn {
+  padding: 10px 12px;
+}
 .sequence-show {
 /*padding 0 30px*/
   width: 100%;

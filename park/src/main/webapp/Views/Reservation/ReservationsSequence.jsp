@@ -29,19 +29,19 @@
             <div class="panel-body">
                 <input type="hidden" value="${curDate}" id="current_date">
                 <input type="hidden" value="${curSportId}" id="current_sport">
-                <div class="col-sm-12">
-                    <div class="btn-group btn-group-justified">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-warning">羽毛球</button>
-                        </div>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-primary">篮球</button>
-                        </div>
-                    </div>
+                <div class="sports-list">
+                    <button type="button" class="btn btn-default sports-item" data-value="1">
+                        <img class="sports-icon sports-active" src="/Content/images/sports/shuttercock-active.png?v=${static_resource_version}">
+                        <img class="sports-icon sports-inactive" src="/Content/images/sports/shuttercock.png?v=${static_resource_version}">
+                        羽毛球
+                    </button>
+                    <button type="button" class="btn btn-primary sports-item">
+                        <img class="sports-icon sports-active" src="/Content/images/sports/swimming-active.png?v=${static_resource_version}">
+                        <img class="sports-icon sports-inactive" src="/Content/images/sports/swimming.png?v=${static_resource_version}">
+                        游泳
+                    </button>
                 </div>
-            </div>
-            <div class="panel-body">
-                <nav class="navbar navbar-default">
+                <nav class="navbar navbar-default date-list">
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav sequence-date">
                             <li class="other-date-select">
@@ -58,39 +58,7 @@
                         </ul>
                     </div>
                 </nav>
-                <form class="form-inline">
-                    <div class="form-group" style="display: none;">
-                        <label>场地状态</label>
-
-                        <label class="checkbox-inline">
-                            <input type="checkbox" name="venue_state" value="1" checked>
-                            未付款
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" name="venue_state" value="2" checked>
-                            已付款
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" name="venue_state" value="3" checked>
-                            已锁定
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" name="venue_state" value="4" checked>
-                            不可预订
-                        </label>
-                    </div>
-                    <div class="form-group" style="display: none;">
-                        <label>用户类型</label>
-
-                        <label class="checkbox-inline">
-                            <input type="checkbox" name="user_state" value="1" checked>
-                            会员
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" name="user_state" value="2" checked>
-                            散客
-                        </label>
-                    </div>
+                <div class="form-inline sequence-btns">
                     <div class="form-group pull-right">
                         <button type="button" class="btn btn-default sequence-lock">
                             <span class="glyphicon glyphicon-lock"></span> 锁 场
@@ -99,7 +67,7 @@
                             <span class="glyphicon glyphicon-ok"></span> 预 订
                         </button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
         <div class="panel panel-default sequence-show">

@@ -64,7 +64,7 @@
                 e.preventDefault();
 
                 _resetSportsForm();
-                $("#settingModal").modal("show");
+                $("#settingModal").modal({backdrop: false, show: true});
             });
 
             // 查询场地详情
@@ -87,7 +87,7 @@
                         $("#sports_form").find("input[name='sportStatus'][value='" + data.sportStatus + "']")
                             .prop("checked", true);
 
-                        $("#settingModal").modal("show");
+                        $("#settingModal").modal({backdrop: false, show: true});
                     } else {
                         alert(res.message || "场地类型查询失败 请稍后重试");
                     }
