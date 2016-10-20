@@ -8,6 +8,11 @@
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/dist/settings/settings_users.js?v=${static_resource_version}"></script>
 </layout:override>
+
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>系统设置</span> &gt;&gt; <span>用户查询</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">

@@ -9,7 +9,7 @@
             <tr>
                 <td class="list-title"></td>
             </tr>
-            <tr>
+            <!--<tr>
                 <td class="list-data">
                     <table class="base-data">
                         <tr>
@@ -32,7 +32,7 @@
                         </tr>
                     </table>
                 </td>
-            </tr>
+            </tr>-->
         </table>
         <table class="list list-nav">
             <tr class="list-nav-header" data-item="member">
@@ -53,7 +53,12 @@
                                 <span><a href="/member/memberList">会员查询</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item member">
+                        <tr class="list-nav-item member ${param.subNav == "operation" ? "active" : ""}"">
+                            <td>
+                                <span><a href="/member/getOperations">会员操作</a></span>
+                            </td>
+                        </tr>
+                        <!--<tr class="list-nav-item member">
                             <td>
                                 <span><a href="#">会员充值</a></span>
                             </td>
@@ -72,10 +77,10 @@
                             <td>
                                 <span><a href="#">未收款列表</a></span>
                             </td>
-                        </tr>
+                        </tr>-->
                         <tr class="list-nav-item member ${param.subNav == "invoice" ? "active" : ""}">
                             <td>
-                                <span><a href="/member/getInvoices">发票登记</a></span>
+                                <span><a href="/member/getInvoices">发票登记查询</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item member ${param.subNav == "setting" ? "active" : ""}">
@@ -187,7 +192,7 @@
                         </tr>-->
                         <tr class="list-nav-item data ${param.subNav == "business" ? "active" : ""}">
                             <td>
-                                <span><a href="/data/getBusinessIncome">营业收支</a></span>
+                                <span><a href="/data/getBusinessIncome">营业收支记录</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item data ${param.subNav == "attendance" ? "active" : ""}">

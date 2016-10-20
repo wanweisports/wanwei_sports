@@ -55,7 +55,9 @@
                                                     <td style="vertical-align: top;">
                                                         <table style="background: url('/Content/images/new/right_table_bg.jpg?v=${static_resource_version}') repeat-x; height:26px; border-bottom:1px solid #5BA8DE; width: 100%;">
                                                             <tr>
-                                                                <td style="text-align: left; color: #004C7E; padding-left: 12px;">当前位置:&nbsp;<span>会员管理</span>&nbsp;&gt;&gt;&nbsp;<span>新会员办理</span></td>
+                                                                <td style="text-align: left; color: #004C7E; padding-left: 12px;">
+                                                                    <layout:block name="<%=Blocks.BLOCK_NAV_PATH%>"/>
+                                                                </td>
                                                             </tr>
                                                         </table>
                                                     </td>

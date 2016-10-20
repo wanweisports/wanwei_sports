@@ -24,6 +24,11 @@
         });
     </script>
 </layout:override>
+
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>系统设置</span> &gt;&gt; <span>基础设置</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
@@ -53,7 +58,7 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="site_province" name="siteProvince"
                                        placeholder="请输入所在省市" autocomplete="off"
-                                       data-val="true" data-val-required="所在省市不能为空" readonly>
+                                       data-val="true" data-val-required="所在省市不能为空">
                                 <div data-valmsg-for="siteProvince" data-valmsg-replace="true"></div>
                             </div>
                         </div>

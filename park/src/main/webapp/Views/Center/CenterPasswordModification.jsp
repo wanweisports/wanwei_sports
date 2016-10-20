@@ -18,11 +18,16 @@
         });
     </script>
 </layout:override>
+
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>通行证</span> &gt;&gt; <span>密码重置</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <form id="center_form" class="form-horizontal" novalidate onsubmit="return false;">
             <div class="panel panel-default">
-                <div class="panel-heading">密码修改</div>
+                <div class="panel-heading">密码重置</div>
                 <div class="panel-body">
                     <div class="col-sm-offset-2 col-sm-8">
                         <div class="form-group">

@@ -9,9 +9,14 @@
     <script src="/Content/app/settings/settings_notification.js?v=${static_resource_version}"></script>
 </layout:override>
 
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>系统设置</span> &gt;&gt; <span>通知管理</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
+            <div class="panel-heading">通知管理</div>
             <div class="panel-body">
                 <form id="notification_form" class="form-horizontal" onsubmit="return false;">
                     <div class="col-sm-4">

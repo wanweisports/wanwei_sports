@@ -9,14 +9,18 @@
     <script src="/Content/app/settings/settings_roles.js?v=${static_resource_version}"></script>
 </layout:override>
 
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>系统设置</span> &gt;&gt; <span>角色查询</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
-            <div class="panel-heading">用户角色</div>
+            <div class="panel-heading">角色查询</div>
             <div class="panel-body">
                 <form id="roles_filter_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
-                        <select class="form-control" id="role_state" name="roleState" style="width:200px;">
+                        <select class="form-control" id="role_state" name="roleState" style="width:160px;">
                             <option value="">所有状态</option>
                             <option value="1">正常</option>
                             <option value="2">锁定</option>

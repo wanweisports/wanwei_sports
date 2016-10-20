@@ -5,6 +5,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>系统设置</span> &gt;&gt; <span>数据库操作</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
@@ -18,59 +22,58 @@
             </div>
         </div>
         <div class="panel panel-default">
-            <div class="panel-heading">清除数据库</div>
             <div class="panel-body">
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <button class="btn btn-danger" style="margin: 10px;">
                         <span class="glyphicon glyphicon-trash"></span> 清空会员信息表
                     </button>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <button class="btn btn-danger" style="margin: 10px;">
                         <span class="glyphicon glyphicon-trash"></span> 清空会员信息表
                     </button>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <button class="btn btn-danger" style="margin: 10px;">
                         <span class="glyphicon glyphicon-trash"></span> 清空会员信息表
                     </button>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <button class="btn btn-danger" style="margin: 10px;">
                         <span class="glyphicon glyphicon-trash"></span> 清空会员信息表
                     </button>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <button class="btn btn-danger" style="margin: 10px;">
                         <span class="glyphicon glyphicon-trash"></span> 清空会员信息表
                     </button>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <button class="btn btn-danger" style="margin: 10px;">
                         <span class="glyphicon glyphicon-trash"></span> 清空会员信息表
                     </button>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <button class="btn btn-danger" style="margin: 10px;">
                         <span class="glyphicon glyphicon-trash"></span> 清空会员信息表
                     </button>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <button class="btn btn-danger" style="margin: 10px;">
                         <span class="glyphicon glyphicon-trash"></span> 清空会员信息表
                     </button>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <button class="btn btn-danger" style="margin: 10px;">
                         <span class="glyphicon glyphicon-trash"></span> 清空会员信息表
                     </button>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <button class="btn btn-danger" style="margin: 10px;">
                         <span class="glyphicon glyphicon-trash"></span> 清空会员信息表
                     </button>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <button class="btn btn-danger" style="margin: 10px;">
                         <span class="glyphicon glyphicon-trash"></span> 清空会员信息表
                     </button>

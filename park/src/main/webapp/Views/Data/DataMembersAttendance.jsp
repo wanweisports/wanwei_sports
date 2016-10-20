@@ -14,12 +14,22 @@
     <script src="/Content/app/data/data_members_attendance.js?v=${static_resource_version}"></script>
 </layout:override>
 
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>数据统计</span> &gt;&gt; <span>客户签到记录</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
             <div class="panel-heading">客户签到记录</div>
             <div class="panel-body">
                 <form id="data_form" class="form-inline" onsubmit="return false;">
+                    <div class="form-group">
+                        <select class="form-control" style="width: 160px;">
+                            <option value="0">今日签到</option>
+                            <option value="1">昨日签到</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="dateSelect" name="dateSelect"
                                placeholder="选择日期" value="${dateSelect}">
@@ -32,7 +42,7 @@
                     </div>
                     <div class="form-group pull-right">
                         <a href="javascript:;" class="btn btn-primary goods-filter">
-                            <span class="glyphicon glyphicon-export"></span> 导出
+                            <span class="glyphicon glyphicon-export"></span> 导出数据
                         </a>
                     </div>
                 </form>
@@ -47,12 +57,103 @@
                             <th>会员卡号</th>
                             <th>姓名</th>
                             <th>会员类型</th>
-                            <th>入口名称</th>
-                            <th>时间</th>
+                            <th>签到入口</th>
+                            <th>签到时间</th>
                             <th>对应订单</th>
+                            <th>签到日期</th>
                         </tr>
                         </thead>
                         <tbody>
+                        <tr>
+                            <td>234545243</td>
+                            <td>李洪旭</td>
+                            <td>金卡</td>
+                            <td>四楼B口</td>
+                            <td>10:00</td>
+                            <td>order_23435543</td>
+                            <td>2016-10-20</td>
+                        </tr>
+                        <tr>
+                            <td>234545243</td>
+                            <td>李洪旭</td>
+                            <td>金卡</td>
+                            <td>四楼B口</td>
+                            <td>10:00</td>
+                            <td>order_23435543</td>
+                            <td>2016-10-20</td>
+                        </tr>
+                        <tr>
+                            <td>234545243</td>
+                            <td>李洪旭</td>
+                            <td>金卡</td>
+                            <td>四楼B口</td>
+                            <td>10:00</td>
+                            <td>order_23435543</td>
+                            <td>2016-10-20</td>
+                        </tr>
+                        <tr>
+                            <td>234545243</td>
+                            <td>李洪旭</td>
+                            <td>金卡</td>
+                            <td>四楼B口</td>
+                            <td>10:00</td>
+                            <td>order_23435543</td>
+                            <td>2016-10-20</td>
+                        </tr>
+                        <tr>
+                            <td>234545243</td>
+                            <td>李洪旭</td>
+                            <td>金卡</td>
+                            <td>四楼B口</td>
+                            <td>10:00</td>
+                            <td>order_23435543</td>
+                            <td>2016-10-20</td>
+                        </tr>
+                        <tr>
+                            <td>234545243</td>
+                            <td>李洪旭</td>
+                            <td>金卡</td>
+                            <td>四楼B口</td>
+                            <td>10:00</td>
+                            <td>order_23435543</td>
+                            <td>2016-10-20</td>
+                        </tr>
+                        <tr>
+                            <td>234545243</td>
+                            <td>李洪旭</td>
+                            <td>金卡</td>
+                            <td>四楼B口</td>
+                            <td>10:00</td>
+                            <td>order_23435543</td>
+                            <td>2016-10-20</td>
+                        </tr>
+                        <tr>
+                            <td>234545243</td>
+                            <td>李洪旭</td>
+                            <td>金卡</td>
+                            <td>四楼B口</td>
+                            <td>10:00</td>
+                            <td>order_23435543</td>
+                            <td>2016-10-20</td>
+                        </tr>
+                        <tr>
+                            <td>234545243</td>
+                            <td>李洪旭</td>
+                            <td>金卡</td>
+                            <td>四楼B口</td>
+                            <td>10:00</td>
+                            <td>order_23435543</td>
+                            <td>2016-10-20</td>
+                        </tr>
+                        <tr>
+                            <td>234545243</td>
+                            <td>李洪旭</td>
+                            <td>金卡</td>
+                            <td>四楼B口</td>
+                            <td>10:00</td>
+                            <td>order_23435543</td>
+                            <td>2016-10-20</td>
+                        </tr>
                         <c:forEach var="enter" items="${attendances}">
                             <tr>
                                 <td>${enter.card_id}</td>

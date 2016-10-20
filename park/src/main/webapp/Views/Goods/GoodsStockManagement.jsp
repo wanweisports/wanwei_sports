@@ -18,9 +18,15 @@
         });
     </script>
 </layout:override>
+
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>商品管理</span> &gt;&gt; <span>商品进销存管理</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
+            <div class="panel-heading">商品进销存管理</div>
             <div class="panel-body">
                 <form class="form-inline" id="goods_filter_form" onsubmit="return false;">
                     <div class="form-group">

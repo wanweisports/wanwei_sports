@@ -19,11 +19,15 @@
     </script>
 </layout:override>
 
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>会员管理</span> &gt;&gt; <span>会员绑卡充值</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <form id="member_form" class="form-horizontal" novalidate onsubmit="return false;">
             <div class="panel panel-default">
-                <div class="panel-heading">会员信息</div>
+                <div class="panel-heading">会员绑卡充值</div>
                 <div class="panel-body">
                     <input type="hidden" name="memberId" value="${memberId}">
                     <div class="col-sm-6">
@@ -80,7 +84,6 @@
         </form>
         <form id="member_card_form" class="form-horizontal" novalidate onsubmit="return false;">
             <div class="panel panel-default">
-                <div class="panel-heading">会员卡充值</div>
                 <input type="hidden" name="memberId" value="${memberId}">
                 <input type="hidden" name="cardNo" value="${cardNo}" >
                 <div class="panel-body">

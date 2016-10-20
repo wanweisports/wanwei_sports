@@ -24,11 +24,16 @@
         });
     </script>
 </layout:override>
+
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>系统设置</span> &gt;&gt; <span>用户查询</span> &gt;&gt; <span>用户设置</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <form id="users_form" class="form-horizontal" action="" method="post" novalidate onsubmit="return false;">
             <div class="panel panel-default">
-                <div class="panel-heading">用户信息</div>
+                <div class="panel-heading">用户设置</div>
                 <div class="panel-body">
                     <div class="col-sm-6">
                         <div class="form-group">

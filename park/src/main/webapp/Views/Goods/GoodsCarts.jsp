@@ -15,82 +15,89 @@
     <script src="/Content/app/goods/goods_carts.js?v=${static_resource_version}"></script>
 </layout:override>
 
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>商品管理</span> &gt;&gt; <span>商品销售</span> &gt;&gt; <span>商品购物车</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left;">
-        <div class="goods-cart-list">
-            <table class="table table-striped table-hover">
-                <thead>
-                <tr>
-                    <th>商品编号</th>
-                    <th>商品图片</th>
-                    <th>商品名称</th>
-                    <th>价格(元)</th>
-                    <th>会员价格(元)</th>
-                    <th>购买数量</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>FD1321211</td>
-                    <td>
-                        <img src="/Content/images/demo/mp60650501_1456481736483_2.jpeg" alt="某某商品"
-                             class="img-rounded" style="width: 100px">
-                    </td>
-                    <td>某某商品</td>
-                    <td>100.00元</td>
-                    <td>90.00元</td>
-                    <td>
-                        <div class="input-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">商品购物车</div>
+            <div class="panel-body goods-cart-list">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>商品编号</th>
+                        <th>商品图片</th>
+                        <th>商品名称</th>
+                        <th>价格(元)</th>
+                        <th>会员价格(元)</th>
+                        <th>购买数量</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>FD1321211</td>
+                        <td>
+                            <img src="/Content/images/demo/mp60650501_1456481736483_2.jpeg" alt="某某商品"
+                                 class="img-rounded" style="width: 100px">
+                        </td>
+                        <td>某某商品</td>
+                        <td>100.00元</td>
+                        <td>90.00元</td>
+                        <td>
+                            <div class="input-group">
                                 <span class="input-group-btn" style="width: auto">
                                     <button class="btn btn-default goods-minus" type="button">-</button>
                                 </span>
-                            <input type="text" class="form-control" value="1" style="width: 50px;">
+                                <input type="text" class="form-control" value="1" style="width: 50px;">
                                 <span class="input-group-btn" style="width: auto">
                                     <button class="btn btn-default goods-plus" type="button">+</button>
                                 </span>
-                        </div>
-                    </td>
-                    <td>
-                        <a href="javascript:;" class="btn btn-warning goods-remove">
-                            <span class="glyphicon glyphicon-trash"></span>
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>FD1321211</td>
-                    <td>
-                        <img src="/Content/images/demo/mp60650501_1456481736483_2.jpeg" alt="某某商品"
-                             class="img-rounded" style="width: 100px">
-                    </td>
-                    <td>某某商品</td>
-                    <td>100.00元</td>
-                    <td>90.00元</td>
-                    <td>
-                        <div class="input-group">
+                            </div>
+                        </td>
+                        <td>
+                            <a href="javascript:;" class="btn btn-warning goods-remove">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>FD1321211</td>
+                        <td>
+                            <img src="/Content/images/demo/mp60650501_1456481736483_2.jpeg" alt="某某商品"
+                                 class="img-rounded" style="width: 100px">
+                        </td>
+                        <td>某某商品</td>
+                        <td>100.00元</td>
+                        <td>90.00元</td>
+                        <td>
+                            <div class="input-group">
                                 <span class="input-group-btn" style="width: auto">
                                     <button class="btn btn-default goods-minus" type="button">-</button>
                                 </span>
-                            <input type="text" class="form-control" value="1" style="width: 50px;">
+                                <input type="text" class="form-control" value="1" style="width: 50px;">
                                 <span class="input-group-btn" style="width: auto">
                                     <button class="btn btn-default goods-plus" type="button">+</button>
                                 </span>
-                        </div>
-                    </td>
-                    <td>
-                        <a href="javascript:;" class="btn btn-warning goods-remove">
-                            <span class="glyphicon glyphicon-trash"></span>
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="alert alert-info" style="overflow: hidden">
-            <p class="pull-left">商品总价: 2000.00元(会员价: 1800.00元)</p>
-            <a href="#zhifuModal" class="btn btn-primary pull-right" data-toggle="modal" data-backdrop="false">
-                <span class="glyphicon glyphicon-usb"></span> 结算
-            </a>
+                            </div>
+                        </td>
+                        <td>
+                            <a href="javascript:;" class="btn btn-warning goods-remove">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="alert alert-info" style="overflow: hidden">
+                    <p class="pull-left">商品总价: 2000.00元(会员价: 1800.00元)</p>
+                    <a href="#zhifuModal" class="btn btn-primary pull-right" data-toggle="modal" data-backdrop="false">
+                        <span class="glyphicon glyphicon-usb"></span> 结算
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 

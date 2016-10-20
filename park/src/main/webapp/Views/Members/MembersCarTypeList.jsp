@@ -20,9 +20,15 @@
         })(jQuery);
     </script>
 </layout:override>
+
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>会员管理</span> &gt;&gt; <span>会员设置</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left;">
         <div class="panel panel-default">
+            <div class="panel-heading">会员设置</div>
             <div class="panel-body">
                 <form id="card_filter_form" class="form-inline col-sm-8" onsubmit="return false;">
                     <div class="form-group">

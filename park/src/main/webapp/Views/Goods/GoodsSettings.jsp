@@ -18,6 +18,11 @@
         });
     </script>
 </layout:override>
+
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>商品管理</span> &gt;&gt; <span>商品设置</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <iframe id="good_form_target" name="goodFormTarget" style="display: none;"></iframe>
@@ -25,7 +30,7 @@
               enctype="multipart/form-data" target="goodFormTarget">
             <input type="hidden" id="goodId" name="goodId" value="${goodId}">
             <div class="panel panel-default">
-                <div class="panel-heading">商品信息</div>
+                <div class="panel-heading">商品设置</div>
                 <div class="panel-body">
                     <div class="col-sm-6">
                         <div class="form-group">

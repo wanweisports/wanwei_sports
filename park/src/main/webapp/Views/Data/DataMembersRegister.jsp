@@ -14,6 +14,10 @@
     <script src="/Content/app/data/data_members_register.js?v=${static_resource_version}"></script>
 </layout:override>
 
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>数据统计</span> &gt;&gt; <span>会员办理统计</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
@@ -24,8 +28,8 @@
                         <select class="form-control" style="width: 160px;">
                             <option value="0">今日数据</option>
                             <option value="1">昨日数据</option>
-                            <option value="2">当前周数据</option>
-                            <option value="3">当前月数据</option>
+                            <option value="2">本周数据</option>
+                            <option value="3">本月数据</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -43,7 +47,7 @@
                     </div>
                     <div class="form-group pull-right">
                         <a href="javascript:;" class="btn btn-primary goods-filter">
-                            <span class="glyphicon glyphicon-export"></span> 导出
+                            <span class="glyphicon glyphicon-export"></span> 导出数据
                         </a>
                     </div>
                 </form>

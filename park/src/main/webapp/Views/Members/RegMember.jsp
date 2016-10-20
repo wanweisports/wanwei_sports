@@ -23,11 +23,16 @@
         });
     </script>
 </layout:override>
+
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>会员管理</span> &gt;&gt; <span>新会员办理</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <form id="member_form" class="form-horizontal" novalidate onsubmit="return false;">
             <div class="panel panel-default">
-                <div class="panel-heading">会员信息</div>
+                <div class="panel-heading">新会员办理</div>
                 <div class="panel-body">
                     <div class="col-sm-6">
                         <div class="form-group">

@@ -13,6 +13,11 @@
         })(jQuery);
     </script>
 </layout:override>
+
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>会员管理</span> &gt;&gt; <span>会员查询</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
@@ -84,13 +89,11 @@
             </div>
         </div>
         <div class="panel panel-default">
-            <div class="panel-heading">会员列表</div>
             <div class="panel-body">
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                         <tr>
-                            <!--<th>#</th>-->
                             <th>姓名</th>
                             <th>手机号码</th>
                             <th>会员卡号</th>

@@ -12,6 +12,8 @@ public class Blocks {
 
     public static final String BLOCK_BODY = "Body";
 
+    public static final String BLOCK_NAV_PATH = "NavPath";
+
     public static final String BLOCK_FOOTER = "Footer";
 
     public static final String BLOCK_WIGHTS = "Wights";

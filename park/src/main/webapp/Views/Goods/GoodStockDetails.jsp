@@ -14,6 +14,10 @@
     <script src="/Content/app/goods/goods_stock_details.js?v=${static_resource_version}"></script>
 </layout:override>
 
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>商品管理</span> &gt;&gt; <span>库存操作明细</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
@@ -40,7 +44,7 @@
                     </div>
                     <div class="form-group pull-right">
                         <a href="javascript:;" class="btn btn-primary goods-filter">
-                            <span class="glyphicon glyphicon-export"></span> 导出
+                            <span class="glyphicon glyphicon-export"></span> 导出数据
                         </a>
                     </div>
                 </form>

@@ -25,12 +25,16 @@
     </script>
 </layout:override>
 
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>会员管理</span> &gt;&gt; <span>会员查询</span> &gt;&gt; <span>会员详情</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left;">
         <form id="member_form" class="form-horizontal" novalidate onsubmit="return false;">
             <input type="hidden" name="memberId" value="${memberId}" />
             <div class="panel panel-default">
-                <div class="panel-heading">会员信息</div>
+                <div class="panel-heading">会员详情</div>
                 <div class="panel-body">
                     <div class="col-sm-6">
                         <div class="form-group">

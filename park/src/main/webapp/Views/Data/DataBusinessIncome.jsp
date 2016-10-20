@@ -14,6 +14,10 @@
     <script src="/Content/app/data/data_business_income.js?v=${static_resource_version}"></script>
 </layout:override>
 
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>数据统计</span> &gt;&gt; <span>营业收入统计</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
@@ -24,8 +28,8 @@
                         <select class="form-control" style="width: 160px;">
                             <option value="0">今日数据</option>
                             <option value="1">昨日数据</option>
-                            <option value="2">当前周数据</option>
-                            <option value="3">当前月数据</option>
+                            <option value="2">本周数据</option>
+                            <option value="3">本月数据</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -43,7 +47,7 @@
                     </div>
                     <div class="form-group pull-right">
                         <a href="javascript:;" class="btn btn-primary goods-filter">
-                            <span class="glyphicon glyphicon-export"></span> 导出
+                            <span class="glyphicon glyphicon-export"></span> 导出数据
                         </a>
                     </div>
                 </form>
@@ -158,16 +162,16 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="panel-body">
+                    <div class="col-sm-6">值班经理签字: <span class="text-success">李洪旭</span></div>
+                    <div class="col-sm-6">财务经理签字: <span class="text-success">李洪旭</span></div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row" style="margin-top:10px">
-        <div class="col-sm-6">值班经理签字: <span class="text-success">李洪旭</span></div>
-        <div class="col-sm-6">财务经理签字: <span class="text-success">李洪旭</span></div>
     </div>
 </layout:override>
 
 <c:import url="../Shared/Layout_New.jsp">
     <c:param name="nav" value="data"/>
-    <c:param name="subNav" value="register"/>
+    <c:param name="subNav" value="business"/>
 </c:import>
