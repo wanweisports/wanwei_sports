@@ -14,7 +14,7 @@
     <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
-    <script src="/Content/dist/reservations/reservations_sports.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/reservations/reservations_sports.js?v=${static_resource_version}"></script>
     <script>
         // 配置表单校验
         $(document).ready(function () {
@@ -25,15 +25,14 @@
     </script>
 </layout:override>
 
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>预订管理</span> &gt;&gt; <span>场地类型设置</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
-<div class="ww-wrapper">
-    <div class="wrapper">
-        <ol class="breadcrumb">
-            <li><a href="/">工作平台</a></li>
-            <li class="active">场地类型</li>
-        </ol>
-        <div>
+    <div class="container-fluid" style="text-align: left;">
             <div class="panel panel-default">
+                <div class="panel-heading">场地类型设置</div>
                 <div class="panel-body">
                     <button data-toggle="modal" class="btn btn-primary sports-add">
                         <span class="glyphicon glyphicon-plus"></span> 增加场地类型
@@ -86,7 +85,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>
 
 <div class="modal fade" id="settingModal" tabindex="-1" role="dialog" aria-labelledby="settingModalLabel">
@@ -170,7 +168,7 @@
 </div>
 </layout:override>
 
-<c:import url="../Shared/Layout.jsp">
+<c:import url="../Shared/Layout_New.jsp">
     <c:param name="nav" value="site"/>
     <c:param name="subNav" value="sports"/>
 </c:import>

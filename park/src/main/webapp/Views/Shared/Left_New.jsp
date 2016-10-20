@@ -107,29 +107,29 @@
                                 <span><a href="/site/getSiteReservationInfo">场地预订</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item site">
+                        <tr class="list-nav-item site ${param.subNav == "batch" ? "active" : ""}">
                             <td>
-                                <span><a href="#">批量预订</a></span>
+                                <span><a href="/site/getSiteReservationBatch">批量预订</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item site">
+                        <!--<tr class="list-nav-item site">
                             <td>
                                 <span><a href="#">订单列表</a></span>
                             </td>
-                        </tr>
-                        <tr class="list-nav-item site">
+                        </tr>-->
+                        <tr class="list-nav-item site ${param.subNav == "pda" ? "active" : ""}">
                             <td>
-                                <span><a href="#">关注度分析</a></span>
+                                <span><a href="/site/getReservationsSequencePDA">场地热点分析</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item site">
+                        <tr class="list-nav-item site ${param.subNav == "site" ? "active" : ""}">
                             <td>
-                                <span><a href="#">场地设置</a></span>
+                                <span><a href="/site/getSiteInfos">场地设置</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item site">
+                        <tr class="list-nav-item site ${param.subNav == "sports" ? "active" : ""}">
                             <td>
-                                <span><a href="#">场地类型设置</a></span>
+                                <span><a href="/site/getSiteSports">场地类型设置</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item site last-nav-item">
