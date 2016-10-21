@@ -72,12 +72,12 @@
                             <td>
                                 <span><a href="/member/getOperations">会员卡操作</a></span>
                             </td>
-                        </tr>
-                        <tr class="list-nav-item member">
-                            <td>
-                                <span><a href="#">未收款列表</a></span>
-                            </td>
                         </tr>-->
+                        <tr class="list-nav-item member ${param.subNav == "loan" ? "active" : ""}">
+                            <td>
+                                <span><a href="/member/getMembersLoans">应收款管理</a></span>
+                            </td>
+                        </tr>
                         <tr class="list-nav-item member ${param.subNav == "invoice" ? "active" : ""}">
                             <td>
                                 <span><a href="/member/getInvoices">发票登记查询</a></span>
