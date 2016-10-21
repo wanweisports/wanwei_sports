@@ -2,7 +2,6 @@ package com.park.service.impl;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,18 +13,18 @@ import com.park.common.bean.PageBean;
 import com.park.common.bean.SiteInputView;
 import com.park.common.bean.SiteOperationInfo;
 import com.park.common.bean.SiteOperationInputView;
-import com.park.common.bean.out.ReserveInfo;
 import com.park.common.bean.out.Site;
 import com.park.common.bean.out.SiteReserveOutputView;
 import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.MemberCard;
 import com.park.common.po.MemberCardType;
-import com.park.common.po.OrderDetail;
 import com.park.common.po.OrderInfo;
 import com.park.common.po.ParkBusiness;
 import com.park.common.po.SiteInfo;
-import com.park.common.po.SiteReserve;
+import com.park.common.po.SiteReserveBasic;
+import com.park.common.po.SiteReserveDate;
+import com.park.common.po.SiteReserveTime;
 import com.park.common.po.SiteSport;
 import com.park.common.po.UserMember;
 import com.park.common.util.DateUtil;
@@ -182,7 +181,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		SiteReserveOutputView siteReserveOutputView = new SiteReserveOutputView();
 		List<Site> siteInfos = new ArrayList<Site>();
 		
-		for(Map<String, Object> map : list){
+		/*for(Map<String, Object> map : list){
 			Site site = new Site();
 			site.setSiteId(StrUtil.objToStr(map.get("siteId")));
 			site.setSiteName(StrUtil.objToStr(map.get("siteName")));
@@ -198,9 +197,9 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 				
 				SiteReserve siteReserve = getSiteReserve(siteDate, startTime, endTime, StrUtil.objToInt(site.getSiteId()));
 				if(siteReserve != null){
-					/*if(siteReserve.getOperatorId() != null){
+					if(siteReserve.getOperatorId() != null){
 						reserveInfo = operatorService.getOperatorNameInfo(siteReserve.getOperatorId());
-					}*/
+					}
 					reserveInfo.setOperatorName(siteReserve.getName());
 					reserveInfo.setOperatorMobile(siteReserve.getMobile());
 					reserveInfo.setOpType(siteReserve.getOpType());
@@ -219,7 +218,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 			}
 			site.setReserveInfos(reserveInfos);
 			siteInfos.add(site);
-		}
+		}*/
 		siteReserveOutputView.setSiteInfos(siteInfos);
 		return siteReserveOutputView;
 	}
@@ -239,57 +238,54 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		return baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(siteInputView));
 	}
 	
-	private SiteReserve getSiteReserve(String siteDate, String startTime, String endTime, int siteId){
+	/*private SiteReserve getSiteReserve(String siteDate, String startTime, String endTime, int siteId){
 		return baseDao.queryByHqlFirst("FROM SiteReserve WHERE siteDate=? AND siteStartTime=? AND siteEndTime=? AND siteId = ?", siteDate, startTime, endTime, siteId);
-	}
+	}*/
 	
+	//先生成订单，在修改订单
 	@Override
 	public Integer saveReservationSite(SiteInputView siteInputView) throws ParseException{
-		SiteOperationInputView siteOperation = JsonUtils.fromJsonDF(siteInputView.getSiteOperationJson(), SiteOperationInputView.class);
-		List<SiteOperationInfo> siteOperationInfos = siteOperation.getSiteOperationInfo();
-		Integer memberId = siteOperation.getMemberId();
-		String name = siteOperation.getName();
-		String mobile = siteOperation.getMobile();
-		String opType = siteOperation.getOpType(); //1.会员 2.散客
-		String reserveType = siteOperation.getReserveType(); //1.PC  2.手机网页  3.打电话
-		
-		/*String[] siteIds = siteInputView.getSiteIds().split(",");
-		String[] times = siteInputView.getTimes().split(",");
-		String opType = siteInputView.getOpType();
-		String siteDate = siteInputView.getSiteDate();
-		String payType = siteInputView.getPayType();*/ //先生成订单，在修改订单
-		
-		Integer salesId = siteInputView.getSalesId();
-		
+		SiteReserveBasic siteReserveBasic = JsonUtils.fromJsonDF(siteInputView.getSiteOperationJson(), SiteReserveBasic.class);
+		List<SiteReserveDate> siteReserveDateList = siteReserveBasic.getSiteReserveDateList();
 		
 		String nowDate = DateUtil.getNowDate();
+		siteReserveBasic.setCreateTime(nowDate);
+		siteReserveBasic.setSalesId(siteInputView.getSalesId());
 		
 		UserMember member = null;
 		OrderInfo orderInfo = new OrderInfo();
-		if(IDBConstant.LOGIC_STATUS_YES.equals(opType)){
-			member = memberService.getUserMember(siteOperation.getMemberId());
+		if(IDBConstant.LOGIC_STATUS_YES.equals(siteReserveBasic.getOpType())){
+			member = memberService.getUserMember(siteReserveBasic.getMemberId());
 			orderInfo.setMemberId(member.getMemberId());
 		}else{
 			orderInfo.setMemberId(0); //散客
 		}
 		
 		orderInfo.setOrderServiceType(IDBConstant.ORDER_SERVICE_TYPE_SITE);
-		/*if(IDBConstant.BALANCE_STYLE_XJ.equals(payType)){
-			orderInfo.setPayStatus(IDBConstant.LOGIC_STATUS_YES); //已支付【现金直接已支付】
-		}else{*/
-			orderInfo.setPayStatus(IDBConstant.LOGIC_STATUS_NO); //未支付
-		//}
-		//orderInfo.setPayType(payType);
-		orderInfo.setSalesId(salesId);
+		orderInfo.setPayStatus(IDBConstant.LOGIC_STATUS_NO); //未支付
+		orderInfo.setSalesId(siteReserveBasic.getSalesId());
 		
-		List<SiteReserve> siteReserves = new ArrayList<SiteReserve>();
-		List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
+		Integer orderId = orderService.saveOrderInfo(orderInfo, null);
 		
-		//for(int i = 0; i < siteIds.length; i++){
-		for(SiteOperationInfo siteOpInfo : siteOperationInfos){
-			OrderDetail orderDetail = new OrderDetail();
+		siteReserveBasic.setOrderId(orderId);
+		siteReserveBasic.setSiteReserveStatus(orderInfo.getPayStatus());
+		baseDao.save(siteReserveBasic, null);
+		
+		for(SiteReserveDate siteReserveDate : siteReserveDateList){
 			
-			Integer siteId = siteOpInfo.getSiteId();
+			siteReserveDate.setReserveInfoId(siteReserveBasic.getReserveInfoId());
+			baseDao.save(siteReserveDate, null);
+			List<SiteReserveTime> siteReserveTimeList = siteReserveDate.getSiteReserveTimeList();
+			for(SiteReserveTime siteReserveTime : siteReserveTimeList){
+				
+				//判断时间是否重复
+				baseDao.queryBySql("SELECT 1 FROM site_reserve_date srd, site_reserve_time srt WHERE srd.reserveId = srt.reserveId AND ")
+				
+				siteReserveTime.setReserveId(siteReserveDate.getReserveId());
+				baseDao.save(siteReserveTime, null);
+			}
+			
+			/*Integer siteId = siteOpInfo.getSiteId();
 			
 			String startTime = siteOpInfo.getStartTime();
 			String endTime = siteOpInfo.getEndTime();
@@ -308,12 +304,13 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 			String siteName = StrUtil.objToStr(siteSport.get("siteName"));
 			
 			SiteReserve reserveIntersection = getReserveIntersection(startTime, endTime, siteDate);
-			if(reserveIntersection != null) throw new MessageException("["+siteName+"]"+reserveIntersection.getSiteStartTime()+"-"+reserveIntersection.getSiteEndTime()+"时间段已有顾客预定");
+			//！if(reserveIntersection != null) throw new MessageException("["+siteName+"]"+reserveIntersection.getSiteStartTime()+"-"+reserveIntersection.getSiteEndTime()+"时间段已有顾客预定");
 			
 			SiteReserve siteReserve = new SiteReserve();
 			siteReserve.setSiteReserveStatus(orderInfo.getPayStatus());
 			siteReserve.setMemberId(orderInfo.getMemberId());
-			siteReserve.setSiteDate(siteDate);
+			siteReserve.setReserveStartDate(siteDate);
+			siteReserve.setReserveEndDate(reserveEndDate)
 			siteReserve.setSiteId(siteId);
 			siteReserve.setSalesId(salesId);
 			siteReserve.setSiteStartTime(startTime);
@@ -330,27 +327,9 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 			}
 			siteReserve.setOpType(opType);
 			siteReserves.add(siteReserve);
-			
-			orderDetail.setItemName(siteSport.get("sportName")+siteName); //羽毛球场地1
-			orderDetail.setItemPrice(StrUtil.objToDouble(siteSport.get("sportMoney"))); //这里只是原始价格，需要确认订单，需要计算打折价覆盖到这个字段
-			orderDetail.setItemMoneyType(IDBConstant.LOGIC_STATUS_NO); //计时收费
-			orderDetail.setItemStartTime(siteReserve.getSiteStartTime());
-			orderDetail.setItemEndTime(siteReserve.getSiteEndTime());
-			orderDetail.setItemId(siteId);
-			//orderDetail.setItemDiscount(100); //折扣【是否提到订单表】
-			orderDetails.add(orderDetail);
+			*/
 		}
-		
-		Integer orderId = orderService.saveOrderInfo(orderInfo, orderDetails);
-		
-		for(SiteReserve siteReserve : siteReserves){
-			siteReserve.setOrderId(orderId);
-			baseDao.save(siteReserve, null);
-		}
-		for(OrderDetail od : orderDetails){
-			od.setOrderId(orderId);
-			baseDao.save(od, od.getOrderDetailId());
-		}
+
 		return orderId;
 	}
 	
@@ -401,17 +380,17 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	@Override
 	public Integer updateConfirmOrder(OrderInfo orderInfo){
 		//找到打折价，进行计算覆盖订单应付总价和打折价字段
-		List<SiteReserve> siteReserves = getReservesByOrderId(orderInfo.getOrderId());
+		/*List<SiteReserve> siteReserves = getReservesByOrderId(orderInfo.getOrderId());
 		//查询根据会员id查询会员
 		List<SiteOperationInfo> siteOperationInfos = new ArrayList<SiteOperationInfo>();
 		for(SiteReserve siteReserve : siteReserves){
 			SiteOperationInfo siteOperationInfo = new SiteOperationInfo();
 			siteOperationInfo.setSiteId(siteReserve.getSalesId());
 			siteOperationInfos.add(siteOperationInfo);
-		}
+		}*/
 		//计算打折价格
-		Map<String, Object> priceMap = getPrice(siteOperationInfos, siteReserves.get(0).getMemberId(), IDBConstant.LOGIC_STATUS_YES);
-		orderInfo.setOrderSumPrice(StrUtil.objToDouble(priceMap.get("presentPrice")));
+		//Map<String, Object> priceMap = getPrice(siteOperationInfos, siteReserves.get(0).getMemberId(), IDBConstant.LOGIC_STATUS_YES);
+		//orderInfo.setOrderSumPrice(StrUtil.objToDouble(priceMap.get("presentPrice")));
 		
 		Integer orderId = orderService.updateConfirmOrder(orderInfo);
 		 //同步更新到序列图表的状态
@@ -419,17 +398,17 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		return orderId;
 	}
 	
-	@Override
+	/*@Override
 	public List<SiteReserve> getReservesByOrderId(int orderId){
 		return baseDao.queryByHql("FROM SiteReserve WHERE orderId = ?", orderId);
 	}
 	
-	private Map<String, Object> getSiteSportName(int siteId){
-		return baseDao.queryBySqlFirst("SELECT si.siteName, ss.sportName, ss.sportMoney, ss.startTime, ss.endTime FROM site_info si, site_sport ss WHERE si.siteType = ss.sportId AND si.siteId=?", siteId);
-	}
-	
 	private SiteReserve getReserveIntersection(String startTime, String endTime, String date){
 		return baseDao.queryByHqlFirst("FROM SiteReserve WHERE siteDate = ? AND NOT ((TIME(siteEndTime) <= TIME(?)) OR (TIME(siteStartTime) >= TIME(?)))", date, startTime, endTime);
+	}*/
+	
+	private Map<String, Object> getSiteSportName(int siteId){
+		return baseDao.queryBySqlFirst("SELECT si.siteName, ss.sportName, ss.sportMoney, ss.startTime, ss.endTime FROM site_info si, site_sport ss WHERE si.siteType = ss.sportId AND si.siteId=?", siteId);
 	}
 	
 	private String getSiteNo() {

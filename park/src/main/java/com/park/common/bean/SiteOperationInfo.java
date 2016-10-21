@@ -2,10 +2,13 @@ package com.park.common.bean;
 
 public class SiteOperationInfo {
 
+	private String reserveModel;
+	private String reserveStartDate;
+	private String reserveEndDate;
+	private String reserveWeek;
 	private Integer siteId;
 	private String startTime;
 	private String endTime;
-	private String siteDate;
 	
 	public Integer getSiteId() {
 		return siteId;
@@ -24,12 +27,6 @@ public class SiteOperationInfo {
 	}
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
-	}
-	public String getSiteDate() {
-		return siteDate;
-	}
-	public void setSiteDate(String siteDate) {
-		this.siteDate = siteDate;
 	}
 	
 }

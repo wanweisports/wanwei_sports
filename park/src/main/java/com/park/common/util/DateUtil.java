@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -48,14 +49,21 @@ public class DateUtil {
 	}
 	
 	/**
-	 * 奖date类型的日期转换为指定格式
+	 * 将date类型的日期转换为指定格式
 	 */
 	public static String dateToString(Date date, String format) {
 		if(StringUtils.isBlank(format)) format = YYYYMMDD;
 		SimpleDateFormat formatter = new SimpleDateFormat(format);
-		String ddd = null;
-		ddd = formatter.format(date);
-		return ddd;
+		return formatter.format(date);
+	}
+	
+	/**
+	 * 降string类型的日期转换为Date
+	 */
+	public static Date stringToDate(String dateStr, String format) throws ParseException {
+		if(StringUtils.isBlank(format)) format = YYYYMMDD;
+		SimpleDateFormat formatter = new SimpleDateFormat(format);
+		return formatter.parse(dateStr);
 	}
 	
 	/**
@@ -96,7 +104,53 @@ public class DateUtil {
 		return format.format(time);
 	}
 	
+	public static void pkDate(String startDateStr, String endDateStr, String week, String ssd, String snd) throws ParseException{
+		String[] weeks = week.split(",");
+		
+		Date startDate = stringToDate(startDateStr, null);
+		Date endDate = stringToDate(endDateStr, null);
+		Calendar startCal1 = Calendar.getInstance();
+		startCal1.setTime(startDate);
+		
+		Date ssdDate = stringToDate(ssd, null);
+		Date sndDate = stringToDate(snd, null);
+		Calendar startCal2 = Calendar.getInstance();
+		startCal2.setTime(ssdDate);
+		
+		while (startCal1.getTime().before(endDate)) {
+			while (startCal2.getTime().before(sndDate)) {
+				//if(startCal2.getTime().getTime()==startCal1.getTime().getTime() && )
+				startCal2.add(Calendar.DATE, 1);
+			}
+			startCal1.add(Calendar.DATE, 1);
+		}
+	}
+	
+	public static int getWeek(Date date){
+		Calendar c = Calendar.getInstance();
+		int week = c.get(Calendar.DAY_OF_WEEK);
+		if(week == 1) return 7; //周日
+		return week-1; //其他星期-1
+	}
+	
+	/*
+	 * 注意事项：
+		Calendar 的 month 从 0 开始，也就是全年 12 个月由 0 ~ 11 进行表示。
+		而 Calendar.DAY_OF_WEEK 定义和值如下：（需要判断周日，然后其他减1）
+		Calendar.SUNDAY = 1  //周日
+		Calendar.MONDAY = 2
+		Calendar.TUESDAY = 3
+		Calendar.WEDNESDAY = 4
+		Calendar.THURSDAY = 5
+		Calendar.FRIDAY = 6
+		Calendar.SATURDAY = 7 //周六
+	 */
 	public static void main(String[] args) throws ParseException {
+		/*long s = System.currentTimeMillis();
+		for(int i=0;i<100000;i++){
+			System.out.println(i);
+		}
+		System.out.println((System.currentTimeMillis()-s)/1000.0);*/
 		/*String time = "09:00";
 		String end = "12:00";
 		DateFormat format = new SimpleDateFormat("HH:mm"); 
