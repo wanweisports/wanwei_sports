@@ -53,24 +53,24 @@
                                 <span><a href="/member/memberList">会员查询</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item member ${param.subNav == "operation" ? "active" : ""}"">
+                        <tr class="list-nav-item member ${param.subNav == "recharge" ? "active" : ""}">
                             <td>
-                                <span><a href="/member/getOperations">会员操作</a></span>
+                                <span><a href="/member/getMembersCardRecharge">会员卡充值</a></span>
                             </td>
                         </tr>
-                        <!--<tr class="list-nav-item member">
+                        <tr class="list-nav-item member ${param.subNav == "upgrade" ? "active" : ""}">
                             <td>
-                                <span><a href="#">会员充值</a></span>
+                                <span><a href="/member/getMembersCardUpgrade">会员卡升级</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item member">
+                        <tr class="list-nav-item member ${param.subNav == "refresh" ? "active" : ""}">
                             <td>
-                                <span><a href="#">会员升级</a></span>
+                                <span><a href="/member/getMembersCardRefresh">会员卡补办</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item member">
+                        <!--<tr class="list-nav-item member ${param.subNav == "operation" ? "active" : ""}">
                             <td>
-                                <span><a href="#">会员补办</a></span>
+                                <span><a href="/member/getOperations">会员卡操作</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item member">

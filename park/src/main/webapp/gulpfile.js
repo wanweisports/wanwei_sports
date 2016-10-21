@@ -58,7 +58,8 @@ gulp.task('stylus-watch', function() {
 
 gulp.task('js-watch', function () {
     gulp.src('./Content/app/**/*.js')
-        //.pipe(uglifyJs())
+        .pipe(jshint())
+        .pipe(jshint.reporter('default'))
         .pipe(notify({
             title: 'minify js',
             message: '<%= file.relative %> watch successful'
@@ -86,5 +87,5 @@ gulp.task('js-hint', function() {
 
 gulp.task('default', ['build']);
 gulp.task('build', ['clean-files', 'stylus-compile', 'js-compile']);
-gulp.task('watch', ['stylus-watch', 'js-watch', 'js-hint']);
+gulp.task('watch', ['stylus-watch', 'js-watch']);
 gulp.task('clean', ['clean-files']);
