@@ -96,7 +96,7 @@
                                 <input type="text" class="form-control" id="memberName" name="memberName"
                                        placeholder="请输入会员姓名" autocomplete="off"
                                        data-val="true" data-val-required="会员姓名不能为空"
-                                       data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,10}$"
+                                       data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,9}$"
                                        data-val-regex="会员姓名长度只能2~12个字符">
                                 <div data-valmsg-for="memberName" data-valmsg-replace="true"></div>
                             </div>
