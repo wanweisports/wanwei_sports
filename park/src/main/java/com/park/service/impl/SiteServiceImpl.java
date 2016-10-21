@@ -279,7 +279,20 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 			for(SiteReserveTime siteReserveTime : siteReserveTimeList){
 				
 				//判断时间是否重复
-				//baseDao.queryBySql("SELECT 1 FROM site_reserve_date srd, site_reserve_time srt WHERE srd.reserveId = srt.reserveId AND ")
+				/**
+				 * SELECT
+						*
+					FROM
+						site_reserve_date srd,
+						site_reserve_time srt
+					WHERE
+						srd.reserveId = srt.reserveId
+					AND 
+					NOT ((DATE(reserveEndDate) <= DATE(?)) OR (DATE(reserveStartDate) >= DATE(?)))
+					NOT ((TIME(siteEndTime) <= TIME(?)) OR (TIME(siteStartTime) >= TIME(?)))
+					AND reserveWeek regexp '9|3|5|2'
+				 */
+				baseDao.queryBySql("SELECT 1 FROM site_reserve_date srd, site_reserve_time srt WHERE srd.reserveId = srt.reserveId AND ")
 				
 				siteReserveTime.setReserveId(siteReserveDate.getReserveId());
 				baseDao.save(siteReserveTime, null);
