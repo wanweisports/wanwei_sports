@@ -39,7 +39,7 @@ public interface ISiteService {
 	
 	public Integer updateLockSite(SiteInputView siteInputView);
 	
-	public Map<String, Object> calculateSiteMoney(SiteInputView siteInputView);
+	public Map<String, Object> calculateSiteMoney(SiteInputView siteInputView) throws ParseException;
 	
 	public Integer updateConfirmOrder(OrderInfo orderInfo);
 	

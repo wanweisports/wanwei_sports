@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.park.common.bean.PageBean;
 import com.park.common.bean.SiteInputView;
-import com.park.common.bean.SiteOperationInfo;
-import com.park.common.bean.SiteOperationInputView;
 import com.park.common.bean.out.Site;
 import com.park.common.bean.out.SiteReserveOutputView;
 import com.park.common.constant.IDBConstant;
@@ -273,28 +271,16 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		
 		for(SiteReserveDate siteReserveDate : siteReserveDateList){
 			
-			siteReserveDate.setReserveInfoId(siteReserveBasic.getReserveInfoId());
+			siteReserveDate.setSiteReserveId(siteReserveBasic.getSiteReserveId());
 			baseDao.save(siteReserveDate, null);
 			List<SiteReserveTime> siteReserveTimeList = siteReserveDate.getSiteReserveTimeList();
 			for(SiteReserveTime siteReserveTime : siteReserveTimeList){
 				
 				//判断时间是否重复
-				/**
-				 * SELECT
-						*
-					FROM
-						site_reserve_date srd,
-						site_reserve_time srt
-					WHERE
-						srd.reserveId = srt.reserveId
-					AND 
-					NOT ((DATE(reserveEndDate) <= DATE(?)) OR (DATE(reserveStartDate) >= DATE(?)))
-					NOT ((TIME(siteEndTime) <= TIME(?)) OR (TIME(siteStartTime) >= TIME(?)))
-					AND reserveWeek regexp '9|3|5|2'
-				 */
-				baseDao.queryBySql("SELECT 1 FROM site_reserve_date srd, site_reserve_time srt WHERE srd.reserveId = srt.reserveId AND ")
+				Map<String, Object> reserveRepeatMap = this.getReserveIntersection(siteReserveTime.getSiteId(), siteReserveDate.getReserveStartDate(), siteReserveDate.getReserveEndDate(), siteReserveDate.getReserveWeek(), siteReserveTime.getSiteStartTime(), siteReserveTime.getSiteEndTime());
+				if(reserveRepeatMap != null) throw new MessageException("【"+siteReserveDate.getReserveStartDate()+"至"+siteReserveDate.getReserveEndDate()+"日期，"+siteReserveTime.getSiteStartTime()+"-"+siteReserveTime.getSiteEndTime()+"，星期："+siteReserveDate.getReserveWeek()+"】与其他顾客预定时间有冲突，请重新选择");
 				
-				siteReserveTime.setReserveId(siteReserveDate.getReserveId());
+				siteReserveTime.setReserveDateId(siteReserveDate.getReserveDateId());
 				baseDao.save(siteReserveTime, null);
 			}
 			
@@ -355,18 +341,18 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	}
 	
 	@Override
-	public Map<String, Object> calculateSiteMoney(SiteInputView siteInputView){
-		SiteOperationInputView siteOperation = JsonUtils.fromJsonDF(siteInputView.getSiteOperationJson(), SiteOperationInputView.class);
-		List<SiteOperationInfo> siteOperationInfos = siteOperation.getSiteOperationInfo();
-		Integer memberId = siteOperation.getMemberId();
-		String opType = siteOperation.getOpType(); //1.会员 2.散客
+	public Map<String, Object> calculateSiteMoney(SiteInputView siteInputView) throws ParseException{
+		SiteReserveBasic siteReserveBasic = JsonUtils.fromJsonDF(siteInputView.getSiteOperationJson(), SiteReserveBasic.class);
+		List<SiteReserveDate> siteReserveDateList = siteReserveBasic.getSiteReserveDateList();
+		Integer memberId = siteReserveBasic.getMemberId();
+		String opType = siteReserveBasic.getOpType(); //1.会员 2.散客
 		
-		Map<String, Object> resultMap = getPrice(siteOperationInfos, memberId, opType);
+		Map<String, Object> resultMap = getPrice(siteReserveDateList, memberId, opType);
 		
 		return resultMap;
 	}
 
-	private Map<String, Object> getPrice(List<SiteOperationInfo> siteOperationInfos, Integer memberId, String opType) {
+	private Map<String, Object> getPrice(List<SiteReserveDate> siteReserveDateList, Integer memberId, String opType) throws ParseException {
 		double discount = 100;
 		if(IDBConstant.LOGIC_STATUS_YES.equals(opType) && memberId != null){ //会员打折
 			//获取会员的会员卡，（如果后期有多张会员卡，则需要在前端用户选择哪张卡，把会员卡id传到后台查询折扣）
@@ -377,16 +363,23 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 			}
 		}
 		
-		Double originalPrice = 0.0; //原价
-		for(SiteOperationInfo siteOpInfo : siteOperationInfos){
-			Map<String, Object> siteSport = getSiteSportName(siteOpInfo.getSiteId());
-			originalPrice += StrUtil.objToDouble(siteSport.get("sportMoney"));
+		Double originalPriceSum = 0.0; //原价
+		for(SiteReserveDate siteReserveDate : siteReserveDateList){
+			int weekNums = DateUtil.getDateScopeWeekNums(siteReserveDate.getReserveStartDate(), siteReserveDate.getReserveEndDate(), siteReserveDate.getReserveWeek());
+			List<SiteReserveTime> siteReserveTimeList = siteReserveDate.getSiteReserveTimeList();
+			Double originalPrice = 0.0;
+			for(SiteReserveTime siteReserveTime : siteReserveTimeList){
+				int hourNums = DateUtil.getTimeHourNums(siteReserveTime.getSiteStartTime(), siteReserveTime.getSiteEndTime());
+				Map<String, Object> siteSport = getSiteSportName(siteReserveTime.getSiteId());
+				originalPrice += StrUtil.objToDouble(siteSport.get("sportMoney"))*hourNums; //最底层每个场地多少钱（小时数*价格）
+			}
+			originalPriceSum += originalPrice * weekNums; //每一段时间多少钱（总场地钱数*星期个数）
 		}
-		Double presentPrice = originalPrice * (discount/100); //打折后的价格
+		Double presentPriceSum = originalPriceSum * (discount/100); //打折后的价格
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap.put("originalPrice", originalPrice);
-		resultMap.put("presentPrice", presentPrice);
+		resultMap.put("originalPrice", originalPriceSum);
+		resultMap.put("presentPrice", presentPriceSum);
 		return resultMap;
 	}
 	
@@ -414,11 +407,16 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	/*@Override
 	public List<SiteReserve> getReservesByOrderId(int orderId){
 		return baseDao.queryByHql("FROM SiteReserve WHERE orderId = ?", orderId);
-	}
-	
-	private SiteReserve getReserveIntersection(String startTime, String endTime, String date){
-		return baseDao.queryByHqlFirst("FROM SiteReserve WHERE siteDate = ? AND NOT ((TIME(siteEndTime) <= TIME(?)) OR (TIME(siteStartTime) >= TIME(?)))", date, startTime, endTime);
 	}*/
+	
+	private Map<String, Object> getReserveIntersection(int siteId, String startDate, String endDate, String weeks, String startTime, String endTime){
+		StringBuilder sql = new StringBuilder("SELECT * FROM site_reserve_date srd, site_reserve_time srt WHERE srd.reserveDateId = srt.reserveDateId");
+		sql.append(" AND siteId = ?");
+		sql.append(" AND NOT ((DATE(reserveEndDate) <= DATE(?)) OR (DATE(reserveStartDate) >= DATE(?)))");
+		sql.append(" AND NOT ((TIME(siteEndTime) <= TIME(?)) OR (TIME(siteStartTime) >= TIME(?)))");
+		sql.append(" AND reserveWeek regexp ?");
+		return baseDao.queryBySqlFirst(sql.toString(), siteId, startDate, endDate, startTime, endTime, weeks.replace(",", "|"));
+	}
 	
 	private Map<String, Object> getSiteSportName(int siteId){
 		return baseDao.queryBySqlFirst("SELECT si.siteName, ss.sportName, ss.sportMoney, ss.startTime, ss.endTime FROM site_info si, site_sport ss WHERE si.siteType = ss.sportId AND si.siteId=?", siteId);
