@@ -31,7 +31,7 @@
                 e.preventDefault();
 
                 _resetSitesForm();
-                $("#settingModal").modal("show");
+                $("#settingModal").modal({backdrop: false, show: true});
             });
 
             // 更改场地类型
@@ -52,7 +52,7 @@
                     });
                     $("#site_form").find("input[name='siteStatus'][value='" + data.siteStatus + "']")
                         .prop("checked", true);
-                    $("#settingModal").modal("show");
+                    $("#settingModal").modal({backdrop: false, show: true});
                 });
             });
 

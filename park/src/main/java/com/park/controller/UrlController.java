@@ -48,6 +48,30 @@ public class UrlController extends BaseController {
 		return "Members/MembersInfoCar";
 	}
 
+    // 登录
+	@RequestMapping("/passport/login")
+	public String passportLogin() {
+		return "Passport/PassportLogin";
+	}
+
+    // 完善信息
+    @RequestMapping("/passport/profile")
+    public String passportProfile() {
+        return "Center/CenterProfileComplete";
+    }
+
+    // 修改密码
+    @RequestMapping("/passport/modifyPassword")
+    public String modifyPassword() {
+        return "Center/CenterPasswordModification";
+    }
+
+    // 帮助文档
+    @RequestMapping("/error/questions")
+    public String errorQuestions() {
+        return "Error/Questions";
+    }
+
 }
 
 

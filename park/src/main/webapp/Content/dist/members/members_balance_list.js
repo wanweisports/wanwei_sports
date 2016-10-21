@@ -7,11 +7,18 @@
             this.initEvents();
 
             // 表单时间控件设置
-            $(".form_datetime").datepicker({
-                format: "yyyy-mm-dd",
-                todayBtn: true,
-                language: "zh-CN",
-                orientation: "bottom auto"
+            $('#createTimeStart').datetimepicker({
+                timepicker: false,
+                lang: "zh",
+                format:'Y-m-d',
+                defaultDate: new Date()
+            });
+
+            $('#createTimeEnd').datetimepicker({
+                timepicker: false,
+                lang: "zh",
+                format:'Y-m-d',
+                defaultDate: new Date()
             });
         },
         initEvents: function () {

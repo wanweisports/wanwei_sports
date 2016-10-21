@@ -1,7 +1,7 @@
 (function ($) {
     // 表单校验配置
     $(document).ready(function () {
-        $('#member_form').validate({
+        $('#login_form').validate({
             ignore: ":hidden"
         });
     });
@@ -24,7 +24,7 @@
             if (res.code == 1) {
                 location.assign($('[name="return_url"]').val());
             } else {
-                alert("用户登录失败, 请稍后重试");
+                alert(res.message || "用户登录失败, 请稍后重试");
             }
         });
     });

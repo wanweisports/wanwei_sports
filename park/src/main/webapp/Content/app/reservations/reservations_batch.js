@@ -12,6 +12,33 @@
             }
         },
         init: function () {
+            // 表单时间控件设置
+            $('#block_start_date').datetimepicker({
+                timepicker: false,
+                lang: "zh",
+                format:'Y-m-d',
+                defaultDate: new Date()
+            });
+
+            $(".start-date-select").on("click", function (e) {
+                e.preventDefault();
+
+                $('#block_start_date').datetimepicker("show");
+            });
+
+            $('#block_end_date').datetimepicker({
+                timepicker: false,
+                lang: "zh",
+                format:'Y-m-d',
+                defaultDate: new Date()
+            });
+
+            $(".end-date-select").on("click", function (e) {
+                e.preventDefault();
+
+                $('#block_end_date').datetimepicker("show");
+            });
+
             //this.initEvents();
         },
         initEvents: function () {

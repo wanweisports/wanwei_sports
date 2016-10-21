@@ -6,15 +6,14 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
-    <link href="/Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="/Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/bootstrap/bootstrap-datepicker/bootstrap-datepicker.zh-CN.min.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
-    <script src="/Content/dist/members/members_info_enter.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/members/members_info_enter.js?v=${static_resource_version}"></script>
     <script>
         $(document).ready(function () {
             // 配置表单校验
@@ -24,16 +23,16 @@
         });
     </script>
 </layout:override>
+
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>会员管理</span> &gt;&gt; <span>新会员办理</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
-<div class="ww-wrapper">
-    <div class="wrapper">
-        <ol class="breadcrumb">
-            <li><a href="/">工作平台</a></li>
-            <li class="active">新会员注册</li>
-        </ol>
-        <form id="member_form" class="form-horizontal" action="" method="post" novalidate>
+    <div class="container-fluid" style="text-align: left">
+        <form id="member_form" class="form-horizontal" novalidate onsubmit="return false;">
             <div class="panel panel-default">
-                <div class="panel-heading">会员信息</div>
+                <div class="panel-heading">新会员办理</div>
                 <div class="panel-body">
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -97,7 +96,7 @@
                                 <input type="text" class="form-control" id="memberName" name="memberName"
                                        placeholder="请输入会员姓名" autocomplete="off"
                                        data-val="true" data-val-required="会员姓名不能为空"
-                                       data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,10}$"
+                                       data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,9}$"
                                        data-val-regex="会员姓名长度只能2~12个字符">
                                 <div data-valmsg-for="memberName" data-valmsg-replace="true"></div>
                             </div>
@@ -119,10 +118,10 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <div class="input-group date form_datetime">
+                                <div class="input-group">
                                     <input type="text" class="form-control" id="memberBirthday" name="memberBirthday"
-                                           data-val="true" data-val-required="会员生日不能为空" readonly>
-                                    <span class="input-group-addon">
+                                           data-val="true" data-val-required="会员生日不能为空" placeholder="会员生日">
+                                    <span class="input-group-addon member-birthday-select">
                                         <i class="glyphicon glyphicon-calendar"></i>
                                     </span>
                                 </div>
@@ -175,10 +174,9 @@
             </div>
         </form>
     </div>
-</div>
 </layout:override>
 
-<c:import url="../Shared/Layout.jsp">
+<c:import url="../Shared/Layout_New.jsp">
     <c:param name="nav" value="member"/>
     <c:param name="subNav" value="register"/>
 </c:import>

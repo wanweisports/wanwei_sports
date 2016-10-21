@@ -291,7 +291,7 @@ public class MemberController extends BaseController {
 		}
 	}
 
-    @RequestMapping(value = "getOperations")
+    /*@RequestMapping(value = "getOperations")
     public String getOperations(String cardNo, Model model) {
     	try {
     		if(StrUtil.isNotBlank(cardNo)){
@@ -302,6 +302,43 @@ public class MemberController extends BaseController {
 			e.printStackTrace();
 		}
         return "Members/MembersOperations";
+    }*/
+
+	@RequestMapping(value = "getMembersCardRecharge")
+	public String getMembersCardRecharge(String cardNo, Model model) {
+		try {
+			if(StrUtil.isNotBlank(cardNo)){
+				model.addAllAttributes(memberService.getOperations(cardNo));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "Members/MembersCardRecharge";
+	}
+
+    @RequestMapping(value = "getMembersCardRefresh")
+    public String getMembersCardRefresh(String cardNo, Model model) {
+        try {
+            if(StrUtil.isNotBlank(cardNo)){
+                model.addAllAttributes(memberService.getOperations(cardNo));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Members/MembersCardRefresh";
+    }
+
+    @RequestMapping(value = "getMembersCardUpgrade")
+    public String getMembersCardUpgrade(String cardNo, Model model) {
+        try {
+            if(StrUtil.isNotBlank(cardNo)){
+                model.addAllAttributes(memberService.getOperations(cardNo));
+            }
+            model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(new MemberInputView()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Members/MembersCardUpgrade";
     }
     
     @ResponseBody
@@ -336,7 +373,12 @@ public class MemberController extends BaseController {
   			return new ResponseBean(false);
   		}
   	}
-    
+
+    // 应收款管理
+    @RequestMapping(value = "getMembersLoans")
+    public String getMembersLoans(Model model) {
+        return "Members/MembersLoans";
+    }
 }
 
 

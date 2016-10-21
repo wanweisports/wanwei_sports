@@ -17,95 +17,61 @@
     <script src="/Content/lib/moment/moment.min.js?v=${static_resource_version}"></script>
     <script src="/Content/app/reservations/reservations_sequence.js?v=${static_resource_version}"></script>
 </layout:override>
+
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>预订管理</span> &gt;&gt; <span>场地预订</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
-    <div style="display: none">
-        <input type="hidden" value="${curDate}" id="current_date">
-        <input type="hidden" value="${curSportId}" id="current_sport">
-    </div>
-    <div class="ww-wrapper">
-        <div class="wrapper">
-            <ol class="breadcrumb">
-                <li><a href="/">工作平台</a></li>
-                <li class="active">现场预订</li>
-            </ol>
-            <div class="panel panel-default sequence-filter">
-                <div class="panel-body">
-                    <div class="col-sm-12">
-                        <div class="btn-group btn-group-justified">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-warning">羽毛球</button>
-                            </div>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-primary">篮球</button>
-                            </div>
-                        </div>
+    <div class="container-fluid" style="text-align: left;">
+        <div class="panel panel-default sequence-filter">
+            <div class="panel-heading">场地预订</div>
+            <div class="panel-body">
+                <input type="hidden" value="${curDate}" id="current_date">
+                <input type="hidden" value="${curSportId}" id="current_sport">
+                <div class="sports-list">
+                    <button type="button" class="btn btn-default sports-item" data-value="1">
+                        <img class="sports-icon sports-active" src="/Content/images/sports/shuttercock-active.png?v=${static_resource_version}">
+                        <img class="sports-icon sports-inactive" src="/Content/images/sports/shuttercock.png?v=${static_resource_version}">
+                        羽毛球
+                    </button>
+                    <button type="button" class="btn btn-primary sports-item">
+                        <img class="sports-icon sports-active" src="/Content/images/sports/swimming-active.png?v=${static_resource_version}">
+                        <img class="sports-icon sports-inactive" src="/Content/images/sports/swimming.png?v=${static_resource_version}">
+                        游泳
+                    </button>
+                </div>
+                <nav class="navbar navbar-default date-list">
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav sequence-date">
+                            <li class="other-date-select">
+                                <a href="javascript:;" class="other-date">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                    <span class="icon-text">选择日期</span>
+                                </a>
+                                <div class="other-date-calendar"
+                                     style="position: absolute; display: none; z-index: 1;">
+                                    <input type="text" class="form-control" id="other_date" name="otherDate"
+                                           autocomplete="off">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="form-inline sequence-btns">
+                    <div class="form-group pull-right">
+                        <button type="button" class="btn btn-default sequence-lock">
+                            <span class="glyphicon glyphicon-lock"></span> 锁 场
+                        </button>
+                        <button type="button" class="btn btn-primary sequence-order">
+                            <span class="glyphicon glyphicon-ok"></span> 预 订
+                        </button>
                     </div>
                 </div>
-                <div class="panel-body">
-                    <nav class="navbar navbar-default">
-                        <div class="container-fluid">
-                            <div class="collapse navbar-collapse">
-                                <ul class="nav navbar-nav sequence-date">
-                                    <li class="other-date-select">
-                                        <a href="javascript:;" class="other-date">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                            <span class="icon-text">选择日期</span>
-                                        </a>
-                                        <div class="other-date-calendar"
-                                             style="position: absolute; display: none; z-index: 1;">
-                                            <input type="text" class="form-control" id="other_date" name="otherDate"
-                                                   autocomplete="off">
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </nav>
-                    <form class="form-inline">
-                        <div class="form-group" style="display: none;">
-                            <label>场地状态</label>
-
-                            <label class="checkbox-inline">
-                                <input type="checkbox" name="venue_state" value="1" checked>
-                                未付款
-                            </label>
-                            <label class="checkbox-inline">
-                                <input type="checkbox" name="venue_state" value="2" checked>
-                                已付款
-                            </label>
-                            <label class="checkbox-inline">
-                                <input type="checkbox" name="venue_state" value="3" checked>
-                                已锁定
-                            </label>
-                            <label class="checkbox-inline">
-                                <input type="checkbox" name="venue_state" value="4" checked>
-                                不可预订
-                            </label>
-                        </div>
-                        <div class="form-group" style="display: none;">
-                            <label>用户类型</label>
-
-                            <label class="checkbox-inline">
-                                <input type="checkbox" name="user_state" value="1" checked>
-                                会员
-                            </label>
-                            <label class="checkbox-inline">
-                                <input type="checkbox" name="user_state" value="2" checked>
-                                散客
-                            </label>
-                        </div>
-                        <div class="form-group pull-right">
-                            <button type="button" class="btn btn-default sequence-lock">
-                                <span class="glyphicon glyphicon-lock"></span> 锁场
-                            </button>
-                            <button type="button" class="btn btn-primary sequence-order">
-                                <span class="glyphicon glyphicon-ok"></span> 预订
-                            </button>
-                        </div>
-                    </form>
-                </div>
             </div>
-            <div class="sequence-show">
+        </div>
+        <div class="panel panel-default sequence-show">
+            <div class="panel-body">
                 <table class="table table-bordered venue-large" id="timing_table">
                     <tr class="timing-header">
                         <td></td>
@@ -124,25 +90,25 @@
                     </c:forEach>
                 </table>
             </div>
-            <div class="panel panel-default sequence-tips">
-                <div class="panel-body">
-                    <span class="unpaid">未付款</span>
-                    <span class="ordered">已付款</span>
-                    <span class="locked">已锁定</span>
-                    <span class="disabled">不可预订</span>
-                </div>
+        </div>
+        <div class="panel panel-default sequence-tips">
+            <div class="panel-body">
+                <span class="unpaid">未付款</span>
+                <span class="ordered">已付款</span>
+                <span class="locked">已锁定</span>
+                <span class="disabled">不可预订</span>
             </div>
         </div>
     </div>
 
     <div class="modal fade" id="zhifuModal" tabindex="-1" role="dialog" aria-labelledby="zhifuModalLabel">
-        <div class="modal-dialog" style="width: 800px;">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="zhifuModalLabel">预订支付</h4>
+                    <h5 class="modal-title" id="zhifuModalLabel">预订支付</h5>
                 </div>
                 <div class="modal-body">
                     <div class="reservations-steps">
@@ -213,7 +179,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label for="reservations_ex_money" class="col-sm-4 control-label">附加费用(元)</label>
+                                                <label for="reservations_ex_money" class="col-sm-4 control-label">附加费用</label>
 
                                                 <div class="col-sm-8">
                                                     <input type="text" class="form-control" id="reservations_ex_money" name="addcharges"
@@ -235,7 +201,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label for="reservations_se_money" class="col-sm-4 control-label">优惠金额(元)</label>
+                                                <label for="reservations_se_money" class="col-sm-4 control-label">优惠金额</label>
 
                                                 <div class="col-sm-8">
                                                     <input type="text" class="form-control" id="reservations_se_money" name="preamount"
@@ -263,7 +229,7 @@
                                         </div>
                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                <label for="reservations_real_money" class="col-sm-2 control-label">实收金额(元)</label>
+                                                <label for="reservations_real_money" class="col-sm-2 control-label">实收金额</label>
 
                                                 <div class="col-sm-8">
                                                     <input type="text" class="form-control" id="reservations_real_money" name="paidamount"
@@ -271,7 +237,7 @@
                                                 </div>
                                                 <div class="col-sm-2">
                                                     <button class="btn btn-primary reservations-pay-confirm">
-                                                        <span class="glyphicon glyphicon-ok"></span> 确定
+                                                        <span class="glyphicon glyphicon-ok"></span> 确 定
                                                     </button>
                                                 </div>
                                             </div>
@@ -292,17 +258,25 @@
     <div class="modal fade tips-modal" tabindex="-1" role="dialog" aria-labelledby="tipsModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
-                <div class="alert alert-info text-message" role="alert">您确定要锁定这些场地?</div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary">确定</button>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="tipsModalLabel">提示框</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info text-message" role="alert">您确定要锁定这些场地?</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
+                    <button type="button" class="btn btn-primary">确 定</button>
+                </div>
             </div>
         </div>
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout.jsp">
+<c:import url="../Shared/Layout_New.jsp">
     <c:param name="nav" value="site"/>
     <c:param name="subNav" value="sequence"/>
 </c:import>

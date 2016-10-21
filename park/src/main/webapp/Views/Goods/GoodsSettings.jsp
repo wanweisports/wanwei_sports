@@ -8,7 +8,7 @@
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
-    <script src="/Content/dist/goods/goods_settings.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/goods/goods_settings.js?v=${static_resource_version}"></script>
     <script>
         // 配置表单校验
         $(document).ready(function () {
@@ -18,22 +18,19 @@
         });
     </script>
 </layout:override>
+
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>商品管理</span> &gt;&gt; <span>商品设置</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
-<div class="ww-wrapper">
-    <div class="wrapper">
-        <ol class="breadcrumb">
-            <li><a href="/">工作平台</a></li>
-            <c:if test="${goodId > 0}">
-                <li><a href="/good/getGoods">进销存管理</a></li>
-            </c:if>
-            <li class="active">商品设置</li>
-        </ol>
+    <div class="container-fluid" style="text-align: left">
         <iframe id="good_form_target" name="goodFormTarget" style="display: none;"></iframe>
         <form id="good_form" class="form-horizontal" action="/good/saveGood" method="post" novalidate
               enctype="multipart/form-data" target="goodFormTarget">
             <input type="hidden" id="goodId" name="goodId" value="${goodId}">
             <div class="panel panel-default">
-                <div class="panel-heading">商品信息</div>
+                <div class="panel-heading">商品设置</div>
                 <div class="panel-body">
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -143,18 +140,17 @@
             </div>
         </form>
     </div>
-</div>
 </layout:override>
 
 <c:if test="${goodId > 0}">
-<c:import url="../Shared/Layout.jsp">
-    <c:param name="nav" value="good"/>
-    <c:param name="subNav" value="stock"/>
-</c:import>
+    <c:import url="../Shared/Layout_New.jsp">
+        <c:param name="nav" value="good"/>
+        <c:param name="subNav" value="stock"/>
+    </c:import>
 </c:if>
 
 <c:if test="${!goodId}">
-    <c:import url="../Shared/Layout.jsp">
+    <c:import url="../Shared/Layout_New.jsp">
         <c:param name="nav" value="good"/>
         <c:param name="subNav" value="setting"/>
     </c:import>

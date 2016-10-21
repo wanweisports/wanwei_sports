@@ -4,15 +4,21 @@
             ToURL: "/member/membersInfoCar"
         },
         init: function () {
-            this.initEvents();
-
             // 表单时间控件设置
-            $(".form_datetime").datepicker({
-                format: "yyyy-mm-dd",
-                todayBtn: true,
-                language: "zh-CN",
-                orientation: "bottom auto"
+            $('#memberBirthday').datetimepicker({
+                timepicker: false,
+                lang: "zh",
+                format:'Y-m-d',
+                defaultDate: new Date()
             });
+
+            $(".member-birthday-select").on("click", function (e) {
+                e.preventDefault();
+
+                $('#memberBirthday').datetimepicker("show");
+            });
+
+            this.initEvents();
         },
         initEvents: function () {
             var content = this;

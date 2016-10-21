@@ -4,11 +4,17 @@
             this.initEvents();
 
             // 表单时间控件设置
-            $(".form_datetime").datepicker({
-                format: "yyyy-mm-dd",
-                todayBtn: true,
-                language: "zh-CN",
-                orientation: "bottom auto"
+            $('#member_birthday').datetimepicker({
+                timepicker: false,
+                lang: "zh",
+                format:'Y-m-d',
+                defaultDate: new Date()
+            });
+
+            $(".member-birthday-select").on("click", function (e) {
+                e.preventDefault();
+
+                $('#member_birthday').datetimepicker("show");
             });
 
             // 生成新卡号
@@ -38,7 +44,7 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $("#gengxinModal").modal("show");
+                        $("#gengxinModal").modal({backdrop: false, show: true});
                     } else {
                         alert(res.message || "会员信息更新失败, 请稍后重试");
                     }

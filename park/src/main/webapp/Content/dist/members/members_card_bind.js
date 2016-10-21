@@ -25,7 +25,7 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $("#tips_modal").modal("show");
+                        $("#tips_modal").modal({backdrop: false, show: true});
                     } else {
                         alert(res.message || "会员信息更新失败, 请稍后重试");
                     }
@@ -66,7 +66,7 @@
                 $.post('/member/saveMemberCar', conditions, function (res) {
                     $form.attr("submitting", "");
                     if (res.code == 1) {
-                        $("#confirm_modal").modal("show");
+                        $("#confirm_modal").modal({backdrop: false, show: true});
                         $.each(res.data, function(key, item){
                             $("#member_card_ticket_form").find("input[name='" + key + "']").val(item);
                         });
@@ -108,7 +108,7 @@
                         // 打印收款单 [未完成] 连接小票机
 
                         location.assign(content.opts.ToURL);
-                        $("#confirmModal").modal("hide");
+                        $("#confirmModal").modal({backdrop: false, show: false});
                     } else {
                         alert(res.message || "打印流水单失败, 请稍后重试");
                     }

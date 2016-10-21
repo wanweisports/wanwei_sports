@@ -43,4 +43,16 @@ public class SettingsController extends BaseController {
     public String notification() {
         return "Settings/SettingsNotification";
     }
+
+    // 数据库操作
+    @RequestMapping("settings/database")
+    public String systemDatabase() {
+        return "Settings/SettingsSystemDatabase";
+    }
+
+    // 系统操作日志
+    @RequestMapping("settings/systemLogs")
+    public String systemLogs() {
+        return "Settings/SettingsSystemLogs";
+    }
 }

@@ -119,9 +119,9 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $("#tips_modal").modal("show");
+                        $("#tips_modal").modal({show: true, backdrop: false});
                     } else {
-                        alert("设置角色失败, 请稍后重试");
+                        alert(res.message || "设置角色失败, 请稍后重试");
                     }
                 });
             });

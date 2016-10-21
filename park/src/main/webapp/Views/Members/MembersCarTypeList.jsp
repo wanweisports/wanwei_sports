@@ -20,100 +20,97 @@
         })(jQuery);
     </script>
 </layout:override>
+
+<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
+    当前位置: <span>会员管理</span> &gt;&gt; <span>会员设置</span>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
-    <div class="ww-wrapper">
-        <div class="wrapper">
-            <ol class="breadcrumb">
-                <li><a href="/">工作平台</a></li>
-                <li class="active">会员类型设置</li>
-            </ol>
-            <div>
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <form id="card_filter_form" class="form-inline col-sm-8" onsubmit="return false;">
-                            <div class="form-group">
-                                <select class="form-control" style="width: 200px;" name="cardTypeStatus"
-                                        id="cardTypeStatus">
-                                    <option value="">全部状态</option>
-                                    <option value="1">正常</option>
-                                    <option value="2">锁定</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <a href="javascript:;" class="btn btn-primary card-type-filter">
-                                    <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
-                                </a>
-                            </div>
-                        </form>
-                        <div class="col-sm-4 text-right">
-                            <button type="button" class="btn btn-primary card-type-add" data-toggle="modal"
-                                    data-target="#addModal">
-                                <span class="glyphicon glyphicon-plus"></span> 增加会员类型
-                            </button>
-                        </div>
+    <div class="container-fluid" style="text-align: left;">
+        <div class="panel panel-default">
+            <div class="panel-heading">会员设置</div>
+            <div class="panel-body">
+                <form id="card_filter_form" class="form-inline col-sm-8" onsubmit="return false;">
+                    <div class="form-group">
+                        <select class="form-control" style="width: 160px;" name="cardTypeStatus"
+                                id="cardTypeStatus">
+                            <option value="">全部状态</option>
+                            <option value="1">正常</option>
+                            <option value="2">锁定</option>
+                        </select>
                     </div>
+                    <div class="form-group">
+                        <a href="javascript:;" class="btn btn-primary card-type-filter">
+                            <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
+                        </a>
+                    </div>
+                </form>
+                <div class="col-sm-4 text-right">
+                    <button type="button" class="btn btn-primary card-type-add" data-toggle="modal"
+                            data-target="#addModal" data-backdrop="false">
+                        <span class="glyphicon glyphicon-plus"></span> 增加会员类型
+                    </button>
                 </div>
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="table-responsive card-type-list">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>会员类别</th>
-                                    <th>支付类型</th>
-                                    <th>会员周期</th>
-                                    <th>时间限制</th>
-                                    <th>会员折扣</th>
-                                    <th>提前时间</th>
-                                    <th>会费(元)</th>
-                                    <th>信用额度(元)</th>
-                                    <th>状态</th>
-                                    <th>操作人</th>
-                                    <th>操作时间</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <c:forEach var="type" items="${list}">
-                                    <tr>
-                                        <td>
-                                            <a class="type-item" href="#addModal" data-toggle="modal" data-id="${type.cardTypeId}">
-                                                    ${type.cardTypeName}
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <c:if test="${type.cardType == '1'}">预存类型</c:if>
-                                            <c:if test="${type.cardType == '2'}">记账类型</c:if>
-                                        </td>
-                                        <td>${type.cardTypeMonth}个月</td>
-                                        <td>
-                                                <%-- fn函数：切分逗号分隔的开始时间和结束时间为数组【c:set：定义变量】 --%>
-                                            <c:set var="timeStart" value="${fn:split(type.cardTypeTimeStart, ',')}" />
-                                            <c:set var="timeEnd" value="${fn:split(type.cardTypeTimeEnd, ',')}" />
-                                                <%-- 进行遍历输出显示周 --%>
-                                            <c:forEach var="week" items="${fn:split(type.cardTypeWeek, ',')}" varStatus="status">
-                                                周${week}: ${timeStart[status.index]}-${timeEnd[status.index]}<br> <%-- status.index：循环的下标,从0开始 --%>
-                                            </c:forEach>
-                                        </td>
-                                        <td>${type.cardTypeDiscount / 10.0}折</td>
-                                        <td>${type.cardTypeAhead}天</td>
-                                        <td>${type.cardTypeMoney}</td>
-                                        <td>${type.cardTypeCredit}</td>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="table-responsive card-type-list">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>会员类别</th>
+                            <th>支付类型</th>
+                            <th>会员周期</th>
+                            <th>时间限制</th>
+                            <th>会员折扣</th>
+                            <th>提前时间</th>
+                            <th>会费(元)</th>
+                            <th>信用额度(元)</th>
+                            <th>状态</th>
+                            <th>操作人</th>
+                            <th>操作时间</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="type" items="${list}">
+                            <tr>
+                                <td>
+                                    <a class="type-item" href="#addModal" data-toggle="modal"
+                                       data-backdrop="false" data-id="${type.cardTypeId}">${type.cardTypeName}</a>
+                                </td>
+                                <td>
+                                    <c:if test="${type.cardType == '1'}">预存类型</c:if>
+                                    <c:if test="${type.cardType == '2'}">记账类型</c:if>
+                                </td>
+                                <td>${type.cardTypeMonth}个月</td>
+                                <td>
+                                        <%-- fn函数：切分逗号分隔的开始时间和结束时间为数组【c:set：定义变量】 --%>
+                                    <c:set var="timeStart" value="${fn:split(type.cardTypeTimeStart, ',')}" />
+                                    <c:set var="timeEnd" value="${fn:split(type.cardTypeTimeEnd, ',')}" />
+                                        <%-- 进行遍历输出显示周 --%>
+                                    <c:forEach var="week" items="${fn:split(type.cardTypeWeek, ',')}" varStatus="status">
+                                        周${week}: ${timeStart[status.index]}-${timeEnd[status.index]}<br> <%-- status.index：循环的下标,从0开始 --%>
+                                    </c:forEach>
+                                </td>
+                                <td>${type.cardTypeDiscount / 10.0}折</td>
+                                <td>${type.cardTypeAhead}天</td>
+                                <td>${type.cardTypeMoney}</td>
+                                <td>${type.cardTypeCredit}</td>
 
-                                        <c:if test="${type.cardTypeStatus=='1'}">
-                                            <td class="text-success">正常</td>
-                                        </c:if>
-                                        <c:if test="${type.cardTypeStatus=='2'}">
-                                            <td class="text-danger">锁定</td>
-                                        </c:if>
+                                <c:if test="${type.cardTypeStatus=='1'}">
+                                    <td class="text-success">正常</td>
+                                </c:if>
+                                <c:if test="${type.cardTypeStatus=='2'}">
+                                    <td class="text-danger">锁定</td>
+                                </c:if>
 
-                                        <td>${type.operatorName}</td>
-                                        <td>${type.createTime}</td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                                <td>${type.operatorName}</td>
+                                <td>${type.createTime}</td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -126,7 +123,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="addModalLabel">设置会员类别</h4>
+                    <h5 class="modal-title" id="addModalLabel">设置会员类别</h5>
                 </div>
                 <div class="modal-body" style="overflow: hidden;">
                     <form id="card_type_form" class="form-horizontal" onsubmit="return false;">
@@ -450,7 +447,7 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout.jsp">
+<c:import url="../Shared/Layout_New.jsp">
     <c:param name="nav" value="member"/>
     <c:param name="subNav" value="setting"/>
 </c:import>
