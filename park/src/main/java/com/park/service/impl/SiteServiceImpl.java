@@ -259,9 +259,12 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 			orderInfo.setMemberId(0); //散客
 		}
 		
-		orderInfo.setOrderServiceType(IDBConstant.ORDER_SERVICE_TYPE_SITE);
+		orderInfo.setOrderServiceType(IDBConstant.LOGIC_STATUS_YES.equals(siteReserveBasic.getReserveModel()) ? IDBConstant.ORDER_SERVICE_TYPE_SITE : IDBConstant.ORDER_SERVICE_TYPE_BLOCK_SITE);
 		orderInfo.setPayStatus(IDBConstant.LOGIC_STATUS_NO); //未支付
 		orderInfo.setSalesId(siteReserveBasic.getSalesId());
+		
+		Map<String, Object> priceMap = getPrice(siteReserveDateList, siteReserveBasic.getMemberId(), siteReserveBasic.getOpType());
+		orderInfo.setOrderSumPrice(StrUtil.objToDouble(priceMap.get("originalPrice")));
 		
 		Integer orderId = orderService.saveOrderInfo(orderInfo, null);
 		
@@ -384,30 +387,45 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	}
 	
 	@Override
-	public Integer updateConfirmOrder(OrderInfo orderInfo){
+	public Integer updateConfirmOrder(OrderInfo orderInfo) throws ParseException{
 		//找到打折价，进行计算覆盖订单应付总价和打折价字段
-		/*List<SiteReserve> siteReserves = getReservesByOrderId(orderInfo.getOrderId());
-		//查询根据会员id查询会员
-		List<SiteOperationInfo> siteOperationInfos = new ArrayList<SiteOperationInfo>();
-		for(SiteReserve siteReserve : siteReserves){
-			SiteOperationInfo siteOperationInfo = new SiteOperationInfo();
-			siteOperationInfo.setSiteId(siteReserve.getSalesId());
-			siteOperationInfos.add(siteOperationInfo);
-		}*/
+		SiteReserveBasic siteReserveBasic = this.getSiteReserveBasicAllByOrderId(orderInfo.getOrderId());
 		//计算打折价格
-		//Map<String, Object> priceMap = getPrice(siteOperationInfos, siteReserves.get(0).getMemberId(), IDBConstant.LOGIC_STATUS_YES);
-		//orderInfo.setOrderSumPrice(StrUtil.objToDouble(priceMap.get("presentPrice")));
+		Map<String, Object> priceMap = getPrice(siteReserveBasic.getSiteReserveDateList(), siteReserveBasic.getMemberId(), IDBConstant.LOGIC_STATUS_YES);
+		orderInfo.setOrderSumPrice(StrUtil.objToDouble(priceMap.get("presentPrice")));
 		
 		Integer orderId = orderService.updateConfirmOrder(orderInfo);
 		 //同步更新到序列图表的状态
-		baseDao.updateBySql("UPDATE site_reserve SET siteReserveStatus = ? WHERE orderId = ?", IDBConstant.LOGIC_STATUS_YES, orderId);
+		siteReserveBasic.setSiteReserveStatus(IDBConstant.LOGIC_STATUS_YES);
+		baseDao.save(siteReserveBasic, siteReserveBasic.getSiteReserveId());
 		return orderId;
 	}
 	
-	/*@Override
-	public List<SiteReserve> getReservesByOrderId(int orderId){
-		return baseDao.queryByHql("FROM SiteReserve WHERE orderId = ?", orderId);
-	}*/
+	@Override
+	public SiteReserveBasic getSiteReserveBasicByOrderId(int orderId){
+		return baseDao.queryByHqlFirst("FROM SiteReserveBasic WHERE orderId = ?", orderId);
+	}
+	
+	@Override
+	public List<SiteReserveDate> getSiteReserveDate(int siteReserveId){
+		return baseDao.queryByHql("FROM SiteReserveDate WHERE siteReserveId = ?", siteReserveId);
+	}
+	
+	@Override
+	public List<SiteReserveDate> getSiteReserveDateTime(List<SiteReserveDate> siteReserveDateList){
+		for(SiteReserveDate siteReserveDate : siteReserveDateList){
+			siteReserveDate.setSiteReserveTimeList((List)baseDao.queryByHql("FROM SiteReserveTime WHERE reserveDateId = ?", siteReserveDate.getReserveDateId()));
+		}
+		return siteReserveDateList;
+	}
+	
+	@Override
+	public SiteReserveBasic getSiteReserveBasicAllByOrderId(int orderId){
+		SiteReserveBasic siteReserveBasic = getSiteReserveBasicByOrderId(orderId);
+		siteReserveBasic.setSiteReserveDateList(getSiteReserveDate(siteReserveBasic.getSiteReserveId()));
+		getSiteReserveDateTime(siteReserveBasic.getSiteReserveDateList());
+		return siteReserveBasic;
+	}
 	
 	private Map<String, Object> getReserveIntersection(int siteId, String startDate, String endDate, String weeks, String startTime, String endTime){
 		StringBuilder sql = new StringBuilder("SELECT * FROM site_reserve_date srd, site_reserve_time srt WHERE srd.reserveDateId = srt.reserveDateId");

@@ -45,7 +45,7 @@ public class SiteReserveBasic implements java.io.Serializable {
 	public SiteReserveBasic(String name, String mobile, String opType,
 			String siteReserveStatus, String reserveType, String reserveModel,
 			String createTime, String updateTime, Integer salesId,
-			Integer memberId, Integer orderId, Integer siteId) {
+			Integer memberId, Integer orderId) {
 		this.name = name;
 		this.mobile = mobile;
 		this.opType = opType;
@@ -57,7 +57,6 @@ public class SiteReserveBasic implements java.io.Serializable {
 		this.salesId = salesId;
 		this.memberId = memberId;
 		this.orderId = orderId;
-		this.siteId = siteId;
 	}
 
 	// Property accessors

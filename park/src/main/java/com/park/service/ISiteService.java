@@ -9,6 +9,8 @@ import com.park.common.bean.SiteInputView;
 import com.park.common.bean.out.SiteReserveOutputView;
 import com.park.common.po.OrderInfo;
 import com.park.common.po.SiteInfo;
+import com.park.common.po.SiteReserveBasic;
+import com.park.common.po.SiteReserveDate;
 import com.park.common.po.SiteSport;
 
 public interface ISiteService {
@@ -41,8 +43,14 @@ public interface ISiteService {
 	
 	public Map<String, Object> calculateSiteMoney(SiteInputView siteInputView) throws ParseException;
 	
-	public Integer updateConfirmOrder(OrderInfo orderInfo);
+	public Integer updateConfirmOrder(OrderInfo orderInfo) throws ParseException;
 	
-	//public List<SiteReserve> getReservesByOrderId(int orderId);
+	public SiteReserveBasic getSiteReserveBasicByOrderId(int orderId);
+	
+	public List<SiteReserveDate> getSiteReserveDate(int siteReserveId);
+	
+	public List<SiteReserveDate> getSiteReserveDateTime(List<SiteReserveDate> siteReserveDateList);
+	
+	public SiteReserveBasic getSiteReserveBasicAllByOrderId(int orderId);
 	
 }
