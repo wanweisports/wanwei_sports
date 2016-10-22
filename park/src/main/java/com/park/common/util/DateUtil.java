@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
 public class DateUtil {
@@ -76,6 +75,13 @@ public class DateUtil {
 		Calendar c = Calendar.getInstance();
 		c.setTime(new Date());
 		c.add(Calendar.MONTH, StrUtil.objToInt(month));
+		return dateToString(c.getTime(), YYYYMMDD);
+	}
+	
+	public static String getAddDay(String dateStr, int addDay) throws ParseException {
+		Calendar c = Calendar.getInstance();
+		c.setTime(stringToDate(dateStr, YYYYMMDD));
+		c.add(Calendar.DATE, addDay);
 		return dateToString(c.getTime(), YYYYMMDD);
 	}
 	

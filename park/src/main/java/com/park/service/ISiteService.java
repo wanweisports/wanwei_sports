@@ -25,6 +25,8 @@ public interface ISiteService {
 	
 	public Map<String, Object> getSiteInfoMap(int siteId);
 	
+	public SiteSport getSiteSportInfo(int siteId);
+	
 	public List<Map<String, Object>> getSiteNames(SiteInputView siteInputView);
 	
 	public PageBean getSiteInfos(SiteInputView siteInputView);
