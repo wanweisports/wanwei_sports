@@ -1,11 +1,13 @@
 package com.park.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Created by wangjun on 16/10/17.
  * 移动端页面
  */
+@Controller
 public class MobileController extends BaseController {
 
     // 首页
@@ -26,12 +28,6 @@ public class MobileController extends BaseController {
     @RequestMapping("mobile/center/card")
     public String renderCenterCard() {
         return "Mobile/Center/CenterCard";
-    }
-
-    // 个人中心系统消息
-    @RequestMapping("mobile/center/message")
-    public String renderCenterMessage() {
-        return "Mobile/Center/CenterMessage";
     }
 
     // 个人中心修改密码

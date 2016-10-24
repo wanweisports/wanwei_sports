@@ -6,13 +6,12 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <link href="/Content/style/mobile/center/center_profile.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div id="main" class="container">
+        <div class="weui-cells__title">个人信息</div>
         <div class="weui-cells weui-cells_form">
             <div class="weui-cell">
                 <div class="weui-cell__hd">
@@ -46,10 +45,15 @@
                     <input class="weui-input" type="date" placeholder="您的出生日期">
                 </div>
             </div>
-            <div class="weui-cell weui-cell_switch">
-                <div class="weui-cell__bd">帅哥</div>
-                <div class="weui-cell__ft">
-                    <input class="weui-switch" type="checkbox" checked>
+            <div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">性别</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <select class="weui-select" name="select2">
+                        <option value="1">帅哥</option>
+                        <option value="2">美女</option>
+                    </select>
                 </div>
             </div>
             <div class="weui-cell">
@@ -75,5 +79,5 @@
 </layout:override>
 
 <c:import url="../Shared/Layout.jsp">
-    <c:param name="title" value="账户编辑"/>
+    <c:param name="title" value="个人信息"/>
 </c:import>

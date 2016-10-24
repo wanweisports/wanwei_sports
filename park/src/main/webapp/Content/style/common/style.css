@@ -255,7 +255,7 @@ table td {
   width: 80px;
   height: 80px;
   display: block;
-  border: 1px solid #999;
+  border: 1px dashed #999;
   cursor: pointer;
 }
 .pic-select input[type="file"] {
@@ -265,6 +265,7 @@ table td {
   opacity: 0;
   top: 0;
   left: 0;
+  z-index: 1000;
 }
 .pic-select .pic-add {
   position: absolute;

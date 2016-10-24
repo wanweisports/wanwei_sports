@@ -33,8 +33,8 @@
     <link href="/Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon" />
 
     <script src="/Content/lib/amfe/flexible.js?v=${static_resource_version}"></script>
-    <link href="/public/lib/reset.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/public/lib/amfe/flexible.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="/Content/lib/reset.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="/Content/lib/amfe/flexible.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
     <link href="/Content/lib/weui/weui.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
     <layout:block name="<%=Blocks.BLOCK_HEADER_CSS%>"/>
 </head>
@@ -45,7 +45,6 @@
 
     <script src="/Content/lib/vue/vue.min.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/zepto/zepto.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/app/common/base.js?v=${static_resource_version}"></script>
     <layout:block name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>"/>
     <layout:block name="<%=Blocks.BLOCK_TRACE_SCRIPTS%>"/>
 </body>

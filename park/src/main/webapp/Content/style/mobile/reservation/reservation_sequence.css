@@ -22,9 +22,6 @@ a:hover {
 .weui-cells .weui-label {
   width: 5em;
 }
-.weui-btn {
-  font-size: 14px;
-}
 .weui-btn_primary {
   background-color: #2faef6;
 }
@@ -148,4 +145,27 @@ a:hover {
   background: #009dd9;
   color: rgba(255,255,255,0.6);
   opacity: 0.6;
+}
+.weui-grids .weui-grid {
+  border: 1px solid #fff;
+  width: 30%;
+  margin-left: 2.5%;
+  margin-top: 2.5%;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  padding: 0;
+  background-color: #36a1db;
+}
+.weui-grids .weui-grid .weui-grid__icon {
+  width: 100%;
+  height: 100%;
+}
+.weui-grids .weui-grid .weui-grid__icon img {
+  width: 50%;
+  height: 50%;
+  margin: 10% auto;
+}
+.weui-grids .weui-grid .weui-grid__label {
+  background: #fff;
 }

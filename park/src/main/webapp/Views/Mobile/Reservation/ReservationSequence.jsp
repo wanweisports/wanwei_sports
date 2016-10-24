@@ -6,16 +6,80 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <link href="/Content/style/mobile/reservation/reservation_sequence.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div id="main" class="container">
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">场地类型</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <select class="weui-select" name="select2">
+                        <option value="1">羽毛球</option>
+                        <option value="2">篮球</option>
+                    </select>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">预订日期</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="date" placeholder="预订日期">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">开始时间</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="time" placeholder="开始时间">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">结束时间</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="time" placeholder="结束时间">
+                </div>
+            </div>
+        </div>
+        <div class="weui-btn-area">
+            <a class="weui-btn weui-btn_primary" href="javascript:">筛选场地</a>
+        </div>
+        <div class="weui-grids">
+            <a href="javascript:;" class="weui-grid">
+                <div class="weui-grid__icon">
+                    <img src="/Content/images/mobile/stadium.png?v=${static_resource_version}">
+                </div>
+                <p class="weui-grid__label">场地1</p>
+            </a>
+            <a href="javascript:;" class="weui-grid">
+                <div class="weui-grid__icon">
+                    <img src="/Content/images/mobile/stadium.png?v=${static_resource_version}">
+                </div>
+                <p class="weui-grid__label">场地1</p>
+            </a>
+            <a href="javascript:;" class="weui-grid">
+                <div class="weui-grid__icon">
+                    <img src="/Content/images/mobile/stadium.png?v=${static_resource_version}">
+                </div>
+                <p class="weui-grid__label">场地1</p>
+            </a>
+            <a href="javascript:;" class="weui-grid">
+                <div class="weui-grid__icon">
+                    <img src="/Content/images/mobile/stadium.png?v=${static_resource_version}">
+                </div>
+                <p class="weui-grid__label">场地1</p>
+            </a>
+            <a href="javascript:;" class="weui-grid">
+                <div class="weui-grid__icon">
+                    <img src="/Content/images/mobile/stadium.png?v=${static_resource_version}">
+                </div>
+                <p class="weui-grid__label">场地1</p>
+            </a>
+        </div>
     </div>
 </layout:override>
 
 <c:import url="../Shared/Layout.jsp">
-    <c:param name="title" value="预订时序图"/>
+    <c:param name="title" value="场地预订"/>
 </c:import>

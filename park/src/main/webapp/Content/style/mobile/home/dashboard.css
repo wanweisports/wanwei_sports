@@ -22,9 +22,6 @@ a:hover {
 .weui-cells .weui-label {
   width: 5em;
 }
-.weui-btn {
-  font-size: 14px;
-}
 .weui-btn_primary {
   background-color: #2faef6;
 }
@@ -148,4 +145,60 @@ a:hover {
   background: #009dd9;
   color: rgba(255,255,255,0.6);
   opacity: 0.6;
+}
+body {
+  background: url("/Content/images/mobile/bg2.jpg") no-repeat center;
+  background-size: cover;
+  overflow: hidden;
+}
+.container .weui-flex {
+  text-align: center;
+  margin-top: 140px;
+  margin-top: 1.8667rem;
+}
+.container .weui-grids .weui-grid {
+  border: 1px solid #fff;
+  width: 30%;
+  margin-left: 2.5%;
+  margin-top: 2.5%;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  padding: 0;
+}
+.container .weui-grids .weui-grid:nth-child(8n+1) {
+  background-color: #36a1db;
+}
+.container .weui-grids .weui-grid:nth-child(8n+2) {
+  background-color: #678ce1;
+}
+.container .weui-grids .weui-grid:nth-child(8n+3) {
+  background-color: #8c67df;
+}
+.container .weui-grids .weui-grid:nth-child(8n+4) {
+  background-color: #84d018;
+}
+.container .weui-grids .weui-grid:nth-child(8n+5) {
+  background-color: #14c760;
+}
+.container .weui-grids .weui-grid:nth-child(8n+6) {
+  background-color: #f3b613;
+}
+.container .weui-grids .weui-grid:nth-child(8n+7) {
+  background-color: #ff8a4a;
+}
+.container .weui-grids .weui-grid:nth-child(8n+8) {
+  background-color: #fc5366;
+}
+.container .weui-grids .weui-grid .weui-grid__icon {
+  width: 100%;
+  height: 100%;
+}
+.container .weui-grids .weui-grid .weui-grid__icon img {
+  width: 50%;
+  height: 50%;
+  margin: 10% auto;
+}
+.container .weui-grids .weui-grid .weui-grid__label {
+  background: #fff;
 }
