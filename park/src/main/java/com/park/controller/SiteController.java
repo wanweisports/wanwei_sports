@@ -171,6 +171,9 @@ public class SiteController extends BaseController {
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.putAll(JsonUtils.fromJson(siteService.getSiteReservationInfo(siteInputView)));
 			return new ResponseBean(data);
+		} catch (MessageException e) {
+			e.printStackTrace();
+			return new ResponseBean(e.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

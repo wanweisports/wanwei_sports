@@ -11,7 +11,6 @@ import com.park.common.exception.MessageException;
 import com.park.common.po.OrderDetail;
 import com.park.common.po.OrderInfo;
 import com.park.common.util.DateUtil;
-import com.park.common.util.JsonUtils;
 import com.park.dao.IBaseDao;
 import com.park.service.IOrderService;
 
@@ -27,15 +26,19 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 		orderInfo.setCreateTime(nowDate);
 		orderInfo.setOrderNo(getOrderNo());
 		Double sumPrice = 0.0;
-		for(OrderDetail orderDetail : orderDetails){
-			sumPrice += orderDetail.getItemPrice();
-		}
-		orderInfo.setOrderSumPrice(sumPrice);
 		baseDao.save(orderInfo, null);
-		for(OrderDetail orderDetail : orderDetails){
-			orderDetail.setOrderId(orderInfo.getOrderId());
-			baseDao.save(orderDetail, null);
-			sumPrice += orderDetail.getItemPrice();
+		
+		if(orderDetails != null && orderDetails.size() > 0){
+			for(OrderDetail orderDetail : orderDetails){
+				sumPrice += orderDetail.getItemPrice();
+			}
+			orderInfo.setOrderSumPrice(sumPrice);
+			for(OrderDetail orderDetail : orderDetails){
+				orderDetail.setOrderId(orderInfo.getOrderId());
+				baseDao.save(orderDetail, null);
+				sumPrice += orderDetail.getItemPrice();
+			}
+			baseDao.save(orderInfo, orderInfo.getOrderId());
 		}
 		return orderInfo.getOrderId();
 	}
@@ -46,8 +49,8 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 		if(orderInfoDB == null) throw new MessageException("订单不存在");
 		if(IDBConstant.LOGIC_STATUS_YES.equals(orderInfoDB.getPayStatus())) throw new MessageException("该订单已支付过了，请不要重复支付");
 		Double orderSumPrice = orderInfo.getOrderSumPrice();
-		Double paySumPrice = orderInfo.getPaySumPrice();
-		if(paySumPrice >= orderSumPrice){
+		orderInfoDB.setPaySumPrice(orderInfoDB.getPaySumPrice()+orderInfo.getPaySumPrice()); //加上之前已经支付过多少钱
+		if(orderInfoDB.getPaySumPrice() >= orderSumPrice){
 			orderInfoDB.setPayStatus(IDBConstant.LOGIC_STATUS_YES); //已支付
 		}else{
 			orderInfoDB.setPayStatus(IDBConstant.LOGIC_STATUS_OTHER); //部分支付
@@ -57,7 +60,7 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 		orderInfoDB.setCheckNo(orderInfo.getCheckNo());
 		orderInfoDB.setOrderRemark(orderInfo.getOrderRemark());
 		orderInfoDB.setOrderSumPrice(orderSumPrice);
-		orderInfoDB.setPaySumPrice(paySumPrice);
+		
 		orderInfoDB.setSubAmount(orderInfo.getSubAmount());
 		orderInfoDB.setPayType(orderInfo.getPayType());
 		orderInfoDB.setPayTime(nowDate);

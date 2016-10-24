@@ -3,10 +3,13 @@ package com.park.common.util;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 
 public class DateUtil {
 	public static final String YYYYMMDD_S = "yyyyMMdd";
@@ -48,14 +51,21 @@ public class DateUtil {
 	}
 	
 	/**
-	 * 奖date类型的日期转换为指定格式
+	 * 将date类型的日期转换为指定格式
 	 */
 	public static String dateToString(Date date, String format) {
 		if(StringUtils.isBlank(format)) format = YYYYMMDD;
 		SimpleDateFormat formatter = new SimpleDateFormat(format);
-		String ddd = null;
-		ddd = formatter.format(date);
-		return ddd;
+		return formatter.format(date);
+	}
+	
+	/**
+	 * 降string类型的日期转换为Date
+	 */
+	public static Date stringToDate(String dateStr, String format) throws ParseException {
+		if(StringUtils.isBlank(format)) format = YYYYMMDD;
+		SimpleDateFormat formatter = new SimpleDateFormat(format);
+		return formatter.parse(dateStr);
 	}
 	
 	/**
@@ -65,6 +75,13 @@ public class DateUtil {
 		Calendar c = Calendar.getInstance();
 		c.setTime(new Date());
 		c.add(Calendar.MONTH, StrUtil.objToInt(month));
+		return dateToString(c.getTime(), YYYYMMDD);
+	}
+	
+	public static String getAddDay(String dateStr, int addDay) throws ParseException {
+		Calendar c = Calendar.getInstance();
+		c.setTime(stringToDate(dateStr, YYYYMMDD));
+		c.add(Calendar.DATE, addDay);
 		return dateToString(c.getTime(), YYYYMMDD);
 	}
 	
@@ -96,7 +113,80 @@ public class DateUtil {
 		return format.format(time);
 	}
 	
+	public static void pkDate(String startDateStr, String endDateStr, String week, String ssd, String snd) throws ParseException{
+		String[] weeks = week.split(",");
+		
+		Date startDate = stringToDate(startDateStr, null);
+		Date endDate = stringToDate(endDateStr, null);
+		Calendar startCal1 = Calendar.getInstance();
+		startCal1.setTime(startDate);
+		
+		Date ssdDate = stringToDate(ssd, null);
+		Date sndDate = stringToDate(snd, null);
+		Calendar startCal2 = Calendar.getInstance();
+		startCal2.setTime(ssdDate);
+		
+		while (startCal1.getTime().before(endDate)) {
+			while (startCal2.getTime().before(sndDate)) {
+				//if(startCal2.getTime().getTime()==startCal1.getTime().getTime() && )
+				startCal2.add(Calendar.DATE, 1);
+			}
+			startCal1.add(Calendar.DATE, 1);
+		}
+	}
+	
+	//获取时间范围内指定星期的数量
+	public static int getDateScopeWeekNums(String startDateStr, String endDateStr, String weeks) throws ParseException{
+		List<String> weekList = Arrays.asList(weeks.split(","));
+		Date startDate = stringToDate(startDateStr, null);
+		Date endDate = stringToDate(endDateStr, null);
+		Calendar endCal = Calendar.getInstance();
+		endCal.setTime(endDate);
+		endCal.add(Calendar.DATE, 1); //为了循环到最后一天为止，故这里加一天
+		
+		Calendar startCal = Calendar.getInstance();
+		startCal.setTime(startDate);
+		int num = 0;
+		while (startCal.getTime().before(endDate)) {
+			if(weekList.contains(StrUtil.objToStr(getWeek(startCal.getTime())))) num++;
+			startCal.add(Calendar.DATE, 1);
+		}
+		return num;
+	}
+	
+	//获取两个时间之间小时数
+	public static int getTimeHourNums(String startTimeStr, String endTimeStr) throws ParseException{
+		Date startDate = stringToDate(startTimeStr, HHMM);
+		Date endDate = stringToDate(endTimeStr, HHMM);
+		return (int) ((endDate.getTime() - startDate.getTime())/DateUtils.MILLIS_PER_HOUR);
+	}
+	
+	public static int getWeek(Date date){
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		int week = c.get(Calendar.DAY_OF_WEEK);
+		if(week == 1) return 7; //周日
+		return week-1; //其他星期-1
+	}
+	
+	/*
+	 * 注意事项：
+		Calendar 的 month 从 0 开始，也就是全年 12 个月由 0 ~ 11 进行表示。
+		而 Calendar.DAY_OF_WEEK 定义和值如下：（需要判断周日，然后其他减1）
+		Calendar.SUNDAY = 1  //周日
+		Calendar.MONDAY = 2
+		Calendar.TUESDAY = 3
+		Calendar.WEDNESDAY = 4
+		Calendar.THURSDAY = 5
+		Calendar.FRIDAY = 6
+		Calendar.SATURDAY = 7 //周六
+	 */
 	public static void main(String[] args) throws ParseException {
+		/*long s = System.currentTimeMillis();
+		for(int i=0;i<100000;i++){
+			System.out.println(i);
+		}
+		System.out.println((System.currentTimeMillis()-s)/1000.0);*/
 		/*String time = "09:00";
 		String end = "12:00";
 		DateFormat format = new SimpleDateFormat("HH:mm"); 
@@ -107,6 +197,30 @@ public class DateUtil {
 			c.add(Calendar.HOUR_OF_DAY, 1);
 			System.out.println(c.getTime());
 		}*/
+		/*String str="20110214";
+        String str1="20110225";
+        SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
+        Calendar start = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        try {
+            start.setTime(format.parse(str));
+            end.setTime(format.parse(str1));
+            end.add(Calendar.DAY_OF_MONTH,1);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        while(start.before(end))
+        {
+            System.out.println(format.format(start.getTime()));
+            start.add(Calendar.DAY_OF_MONTH,1);
+            
+            System.out.println("---");
+        }*/
+		Date startDate = stringToDate("08:00", HHMM);
+		Date endDate = stringToDate("12:00", HHMM);
+		int a = (int) ((endDate.getTime() - startDate.getTime())/DateUtils.MILLIS_PER_HOUR);
+		System.out.println(a);
 	}
 
 }
