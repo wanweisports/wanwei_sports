@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.park.common.bean.GoodInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.po.GoodInfo;
+import com.park.common.po.GoodShopping;
 
 public interface IGoodService {
 	
@@ -24,6 +25,14 @@ public interface IGoodService {
 	
 	public List<Map<String, Object>> getGoodsMarket(GoodInputView goodInputView);
 	
-	public List<Map<String, Object>> getGoodsCart(GoodInputView goodInputView);
+	public List<Map<String, Object>> getGoodsCart(int salesId);
+	
+	public Integer saveGoodShopping(GoodShopping goodShopping);
+	
+	public GoodShopping getGoodShoppingByGood(int goodId, int salesId);
+	
+	public GoodShopping getGoodShopping(int shoppingId, int salesId);
+	
+	public void deleteCart(int shoppingId, int salesId);
 	
 }
