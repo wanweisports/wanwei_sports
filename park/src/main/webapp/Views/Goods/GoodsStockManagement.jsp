@@ -99,7 +99,7 @@
                                        data-id="${good.goodId}" data-count="${good.goodCount}" data-backdrop="false">
                                         <span class="glyphicon glyphicon-hdd"></span> 增加库存
                                     </a>
-                                    <a href="/good/updateGood?goodId=${good.goodId}" class="btn btn-primary">
+                                    <a href="/good/viewGood?goodId=${good.goodId}" class="btn btn-primary">
                                         <span class="glyphicon glyphicon-share-alt"></span> 查看
                                     </a>
                                 </td>

@@ -12,84 +12,111 @@
                 'core' : {
                     'data' : [{
                         "id": "root",
-                        "text" : "全部功能",
+                        "text" : "全部权限",
                         "state" : {"opened": true, "selected": true },
                         "children" : [{
                             "id": "member",
                             "text" : "会员管理",
                             "children" : [{
                                 "id": "member_reg",
-                                "text" : "新会员注册"
+                                "text" : "新会员办理"
                             }, {
                                 "id": "member_query",
                                 "text" : "会员查询"
                             }, {
+                                "id": "member_recharge",
+                                "text" : "会员卡充值"
+                            }, {
+                                "id": "member_upgrade",
+                                "text" : "会员卡升级"
+                            }, {
+                                "id": "member_refresh",
+                                "text" : "会员卡补办"
+                            }, {
+                                "id": "member_loan",
+                                "text" : "应收款管理"
+                            }, {
                                 "id": "member_invoice",
-                                "text" : "发票登记"
+                                "text" : "发票登记查询"
                             }, {
                                 "id": "member_settings",
                                 "text" : "会员类型设置"
                             }]
                         }, {
-                            "id": "node_2",
-                            "text" : "场地预订",
+                            "id": "site",
+                            "text" : "预订管理",
                             "children" : [{
-                                "id": "node_2_1",
-                                "text" : "现场预订"
+                                "id": "site_sequence",
+                                "text" : "场地预订"
                             }, {
-                                "id": "node_2_2",
+                                "id": "site_bath",
                                 "text" : "批量预订"
                             }, {
-                                "id": "node_2_3",
-                                "text" : "热点概率分析"
+                                "id": "site_order",
+                                "text" : "预订订单查询"
                             }, {
-                                "id": "node_2_4",
-                                "text" : "场地类型"
+                                "id": "site_pda",
+                                "text" : "场地热点分析"
                             }, {
-                                "id": "node_2_5",
+                                "id": "site_setting",
                                 "text" : "场地设置"
+                            }, {
+                                "id": "site_sports_setting",
+                                "text" : "场地类型设置"
                             }]
                         }, {
-                            "id": "node_3",
+                            "id": "good",
                             "text" : "商品管理",
                             "children" : [{
-                                "id": "node_3_1",
+                                "id": "good_setting",
                                 "text" : "商品设置"
                             }, {
-                                "id": "node_3_2",
+                                "id": "good_stock",
                                 "text" : "进销存管理"
                             }, {
-                                "id": "node_3_3",
+                                "id": "good_market",
                                 "text" : "商品销售"
+                            }, {
+                                "id": "good_detail",
+                                "text" : "库存明细日志"
                             }]
                         }, {
-                            "id": "node_4",
+                            "id": "data",
                             "text" : "数据统计",
                             "children" : [{
-                                "id": "node_4_1",
-                                "text" : "会员注册统计"
+                                "id": "data_register",
+                                "text" : "会员办理统计"
                             }, {
-                                "id": "node_4_2",
-                                "text" : "营业收入统计"
+                                "id": "data_business",
+                                "text" : "营业收支统计"
                             }, {
-                                "id": "node_4_3",
+                                "id": "data_percent",
+                                "text" : "场地使用率"
+                            }, {
+                                "id": "data_attendance",
                                 "text" : "签到记录"
                             }]
                         }, {
-                            "id": "node_5",
+                            "id": "settings",
                             "text" : "系统设置",
                             "children" : [{
-                                "id": "node_5_1",
-                                "text" : "用户设置"
-                            }, {
-                                "id": "node_5_2",
-                                "text" : "角色设置"
-                            }, {
-                                "id": "node_5_3",
+                                "id": "settings_common",
                                 "text" : "基础设置"
                             }, {
-                                "id": "node_5_4",
-                                "text" : "通知设置"
+                                "id": "settings_user",
+                                "text" : "员工信息设置"
+                            }, {
+                                "id": "settings_role",
+                                "text" : "员工权限设置"
+                            }, {
+                                "id": "settings_notification",
+                                "text" : "通知管理"
+                            }, {
+                                "id": "settings_database",
+                                "text" : "数据库操作"
+                            }, {
+                                "id": "settings_logs",
+                                "text" : "系统日志"
                             }]
                         }]
                     }]

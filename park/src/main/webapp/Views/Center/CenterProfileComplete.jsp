@@ -36,8 +36,18 @@
                 <div class="panel-body">
                     <div class="col-sm-6">
                         <div class="form-group">
+                            <label for="user_no" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 员工编号
+                            </label>
+
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="user_no" name="user_no"
+                                       placeholder="员工编号" autocomplete="off" value="88888" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="user_name" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 姓名
+                                <span class="text-danger">*</span> 员工姓名
                             </label>
 
                             <div class="col-sm-8">
@@ -48,22 +58,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="user_mobile" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 手机号码
-                            </label>
-
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="user_mobile" name="user_mobile"
-                                       placeholder="请输入手机号码" autocomplete="off"
-                                       data-val="true" data-val-required="手机号码不能为空"
-                                       data-val-regex-pattern="^1\d{10}$"
-                                       data-val-regex="手机号码格式错误">
-                                <div data-valmsg-for="user_mobile" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label for="user_birthday" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 生日
+                                <span class="text-danger">*</span> 员工生日
                             </label>
 
                             <div class="col-sm-8">
@@ -80,22 +76,18 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="user_idcard" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 身份证号
+                            <label for="user_account" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 登录账号
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="user_idcard" name="user_idcard"
-                                       placeholder="请输入18位身份证号" autocomplete="off"
-                                       data-val="true" data-val-required="身份证号不能为空"
-                                       data-val-regex-pattern="^\d{18}$|^\d{17}(\d|X|x)$"
-                                       data-val-regex="身份证号格式错误">
-                                <div data-valmsg-for="user_idcard" data-valmsg-replace="true"></div>
+                                <input type="text" class="form-control" id="user_account" name="user_account"
+                                       placeholder="登录账号" autocomplete="off" value="admin" readonly>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="user_sex1" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 会员性别
+                                <span class="text-danger">*</span> 员工性别
                             </label>
 
                             <div class="col-sm-8">
@@ -106,6 +98,20 @@
                                     <input type="radio" name="user_sex" id="user_sex2" value="2"> 女
                                 </label>
                                 <div data-valmsg-for="user_sex" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="user_mobile" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 联系电话
+                            </label>
+
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="user_mobile" name="user_mobile"
+                                       placeholder="请输入联系电话" autocomplete="off"
+                                       data-val="true" data-val-required="联系电话不能为空"
+                                       data-val-regex-pattern="^1\d{10}$"
+                                       data-val-regex="联系电话格式错误">
+                                <div data-valmsg-for="user_mobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -122,7 +128,7 @@
                             <div class="col-sm-offset-4 col-sm-8">
                                 <p class="sc-submit-tips"></p>
                                 <button type="submit" class="btn btn-primary profile-submit">
-                                    <span class="glyphicon glyphicon-ok"></span> 完善信息
+                                    <span class="glyphicon glyphicon-ok"></span> 确定修改
                                 </button>
                             </div>
                         </div>

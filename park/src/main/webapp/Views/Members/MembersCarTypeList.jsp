@@ -70,15 +70,13 @@
                             <th>状态</th>
                             <th>操作人</th>
                             <th>操作时间</th>
+                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         <c:forEach var="type" items="${list}">
                             <tr>
-                                <td>
-                                    <a class="type-item" href="#addModal" data-toggle="modal"
-                                       data-backdrop="false" data-id="${type.cardTypeId}">${type.cardTypeName}</a>
-                                </td>
+                                <td>${type.cardTypeName}</td>
                                 <td>
                                     <c:if test="${type.cardType == '1'}">预存类型</c:if>
                                     <c:if test="${type.cardType == '2'}">记账类型</c:if>
@@ -107,6 +105,12 @@
 
                                 <td>${type.operatorName}</td>
                                 <td>${type.createTime}</td>
+                                <td>
+                                    <a class="btn btn-primary" class="type-item" href="#addModal" data-toggle="modal"
+                                       data-backdrop="false" data-id="${type.cardTypeId}">
+                                        <span class="glyphicon glyphicon-share-alt"></span> 查看
+                                    </a>
+                                </td>
                             </tr>
                         </c:forEach>
                         </tbody>

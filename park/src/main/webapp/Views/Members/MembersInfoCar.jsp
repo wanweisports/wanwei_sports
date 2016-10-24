@@ -73,7 +73,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
-                                <button type="button" class="btn btn-primary genxin-submit">
+                                <button type="button" class="btn btn-primary col-sm-4 genxin-submit">
                                     <span class="glyphicon glyphicon-refresh"></span> 更新会员信息
                                 </button>
                             </div>

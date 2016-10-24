@@ -26,13 +26,13 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>系统设置</span> &gt;&gt; <span>基础设置</span>
+    当前位置: <span>系统设置</span> &gt;&gt; <span>场馆基础设置</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
-            <div class="panel-heading">基础设置</div>
+            <div class="panel-heading">场馆基础设置</div>
             <div class="panel-body">
                 <form id="common_form" class="form-horizontal" novalidate onsubmit="return false;">
                     <div class="col-sm-6">
@@ -136,12 +136,21 @@
                                 <div data-valmsg-for="siteAddress" data-valmsg-replace="true"></div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="site_remark" class="col-sm-2 control-label">备注信息</label>
+
+                            <div class="col-sm-10">
+                                <textarea class="form-control" id="site_remark" name="siteRemark" rows="3"
+                                          placeholder="请输入备注信息" autocomplete="off"></textarea>
+                                <div data-valmsg-for="siteRemark" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm-12">
                         <div class="form-group sc-ui-submit">
-                            <div class="col-sm-offset-4 col-sm-4">
+                            <div class="col-sm-offset-4 col-sm-8">
                                 <p class="sc-submit-tips"></p>
-                                <button type="button" class="btn btn-primary common-save" style="width: 100%">
+                                <button type="button" class="btn btn-primary col-sm-4 common-save">
                                     <span class="glyphicon glyphicon-ok"></span>  保 存
                                 </button>
                             </div>

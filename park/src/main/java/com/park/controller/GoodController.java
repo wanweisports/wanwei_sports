@@ -27,12 +27,15 @@ public class GoodController extends BaseController {
 	@Autowired
 	private IGoodService goodService;
 	
-	@RequestMapping("updateGood")
-	public String updateGood(Integer goodId, Model model){
-		if(goodId != null){
-			model.addAllAttributes(JsonUtils.fromJsonDF(goodService.getGoodInfo(goodId)));
-		}
+	@RequestMapping("settingGood")
+	public String settingGood(){
 		return "Goods/GoodsSettings";
+	}
+
+	@RequestMapping("viewGood")
+	public String viewGood(Integer goodId, Model model){
+        model.addAllAttributes(JsonUtils.fromJsonDF(goodService.getGoodInfo(goodId)));
+		return "Goods/GoodsViews";
 	}
 
 	@ResponseBody

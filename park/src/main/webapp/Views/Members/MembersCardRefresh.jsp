@@ -28,7 +28,7 @@
         <div class="panel panel-default member-card-panel">
             <div class="panel-heading">会员卡补办</div>
             <div class="panel-body">
-                <form id="member_card_form" class="form-horizontal" onsubmit="return false;">
+                <form id="member_card_form" class="form-horizontal" novalidate onsubmit="return false;">
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label for="card_no" class="col-sm-2 control-label">
@@ -39,7 +39,7 @@
                                 <input type="text" class="form-control" id="card_no" name="cardNo" value="${cardNo}"
                                        placeholder="请输入会员卡号" autocomplete="off"
                                        data-val="true" data-val-required="会员卡号不能为空">
-                                <div data-valmsg-for="cardno" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="cardNo" data-valmsg-replace="true"></div>
                             </div>
                             <div class="col-sm-4">
                                 <a href="javascript:;" class="btn btn-primary member-card-filter">
@@ -86,12 +86,12 @@
 
         <div class="panel panel-default refresh-card-panel">
             <div class="panel-body">
-                <form id="refresh_card_form" class="form-horizontal" onsubmit="return false;">
+                <form id="refresh_card_form" class="form-horizontal" novalidate onsubmit="return false;">
                     <input type="hidden" id="refresh_cardId" name="cardId" value="${cardId}">
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="refresh_money" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 补办价格
+                                <span class="text-danger">*</span> 补办金额(元)
                             </label>
 
                             <div class="col-sm-8">
@@ -122,22 +122,22 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="refresh_discount" class="col-sm-4 control-label">优惠金额</label>
+                            <label for="refresh_discount" class="col-sm-4 control-label">优惠金额(元)</label>
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="refresh_discount" name="subMoney"
-                                       placeholder="请输入优惠金额(元)" autocomplete="off" value="0"
+                                       placeholder="请输入优惠金额(元)" autocomplete="off"
                                        data-val-regex-pattern="^[1-9][0-9]*$"
                                        data-val-regex="优惠金额格式错误">
                                 <div data-valmsg-for="subMoney" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="refresh_send" class="col-sm-4 control-label">赠送金额</label>
+                            <label for="refresh_send" class="col-sm-4 control-label">赠送金额(元)</label>
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="refresh_send" name="givingAmount"
-                                       placeholder="请输入赠送金额(元)" autocomplete="off" value="0"
+                                       placeholder="请输入赠送金额(元)" autocomplete="off"
                                        data-val-regex-pattern="^[1-9][0-9]*$"
                                        data-val-regex="赠送金额格式错误">
                                 <div data-valmsg-for="givingAmount" data-valmsg-replace="true"></div>
@@ -146,14 +146,14 @@
                     </div>
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">新卡号</label>
+                            <label class="col-sm-2 control-label">新的卡号</label>
 
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="newCardNo" name="newCardNo" readonly>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="refresh_remark" class="col-sm-2 control-label">补办备注</label>
+                            <label for="refresh_remark" class="col-sm-2 control-label">备注</label>
 
                             <div class="col-sm-10">
                             <textarea class="form-control" id="refresh_remark" name="remark" rows="3"

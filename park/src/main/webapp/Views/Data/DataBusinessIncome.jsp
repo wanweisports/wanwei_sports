@@ -15,13 +15,13 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>数据统计</span> &gt;&gt; <span>营业收入统计</span>
+    当前位置: <span>数据统计</span> &gt;&gt; <span>营业收支统计</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
-            <div class="panel-heading">营业收入统计</div>
+            <div class="panel-heading">营业收支统计</div>
             <div class="panel-body">
                 <form id="data_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">

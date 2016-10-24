@@ -54,7 +54,7 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>#</th>
+                            <th>选择</th>
                             <th>流水单号</th>
                             <th>发票抬头</th>
                             <th>发票金额</th>
