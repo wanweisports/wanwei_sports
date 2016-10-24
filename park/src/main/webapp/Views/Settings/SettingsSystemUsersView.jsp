@@ -26,31 +26,31 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>系统设置</span> &gt;&gt; <span>用户查询</span> &gt;&gt; <span>用户设置</span>
+    当前位置: <span>系统设置</span> &gt;&gt; <span>员工信息查询</span> &gt;&gt; <span>员工信息设置</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
-        <form id="users_form" class="form-horizontal" action="" method="post" novalidate onsubmit="return false;">
+        <form id="users_form" class="form-horizontal" novalidate onsubmit="return false;">
             <div class="panel panel-default">
-                <div class="panel-heading">用户设置</div>
+                <div class="panel-heading">员工信息设置</div>
                 <div class="panel-body">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="user_account" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 用户账户
+                            <label for="user_no" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 员工编号
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="user_account" name="userAccount"
-                                       placeholder="用户账户" autocomplete="off"
-                                       data-val="true" data-val-required="用户账户不能为空">
-                                <div data-valmsg-for="userAccount" data-valmsg-replace="true"></div>
+                                <input type="text" class="form-control" id="user_no" name="user_no"
+                                       placeholder="员工编号" autocomplete="off"
+                                       data-val="true" data-val-required="员工编号不能为空" readonly>
+                                <div data-valmsg-for="user_no" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="user_name" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 用户姓名
+                                <span class="text-danger">*</span> 真实姓名
                             </label>
 
                             <div class="col-sm-8">
@@ -72,23 +72,46 @@
                                 <div data-valmsg-for="startDate" data-valmsg-replace="true"></div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="user_password" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 用户密码
+                            <label for="data_birthday" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 员工生日
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="password" class="form-control" id="user_password" name="userPassword"
-                                       placeholder="用户密码" autocomplete="off"
-                                       data-val="true" data-val-required="用户密码不能为空">
-                                <div data-valmsg-for="userPassword" data-valmsg-replace="true"></div>
+                                <input type="text" class="form-control" id="data_birthday" name="data_birthday"
+                                       placeholder="生效时间" autocomplete="off"
+                                       data-val="true" data-val-required="生效时间不能为空">
+                                <div data-valmsg-for="data_birthday" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact_name" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 联系人
+                            </label>
+
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="contact_name" name="contact_name"
+                                       placeholder="联系人" autocomplete="off">
+                                <div data-valmsg-for="contactMame" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="user_account" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 登录账户
+                            </label>
+
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="user_account" name="userAccount"
+                                       placeholder="登录账户" autocomplete="off"
+                                       data-val="true" data-val-required="登录账户不能为空">
+                                <div data-valmsg-for="userAccount" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="user_role" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 所属角色
+                                <span class="text-danger">*</span> 员工权限
                             </label>
 
                             <div class="col-sm-8">
@@ -100,15 +123,37 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="end_date" class="col-sm-4 control-label">
+                            <label for="end1_date" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 截止日期
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="end_date" name="endDate"
+                                <input type="text" class="form-control" id="end1_date" name="endDate"
                                        placeholder="截止日期" autocomplete="off"
                                        data-val="true" data-val-required="截止日期不能为空">
                                 <div data-valmsg-for="endDate" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact_phone" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 联系电话
+                            </label>
+
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="contact_phone" name="contact_phone"
+                                       placeholder="联系电话" autocomplete="off"
+                                       data-val="true" data-val-required="联系电话不能为空">
+                                <div data-valmsg-for="contact_phone"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact_address" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 联系地址
+                            </label>
+
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="contact_address" name="contact_address"
+                                       placeholder="联系电话" autocomplete="off">
                             </div>
                         </div>
                     </div>

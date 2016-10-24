@@ -209,14 +209,14 @@
                             <label class="col-sm-4 control-label">会员折扣</label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" value="${cardTypeDiscount / 10.0}折" disabled>
+                                <input type="text" class="form-control" value="${cardTypeDiscount}折" disabled>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">余额(元)</label>
 
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" value="${cardBalance}" disabled>
+                                <input type="text" class="form-control" value="${cardBalance}元" disabled>
                             </div>
                             <div class="col-sm-2">
                                 <a href="/member/getBalances?cardId=${cardId}&memberId=${memberId}" class="btn btn-primary" title="收支明细">
@@ -256,12 +256,7 @@
                             <label class="col-sm-4 control-label">有效期至</label>
 
                             <div class="col-sm-8">
-                                <c:if test="${cardDeadline != 0}">
-                                    <input type="text" class="form-control" value="${cardDeadline}" disabled>
-                                </c:if>
-                                <c:if test="${cardDeadline == 0}">
-                                    <input type="text" class="form-control" value="无限制" disabled>
-                                </c:if>
+                                <input type="text" class="form-control" value="${cardDeadline}" disabled>
                             </div>
                         </div>
                         <div class="form-group">
@@ -277,7 +272,7 @@
                             <div class="text-center">
                                 <p class="sc-submit-tips"></p>
                                 <a href="javascript:;" class="btn btn-primary gengxin-modal">
-                                    <span class="glyphicon glyphicon-ok"></span> 更新会员信息
+                                    <span class="glyphicon glyphicon-refresh"></span> 更新会员信息
                                 </a>
                                 <a href="#chongzhiModal" class="btn btn-primary" data-toggle="modal" data-backdrop="false">
                                     <span class="glyphicon glyphicon-usd"></span> 会员卡充值

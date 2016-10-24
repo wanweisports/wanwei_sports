@@ -238,6 +238,7 @@ table td {
 }
 /* 内容容器 */
 .container-wrapper {
+  color: #333;
   overflow: auto;
   width: 100%;
   height: 100%;
@@ -270,6 +271,7 @@ input[type=checkbox] {
 }
 .btn {
   font-size: 12px;
+  border-radius: 0;
 }
 .panel {
   margin-bottom: 10px;

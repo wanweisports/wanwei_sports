@@ -85,7 +85,7 @@
                         </tr>
                         <tr class="list-nav-item member ${param.subNav == "setting" ? "active" : ""}">
                             <td>
-                                <span><a href="/member/getMemberCarTypes">会员设置</a></span>
+                                <span><a href="/member/getMemberCarTypes">会员类型设置</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item member last-nav-item">
@@ -112,11 +112,11 @@
                                 <span><a href="/site/getSiteReservationBatch">批量预订</a></span>
                             </td>
                         </tr>
-                        <!--<tr class="list-nav-item site">
+                        <tr class="list-nav-item site ${param.subNav == "batch" ? "active" : ""}">
                             <td>
-                                <span><a href="#">订单列表</a></span>
+                                <span><a href="/site/getSiteReservationOrders">预订订单查询</a></span>
                             </td>
-                        </tr>-->
+                        </tr>
                         <tr class="list-nav-item site ${param.subNav == "pda" ? "active" : ""}">
                             <td>
                                 <span><a href="/site/getReservationsSequencePDA">场地热点分析</a></span>
@@ -192,7 +192,12 @@
                         </tr>-->
                         <tr class="list-nav-item data ${param.subNav == "business" ? "active" : ""}">
                             <td>
-                                <span><a href="/data/getBusinessIncome">营业收支记录</a></span>
+                                <span><a href="/data/getBusinessIncome">营业收支统计</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item data ${param.subNav == "percent" ? "active" : ""}">
+                            <td>
+                                <span><a href="/data/getBusinessIncome">场地使用率</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item data ${param.subNav == "attendance" ? "active" : ""}">
@@ -216,17 +221,17 @@
                     <table style="width: 100%;">
                         <tr class="list-nav-item setting ${param.subNav == "base" ? "active" : ""}">
                             <td>
-                                <span><a href="/settings/common">基础设置</a></span>
+                                <span><a href="/settings/common">场馆基础设置</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item setting ${param.subNav == "user" ? "active" : ""}">
                             <td>
-                                <span><a href="settings/getUsers">用户设置</a></span>
+                                <span><a href="settings/getUsers">员工信息设置</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item setting ${param.subNav == "role" ? "active" : ""}">
                             <td>
-                                <span><a href="/settings/getRoles">角色设置</a></span>
+                                <span><a href="/settings/getRoles">员工权限设置</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item setting ${param.subNav == "notification" ? "active" : ""}">
@@ -245,6 +250,35 @@
                             </td>
                         </tr>
                         <tr class="list-nav-item setting last-nav-item">
+                            <td>&nbsp;</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="list-nav-header" data-item="passport">
+                <td>
+                    <span><a href="javascript:;">个人中心</a></span>
+                </td>
+            </tr>
+            <tr class="list-nav-list passport" style="${param.nav == "passport" ? "" : "display:none;"}">
+                <td>
+                    <table style="width: 100%;">
+                        <tr class="list-nav-item passport ${param.subNav == "profile" ? "active" : ""}">
+                            <td>
+                                <span><a href="/passport/profile">完善信息</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item passport ${param.subNav == "password" ? "active" : ""}">
+                            <td>
+                                <span><a href="/passport/modifyPassword">密码重置</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item passport ${param.subNav == "questions" ? "active" : ""}">
+                            <td>
+                                <span><a href="/error/questions">操作指南</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item passport last-nav-item">
                             <td>&nbsp;</td>
                         </tr>
                     </table>

@@ -10,25 +10,25 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>系统设置</span> &gt;&gt; <span>用户查询</span>
+    当前位置: <span>系统设置</span> &gt;&gt; <span>员工信息查询</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
-            <div class="panel-heading">用户查询</div>
+            <div class="panel-heading">员工信息查询</div>
             <div class="panel-body">
                 <form id="users_filter_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
                         <select class="form-control" id="user_role" name="userRole" style="width:160px;">
-                            <option value="">所有角色</option>
+                            <option value="">员工权限</option>
                             <option value="1">经理</option>
                             <option value="1">收银</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <select class="form-control" id="user_state" name="userState" style="width:160px;">
-                            <option value="">所有状态</option>
+                            <option value="">员工状态</option>
                             <option value="1">正常</option>
                             <option value="2">锁定</option>
                         </select>
@@ -40,15 +40,15 @@
                     </div>
                     <div class="form-group">
                         <a href="javascript:;" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-flash"></span> 激活用户
+                            <span class="glyphicon glyphicon-flash"></span> 激活员工
                         </a>
                         <a href="javascript:;" class="btn btn-warning">
-                            <span class="glyphicon glyphicon-lock"></span> 锁定用户
+                            <span class="glyphicon glyphicon-lock"></span> 锁定员工
                         </a>
                     </div>
                     <div class="form-group pull-right">
                         <a href="/settings/getUsersView" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-plus"></span> 添加用户
+                            <span class="glyphicon glyphicon-plus"></span> 添加员工
                         </a>
                     </div>
                 </form>
@@ -60,29 +60,25 @@
                     <table class="table">
                         <thead>
                         <tr class="">
-                            <th>#</th>
-                            <th>姓名</th>
-                            <th>用户账号</th>
-                            <th>所属角色</th>
+                            <th>员工编号</th>
+                            <th>登录账号</th>
+                            <th>员工姓名</th>
+                            <th>权限类别</th>
                             <th>生效日期</th>
                             <th>截止日期</th>
-                            <th>最近登录时间</th>
                             <th>状态</th>
-                            <th>创建时间</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td><label><input type="checkbox" name="user_status" value="1"></label></td>
-                            <td>李小安</td>
+                            <td>00000</td>
                             <td>xiaoan.li@wanwei.com</td>
+                            <td>李小安</td>
                             <td>收银</td>
                             <td>2016-01-01</td>
                             <td>--</td>
-                            <td>2016-08-21 12:23:25</td>
                             <td class="text-success">正常</td>
-                            <td>2016-08-21 12:23:25</td>
                             <td>
                                 <a class="btn btn-primary" href="/settings/getUsersView?userId=1">
                                     <span class="glyphicon glyphicon-share-alt"></span>  查看
@@ -90,15 +86,13 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><label><input type="checkbox" name="user_status" value="1"></label></td>
-                            <td>李晓丹</td>
+                            <td>00012</td>
                             <td>xiaoan.li@wanwei.com</td>
+                            <td>李晓丹</td>
                             <td>收银</td>
                             <td>2016-01-01</td>
                             <td>--</td>
-                            <td>2016-08-21 12:23:25</td>
                             <td class="text-success">正常</td>
-                            <td>2016-08-21 12:23:25</td>
                             <td>
                                 <a class="btn btn-primary" href="/settings/getUsersView?userId=2">
                                     <span class="glyphicon glyphicon-share-alt"></span>  查看
@@ -106,15 +100,13 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><label><input type="checkbox" name="user_status" value="1"></label></td>
-                            <td>李晓丹</td>
+                            <td>00032</td>
                             <td>xiaoan.li@wanwei.com</td>
+                            <td>李晓丹</td>
                             <td>收银</td>
                             <td>2016-01-01</td>
                             <td>2016-10-13</td>
-                            <td>2016-08-21 12:23:25</td>
                             <td class="text-danger">锁定</td>
-                            <td>2016-08-21 12:23:25</td>
                             <td>
                                 <a class="btn btn-primary" href="/settings/getUsersView?userId=3">
                                     <span class="glyphicon glyphicon-share-alt"></span>  查看

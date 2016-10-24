@@ -25,36 +25,36 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>系统设置</span> &gt;&gt; <span>角色查询</span> &gt;&gt; <span>角色设置</span>
+    当前位置: <span>系统设置</span> &gt;&gt; <span>员工权限查询</span> &gt;&gt; <span>员工权限设置</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <form id="roles_form" class="form-horizontal" novalidate onsubmit="return false;">
             <div class="panel panel-default">
-                <div class="panel-heading">角色设置</div>
+                <div class="panel-heading">员工权限设置</div>
                 <div class="panel-body">
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="role_name" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 角色名称
+                                <span class="text-danger">*</span> 权限名称
                             </label>
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="role_name" name="roleName"
-                                       placeholder="角色名称" autocomplete="off"
+                                       placeholder="权限名称" autocomplete="off"
                                        data-val="true" data-val-required="角色名称不能为空">
                                 <div data-valmsg-for="roleName" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="role_remark" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 角色说明
+                                <span class="text-danger">*</span> 权限说明
                             </label>
 
                             <div class="col-sm-8">
                                 <textarea class="form-control" rows="3" id="role_remark" name="roleRemark"
-                                          placeholder="角色说明"
+                                          placeholder="权限说明"
                                           data-val="true" data-val-required="角色说明不能为空"></textarea>
                                 <div data-valmsg-for="roleRemark" data-valmsg-replace="true"></div>
                             </div>
@@ -93,7 +93,7 @@
                             <div class="col-sm-offset-4 col-sm-4">
                                 <p class="sc-submit-tips"></p>
                                 <button type="submit" class="btn btn-primary roles-save" style="width: 100%;">
-                                    <span class="glyphicon glyphicon-ok"></span> 设置角色
+                                    <span class="glyphicon glyphicon-ok"></span> 设置权限
                                 </button>
                             </div>
                         </div>

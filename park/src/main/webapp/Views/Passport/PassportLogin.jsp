@@ -30,7 +30,7 @@
         <div class="login">
             <div class="col-md-6 login-brief">
                 <img src="/Content/images/new/logo.png?v=${static_resource_version}">
-                <p>借力互联网大数据技术，助推体育资源的整合优化，打造最优质服务的运营平台。</p>
+                <p>借力互联网大数据技术，助推体育资源的整合，打造最优质服务的场馆运营管理平台。</p>
             </div>
             <div class="col-md-6 login-form">
                 <form id="login_form" method="post" autocomplete="off" novalidate="novalidate" onsubmit="return false;">

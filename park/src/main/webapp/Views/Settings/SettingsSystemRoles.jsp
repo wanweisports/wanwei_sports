@@ -10,17 +10,17 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>系统设置</span> &gt;&gt; <span>角色查询</span>
+    当前位置: <span>系统设置</span> &gt;&gt; <span>员工权限查询</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
-            <div class="panel-heading">角色查询</div>
+            <div class="panel-heading">员工权限查询</div>
             <div class="panel-body">
                 <form id="roles_filter_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
-                        <select class="form-control" id="role_state" name="roleState" style="width:160px;">
+                        <select class="form-control" id="role_state" name="roleState" style="width: 160px;">
                             <option value="">所有状态</option>
                             <option value="1">正常</option>
                             <option value="2">锁定</option>
@@ -33,7 +33,7 @@
                     </div>
                     <div class="form-group pull-right">
                         <a href="/settings/getRolesView" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-plus"></span> 添加用户角色
+                            <span class="glyphicon glyphicon-plus"></span> 添加员工权限
                         </a>
                     </div>
                 </form>
@@ -46,10 +46,10 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>角色名称</th>
-                            <th>角色说明</th>
-                            <th>状态</th>
-                            <th>最后操作人</th>
+                            <th>权限名称</th>
+                            <th>权限说明</th>
+                            <th>权限状态</th>
+                            <th>操作人</th>
                             <th>创建时间</th>
                             <th></th>
                         </tr>

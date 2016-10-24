@@ -28,7 +28,7 @@
         <div class="panel panel-default member-card-panel">
             <div class="panel-heading">会员卡充值</div>
             <div class="panel-body">
-                <form id="member_card_form" class="form-horizontal" onsubmit="return false;">
+                <form id="member_card_form" class="form-horizontal" novalidate onsubmit="return false;">
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label for="card_no" class="col-sm-2 control-label">
@@ -39,7 +39,7 @@
                                 <input type="text" class="form-control" id="card_no" name="cardNo" value="${cardNo}"
                                        placeholder="请输入会员卡号" autocomplete="off"
                                        data-val="true" data-val-required="会员卡号不能为空">
-                                <div data-valmsg-for="cardno" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="cardNo" data-valmsg-replace="true"></div>
                             </div>
                             <div class="col-sm-4">
                                 <a href="javascript:;" class="btn btn-primary member-card-filter">
@@ -66,7 +66,7 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">当前余额</label>
+                            <label class="col-sm-4 control-label">当前余额(元)</label>
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" value="<c:if test='${cardBalance!=null}'>${cardBalance}元</c:if>" disabled>
@@ -86,12 +86,12 @@
 
         <div class="panel panel-default recharge-card-panel">
             <div class="panel-body">
-                <form id="recharge_card_form" class="form-horizontal" onsubmit="return false;">
+                <form id="recharge_card_form" class="form-horizontal" novalidate onsubmit="return false;">
                     <input type="hidden" id="recharge_cardId" name="cardId" value="${cardId}">
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="recharge_money" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 充值金额
+                                <span class="text-danger">*</span> 充值金额(元)
                             </label>
 
                             <div class="col-sm-8">
@@ -122,22 +122,22 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="recharge_discount" class="col-sm-4 control-label">优惠金额</label>
+                            <label for="recharge_discount" class="col-sm-4 control-label">优惠金额(元)</label>
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="recharge_discount" name="subMoney"
-                                       placeholder="请输入优惠金额(元)" autocomplete="off" value="0"
+                                       placeholder="请输入优惠金额(元)" autocomplete="off"
                                        data-val-regex-pattern="^[1-9][0-9]*$"
                                        data-val-regex="优惠金额格式错误">
                                 <div data-valmsg-for="subMoney" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="recharge_send" class="col-sm-4 control-label">赠送金额</label>
+                            <label for="recharge_send" class="col-sm-4 control-label">赠送金额(元)</label>
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="recharge_send" name="givingAmount"
-                                       placeholder="请输入赠送金额(元)" autocomplete="off" value="0"
+                                       placeholder="请输入赠送金额(元)" autocomplete="off"
                                        data-val-regex-pattern="^[1-9][0-9]*$"
                                        data-val-regex="赠送金额格式错误">
                                 <div data-valmsg-for="givingAmount" data-valmsg-replace="true"></div>

@@ -24,57 +24,57 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="col-sm-3">
-                    <button class="btn btn-danger" style="margin: 10px;">
+                    <button class="btn btn-danger" style="margin: 10px; width: 100%;">
                         <span class="glyphicon glyphicon-trash"></span> 清空会员信息表
                     </button>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-danger" style="margin: 10px;">
+                    <button class="btn btn-danger" style="margin: 10px; width: 100%;">
                         <span class="glyphicon glyphicon-trash"></span> 清空会员信息表
                     </button>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-danger" style="margin: 10px;">
+                    <button class="btn btn-danger" style="margin: 10px; width: 100%;">
                         <span class="glyphicon glyphicon-trash"></span> 清空会员信息表
                     </button>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-danger" style="margin: 10px;">
+                    <button class="btn btn-danger" style="margin: 10px; width: 100%;">
                         <span class="glyphicon glyphicon-trash"></span> 清空会员信息表
                     </button>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-danger" style="margin: 10px;">
+                    <button class="btn btn-danger" style="margin: 10px; width: 100%;">
                         <span class="glyphicon glyphicon-trash"></span> 清空会员信息表
                     </button>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-danger" style="margin: 10px;">
+                    <button class="btn btn-danger" style="margin: 10px; width: 100%;">
                         <span class="glyphicon glyphicon-trash"></span> 清空会员信息表
                     </button>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-danger" style="margin: 10px;">
+                    <button class="btn btn-danger" style="margin: 10px; width: 100%;">
                         <span class="glyphicon glyphicon-trash"></span> 清空会员信息表
                     </button>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-danger" style="margin: 10px;">
+                    <button class="btn btn-danger" style="margin: 10px; width: 100%;">
                         <span class="glyphicon glyphicon-trash"></span> 清空会员信息表
                     </button>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-danger" style="margin: 10px;">
+                    <button class="btn btn-danger" style="margin: 10px; width: 100%;">
                         <span class="glyphicon glyphicon-trash"></span> 清空会员信息表
                     </button>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-danger" style="margin: 10px;">
+                    <button class="btn btn-danger" style="margin: 10px; width: 100%;">
                         <span class="glyphicon glyphicon-trash"></span> 清空会员信息表
                     </button>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-danger" style="margin: 10px;">
+                    <button class="btn btn-danger" style="margin: 10px; width: 100%;">
                         <span class="glyphicon glyphicon-trash"></span> 清空会员信息表
                     </button>
                 </div>

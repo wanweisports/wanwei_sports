@@ -4,14 +4,16 @@
             this.initEvents();
         },
         initEvents: function () {
-            var content = this;
-
             // 筛选
             $(".member-card-filter").on("click", function (e) {
                 e.preventDefault();
 
                 var $form = $("#member_card_form");
                 var conditions = $form.serialize();
+
+                if (!$form.valid()) {
+                    return false;
+                }
 
                 location.assign('/member/getMembersCardUpgrade?' + conditions);
             });
@@ -21,8 +23,8 @@
                     var data = res.data;
 
                     if (res.code == 1) {
-                        $("#upgrade_cost").val(data.cardTypeMoney);
-                        $("#upgrade_discount").val(data.cardTypeDiscount);
+                        $("#upgrade_cost").val(data.cardTypeMoney + "元");
+                        $("#upgrade_discount").val(data.cardTypeDiscount + "折");
                         $("#upgrade_deadline").val(data.cardDeadline);
                     } else {
                         alert("卡类型信息查询失败, 请稍后重试");

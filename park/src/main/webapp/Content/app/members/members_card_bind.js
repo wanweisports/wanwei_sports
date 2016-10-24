@@ -40,11 +40,11 @@
                     if (res.code == 1) {
                         var data = res.data;
 
-                        $('[name="cardTypeDiscount"]').val(data.cardTypeDiscount / 10.0);
-                        $('[name="cardTypeCredit"]').val(data.cardTypeCredit || 0);
-                        $('[name="cardTypeMoney"]').val(data.cardTypeMoney || 0);
+                        $('[name="cardTypeDiscount"]').val(data.cardTypeDiscount + "折");
+                        $('[name="cardTypeCredit"]').val((data.cardTypeCredit || 0) + "元");
+                        $('[name="cardTypeMoney"]').val((data.cardTypeMoney || 0) + "元");
                         $('[name="cardDeadline"]').val(data.cardDeadline);
-                        $('[name="cardTypeAhead"]').val(data.cardTypeAhead || 0);
+                        $('[name="cardTypeAhead"]').val((data.cardTypeAhead || 0) + "天");
                     } else {
                         alert(res.message || "会员类别详情查询失败, 请稍后重试");
                     }
@@ -92,6 +92,14 @@
             // 打印小票
             $(".print-ticket").on("click", function (e) {
                 e.preventDefault();
+
+                if (!$("#is_print_ticket").prop("checked")) {
+                    // 打印收款单 [未完成] 连接小票机
+
+                    location.assign(content.opts.ToURL);
+                    $("#confirmModal").modal({backdrop: false, show: false});
+                    return false;
+                }
 
                 var $form = $("#member_card_ticket_form");
                 var conditions = $form.serialize();

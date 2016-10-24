@@ -6,65 +6,37 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="/Content/dist/members/members_list_query.js?v=${static_resource_version}"></script>
-    <script>
-        (function ($) {
-            $("#payment_type").val('${memberType}');
-        })(jQuery);
-    </script>
+    <script src="/Content/app/settings/settings_notification.js?v=${static_resource_version}"></script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>会员管理</span> &gt;&gt; <span>会员查询</span>
+    当前位置: <span>系统设置</span> &gt;&gt; <span>通知管理</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
-            <div class="panel-heading">会员查询</div>
+            <div class="panel-heading">通知管理</div>
             <div class="panel-body">
-                <form id="member_filter_form" class="form-horizontal" method="post" novalidate
-                      onsubmit="return false;">
+                <form id="notification_form" class="form-horizontal" onsubmit="return false;">
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="member_mobile" class="col-sm-4 control-label">手机号码</label>
+
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="member_mobile" name="memberMobile"
-                                       placeholder="请输入手机号码" value="${memberMobile}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="payment_type" class="col-sm-4 control-label">支付类型</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" id="payment_type" name="memberType">
-                                    <option value="">全部类型</option>
-                                    <option value="1">预付类型</option>
-                                    <option value="2">记账类型</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="card_no" class="col-sm-4 control-label">会员卡号</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="card_no" name="cardNo"
-                                       placeholder="请输入会员卡号" value="${cardNo}">
+                                <input type="text" class="form-control" id="member_mobile" name="member_mobile"
+                                       placeholder="请输入手机号码">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="member_type" class="col-sm-4 control-label">会员类型</label>
+
                             <div class="col-sm-8">
-                                <select class="form-control" id="member_type" name="cardTypeId">
+                                <select class="form-control" id="member_type" name="member_type">
                                     <option value="">全部类型</option>
-                                    <c:forEach var="type" items="${memberCarTypeNames}">
-                                        <c:if test="${type.cardTypeId == cardTypeId}">
-                                            <option value="${type.cardTypeId}" selected>${type.cardTypeName}</option>
-                                        </c:if>
-                                        <c:if test="${type.cardTypeId != cardTypeId}">
-                                            <option value="${type.cardTypeId}">${type.cardTypeName}</option>
-                                        </c:if>
-                                    </c:forEach>
+                                    <option value="1">金卡</option>
+                                    <option value="2">银卡</option>
+                                    <option value="3">记账卡</option>
                                 </select>
                             </div>
                         </div>
@@ -72,15 +44,34 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="member_idcard" class="col-sm-4 control-label">身份证号</label>
+
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="member_idcard" name="memberIdcard"
-                                       placeholder="请输入身份证号" value="${memberIdcard}">
+                                <input type="text" class="form-control" id="member_idcard" name="member_idcard"
+                                       placeholder="请输入身份证号">
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class=" col-sm-offset-4 col-sm-8">
-                                <a href="javascript:;" class="btn btn-primary member-filter">
-                                    <span class="glyphicon glyphicon-search"></span> 检索 & 显示
+                            <div class="col-sm-offset-1 col-sm-8">
+                                <a href="javascript:;" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="card_no" class="col-sm-4 control-label">会员卡号</label>
+
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="card_no" name="card_no"
+                                       placeholder="请输入会员卡号">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <a href="#fasongModal" class="btn btn-primary pull-right" data-toggle="modal"
+                                    data-backdrop="false">
+                                    <span class="glyphicon glyphicon-send"></span> 发送消息
                                 </a>
                             </div>
                         </div>
@@ -94,50 +85,65 @@
                     <table class="table">
                         <thead>
                         <tr>
+                            <th>#</th>
                             <th>姓名</th>
                             <th>手机号码</th>
+                            <th>身份证号</th>
                             <th>会员卡号</th>
                             <th>会员类型</th>
-                            <th>截止日期</th>
+                            <th>有效期至</th>
                             <th>余额(元)</th>
                             <th>状态</th>
                             <th>操作人</th>
-                            <th>办卡时间</th>
-                            <th>操作</th>
+                            <th>注册时间</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="member" items="${list}">
+                        <tr>
+                            <td><label><input type="checkbox" name="message_status" value=""></label></td>
+                            <td>李洪旭</td>
+                            <td>110****5678</td>
+                            <td>123456***4321</td>
+                            <td>34543553</td>
+                            <td>金卡</td>
+                            <td>2016-12-31</td>
+                            <td>10000</td>
+                            <td class="text-success">有效</td>
+                            <td>李晓丹</td>
+                            <td>2016-09-03</td>
+                        </tr>
+                        <tr>
+                            <td><label><input type="checkbox" name="message_status" value=""></label></td>
+                            <td>李洪旭</td>
+                            <td>110****5678</td>
+                            <td>123456***4321</td>
+                            <td>34543553</td>
+                            <td>金卡</td>
+                            <td>2016-12-31</td>
+                            <td>10000</td>
+                            <td class="text-danger">锁定</td>
+                            <td>李晓丹</td>
+                            <td>2016-09-03</td>
+                        </tr>
+                        <c:forEach var="member" items="${members}">
                             <tr>
-                                <td>${member.memberName}</td>
-                                <td>${member.memberMobile}</td>
-                                <td>${member.cardNo}</td>
-                                <td>${member.cardTypeName}</td>
-                                <td>${member.cardDeadline}</td>
-                                <td>${member.cardBalance}</td>
-                                <c:if test="${member.cardStatus == null}">
-                                    <td></td>
-                                </c:if>
-                                <c:if test="${member.cardStatus == 1}">
+                                <td><label><input type="checkbox" name="message_status" value="${loop.index}"></label></td>
+                                <td>${loop.index}</td>
+                                <td>${member.member_name}</td>
+                                <td>${member.member_mobile}</td>
+                                <td>${member.member_idcard}</td>
+                                <td>${member.card_id}</td>
+                                <td>白金卡</td>
+                                <td>2016-12-31</td>
+                                <td>10000</td>
+                                <c:if test="${member.member_status == 1}">
                                     <td class="text-success">有效</td>
                                 </c:if>
-                                <c:if test="${member.cardStatus == 2}">
+                                <c:if test="${member.member_status == 2}">
                                     <td class="text-danger">锁定</td>
                                 </c:if>
-                                <td>${member.operatorName}</td>
-                                <td>${member.createTime}</td>
-                                <td>
-                                    <c:if test="${member.tempCardNo == null}">
-                                        <a class="btn btn-primary" href="/member/memberInfo?memberId=${member.memberId}">
-                                            <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                        </a>
-                                    </c:if>
-                                    <c:if test="${member.tempCardNo != null}">
-                                        <a class="btn btn-warning" href="/member/membersInfoCar?memberId=${member.memberId}">
-                                            <span class="glyphicon glyphicon-credit-card"></span> 绑卡
-                                        </a>
-                                    </c:if>
-                                </td>
+                                <td>李晓丹</td>
+                                <td>2016-09-03</td>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -210,9 +216,31 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="fasongModal" tabindex="-1" role="dialog" aria-labelledby="fasongModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="fasongModalLabel">发送消息</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info" role="alert">发送消息至 李洪旭, 李洪旭, 李洪旭等</div>
+                    <textarea class="form-control" rows="3"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-ok"></span> 确 定
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </layout:override>
 
 <c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="member"/>
-    <c:param name="subNav" value="list"/>
+    <c:param name="nav" value="setting"/>
+    <c:param name="subNav" value="notification"/>
 </c:import>
