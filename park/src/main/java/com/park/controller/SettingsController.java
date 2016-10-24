@@ -1,16 +1,30 @@
 package com.park.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.park.common.po.ParkBusiness;
+import com.park.service.IParkService;
 
 /**
  * Created by wangjun on 16/10/12.
  */
 @Controller
 public class SettingsController extends BaseController {
+	
+	@Autowired
+	private IParkService parkService;
+	
     // 常用设置
     @RequestMapping("settings/common")
-    public String settingsCommon() {
+    public String settingsCommon(ParkBusiness parkBusiness, Model model) {
+    	try {
+			model.addAttribute("businessId", parkService.saveParkBusiness(parkBusiness));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         return "Settings/SettingsCommon";
     }
 

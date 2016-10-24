@@ -12,4 +12,8 @@ public interface IParkService {
 	
 	public List<Map<String, Object>> getTimePeriod(ParkBusiness parkBusiness) throws ParseException;
 	
+	public ParkBusiness getParkBusiness(int businessId);
+	
+	public Integer saveParkBusiness(ParkBusiness parkBusiness);
+	
 }
