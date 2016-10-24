@@ -65,10 +65,24 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="file" id="good_pic" name="goodPic" accept="image/*"
-                                       value="${goodPic}" placeholder="商品图片" autocomplete="off"
-                                       data-val="true" data-val-required="商品图片不能为空">
+                                <input type="file" id="good_pic" name="goodPic" accept="image/*" value=""
+                                       placeholder="商品图片" autocomplete="off" data-val="true"
+                                       data-val-required="商品图片不能为空">
                                 <div data-valmsg-for="goodPic" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="good_count" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 初始库存量
+                            </label>
+
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="good_count" name="goodCount"
+                                       value="${goodCount}" placeholder="初始库存量" autocomplete="off"
+                                       data-val="true" data-val-required="初始库存量不能为空"
+                                       data-val-regex-pattern="^[1-9]\d*$"
+                                       data-val-regex="初始库存量格式错误">
+                                <div data-valmsg-for="goodCount" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -83,6 +97,19 @@
                                        value="${goodName}" placeholder="商品名称" autocomplete="off"
                                        data-val="true" data-val-required="商品名称不能为空">
                                 <div data-valmsg-for="goodName" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="good_type" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 商品类别
+                            </label>
+
+                            <div class="col-sm-8">
+                                <select class="form-control" id="good_type" name="goodType">
+                                    <option value="">请选择</option>
+                                    <option value="1">饮食类</option>
+                                </select>
+                                <div data-valmsg-for="goodType" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -120,7 +147,7 @@
                     </div>
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <label for="good_remark" class="col-sm-2 control-label">备注</label>
+                            <label for="good_remark" class="col-sm-2 control-label">商品描述</label>
 
                             <div class="col-sm-10">
                             <textarea class="form-control" id="good_remark" name="goodRemark" rows="3"
