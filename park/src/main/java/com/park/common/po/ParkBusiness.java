@@ -20,6 +20,11 @@ public class ParkBusiness implements java.io.Serializable {
 	private String businessStartTime;
 	private String businessEndTime;
 	private String businessTimePeriod;
+	private String businessName;
+	private String businessAreaName;
+	private String businessContact;
+	private String businessPhone;
+	private String businessAddress;
 	private String createTime;
 	private String updateTime;
 	private Integer salesId;
@@ -32,11 +37,18 @@ public class ParkBusiness implements java.io.Serializable {
 
 	/** full constructor */
 	public ParkBusiness(String businessStartTime, String businessEndTime,
-			String businessTimePeriod, String createTime, String updateTime,
-			Integer salesId) {
+			String businessTimePeriod, String businessName,
+			String businessAreaName, String businessContact,
+			String businessPhone, String businessAddress, String createTime,
+			String updateTime, Integer salesId) {
 		this.businessStartTime = businessStartTime;
 		this.businessEndTime = businessEndTime;
 		this.businessTimePeriod = businessTimePeriod;
+		this.businessName = businessName;
+		this.businessAreaName = businessAreaName;
+		this.businessContact = businessContact;
+		this.businessPhone = businessPhone;
+		this.businessAddress = businessAddress;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
 		this.salesId = salesId;
@@ -79,6 +91,51 @@ public class ParkBusiness implements java.io.Serializable {
 
 	public void setBusinessTimePeriod(String businessTimePeriod) {
 		this.businessTimePeriod = businessTimePeriod;
+	}
+
+	@Column(name = "businessName")
+	public String getBusinessName() {
+		return this.businessName;
+	}
+
+	public void setBusinessName(String businessName) {
+		this.businessName = businessName;
+	}
+
+	@Column(name = "businessAreaName", length = 512)
+	public String getBusinessAreaName() {
+		return this.businessAreaName;
+	}
+
+	public void setBusinessAreaName(String businessAreaName) {
+		this.businessAreaName = businessAreaName;
+	}
+
+	@Column(name = "businessContact", length = 32)
+	public String getBusinessContact() {
+		return this.businessContact;
+	}
+
+	public void setBusinessContact(String businessContact) {
+		this.businessContact = businessContact;
+	}
+
+	@Column(name = "businessPhone", length = 32)
+	public String getBusinessPhone() {
+		return this.businessPhone;
+	}
+
+	public void setBusinessPhone(String businessPhone) {
+		this.businessPhone = businessPhone;
+	}
+
+	@Column(name = "businessAddress", length = 1024)
+	public String getBusinessAddress() {
+		return this.businessAddress;
+	}
+
+	public void setBusinessAddress(String businessAddress) {
+		this.businessAddress = businessAddress;
 	}
 
 	@Column(name = "createTime", length = 20)
