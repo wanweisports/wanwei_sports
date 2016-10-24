@@ -148,7 +148,7 @@
                     <table style="width: 100%;">
                         <tr class="list-nav-item good ${param.subNav == "setting" ? "active" : ""}">
                             <td>
-                                <span><a href="/good/updateGood">商品设置</a></span>
+                                <span><a href="/good/settingGood">商品设置</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item good ${param.subNav == "stock" ? "active" : ""}">

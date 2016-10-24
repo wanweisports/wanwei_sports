@@ -22,6 +22,10 @@
                 var $form = $("#member_card_form");
                 var conditions = $form.serialize();
 
+                if (!$form.valid()) {
+                    return false;
+                }
+
                 location.assign('/member/getMembersCardRefresh?' + conditions);
             });
 

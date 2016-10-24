@@ -24,7 +24,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">商品购物车</div>
             <div class="panel-body goods-cart-list">
-                <table class="table table-striped table-hover">
+                <table class="table">
                     <thead>
                     <tr>
                         <th>商品编号</th>
