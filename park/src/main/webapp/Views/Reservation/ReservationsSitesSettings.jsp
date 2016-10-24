@@ -35,7 +35,7 @@
                             <option value="">全部类型</option>
                             <c:forEach var="sport" items="${siteSportNames}">
                                 <option value="${sport.sportId}"
-                                        <c:if test="${sport.sportId = sportId}">selected</c:if> >${sport.sportName}</option>
+                                        <c:if test="${sport.sportId == sportId}">selected</c:if> >${sport.sportName}</option>
                             </c:forEach>
                         </select>
                         <a href="/site/getSiteSports" class="btn btn-primary">

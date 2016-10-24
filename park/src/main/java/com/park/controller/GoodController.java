@@ -15,6 +15,7 @@ import com.park.common.bean.PageBean;
 import com.park.common.bean.ResponseBean;
 import com.park.common.exception.MessageException;
 import com.park.common.po.GoodInfo;
+import com.park.common.po.GoodShopping;
 import com.park.common.po.UserOperator;
 import com.park.common.util.JsonUtils;
 import com.park.service.IGoodService;
@@ -108,10 +109,47 @@ public class GoodController extends BaseController {
 		return "Goods/GoodsMarket";
 	}
 	
-	@RequestMapping(value = "getGoodsCart")
-	public String getGoodsCart(GoodInputView goodInputView, Model model) {
+	@ResponseBody
+	@RequestMapping(value = "addGoodsToCart")
+	public ResponseBean addGoodsToCart(GoodShopping goodShopping){
 		try {
-			model.addAttribute("goods", goodService.getGoodsCart(goodInputView));
+			UserOperator userOperator = super.getUserInfo();
+			goodShopping.setSalesId(userOperator.getId());
+			Integer shoppingId = goodService.saveGoodShopping(goodShopping);
+			Map<String, Object> data = new HashMap<String, Object>();
+			data.put("shoppingId", shoppingId);
+			return new ResponseBean(data);
+		} catch (MessageException e) {
+			e.printStackTrace();
+			return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "deleteCart")
+	public ResponseBean deleteCart(int shoppingId){
+		try {
+			UserOperator userOperator = super.getUserInfo();
+			goodService.deleteCart(shoppingId, userOperator.getId());
+			return new ResponseBean(true);
+		} catch (MessageException e) {
+			e.printStackTrace();
+			return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
+	}
+	
+	@RequestMapping(value = "getGoodsCart")
+	public String getGoodsCart(Model model) {
+		try {
+			//获取登录销售员下的所有购物车商品
+			UserOperator userOperator = super.getUserInfo();
+			model.addAttribute("goods", goodService.getGoodsCart(userOperator.getId()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -14,6 +14,7 @@ import com.park.common.bean.PageBean;
 import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.GoodInfo;
+import com.park.common.po.GoodShopping;
 import com.park.common.util.DateUtil;
 import com.park.common.util.FileUtil;
 import com.park.common.util.JsonUtils;
@@ -134,8 +135,52 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 	}
 	
 	@Override
-	public List<Map<String, Object>> getGoodsCart(GoodInputView goodInputView){
-		return null;
+	public List<Map<String, Object>> getGoodsCart(int salesId){
+		return baseDao.queryBySql("SELECT gi.goodId, gi.goodNo, gi.goodName, gi.goodPrice, gsi.shoppingGoodAmount FROM good_info gi, good_shopping gsi WHERE gi.goodId = gsi.goodId AND gsi.salesId = ?", salesId);
+	}
+	
+	@Override
+	public Integer saveGoodShopping(GoodShopping goodShopping){
+		Integer goodId = goodShopping.getGoodId();
+		if(goodId == null) throw new MessageException("参数错误：goodId");
+		GoodInfo goodInfo = getGoodInfo(goodId);
+		if(goodInfo == null) throw new MessageException("商品不存在");
+		goodShopping.setShoppingName(goodInfo.getGoodName());
+		GoodShopping goodShoppingDB = getGoodShoppingByGood(goodId, goodShopping.getSalesId());
+		String nowDate = DateUtil.getNowDate();
+		if(goodShoppingDB == null){
+			goodShopping.setShoppingGoodAmount(1);
+			goodShopping.setCreateTime(nowDate);
+			baseDao.save(goodShopping, null);
+			return goodShopping.getShoppingId();
+		}else{
+			goodShoppingDB.setShoppingGoodAmount(goodShoppingDB.getShoppingGoodAmount()+1);
+			goodShoppingDB.setUpdateTime(nowDate);
+			baseDao.save(goodShoppingDB, goodId);
+			return goodShoppingDB.getShoppingId();
+		}
+	}
+	
+	@Override
+	public void deleteCart(int shoppingId, int salesId){
+		GoodShopping goodShopping = getGoodShopping(shoppingId, salesId);
+		if(goodShopping == null) throw new MessageException("该购物商品不存在");
+		baseDao.delete(goodShopping);
+	}
+	
+	@Override
+	public GoodShopping getGoodShoppingByGood(int goodId, int salesId){
+		return baseDao.queryByHqlFirst("FROM GoodShopping WHERE goodId = ? AND salesId = ?", goodId, salesId);
+	}
+	
+	@Override
+	public GoodShopping getGoodShopping(int shoppingId, int salesId){
+		return baseDao.queryByHqlFirst("FROM GoodShopping WHERE shoppingId = ? AND salesId = ?", shoppingId, salesId);
 	}
 	
 }
+
+
+
+
+
