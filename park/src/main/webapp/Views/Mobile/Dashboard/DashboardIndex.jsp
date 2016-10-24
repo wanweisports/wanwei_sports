@@ -50,6 +50,12 @@
                 </div>
                 <p class="weui-grid__label">会员卡</p>
             </a>
+            <a href="mobile/training/list" class="weui-grid">
+                <div class="weui-grid__icon">
+                    <img src="/Content/images/mobile/classroom.png?v=${static_resource_version}" alt="用户信息">
+                </div>
+                <p class="weui-grid__label">培训报名</p>
+            </a>
             <a href="/mobile/center/about" class="weui-grid">
                 <div class="weui-grid__icon">
                     <img src="/Content/images/mobile/about.png?v=${static_resource_version}" alt="系统消息">

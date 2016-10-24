@@ -379,6 +379,12 @@ public class MemberController extends BaseController {
     public String getMembersLoans(Model model) {
         return "Members/MembersLoans";
     }
+
+    // 会员卡注销
+    @RequestMapping(value = "getMembersCardCancel")
+    public String getMembersCardCancel(Model model) {
+        return "Members/MembersCardCancel";
+    }
     
 }
 

@@ -26,6 +26,12 @@ public class GoodController extends BaseController {
 	
 	@Autowired
 	private IGoodService goodService;
+
+    // 商品类别设置
+    @RequestMapping("typeGood")
+    public String typeGood(){
+        return "Goods/GoodsTypeSettings";
+    }
 	
 	@RequestMapping("settingGood")
 	public String settingGood(){

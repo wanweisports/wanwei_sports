@@ -68,6 +68,11 @@
                                 <span><a href="/member/getMembersCardRefresh">会员卡补办</a></span>
                             </td>
                         </tr>
+                        <tr class="list-nav-item member ${param.subNav == "cancel" ? "active" : ""}">
+                            <td>
+                                <span><a href="/member/getMembersCardCancel">会员卡注销</a></span>
+                            </td>
+                        </tr>
                         <!--<tr class="list-nav-item member ${param.subNav == "operation" ? "active" : ""}">
                             <td>
                                 <span><a href="/member/getOperations">会员卡操作</a></span>
@@ -146,6 +151,11 @@
             <tr class="list-nav-list good" style="${param.nav == "good" ? "" : "display:none;"}">
                 <td>
                     <table style="width: 100%;">
+                        <tr class="list-nav-item good ${param.subNav == "type" ? "active" : ""}">
+                            <td>
+                                <span><a href="/good/typeGood">商品类别设置</a></span>
+                            </td>
+                        </tr>
                         <tr class="list-nav-item good ${param.subNav == "setting" ? "active" : ""}">
                             <td>
                                 <span><a href="/good/settingGood">商品设置</a></span>

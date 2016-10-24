@@ -6,7 +6,7 @@ body {
   height: 100vh;
   padding: 0;
   margin: 0;
-  background: #f5faff;
+  background: #e5e9ee;
   color: #888;
   overflow-x: hidden;
 }
@@ -21,6 +21,9 @@ a:hover {
 }
 .weui-cells .weui-label {
   width: 5em;
+}
+.weui-btn {
+  font-size: 14px;
 }
 .weui-btn_primary {
   background-color: #2faef6;
@@ -74,6 +77,9 @@ a:hover {
 .weui-navbar__item.weui-bar__item_on {
   background: #2faef6;
   color: #fff;
+}
+.weui-cells_form textarea {
+  padding-left: 15px;
 }
 [v-cloak] {
   display: none;

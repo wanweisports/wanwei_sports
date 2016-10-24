@@ -14,16 +14,17 @@
         <div class="weui-tab">
             <div class="weui-navbar">
                 <div class="weui-navbar__item weui-bar__item_on">
-                    全部
+                    全部课程
                 </div>
                 <div class="weui-navbar__item">
-                    报名中
-                </div>
-                <div class="weui-navbar__item">
-                    已完成
+                    已报名
                 </div>
             </div>
             <div class="weui-tab__panel">
+                <div class="weui-btn-area">
+                    <a class="weui-btn weui-btn_primary" href="/mobile/training/signup">我要报名</a>
+                </div>
+
                 <div class="weui-panel weui-panel_access">
                     <div class="weui-panel__bd">
                         <a href="/mobile/training/students" class="weui-media-box weui-media-box_appmsg">

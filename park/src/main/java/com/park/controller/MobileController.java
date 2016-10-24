@@ -54,9 +54,31 @@ public class MobileController extends BaseController {
         return "Mobile/Reservation/ReservationList";
     }
 
+    // 培训
+
     // 培训报名
     @RequestMapping("mobile/training/signup")
     public String renderTrainingSignUp() {
         return "Mobile/Training/TrainingSignUp";
+    }
+    // 报名课程列表
+    @RequestMapping("mobile/training/list")
+    public String renderTrainingList() {
+        return "Mobile/Training/TrainingList";
+    }
+    // 报名人数列表
+    @RequestMapping("mobile/training/students")
+    public String renderTrainingStudents() {
+        return "Mobile/Training/TrainingStudents";
+    }
+    // 课程创建
+    @RequestMapping("mobile/training/create")
+    public String renderTrainingCreate() {
+        return "Mobile/Training/TrainingCreate";
+    }
+    // 课程列表
+    @RequestMapping("mobile/training/classes")
+    public String renderTrainingClasses() {
+        return "Mobile/Training/TrainingClasses";
     }
 }

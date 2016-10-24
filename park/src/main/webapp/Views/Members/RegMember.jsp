@@ -42,7 +42,9 @@
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="cardNo" name="tempCardNo"
-                                       placeholder="会员卡号" value="${cardNo}" readonly>
+                                       placeholder="会员卡号" value="${cardNo}"
+                                       data-val="true" data-val-required="会员卡号不能为空">
+                                <div data-valmsg-for="tempCardNo" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
