@@ -24,6 +24,10 @@
                 </div>
             </div>
             <div class="weui-tab__panel">
+                <div class="weui-btn-area">
+                    <a class="weui-btn weui-btn_primary" href="/mobile/training/create">创建课程</a>
+                </div>
+
                 <div class="weui-panel weui-panel_access">
                     <div class="weui-panel__bd">
                         <a href="/mobile/training/create" class="weui-media-box weui-media-box_appmsg">
