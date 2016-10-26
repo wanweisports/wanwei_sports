@@ -1,7 +1,7 @@
 package com.park.service;
 
-import java.util.Map;
-
+import com.park.common.bean.OperatorInputView;
+import com.park.common.bean.PageBean;
 import com.park.common.bean.out.ReserveInfo;
 import com.park.common.po.SystemRole;
 import com.park.common.po.SystemRoleOperator;
@@ -20,5 +20,7 @@ public interface IOperatorService {
 	public UserOperator getUserOperator(String id);
 	
 	public ReserveInfo getOperatorNameInfo(String operatorId);
+	
+	public PageBean getOperatorList(OperatorInputView operatorInputView);
 	
 }
