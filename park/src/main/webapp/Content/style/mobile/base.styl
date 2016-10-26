@@ -9,7 +9,7 @@ body
     height 100vh
     padding 0
     margin 0
-    background #F5FAFF
+    background #E5E9EE
     color #888888
     overflow-x hidden
 a
@@ -18,38 +18,52 @@ a
         text-decoration none
 
 // weui 重写
-.weui_cells
+.weui-cells
     font-size 14px
-    .weui_label
+    .weui-label
         width 5em
-.weui_btn_primary
+.weui-btn
+    font-size 14px
+.weui-btn_primary
     background-color #2FAEF6
-.weui_btn_primary:not(.weui_btn_disabled):active
+.weui-btn_primary:not(.weui-btn_disabled):active
     background-color #2FAEF6
-.weui_btn_plain_primary
+.weui-btn_plain_primary
     color #2FAEF6
     border 1px solid #2FAEF6
-.weui_btn_plain_primary:not(.weui_btn_disabled):active
+.weui-btn_plain_primary:not(.weui-btn_disabled):active
     color #2FAEF6
     border 1px solid #2FAEF6
-.weui_cells_radio .weui_check:checked+.weui_icon_checked:before
+.weui-cells_radio .weui_check:checked+.weui_icon_checked:before
     color #2FAEF6
 .weui_icon_success:before
     color #2FAEF6
-.weui_switch:checked
+.weui-switch:checked
     border-color #2FAEF6
     background-color #2FAEF6
-.weui_cell_ft
+.weui-cell__ft
     font-size 12px
-.weui_btn_dialog.primary
+.weui-btn_dialog.primary
     color #2FAEF6
-.weui_actionsheet
+.weui-actionsheet
     max-height 100%
     overflow auto
-.weui_mask.info-container
+.weui-mask.info-container
     overflow auto
-.weui_input
+.weui-input
     padding-left 15px
+.weui-select
+    color #888
+.weui-cell_select .weui-cell__bd:after
+    display none
+.weui-form-preview__btn_primary
+    color #2FAEF6
+.weui-navbar__item.weui-bar__item_on
+    background #2FAEF6
+    color #fff
+.weui-cells_form
+    textarea
+        padding-left 15px
 
 [v-cloak]
     display none
@@ -111,154 +125,3 @@ a
     background #009DD9
     color rgba(255, 255, 255, 0.6)
     opacity 0.6
-
-// 合作品牌
-.car-insure-companies-title
-    margin-top rem(60px)
-    text-align center
-.car-insure-companies
-    background #ffffff
-    .car-insure-companies-group
-        border 1px solid #DDDDDD
-        &:first-child
-            border-bottom-style none
-    .car-insure-companies-item
-        display inline-block
-        width 32%
-        border-right 1px solid #DDDDDD
-        &:last-child
-            border-right-style none
-        img
-            width 100%
-
-// 首页广告轮播按钮
-.car-input-enter
-    position fixed !important
-    top rem(330px) !important
-    border 1px solid #FF8A38 !important
-    background #FFFFFF !important
-    z-index 999 !important
-    width 90% !important
-    height rem(80px) !important
-    border-radius 6px !important
-    left 3% !important
-
-// 头部
-.car-insure-header
-    background #2FAEF6
-    color #ffffff
-    padding-top rem(18px)
-    padding-bottom rem(18px)
-    padding-left rem(20px)
-    padding-right rem(20px)
-    text-align center
-    .left
-        float left
-        width rem(52px)
-        img
-            height rem(38px)
-            margin-top rem(10px)
-    .right
-        float right
-        margin-top rem(4px)
-        color #ffffff
-    .title
-        font-size 18px
-    .left-title
-        margin-left rem(-52px)
-
-// tab切换
-.car-insure-navbar
-    position relative
-    height 100%
-    .navbar-tab
-        display block
-        position absolute
-        top 0
-        width 100%
-        background #FFFFFF
-        .navbar-tab-item
-            position relative
-            display block
-            padding rem(30px) 0
-            text-align center
-            color #888888
-            font-size 18px
-            border 1px solid #DDDDDD
-            border-left-style none
-            border-top-style none
-            font-weight 700
-            float left
-            width 33%
-            &:last-child
-                border-right-style none
-    .navbar-content
-        box-sizing border-box
-        height 100%
-        padding-top rem(100px)
-        padding-bottom rem(50px)
-        overflow auto
-
-// 页面logo
-.car-insure-main
-    .car-insure-logo
-        text-align center
-        padding-top: rem(140px)
-        padding-bottom: rem(95px)
-        .logo
-            width: rem(375px)
-
-// 车险小知识
-.car-insure-running
-    .car-insure-running-container
-        background #F5FAFF
-        color #000000
-        opacity 1 !important
-        .car-insure-main
-            text-align center
-            img
-                display block
-                margin 0 auto
-                margin-top rem(30px)
-                margin-bottom rem(30px)
-            .title
-                margin-top rem(20px)
-                font-size 16px
-                font-weight 700
-            .tips
-                color #4c4c4c
-                background #FFCC22
-                text-align left
-                padding rem(20px)
-                margin rem(20px)
-                border-radius rem(20px)
-
-// 脚部
-.car-insure-footer
-    background #FFFFFF
-    color #999999
-    border 1px solid #DDDDDD
-    position fixed
-    bottom 0
-    left 0
-    width 100%
-    z-index 100
-    .nav-container
-        text-align center
-        .nav-item
-            float left
-            width 33%
-            color #999999
-            img
-                display block
-                margin 0 auto
-                margin-top rem(6px)
-                height rem(50px)
-            span
-                display block
-                font-size 12px
-                color #999999
-        .nav-active
-            color #2FAEF6
-            span
-                color #2FAEF6

@@ -5,6 +5,8 @@
             this.initTimePicker();
         },
         initTimePicker: function () {
+            $.datetimepicker.setLocale('zh');
+
             // 营业开始时间
             $('#start_time').datetimepicker({
                 datepicker: false,

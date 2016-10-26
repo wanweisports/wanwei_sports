@@ -1,11 +1,13 @@
 package com.park.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Created by wangjun on 16/10/17.
  * 移动端页面
  */
+@Controller
 public class MobileController extends BaseController {
 
     // 首页
@@ -26,12 +28,6 @@ public class MobileController extends BaseController {
     @RequestMapping("mobile/center/card")
     public String renderCenterCard() {
         return "Mobile/Center/CenterCard";
-    }
-
-    // 个人中心系统消息
-    @RequestMapping("mobile/center/message")
-    public String renderCenterMessage() {
-        return "Mobile/Center/CenterMessage";
     }
 
     // 个人中心修改密码
@@ -58,9 +54,31 @@ public class MobileController extends BaseController {
         return "Mobile/Reservation/ReservationList";
     }
 
+    // 培训
+
     // 培训报名
     @RequestMapping("mobile/training/signup")
     public String renderTrainingSignUp() {
         return "Mobile/Training/TrainingSignUp";
+    }
+    // 报名课程列表
+    @RequestMapping("mobile/training/list")
+    public String renderTrainingList() {
+        return "Mobile/Training/TrainingList";
+    }
+    // 报名人数列表
+    @RequestMapping("mobile/training/students")
+    public String renderTrainingStudents() {
+        return "Mobile/Training/TrainingStudents";
+    }
+    // 课程创建
+    @RequestMapping("mobile/training/create")
+    public String renderTrainingCreate() {
+        return "Mobile/Training/TrainingCreate";
+    }
+    // 课程列表
+    @RequestMapping("mobile/training/classes")
+    public String renderTrainingClasses() {
+        return "Mobile/Training/TrainingClasses";
     }
 }

@@ -3,7 +3,7 @@ body {
   font-family: "宋体", "微软雅黑", Arial, Helvetica, sans-serif;
   color: #075b92;
   background: #fff;
-  font-size: 12px;
+  font-size: 14px;
   margin: 0;
   padding: 0;
 }
@@ -115,21 +115,23 @@ table td {
   display: block;
 }
 .top-container table.top-header .top-header-right table .top-header-menu .menu ul li a:hover span {
-  color: #004c7e;
+  color: #2d97e6;
 }
 .top-container table.top-menu {
   width: 100%;
   border: none;
-  height: 25px;
+  height: 30px;
 }
 .top-container table.top-menu .top-menu-left {
   background: url("/Content/images/new/menu_bg.jpg");
+  background-size: auto 30px;
   width: 165px;
 }
 .top-container table.top-menu .top-menu-left .top-menu-user {
   background: url("/Content/images/new/menu_left.jpg") no-repeat;
+  background-size: 155px 27px;
   width: 155px;
-  height: 22px;
+  height: 27px;
   float: left;
   margin: 3px 0 0 4px;
   text-align: center;
@@ -140,22 +142,23 @@ table td {
 }
 .top-container table.top-menu .top-menu-list {
   background: url("/Content/images/new/menu_bg.jpg") repeat-x;
+  background-size: auto 30px;
   width: 100%;
 }
 .top-container table.top-menu .top-menu-list div.menu-items {
   width: 100%;
-  height: 25px;
+  height: 30px;
 }
 .top-container table.top-menu .top-menu-list div.menu-items .short-enter {
-  background: url("/Content/images/new/hand_right.png") no-repeat 0 2px;
+  background: url("/Content/images/new/hand_right.png") no-repeat 0 4px;
   background-size: auto 20px;
   float: left;
   padding-left: 24px;
-  padding-top: 4px;
+  padding-top: 5px;
   margin-left: 38px;
 }
 .top-container table.top-menu .top-menu-list div.menu-items ul {
-  padding: 4px 0 0 8px;
+  padding: 5px 0 0 8px;
   float: left;
 }
 .top-container table.top-menu .top-menu-list div.menu-items ul li {
@@ -212,12 +215,13 @@ table td {
   height: 50px;
 }
 .navigator-container .navigator table.list .list-nav-header td {
-  height: 25px;
-  background: url("/Content/images/new/list_task.jpg");
+  height: 30px;
+  background: url("/Content/images/new/list_task.jpg") repeat-x;
+  background-size: auto 30px;
 }
 .navigator-container .navigator table.list .list-nav-item td {
   border-bottom: 1px dotted #004c7e;
-  height: 25px;
+  height: 30px;
 }
 .navigator-container .navigator table.list .list-nav-item.active,
 .navigator-container .navigator table.list .list-nav-item:hover {
@@ -229,10 +233,10 @@ table td {
   height: 30px;
 }
 .navigator-container .navigator table.list-performance {
-  top: 82px;
+  top: 87px;
 }
 .navigator-container .navigator table.list-nav {
-  top: 110px;
+  top: 116px;
 }
 .container-wrapper {
   color: #333;
@@ -255,7 +259,7 @@ table td {
   width: 80px;
   height: 80px;
   display: block;
-  border: 1px solid #999;
+  border: 1px dashed #999;
   cursor: pointer;
 }
 .pic-select input[type="file"] {
@@ -265,6 +269,7 @@ table td {
   opacity: 0;
   top: 0;
   left: 0;
+  z-index: 1000;
 }
 .pic-select .pic-add {
   position: absolute;
@@ -279,7 +284,7 @@ table td {
 }
 .form-control {
   height: 30px;
-  font-size: 12px;
+  font-size: 14px;
   border-radius: 0;
   box-shadow: none;
   transition: none;
@@ -289,8 +294,9 @@ input[type=checkbox] {
   margin: 0;
 }
 .btn {
-  font-size: 12px;
+  font-size: 14px;
   border-radius: 0;
+  padding: 4px 12px;
 }
 .panel {
   margin-bottom: 10px;
@@ -303,7 +309,7 @@ input[type=checkbox] {
 }
 .table-responsive .table th,
 .table-responsive .table td {
-  padding: 6px;
+  padding: 4px;
   text-align: center;
   vertical-align: middle;
 }

@@ -4,6 +4,8 @@
             ToURL: "/member/membersInfoCar"
         },
         init: function () {
+            $.datetimepicker.setLocale('zh');
+
             // 表单时间控件设置
             $('#memberBirthday').datetimepicker({
                 timepicker: false,

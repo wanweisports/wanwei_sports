@@ -111,11 +111,14 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="member_idcard" class="col-sm-4 control-label">身份证号</label>
+                            <label for="member_idcard" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 身份证号
+                            </label>
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="member_idcard" name="memberIdcard"
                                        placeholder="请输入18位身份证号" autocomplete="off"
+                                       data-val="true" data-val-required="身份证号不能为空"
                                        data-val-regex-pattern="^\d{18}$|^\d{17}(\d|X|x)$"
                                        data-val-regex="身份证号格式错误"
                                        value="${memberIdcard}">
@@ -148,20 +151,16 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="member_birthday" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 会员生日
-                            </label>
+                            <label for="member_birthday" class="col-sm-4 control-label">会员生日</label>
 
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="member_birthday" name="memberBirthday"
-                                           data-val="true" data-val-required="会员生日不能为空"
-                                           value="${memberBirthday}">
+                                           value="${memberBirthday}" placeholder="会员生日">
                                     <span class="input-group-addon member-birthday-select">
                                         <i class="glyphicon glyphicon-calendar"></i>
                                     </span>
                                 </div>
-                                <div data-valmsg-for="memberBirthday" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -312,9 +311,9 @@
 
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" id="refresh_money" name="buBanMoney"
-                                               placeholder="请输入补办金额(元)" autocomplete="off"
+                                               placeholder="补办金额(元)" autocomplete="off"
                                                data-val="true" data-val-required="补办金额不能为空"
-                                               data-val-regex-pattern="^[1-9][0-9]*$"
+                                               data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                                data-val-regex="补办金额格式错误">
                                         <div data-valmsg-for="buBanMoney" data-valmsg-replace="true"></div>
                                     </div>
@@ -342,8 +341,8 @@
 
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" id="refresh_discount" name="subMoney"
-                                               placeholder="请输入优惠金额(元)" autocomplete="off" value="0"
-                                               data-val-regex-pattern="^[1-9][0-9]*$"
+                                               placeholder="请输入优惠金额(元)" autocomplete="off"
+                                               data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                                data-val-regex="优惠金额格式错误">
                                         <div data-valmsg-for="subMoney" data-valmsg-replace="true"></div>
                                     </div>
@@ -353,8 +352,8 @@
 
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" id="refresh_send" name="givingAmount"
-                                               placeholder="请输入赠送金额(元)" autocomplete="off" value="0"
-                                               data-val-regex-pattern="^[1-9][0-9]*$"
+                                               placeholder="请输入赠送金额(元)" autocomplete="off"
+                                               data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                                data-val-regex="赠送金额格式错误">
                                         <div data-valmsg-for="givingAmount" data-valmsg-replace="true"></div>
                                     </div>
@@ -412,7 +411,7 @@
                                         <input type="text" class="form-control" id="recharge_money" name="czMoney"
                                                placeholder="请输入充值金额(元)" autocomplete="off"
                                                data-val="true" data-val-required="充值金额不能为空"
-                                               data-val-regex-pattern="^[1-9][0-9]*$"
+                                               data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                                data-val-regex="充值金额格式错误">
                                         <div data-valmsg-for="czMoney" data-valmsg-replace="true"></div>
                                     </div>
@@ -440,8 +439,8 @@
 
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" id="recharge_discount" name="subMoney"
-                                               placeholder="请输入优惠金额(元)" autocomplete="off" value="0"
-                                               data-val-regex-pattern="^[1-9][0-9]*$"
+                                               placeholder="请输入优惠金额(元)" autocomplete="off"
+                                               data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                                data-val-regex="优惠金额格式错误">
                                         <div data-valmsg-for="subMoney" data-valmsg-replace="true"></div>
                                     </div>
@@ -451,8 +450,8 @@
 
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" id="recharge_send" name="givingAmount"
-                                               placeholder="请输入赠送金额(元)" autocomplete="off" value="0"
-                                               data-val-regex-pattern="^[1-9][0-9]*$"
+                                               placeholder="请输入赠送金额(元)" autocomplete="off"
+                                               data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                                data-val-regex="赠送金额格式错误">
                                         <div data-valmsg-for="givingAmount" data-valmsg-replace="true"></div>
                                     </div>
@@ -522,7 +521,7 @@
                                         <input type="text" class="form-control" id="upper_money" name="upLevelMoney"
                                                placeholder="请输入升级金额(元)" autocomplete="off"
                                                data-val="true" data-val-required="升级金额不能为空"
-                                               data-val-regex-pattern="^[1-9][0-9]*$"
+                                               data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                                data-val-regex="升级金额格式错误">
                                         <div data-valmsg-for="upLevelMoney" data-valmsg-replace="true"></div>
                                     </div>
@@ -564,8 +563,8 @@
 
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" id="upper_discount" name="subMoney"
-                                               placeholder="请输入优惠金额(元)" autocomplete="off" value="0"
-                                               data-val-regex-pattern="^[1-9][0-9]*$"
+                                               placeholder="请输入优惠金额(元)" autocomplete="off"
+                                               data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                                data-val-regex="优惠金额格式错误">
                                         <div data-valmsg-for="subMoney" data-valmsg-replace="true"></div>
                                     </div>
@@ -575,8 +574,8 @@
 
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" id="upper_send" name="givingAmount"
-                                               placeholder="请输入赠送金额(元)" autocomplete="off" value="0"
-                                               data-val-regex-pattern="^[1-9][0-9]*$"
+                                               placeholder="请输入赠送金额(元)" autocomplete="off"
+                                               data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                                data-val-regex="赠送金额格式错误">
                                         <div data-valmsg-for="givingAmount" data-valmsg-replace="true"></div>
                                     </div>

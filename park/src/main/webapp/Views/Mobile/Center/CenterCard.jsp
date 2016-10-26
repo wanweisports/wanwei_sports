@@ -6,50 +6,49 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <link href="/Content/style/mobile/center/center_profile.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div id="main" class="container">
+        <div class="weui-cells__title">会员卡信息</div>
         <div class="weui-cells">
-            <a class="weui-cell" href="javascript:;">
+            <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <p>支付类型</p>
                 </div>
                 <div class="weui-cell__ft">预付类型</div>
-            </a>
-            <a class="weui-cell" href="javascript:;">
+            </div>
+            <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <p>会员类型</p>
                 </div>
                 <div class="weui-cell__ft">金卡</div>
-            </a>
-            <a class="weui-cell" href="javascript:;">
+            </div>
+            <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <p>余额</p>
                 </div>
                 <div class="weui-cell__ft">100元</div>
-            </a>
-            <a class="weui-cell" href="javascript:;">
+            </div>
+            <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <p>折扣</p>
                 </div>
                 <div class="weui-cell__ft">8.0折</div>
-            </a>
-            <a class="weui-cell" href="javascript:;">
+            </div>
+            <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <p>截止日期</p>
                 </div>
                 <div class="weui-cell__ft">2016-11-31</div>
-            </a>
-            <a class="weui-cell" href="javascript:;">
+            </div>
+            <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <p>销售员</p>
                 </div>
                 <div class="weui-cell__ft">小星星</div>
-            </a>
+            </div>
         </div>
     </div>
 </layout:override>

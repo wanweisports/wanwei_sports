@@ -116,7 +116,7 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="upper_money" name="upLevelMoney"
                                        placeholder="请输入升级费用(元)" autocomplete="off"
-                                       data-val-regex-pattern="^[1-9][0-9]*$"
+                                       data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                        data-val-regex="升级费用格式错误">
                                 <div data-valmsg-for="upLevelMoney" data-valmsg-replace="true"></div>
                             </div>
@@ -159,7 +159,7 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="upper_discount" name="subMoney"
                                        placeholder="请输入优惠金额(元)" autocomplete="off"
-                                       data-val-regex-pattern="^[1-9][0-9]*$"
+                                       data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                        data-val-regex="优惠金额格式错误">
                                 <div data-valmsg-for="subMoney" data-valmsg-replace="true"></div>
                             </div>
@@ -170,7 +170,7 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="upper_send" name="givingAmount"
                                        placeholder="请输入赠送金额(元)" autocomplete="off"
-                                       data-val-regex-pattern="^[1-9][0-9]*$"
+                                       data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                        data-val-regex="赠送金额格式错误">
                                 <div data-valmsg-for="givingAmount" data-valmsg-replace="true"></div>
                             </div>
@@ -181,17 +181,20 @@
                             <label for="upper_remark" class="col-sm-2 control-label">备注</label>
 
                             <div class="col-sm-10">
-                                    <textarea class="form-control" id="upper_remark" name="remark" rows="3"
-                                              placeholder="请输入备注" autocomplete="off"></textarea>
+                                <textarea class="form-control" id="upper_remark" name="remark" rows="3"
+                                          placeholder="请输入备注" autocomplete="off"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-8">
+                                <p class="sc-submit-tips"></p>
+                                <button type="button" class="btn btn-primary col-sm-4 upgrade-card-submit">
+                                    <span class="glyphicon glyphicon-ok"></span> 确认 & 收款
+                                </button>
                             </div>
                         </div>
                     </div>
                 </form>
-            </div>
-            <div class="panel-footer" style="overflow: hidden;">
-                <button type="button" class="btn btn-primary upgrade-card-submit pull-right">
-                    <span class="glyphicon glyphicon-ok"></span> 确认 & 收款
-                </button>
             </div>
         </div>
     </div>

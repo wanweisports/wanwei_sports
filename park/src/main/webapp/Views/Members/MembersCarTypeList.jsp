@@ -8,7 +8,7 @@
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
-    <script src="/Content/dist/members/members_card_types.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/members/members_card_types.js?v=${static_resource_version}"></script>
     <script>
         // 表单校验设置
         $('#card_type_form').validate({
@@ -387,8 +387,8 @@
                                     <input type="text" class="form-control" id="card_type_money" name="cardTypeMoney"
                                            placeholder="会费(元)" autocomplete="off"
                                            data-val="true" data-val-required="会费不能为空"
-                                           data-val-regex-pattern="^[0-9]|[1-9][0-9]$"
-                                           data-val-regex="会费只能是数字">
+                                           data-val-regex-pattern="^(0\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?$"
+                                           data-val-regex="会费格式错误">
                                     <div data-valmsg-for="cardTypeMoney" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
@@ -401,8 +401,8 @@
                                     <input type="text" class="form-control" id="card_type_overdraw" name="cardTypeCredit"
                                            placeholder="信用额度(元)" autocomplete="off"
                                            data-val="true" data-val-required="信用额度不能为空"
-                                           data-val-regex-pattern="^[0-9]|[1-9][0-9]$"
-                                           data-val-regex="信用额度只能是数字">
+                                           data-val-regex-pattern="^0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?$"
+                                           data-val-regex="信用额度格式错误">
                                     <div data-valmsg-for="cardTypeCredit" data-valmsg-replace="true"></div>
                                 </div>
                             </div>

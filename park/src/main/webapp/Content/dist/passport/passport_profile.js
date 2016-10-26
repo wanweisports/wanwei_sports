@@ -1,6 +1,8 @@
 (function ($) {
     var Passport_Profile = {
         init: function () {
+            $.datetimepicker.setLocale('zh');
+
             // 表单时间控件设置
             $('#user_birthday').datetimepicker({
                 timepicker: false,

@@ -2,16 +2,22 @@
     var Venue_Bookings = {
         tpl: {
             BlockBooking: function () {
-                return '<tr data-id="#BOOKING_ID#">' +
-                    '<td>#BOOKING_SPORT#</td>' +
-                    '<td>#BOOKING_START_DATE#~#BOOKING_END_DATE#</td>' +
-                    '<td>#BOOKING_WEEK##BOOKING_START_TIME#~#BOOKING_END_TIME#</td>' +
-                    '<td>#BOOKING_AREA#</td>' +
-                    '<td><button type="button" class="btn btn-danger booking-cancel">' +
-                    '<span class="glyphicon glyphicon-remove"></span> 取消 </button></td></tr>';
+                return '<tr><td>#SPORTNAME#</td>' +
+                    '<td>2016-07-01 ~ 2016-09-30</td>' +
+                    '<td>周一,周二</td>' +
+                    '<td>10:00 ~ 11:00</td>' +
+                    '<td>场地1</td>' +
+                    '<td>' +
+                    '<a href="javascript:;" class="btn btn-danger">' +
+                    '<span class="glyphicon glyphicon-trash"></span>' +
+                    '</a>' +
+                    '</td>' +
+                    '</tr>';
             }
         },
         init: function () {
+            $.datetimepicker.setLocale('zh');
+
             // 表单时间控件设置
             $('#block_start_date').datetimepicker({
                 timepicker: false,
@@ -39,15 +45,15 @@
                 $('#block_end_date').datetimepicker("show");
             });
 
-            //this.initEvents();
+            this.initEvents();
         },
         initEvents: function () {
             var content = this;
             this.queryMembers();
             this.querySportsArea();
-            this.bookingVenue();
+            //this.bookingVenue();
 
-            var $txtStartTime = $("#block_time_start");
+            /*var $txtStartTime = $("#block_time_start");
             var $txtEndTime = $("#block_time_end");
             //var $txtBookingWeek = $("#block_booking_week");
 
@@ -205,16 +211,14 @@
                         .addClass("text-danger");
                     clickable = true;
                 });
-            });
+            });*/
         },
-        // 查询会员
+        // 查询会员[未完成]
         queryMembers: function () {
-            var $uiBookingUser = $(".sc-booking-user");
-
-            $uiBookingUser.on("click", ".user-search", function (e) {
+            $(".user-search").on("click", function (e) {
                 e.preventDefault();
 
-                var $keywords = $("#block_search_name");
+                var $keywords = $("#block_user_phone");
 
                 $.getJSON('/users/Search', {
                     name: $keywords.val().trim()
@@ -222,9 +226,7 @@
                     var data = result.data;
 
                     if (result.status == 200) {
-                        $('[name="userclass"]').val(data.memberlevel);
-                        $('[name="membernumber"]').val(data.memberid);
-                        $('[name="membername"]').val(data.membername);
+                        $('[name="name"]').val(data.name);
                         $('[name="fitphone"]').val(data.phone);
                     } else {
                         alert(result.message);
@@ -234,10 +236,8 @@
         },
         // 场地列表
         querySportsArea: function () {
-            var $txtSiteClass = $("#block_user_degree");
-
             $.getJSON('/venue/getVenueSportsArea', {
-                sport: $txtSiteClass.val().trim()
+                sport: 1
             }, function (result) {
                 var data = result.data;
                 var html = "";
