@@ -153,13 +153,16 @@
                                       placeholder="请输入备注" autocomplete="off"></textarea>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-8">
+                                <p class="sc-submit-tips"></p>
+                                <button type="button" class="btn btn-primary col-sm-4 recharge-card-submit">
+                                    <span class="glyphicon glyphicon-ok"></span> 确认 & 收款
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </form>
-            </div>
-            <div class="panel-footer" style="overflow: hidden;">
-                <button type="button" class="btn btn-primary recharge-card-submit pull-right">
-                    <span class="glyphicon glyphicon-ok"></span> 确认 & 收款
-                </button>
             </div>
         </div>
     </div>

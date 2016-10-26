@@ -181,17 +181,20 @@
                             <label for="upper_remark" class="col-sm-2 control-label">备注</label>
 
                             <div class="col-sm-10">
-                                    <textarea class="form-control" id="upper_remark" name="remark" rows="3"
-                                              placeholder="请输入备注" autocomplete="off"></textarea>
+                                <textarea class="form-control" id="upper_remark" name="remark" rows="3"
+                                          placeholder="请输入备注" autocomplete="off"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-8">
+                                <p class="sc-submit-tips"></p>
+                                <button type="button" class="btn btn-primary col-sm-4 upgrade-card-submit">
+                                    <span class="glyphicon glyphicon-ok"></span> 确认 & 收款
+                                </button>
                             </div>
                         </div>
                     </div>
                 </form>
-            </div>
-            <div class="panel-footer" style="overflow: hidden;">
-                <button type="button" class="btn btn-primary upgrade-card-submit pull-right">
-                    <span class="glyphicon glyphicon-ok"></span> 确认 & 收款
-                </button>
             </div>
         </div>
     </div>
