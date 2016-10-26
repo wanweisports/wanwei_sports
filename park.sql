@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2016-10-26 16:59:03
+Date: 2016-10-26 18:30:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -301,12 +301,13 @@ CREATE TABLE `park_business` (
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`businessId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='营业时间表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='营业时间表';
 
 -- ----------------------------
 -- Records of park_business
 -- ----------------------------
 INSERT INTO `park_business` VALUES ('1', '08:00', '15:00', '1', null, null, null, null, null, '2016-10-12 19:41:31', null, '1');
+INSERT INTO `park_business` VALUES ('3', null, null, null, null, null, null, null, null, '2016-10-26 18:28:41', null, null);
 
 -- ----------------------------
 -- Table structure for site_info
@@ -551,7 +552,7 @@ CREATE TABLE `system_role` (
   `createTime` varchar(20) DEFAULT NULL COMMENT '创建时间',
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`roleId`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='角色';
+) ENGINE=InnoDB AUTO_INCREMENT=1002 DEFAULT CHARSET=utf8 COMMENT='角色';
 
 -- ----------------------------
 -- Records of system_role
@@ -559,6 +560,8 @@ CREATE TABLE `system_role` (
 INSERT INTO `system_role` VALUES ('1', '超级管理员', '1', '1', '2016-10-13 10:00:00', null);
 INSERT INTO `system_role` VALUES ('2', '会员', '1', '1', '2016-10-13 10:00:00', null);
 INSERT INTO `system_role` VALUES ('3', '普通用户', '1', '1', '2016-10-13 10:00:00', null);
+INSERT INTO `system_role` VALUES ('1000', '经理', '1', '1', '2016-10-13 10:00:00', null);
+INSERT INTO `system_role` VALUES ('1001', '收银', '1', '1', '2016-10-13 10:00:00', null);
 
 -- ----------------------------
 -- Table structure for system_role_operator
@@ -646,12 +649,12 @@ CREATE TABLE `user_operator` (
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `lastLoginTime` varchar(20) DEFAULT NULL COMMENT '最后一次登录时间',
   `operatorNo` varchar(32) DEFAULT NULL COMMENT '用户编号',
-  `operatorRealName` varchar(32) DEFAULT NULL COMMENT '真实姓名',
   `operatorEffectDate` varchar(20) DEFAULT NULL COMMENT '生效日期',
   `operatorEndDate` varchar(20) DEFAULT NULL COMMENT '截止日期',
   `operatorBirthday` varchar(20) DEFAULT NULL COMMENT '用户生日',
   `operatorContact` varchar(32) DEFAULT NULL COMMENT '联系人',
   `operatorAddress` varchar(512) DEFAULT NULL COMMENT '用户联系地址',
+  `operatorSex` varchar(1) DEFAULT NULL COMMENT '用户性别（1：男  2：女）',
   PRIMARY KEY (`id`),
   UNIQUE KEY `operatorId_Unique` (`operatorId`),
   KEY `operatorId_Normal` (`operatorId`)
