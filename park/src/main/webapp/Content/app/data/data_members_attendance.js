@@ -6,6 +6,8 @@
         init: function () {
             this.initEvents();
 
+            $.datetimepicker.setLocale('zh');
+
             // 表单时间控件设置
             $('#dateSelect').datetimepicker({
                 timepicker: false,

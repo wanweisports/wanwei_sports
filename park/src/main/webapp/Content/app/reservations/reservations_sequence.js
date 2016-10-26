@@ -24,6 +24,8 @@
         initDatePicker: function () {
             var content = this;
 
+            $.datetimepicker.setLocale('zh');
+
             $('#other_date').datetimepicker({
                 timepicker: false,
                 lang: "zh",

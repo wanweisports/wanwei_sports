@@ -34,14 +34,20 @@
             <div class="panel panel-default sc-booking-user">
                 <div class="panel-heading">批量预订</div>
                 <div class="panel-body">
+                    <input type="hidden" name="memberId" value="">
+                    <input type="hidden" name="opType" value="2"> <!--1会员2散客-->
+                    <input type="hidden" name="reserveType" value="1"><!--1PC-->
+                    <input type="hidden" name="reserveModel" value="2"><!--1普通2批量-->
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="block_user_name" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 预订人
                             </label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="block_user_name" name="membername"
-                                       placeholder="预订人" autocomplete="off">
+                                <input type="text" class="form-control" id="block_user_name" name="name"
+                                       placeholder="预订人" autocomplete="off" value="散客"
+                                       data-val="true" data-val-required="预订人不能为空">
+                                <div data-valmsg-for="siteclass" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -51,7 +57,7 @@
                             <div class="col-sm-8">
                                 <select class="form-control" id="block_user_degree" name="siteclass"
                                         data-val="true" data-val-required="请选择场地类型">
-                                    <option value="">选择类型</option>
+                                    <option value="1">选择类型</option>
                                     <option value="1">羽毛球</option>
                                 </select>
                                 <div data-valmsg-for="siteclass" data-valmsg-replace="true"></div>
@@ -63,12 +69,12 @@
                             <label for="block_user_phone" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 手机号码 </label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="block_user_phone" name="fitphone"
+                                <input type="text" class="form-control" id="block_user_phone" name="mobile"
                                        placeholder="手机号码" autocomplete="off"
                                        data-val="true" data-val-required="手机号码不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
                                        data-val-regex="手机号码格式错误">
-                                <div data-valmsg-for="fitphone" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="mobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -77,14 +83,14 @@
                             </label>
                             <div class="col-sm-8">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="block_start_date" name="startdate"
+                                    <input type="text" class="form-control" id="block_start_date" name="reserveStartDate"
                                            placeholder="起始日期" autocomplete="off"
                                            data-val="true" data-val-required="起始日期不能为空">
                                     <span class="input-group-addon start-date-select">
                                         <i class="glyphicon glyphicon-calendar"></i>
                                     </span>
                                 </div>
-                                <div data-valmsg-for="startdate" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="reserveStartDate" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -94,7 +100,7 @@
                                 <a href="javascript:void(0);" class="btn btn-primary user-search" title="搜索">
                                     <span class="glyphicon glyphicon-search"></span> 搜索
                                 </a>
-                                <a href="/users" class="btn btn-primary" title="选择会员">
+                                <a href="/members/list" class="btn btn-primary" title="选择会员">
                                     <span class="glyphicon glyphicon-th-list"></span> 选择会员
                                 </a>
                             </div>
@@ -105,14 +111,14 @@
                             </label>
                             <div class="col-sm-8">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="block_end_date" name="enddate"
+                                    <input type="text" class="form-control" id="block_end_date" name="reserveEndDate"
                                            placeholder="终止日期" autocomplete="off"
                                            data-val="true" data-val-required="终止日期不能为空">
                                     <span class="input-group-addon end-date-select">
                                         <i class="glyphicon glyphicon-calendar"></i>
                                     </span>
                                 </div>
-                                <div data-valmsg-for="enddate" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="reserveEndDate" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -123,25 +129,25 @@
                             </label>
                             <div class="col-sm-10">
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" name="scheduledweek" value="1"> 周一
+                                    <input type="checkbox" name="reserveWeek" value="1"> 周一
                                 </label>
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" name="scheduledweek" value="2"> 周二
+                                    <input type="checkbox" name="reserveWeek" value="2"> 周二
                                 </label>
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" name="scheduledweek" value="3"> 周三
+                                    <input type="checkbox" name="reserveWeek" value="3"> 周三
                                 </label>
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" name="scheduledweek" value="3"> 周四
+                                    <input type="checkbox" name="reserveWeek" value="3"> 周四
                                 </label>
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" name="scheduledweek" value="3"> 周五
+                                    <input type="checkbox" name="reserveWeek" value="3"> 周五
                                 </label>
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" name="scheduledweek" value="3"> 周六
+                                    <input type="checkbox" name="reserveWeek" value="3"> 周六
                                 </label>
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" name="scheduledweek" value="3"> 周日
+                                    <input type="checkbox" name="reserveWeek" value="3"> 周日
                                 </label>
                             </div>
                         </div>
@@ -157,7 +163,7 @@
                                     <span class="text-danger">*</span> 场地编号
                                 </label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" id="block_venue_name" name="sitenumber">
+                                    <select class="form-control" id="block_venue_name" name="siteId">
                                         <option value="1">场地1</option>
                                         <option value="2">场地2</option>
                                         <option value="3">场地3</option>
@@ -175,7 +181,7 @@
                                     <span class="text-danger">*</span> 开始时间
                                 </label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" id="block_time_start" name="starttime">
+                                    <select class="form-control" id="block_time_start" name="siteStartTime">
                                         <option value="08:00">08:00</option>
                                         <option value="09:00">09:00</option>
                                         <option value="10:00">10:00</option>
@@ -191,7 +197,7 @@
                                     <span class="text-danger">*</span> 结束时间
                                 </label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" id="block_time_end" name="endtime">
+                                    <select class="form-control" id="block_time_end" name="siteEndTime">
                                         <option value="08:00">08:00</option>
                                         <option value="09:00">09:00</option>
                                         <option value="10:00">10:00</option>

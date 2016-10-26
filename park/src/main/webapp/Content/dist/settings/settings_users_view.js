@@ -6,6 +6,8 @@
         },
         // 初始时间选择
         initDatePicker: function () {
+            $.datetimepicker.setLocale('zh');
+
             // 生效时间
             $('#start_date').datetimepicker({
                 timepicker: false,
