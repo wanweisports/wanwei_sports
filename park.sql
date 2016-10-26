@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2016-10-24 15:48:19
+Date: 2016-10-26 16:59:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -56,12 +56,13 @@ CREATE TABLE `good_shopping` (
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`shoppingId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='购物车表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='购物车表';
 
 -- ----------------------------
 -- Records of good_shopping
 -- ----------------------------
 INSERT INTO `good_shopping` VALUES ('1', '1', '农夫山泉', '3', '2016-10-24 13:15:13', '2016-10-24 13:16:28', '1');
+INSERT INTO `good_shopping` VALUES ('3', '2', '3', '1', '2016-10-25 14:22:04', null, '1');
 
 -- ----------------------------
 -- Table structure for member_card
@@ -86,10 +87,10 @@ CREATE TABLE `member_card` (
 -- ----------------------------
 -- Records of member_card
 -- ----------------------------
-INSERT INTO `member_card` VALUES ('2', '4', '761715', '12.00', '0', '1', '2', '2016-10-10 10:34:50', '2016-10-10 14:58:24', '13', '1');
+INSERT INTO `member_card` VALUES ('2', '4', '761715', '2012.00', '0', '1', '2', '2016-10-10 10:34:50', '2016-10-25 16:42:03', '13', '1');
 INSERT INTO `member_card` VALUES ('3', '5', '922444', '21.00', '2017-04-10', '1', '3', '2016-10-10 11:50:52', '2016-10-10 13:45:54', '1', '1');
-INSERT INTO `member_card` VALUES ('4', '6', '561963', '8.00', '2017-04-10', '1', '3', '2016-10-10 11:53:23', '2016-10-10 14:02:27', '1', '1');
-INSERT INTO `member_card` VALUES ('5', '7', '104561', '2.00', '0', '1', '2', '2016-10-12 18:35:45', null, '1', '1');
+INSERT INTO `member_card` VALUES ('4', '6', '561963', '1508.00', '2017-04-10', '1', '3', '2016-10-10 11:53:23', '2016-10-25 16:14:59', '1', '1');
+INSERT INTO `member_card` VALUES ('5', '7', '104561', '21002.00', '0', '1', '2', '2016-10-12 18:35:45', '2016-10-25 16:12:10', '1', '1');
 INSERT INTO `member_card` VALUES ('6', '8', '461136', '2.00', '0', '1', '2', '2016-10-10 18:37:35', null, '1', '1');
 INSERT INTO `member_card` VALUES ('7', '10', '262768', '10300.00', '0', '1', '2', '2016-10-24 14:43:32', null, '', '1');
 INSERT INTO `member_card` VALUES ('8', '11', '993345', '4000.00', '0', '1', '5', '2016-10-24 15:03:29', null, '', '1');
@@ -205,7 +206,7 @@ CREATE TABLE `other_balance` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`balanceId`),
   UNIQUE KEY `balanceNo_Unique` (`balanceNo`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='收支流水表';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='收支流水表';
 
 -- ----------------------------
 -- Records of other_balance
@@ -221,6 +222,11 @@ INSERT INTO `other_balance` VALUES ('9', '20161010183545', '10', '5', null, '3',
 INSERT INTO `other_balance` VALUES ('10', '20161010183735', '10', '6', null, '3', '0', '1.00', '10.00', '1.00', '1.00', null, '1', '2016-10-10 18:37:35', '2016-10-10 18:37:35', null, '1', null);
 INSERT INTO `other_balance` VALUES ('11', '20161024144332', '10', '7', null, '3', '1', '10000.00', '9810.00', '200.00', '300.00', null, '1', '2016-10-24 14:43:32', '2016-10-24 14:43:32', null, '1', null);
 INSERT INTO `other_balance` VALUES ('12', '20161024150329', '10', '8', null, '3', '2', '2000.00', '1500.00', '500.00', '2000.00', null, '1', '2016-10-24 15:03:29', '2016-10-24 15:03:29', null, '1', null);
+INSERT INTO `other_balance` VALUES ('13', '20161025161156', '11', '5', null, '1', '1', '10000.00', '9500.00', '500.00', '500.00', null, null, '2016-10-25 16:11:55', '2016-10-25 16:11:55', null, '1', '');
+INSERT INTO `other_balance` VALUES ('14', '20161025161210', '11', '5', null, '1', '1', '10000.00', '9500.00', '500.00', '500.00', null, null, '2016-10-25 16:12:10', '2016-10-25 16:12:10', null, '1', '');
+INSERT INTO `other_balance` VALUES ('15', '20161025161459', '11', '4', null, '1', '1', '1000.00', '500.00', '500.00', '500.00', null, null, '2016-10-25 16:14:59', '2016-10-25 16:14:59', null, '1', '');
+INSERT INTO `other_balance` VALUES ('16', '20161025163827', '11', '2', null, '1', '1', '1000.00', '1000.00', '0.00', '0.00', null, null, '2016-10-25 16:38:27', '2016-10-25 16:38:27', null, '1', '');
+INSERT INTO `other_balance` VALUES ('17', '20161025164203', '11', '2', null, '1', '1', '1000.00', '1000.00', '0.00', '0.00', null, null, '2016-10-25 16:42:03', '2016-10-25 16:42:03', null, '1', '');
 
 -- ----------------------------
 -- Table structure for other_invoice
@@ -286,36 +292,21 @@ CREATE TABLE `park_business` (
   `businessStartTime` varchar(20) DEFAULT NULL COMMENT '营业开始时间',
   `businessEndTime` varchar(20) DEFAULT NULL COMMENT '营业结束时间',
   `businessTimePeriod` varchar(20) DEFAULT NULL COMMENT '营业时间段',
+  `businessName` varchar(255) DEFAULT NULL COMMENT '场馆名称',
+  `businessAreaName` varchar(512) DEFAULT NULL COMMENT '所在省市',
+  `businessContact` varchar(32) DEFAULT NULL COMMENT '联系人',
+  `businessPhone` varchar(32) DEFAULT NULL COMMENT '联系电话',
+  `businessAddress` varchar(1024) DEFAULT NULL COMMENT '详细地址',
   `createTime` varchar(20) DEFAULT NULL COMMENT '创建时间',
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`businessId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='营业时间表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='营业时间表';
 
 -- ----------------------------
 -- Records of park_business
 -- ----------------------------
-INSERT INTO `park_business` VALUES ('1', '08:00', '15:00', '1', '2016-10-12 19:41:31', null, '1');
-
--- ----------------------------
--- Table structure for park_business_period
--- ----------------------------
-DROP TABLE IF EXISTS `park_business_period`;
-CREATE TABLE `park_business_period` (
-  `businessPeriodId` int(11) NOT NULL AUTO_INCREMENT,
-  `businessId` int(11) DEFAULT NULL COMMENT '营业时间id',
-  `periodStartTime` varchar(20) DEFAULT NULL COMMENT '时间段开始时间',
-  `periodEndTime` varchar(20) DEFAULT NULL COMMENT '时间段结束时间',
-  PRIMARY KEY (`businessPeriodId`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='营业时间段表';
-
--- ----------------------------
--- Records of park_business_period
--- ----------------------------
-INSERT INTO `park_business_period` VALUES ('1', '1', '08:00', '09:00');
-INSERT INTO `park_business_period` VALUES ('2', '1', '09:00', '10:00');
-INSERT INTO `park_business_period` VALUES ('3', '1', '11:00', '12:00');
-INSERT INTO `park_business_period` VALUES ('4', '1', '12:00', '13:00');
+INSERT INTO `park_business` VALUES ('1', '08:00', '15:00', '1', null, null, null, null, null, '2016-10-12 19:41:31', null, '1');
 
 -- ----------------------------
 -- Table structure for site_info
@@ -654,6 +645,13 @@ CREATE TABLE `user_operator` (
   `createTime` varchar(20) DEFAULT NULL COMMENT '创建时间',
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `lastLoginTime` varchar(20) DEFAULT NULL COMMENT '最后一次登录时间',
+  `operatorNo` varchar(32) DEFAULT NULL COMMENT '用户编号',
+  `operatorRealName` varchar(32) DEFAULT NULL COMMENT '真实姓名',
+  `operatorEffectDate` varchar(20) DEFAULT NULL COMMENT '生效日期',
+  `operatorEndDate` varchar(20) DEFAULT NULL COMMENT '截止日期',
+  `operatorBirthday` varchar(20) DEFAULT NULL COMMENT '用户生日',
+  `operatorContact` varchar(32) DEFAULT NULL COMMENT '联系人',
+  `operatorAddress` varchar(512) DEFAULT NULL COMMENT '用户联系地址',
   PRIMARY KEY (`id`),
   UNIQUE KEY `operatorId_Unique` (`operatorId`),
   KEY `operatorId_Normal` (`operatorId`)
@@ -662,11 +660,11 @@ CREATE TABLE `user_operator` (
 -- ----------------------------
 -- Records of user_operator
 -- ----------------------------
-INSERT INTO `user_operator` VALUES ('1', '123456', '李晓丹1', '123456', '15110275788', '1', '2016-09-23 19:10:23', null, null);
-INSERT INTO `user_operator` VALUES ('2', '864422', '发送', '123456', '11111111111', '1', '2016-10-13 10:41:49', null, null);
-INSERT INTO `user_operator` VALUES ('3', '262768', '欧阳资源传话', '123456', '18701562970', '1', '2016-10-24 14:16:06', null, null);
-INSERT INTO `user_operator` VALUES ('4', '993345', '陈楚生', '123456', '12345678913', '1', '2016-10-24 14:52:41', null, null);
-INSERT INTO `user_operator` VALUES ('5', '559564', '葫芦娃', '123456', '12345678912', '1', '2016-10-24 15:08:42', null, null);
+INSERT INTO `user_operator` VALUES ('1', '123456', '李晓丹1', '123456', '15110275788', '1', '2016-09-23 19:10:23', null, null, null, null, null, null, null, null, null);
+INSERT INTO `user_operator` VALUES ('2', '864422', '发送', '123456', '11111111111', '1', '2016-10-13 10:41:49', null, null, null, null, null, null, null, null, null);
+INSERT INTO `user_operator` VALUES ('3', '262768', '欧阳资源传话', '123456', '18701562970', '1', '2016-10-24 14:16:06', null, null, null, null, null, null, null, null, null);
+INSERT INTO `user_operator` VALUES ('4', '993345', '陈楚生', '123456', '12345678913', '1', '2016-10-24 14:52:41', null, null, null, null, null, null, null, null, null);
+INSERT INTO `user_operator` VALUES ('5', '559564', '葫芦娃', '123456', '12345678912', '1', '2016-10-24 15:08:42', null, null, null, null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for user_operator_card
