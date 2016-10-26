@@ -18,8 +18,8 @@
 
     <title>${param.title == null || param.title eq "" ? "万维体育 wanwei.com - 智能场馆管理系统" : param.title}</title>
 
-    <meta name="keywords" content="${param.keyword == null || param.keyword eq "" ? "万维体育, 智能体育场馆, 体育场馆, 预订, 收银, 万维, wanwei.com" : param.keyword}"/>
-    <meta name="description" content="${param.desc == null || param.desc eq "" ? "万维体育 wanwei.com - 提供智能化的体育场馆运营服务。" : param.desc}"/>
+    <meta name="keywords" content="${param.keyword == null || param.keyword eq '' ? "万维体育, 智能体育场馆, 体育场馆, 预订, 收银, 万维, wanwei.com" : param.keyword}"/>
+    <meta name="description" content="${param.desc == null || param.desc eq '' ? "万维体育 wanwei.com - 提供智能化的体育场馆运营服务。" : param.desc}"/>
     <meta name="author" content="北体高科技术有限公司" />
 
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
