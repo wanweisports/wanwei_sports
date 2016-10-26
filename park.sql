@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
-Source Server Version : 50528
-Source Host           : localhost:3306
+Source Server Version : 60011
+Source Host           : 127.0.0.1:3306
 Source Database       : park
 
 Target Server Type    : MYSQL
-Target Server Version : 50528
+Target Server Version : 60011
 File Encoding         : 65001
 
-Date: 2016-10-26 18:30:33
+Date: 2016-10-26 22:21:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,7 +24,7 @@ CREATE TABLE `good_info` (
   `goodNo` varchar(32) NOT NULL COMMENT '商品编号',
   `goodName` varchar(100) DEFAULT NULL COMMENT '商品名称',
   `goodPic` varchar(255) DEFAULT NULL COMMENT '商品图片地址',
-  `goodType` varchar(16) DEFAULT NULL COMMENT '商品类型',
+  `goodTypeId` int(11) DEFAULT NULL COMMENT '商品类型id',
   `goodMoneyType` varchar(1) DEFAULT NULL COMMENT '计费方式（1. 计次收费  2. 计时收费）',
   `goodPrice` decimal(10,2) NOT NULL COMMENT '商品价格',
   `goodDiscount` varchar(16) DEFAULT NULL COMMENT '商品折扣	1：无折扣，2：会员折扣',
@@ -63,6 +63,26 @@ CREATE TABLE `good_shopping` (
 -- ----------------------------
 INSERT INTO `good_shopping` VALUES ('1', '1', '农夫山泉', '3', '2016-10-24 13:15:13', '2016-10-24 13:16:28', '1');
 INSERT INTO `good_shopping` VALUES ('3', '2', '3', '1', '2016-10-25 14:22:04', null, '1');
+
+-- ----------------------------
+-- Table structure for good_type
+-- ----------------------------
+DROP TABLE IF EXISTS `good_type`;
+CREATE TABLE `good_type` (
+  `goodTypeId` int(11) NOT NULL AUTO_INCREMENT COMMENT '商品类型id',
+  `goodTypeName` varchar(32) DEFAULT NULL COMMENT '类型名称',
+  `goodTypeDescribe` varchar(255) DEFAULT NULL COMMENT '类型描述',
+  `goodTypeStatus` varchar(1) DEFAULT NULL COMMENT '类型状态（1：有效  2：无效）',
+  `createTime` varchar(20) DEFAULT NULL COMMENT '创建时间',
+  `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
+  `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
+  PRIMARY KEY (`goodTypeId`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='商品类型表';
+
+-- ----------------------------
+-- Records of good_type
+-- ----------------------------
+INSERT INTO `good_type` VALUES ('1', '饮料', '饮料，水', '1', '2016-10-10 15:30:00', null, '1');
 
 -- ----------------------------
 -- Table structure for member_card
@@ -308,6 +328,26 @@ CREATE TABLE `park_business` (
 -- ----------------------------
 INSERT INTO `park_business` VALUES ('1', '08:00', '15:00', '1', null, null, null, null, null, '2016-10-12 19:41:31', null, '1');
 INSERT INTO `park_business` VALUES ('3', null, null, null, null, null, null, null, null, '2016-10-26 18:28:41', null, null);
+
+-- ----------------------------
+-- Table structure for park_business_period
+-- ----------------------------
+DROP TABLE IF EXISTS `park_business_period`;
+CREATE TABLE `park_business_period` (
+  `businessPeriodId` int(11) NOT NULL AUTO_INCREMENT,
+  `businessId` int(11) DEFAULT NULL COMMENT '营业时间id',
+  `periodStartTime` varchar(20) DEFAULT NULL COMMENT '时间段开始时间',
+  `periodEndTime` varchar(20) DEFAULT NULL COMMENT '时间段结束时间',
+  PRIMARY KEY (`businessPeriodId`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='营业时间段表';
+
+-- ----------------------------
+-- Records of park_business_period
+-- ----------------------------
+INSERT INTO `park_business_period` VALUES ('1', '1', '08:00', '09:00');
+INSERT INTO `park_business_period` VALUES ('2', '1', '09:00', '10:00');
+INSERT INTO `park_business_period` VALUES ('3', '1', '11:00', '12:00');
+INSERT INTO `park_business_period` VALUES ('4', '1', '12:00', '13:00');
 
 -- ----------------------------
 -- Table structure for site_info
@@ -624,13 +664,8 @@ CREATE TABLE `user_member` (
 -- ----------------------------
 -- Records of user_member
 -- ----------------------------
-INSERT INTO `user_member` VALUES ('4', null, 'asd1', '1', '15110275787', '15110275787', '1', '510603199007307955', '2016-09-03', null, null, 'dsadsa', 'dsadsadsa', '2016-10-10 10:34:01', '2016-10-10 10:34:09', '1', null);
-INSERT INTO `user_member` VALUES ('5', null, '范德萨', '1', '15111151111', '15111151111', '2', '510603199007307953', '2016-10-08', null, null, '倒萨', '额我去俄武器', '2016-10-10 11:33:52', null, '1', null);
-INSERT INTO `user_member` VALUES ('6', null, '斯蒂芬', '1', '11111111112', '11111111111', '1', '510603101007305555', '2016-10-06', null, null, 'ads', '安德森', '2016-10-10 11:52:56', null, '1', null);
-INSERT INTO `user_member` VALUES ('7', null, '我的', '1', '11111111111', '11111111111', '1', '5106031990921231231111', '2016-09-29', null, null, 'a', '啊', '2016-10-10 18:35:11', null, '1', null);
-INSERT INTO `user_member` VALUES ('8', null, '低洼', '1', '11111111111', '11111111111', '1', '510603199007302321', '2016-09-29', null, null, '11111111111', '11111111111', '2016-10-10 18:37:22', null, '1', null);
 INSERT INTO `user_member` VALUES ('9', '864422', '发送', '1', '11111111111', '11111111111', '1', '511111111111111111', '2016-10-01', null, null, '11111111111', '11111111111', '2016-10-13 10:41:49', null, '1', '864422');
-INSERT INTO `user_member` VALUES ('10', '262768', '欧阳资源传话', '1', '18701562970', '', '1', '123123123456789452', '2016-01-07', null, null, '', '', '2016-10-24 14:16:06', null, '1', null);
+INSERT INTO `user_member` VALUES ('10', '262768', '欧阳资源传话', '1', '18701562971', '', '1', '123123123456789452', '2016-01-07', null, null, '', '', '2016-10-24 14:16:06', '2016-10-26 21:19:54', '1', null);
 INSERT INTO `user_member` VALUES ('11', '993345', '陈楚生', '1', '12345678913', '', '1', '12323323323322322X', '2017-03-01', null, null, '', '', '2016-10-24 14:52:41', null, '1', null);
 INSERT INTO `user_member` VALUES ('12', '559564', '葫芦娃', '2', '12345678912', '', '1', '', '2016-10-03', null, null, '', '', '2016-10-24 15:08:42', null, '1', '559564');
 
@@ -665,7 +700,7 @@ CREATE TABLE `user_operator` (
 -- ----------------------------
 INSERT INTO `user_operator` VALUES ('1', '123456', '李晓丹1', '123456', '15110275788', '1', '2016-09-23 19:10:23', null, null, null, null, null, null, null, null, null);
 INSERT INTO `user_operator` VALUES ('2', '864422', '发送', '123456', '11111111111', '1', '2016-10-13 10:41:49', null, null, null, null, null, null, null, null, null);
-INSERT INTO `user_operator` VALUES ('3', '262768', '欧阳资源传话', '123456', '18701562970', '1', '2016-10-24 14:16:06', null, null, null, null, null, null, null, null, null);
+INSERT INTO `user_operator` VALUES ('3', '262768', '欧阳资源传话', '123456', '18701562971', '1', '2016-10-24 14:16:06', null, null, null, null, null, null, null, null, null);
 INSERT INTO `user_operator` VALUES ('4', '993345', '陈楚生', '123456', '12345678913', '1', '2016-10-24 14:52:41', null, null, null, null, null, null, null, null, null);
 INSERT INTO `user_operator` VALUES ('5', '559564', '葫芦娃', '123456', '12345678912', '1', '2016-10-24 15:08:42', null, null, null, null, null, null, null, null, null);
 

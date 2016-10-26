@@ -16,6 +16,7 @@ import com.park.service.IParkService;
  * Created by wangjun on 16/10/12.
  */
 @Controller
+@RequestMapping("settings")
 public class SettingsController extends BaseController {
 	
 	@Autowired
@@ -25,7 +26,7 @@ public class SettingsController extends BaseController {
 	private IOperatorService operatorService;
 	
     // 常用设置
-    @RequestMapping("settings/common")
+    @RequestMapping("common")
     public String settingsCommon(ParkBusiness parkBusiness, Model model) {
     	try {
 			model.addAttribute("businessId", parkService.saveParkBusiness(parkBusiness));
@@ -36,7 +37,7 @@ public class SettingsController extends BaseController {
     }
 
     // 用户设置详情
-    @RequestMapping("settings/getUsersView")
+    @RequestMapping("getUsersView")
     public String getUsersView(Model model) {
     	try {
 			
@@ -47,7 +48,7 @@ public class SettingsController extends BaseController {
     }
 
     // 用户设置
-    @RequestMapping("settings/getUsers")
+    @RequestMapping("getUsers")
     public String getUsers(OperatorInputView operatorInputView, Model model) {
     	try {
     		model.addAllAttributes(JsonUtils.fromJsonDF(operatorInputView));
@@ -60,7 +61,7 @@ public class SettingsController extends BaseController {
     }
 
     // 角色设置详情
-    @RequestMapping("settings/getRolesView")
+    @RequestMapping("getRolesView")
     public String getRolesView() {
         return "Settings/SettingsSystemRolesView";
     }
@@ -72,19 +73,19 @@ public class SettingsController extends BaseController {
     }
 
     // 通知设置
-    @RequestMapping("settings/notification")
+    @RequestMapping("notification")
     public String notification() {
         return "Settings/SettingsNotification";
     }
 
     // 数据库操作
-    @RequestMapping("settings/database")
+    @RequestMapping("database")
     public String systemDatabase() {
         return "Settings/SettingsSystemDatabase";
     }
 
     // 系统操作日志
-    @RequestMapping("settings/systemLogs")
+    @RequestMapping("systemLogs")
     public String systemLogs() {
         return "Settings/SettingsSystemLogs";
     }

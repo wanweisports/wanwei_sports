@@ -20,7 +20,7 @@ public class GoodInfo implements java.io.Serializable {
 	private String goodNo;
 	private String goodName;
 	private String goodPic;
-	private String goodType;
+	private Integer goodTypeId;
 	private String goodMoneyType;
 	private Double goodPrice;
 	private String goodDiscount;
@@ -38,22 +38,21 @@ public class GoodInfo implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public GoodInfo(String goodNo, String goodType, Double goodPrice) {
+	public GoodInfo(String goodNo, Double goodPrice) {
 		this.goodNo = goodNo;
-		this.goodType = goodType;
 		this.goodPrice = goodPrice;
 	}
 
 	/** full constructor */
 	public GoodInfo(String goodNo, String goodName, String goodPic,
-			String goodType, String goodMoneyType, Double goodPrice,
+			Integer goodTypeId, String goodMoneyType, Double goodPrice,
 			String goodDiscount, String goodStatus, Integer goodCount,
 			String goodRemark, String createTime, String updateTime,
 			Integer salesId) {
 		this.goodNo = goodNo;
 		this.goodName = goodName;
 		this.goodPic = goodPic;
-		this.goodType = goodType;
+		this.goodTypeId = goodTypeId;
 		this.goodMoneyType = goodMoneyType;
 		this.goodPrice = goodPrice;
 		this.goodDiscount = goodDiscount;
@@ -104,13 +103,13 @@ public class GoodInfo implements java.io.Serializable {
 		this.goodPic = goodPic;
 	}
 
-	@Column(name = "goodType", length = 16)
-	public String getGoodType() {
-		return this.goodType;
+	@Column(name = "goodTypeId")
+	public Integer getGoodTypeId() {
+		return this.goodTypeId;
 	}
 
-	public void setGoodType(String goodType) {
-		this.goodType = goodType;
+	public void setGoodTypeId(Integer goodTypeId) {
+		this.goodTypeId = goodTypeId;
 	}
 
 	@Column(name = "goodMoneyType", length = 1)

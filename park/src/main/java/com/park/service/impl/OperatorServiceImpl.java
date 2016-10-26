@@ -76,10 +76,10 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 	
 	@Override
 	public PageBean getOperatorList(OperatorInputView operatorInputView){
-		
 		StringBuilder headSql = new StringBuilder("SELECT uo.operatorNo, uo.operatorId, uo.operatorName, sr.roleName, uo.operatorEffectDate, uo.operatorEndDate, uo.status");
 		StringBuilder bodySql = new StringBuilder(" FROM user_operator uo, system_role_operator sro, system_role sr");
 		StringBuilder whereSql = new StringBuilder(" WHERE uo.operatorId = sro.operatorId AND sro.roleId = sr.roleId");
+		whereSql.append(" AND sr.roleId >= ").append(IDBConstant.ROLE_EMPLOYEE);
 		return super.getPageBean(headSql, bodySql, whereSql, operatorInputView);
 	}
 	

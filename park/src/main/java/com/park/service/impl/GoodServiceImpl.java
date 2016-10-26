@@ -15,6 +15,7 @@ import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.GoodInfo;
 import com.park.common.po.GoodShopping;
+import com.park.common.po.GoodType;
 import com.park.common.util.DateUtil;
 import com.park.common.util.FileUtil;
 import com.park.common.util.JsonUtils;
@@ -179,6 +180,46 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 	@Override
 	public GoodShopping getGoodShopping(int shoppingId, int salesId){
 		return baseDao.queryByHqlFirst("FROM GoodShopping WHERE shoppingId = ? AND salesId = ?", shoppingId, salesId);
+	}
+	
+	@Override
+	public List<Map<String, Object>> getGoodTypeNames(){
+		return baseDao.queryBySql("SELECT goodTypeId, goodTypeName FROM good_type WHERE goodTypeStatus = ?", IDBConstant.LOGIC_STATUS_YES);
+	}
+	
+	@Override
+	public PageBean getGoodTypes(GoodInputView goodInputView){
+		StringBuilder headSql = new StringBuilder("SELECT goodTypeId, goodTypeName, goodTypeDescribe, gt.createTime, uo.operatorName");
+		StringBuilder bodySql = new StringBuilder(" FROM good_type gt, user_operator uo");
+		StringBuilder whereSql = new StringBuilder(" WHERE gt.salesId = uo.id");
+		return super.getPageBean(headSql, bodySql, whereSql, goodInputView);
+	}
+	
+	@Override
+	public Integer saveGoodType(GoodType goodType){
+		String nowDate = DateUtil.getNowDate();
+		Integer goodTypeId = goodType.getGoodTypeId();
+		String goodTypeStatus = goodType.getGoodTypeStatus() == null ? IDBConstant.LOGIC_STATUS_YES : goodType.getGoodTypeStatus();
+		if(goodTypeId == null){
+			goodType.setCreateTime(nowDate);
+			goodType.setGoodTypeStatus(goodTypeStatus);
+			baseDao.save(goodType, null);
+			return goodType.getGoodTypeId();
+		}else{
+			GoodType goodTypeDB = getGoodType(goodTypeId);
+			if(goodTypeDB == null) throw new MessageException("商品类型不存在");
+			goodTypeDB.setGoodTypeName(goodType.getGoodTypeName());
+			goodTypeDB.setGoodTypeDescribe(goodType.getGoodTypeDescribe());
+			goodTypeDB.setGoodTypeStatus(goodTypeStatus);
+			goodTypeDB.setUpdateTime(nowDate);
+			baseDao.save(goodTypeDB, goodTypeId);
+			return goodTypeId;
+		}
+	}
+	
+	@Override
+	public GoodType getGoodType(int goodTypeId){
+		return baseDao.getToEvict(GoodType.class, goodTypeId);
 	}
 	
 }
