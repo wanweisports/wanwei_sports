@@ -33,10 +33,12 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 		Integer goodId = goodInfo.getGoodId();
 		String nowDate = DateUtil.getNowDate();
 		if(goodId == null){ //添加
-			//goodInfo.setGoodNo(getGoodNo()); //商品编号[手动输入]
-			goodInfo.setGoodStatus(IDBConstant.GOOD_STATE_BOOKING); //商品的预售和在售   商品刚添加完就是预售状态   上架后就是在售状态  下架后又是预售状态
-			if(goodInfo.getGoodCount() == null){
+			 //商品的预售和在售   商品刚添加完就是预售状态   上架后就是在售状态  下架后又是预售状态
+			if(goodInfo.getGoodCount() == null || goodInfo.getGoodCount() <= 0){
 				goodInfo.setGoodCount(0);
+				goodInfo.setGoodStatus(IDBConstant.GOOD_STATE_BOOKING); //新：库存小于等于0
+			}else{
+				goodInfo.setGoodStatus(IDBConstant.GOOD_STATE_ING); //新：库存大于等于0
 			}
 			goodInfo.setCreateTime(nowDate);
 			baseDao.save(goodInfo, null);
@@ -49,6 +51,7 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 			goodInfoDB.setGoodDiscount(goodInfo.getGoodDiscount());
 			goodInfoDB.setGoodRemark(goodInfo.getGoodRemark());
 			goodInfoDB.setGoodMoneyType(goodInfo.getGoodMoneyType()); //计费方式
+			goodInfoDB.setGoodCount(goodInfo.getGoodCount());
 			goodInfoDB.setUpdateTime(nowDate);
 			goodInfoDB.setSalesId(goodInfo.getSalesId());
 			baseDao.save(goodInfoDB, goodInfoDB.getGoodId());
