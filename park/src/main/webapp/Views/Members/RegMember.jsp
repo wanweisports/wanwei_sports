@@ -104,30 +104,30 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="memberIdcard" class="col-sm-4 control-label">身份证号</label>
+                            <label for="memberIdcard" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 身份证号
+                            </label>
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="memberIdcard" name="memberIdcard"
                                        placeholder="请输入18位身份证号" autocomplete="off"
+                                       data-val="true" data-val-required="身份证号不能为空"
                                        data-val-regex-pattern="^\d{17}(\d|X|x)$"
-                                       data-val-regex="身份证号格式错误" data-val="true">
+                                       data-val-regex="身份证号格式错误">
                                 <div data-valmsg-for="memberIdcard" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="memberBirthday" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 会员生日
-                            </label>
+                            <label for="memberBirthday" class="col-sm-4 control-label">会员生日</label>
 
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="memberBirthday" name="memberBirthday"
-                                           data-val="true" data-val-required="会员生日不能为空" placeholder="会员生日">
+                                           placeholder="会员生日">
                                     <span class="input-group-addon member-birthday-select">
                                         <i class="glyphicon glyphicon-calendar"></i>
                                     </span>
                                 </div>
-                                <div data-valmsg-for="memberBirthday" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">

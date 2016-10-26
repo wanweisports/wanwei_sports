@@ -159,7 +159,7 @@
                                     <input type="text" class="form-control" id="recharge_money" name="cardBalance"
                                            placeholder="请输入充值金额(元)" autocomplete="off"
                                            data-val="true" data-val-required="充值金额不能为空"
-                                           data-val-regex-pattern="^[1-9][0-9]*$"
+                                           data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                            data-val-regex="充值金额格式错误">
                                     <div data-valmsg-for="cardBalance" data-valmsg-replace="true"></div>
                                 </div>
@@ -188,7 +188,7 @@
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="recharge_discount" name="subAmount"
                                            value="" placeholder="请输入优惠金额"
-                                           data-val-regex-pattern="^[1-9][0-9]*$"
+                                           data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                            data-val-regex="优惠金额格式错误">
                                     <div data-valmsg-for="subAmount" data-valmsg-replace="true"></div>
                                 </div>
@@ -199,7 +199,7 @@
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="recharge_send" name="givingAmount"
                                            value="" placeholder="请输入赠送金额"
-                                           data-val-regex-pattern="^[1-9][0-9]*$"
+                                           data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                            data-val-regex="赠送金额格式错误">
                                     <div data-valmsg-for="givingAmount" data-valmsg-replace="true"></div>
                                 </div>
@@ -298,7 +298,7 @@
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" id="ticket_money"
                                                        name="invoiceMoney" placeholder="发票金额" autocomplete="off"
-                                                       data-val-regex-pattern="^[1-9][0-9]*$"
+                                                       data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                                        data-val-regex="发票金额格式错误">
                                                 <div data-valmsg-for="invoiceMoney" data-valmsg-replace="true"></div>
                                             </div>

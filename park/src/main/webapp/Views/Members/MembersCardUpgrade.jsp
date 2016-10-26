@@ -116,7 +116,7 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="upper_money" name="upLevelMoney"
                                        placeholder="请输入升级费用(元)" autocomplete="off"
-                                       data-val-regex-pattern="^[1-9][0-9]*$"
+                                       data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                        data-val-regex="升级费用格式错误">
                                 <div data-valmsg-for="upLevelMoney" data-valmsg-replace="true"></div>
                             </div>
@@ -159,7 +159,7 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="upper_discount" name="subMoney"
                                        placeholder="请输入优惠金额(元)" autocomplete="off"
-                                       data-val-regex-pattern="^[1-9][0-9]*$"
+                                       data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                        data-val-regex="优惠金额格式错误">
                                 <div data-valmsg-for="subMoney" data-valmsg-replace="true"></div>
                             </div>
@@ -170,7 +170,7 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="upper_send" name="givingAmount"
                                        placeholder="请输入赠送金额(元)" autocomplete="off"
-                                       data-val-regex-pattern="^[1-9][0-9]*$"
+                                       data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                        data-val-regex="赠送金额格式错误">
                                 <div data-valmsg-for="givingAmount" data-valmsg-replace="true"></div>
                             </div>

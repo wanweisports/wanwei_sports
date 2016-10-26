@@ -387,8 +387,8 @@
                                     <input type="text" class="form-control" id="card_type_money" name="cardTypeMoney"
                                            placeholder="会费(元)" autocomplete="off"
                                            data-val="true" data-val-required="会费不能为空"
-                                           data-val-regex-pattern="^[0-9]|[1-9][0-9]$"
-                                           data-val-regex="会费只能是数字">
+                                           data-val-regex-pattern="^(0\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?$"
+                                           data-val-regex="会费格式错误">
                                     <div data-valmsg-for="cardTypeMoney" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
@@ -401,8 +401,8 @@
                                     <input type="text" class="form-control" id="card_type_overdraw" name="cardTypeCredit"
                                            placeholder="信用额度(元)" autocomplete="off"
                                            data-val="true" data-val-required="信用额度不能为空"
-                                           data-val-regex-pattern="^[0-9]|[1-9][0-9]$"
-                                           data-val-regex="信用额度只能是数字">
+                                           data-val-regex-pattern="^0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?$"
+                                           data-val-regex="信用额度格式错误">
                                     <div data-valmsg-for="cardTypeCredit" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
