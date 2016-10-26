@@ -14,8 +14,6 @@ public interface IPlatformConstant {
 	
 	public static final String FAIL_CODE = "-1";
 	
-	public static final String Rotary_CODE = "0";
-	
 	public static final String FAIL_MESSAGE = "操作失败";
 	
 	public static final String REQUEST_JSON = "request_json";

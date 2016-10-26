@@ -5,20 +5,28 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.park.common.bean.OperatorInputView;
+import com.park.common.bean.PageBean;
 import com.park.common.po.ParkBusiness;
+import com.park.common.util.JsonUtils;
+import com.park.service.IOperatorService;
 import com.park.service.IParkService;
 
 /**
  * Created by wangjun on 16/10/12.
  */
 @Controller
+@RequestMapping("settings")
 public class SettingsController extends BaseController {
 	
 	@Autowired
 	private IParkService parkService;
 	
+	@Autowired
+	private IOperatorService operatorService;
+	
     // 常用设置
-    @RequestMapping("settings/common")
+    @RequestMapping("common")
     public String settingsCommon(ParkBusiness parkBusiness, Model model) {
     	try {
 			model.addAttribute("businessId", parkService.saveParkBusiness(parkBusiness));
@@ -29,19 +37,31 @@ public class SettingsController extends BaseController {
     }
 
     // 用户设置详情
-    @RequestMapping("settings/getUsersView")
-    public String getUsersView() {
+    @RequestMapping("getUsersView")
+    public String getUsersView(Model model) {
+    	try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         return "Settings/SettingsSystemUsersView";
     }
 
     // 用户设置
-    @RequestMapping("settings/getUsers")
-    public String getUsers() {
+    @RequestMapping("getUsers")
+    public String getUsers(OperatorInputView operatorInputView, Model model) {
+    	try {
+    		model.addAllAttributes(JsonUtils.fromJsonDF(operatorInputView));
+			PageBean pageBean = operatorService.getOperatorList(operatorInputView);
+			super.setPageInfo(model, pageBean);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         return "Settings/SettingsSystemUsers";
     }
 
     // 角色设置详情
-    @RequestMapping("settings/getRolesView")
+    @RequestMapping("getRolesView")
     public String getRolesView() {
         return "Settings/SettingsSystemRolesView";
     }
@@ -53,19 +73,19 @@ public class SettingsController extends BaseController {
     }
 
     // 通知设置
-    @RequestMapping("settings/notification")
+    @RequestMapping("notification")
     public String notification() {
         return "Settings/SettingsNotification";
     }
 
     // 数据库操作
-    @RequestMapping("settings/database")
+    @RequestMapping("database")
     public String systemDatabase() {
         return "Settings/SettingsSystemDatabase";
     }
 
     // 系统操作日志
-    @RequestMapping("settings/systemLogs")
+    @RequestMapping("systemLogs")
     public String systemLogs() {
         return "Settings/SettingsSystemLogs";
     }

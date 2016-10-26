@@ -10,6 +10,7 @@ import com.park.common.bean.GoodInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.po.GoodInfo;
 import com.park.common.po.GoodShopping;
+import com.park.common.po.GoodType;
 
 public interface IGoodService {
 	
@@ -34,5 +35,13 @@ public interface IGoodService {
 	public GoodShopping getGoodShopping(int shoppingId, int salesId);
 	
 	public void deleteCart(int shoppingId, int salesId);
+	
+	public List<Map<String, Object>> getGoodTypeNames();
+	
+	public PageBean getGoodTypes(GoodInputView goodInputView);
+	
+	public Integer saveGoodType(GoodType goodType);
+	
+	public GoodType getGoodType(int goodTypeId);
 	
 }

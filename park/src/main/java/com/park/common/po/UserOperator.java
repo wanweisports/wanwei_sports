@@ -25,6 +25,14 @@ public class UserOperator implements java.io.Serializable {
 	private String status;
 	private String createTime;
 	private String updateTime;
+	private String lastLoginTime;
+	private String operatorNo;
+	private String operatorEffectDate;
+	private String operatorEndDate;
+	private String operatorBirthday;
+	private String operatorContact;
+	private String operatorAddress;
+	private String operatorSex;
 
 	// Constructors
 
@@ -40,7 +48,10 @@ public class UserOperator implements java.io.Serializable {
 	/** full constructor */
 	public UserOperator(String operatorId, String operatorName,
 			String operatorPwd, String operatorMobile, String status,
-			String createTime, String updateTime) {
+			String createTime, String updateTime, String lastLoginTime,
+			String operatorNo, String operatorEffectDate,
+			String operatorEndDate, String operatorBirthday,
+			String operatorContact, String operatorAddress, String operatorSex) {
 		this.operatorId = operatorId;
 		this.operatorName = operatorName;
 		this.operatorPwd = operatorPwd;
@@ -48,6 +59,14 @@ public class UserOperator implements java.io.Serializable {
 		this.status = status;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
+		this.lastLoginTime = lastLoginTime;
+		this.operatorNo = operatorNo;
+		this.operatorEffectDate = operatorEffectDate;
+		this.operatorEndDate = operatorEndDate;
+		this.operatorBirthday = operatorBirthday;
+		this.operatorContact = operatorContact;
+		this.operatorAddress = operatorAddress;
+		this.operatorSex = operatorSex;
 	}
 
 	// Property accessors
@@ -123,6 +142,78 @@ public class UserOperator implements java.io.Serializable {
 
 	public void setUpdateTime(String updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	@Column(name = "lastLoginTime", length = 20)
+	public String getLastLoginTime() {
+		return this.lastLoginTime;
+	}
+
+	public void setLastLoginTime(String lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
+	}
+
+	@Column(name = "operatorNo", length = 32)
+	public String getOperatorNo() {
+		return this.operatorNo;
+	}
+
+	public void setOperatorNo(String operatorNo) {
+		this.operatorNo = operatorNo;
+	}
+
+	@Column(name = "operatorEffectDate", length = 20)
+	public String getOperatorEffectDate() {
+		return this.operatorEffectDate;
+	}
+
+	public void setOperatorEffectDate(String operatorEffectDate) {
+		this.operatorEffectDate = operatorEffectDate;
+	}
+
+	@Column(name = "operatorEndDate", length = 20)
+	public String getOperatorEndDate() {
+		return this.operatorEndDate;
+	}
+
+	public void setOperatorEndDate(String operatorEndDate) {
+		this.operatorEndDate = operatorEndDate;
+	}
+
+	@Column(name = "operatorBirthday", length = 20)
+	public String getOperatorBirthday() {
+		return this.operatorBirthday;
+	}
+
+	public void setOperatorBirthday(String operatorBirthday) {
+		this.operatorBirthday = operatorBirthday;
+	}
+
+	@Column(name = "operatorContact", length = 32)
+	public String getOperatorContact() {
+		return this.operatorContact;
+	}
+
+	public void setOperatorContact(String operatorContact) {
+		this.operatorContact = operatorContact;
+	}
+
+	@Column(name = "operatorAddress", length = 512)
+	public String getOperatorAddress() {
+		return this.operatorAddress;
+	}
+
+	public void setOperatorAddress(String operatorAddress) {
+		this.operatorAddress = operatorAddress;
+	}
+
+	@Column(name = "operatorSex", length = 1)
+	public String getOperatorSex() {
+		return this.operatorSex;
+	}
+
+	public void setOperatorSex(String operatorSex) {
+		this.operatorSex = operatorSex;
 	}
 
 }

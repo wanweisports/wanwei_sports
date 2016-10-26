@@ -16,6 +16,7 @@ import com.park.common.bean.ResponseBean;
 import com.park.common.exception.MessageException;
 import com.park.common.po.GoodInfo;
 import com.park.common.po.GoodShopping;
+import com.park.common.po.GoodType;
 import com.park.common.po.UserOperator;
 import com.park.common.util.JsonUtils;
 import com.park.service.IGoodService;
@@ -29,18 +30,28 @@ public class GoodController extends BaseController {
 
     // 商品类别设置
     @RequestMapping("typeGood")
-    public String typeGood(){
+    public String typeGood(GoodInputView goodInputView, Model model){
+    	try {
+    		model.addAllAttributes(JsonUtils.fromJsonDF(goodInputView));
+			PageBean pageBean = goodService.getGoodTypes(goodInputView);
+			System.out.println(JsonUtils.toJson(pageBean.getList()));
+			super.setPageInfo(model, pageBean);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         return "Goods/GoodsTypeSettings";
     }
 	
 	@RequestMapping("settingGood")
-	public String settingGood(){
+	public String settingGood(Model model){
+		model.addAttribute("goodTypeNames", goodService.getGoodTypeNames());
 		return "Goods/GoodsSettings";
 	}
 
 	@RequestMapping("viewGood")
 	public String viewGood(Integer goodId, Model model){
         model.addAllAttributes(JsonUtils.fromJsonDF(goodService.getGoodInfo(goodId)));
+        model.addAttribute("goodTypeNames", goodService.getGoodTypeNames());
 		return "Goods/GoodsViews";
 	}
 
@@ -165,6 +176,38 @@ public class GoodController extends BaseController {
 	@RequestMapping(value = "getGoodsStockDetails")
 	public String getGoodsStockDetails() {
 		return "Goods/GoodStockDetails";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "goodTypeInfo")
+	public ResponseBean goodTypeInfo(int goodTypeId) {
+		try {
+			return new ResponseBean(JsonUtils.fromJson(goodService.getGoodType(goodTypeId)));
+		} catch (MessageException e) {
+			e.printStackTrace();
+			return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "saveGoodType")
+	public ResponseBean saveGoodType(GoodType goodType) {
+		try {
+			UserOperator userInfo = super.getUserInfo();
+			goodType.setSalesId(userInfo.getId());
+			Map<String, Object> data = new HashMap<String, Object>();
+			data.put("goodTypeId", goodService.saveGoodType(goodType));
+			return new ResponseBean(data);
+		} catch (MessageException e) {
+			e.printStackTrace();
+			return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
 	}
 	
 }

@@ -10,7 +10,7 @@
 	<!-- 定义一个简短的名称，主要是给一些工具使用（必须元素） -->
 	<short-name>functionTag</short-name>
 	<!-- 定义此标签库的uri路径，用于唯一标识该数据库，便于页面的引用 -->
-	<!-- <uri>http://cn.csdn.web.tag</uri> -->
+	<uri>http://xiaosong.csdn.web.tag</uri>
 	<!-- 此标签库中的一个标签处理器的声明 -->
 	<tag>
 		<!-- 该标签处理器的一个简短描述 -->

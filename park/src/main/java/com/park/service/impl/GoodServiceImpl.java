@@ -15,6 +15,7 @@ import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.GoodInfo;
 import com.park.common.po.GoodShopping;
+import com.park.common.po.GoodType;
 import com.park.common.util.DateUtil;
 import com.park.common.util.FileUtil;
 import com.park.common.util.JsonUtils;
@@ -33,10 +34,12 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 		Integer goodId = goodInfo.getGoodId();
 		String nowDate = DateUtil.getNowDate();
 		if(goodId == null){ //添加
-			//goodInfo.setGoodNo(getGoodNo()); //商品编号[手动输入]
-			goodInfo.setGoodStatus(IDBConstant.GOOD_STATE_BOOKING); //商品的预售和在售   商品刚添加完就是预售状态   上架后就是在售状态  下架后又是预售状态
-			if(goodInfo.getGoodCount() == null){
+			 //商品的预售和在售   商品刚添加完就是预售状态   上架后就是在售状态  下架后又是预售状态
+			if(goodInfo.getGoodCount() == null || goodInfo.getGoodCount() <= 0){
 				goodInfo.setGoodCount(0);
+				goodInfo.setGoodStatus(IDBConstant.GOOD_STATE_BOOKING); //新：库存小于等于0
+			}else{
+				goodInfo.setGoodStatus(IDBConstant.GOOD_STATE_ING); //新：库存大于等于0
 			}
 			goodInfo.setCreateTime(nowDate);
 			baseDao.save(goodInfo, null);
@@ -49,6 +52,7 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 			goodInfoDB.setGoodDiscount(goodInfo.getGoodDiscount());
 			goodInfoDB.setGoodRemark(goodInfo.getGoodRemark());
 			goodInfoDB.setGoodMoneyType(goodInfo.getGoodMoneyType()); //计费方式
+			goodInfoDB.setGoodCount(goodInfo.getGoodCount());
 			goodInfoDB.setUpdateTime(nowDate);
 			goodInfoDB.setSalesId(goodInfo.getSalesId());
 			baseDao.save(goodInfoDB, goodInfoDB.getGoodId());
@@ -176,6 +180,46 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 	@Override
 	public GoodShopping getGoodShopping(int shoppingId, int salesId){
 		return baseDao.queryByHqlFirst("FROM GoodShopping WHERE shoppingId = ? AND salesId = ?", shoppingId, salesId);
+	}
+	
+	@Override
+	public List<Map<String, Object>> getGoodTypeNames(){
+		return baseDao.queryBySql("SELECT goodTypeId, goodTypeName FROM good_type WHERE goodTypeStatus = ?", IDBConstant.LOGIC_STATUS_YES);
+	}
+	
+	@Override
+	public PageBean getGoodTypes(GoodInputView goodInputView){
+		StringBuilder headSql = new StringBuilder("SELECT goodTypeId, goodTypeName, goodTypeDescribe, gt.createTime, uo.operatorName");
+		StringBuilder bodySql = new StringBuilder(" FROM good_type gt, user_operator uo");
+		StringBuilder whereSql = new StringBuilder(" WHERE gt.salesId = uo.id");
+		return super.getPageBean(headSql, bodySql, whereSql, goodInputView);
+	}
+	
+	@Override
+	public Integer saveGoodType(GoodType goodType){
+		String nowDate = DateUtil.getNowDate();
+		Integer goodTypeId = goodType.getGoodTypeId();
+		String goodTypeStatus = goodType.getGoodTypeStatus() == null ? IDBConstant.LOGIC_STATUS_YES : goodType.getGoodTypeStatus();
+		if(goodTypeId == null){
+			goodType.setCreateTime(nowDate);
+			goodType.setGoodTypeStatus(goodTypeStatus);
+			baseDao.save(goodType, null);
+			return goodType.getGoodTypeId();
+		}else{
+			GoodType goodTypeDB = getGoodType(goodTypeId);
+			if(goodTypeDB == null) throw new MessageException("商品类型不存在");
+			goodTypeDB.setGoodTypeName(goodType.getGoodTypeName());
+			goodTypeDB.setGoodTypeDescribe(goodType.getGoodTypeDescribe());
+			goodTypeDB.setGoodTypeStatus(goodTypeStatus);
+			goodTypeDB.setUpdateTime(nowDate);
+			baseDao.save(goodTypeDB, goodTypeId);
+			return goodTypeId;
+		}
+	}
+	
+	@Override
+	public GoodType getGoodType(int goodTypeId){
+		return baseDao.getToEvict(GoodType.class, goodTypeId);
 	}
 	
 }

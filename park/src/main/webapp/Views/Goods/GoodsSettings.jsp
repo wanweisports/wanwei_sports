@@ -105,11 +105,13 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <select class="form-control" id="good_type" name="goodType">
+                                <select class="form-control" id="good_type" name="goodTypeId">
                                     <option value="">请选择</option>
-                                    <option value="1">饮食类</option>
+                                    <c:forEach var="type" items="${goodTypeNames}">
+                                    	<option value="${type.goodTypeId}" <c:if test='${type.goodTypeId==goodTypeId}'>selected</c:if>>${type.goodTypeName}</option>
+                                    </c:forEach>
                                 </select>
-                                <div data-valmsg-for="goodType" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="goodTypeId" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">

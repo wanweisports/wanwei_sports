@@ -59,4 +59,6 @@ public interface IDBConstant {
     public static final String ORDER_SERVICE_TYPE_GOODS = "2";//商品
     public static final String ORDER_SERVICE_TYPE_BLOCK_SITE = "3";//包场
     
+    public static final int ROLE_EMPLOYEE = 1000;//员工角色最低主键值
+    
 }
