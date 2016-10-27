@@ -10,19 +10,20 @@
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
     <script src="/Content/app/members/members_card_types.js?v=${static_resource_version}"></script>
     <script>
-        // 表单校验设置
-        $('#card_type_form').validate({
-            ignore: ":hidden"
-        });
+        $(document).ready(function () {
+            // 表单校验设置
+            $('#card_type_form').validate({
+                ignore: ":hidden"
+            });
 
-        (function ($) {
+            // 选中的卡类型状态
             $("#cardTypeStatus").val('${cardTypeStatus}');
-        })(jQuery);
+        });
     </script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>会员管理</span> &gt;&gt; <span>会员设置</span>
+    当前位置: <span>会员管理</span> &gt;&gt; <span>会员类型设置</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -59,6 +60,7 @@
                     <table class="table">
                         <thead>
                         <tr>
+                            <th>#</th>
                             <th>会员类别</th>
                             <th>支付类型</th>
                             <th>会员周期</th>
@@ -74,8 +76,9 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="type" items="${list}">
+                        <c:forEach var="type" items="${list}" varStatus="loop">
                             <tr>
+                                <td>${loop.index}</td>
                                 <td>${type.cardTypeName}</td>
                                 <td>
                                     <c:if test="${type.cardType == '1'}">预存类型</c:if>
@@ -106,7 +109,7 @@
                                 <td>${type.operatorName}</td>
                                 <td>${type.createTime}</td>
                                 <td>
-                                    <a class="btn btn-primary" class="type-item" href="#addModal" data-toggle="modal"
+                                    <a class="btn btn-primary type-item" href="#addModal" data-toggle="modal"
                                        data-backdrop="false" data-id="${type.cardTypeId}">
                                         <span class="glyphicon glyphicon-share-alt"></span> 查看
                                     </a>
@@ -208,7 +211,7 @@
                                 <div class="col-sm-10">
                                     <div class="input-group">
                                         <label class="input-group-addon">
-                                            <input type="checkbox" name="cardTypeWeek" value="1" checked> 周一
+                                            <input type="checkbox" name="cardTypeWeek" value="7" checked> 周一
                                         </label>
                                         <div class="pull-left" style="width: 40%">
                                             <select class="form-control timeWeek" name="cardTypeTimeStart">
@@ -217,6 +220,16 @@
                                                 <option value="10:00">10:00</option>
                                                 <option value="11:00">11:00</option>
                                                 <option value="12:00">12:00</option>
+                                                <option value="13:00">13:00</option>
+                                                <option value="14:00">14:00</option>
+                                                <option value="15:00">15:00</option>
+                                                <option value="16:00">16:00</option>
+                                                <option value="17:00">17:00</option>
+                                                <option value="18:00">18:00</option>
+                                                <option value="19:00">19:00</option>
+                                                <option value="20:00">20:00</option>
+                                                <option value="21:00">21:00</option>
+                                                <option value="22:00">22:00</option>
                                             </select>
                                         </div>
                                         <div class="pull-left" style="width: 40%">
@@ -226,7 +239,16 @@
                                                 <option value="10:00">10:00</option>
                                                 <option value="11:00">11:00</option>
                                                 <option value="12:00">12:00</option>
-                                                <option value="20:00" selected>20:00</option>
+                                                <option value="13:00">13:00</option>
+                                                <option value="14:00">14:00</option>
+                                                <option value="15:00">15:00</option>
+                                                <option value="16:00">16:00</option>
+                                                <option value="17:00">17:00</option>
+                                                <option value="18:00">18:00</option>
+                                                <option value="19:00">19:00</option>
+                                                <option value="20:00">20:00</option>
+                                                <option value="21:00">21:00</option>
+                                                <option value="22:00" selected>22:00</option>
                                             </select>
                                         </div>
                                     </div>
@@ -241,6 +263,16 @@
                                                 <option value="10:00">10:00</option>
                                                 <option value="11:00">11:00</option>
                                                 <option value="12:00">12:00</option>
+                                                <option value="13:00">13:00</option>
+                                                <option value="14:00">14:00</option>
+                                                <option value="15:00">15:00</option>
+                                                <option value="16:00">16:00</option>
+                                                <option value="17:00">17:00</option>
+                                                <option value="18:00">18:00</option>
+                                                <option value="19:00">19:00</option>
+                                                <option value="20:00">20:00</option>
+                                                <option value="21:00">21:00</option>
+                                                <option value="22:00">22:00</option>
                                             </select>
                                         </div>
                                         <div class="pull-left" style="width: 40%">
@@ -250,7 +282,16 @@
                                                 <option value="10:00">10:00</option>
                                                 <option value="11:00">11:00</option>
                                                 <option value="12:00">12:00</option>
-                                                <option value="20:00" selected>20:00</option>
+                                                <option value="13:00">13:00</option>
+                                                <option value="14:00">14:00</option>
+                                                <option value="15:00">15:00</option>
+                                                <option value="16:00">16:00</option>
+                                                <option value="17:00">17:00</option>
+                                                <option value="18:00">18:00</option>
+                                                <option value="19:00">19:00</option>
+                                                <option value="20:00">20:00</option>
+                                                <option value="21:00">21:00</option>
+                                                <option value="22:00" selected>22:00</option>
                                             </select>
                                         </div>
                                     </div>
@@ -265,6 +306,16 @@
                                                 <option value="10:00">10:00</option>
                                                 <option value="11:00">11:00</option>
                                                 <option value="12:00">12:00</option>
+                                                <option value="13:00">13:00</option>
+                                                <option value="14:00">14:00</option>
+                                                <option value="15:00">15:00</option>
+                                                <option value="16:00">16:00</option>
+                                                <option value="17:00">17:00</option>
+                                                <option value="18:00">18:00</option>
+                                                <option value="19:00">19:00</option>
+                                                <option value="20:00">20:00</option>
+                                                <option value="21:00">21:00</option>
+                                                <option value="22:00">22:00</option>
                                             </select>
                                         </div>
                                         <div class="pull-left" style="width: 40%">
@@ -274,7 +325,16 @@
                                                 <option value="10:00">10:00</option>
                                                 <option value="11:00">11:00</option>
                                                 <option value="12:00">12:00</option>
-                                                <option value="20:00" selected>20:00</option>
+                                                <option value="13:00">13:00</option>
+                                                <option value="14:00">14:00</option>
+                                                <option value="15:00">15:00</option>
+                                                <option value="16:00">16:00</option>
+                                                <option value="17:00">17:00</option>
+                                                <option value="18:00">18:00</option>
+                                                <option value="19:00">19:00</option>
+                                                <option value="20:00">20:00</option>
+                                                <option value="21:00">21:00</option>
+                                                <option value="22:00" selected>22:00</option>
                                             </select>
                                         </div>
                                     </div>
@@ -289,6 +349,16 @@
                                                 <option value="10:00">10:00</option>
                                                 <option value="11:00">11:00</option>
                                                 <option value="12:00">12:00</option>
+                                                <option value="13:00">13:00</option>
+                                                <option value="14:00">14:00</option>
+                                                <option value="15:00">15:00</option>
+                                                <option value="16:00">16:00</option>
+                                                <option value="17:00">17:00</option>
+                                                <option value="18:00">18:00</option>
+                                                <option value="19:00">19:00</option>
+                                                <option value="20:00">20:00</option>
+                                                <option value="21:00">21:00</option>
+                                                <option value="22:00">22:00</option>
                                             </select>
                                         </div>
                                         <div class="pull-left" style="width: 40%">
@@ -298,7 +368,16 @@
                                                 <option value="10:00">10:00</option>
                                                 <option value="11:00">11:00</option>
                                                 <option value="12:00">12:00</option>
-                                                <option value="20:00" selected>20:00</option>
+                                                <option value="13:00">13:00</option>
+                                                <option value="14:00">14:00</option>
+                                                <option value="15:00">15:00</option>
+                                                <option value="16:00">16:00</option>
+                                                <option value="17:00">17:00</option>
+                                                <option value="18:00">18:00</option>
+                                                <option value="19:00">19:00</option>
+                                                <option value="20:00">20:00</option>
+                                                <option value="21:00">21:00</option>
+                                                <option value="22:00" selected>22:00</option>
                                             </select>
                                         </div>
                                     </div>
@@ -313,6 +392,16 @@
                                                 <option value="10:00">10:00</option>
                                                 <option value="11:00">11:00</option>
                                                 <option value="12:00">12:00</option>
+                                                <option value="13:00">13:00</option>
+                                                <option value="14:00">14:00</option>
+                                                <option value="15:00">15:00</option>
+                                                <option value="16:00">16:00</option>
+                                                <option value="17:00">17:00</option>
+                                                <option value="18:00">18:00</option>
+                                                <option value="19:00">19:00</option>
+                                                <option value="20:00">20:00</option>
+                                                <option value="21:00">21:00</option>
+                                                <option value="22:00">22:00</option>
                                             </select>
                                         </div>
                                         <div class="pull-left" style="width: 40%">
@@ -322,7 +411,16 @@
                                                 <option value="10:00">10:00</option>
                                                 <option value="11:00">11:00</option>
                                                 <option value="12:00">12:00</option>
-                                                <option value="20:00" selected>20:00</option>
+                                                <option value="13:00">13:00</option>
+                                                <option value="14:00">14:00</option>
+                                                <option value="15:00">15:00</option>
+                                                <option value="16:00">16:00</option>
+                                                <option value="17:00">17:00</option>
+                                                <option value="18:00">18:00</option>
+                                                <option value="19:00">19:00</option>
+                                                <option value="20:00">20:00</option>
+                                                <option value="21:00">21:00</option>
+                                                <option value="22:00" selected>22:00</option>
                                             </select>
                                         </div>
                                     </div>
@@ -337,6 +435,16 @@
                                                 <option value="10:00">10:00</option>
                                                 <option value="11:00">11:00</option>
                                                 <option value="12:00">12:00</option>
+                                                <option value="13:00">13:00</option>
+                                                <option value="14:00">14:00</option>
+                                                <option value="15:00">15:00</option>
+                                                <option value="16:00">16:00</option>
+                                                <option value="17:00">17:00</option>
+                                                <option value="18:00">18:00</option>
+                                                <option value="19:00">19:00</option>
+                                                <option value="20:00">20:00</option>
+                                                <option value="21:00">21:00</option>
+                                                <option value="22:00">22:00</option>
                                             </select>
                                         </div>
                                         <div class="pull-left" style="width: 40%">
@@ -346,7 +454,16 @@
                                                 <option value="10:00">10:00</option>
                                                 <option value="11:00">11:00</option>
                                                 <option value="12:00">12:00</option>
-                                                <option value="20:00" selected>20:00</option>
+                                                <option value="13:00">13:00</option>
+                                                <option value="14:00">14:00</option>
+                                                <option value="15:00">15:00</option>
+                                                <option value="16:00">16:00</option>
+                                                <option value="17:00">17:00</option>
+                                                <option value="18:00">18:00</option>
+                                                <option value="19:00">19:00</option>
+                                                <option value="20:00">20:00</option>
+                                                <option value="21:00">21:00</option>
+                                                <option value="22:00" selected>22:00</option>
                                             </select>
                                         </div>
                                     </div>
@@ -361,6 +478,16 @@
                                                 <option value="10:00">10:00</option>
                                                 <option value="11:00">11:00</option>
                                                 <option value="12:00">12:00</option>
+                                                <option value="13:00">13:00</option>
+                                                <option value="14:00">14:00</option>
+                                                <option value="15:00">15:00</option>
+                                                <option value="16:00">16:00</option>
+                                                <option value="17:00">17:00</option>
+                                                <option value="18:00">18:00</option>
+                                                <option value="19:00">19:00</option>
+                                                <option value="20:00">20:00</option>
+                                                <option value="21:00">21:00</option>
+                                                <option value="22:00">22:00</option>
                                             </select>
                                         </div>
                                         <div class="pull-left" style="width: 40%">
@@ -370,7 +497,16 @@
                                                 <option value="10:00">10:00</option>
                                                 <option value="11:00">11:00</option>
                                                 <option value="12:00">12:00</option>
-                                                <option value="20:00" selected>20:00</option>
+                                                <option value="13:00">13:00</option>
+                                                <option value="14:00">14:00</option>
+                                                <option value="15:00">15:00</option>
+                                                <option value="16:00">16:00</option>
+                                                <option value="17:00">17:00</option>
+                                                <option value="18:00">18:00</option>
+                                                <option value="19:00">19:00</option>
+                                                <option value="20:00">20:00</option>
+                                                <option value="21:00">21:00</option>
+                                                <option value="22:00" selected>22:00</option>
                                             </select>
                                         </div>
                                     </div>
@@ -387,7 +523,7 @@
                                     <input type="text" class="form-control" id="card_type_money" name="cardTypeMoney"
                                            placeholder="会费(元)" autocomplete="off"
                                            data-val="true" data-val-required="会费不能为空"
-                                           data-val-regex-pattern="^(0\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?$"
+                                           data-val-regex-pattern="^(0(\.[0-9]{1,2})?)|([1-9][0-9]*(\.[0-9]{1,2})?)$"
                                            data-val-regex="会费格式错误">
                                     <div data-valmsg-for="cardTypeMoney" data-valmsg-replace="true"></div>
                                 </div>
@@ -401,7 +537,7 @@
                                     <input type="text" class="form-control" id="card_type_overdraw" name="cardTypeCredit"
                                            placeholder="信用额度(元)" autocomplete="off"
                                            data-val="true" data-val-required="信用额度不能为空"
-                                           data-val-regex-pattern="^0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?$"
+                                           data-val-regex-pattern="^(0(\.[0-9]{1,2})?)|([1-9][0-9]*(\.[0-9]{1,2})?)$"
                                            data-val-regex="信用额度格式错误">
                                     <div data-valmsg-for="cardTypeCredit" data-valmsg-replace="true"></div>
                                 </div>
@@ -417,8 +553,8 @@
                                     <input type="text" class="form-control" id="card_type_discount" name="cardTypeDiscount"
                                            placeholder="会员折扣" autocomplete="off"
                                            data-val="true" data-val-required="会员折扣不能为空"
-                                           data-val-regex-pattern="^[0-9]|[1-9][0-9]$"
-                                           data-val-regex="会员折扣只能是数字">
+                                           data-val-regex-pattern="^[0-9]\d{0,1}$"
+                                           data-val-regex="输入100以内的非负整数">
                                     <div data-valmsg-for="cardTypeDiscount" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
@@ -442,7 +578,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="save_card_type"><!-- data-dismiss="modal" -->
+                    <button type="button" class="btn btn-primary" id="save_card_type">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>

@@ -23,6 +23,14 @@
                 format:'Y-m-d',
                 minDate: 0
             });
+
+            // 员工生日
+            $('#data_birthday').datetimepicker({
+                timepicker: false,
+                lang: "zh",
+                format:'Y-m-d',
+                maxDate: 0
+            });
         },
         initEvents: function () {
             // 用户设置

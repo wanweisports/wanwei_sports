@@ -20,7 +20,7 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>会员管理</span> &gt;&gt; <span>会员卡注销</span>
+    当前位置: <span>会员管理</span> &gt;&gt; <span style="color: #f00;">会员卡注销[未完成]</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">

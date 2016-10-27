@@ -163,9 +163,8 @@
                                       placeholder="备注"></textarea>
                             </div>
                         </div>
-                        <div class="form-group sc-ui-submit">
+                        <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
-                                <p class="sc-submit-tips"></p>
                                 <button type="button" class="btn btn-primary col-sm-4 register-member">
                                     <span class="glyphicon glyphicon-ok"></span>  注册 & 绑卡
                                 </button>
