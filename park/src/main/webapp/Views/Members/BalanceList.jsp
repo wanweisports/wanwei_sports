@@ -15,13 +15,13 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>会员管理</span> &gt;&gt; <span>会员查询</span> &gt;&gt; <span>会员详情</span> &gt;&gt; <span>会员卡储值查询</span>
+    当前位置: <span>会员管理</span> &gt;&gt; <span>会员查询</span> &gt;&gt; <span>会员详情</span> &gt;&gt; <span>储值明细</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left;">
         <div class="panel panel-default">
-            <div class="panel-heading">会员卡储值查询</div>
+            <div class="panel-heading">储值明细</div>
             <div class="panel-body">
                 <form class="form-inline" id="balance_filter_form" onsubmit="return false;">
                     <input type="hidden" name="cardId" value="${cardId}">
@@ -51,11 +51,11 @@
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>
-                    <!--<div class="form-group pull-right">
+                    <div class="form-group pull-right">
                         <a href="/member/getConsumes?cardId=${cardId}" class="btn btn-primary">
                             <span class="glyphicon glyphicon-th-list"></span> 消费明细
                         </a>
-                    </div>-->
+                    </div>
                 </form>
             </div>
         </div>

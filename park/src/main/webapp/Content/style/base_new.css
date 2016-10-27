@@ -33,6 +33,7 @@ a:hover {
   border: 1px solid #f2595c !important;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  text-align: left;
 }
 .field-validation-error {
   color: #f2595c;
@@ -40,6 +41,7 @@ a:hover {
   border-top: none;
   background-color: #ffdede;
   padding-left: 8px;
+  text-align: left;
 }
 table {
   border-collapse: collapse;

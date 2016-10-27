@@ -123,12 +123,12 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="end1_date" class="col-sm-4 control-label">
+                            <label for="end_date" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 截止日期
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="end1_date" name="endDate"
+                                <input type="text" class="form-control" id="end_date" name="endDate"
                                        placeholder="截止日期" autocomplete="off"
                                        data-val="true" data-val-required="截止日期不能为空">
                                 <div data-valmsg-for="endDate" data-valmsg-replace="true"></div>

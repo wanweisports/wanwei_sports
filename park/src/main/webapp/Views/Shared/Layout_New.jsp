@@ -56,6 +56,10 @@
                                                         <table style="background: url('/Content/images/new/right_table_bg.jpg?v=${static_resource_version}') repeat-x; height:26px; border-bottom:1px solid #5BA8DE; width: 100%;">
                                                             <tr>
                                                                 <td style="text-align: left; color: #004C7E; padding-left: 12px;">
+                                                                    <a href="javascript:history.go(-1);" class="btn btn-primary"
+                                                                        style="padding: 2px 12px; margin-right: 2px; opacity: 0.6;">
+                                                                        <span class="glyphicon glyphicon-arrow-left"></span>
+                                                                    </a>
                                                                     <layout:block name="<%=Blocks.BLOCK_NAV_PATH%>"/>
                                                                 </td>
                                                             </tr>

@@ -52,13 +52,13 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('member/saveMemberCardType', conditions, function (res) {
+                $.post('/member/saveMemberCardType', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        alert("会员设置保存失败, 请稍后重试");
+                        alert(res.message || "会员设置保存失败, 请稍后重试");
                     }
                 });
             });
