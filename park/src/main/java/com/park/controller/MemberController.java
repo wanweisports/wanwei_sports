@@ -118,11 +118,40 @@ public class MemberController extends BaseController {
         return "Members/MembersCarTypeList";
     }
 
+    /**
+     * 根据会员卡类型ID,获取会员卡类型详情
+     * @param cardTypeId
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "getMemberCarType", method = RequestMethod.POST)
     public ResponseBean getMemberCarType(Integer cardTypeId) {
         try {
             return new ResponseBean(memberService.getMemberCardTypeMap(cardTypeId));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
+    /**
+     * 保存(增加或者更新)会员卡类型,cardTypeId有值为更新
+     * @param memberCardType
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "saveMemberCardType", method = RequestMethod.POST)
+    public ResponseBean saveMemberCardType(MemberCardType memberCardType) {
+        try {
+            UserOperator userOperator = super.getUserInfo();
+            memberCardType.setSalesId(userOperator.getId());
+            Integer cardTypeId = memberService.saveMemberCardType(memberCardType);
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("cardTypeId", cardTypeId);
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseBean(false);
@@ -180,25 +209,6 @@ public class MemberController extends BaseController {
             //return new ResponseBean(false);
         }
         return "Members/MembersInfo";
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "saveMemberCardType", method = RequestMethod.POST)
-    public ResponseBean saveMemberCardType(MemberCardType memberCardType) {
-        try {
-            UserOperator userOperator = super.getUserInfo();
-            memberCardType.setSalesId(userOperator.getId());
-            Integer cardTypeId = memberService.saveMemberCardType(memberCardType);
-            Map<String, Object> data = new HashMap<String, Object>();
-            data.put("cardTypeId", cardTypeId);
-            return new ResponseBean(data);
-        } catch (MessageException e) {
-            e.printStackTrace();
-            return new ResponseBean(e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseBean(false);
-        }
     }
 
     @ResponseBody
@@ -391,8 +401,8 @@ public class MemberController extends BaseController {
     public String getMembersCardCancel(Model model) {
         return "Members/MembersCardCancel";
     }
-    // 会员卡消费查询
 
+    // 会员卡消费查询
     @RequestMapping(value = "getConsumes")
     public String getConsumes(Model model) {
         return "Members/ConsumeList";
