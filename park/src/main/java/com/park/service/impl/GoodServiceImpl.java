@@ -144,7 +144,7 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 	}
 	
 	@Override
-	public Integer saveGoodShopping(GoodShopping goodShopping){
+	public Integer saveGoodShopping(GoodShopping goodShopping, int amount){
 		Integer goodId = goodShopping.getGoodId();
 		if(goodId == null) throw new MessageException("参数错误：goodId");
 		GoodInfo goodInfo = getGoodInfo(goodId);
@@ -158,7 +158,7 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 			baseDao.save(goodShopping, null);
 			return goodShopping.getShoppingId();
 		}else{
-			goodShoppingDB.setShoppingGoodAmount(goodShoppingDB.getShoppingGoodAmount()+1);
+			goodShoppingDB.setShoppingGoodAmount(goodShoppingDB.getShoppingGoodAmount()+amount);
 			goodShoppingDB.setUpdateTime(nowDate);
 			baseDao.save(goodShoppingDB, goodId);
 			return goodShoppingDB.getShoppingId();

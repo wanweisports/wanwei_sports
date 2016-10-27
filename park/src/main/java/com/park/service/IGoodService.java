@@ -28,7 +28,7 @@ public interface IGoodService {
 	
 	public List<Map<String, Object>> getGoodsCart(int salesId);
 	
-	public Integer saveGoodShopping(GoodShopping goodShopping);
+	public Integer saveGoodShopping(GoodShopping goodShopping, int amount);
 	
 	public GoodShopping getGoodShoppingByGood(int goodId, int salesId);
 	

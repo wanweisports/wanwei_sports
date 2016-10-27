@@ -62,7 +62,9 @@ public class SettingsController extends BaseController {
     public String getUsers(OperatorInputView operatorInputView, Model model) {
     	try {
     		model.addAllAttributes(JsonUtils.fromJsonDF(operatorInputView));
+    		model.addAttribute("roleNames", roleService.getRoleNames(IDBConstant.ROLE_EMPLOYEE));
 			PageBean pageBean = operatorService.getOperatorList(operatorInputView);
+			System.out.println(JsonUtils.toJson(pageBean));
 			super.setPageInfo(model, pageBean);
 		} catch (Exception e) {
 			e.printStackTrace();
