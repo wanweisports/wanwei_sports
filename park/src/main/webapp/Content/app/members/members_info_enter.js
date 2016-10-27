@@ -11,7 +11,8 @@
                 timepicker: false,
                 lang: "zh",
                 format:'Y-m-d',
-                defaultDate: new Date()
+                defaultDate: new Date(),
+                maxDate: 0
             });
 
             $(".member-birthday-select").on("click", function (e) {
