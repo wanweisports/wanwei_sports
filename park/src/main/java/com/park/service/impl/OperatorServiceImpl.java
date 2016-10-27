@@ -1,6 +1,5 @@
 package com.park.service.impl;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,8 @@ import com.park.common.po.UserOperator;
 import com.park.common.util.JsonUtils;
 import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
-import com.park.service.IMemberService;
 import com.park.service.IOperatorService;
+import com.park.service.IRoleService;
 
 @Service
 public class OperatorServiceImpl extends BaseService implements IOperatorService {
@@ -28,14 +27,18 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 	private IBaseDao baseDao;
 	
 	@Autowired
-	private IMemberService memberService;
+	private IRoleService roleService;
 	
 	@Override
 	public String saveOperator(UserOperator userOperator, int roleId){
-		SystemRole systemRole = getSystemRole(roleId);
+		SystemRole systemRole = roleService.getSystemRole(roleId);
 		if(systemRole == null) throw new MessageException("角色不存在");
 		if(!IDBConstant.LOGIC_STATUS_YES.equals(systemRole.getRoleStatus())) throw new MessageException("角色不可用");
-		baseDao.save(userOperator, null);
+		baseDao.save(userOperator, userOperator.getId());
+		
+		//删除之前的角色
+		SystemRoleOperator operatorRole = roleService.getOperatorRole(userOperator.getOperatorId());
+		if(operatorRole != null) baseDao.delete(operatorRole);
 		
 		SystemRoleOperator systemRoleOperator = new SystemRoleOperator(new SystemRoleOperatorId(roleId, userOperator.getOperatorId()));
 		baseDao.save(systemRoleOperator, null);
@@ -43,18 +46,8 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 	}
 	
 	@Override
-	public SystemRole getSystemRole(int roleId){
-		return baseDao.queryByHqlFirst("FROM SystemRole WHERE roleId = ?", roleId);
-	}
-	
-	@Override
 	public UserOperator getOperator(String operatorId){
 		return baseDao.queryByHqlFirst("FROM UserOperator WHERE operatorId = ?", operatorId);
-	}
-	
-	@Override
-	public SystemRoleOperator getSystemRoleOperator(String operatorId){
-		return baseDao.queryByHqlFirst("FROM SystemRoleOperator WHERE operatorId = ?", operatorId);
 	}
 	
 	@Override
@@ -64,23 +57,59 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 	
 	@Override
 	public ReserveInfo getOperatorNameInfo(String operatorId){
-		UserOperator operator = getOperator(operatorId);
+		/*UserOperator operator = getOperator(operatorId);
 		SystemRoleOperator systemRoleOperator = getSystemRoleOperator(operatorId);
 		ReserveInfo reserveInfo = new ReserveInfo();
 		reserveInfo.setOperatorId(operatorId);
 		reserveInfo.setOperatorName(operator.getOperatorName());
 		reserveInfo.setOperatorMobile(operator.getOperatorMobile());
 		reserveInfo.setOpType(StrUtil.objToStr(systemRoleOperator.getId().getRoleId()));
-		return reserveInfo;
+		return reserveInfo;*/
+		return null;
 	}
 	
 	@Override
 	public PageBean getOperatorList(OperatorInputView operatorInputView){
+		String roleId = operatorInputView.getRoleId();
+		String status = operatorInputView.getStatus();
+		
 		StringBuilder headSql = new StringBuilder("SELECT uo.operatorNo, uo.operatorId, uo.operatorName, sr.roleName, uo.operatorEffectDate, uo.operatorEndDate, uo.status");
 		StringBuilder bodySql = new StringBuilder(" FROM user_operator uo, system_role_operator sro, system_role sr");
 		StringBuilder whereSql = new StringBuilder(" WHERE uo.operatorId = sro.operatorId AND sro.roleId = sr.roleId");
 		whereSql.append(" AND sr.roleId >= ").append(IDBConstant.ROLE_EMPLOYEE);
+		if(StrUtil.isNotBlank(status)){
+			whereSql.append(" AND uo.status = :status");
+		}
+		if(StrUtil.isNotBlank(roleId)){
+			whereSql.append(" AND sro.roleId = :roleId");
+		}
 		return super.getPageBean(headSql, bodySql, whereSql, operatorInputView);
+	}
+	
+	@Override
+	public Map<String, Object> getEmployee(String operatorId){
+		UserOperator operator = getOperator(operatorId);
+		SystemRoleOperator operatorRole = roleService.getOperatorRole(operatorId);
+		Integer roleId = operatorRole.getId().getRoleId();
+		if(roleId < IDBConstant.ROLE_EMPLOYEE) throw new MessageException("操作错误");
+		Map<String, Object> operatorMap = JsonUtils.fromJson(operator);
+		operatorMap.put("roleId", roleId);
+		return operatorMap;
+	}
+	
+	@Override
+	public String saveEmployee(UserOperator userOperator, int roleId){
+		if(roleId < IDBConstant.ROLE_EMPLOYEE) throw new MessageException("操作错误");
+		return saveOperator(userOperator, roleId);
+	}
+	
+	@Override
+	public void updateLockEmployee(String operatorId, boolean lock){
+		SystemRoleOperator operatorRole = roleService.getOperatorRole(operatorId);
+		if(operatorRole.getId().getRoleId() < IDBConstant.ROLE_EMPLOYEE) throw new MessageException("操作错误");
+		UserOperator operator = getOperator(operatorId);
+		operator.setStatus(lock ? IDBConstant.LOGIC_STATUS_NO : IDBConstant.LOGIC_STATUS_YES);
+		baseDao.save(operator, operatorId);
 	}
 	
 }
