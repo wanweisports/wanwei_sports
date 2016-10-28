@@ -177,7 +177,21 @@ public class GoodController extends BaseController {
 	public String getGoodsStockDetails() {
 		return "Goods/GoodStockDetails";
 	}
-	
+
+	// 商品类别设置
+	@ResponseBody
+	@RequestMapping("goodTypes")
+	public ResponseBean goodTypes(GoodInputView goodInputView){
+		try {
+			Map<String, Object> data = new HashMap<String, Object>();
+			data.put("list", goodService.getGoodTypes(goodInputView));
+			return new ResponseBean(data);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
+	}
+
 	@ResponseBody
 	@RequestMapping(value = "goodTypeInfo")
 	public ResponseBean goodTypeInfo(int goodTypeId) {

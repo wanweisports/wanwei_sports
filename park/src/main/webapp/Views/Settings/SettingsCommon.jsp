@@ -42,10 +42,10 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="site_name" name="siteName"
-                                       placeholder="请输入场馆名称" autocomplete="off" value="171中学体育俱乐部"
+                                <input type="text" class="form-control" id="site_name" name="businessName"
+                                       placeholder="请输入场馆名称" autocomplete="off" value="${businessName}"
                                        data-val="true" data-val-required="场馆名称不能为空" readonly>
-                                <div data-valmsg-for="siteName" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="businessName" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -56,10 +56,10 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="site_province" name="siteProvince"
-                                       placeholder="请输入所在省市" autocomplete="off"
+                                <input type="text" class="form-control" id="site_province" name="businessAreaName"
+                                       placeholder="请输入所在省市" autocomplete="off" value="${businessAreaName}"
                                        data-val="true" data-val-required="所在省市不能为空">
-                                <div data-valmsg-for="siteProvince" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="businessAreaName" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -70,12 +70,12 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="start_time" name="startTime"
-                                       placeholder="请输入营业开始时间" autocomplete="off"
+                                <input type="text" class="form-control" id="start_time" name="businessStartTime"
+                                       placeholder="请输入营业开始时间" autocomplete="off" value="${businessStartTime}"
                                        data-val="true" data-val-required="营业开始时间不能为空"
                                        data-val-regex-pattern="^(([0-1]\d)|(2[0-3])):[0-5]\d$"
                                        data-val-regex="营业开始时间格式错误">
-                                <div data-valmsg-for="startTime" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="businessStartTime" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -86,12 +86,12 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="end_time" name="endTime"
-                                       placeholder="请输入营业结束时间" autocomplete="off"
+                                <input type="text" class="form-control" id="end_time" name="businessEndTime"
+                                       placeholder="请输入营业结束时间" autocomplete="off" value="${businessEndTime}"
                                        data-val="true" data-val-required="营业结束时间不能为空"
                                        data-val-regex-pattern="^(([0-1]\d)|(2[0-3])):[0-5]\d$"
                                        data-val-regex="营业结束时间格式错误">
-                                <div data-valmsg-for="endTime" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="businessEndTime" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -102,10 +102,10 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="site_contact" name="siteContact"
-                                       placeholder="请输入联系人" autocomplete="off"
+                                <input type="text" class="form-control" id="site_contact" name="businessContact"
+                                       placeholder="请输入联系人" autocomplete="off" value="${businessContact}"
                                        data-val="true" data-val-required="联系人不能为空">
-                                <div data-valmsg-for="siteContact" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="businessContact" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -116,10 +116,12 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="site_phone" name="sitePhone"
-                                       placeholder="请输入联系电话" autocomplete="off"
-                                       data-val="true" data-val-required="联系电话不能为空">
-                                <div data-valmsg-for="sitePhone" data-valmsg-replace="true"></div>
+                                <input type="text" class="form-control" id="site_phone" name="businessPhone"
+                                       placeholder="请输入联系电话" autocomplete="off" value="${businessPhone}"
+                                       data-val="true" data-val-required="联系电话不能为空"
+                                       data-val-regex-pattern="^110\d{8}$"
+                                       data-val-regex="联系人格式错误">
+                                <div data-valmsg-for="businessPhone" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -130,26 +132,16 @@
                             </label>
 
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="site_address" name="siteAddress"
-                                       placeholder="请输入详细地址" autocomplete="off"
+                                <input type="text" class="form-control" id="site_address" name="businessAddress"
+                                       placeholder="请输入详细地址" autocomplete="off" value="${businessAddress}"
                                        data-val="true" data-val-required="详细地址不能为空">
-                                <div data-valmsg-for="siteAddress" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="site_remark" class="col-sm-2 control-label">备注信息</label>
-
-                            <div class="col-sm-10">
-                                <textarea class="form-control" id="site_remark" name="siteRemark" rows="3"
-                                          placeholder="请输入备注信息" autocomplete="off"></textarea>
-                                <div data-valmsg-for="siteRemark" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="businessAddress" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-12">
-                        <div class="form-group sc-ui-submit">
+                        <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
-                                <p class="sc-submit-tips"></p>
                                 <button type="button" class="btn btn-primary col-sm-4 common-save">
                                     <span class="glyphicon glyphicon-ok"></span>  保 存
                                 </button>

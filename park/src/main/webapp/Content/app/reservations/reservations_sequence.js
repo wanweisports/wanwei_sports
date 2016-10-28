@@ -12,6 +12,51 @@
             Reservation_Date_Tpl: '<li class="reservation-date-picker #DATEACTIVE#" data-value="#DATEVALUE#">' +
                 '<a href="javascript:;">#DATETEXT#</a></li>'
         },
+        formatJSON: function (data) {
+            var newData = {
+                mobile: "",
+                name: "",
+                memberId: "",
+                opType: 2,
+                reserveType: 1,
+                reserveModel: 2,
+                siteReserveDateList: [{
+                    reserveStartDate: this.opts.Current_Date,
+                    reserveEndDate: this.opts.Current_Date,
+                    reserveWeek: "1",
+                    siteReserveTimeList: [{
+                        "siteId": "1",
+                        "siteStartTime": "09:00",
+                        "siteEndTime": "15:00"
+                    }]
+                }]
+            };
+
+            /*
+             {
+             "mobile": "15110275787",
+             "name": "张三",
+             "memberId": 1,
+             "opType": 2,
+             "reserveType": 1,
+             "reserveModel": 2,
+             "siteReserveDateList": [
+             {
+             "reserveStartDate": "2016-10-01",
+             "reserveEndDate": "2016-10-21",
+             "reserveWeek": "1,3,5",
+             "siteReserveTimeList": [
+             {
+             "siteId": "1",
+             "siteStartTime": "09:00",
+             "siteEndTime": "15:00"
+             }
+             ]
+             }
+             ]
+             }
+            */
+        },
         init: function () {
             this.initDatePicker();
             this.initMenuDate();
@@ -31,7 +76,7 @@
                 lang: "zh",
                 format:'Y-m-d',
                 inline: true,
-                defaultDate: new Date(),
+                maxDate: 0,
                 onSelectDate: function (ct, $el) {
                     content.opts.Current_Date = $el.val();
                     $(".other-date .icon-text").text(content.opts.Current_Date);
@@ -223,9 +268,8 @@
                     var $sel = $selected.eq(i);
 
                     data.push({
-                        startTime: $sel.attr("data-start"),
-                        endTime: $sel.attr("data-end"),
-                        siteDate: content.opts.Current_Date,
+                        siteStartTime: $sel.attr("data-start"),
+                        siteEndTime: $sel.attr("data-end"),
                         siteId: $sel.attr("data-id")
                     });
                 }
@@ -237,7 +281,6 @@
             $(".sequence-lock").on("click", function (e) {
                 e.preventDefault();
 
-                console.log(_findSelectedArea());
                 $(".tips-modal").modal({backdrop: false, show: true});
             });
 
@@ -251,9 +294,22 @@
                     return alert("请选择场地");
                 }
 
-                content.opts.data = data;
+                content.opts.data = {
+                    mobile: "",
+                    name: "散客",
+                    memberId: "",
+                    opType: 2,
+                    reserveType: 1,
+                    reserveModel: 1,
+                    siteReserveDateList: [{
+                        reserveStartDate: content.opts.Current_Date,
+                        reserveEndDate: content.opts.Current_Date,
+                        reserveWeek: (new Date(content.opts.Current_Date)).getDay(),
+                        siteReserveTimeList: data
+                    }]
+                };
                 $.post('/site/calculateSiteMoney', {
-                    siteOperationJson: JSON.stringify({siteOperationInfo: content.opts.data, opType: 2})
+                    siteOperationJson: JSON.stringify(content.opts.data)
                 }, function (res) {
                     var data = res.data;
 
@@ -283,15 +339,12 @@
 
                 $reservationsSteps.find(".reservations-steps").steps("next", 1);
 
+                var data = content.opts.data;
+                data.name = "散客";
+                data.mobile = "13051788101";
+
                 $.post('/site/saveReservationSite', {
-                    siteOperationJson: JSON.stringify({
-                        siteOperationInfo: content.opts.data,
-                        opType: 2,
-                        reserveType: 1,
-                        //memberId: 1,
-                        name: "张三",
-                        mobile: "13051788101"
-                    })
+                    siteOperationJson: JSON.stringify(data)
                 }, function (res) {
                     var data = res.data;
 
