@@ -228,7 +228,12 @@ public class SiteController extends BaseController {
 			return new ResponseBean(false);
 		}
 	}
-	
+
+	/**
+	 * 计算场地的选择的场地的价格
+	 * @param siteInputView
+	 * @return
+     */
 	//计算预定场地价格
 	@ResponseBody
 	@RequestMapping("calculateSiteMoney")

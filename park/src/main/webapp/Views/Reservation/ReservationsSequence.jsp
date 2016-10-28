@@ -25,22 +25,24 @@
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left;">
         <div class="panel panel-default sequence-filter">
-            <div class="panel-heading">场地预订</div>
-            <div class="panel-body">
-                <input type="hidden" value="${curDate}" id="current_date">
-                <input type="hidden" value="${curSportId}" id="current_sport">
+            <div class="panel-heading">
+                <span>场地预订  </span>
                 <div class="sports-list">
-                    <button type="button" class="btn btn-default sports-item" data-value="1">
+                    <button type="button" class="btn btn-primary sports-item" data-value="1">
                         <img class="sports-icon sports-active" src="/Content/images/sports/shuttercock-active.png?v=${static_resource_version}">
                         <img class="sports-icon sports-inactive" src="/Content/images/sports/shuttercock.png?v=${static_resource_version}">
                         羽毛球
                     </button>
-                    <button type="button" class="btn btn-primary sports-item">
+                    <button type="button" class="btn btn-default sports-item">
                         <img class="sports-icon sports-active" src="/Content/images/sports/swimming-active.png?v=${static_resource_version}">
                         <img class="sports-icon sports-inactive" src="/Content/images/sports/swimming.png?v=${static_resource_version}">
                         游泳
                     </button>
                 </div>
+            </div>
+            <div class="panel-body">
+                <input type="hidden" value="${curDate}" id="current_date">
+                <input type="hidden" value="${curSportId}" id="current_sport">
                 <nav class="navbar navbar-default date-list">
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav sequence-date">

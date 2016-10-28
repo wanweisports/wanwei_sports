@@ -228,4 +228,27 @@
 > 
 > 请求参数：
 > 
-    invoiceIds    领取的发票id（多个逗号分隔）  
+    invoiceIds    领取的发票id（多个逗号分隔）
+>
+
+## 系统设置
+主要是一些系统的参数的设置，以及操作用户的设置等。
+
+### 1.  场馆信息设置
+目的是设置当前场馆的基础信息。
+> 请求地址：
+>
+    settings/common.do
+> 
+> 请求类型：POST（application/json）
+> 
+> 请求参数：
+> 
+    businessStartTime    营业开始时间
+    businessEndTime      营业结束时间
+    businessName         场馆名称
+    businessAreaName     场馆所在省市
+    businessContact      场馆联系人
+    businessPhone        场馆联系电话
+    businessAddress      场馆详细地址
+>
