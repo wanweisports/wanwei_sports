@@ -30,65 +30,40 @@
                         <th>商品编号</th>
                         <th>商品图片</th>
                         <th>商品名称</th>
-                        <th>价格(元)</th>
-                        <th>会员价格(元)</th>
+                        <th>商品单价(元)</th>
                         <th>购买数量</th>
                         <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>FD1321211</td>
-                        <td>
-                            <img src="/Content/images/demo/mp60650501_1456481736483_2.jpeg" alt="某某商品"
-                                 class="img-rounded" style="width: 100px">
-                        </td>
-                        <td>某某商品</td>
-                        <td>100.00元</td>
-                        <td>90.00元</td>
-                        <td>
-                            <div class="input-group">
-                                <span class="input-group-btn" style="width: auto">
-                                    <button class="btn btn-default goods-minus" type="button">-</button>
-                                </span>
-                                <input type="text" class="form-control" value="1" style="width: 50px;">
-                                <span class="input-group-btn" style="width: auto">
-                                    <button class="btn btn-default goods-plus" type="button">+</button>
-                                </span>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="javascript:;" class="btn btn-warning goods-remove">
-                                <span class="glyphicon glyphicon-trash"></span>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>FD1321211</td>
-                        <td>
-                            <img src="/Content/images/demo/mp60650501_1456481736483_2.jpeg" alt="某某商品"
-                                 class="img-rounded" style="width: 100px">
-                        </td>
-                        <td>某某商品</td>
-                        <td>100.00元</td>
-                        <td>90.00元</td>
-                        <td>
-                            <div class="input-group">
-                                <span class="input-group-btn" style="width: auto">
-                                    <button class="btn btn-default goods-minus" type="button">-</button>
-                                </span>
-                                <input type="text" class="form-control" value="1" style="width: 50px;">
-                                <span class="input-group-btn" style="width: auto">
-                                    <button class="btn btn-default goods-plus" type="button">+</button>
-                                </span>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="javascript:;" class="btn btn-warning goods-remove">
-                                <span class="glyphicon glyphicon-trash"></span>
-                            </a>
-                        </td>
-                    </tr>
+                    <c:forEach var="good" items="${goods}">
+                        <tr>
+                            <td style="vertical-align: middle;">${good.goodNo}</td>
+                            <td style="vertical-align: middle;">
+                                <img src="${good.goodPic}" alt="${good.goodName}"
+                                     class="img-rounded" style="width: 100px; height: 80px;">
+                            </td>
+                            <td style="vertical-align: middle;">${good.goodName}</td>
+                            <td style="vertical-align: middle;">${good.goodPrice}元</td>
+                            <td style="vertical-align: middle;">
+                                <div class="input-group">
+                                    <span class="input-group-btn" style="width: auto">
+                                        <button class="btn btn-default goods-minus" data-id="${good.goodId}">-</button>
+                                    </span>
+                                    <input type="text" class="form-control good-count" value="${good.shoppingGoodAmount}"
+                                           style="width: 40px; padding: 6px 0; text-align: center">
+                                    <span class="input-group-btn" style="width: auto">
+                                        <button class="btn btn-default goods-plus" data-id="${good.goodId}">+</button>
+                                    </span>
+                                </div>
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <a href="javascript:;" class="btn btn-warning goods-remove" data-sid="${good.shoppingId}">
+                                    <span class="glyphicon glyphicon-trash"></span> 移除
+                                </a>
+                            </td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
                 <div class="alert alert-info" style="overflow: hidden">

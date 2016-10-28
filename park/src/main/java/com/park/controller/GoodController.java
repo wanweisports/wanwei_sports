@@ -120,6 +120,7 @@ public class GoodController extends BaseController {
 	@RequestMapping(value = "getGoodsMarket")
 	public String getGoodsMarket(GoodInputView goodInputView, Model model) {
 		try {
+            model.addAttribute("goodTypeNames", goodService.getGoodTypeNames());
 			model.addAttribute("goods", goodService.getGoodsMarket(goodInputView));
 		} catch (Exception e) {
 			e.printStackTrace();

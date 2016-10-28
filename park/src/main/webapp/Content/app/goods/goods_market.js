@@ -15,6 +15,10 @@
         },
         init: function () {
             this.initEvents();
+
+            var goodType = location.search.replace("?goodType=", "");
+            $(".good-type-list").find('[data-type="' + goodType + '"]')
+                .addClass("btn-warning").removeClass("btn-primary");
         },
         initEvents: function () {
             var content = this;
@@ -45,19 +49,20 @@
                 content.opts.data[goodId].goodCount++;
 
                 $btnCart.find(".badge").html(content.calCartCount());
+
+                $.post('/good/addGoodsToCart', {goodId: goodId, amount: 1}, function (res) {
+                    if (res.code == 1) {
+                    } else {
+                        alert(res.message || "添加购物车失败, 请稍后重试");
+                    }
+                });
             });
 
             // 跳转购物车列表
             $btnCart.on("click", function (e) {
                 e.preventDefault();
 
-                $.post('/goods/SaveGoodsCart', {carts: JSON.stringify(content.opts.data)}, function (res) {
-                    if (res.code == 1) {
-                        location.assign("/good/getGoodsCart");
-                    }
-                }).fail(function (err) {
-                    console.log(err);
-                });
+                location.assign("/good/getGoodsCart");
             });
         }
     };

@@ -142,8 +142,14 @@
 
                 var $this = $(this);
 
-                $.post("/goods/DeleteGoodsCart", {id: $this.attr("data-id")}, function (res) {
-                    $this.parents("tr").remove();
+                $.post("/good/deleteCart", {
+                    shoppingId: $this.attr("data-sid")
+                }, function (res) {
+                    if (res.code == 1) {
+                        location.reload();
+                    } else {
+                        alert(res.message || "移除购物车失败, 请稍后重试");
+                    }
                 });
             });
 
@@ -152,9 +158,17 @@
                 e.preventDefault();
 
                 var $this = $(this);
+                var count = parseInt($this.parents(".input-group").find(".good-count").val());
 
-                $.post("/goods/PlusGoodsCartCount", {id: $this.attr("data-id")}, function (res) {
-                    $this.parents("td").find(".good-count").val(res.data.count);
+                $.post("/good/addGoodsToCart", {
+                    goodId: $this.attr("data-id"),
+                    amount: 1
+                }, function (res) {
+                    if (res.code == 1) {
+                        $this.parents(".input-group").find(".good-count").val(++count);
+                    } else {
+                        alert(res.message || "增加数量失败, 请稍后重试");
+                    }
                 });
             });
 
@@ -163,9 +177,21 @@
                 e.preventDefault();
 
                 var $this = $(this);
+                var count = parseInt($this.parents(".input-group").find(".good-count").val());
 
-                $.post("/goods/MinusGoodsCartCount", {id: $this.attr("data-id")}, function (res) {
-                    $this.parents("td").find(".good-count").val(res.data.count);
+                if (count <= 1) {
+                    return false;
+                }
+
+                $.post("/good/addGoodsToCart", {
+                    goodId: $this.attr("data-id"),
+                    amount: -1
+                }, function (res) {
+                    if (res.code == 1) {
+                        $this.parents(".input-group").find(".good-count").val(--count);
+                    } else {
+                        alert(res.message || "减少数量失败, 请稍后重试");
+                    }
                 });
             });
         }

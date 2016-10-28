@@ -136,7 +136,7 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 		StringBuilder sql = new StringBuilder("SELECT goodId, goodName, goodPic, goodPrice FROM good_info");
 		sql.append(" WHERE goodStatus = :goodStatus");
 		if(StrUtil.isNotBlank(goodType)){
-			sql.append(" AND goodType = :goodType");
+			sql.append(" AND goodTypeId = :goodType");
 		}
 		goodInputView.setGoodStatus(IDBConstant.GOOD_STATE_ING);
 		return baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(goodInputView));
@@ -144,7 +144,7 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 	
 	@Override
 	public List<Map<String, Object>> getGoodsCart(int salesId){
-		return baseDao.queryBySql("SELECT gi.goodId, gi.goodNo, gi.goodName, gi.goodPrice, gsi.shoppingGoodAmount FROM good_info gi, good_shopping gsi WHERE gi.goodId = gsi.goodId AND gsi.salesId = ?", salesId);
+		return baseDao.queryBySql("SELECT gi.goodId, gi.goodPic, gi.goodNo, gi.goodName, gi.goodPrice, gsi.shoppingId, gsi.shoppingGoodAmount FROM good_info gi, good_shopping gsi WHERE gi.goodId = gsi.goodId AND gsi.salesId = ?", salesId);
 	}
 	
 	@Override
