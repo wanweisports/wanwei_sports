@@ -187,9 +187,7 @@ public class SiteController extends BaseController {
 		try {
 			UserOperator userOperator = super.getUserInfo();
 			siteInputView.setSalesId(userOperator.getId());
-			Map<String, Object> data = new HashMap<String, Object>();
-			data.put("orderId", siteService.saveReservationSite(siteInputView));
-			return new ResponseBean(data);
+			return new ResponseBean(siteService.saveReservationSite(siteInputView));
 		} catch (MessageException e) {
 			e.printStackTrace();
 			return new ResponseBean(e.getMessage());

@@ -89,6 +89,7 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 	@Override
 	public Map<String, Object> getEmployee(String operatorId){
 		UserOperator operator = getOperator(operatorId);
+		if(operator == null) throw new MessageException("用户不存在");
 		SystemRoleOperator operatorRole = roleService.getOperatorRole(operatorId);
 		Integer roleId = operatorRole.getId().getRoleId();
 		if(roleId < IDBConstant.ROLE_EMPLOYEE) throw new MessageException("操作错误");
