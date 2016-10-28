@@ -14,6 +14,7 @@ import com.park.common.po.SystemRole;
 import com.park.common.po.SystemRoleOperator;
 import com.park.common.po.SystemRoleOperatorId;
 import com.park.common.po.UserOperator;
+import com.park.common.util.DateUtil;
 import com.park.common.util.JsonUtils;
 import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
@@ -34,6 +35,10 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 		SystemRole systemRole = roleService.getSystemRole(roleId);
 		if(systemRole == null) throw new MessageException("角色不存在");
 		if(!IDBConstant.LOGIC_STATUS_YES.equals(systemRole.getRoleStatus())) throw new MessageException("角色不可用");
+		if(userOperator.getId() == null){
+			userOperator.setCreateTime(DateUtil.getNowDate());
+			userOperator.setStatus(IDBConstant.LOGIC_STATUS_YES);
+		}
 		baseDao.save(userOperator, userOperator.getId());
 		
 		//删除之前的角色
@@ -89,6 +94,7 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 	@Override
 	public Map<String, Object> getEmployee(String operatorId){
 		UserOperator operator = getOperator(operatorId);
+		if(operator == null) throw new MessageException("用户不存在");
 		SystemRoleOperator operatorRole = roleService.getOperatorRole(operatorId);
 		Integer roleId = operatorRole.getId().getRoleId();
 		if(roleId < IDBConstant.ROLE_EMPLOYEE) throw new MessageException("操作错误");
@@ -110,6 +116,11 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 		UserOperator operator = getOperator(operatorId);
 		operator.setStatus(lock ? IDBConstant.LOGIC_STATUS_NO : IDBConstant.LOGIC_STATUS_YES);
 		baseDao.save(operator, operatorId);
+	}
+	
+	@Override
+	public UserOperator innerLogin(String name){
+		return JsonUtils.fromJson(baseDao.queryBySqlFirst("SELECT * FROM user_operator WHERE operatorId = ?", name), UserOperator.class);
 	}
 	
 }

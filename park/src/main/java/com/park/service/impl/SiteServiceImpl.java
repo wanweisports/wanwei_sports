@@ -254,7 +254,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	
 	//先生成订单，在修改订单
 	@Override
-	public Integer saveReservationSite(SiteInputView siteInputView) throws ParseException{
+	public Map<String, Object> saveReservationSite(SiteInputView siteInputView) throws ParseException{
 		SiteReserveBasic siteReserveBasic = JsonUtils.fromJsonDF(siteInputView.getSiteOperationJson(), SiteReserveBasic.class);
 		List<SiteReserveDate> siteReserveDateList = siteReserveBasic.getSiteReserveDateList();
 		
@@ -355,8 +355,10 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 			siteReserves.add(siteReserve);
 			*/
 		}
-
-		return orderId;
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("orderId", orderId);
+		resultMap.put("orderSumPrice", orderInfo.getOrderSumPrice());
+		return resultMap;
 	}
 	
 	@Override
@@ -446,6 +448,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	@Override
 	public SiteReserveBasic getSiteReserveBasicAllByOrderId(int orderId){
 		SiteReserveBasic siteReserveBasic = getSiteReserveBasicByOrderId(orderId);
+		if(siteReserveBasic == null) throw new MessageException("订单不存在，请重新预定");
 		siteReserveBasic.setSiteReserveDateList(getSiteReserveDate(siteReserveBasic.getSiteReserveId()));
 		getSiteReserveDateTime(siteReserveBasic.getSiteReserveDateList());
 		return siteReserveBasic;

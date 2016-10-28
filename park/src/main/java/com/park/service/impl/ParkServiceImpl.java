@@ -49,10 +49,9 @@ public class ParkServiceImpl extends BaseService implements IParkService {
 	
 	@Override
 	public Integer saveParkBusiness(ParkBusiness parkBusiness){
-		Integer businessId = parkBusiness.getBusinessId();
+		ParkBusiness parkBusinessDB = getParkBusiness();
 		String nowDate = DateUtil.getNowDate();
-		if(businessId != null){
-			ParkBusiness parkBusinessDB = getParkBusiness(businessId);
+		if(parkBusinessDB != null){
 			parkBusinessDB.setBusinessAddress(parkBusiness.getBusinessAddress());
 			parkBusinessDB.setBusinessAreaName(parkBusiness.getBusinessAreaName());
 			parkBusinessDB.setBusinessContact(parkBusiness.getBusinessContact());
@@ -62,8 +61,8 @@ public class ParkServiceImpl extends BaseService implements IParkService {
 			parkBusinessDB.setBusinessPhone(parkBusiness.getBusinessPhone());
 			parkBusinessDB.setUpdateTime(nowDate);
 			parkBusinessDB.setSalesId(parkBusiness.getSalesId());
-			baseDao.save(parkBusinessDB, businessId);
-			return businessId;
+			baseDao.save(parkBusinessDB, parkBusinessDB.getBusinessId());
+			return parkBusinessDB.getBusinessId();
 		}else{
 			parkBusiness.setCreateTime(nowDate);
 			baseDao.save(parkBusiness, null);
@@ -72,8 +71,8 @@ public class ParkServiceImpl extends BaseService implements IParkService {
 	}
 	
 	@Override
-	public ParkBusiness getParkBusiness(int businessId){
-		return baseDao.getToEvict(ParkBusiness.class, businessId);
+	public ParkBusiness getParkBusiness(){
+		return baseDao.queryByHqlFirst("FROM ParkBusiness");
 	}
 	
 }

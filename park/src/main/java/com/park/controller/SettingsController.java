@@ -36,13 +36,30 @@ public class SettingsController extends BaseController {
 	
     // 常用设置
     @RequestMapping("common")
-    public String settingsCommon(ParkBusiness parkBusiness, Model model) {
+    public String settingsCommon(Model model) {
     	try {
-			model.addAttribute("businessId", parkService.saveParkBusiness(parkBusiness));
+			model.addAttribute(JsonUtils.fromJson(parkService.getParkBusiness()));
+			System.out.println(JsonUtils.toJson(parkService.getParkBusiness()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
         return "Settings/SettingsCommon";
+    }
+    
+    @ResponseBody
+    @RequestMapping("saveCommon")
+    public ResponseBean saveCommon(ParkBusiness parkBusiness) {
+    	try {
+    		parkBusiness.setSalesId(super.getUserInfo().getId());
+    		parkService.saveParkBusiness(parkBusiness);
+			return new ResponseBean(true);
+		} catch (MessageException e) {
+			e.printStackTrace();
+			return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
     }
 
     // 用户设置详情
@@ -62,7 +79,9 @@ public class SettingsController extends BaseController {
     public String getUsers(OperatorInputView operatorInputView, Model model) {
     	try {
     		model.addAllAttributes(JsonUtils.fromJsonDF(operatorInputView));
+    		model.addAttribute("roleNames", roleService.getRoleNames(IDBConstant.ROLE_EMPLOYEE));
 			PageBean pageBean = operatorService.getOperatorList(operatorInputView);
+			System.out.println(JsonUtils.toJson(pageBean));
 			super.setPageInfo(model, pageBean);
 		} catch (Exception e) {
 			e.printStackTrace();
