@@ -1,4 +1,4 @@
-获取预计价格：site/calculateSiteMoney（准备输入用户或会员信息页面，进入此页面调用此接口）
+获取预计价格：site/calculateSiteMoney（准备输入用户和会员信息页面，进入此页面调用此接口）
 请求：
 {
     "siteReserveDateList": [
