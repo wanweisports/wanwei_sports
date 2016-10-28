@@ -2,12 +2,12 @@
     /* 全局事件 */
 
     // 退出登录
-    $(".user-logout").on("click", function (e) {
+    /*$(".user-logout").on("click", function (e) {
         e.preventDefault();
 
         //alert("成功登出");
         location.assign('/passport/login');
-    });
+    });*/
 
     // 导航切换
     $(".navigator-container").on("click", ".list-nav-header", function (e) {

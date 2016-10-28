@@ -1,43 +1,43 @@
-ÓªÒµÊ±¼äÏêÇé£º
-½Ó¿ÚÃû£ºsettings/common
+ï»¿è¥ä¸šæ—¶é—´è¯¦æƒ…ï¼š
+æ¥å£åï¼šsettings/common
 
-ÇëÇó£ºÎŞ
+è¯·æ±‚ï¼šæ— 
 
-·µ»Ø£º
+è¿”å›ï¼š
 {
     "businessStartTime": "08:00",
     "businessEndTime": "17:00",
-    "businessName": "ÍòÎ¬ÌåÓı",
-    "businessAreaName": "±±¾©ÊĞ",
-    "businessContact": "ÕÅÈı",
+    "businessName": "ä¸‡ç»´ä½“è‚²",
+    "businessAreaName": "åŒ—äº¬å¸‚",
+    "businessContact": "å¼ ä¸‰",
     "businessPhone": "15110275787",
-    "businessAddress": "±±¾©ÊĞº£µíÇø130ºÅ"
+    "businessAddress": "åŒ—äº¬å¸‚æµ·æ·€åŒº130å·"
 }
 
 
 ========================================================================================================================
 
-ÓªÒµÊ±¼äĞŞ¸Ä£º¡¾Ajax¡¿
-½Ó¿ÚÃû£ºsettings/saveCommon
+è¥ä¸šæ—¶é—´ä¿®æ”¹ï¼šã€Ajaxã€‘
+æ¥å£åï¼šsettings/saveCommon
 
-ÇëÇó£º
-/settings/saveCommon?businessName=ÍòÎ¬ÌåÓı&businessAreaName=±±¾©ÊĞ&businessStartTime=08:00&businessEndTime=17:00&businessContact=ÕÅÈı&businessPhone=15110275787&businessAddress=±±¾©ÊĞº£µíÇø130ºÅ
-
-
-  `businessStartTime`  'ÓªÒµ¿ªÊ¼Ê±¼ä',
-  `businessEndTime`  'ÓªÒµ½áÊøÊ±¼ä',
-  `businessTimePeriod`  'ÓªÒµÊ±¼ä¶Î',
-  `businessName`  '³¡¹İÃû³Æ',
-  `businessAreaName`  'ËùÔÚÊ¡ÊĞ',
-  `businessContact`  'ÁªÏµÈË',
-  `businessPhone`  'ÁªÏµµç»°',
-  `businessAddress`  'ÏêÏ¸µØÖ·',
+è¯·æ±‚ï¼š
+/settings/saveCommon?businessName=ä¸‡ç»´ä½“è‚²&businessAreaName=åŒ—äº¬å¸‚&businessStartTime=08:00&businessEndTime=17:00&businessContact=å¼ ä¸‰&businessPhone=15110275787&businessAddress=åŒ—äº¬å¸‚æµ·æ·€åŒº130å·
 
 
+  `businessStartTime`  'è¥ä¸šå¼€å§‹æ—¶é—´',
+  `businessEndTime`  'è¥ä¸šç»“æŸæ—¶é—´',
+  `businessTimePeriod`  'è¥ä¸šæ—¶é—´æ®µ',
+  `businessName`  'åœºé¦†åç§°',
+  `businessAreaName`  'æ‰€åœ¨çœå¸‚',
+  `businessContact`  'è”ç³»äºº',
+  `businessPhone`  'è”ç³»ç”µè¯',
+  `businessAddress`  'è¯¦ç»†åœ°å€',
 
-·µ»Ø£º
+
+
+è¿”å›ï¼š
 {
     "code": "1",
-    "message": "²Ù×÷³É¹¦",
+    "message": "æ“ä½œæˆåŠŸ",
     "data": {}
 }

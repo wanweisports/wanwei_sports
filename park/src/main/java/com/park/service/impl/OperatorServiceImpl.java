@@ -36,6 +36,7 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 		if(systemRole == null) throw new MessageException("角色不存在");
 		if(!IDBConstant.LOGIC_STATUS_YES.equals(systemRole.getRoleStatus())) throw new MessageException("角色不可用");
 		if(userOperator.getId() == null){
+			userOperator.setOperatorPwd("123456"); //密码暂时设置为123456
 			userOperator.setCreateTime(DateUtil.getNowDate());
 			userOperator.setStatus(IDBConstant.LOGIC_STATUS_YES);
 		}
@@ -104,9 +105,18 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 	}
 	
 	@Override
-	public String saveEmployee(UserOperator userOperator, int roleId){
+	public String saveEmployee(UserOperator operator, int roleId){
 		if(roleId < IDBConstant.ROLE_EMPLOYEE) throw new MessageException("操作错误");
-		return saveOperator(userOperator, roleId);
+		if(operator.getId() != null){
+			//保留用户之前的数据，这个接口不做修改
+			UserOperator operatorDB = getOperator(operator.getOperatorId());
+			operator.setCreateTime(operatorDB.getCreateTime());
+			operator.setOperatorPwd(operatorDB.getOperatorPwd());
+			operator.setOperatorNo(operatorDB.getOperatorNo());
+			
+			operator.setUpdateTime(DateUtil.getNowDate());
+		}
+		return saveOperator(operator, roleId);
 	}
 	
 	@Override
@@ -121,6 +131,11 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 	@Override
 	public UserOperator innerLogin(String name){
 		return JsonUtils.fromJson(baseDao.queryBySqlFirst("SELECT * FROM user_operator WHERE operatorId = ?", name), UserOperator.class);
+	}
+	
+	@Override
+	public void saveLastLoginTime(int id){
+		baseDao.updateBySql("UPDATE user_operator SET lastLoginTime = ? WHERE id = ?", DateUtil.getNowDate(), id);
 	}
 	
 }

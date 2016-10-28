@@ -27,4 +27,6 @@ public interface IOperatorService {
 	
 	public UserOperator innerLogin(String name);
 	
+	public void saveLastLoginTime(int id);
+	
 }

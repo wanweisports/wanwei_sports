@@ -1,41 +1,41 @@
-ÉÌÆ·ÀàÐÍÁÐ±í£º
+ï»¿å•†å“ç±»åž‹åˆ—è¡¨ï¼š
 
-ÇëÇó£ºgood/typeGood
+è¯·æ±‚ï¼šgood/typeGood
 
-·µ»Ø£º
+è¿”å›žï¼š
 [
     {
         "createTime": "2016-10-10 15:30:00",
-        "goodTypeDescribe": "ÒûÁÏ£¬Ë®",
-        "operatorName": "ÀîÏþµ¤1",
+        "goodTypeDescribe": "é¥®æ–™ï¼Œæ°´",
+        "operatorName": "æŽæ™“ä¸¹1",
         "goodTypeId": "1",
-        "goodTypeName": "ÒûÁÏ"
+        "goodTypeName": "é¥®æ–™"
     }
 ]
 ============================================================================================
-µ¥¸öÉÌÆ·ÀàÐÍ£º¡¾AjaxÇëÇó¡¿
+å•ä¸ªå•†å“ç±»åž‹ï¼šã€Ajaxè¯·æ±‚ã€‘
 
-ÇëÇó£ºgood/goodTypeInfo?goodTypeId=1
+è¯·æ±‚ï¼šgood/goodTypeInfo?goodTypeId=1
 
-·µ»Ø£º
+è¿”å›žï¼š
 {
     "code": "1",
-    "message": "²Ù×÷³É¹¦",
+    "message": "æ“ä½œæˆåŠŸ",
     "data": {
-        "goodTypeDescribe": "ÒûÁÏ£¬Ë®",
+        "goodTypeDescribe": "é¥®æ–™ï¼Œæ°´",
         "goodTypeId": "1",
-        "goodTypeName": "ÒûÁÏ"
+        "goodTypeName": "é¥®æ–™"
     }
 }
 ============================================================================================
-±£´æÉÌÆ·ÀàÐÍ£º¡¾AjaxÇëÇó¡¿
+ä¿å­˜å•†å“ç±»åž‹ï¼šã€Ajaxè¯·æ±‚ã€‘
 
-ÇëÇó£ºgood/saveGoodType?goodTypeName=ÒûÁÏ&goodTypeDescribe=ÒûÁÏ£¬Ë®&goodTypeId=2  //goodTypeId£ºÎÞ´Ë²ÎÊýÌí¼Ó£¬ÓÐÔò¸üÐÂ
+è¯·æ±‚ï¼šgood/saveGoodType?goodTypeName=é¥®æ–™&goodTypeDescribe=é¥®æ–™ï¼Œæ°´&goodTypeId=2  //goodTypeIdï¼šæ— æ­¤å‚æ•°æ·»åŠ ï¼Œæœ‰åˆ™æ›´æ–°
 
-·µ»Ø£º
+è¿”å›žï¼š
 {
     "code": "-1",
-    "message": "ÉÌÆ·ÀàÐÍ²»´æÔÚ",
+    "message": "å•†å“ç±»åž‹ä¸å­˜åœ¨",
     "data": {}
 }
 
