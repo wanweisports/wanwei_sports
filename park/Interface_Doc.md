@@ -249,7 +249,7 @@
 >
     good/goodTypes.do || good/typeGood.do(页面)
 > 
-> 请求类型：POST（application/json）
+> 请求类型：GET（application/json || JSP页面）
 >
 > 返回数据：
 > 

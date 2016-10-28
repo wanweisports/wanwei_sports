@@ -78,6 +78,7 @@ public class GoodController extends BaseController {
 	public String getGoods(GoodInputView goodInputView, Model model) {
 		try {
 			model.addAllAttributes(JsonUtils.fromJsonDF(goodInputView));
+            model.addAttribute("goodTypeNames", goodService.getGoodTypeNames());
 			PageBean pageBean = goodService.getGoods(goodInputView);
 			super.setPageInfo(model, pageBean);
 		} catch (Exception e) {

@@ -28,7 +28,6 @@
         <iframe id="good_form_target" name="goodFormTarget" style="display: none;"></iframe>
         <form id="good_form" class="form-horizontal" action="/good/saveGood" method="post" novalidate
               enctype="multipart/form-data" target="goodFormTarget">
-            <input type="hidden" id="goodId" name="goodId" value="${goodId}">
             <div class="panel panel-default">
                 <div class="panel-heading">商品设置</div>
                 <div class="panel-body">
@@ -54,7 +53,7 @@
                                 <input type="text" class="form-control" id="good_price" name="goodPrice"
                                        value="${goodPrice}" placeholder="商品价格" autocomplete="off"
                                        data-val="true" data-val-required="商品价格不能为空"
-                                       data-val-regex-pattern="^[1-9]\d*$"
+                                       data-val-regex-pattern="^(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                        data-val-regex="商品价格格式错误">
                                 <div data-valmsg-for="goodPrice" data-valmsg-replace="true"></div>
                             </div>
@@ -65,9 +64,9 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="file" id="good_pic" name="goodPic" accept="image/*" value=""
+                                <input type="file" id="good_pic" name="file" accept="image/*" value=""
                                        placeholder="商品图片" autocomplete="off" data-val="true"
-                                       data-val-required="商品图片不能为空">
+                                       data-val-required="商品图片不能为空" style="font-size: 12px;">
                                 <div data-valmsg-for="goodPic" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -80,7 +79,7 @@
                                 <input type="text" class="form-control" id="good_count" name="goodCount"
                                        value="${goodCount}" placeholder="初始库存量" autocomplete="off"
                                        data-val="true" data-val-required="初始库存量不能为空"
-                                       data-val-regex-pattern="^[1-9]\d*$"
+                                       data-val-regex-pattern="^0|[1-9]\d*$"
                                        data-val-regex="初始库存量格式错误">
                                 <div data-valmsg-for="goodCount" data-valmsg-replace="true"></div>
                             </div>
@@ -108,7 +107,7 @@
                                 <select class="form-control" id="good_type" name="goodTypeId">
                                     <option value="">请选择</option>
                                     <c:forEach var="type" items="${goodTypeNames}">
-                                    	<option value="${type.goodTypeId}" <c:if test='${type.goodTypeId==goodTypeId}'>selected</c:if>>${type.goodTypeName}</option>
+                                        <option value="${type.goodTypeId}" <c:if test='${type.goodTypeId == goodTypeId}'>selected</c:if>>${type.goodTypeName}</option>
                                     </c:forEach>
                                 </select>
                                 <div data-valmsg-for="goodTypeId" data-valmsg-replace="true"></div>

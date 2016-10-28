@@ -49,7 +49,7 @@
                         <tbody>
                         <c:forEach var="type" items="${list}" varStatus="loop">
                             <tr>
-                                <td>${loop.index}</td>
+                                <td>${loop.index + 1}</td>
                                 <td>${type.goodTypeName}</td>
                                 <td>${type.goodTypeDescribe}</td>
                                 <td>${type.operatorName}</td>

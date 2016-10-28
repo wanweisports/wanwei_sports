@@ -35,6 +35,15 @@
                                placeholder="请输入商品名称" value="${goodName}">
                     </div>
                     <div class="form-group">
+                        <label for="good_name">商品类别</label>
+                        <select class="form-control" id="good_type" name="goodType" style="width: 160px;">
+                            <option value="">全部类别</option>
+                            <c:forEach var="type" items="${goodTypeNames}">
+                                <option value="${type.goodTypeId}" <c:if test='${type.goodTypeId == goodType}'>selected</c:if>>${type.goodTypeName}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="good_state">&nbsp;商品状态</label>
                         <select class="form-control" id="good_state" name="goodStatus" style="width: 160px;">
                             <option value="">全部状态</option>
@@ -90,7 +99,7 @@
                                         </a>
                                     </c:if>
                                     <c:if test="${good.goodStatus == 1}">
-                                        <a href="javascript:;" class="btn btn-primary goods-outer"
+                                        <a href="javascript:;" class="btn btn-warning goods-outer"
                                            data-id="${good.goodId}">
                                             <span class="glyphicon glyphicon-arrow-down"></span> 下架
                                         </a>
@@ -193,7 +202,9 @@
                             <div class="col-sm-12">
                                 <input type="text" class="form-control" id="good_count" name="goodCount"
                                        placeholder="请输入增加的库存量"
-                                       data-val="true" data-val-required="库存量不能为空">
+                                       data-val="true" data-val-required="库存量不能为空"
+                                       data-val-regex-pattern="^[1-9]\d*$"
+                                       data-val-regex="初始库存量格式错误">
                                 <div data-valmsg-for="goodCount" data-valmsg-replace="true"></div>
                             </div>
                         </div>

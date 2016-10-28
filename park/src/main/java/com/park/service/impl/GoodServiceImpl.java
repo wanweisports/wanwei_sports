@@ -69,6 +69,7 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 
 	@Override
 	public PageBean getGoods(GoodInputView goodInputView){
+		String goodTypeId = goodInputView.getGoodType();
 		String goodName = goodInputView.getGoodName();
 		String goodStatus = goodInputView.getGoodStatus();
 		
@@ -80,6 +81,9 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 		}
 		if(StrUtil.isNotBlank(goodStatus)){
 			whereSql.append(" AND goodStatus = :goodStatus");
+		}
+		if(StrUtil.isNotBlank(goodTypeId)){
+			whereSql.append(" AND goodTypeId = :goodType");
 		}
 		return super.getPageBean(headSql, bodySql, whereSql, goodInputView);
 	}
