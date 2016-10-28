@@ -211,7 +211,7 @@
                                 <div class="col-sm-10">
                                     <div class="input-group">
                                         <label class="input-group-addon">
-                                            <input type="checkbox" name="cardTypeWeek" value="7" checked> 周一
+                                            <input type="checkbox" name="cardTypeWeek" value="1" checked> 周一
                                         </label>
                                         <div class="pull-left" style="width: 40%">
                                             <select class="form-control timeWeek" name="cardTypeTimeStart">

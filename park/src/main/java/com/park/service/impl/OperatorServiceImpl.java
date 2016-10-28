@@ -14,6 +14,7 @@ import com.park.common.po.SystemRole;
 import com.park.common.po.SystemRoleOperator;
 import com.park.common.po.SystemRoleOperatorId;
 import com.park.common.po.UserOperator;
+import com.park.common.util.DateUtil;
 import com.park.common.util.JsonUtils;
 import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
@@ -34,6 +35,10 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 		SystemRole systemRole = roleService.getSystemRole(roleId);
 		if(systemRole == null) throw new MessageException("角色不存在");
 		if(!IDBConstant.LOGIC_STATUS_YES.equals(systemRole.getRoleStatus())) throw new MessageException("角色不可用");
+		if(userOperator.getId() == null){
+			userOperator.setCreateTime(DateUtil.getNowDate());
+			userOperator.setStatus(IDBConstant.LOGIC_STATUS_YES);
+		}
 		baseDao.save(userOperator, userOperator.getId());
 		
 		//删除之前的角色

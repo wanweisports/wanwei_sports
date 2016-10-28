@@ -128,11 +128,11 @@ public class GoodController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "addGoodsToCart")
-	public ResponseBean addGoodsToCart(GoodShopping goodShopping){
+	public ResponseBean addGoodsToCart(GoodShopping goodShopping, int amount){
 		try {
 			UserOperator userOperator = super.getUserInfo();
 			goodShopping.setSalesId(userOperator.getId());
-			Integer shoppingId = goodService.saveGoodShopping(goodShopping);
+			Integer shoppingId = goodService.saveGoodShopping(goodShopping, amount);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("shoppingId", shoppingId);
 			return new ResponseBean(data);

@@ -1,0 +1,54 @@
+保存/修改员工：【Ajax】
+settings/saveEmployee?operatorId=111111&operatorName=陈小松&operatorMobile=15110275787&operatorBirthday=1990-07-30&operatorEffectDate=2016-10-10&operatorEndDate=2016-11-10&operatorContact=李金花&operatorAddress=北京市&operatorSex=1&operatorNo=00001&roleId=1000&id=1 //无id添加，有则更新
+
+返回：
+{
+  "code": "1",
+  "message": "操作成功",
+  "data": {}
+}
+
+===============================================================================================================================================================
+员工详情：
+
+请求：settings/getUsersView?operatorId=111111
+
+返回：
+角色List:（用于select下拉框选择）
+"roleNames": [{"roleName":"经理","roleId":"1000"},{"roleName":"收银","roleId":"1001"}]
+
+员工详情：
+{id=7, operatorId=111111, operatorName=陈小松, operatorMobile=15110275787, operatorNo=00001, operatorEffectDate=2016-10-10, operatorEndDate=2016-11-10, operatorBirthday=1990-07-30, operatorContact=张三, operatorAddress=北京市, operatorSex=1, roleId=1000}
+===============================================================================================================================================================
+员工列表：
+
+请求：settings/getUsers?status=1&roleId=1000   //条件：status:状态   roleId角色权限
+
+返回：
+角色List:（用于select下拉框选择）
+"roleNames": [{"roleName":"经理","roleId":"1000"},{"roleName":"收银","roleId":"1001"}]
+
+列表：
+{
+    "list": [
+        {
+            "operatorId": "111111",
+            "operatorName": "陈小松",
+            "operatorNo": "00001",
+            "roleName": "经理",
+            "operatorEffectDate": "2016-10-10",
+            "operatorEndDate": "2016-11-10",
+ 	    "status": "1"
+        }
+    ]
+}
+===============================================================================================================================================================
+锁定/解锁员工：
+请求：settings/lockEmployee?operatorId=111111&lock=true  //lock：true锁定  false解锁
+
+返回：
+{
+  "code": "1",
+  "message": "操作成功",
+  "data": {}
+}
