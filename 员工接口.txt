@@ -1,41 +1,41 @@
-±£´æ/ĞŞ¸ÄÔ±¹¤£º¡¾Ajax¡¿
-settings/saveEmployee?operatorId=111111&operatorName=³ÂĞ¡ËÉ&operatorMobile=15110275787&operatorBirthday=1990-07-30&operatorEffectDate=2016-10-10&operatorEndDate=2016-11-10&operatorContact=Àî½ğ»¨&operatorAddress=±±¾©ÊĞ&operatorSex=1&operatorNo=00001&roleId=1000&id=1 //ÎŞidÌí¼Ó£¬ÓĞÔò¸üĞÂ
+ï»¿ä¿å­˜/ä¿®æ”¹å‘˜å·¥ï¼šã€Ajaxã€‘
+settings/saveEmployee?operatorId=111111&operatorName=é™ˆå°æ¾&operatorMobile=15110275787&operatorBirthday=1990-07-30&operatorEffectDate=2016-10-10&operatorEndDate=2016-11-10&operatorContact=æé‡‘èŠ±&operatorAddress=åŒ—äº¬å¸‚&operatorSex=1&operatorNo=00001&roleId=1000&id=1 //æ— idæ·»åŠ ï¼Œæœ‰åˆ™æ›´æ–°
 
-·µ»Ø£º
+è¿”å›ï¼š
 {
   "code": "1",
-  "message": "²Ù×÷³É¹¦",
+  "message": "æ“ä½œæˆåŠŸ",
   "data": {}
 }
 
 ===============================================================================================================================================================
-Ô±¹¤ÏêÇé£º
+å‘˜å·¥è¯¦æƒ…ï¼š
 
-ÇëÇó£ºsettings/getUsersView?operatorId=111111
+è¯·æ±‚ï¼šsettings/getUsersView?operatorId=111111
 
-·µ»Ø£º
-½ÇÉ«List:£¨ÓÃÓÚselectÏÂÀ­¿òÑ¡Ôñ£©
-"roleNames": [{"roleName":"¾­Àí","roleId":"1000"},{"roleName":"ÊÕÒø","roleId":"1001"}]
+è¿”å›ï¼š
+è§’è‰²List:ï¼ˆç”¨äºselectä¸‹æ‹‰æ¡†é€‰æ‹©ï¼‰
+"roleNames": [{"roleName":"ç»ç†","roleId":"1000"},{"roleName":"æ”¶é“¶","roleId":"1001"}]
 
-Ô±¹¤ÏêÇé£º
-{id=7, operatorId=111111, operatorName=³ÂĞ¡ËÉ, operatorMobile=15110275787, operatorNo=00001, operatorEffectDate=2016-10-10, operatorEndDate=2016-11-10, operatorBirthday=1990-07-30, operatorContact=ÕÅÈı, operatorAddress=±±¾©ÊĞ, operatorSex=1, roleId=1000}
+å‘˜å·¥è¯¦æƒ…ï¼š
+{id=7, operatorId=111111, operatorName=é™ˆå°æ¾, operatorMobile=15110275787, operatorNo=00001, operatorEffectDate=2016-10-10, operatorEndDate=2016-11-10, operatorBirthday=1990-07-30, operatorContact=å¼ ä¸‰, operatorAddress=åŒ—äº¬å¸‚, operatorSex=1, roleId=1000}
 ===============================================================================================================================================================
-Ô±¹¤ÁĞ±í£º
+å‘˜å·¥åˆ—è¡¨ï¼š
 
-ÇëÇó£ºsettings/getUsers?status=1&roleId=1000   //Ìõ¼ş£ºstatus:×´Ì¬   roleId½ÇÉ«È¨ÏŞ
+è¯·æ±‚ï¼šsettings/getUsers?status=1&roleId=1000   //æ¡ä»¶ï¼šstatus:çŠ¶æ€   roleIdè§’è‰²æƒé™
 
-·µ»Ø£º
-½ÇÉ«List:£¨ÓÃÓÚselectÏÂÀ­¿òÑ¡Ôñ£©
-"roleNames": [{"roleName":"¾­Àí","roleId":"1000"},{"roleName":"ÊÕÒø","roleId":"1001"}]
+è¿”å›ï¼š
+è§’è‰²List:ï¼ˆç”¨äºselectä¸‹æ‹‰æ¡†é€‰æ‹©ï¼‰
+"roleNames": [{"roleName":"ç»ç†","roleId":"1000"},{"roleName":"æ”¶é“¶","roleId":"1001"}]
 
-ÁĞ±í£º
+åˆ—è¡¨ï¼š
 {
     "list": [
         {
             "operatorId": "111111",
-            "operatorName": "³ÂĞ¡ËÉ",
+            "operatorName": "é™ˆå°æ¾",
             "operatorNo": "00001",
-            "roleName": "¾­Àí",
+            "roleName": "ç»ç†",
             "operatorEffectDate": "2016-10-10",
             "operatorEndDate": "2016-11-10",
  	    "status": "1"
@@ -43,12 +43,12 @@ settings/saveEmployee?operatorId=111111&operatorName=³ÂĞ¡ËÉ&operatorMobile=15110
     ]
 }
 ===============================================================================================================================================================
-Ëø¶¨/½âËøÔ±¹¤£º
-ÇëÇó£ºsettings/lockEmployee?operatorId=111111&lock=true  //lock£ºtrueËø¶¨  false½âËø
+é”å®š/è§£é”å‘˜å·¥ï¼š
+è¯·æ±‚ï¼šsettings/lockEmployee?operatorId=111111&lock=true  //lockï¼štrueé”å®š  falseè§£é”
 
-·µ»Ø£º
+è¿”å›ï¼š
 {
   "code": "1",
-  "message": "²Ù×÷³É¹¦",
+  "message": "æ“ä½œæˆåŠŸ",
   "data": {}
 }

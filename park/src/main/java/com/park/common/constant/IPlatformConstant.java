@@ -21,6 +21,8 @@ public interface IPlatformConstant {
 	public final String time00 = " 00:00:00";
 	
     public final String time24 = " 23:59:59";
+    
+    public final String LOGIN_USER = "loginUser";
 	
 	public static final String APP_ID = (String) CustomizedPropertyConfigurer.getContextProperty("app_id"); //appid
 	

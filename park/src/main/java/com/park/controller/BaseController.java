@@ -8,15 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.springframework.ui.Model;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import com.park.common.bean.PageBean;
+import com.park.common.constant.IPlatformConstant;
 import com.park.common.po.UserOperator;
 import com.park.common.util.JsonUtils;
 
@@ -92,7 +93,7 @@ public class BaseController {
         return new StringBuilder(UrlBasedViewResolver.FORWARD_URL_PREFIX).append(path).toString();
     }
 
-    private HttpServletRequest getRequest() {
+    protected HttpServletRequest getRequest() {
         return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
     }
 
@@ -106,7 +107,7 @@ public class BaseController {
     }
 
     protected UserOperator getUserInfo(HttpSession session) {
-        return (UserOperator) session.getAttribute("loginUser");
+        return (UserOperator) session.getAttribute(IPlatformConstant.LOGIN_USER);
     }
 	
     protected void setPageInfo(Model model, PageBean pageBean){
