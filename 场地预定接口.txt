@@ -1,0 +1,116 @@
+获取预计价格：site/calculateSiteMoney（准备输入用户或会员信息页面，进入此页面调用此接口）
+请求：
+{
+    "siteReserveDateList": [
+        {
+            "reserveStartDate": "2016-10-01",
+            "reserveEndDate": "2016-10-21",
+            "reserveWeek": "2,3,4",
+            "siteReserveTimeList": [
+                {
+                    "siteId": "1",
+                    "siteStartTime": "15:00",
+                    "siteEndTime": "20:00"
+                }
+            ]
+        }
+    ]
+}
+
+返回：
+{
+    "code": "1",
+    "message": "操作成功",
+    "data": {
+        "originalPrice": 2700
+    }
+}
+========================================================================================================================
+
+预定：
+接口名：site/saveReservationSite（点击去支付调用此接口）
+
+请求
+{
+    "mobile": "15110275787",
+    "name": "张三",
+    "memberId": 1,
+    "opType": 2,
+    "reserveType": 1,
+    "reserveModel": 2,
+    "siteReserveDateList": [
+        {
+            "reserveStartDate": "2016-10-01",
+            "reserveEndDate": "2016-10-21",
+            "reserveWeek": "2,3,4",
+            "siteReserveTimeList": [
+                {
+                    "siteId": "1",
+                    "siteStartTime": "09:00",
+                    "siteEndTime": "10:00"
+                }
+            ]
+        }
+    ]
+}
+
+返回：
+{
+    "code": "1",
+    "message": "操作成功",
+    "data": {
+        "orderId": 47
+    }
+}
+========================================================================================================================
+获取会员或散客价格：
+接口名：site/calculateSiteMoney（点击去支付后调用该接口）
+
+请求：
+{
+    "mobile": "15110275787", //散客需传
+    "name": "散客", //散客需传
+    "memberId": 9,  //会员需传
+    "opType": 1,    //1：会员  2：散客
+    "reserveType": 1,  //预定类型（1：PC  2：手机网页  3：打电话）
+    "reserveModel": 2, //预定模式（1：普通  2：批量）
+    "siteReserveDateList": [
+        {
+            "reserveStartDate": "2016-10-01", //预定开始时间
+            "reserveEndDate": "2016-10-02",   //预定结束时间
+            "reserveWeek": "2,3,4",           //预定星期，逗号分隔
+            "siteReserveTimeList": [
+                {
+                    "siteId": "1",            
+                    "siteStartTime": "13:00",  //预定开始时间
+                    "siteEndTime": "14:00"     //预定结束时间
+                }
+            ]
+        }
+    ]
+}
+
+返回：
+{
+    "code": "1",
+    "message": "操作成功",
+    "data": {
+        "originalPrice": 2250,  //原始价格
+        "presentPrice": 2250    //会员价格
+    }
+}
+
+========================================================================================================================
+确认订单：（点击确定调用此接口）
+请求：site/confirmOrder?orderId=47&paySumPrice=2250&subAmount=100&additionalPrice=100&payType=1&checkNo=11111&orderRemark=老司机
+                        订单id      支付了的总价     优惠金额      附加金额            支付方式    支票号       订单描述
+               
+
+返回：
+{
+    "code": "1",
+    "message": "操作成功",
+    "data": {}
+}
+========================================================================================================================
+支付方式 1：现金  2：支付宝  3：微信

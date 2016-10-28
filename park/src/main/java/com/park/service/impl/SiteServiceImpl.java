@@ -448,6 +448,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	@Override
 	public SiteReserveBasic getSiteReserveBasicAllByOrderId(int orderId){
 		SiteReserveBasic siteReserveBasic = getSiteReserveBasicByOrderId(orderId);
+		if(siteReserveBasic == null) throw new MessageException("订单不存在，请重新预定");
 		siteReserveBasic.setSiteReserveDateList(getSiteReserveDate(siteReserveBasic.getSiteReserveId()));
 		getSiteReserveDateTime(siteReserveBasic.getSiteReserveDateList());
 		return siteReserveBasic;
