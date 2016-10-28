@@ -67,6 +67,15 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <c:forEach var="member" items="${data}" varStatus="loop">
+                            <tr>
+                                <td>${loop.index + 1}</td>
+                                <td>${member.cardTypeName}</td>
+                                <td>${member.cardTypeMoney}</td>
+                                <td>${member.count}</td>
+                                <td>${member.countMoney}</td>
+                            </tr>
+                        </c:forEach>
                         <tr>
                             <td>1</td>
                             <td>金卡会员</td>

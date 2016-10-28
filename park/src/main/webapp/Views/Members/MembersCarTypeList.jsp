@@ -78,7 +78,7 @@
                         <tbody>
                         <c:forEach var="type" items="${list}" varStatus="loop">
                             <tr>
-                                <td>${loop.index}</td>
+                                <td>${loop.index + 1}</td>
                                 <td>${type.cardTypeName}</td>
                                 <td>
                                     <c:if test="${type.cardType == '1'}">预存类型</c:if>

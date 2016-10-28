@@ -117,9 +117,9 @@
                                 <span><a href="/site/getSiteReservationBatch">批量预订</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item site ${param.subNav == "batch" ? "active" : ""}">
+                        <tr class="list-nav-item site ${param.subNav == "order" ? "active" : ""}">
                             <td>
-                                <span><a href="/site/getSiteReservationOrders">预订订单查询</a></span>
+                                <span><a href="/site/getSiteReservationOrders">预订订单</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item site ${param.subNav == "pda" ? "active" : ""}">
