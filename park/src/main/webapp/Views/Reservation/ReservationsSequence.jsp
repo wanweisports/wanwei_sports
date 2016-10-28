@@ -13,6 +13,8 @@
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery-steps/jquery.steps.min.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/moment/moment.min.js?v=${static_resource_version}"></script>
     <script src="/Content/app/reservations/reservations_sequence.js?v=${static_resource_version}"></script>
@@ -112,7 +114,7 @@
     </div>
 
     <div class="modal fade" id="zhifuModal" tabindex="-1" role="dialog" aria-labelledby="zhifuModalLabel">
-        <div class="modal-dialog">
+        <div class="modal-dialog" style="width: 640px;">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -194,7 +196,7 @@
 
                                                 <div class="col-sm-8">
                                                     <input type="text" class="form-control" id="reservations_ex_money" name="additionalPrice"
-                                                           placeholder="请输入附加金额(元)" autocomplete="off"
+                                                           placeholder="附加金额(元)" autocomplete="off"
                                                            data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                                            data-val-regex="附加金额格式错误">
                                                     <div data-valmsg-for="additionalPrice" data-valmsg-replace="true"></div>
@@ -221,7 +223,7 @@
 
                                                 <div class="col-sm-8">
                                                     <input type="text" class="form-control" id="reservations_se_money" name="subAmount"
-                                                           placeholder="请输入优惠金额(元)" autocomplete="off"
+                                                           placeholder="优惠金额(元)" autocomplete="off"
                                                            data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                                            data-val-regex="优惠金额格式错误">
                                                     <div data-valmsg-for="subAmount" data-valmsg-replace="true"></div>

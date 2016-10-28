@@ -100,6 +100,70 @@
                         </c:forEach>
                         </tbody>
                     </table>
+                    <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >
+                        <p class="pull-left" style="margin: 12px 14px;">
+                            <span>${pageSize}条/页</span>
+                            <span>总${count}条</span>
+                        </p>
+                        <ul class="pagination pull-right">
+                            <c:if test="${currentPage == 1}">
+                                <li class="disabled">
+                                    <a href="javascript:;" data-index="1">
+                                        <span>首页</span>
+                                    </a>
+                                </li>
+                                <li class="disabled">
+                                    <a href="javascript:;" data-index="1">
+                                        <span>上一页</span>
+                                    </a>
+                                </li>
+                            </c:if>
+                            <c:if test="${currentPage != 1}">
+                                <li>
+                                    <a class="page-first" href="javascript:;" data-index="1">
+                                        <span>首页</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="page-prev" href="javascript:;" data-index="${currentPage - 1}">
+                                        <span>上一页</span>
+                                    </a>
+                                </li>
+                            </c:if>
+                            <c:forEach var="i" begin="1" end="${lastPage}">
+                                <c:if test="${i == currentPage}">
+                                    <li class="active"><a href="javascript:;" data-index="${i}">${i}</a></li>
+                                </c:if>
+                                <c:if test="${i != currentPage}">
+                                    <li><a class="page-index" href="javascript:;" data-index="${i}">${i}</a></li>
+                                </c:if>
+                            </c:forEach>
+                            <c:if test="${currentPage == lastPage}">
+                                <li class="disabled">
+                                    <a href="javascript:;" data-index="1">
+                                        <span>下一页</span>
+                                    </a>
+                                </li>
+                                <li class="disabled">
+                                    <a href="javascript:;" data-index="1">
+                                        <span>末页</span>
+                                    </a>
+                                </li>
+                            </c:if>
+                            <c:if test="${currentPage != lastPage}">
+                                <li>
+                                    <a class="page-next" href="javascript:;" data-index="${currentPage + 1}">
+                                        <span>下一页</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="page-last" href="javascript:;" data-index="${lastPage}">
+                                        <span>末页</span>
+                                    </a>
+                                </li>
+                            </c:if>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>

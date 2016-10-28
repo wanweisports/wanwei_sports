@@ -13,7 +13,7 @@
             data: {
                 name: "散客",
                 mobile: "",
-                memberId: "",
+                //memberId: "",
                 opType: "2",
                 reserveType: "1",
                 reserveModel: "2",
@@ -68,9 +68,21 @@
                     return false;
                 }
 
+                function __getCheckbox() {
+                    var value = [];
+                    var text = [];
+
+                    $('input[name="reserveWeek"]:checked').each(function(){
+                        value.push($(this).val());
+                        text.push($(this).attr("data-text"));
+                    });
+
+                    return {value: value, text: text};
+                }
+
                 data.reserveStartDate = $("#block_start_date").val();
                 data.reserveEndDate = $("#block_end_date").val();
-                data.reserveWeek = $("[name='reserveWeek']").val();
+                data.reserveWeek = __getCheckbox().value;
                 data.siteReserveTimeList = [{
                     siteStartTime: $("#block_time_start").val(),
                     siteEndTime: $("#block_time_end").val(),
@@ -85,7 +97,7 @@
                     .replace("#BOOKING_START_TIME#", $("#block_time_start").find("option:selected").text().trim())
                     .replace("#BOOKING_END_TIME#", $("#block_time_end").find("option:selected").text().trim())
                     .replace("#BOOKING_AREA#", $("#block_venue_name").find("option:selected").text().trim())
-                    .replace("#BOOKING_WEEK#", "(" + $("[name='reserveWeek']:checked").text().trim() + ")"));
+                    .replace("#BOOKING_WEEK#", "(" + __getCheckbox().text + ")"));
             });
 
             // 预订
@@ -97,6 +109,9 @@
                     alert("请先加场");
                     return false;
                 }
+
+                var data = content.opts.data;
+                data.mobile = "11012345678";
 
                 $.post('site/saveReservationSite', {
                     siteOperationJson: JSON.stringify(content.opts.data)

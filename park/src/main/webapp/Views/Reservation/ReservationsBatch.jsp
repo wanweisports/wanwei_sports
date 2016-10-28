@@ -132,22 +132,22 @@
                             <div class="col-sm-10">
                                 <div>
                                     <label class="checkbox-inline">
-                                        <input type="checkbox" name="reserveWeek" value="1"> 周一
+                                        <input type="checkbox" name="reserveWeek" value="1" data-text="周一"> 周一
                                     </label>
                                     <label class="checkbox-inline">
-                                        <input type="checkbox" name="reserveWeek" value="2"> 周二
+                                        <input type="checkbox" name="reserveWeek" value="2" data-text="周二"> 周二
                                     </label>
                                     <label class="checkbox-inline">
-                                        <input type="checkbox" name="reserveWeek" value="3"> 周三
+                                        <input type="checkbox" name="reserveWeek" value="3" data-text="周三"> 周三
                                     </label>
                                     <label class="checkbox-inline">
-                                        <input type="checkbox" name="reserveWeek" value="4"> 周四
+                                        <input type="checkbox" name="reserveWeek" value="4" data-text="周四"> 周四
                                     </label>
                                     <label class="checkbox-inline">
-                                        <input type="checkbox" name="reserveWeek" value="5"> 周五
+                                        <input type="checkbox" name="reserveWeek" value="5" data-text="周五"> 周五
                                     </label>
                                     <label class="checkbox-inline">
-                                        <input type="checkbox" name="reserveWeek" value="6"> 周六
+                                        <input type="checkbox" name="reserveWeek" value="6" data-text="周六"> 周六
                                     </label>
                                     <label class="checkbox-inline">
                                         <input type="checkbox" name="reserveWeek" value="7"> 周日

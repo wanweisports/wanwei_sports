@@ -294,7 +294,7 @@
                 var data = content.opts.data;
                 data.name = "散客";
                 data.mobile = "13051788101";
-                data.memberId = "";
+                //data.memberId = "";
                 data.opType = "2";
                 data.reserveType = "1";
                 data.reserveModel = "1";
