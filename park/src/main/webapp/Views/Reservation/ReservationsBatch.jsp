@@ -17,7 +17,7 @@
     <script>
         $(document).ready(function () {
             // 配置表单校验
-            $('#batch_form').validate({
+            $('#reservations_batch_form').validate({
                 ignore: ":hidden"
             });
         });
@@ -30,7 +30,7 @@
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left;">
-        <form id="batch_form" class="form-horizontal" novalidate onsubmit="return false;">
+        <form id="reservations_batch_form" class="form-horizontal" novalidate onsubmit="return false;">
             <div class="panel panel-default sc-booking-user">
                 <div class="panel-heading">批量预订</div>
                 <div class="panel-body">
@@ -46,18 +46,19 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="block_user_name" name="name"
                                        placeholder="预订人" autocomplete="off" value="散客"
-                                       data-val="true" data-val-required="预订人不能为空">
-                                <div data-valmsg-for="siteclass" data-valmsg-replace="true"></div>
+                                       data-val="true" data-val-required="预订人不能为空"
+                                       data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,9}$"
+                                       data-val-regex="预订人长度只能2~12个字符">
+                                <div data-valmsg-for="name" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="block_user_degree" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 类型
+                                <span class="text-danger">*</span> 场地类型
                             </label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="block_user_degree" name="siteclass"
                                         data-val="true" data-val-required="请选择场地类型">
-                                    <option value="1">选择类型</option>
                                     <option value="1">羽毛球</option>
                                 </select>
                                 <div data-valmsg-for="siteclass" data-valmsg-replace="true"></div>
@@ -67,7 +68,8 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="block_user_phone" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 手机号码 </label>
+                                <span class="text-danger">*</span> 手机号码
+                            </label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="block_user_phone" name="mobile"
                                        placeholder="手机号码" autocomplete="off"
@@ -128,27 +130,30 @@
                                 <span class="text-danger">*</span> 预订周
                             </label>
                             <div class="col-sm-10">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" name="reserveWeek" value="1"> 周一
-                                </label>
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" name="reserveWeek" value="2"> 周二
-                                </label>
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" name="reserveWeek" value="3"> 周三
-                                </label>
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" name="reserveWeek" value="3"> 周四
-                                </label>
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" name="reserveWeek" value="3"> 周五
-                                </label>
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" name="reserveWeek" value="3"> 周六
-                                </label>
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" name="reserveWeek" value="3"> 周日
-                                </label>
+                                <div>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" name="reserveWeek" value="1"> 周一
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" name="reserveWeek" value="2"> 周二
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" name="reserveWeek" value="3"> 周三
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" name="reserveWeek" value="4"> 周四
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" name="reserveWeek" value="5"> 周五
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" name="reserveWeek" value="6"> 周六
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" name="reserveWeek" value="7"> 周日
+                                    </label>
+                                </div>
+                                <div data-valmsg-for="reserveWeek" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -187,6 +192,16 @@
                                         <option value="10:00">10:00</option>
                                         <option value="11:00">11:00</option>
                                         <option value="12:00">12:00</option>
+                                        <option value="13:00">13:00</option>
+                                        <option value="14:00">14:00</option>
+                                        <option value="15:00">15:00</option>
+                                        <option value="16:00">16:00</option>
+                                        <option value="17:00">17:00</option>
+                                        <option value="18:00">18:00</option>
+                                        <option value="19:00">19:00</option>
+                                        <option value="20:00">20:00</option>
+                                        <option value="21:00">21:00</option>
+                                        <option value="22:00">22:00</option>
                                     </select>
                                 </div>
                             </div>
@@ -203,6 +218,16 @@
                                         <option value="10:00">10:00</option>
                                         <option value="11:00">11:00</option>
                                         <option value="12:00">12:00</option>
+                                        <option value="13:00">13:00</option>
+                                        <option value="14:00">14:00</option>
+                                        <option value="15:00">15:00</option>
+                                        <option value="16:00">16:00</option>
+                                        <option value="17:00">17:00</option>
+                                        <option value="18:00">18:00</option>
+                                        <option value="19:00">19:00</option>
+                                        <option value="20:00">20:00</option>
+                                        <option value="21:00">21:00</option>
+                                        <option value="22:00">22:00</option>
                                     </select>
                                 </div>
                             </div>
@@ -210,7 +235,7 @@
                     </div>
                     <div class="col-sm-9">
                         <div class="table-responsive sc-table">
-                            <table class="table table-striped sc-booking-venues">
+                            <table class="table table-striped sc-booking-venues reservations-list">
                                 <tr class="sc-table-header">
                                     <th>类型</th>
                                     <th>预订日期</th>
@@ -219,7 +244,7 @@
                                     <th>场地</th>
                                     <th>操作</th>
                                 </tr>
-                                <tr>
+                                <!--<tr>
                                     <td>羽毛球</td>
                                     <td>2016-07-01 ~ 2016-09-30</td>
                                     <td>周一,周二</td>
@@ -242,7 +267,7 @@
                                             <span class="glyphicon glyphicon-trash"></span>
                                         </a>
                                     </td>
-                                </tr>
+                                </tr>-->
                             </table>
                         </div>
                     </div>
@@ -255,18 +280,122 @@
                         </div>
                         <div class="form-group col-sm-12">
                             <button type="submit" class="btn btn-primary col-sm-12 booking-pay">
-                                <span class="glyphicon glyphicon-usd"></span> 预订付款
+                                <span class="glyphicon glyphicon-usd"></span> 预 订
                             </button>
                         </div>
-                        <div class="form-group col-sm-12" style="display: none;">
+                        <!--<div class="form-group col-sm-12" style="display: none;">
                             <button type="submit" class="btn btn-primary col-sm-12 booking-confirm">
                                 <span class="glyphicon glyphicon-ok"></span> 预订确认
                             </button>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
         </form>
+    </div>
+
+    <div class="modal fade" id="zhifuModal" tabindex="-1" role="dialog" aria-labelledby="zhifuModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="zhifuModalLabel">预订支付</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="reservations_paid_form" class="form-horizontal" novalidate onsubmit="return false;">
+                        <input type="hidden" id="reservations_order_id" name="orderId">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="reservations_order_no" class="col-sm-2 control-label">订单号</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="reservations_order_no"
+                                           name="orderno" placeholder="订单号" value="" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="reservations_ex_money" class="col-sm-4 control-label">附加金额</label>
+
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="reservations_ex_money" name="additionalPrice"
+                                           placeholder="请输入附加金额(元)" autocomplete="off"
+                                           data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                           data-val-regex="附加金额格式错误">
+                                    <div data-valmsg-for="additionalPrice" data-valmsg-replace="true"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="reservations_money_type" class="col-sm-4 control-label">支付方式</label>
+
+                                <div class="col-sm-8">
+                                    <select class="form-control" id="reservations_money_type" name="payType"
+                                            data-val="true" data-val-required="请选择支付方式">
+                                        <option value="">请选择</option>
+                                        <option value="1">现金</option>
+                                        <option value="2">支付宝</option>
+                                        <option value="3">微信</option>
+                                    </select>
+                                    <div data-valmsg-for="payType" data-valmsg-replace="true"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="reservations_se_money" class="col-sm-4 control-label">优惠金额</label>
+
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="reservations_se_money" name="subAmount"
+                                           placeholder="请输入优惠金额(元)" autocomplete="off"
+                                           data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                           data-val-regex="优惠金额格式错误">
+                                    <div data-valmsg-for="subAmount" data-valmsg-replace="true"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="reservations_money_no" class="col-sm-4 control-label">支票号</label>
+
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="reservations_money_no" name="checkNo"
+                                           placeholder="支票号" value="" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="reservations_pay_remark" class="col-sm-2 control-label">备注</label>
+
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" rows="3" id="reservations_pay_remark"
+                                              name="orderRemark" placeholder="备注"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="reservations_real_money" class="col-sm-2 control-label">实收金额</label>
+
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="reservations_real_money" name="paySumPrice"
+                                           placeholder="请输入实收金额(元)" autocomplete="off"
+                                           data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                           data-val-regex="实收金额格式错误">
+                                    <div data-valmsg-for="paySumPrice" data-valmsg-replace="true"></div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <button class="btn btn-primary reservations-pay-confirm">
+                                        <span class="glyphicon glyphicon-ok"></span> 确 定
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </layout:override>
 

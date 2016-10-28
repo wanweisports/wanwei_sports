@@ -16,6 +16,14 @@
     <script src="/Content/lib/jquery/jquery-steps/jquery.steps.min.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/moment/moment.min.js?v=${static_resource_version}"></script>
     <script src="/Content/app/reservations/reservations_sequence.js?v=${static_resource_version}"></script>
+    <script>
+        $(document).ready(function () {
+            // 配置表单校验
+            $('#reservations_user_form, #reservations_paid_form').validate({
+                ignore: ":hidden"
+            });
+        });
+    </script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
@@ -169,6 +177,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <form id="reservations_paid_form" class="form-horizontal" novalidate onsubmit="return false;">
+                                        <input type="hidden" id="reservations_order_id" name="orderId">
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <label for="reservations_order_no" class="col-sm-2 control-label">订单号</label>
@@ -181,23 +190,28 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label for="reservations_ex_money" class="col-sm-4 control-label">附加费用</label>
+                                                <label for="reservations_ex_money" class="col-sm-4 control-label">附加金额</label>
 
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="reservations_ex_money" name="addcharges"
-                                                           placeholder="附加费用" value="" autocomplete="off">
+                                                    <input type="text" class="form-control" id="reservations_ex_money" name="additionalPrice"
+                                                           placeholder="请输入附加金额(元)" autocomplete="off"
+                                                           data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                                           data-val-regex="附加金额格式错误">
+                                                    <div data-valmsg-for="additionalPrice" data-valmsg-replace="true"></div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="reservations_money_type" class="col-sm-4 control-label">付款方式</label>
+                                                <label for="reservations_money_type" class="col-sm-4 control-label">支付方式</label>
 
                                                 <div class="col-sm-8">
-                                                    <select class="form-control" id="reservations_money_type" name="paymentmethod">
-                                                        <option value="0">现金</option>
-                                                        <option value="1">微信</option>
+                                                    <select class="form-control" id="reservations_money_type" name="payType"
+                                                        data-val="true" data-val-required="请选择支付方式">
+                                                        <option value="">请选择</option>
+                                                        <option value="1">现金</option>
                                                         <option value="2">支付宝</option>
-                                                        <option value="3">支票</option>
+                                                        <option value="3">微信</option>
                                                     </select>
+                                                    <div data-valmsg-for="payType" data-valmsg-replace="true"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -206,15 +220,18 @@
                                                 <label for="reservations_se_money" class="col-sm-4 control-label">优惠金额</label>
 
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="reservations_se_money" name="preamount"
-                                                           placeholder="优惠金额" value="" autocomplete="off">
+                                                    <input type="text" class="form-control" id="reservations_se_money" name="subAmount"
+                                                           placeholder="请输入优惠金额(元)" autocomplete="off"
+                                                           data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                                           data-val-regex="优惠金额格式错误">
+                                                    <div data-valmsg-for="subAmount" data-valmsg-replace="true"></div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="reservations_money_no" class="col-sm-4 control-label">支票号</label>
 
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="reservations_money_no" name="checknumber"
+                                                    <input type="text" class="form-control" id="reservations_money_no" name="checkNo"
                                                            placeholder="支票号" value="" autocomplete="off">
                                                 </div>
                                             </div>
@@ -225,7 +242,7 @@
 
                                                 <div class="col-sm-10">
                                                         <textarea class="form-control" rows="3" id="reservations_pay_remark"
-                                                                  name="remarks" placeholder="备注" autocomplete="off"></textarea>
+                                                                  name="orderRemark" placeholder="备注"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -234,8 +251,11 @@
                                                 <label for="reservations_real_money" class="col-sm-2 control-label">实收金额</label>
 
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="reservations_real_money" name="paidamount"
-                                                           placeholder="实收金额" value="" readonly>
+                                                    <input type="text" class="form-control" id="reservations_real_money" name="paySumPrice"
+                                                           placeholder="请输入实收金额(元)" autocomplete="off"
+                                                           data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                                           data-val-regex="实收金额格式错误">
+                                                    <div data-valmsg-for="paySumPrice" data-valmsg-replace="true"></div>
                                                 </div>
                                                 <div class="col-sm-2">
                                                     <button class="btn btn-primary reservations-pay-confirm">
@@ -243,9 +263,6 @@
                                                     </button>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <p class="sc-submit-tips"></p>
                                         </div>
                                     </form>
                                 </div>

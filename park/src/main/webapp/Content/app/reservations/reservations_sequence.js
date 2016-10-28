@@ -12,51 +12,6 @@
             Reservation_Date_Tpl: '<li class="reservation-date-picker #DATEACTIVE#" data-value="#DATEVALUE#">' +
                 '<a href="javascript:;">#DATETEXT#</a></li>'
         },
-        formatJSON: function (data) {
-            var newData = {
-                mobile: "",
-                name: "",
-                memberId: "",
-                opType: 2,
-                reserveType: 1,
-                reserveModel: 2,
-                siteReserveDateList: [{
-                    reserveStartDate: this.opts.Current_Date,
-                    reserveEndDate: this.opts.Current_Date,
-                    reserveWeek: "1",
-                    siteReserveTimeList: [{
-                        "siteId": "1",
-                        "siteStartTime": "09:00",
-                        "siteEndTime": "15:00"
-                    }]
-                }]
-            };
-
-            /*
-             {
-             "mobile": "15110275787",
-             "name": "张三",
-             "memberId": 1,
-             "opType": 2,
-             "reserveType": 1,
-             "reserveModel": 2,
-             "siteReserveDateList": [
-             {
-             "reserveStartDate": "2016-10-01",
-             "reserveEndDate": "2016-10-21",
-             "reserveWeek": "1,3,5",
-             "siteReserveTimeList": [
-             {
-             "siteId": "1",
-             "siteStartTime": "09:00",
-             "siteEndTime": "15:00"
-             }
-             ]
-             }
-             ]
-             }
-            */
-        },
         init: function () {
             this.initDatePicker();
             this.initMenuDate();
@@ -206,7 +161,6 @@
                                             .replace(/#USERMOBILE#/, "*" + reserveInfo.operatorMobile.substr(-4))
                                         );
                                 }
-
                             }
 
                             // 已锁定
@@ -225,6 +179,8 @@
                             }
                         }
                     }
+                } else {
+                    alert(res.message || "查询预订信息失败, 请稍后重试");
                 }
             });
         },
@@ -295,12 +251,6 @@
                 }
 
                 content.opts.data = {
-                    mobile: "",
-                    name: "散客",
-                    memberId: "",
-                    opType: 2,
-                    reserveType: 1,
-                    reserveModel: 1,
                     siteReserveDateList: [{
                         reserveStartDate: content.opts.Current_Date,
                         reserveEndDate: content.opts.Current_Date,
@@ -315,6 +265,8 @@
 
                     if (res.code == 1) {
                         $("#reservations_amount").val(data.originalPrice);
+                    } else {
+                        alert(res.message || "计算金额失败, 请稍后重试");
                     }
                 });
 
@@ -342,15 +294,21 @@
                 var data = content.opts.data;
                 data.name = "散客";
                 data.mobile = "13051788101";
+                data.memberId = "";
+                data.opType = "2";
+                data.reserveType = "1";
+                data.reserveModel = "1";
 
                 $.post('/site/saveReservationSite', {
                     siteOperationJson: JSON.stringify(data)
                 }, function (res) {
                     var data = res.data;
 
-                    console.log(res);
-
                     if (res.code == 1) {
+                        $("#reservations_order_id").val(data.orderId);
+                        $reservationsSteps.find(".reservations-steps").steps("next", 1);
+                    } else {
+                        alert(res.message || "提交预订失败, 请稍后重试");
                     }
                 });
             });
@@ -359,8 +317,24 @@
             $(".reservations-pay-confirm").on("click", function (e) {
                 e.preventDefault();
 
-                $reservationsSteps.modal("hide");
-                location.reload();
+                var $form = $("#reservations_paid_form");
+                var conditions = $form.serialize();
+
+                if ($form.attr("submitting") == "submitting" || !$form.valid()) {
+                    return false;
+                }
+                $form.attr("submitting", "submitting");
+
+                $.post('/site/confirmOrder', conditions, function (res) {
+                    $form.attr("submitting", "");
+
+                    if (res.code == 1) {
+                        $reservationsSteps.modal("hide");
+                        location.reload();
+                    } else {
+                        alert(res.message || "确认订单失败, 请稍后重试");
+                    }
+                });
             });
         }
     };
