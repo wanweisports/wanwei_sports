@@ -25,4 +25,6 @@ public interface IOperatorService {
 	
 	public void updateLockEmployee(String operatorId, boolean lock);
 	
+	public UserOperator innerLogin(String name);
+	
 }

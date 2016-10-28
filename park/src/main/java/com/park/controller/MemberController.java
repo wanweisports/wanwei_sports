@@ -33,6 +33,22 @@ public class MemberController extends BaseController {
 
     @Autowired
     private IMemberService memberService;
+    
+    @RequestMapping("regMember")
+	public String toRegMember(Model model) {
+		model.addAttribute("cardNo", memberService.getCardNo()); //注册会员之前，生成会员号
+		return "Members/RegMember";
+	}
+    
+    @RequestMapping("membersInfoCar")
+	public String toMembersInfoCar(Integer memberId, Model model) {
+		Map<String, Object> regMember = memberService.getRegMember(memberId);
+		model.addAllAttributes(regMember);
+		MemberInputView memberInputView = new  MemberInputView();
+		memberInputView.setCardType(regMember.get("memberType").toString());
+		model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(memberInputView));
+		return "Members/MembersInfoCar";
+	}
 
     @ResponseBody
     @RequestMapping(value = "saveMember", method = RequestMethod.POST)

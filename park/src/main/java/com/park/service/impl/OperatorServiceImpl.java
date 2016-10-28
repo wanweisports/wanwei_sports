@@ -118,4 +118,9 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 		baseDao.save(operator, operatorId);
 	}
 	
+	@Override
+	public UserOperator innerLogin(String name){
+		return JsonUtils.fromJson(baseDao.queryBySqlFirst("SELECT * FROM user_operator WHERE operatorId = ?", name), UserOperator.class);
+	}
+	
 }
