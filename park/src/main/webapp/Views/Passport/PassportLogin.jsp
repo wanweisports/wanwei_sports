@@ -35,15 +35,15 @@
             <div class="col-md-6 login-form">
                 <form id="login_form" method="post" autocomplete="off" novalidate="novalidate" onsubmit="return false;">
                     <div class="form-group">
-                        <input type="text" name="sale_mobile" class="form-control" placeholder="手机号码"
-                               value="${sale_mobile}">
+                        <input type="text" name="name" class="form-control" placeholder="手机号码"
+                               value="${name}">
                     </div>
                     <div class="form-group">
-                        <input type="password" name="password" class="form-control" placeholder="登录密码"
+                        <input type="password" name="pwd" class="form-control" placeholder="登录密码"
                                value="${password}">
                     </div>
                     <div class="form-group text-right">
-                        <input type="hidden" name="return_url" value="${return_url}">
+                        <input type="hidden" name="return_url" value="${returnUrl}">
                         <button type="button" class="btn btn-primary login-btn">登 录</button>
                     </div>
                 </form>

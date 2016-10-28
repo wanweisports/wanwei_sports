@@ -53,7 +53,6 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			UserOperator operator = new UserOperator();
 			operator.setOperatorMobile(userMember.getMemberMobile());
 			operator.setOperatorId(userMember.getTempCardNo()); //会员帐号暂时使用第一次注册的会员卡号
-			operator.setOperatorPwd("123456"); //会员密码暂时设置为123456
 			operator.setStatus(IDBConstant.LOGIC_STATUS_YES);
 			operator.setCreateTime(nowDate);
 			operator.setOperatorName(userMember.getMemberName());

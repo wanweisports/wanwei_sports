@@ -99,10 +99,6 @@ public class BaseController {
 
     protected UserOperator getUserInfo() {
         UserOperator userInfo = getUserInfo(getRequest().getSession());
-        if(userInfo == null){
-        	userInfo = new UserOperator();
-        	userInfo.setId(1); //这里测试固定为1
-        }
         return userInfo;
     }
 

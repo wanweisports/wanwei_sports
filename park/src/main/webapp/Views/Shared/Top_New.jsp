@@ -31,7 +31,7 @@
                                 <ul>
                                     <li><a href="/passport/profile"><span>完善信息</span></a></li>
                                     <li><a href="/passport/modifyPassword"><span>密码重置</span></a></li>
-                                    <li><a class="user-logout" href="javascript:;"><span>安全退出</span></a></li>
+                                    <li><a class="user-logout" href="/passport/logout"><span>安全退出</span></a></li>
                                     <li><a href="/error/questions"><span>操作指南</span></a></li>
                                 </ul>
                             </div>

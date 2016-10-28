@@ -28,4 +28,8 @@ public class RequestUtil {
         return URLDecoder.decode(reqBody, HTTP.UTF_8);
     }
 	
+	public static String getRequestURIQuery(HttpServletRequest request){
+        return request.getRequestURI() + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+	}
+	
 }

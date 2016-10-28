@@ -2,8 +2,11 @@ package com.park.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.park.common.annotation.NotProtected;
 import com.park.common.bean.ResponseBean;
 import com.park.common.constant.IPlatformConstant;
 import com.park.common.exception.MessageException;
@@ -33,12 +36,22 @@ public class UrlController extends BaseController {
 		return "Members/MembersList";
 	}*/
 	
+	// 登录后主页
+    @RequestMapping("loginWelCome")
+    public String loginWelCome() {
+        return "LoginWelCome";
+    }
+	
     // 登录
+	@NotProtected
 	@RequestMapping("/passport/login")
-	public String passportLogin() {
+	public String passportLogin(String returnUrl, Model model) {
+		model.addAttribute("returnUrl", StrUtil.isBlank(returnUrl) ? "/loginWelCome" : returnUrl);
 		return "Passport/PassportLogin";
 	}
 	
+	@NotProtected
+	@ResponseBody
 	@RequestMapping("/passport/submitUserLogin")
 	public ResponseBean submitUserLogin(String name, String pwd) {
 		try{
@@ -48,6 +61,7 @@ public class UrlController extends BaseController {
 			if(operator == null) throw new MessageException("用户名错误！");
 			if(!pwd.equals(operator.getOperatorPwd())) throw new MessageException("密码错误！");
 			operator.setOperatorPwd(null);
+			operatorService.saveLastLoginTime(operator.getId());
 			super.getRequest().getSession().setAttribute(IPlatformConstant.LOGIN_USER, operator);
 			return new ResponseBean(true);
 		} catch (MessageException e) {
@@ -58,6 +72,13 @@ public class UrlController extends BaseController {
 			return new ResponseBean(false);
 		}
 		
+	}
+	
+	//退出登录
+	@RequestMapping("passport/logout")
+	public String logout() {
+		super.getRequest().getSession().invalidate();
+		return redirect("/passport/login");
 	}
 
     // 完善信息
