@@ -7,6 +7,7 @@
     code       返回状态（1.正确响应）
     message    返回信息
     data       返回数据
+>    
 
 ## 会员管理
 主要是会员的增删改查，以及会员卡，发票等相关功能的接口。
@@ -75,6 +76,7 @@
     invoiceId                 发票编号
     balanceServiceTypeName    订单类型
     balanceStatusName         订单付款状态
+>       
     
 ### 4.  会员卡类型查询
 目的是根据会员的支付类型查询会员卡的类型，主要用户显示会员卡类型列表。
@@ -91,6 +93,7 @@
 > 返回数据：
 >
     memberCarTypeNames  会员卡列表（[{cardTypeId,cardTypeName}...]）
+>   
 
 ### 5.  会员卡类型详情
 目的是根据某种会员卡类型查询此类型的设置详情。
@@ -119,6 +122,7 @@
     cardTypeTimeStart   开始时间许可（多个逗号分隔【也就是name值相同】）
     cardTypeTimeEnd     结束时间许可（多个逗号分隔【也就是name值相同】）
     cardTypeStatus      会员卡类型的状态
+>    
     
 ### 6.  会员卡类型设置
 目的是增加和修改会员卡类型信息；其中请求参数cardTypeId不为空，则为更新会员卡类型，否则是增加会员卡类型。
@@ -142,7 +146,8 @@
     cardTypeWeek        周一~周日（1-7多个逗号分隔【也就是name值相同】）
     cardTypeTimeStart   开始时间许可（多个逗号分隔【也就是name值相同】）
     cardTypeTimeEnd     结束时间许可（多个逗号分隔【也就是name值相同】）
-    cardTypeStatus      会员卡类型的状态（1.正常，2.锁定）   
+    cardTypeStatus      会员卡类型的状态（1.正常，2.锁定）  
+>     
     
 ### 7.  升级会员卡
 目的是为会员升级，如从普通卡升级到金卡等。
@@ -162,6 +167,7 @@
     givingAmount    赠送金额（元）
     remark          备注
     salesId         销售员id
+>    
 
 ### 8.  充值会员卡
 目的是为会员充值。
@@ -171,7 +177,7 @@
 > 
 > 请求类型：POST（application/json）
 > 
-> 请求参数：
+> 返回数据：
 > 
     cardId          会员id
     balanceStyle    支付类型（1.现金，2.支付宝，3.微信）
@@ -180,6 +186,7 @@
     givingAmount    赠送金额（元）
     remark          备注
     salesId         销售员id
+>    
 
 ### 9.  补办会员卡
 目的是为会员补办。
@@ -198,6 +205,7 @@
     givingAmount    赠送金额（元）
     remark          备注
     salesId         销售员id
+>   
       
 ### 10.  登记发票
 目的是标记订单是否需要打印发票。
@@ -217,6 +225,7 @@
     invoiceRemark         发票内容备注
     invoiceState          打印发票（1.打印，2.不打印）
     salesId               销售员id    
+>   
 
 ### 11.  标记已领取发票
 目的是标记发票已领取。
@@ -229,6 +238,61 @@
 > 请求参数：
 > 
     invoiceIds    领取的发票id（多个逗号分隔）
+>
+
+## 商品管理
+主要是管理商品的设置，销售，进销存等。
+
+### 1.  商品类型列表
+目的是查看商品类型的详情信息。
+> 请求地址：
+>
+    good/goodTypes.do || good/typeGood.do(页面)
+> 
+> 请求类型：POST（application/json）
+>
+> 返回数据：
+> 
+    list            类型列表[{下面四个字段的key-value}]
+    goodTypeDescribe    商品类型描述
+    goodTypeId          商品类型ID
+    goodTypeName        商品类型名称
+    createTime          创建时间
+    operatorName        操作员名称
+>
+
+### 2.  商品类型详情
+目的是查看商品类型的详情信息。
+> 请求地址：
+>
+    good/goodTypeInfo.do
+> 
+> 请求类型：POST（application/json）
+> 
+> 请求参数：
+> 
+    goodTypeId    商品类型ID
+>
+> 返回数据：
+> 
+    goodTypeDescribe    商品类型描述
+    goodTypeId          商品类型ID
+    goodTypeName        商品类型名称
+>
+
+### 3.  商品类型设置
+目的是增加或者更新商品类型详情。
+> 请求地址：
+>
+    good/saveGoodType.do
+> 
+> 请求类型：POST（application/json）
+> 
+> 请求参数：
+> 
+    goodTypeDescribe    商品类型描述
+    goodTypeId          商品类型ID
+    goodTypeName        商品类型名称
 >
 
 ## 系统设置

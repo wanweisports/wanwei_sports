@@ -47,45 +47,21 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>饮食类</td>
-                            <td>饮料,食品</td>
-                            <td>李晓丹</td>
-                            <td>2016-11-11</td>
-                            <td>
-                                <a class="btn btn-primary" class="type-item" href="#addModal" data-toggle="modal"
-                                   data-backdrop="false" data-id="${type.goodTypeId}">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>服饰类</td>
-                            <td></td>
-                            <td>李晓丹</td>
-                            <td>2016-11-11</td>
-                            <td>
-                                <a class="btn btn-primary" class="type-item" href="#addModal" data-toggle="modal"
-                                   data-backdrop="false" data-id="${type.goodTypeId}">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>器械类</td>
-                            <td></td>
-                            <td>李晓丹</td>
-                            <td>2016-11-11</td>
-                            <td>
-                                <a class="btn btn-primary" class="type-item" href="#addModal" data-toggle="modal"
-                                   data-backdrop="false" data-id="${type.goodTypeId}">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </a>
-                            </td>
-                        </tr>
+                        <c:forEach var="type" items="${list}" varStatus="loop">
+                            <tr>
+                                <td>${loop.index}</td>
+                                <td>${type.goodTypeName}</td>
+                                <td>${type.goodTypeDescribe}</td>
+                                <td>${type.operatorName}</td>
+                                <td>${type.createTime}</td>
+                                <td>
+                                    <a class="btn btn-primary type-item" href="#addModal" data-toggle="modal"
+                                       data-backdrop="false" data-id="${type.goodTypeId}">
+                                        <span class="glyphicon glyphicon-share-alt"></span> 查看
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>
@@ -120,18 +96,17 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="good_type_remark" class="col-sm-2 control-label">
-                                <span class="text-danger">*</span> 类别描述
-                            </label>
+                            <label for="good_type_remark" class="col-sm-2 control-label">类别描述</label>
 
                             <div class="col-sm-10">
-                                <textarea class="form-control" id="good_type_remark" name="goodTypeRemark" rows="3" placeholder="类别描述"></textarea>
+                                <textarea class="form-control" id="good_type_remark" name="goodTypeDescribe" rows="3"
+                                          placeholder="类别描述"></textarea>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="save_good_type"><!-- data-dismiss="modal" -->
+                    <button type="button" class="btn btn-primary" id="save_good_type">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>
