@@ -33,23 +33,23 @@ public class MemberController extends BaseController {
 
     @Autowired
     private IMemberService memberService;
-    
+
+    /**
+     * [页面]注册会员的录入会员信息页面,自动生成会员卡的编号
+     * @param model
+     * @return
+     */
     @RequestMapping("regMember")
 	public String toRegMember(Model model) {
 		model.addAttribute("cardNo", memberService.getCardNo()); //注册会员之前，生成会员号
 		return "Members/RegMember";
 	}
-    
-    @RequestMapping("membersInfoCar")
-	public String toMembersInfoCar(Integer memberId, Model model) {
-		Map<String, Object> regMember = memberService.getRegMember(memberId);
-		model.addAllAttributes(regMember);
-		MemberInputView memberInputView = new  MemberInputView();
-		memberInputView.setCardType(regMember.get("memberType").toString());
-		model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(memberInputView));
-		return "Members/MembersInfoCar";
-	}
 
+    /**
+     * [API]注册会员的录入会员信息保存
+     * @param userMember
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "saveMember", method = RequestMethod.POST)
     public ResponseBean saveMember(UserMember userMember){
@@ -69,6 +69,27 @@ public class MemberController extends BaseController {
         }
     }
 
+    /**
+     * [页面]会员绑卡页面, 根据录入信息的支付类型, 显示会员类型列表
+     * @param memberId 会员ID
+     * @param model
+     * @return
+     */
+    @RequestMapping("membersInfoCar")
+	public String toMembersInfoCar(Integer memberId, Model model) {
+		Map<String, Object> regMember = memberService.getRegMember(memberId);
+		model.addAllAttributes(regMember);
+		MemberInputView memberInputView = new  MemberInputView();
+		memberInputView.setCardType(regMember.get("memberType").toString());
+		model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(memberInputView));
+		return "Members/MembersInfoCar";
+	}
+
+    /**
+     * [API]更新部分会员信息, 手机号, 姓名等
+     * @param userMember
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "updateMemberName", method = RequestMethod.POST)
     public ResponseBean updateMemberName(UserMember userMember){
@@ -84,6 +105,12 @@ public class MemberController extends BaseController {
         }
     }
 
+    /**
+     * [API]会员绑卡提交
+     * @param memberCard
+     * @param otherBalance
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "saveMemberCar", method = RequestMethod.POST)
     public ResponseBean saveMemberCar(MemberCard memberCard, OtherBalance otherBalance){
@@ -101,6 +128,11 @@ public class MemberController extends BaseController {
         }
     }
 
+    /**
+     * [API]查询所有的会员卡类型
+     * @param memberInputView
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "getMemberCarTypeNames")
     public ResponseBean getMemberCarTypeNames(MemberInputView memberInputView) {

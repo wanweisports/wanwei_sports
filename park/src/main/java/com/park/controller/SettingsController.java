@@ -38,7 +38,7 @@ public class SettingsController extends BaseController {
     @RequestMapping("common")
     public String settingsCommon(Model model) {
     	try {
-			model.addAttribute(JsonUtils.fromJson(parkService.getParkBusiness()));
+			model.addAllAttributes(JsonUtils.fromJson(parkService.getParkBusiness()));
 			System.out.println(JsonUtils.toJson(parkService.getParkBusiness()));
 		} catch (Exception e) {
 			e.printStackTrace();

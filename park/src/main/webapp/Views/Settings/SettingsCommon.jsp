@@ -35,6 +35,7 @@
             <div class="panel-heading">场馆基础设置</div>
             <div class="panel-body">
                 <form id="common_form" class="form-horizontal" novalidate onsubmit="return false;">
+                    <input type="hidden" name="businessId" value="${businessId}">
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="site_name" class="col-sm-4 control-label">
@@ -44,7 +45,7 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="site_name" name="businessName"
                                        placeholder="请输入场馆名称" autocomplete="off" value="${businessName}"
-                                       data-val="true" data-val-required="场馆名称不能为空" readonly>
+                                       data-val="true" data-val-required="场馆名称不能为空">
                                 <div data-valmsg-for="businessName" data-valmsg-replace="true"></div>
                             </div>
                         </div>
