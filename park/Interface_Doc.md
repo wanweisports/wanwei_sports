@@ -238,7 +238,7 @@
 目的是设置当前场馆的基础信息。
 > 请求地址：
 >
-    settings/common.do
+    settings/saveCommon.do
 > 
 > 请求类型：POST（application/json）
 > 

@@ -339,15 +339,12 @@
 
                 $reservationsSteps.find(".reservations-steps").steps("next", 1);
 
+                var data = content.opts.data;
+                data.name = "散客";
+                data.mobile = "13051788101";
+
                 $.post('/site/saveReservationSite', {
-                    siteOperationJson: JSON.stringify({
-                        siteOperationInfo: content.opts.data,
-                        opType: 2,
-                        reserveType: 1,
-                        //memberId: 1,
-                        name: "张三",
-                        mobile: "13051788101"
-                    })
+                    siteOperationJson: JSON.stringify(data)
                 }, function (res) {
                     var data = res.data;
 
