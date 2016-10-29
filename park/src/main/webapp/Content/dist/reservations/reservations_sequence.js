@@ -31,7 +31,7 @@
                 lang: "zh",
                 format:'Y-m-d',
                 inline: true,
-                defaultDate: new Date(),
+                maxDate: 0,
                 onSelectDate: function (ct, $el) {
                     content.opts.Current_Date = $el.val();
                     $(".other-date .icon-text").text(content.opts.Current_Date);
@@ -161,7 +161,6 @@
                                             .replace(/#USERMOBILE#/, "*" + reserveInfo.operatorMobile.substr(-4))
                                         );
                                 }
-
                             }
 
                             // 已锁定
@@ -180,6 +179,8 @@
                             }
                         }
                     }
+                } else {
+                    alert(res.message || "查询预订信息失败, 请稍后重试");
                 }
             });
         },
@@ -223,9 +224,8 @@
                     var $sel = $selected.eq(i);
 
                     data.push({
-                        startTime: $sel.attr("data-start"),
-                        endTime: $sel.attr("data-end"),
-                        siteDate: content.opts.Current_Date,
+                        siteStartTime: $sel.attr("data-start"),
+                        siteEndTime: $sel.attr("data-end"),
                         siteId: $sel.attr("data-id")
                     });
                 }
@@ -237,7 +237,6 @@
             $(".sequence-lock").on("click", function (e) {
                 e.preventDefault();
 
-                console.log(_findSelectedArea());
                 $(".tips-modal").modal({backdrop: false, show: true});
             });
 
@@ -251,14 +250,23 @@
                     return alert("请选择场地");
                 }
 
-                content.opts.data = data;
+                content.opts.data = {
+                    siteReserveDateList: [{
+                        reserveStartDate: content.opts.Current_Date,
+                        reserveEndDate: content.opts.Current_Date,
+                        reserveWeek: (new Date(content.opts.Current_Date)).getDay(),
+                        siteReserveTimeList: data
+                    }]
+                };
                 $.post('/site/calculateSiteMoney', {
-                    siteOperationJson: JSON.stringify({siteOperationInfo: content.opts.data, opType: 2})
+                    siteOperationJson: JSON.stringify(content.opts.data)
                 }, function (res) {
                     var data = res.data;
 
                     if (res.code == 1) {
                         $("#reservations_amount").val(data.originalPrice);
+                    } else {
+                        alert(res.message || "计算金额失败, 请稍后重试");
                     }
                 });
 
@@ -283,21 +291,24 @@
 
                 $reservationsSteps.find(".reservations-steps").steps("next", 1);
 
+                var data = content.opts.data;
+                data.name = "散客";
+                data.mobile = "13051788101";
+                //data.memberId = "";
+                data.opType = "2";
+                data.reserveType = "1";
+                data.reserveModel = "1";
+
                 $.post('/site/saveReservationSite', {
-                    siteOperationJson: JSON.stringify({
-                        siteOperationInfo: content.opts.data,
-                        opType: 2,
-                        reserveType: 1,
-                        //memberId: 1,
-                        name: "张三",
-                        mobile: "13051788101"
-                    })
+                    siteOperationJson: JSON.stringify(data)
                 }, function (res) {
                     var data = res.data;
 
-                    console.log(res);
-
                     if (res.code == 1) {
+                        $("#reservations_order_id").val(data.orderId);
+                        $reservationsSteps.find(".reservations-steps").steps("next", 1);
+                    } else {
+                        alert(res.message || "提交预订失败, 请稍后重试");
                     }
                 });
             });
@@ -306,8 +317,24 @@
             $(".reservations-pay-confirm").on("click", function (e) {
                 e.preventDefault();
 
-                $reservationsSteps.modal("hide");
-                location.reload();
+                var $form = $("#reservations_paid_form");
+                var conditions = $form.serialize();
+
+                if ($form.attr("submitting") == "submitting" || !$form.valid()) {
+                    return false;
+                }
+                $form.attr("submitting", "submitting");
+
+                $.post('/site/confirmOrder', conditions, function (res) {
+                    $form.attr("submitting", "");
+
+                    if (res.code == 1) {
+                        $reservationsSteps.modal("hide");
+                        location.reload();
+                    } else {
+                        alert(res.message || "确认订单失败, 请稍后重试");
+                    }
+                });
             });
         }
     };

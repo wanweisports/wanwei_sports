@@ -154,17 +154,33 @@
         </div>
     </div>
 
-    <div class="modal fade" id="tips_modal" tabindex="-1" role="dialog" aria-labelledby="tipsModalLabel">
+    <div class="modal fade" id="tips_success_modal" tabindex="-1" role="dialog" aria-labelledby="tips_success_modal_label">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h5 class="modal-title" id="tipsModalLabel">提示框</h5>
+                    <h5 class="modal-title" id="tips_success_modal_label">提示框</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-success tips-content" role="alert">常用设置保存成功!</div>
+                    <p class="text-success">场馆基础信息设置成功!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="tips_error_modal" tabindex="-1" role="dialog" aria-labelledby="tips_error_modal_label">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="tips_error_modal_label">提示框</h5>
+                </div>
+                <div class="modal-body">
+                    <p class="text-danger">场馆基础信息设置失败!</p>
                 </div>
             </div>
         </div>

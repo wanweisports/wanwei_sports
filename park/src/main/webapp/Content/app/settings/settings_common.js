@@ -13,9 +13,7 @@
                 datepicker: false,
                 lang: "zh",
                 format: "H:i",
-                allowTimes: ['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00',
-                    '17:00','18:00','19:00','20:00','21:00','22:00'],
-                step: 5
+                step: 60
             });
 
             // 营业结束时间
@@ -23,9 +21,7 @@
                 datepicker: false,
                 lang: "zh",
                 format: "H:i",
-                allowTimes: ['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00',
-                    '17:00','18:00','19:00','20:00','21:00','22:00'],
-                step: 5
+                step: 60
             });
         },
         initEvents: function () {
@@ -45,12 +41,13 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $("#tips_modal").modal({show: true, backdrop: false});
+                        $("#tips_success_modal").modal({show: true, backdrop: false});
                         setTimeout(function () {
-                            $("#tips_modal").modal("hide");
-                        }, 3000)
+                            $("#tips_success_modal").modal("hide");
+                        }, 3000);
                     } else {
-                        alert(res.message || "常用设置失败, 请稍后重试");
+                        $("#tips_error_modal").modal({show: true, backdrop: false});
+                        console.log(res.message || "场馆基础信息设置失败, 请稍后重试");
                     }
                 });
             });

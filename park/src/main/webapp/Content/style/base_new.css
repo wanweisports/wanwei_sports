@@ -325,10 +325,11 @@ input[type=checkbox] {
 }
 .modal-sm .modal-header {
   padding: 6px;
+  text-align: center;
 }
 .modal-sm .modal-header .close {
-  margin-top: 2px;
-  margin-right: 6px;
+  margin-top: 0;
+  margin-right: 0;
 }
 .modal-dialog .modal-header {
   padding: 10px;

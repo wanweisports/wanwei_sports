@@ -24,13 +24,13 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('', conditions, function (res) {
+                $.post('/good/saveGoodType', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        alert("商品类别设置保存失败, 请稍后重试");
+                        alert(res.message || "商品类别设置保存失败, 请稍后重试");
                     }
                 });
             });
@@ -41,11 +41,13 @@
 
                 var id = $(this).attr("data-id");
 
-                $.post('', {goodTypeId: id}, function (res) {
+                $.post('/good/goodTypeInfo', {goodTypeId: id}, function (res) {
+                    var data = res.data;
+
                     if (res.code == 1) {
-                        $("#good_type_id").val("");
-                        $("#good_type_name").val("");
-                        $("#good_type_remark").val("");
+                        $("#good_type_id").val(data.goodTypeId);
+                        $("#good_type_name").val(data.goodTypeName);
+                        $("#good_type_remark").val(data.goodTypeDescribe);
                     } else {
                         alert(res.message || "商品类别信息查询失败, 请稍后重试");
                     }

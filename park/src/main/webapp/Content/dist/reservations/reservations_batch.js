@@ -2,17 +2,22 @@
     var Venue_Bookings = {
         tpl: {
             BlockBooking: function () {
-                return '<tr><td>#SPORTNAME#</td>' +
-                    '<td>2016-07-01 ~ 2016-09-30</td>' +
-                    '<td>周一,周二</td>' +
-                    '<td>10:00 ~ 11:00</td>' +
-                    '<td>场地1</td>' +
-                    '<td>' +
-                    '<a href="javascript:;" class="btn btn-danger">' +
-                    '<span class="glyphicon glyphicon-trash"></span>' +
-                    '</a>' +
-                    '</td>' +
+                return '<tr>' +
+                    '<td>#BOOKING_SPORT#</td><td>#BOOKING_START_DATE# ~ #BOOKING_END_DATE#</td>' +
+                    '<td>#BOOKING_WEEK#</td><td>#BOOKING_START_TIME# ~ #BOOKING_END_TIME#</td><td>#BOOKING_AREA#</td>' +
+                    '<td><a href="javascript:;" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>' +
                     '</tr>';
+            }
+        },
+        opts: {
+            data: {
+                name: "散客",
+                mobile: "",
+                //memberId: "",
+                opType: "2",
+                reserveType: "1",
+                reserveModel: "2",
+                siteReserveDateList: []
             }
         },
         init: function () {
@@ -23,7 +28,7 @@
                 timepicker: false,
                 lang: "zh",
                 format:'Y-m-d',
-                defaultDate: new Date()
+                minDate: 0
             });
 
             $(".start-date-select").on("click", function (e) {
@@ -36,7 +41,7 @@
                 timepicker: false,
                 lang: "zh",
                 format:'Y-m-d',
-                defaultDate: new Date()
+                minDate: 0
             });
 
             $(".end-date-select").on("click", function (e) {
@@ -45,12 +50,118 @@
                 $('#block_end_date').datetimepicker("show");
             });
 
-            this.initEvents();
+            this.initEvents2();
+            //this.initEvents();
         },
+        initEvents2: function () {
+            var content = this;
+
+            // 加场
+            $(".booking-add").on("click", function (e) {
+                e.preventDefault();
+
+                var $form = $("#reservations_batch_form");
+                var $list = $(".reservations-list");
+                var data = {};
+
+                if (!$form.valid()) {
+                    return false;
+                }
+
+                function __getCheckbox() {
+                    var value = [];
+                    var text = [];
+
+                    $('input[name="reserveWeek"]:checked').each(function(){
+                        value.push($(this).val());
+                        text.push($(this).attr("data-text"));
+                    });
+
+                    return {value: value, text: text};
+                }
+
+                data.reserveStartDate = $("#block_start_date").val();
+                data.reserveEndDate = $("#block_end_date").val();
+                data.reserveWeek = __getCheckbox().value;
+                data.siteReserveTimeList = [{
+                    siteStartTime: $("#block_time_start").val(),
+                    siteEndTime: $("#block_time_end").val(),
+                    siteId: $("#block_venue_name").val()
+                }];
+                content.opts.data.siteReserveDateList.push(data);
+
+                $list.append(content.tpl.BlockBooking()
+                    .replace("#BOOKING_SPORT#", $("#block_user_degree").find("option:selected").text().trim())
+                    .replace("#BOOKING_START_DATE#", $("#block_start_date").val())
+                    .replace("#BOOKING_END_DATE#", $("#block_end_date").val())
+                    .replace("#BOOKING_START_TIME#", $("#block_time_start").find("option:selected").text().trim())
+                    .replace("#BOOKING_END_TIME#", $("#block_time_end").find("option:selected").text().trim())
+                    .replace("#BOOKING_AREA#", $("#block_venue_name").find("option:selected").text().trim())
+                    .replace("#BOOKING_WEEK#", "(" + __getCheckbox().text + ")"));
+            });
+
+            // 预订
+            $(".booking-pay").on("click", function (e) {
+                e.preventDefault();
+
+                var $list = $(".reservations-list");
+                if ($list.find("tr").size() == 1) {
+                    alert("请先加场");
+                    return false;
+                }
+
+                var data = content.opts.data;
+                data.mobile = "11012345678";
+
+                $.post('site/saveReservationSite', {
+                    siteOperationJson: JSON.stringify(content.opts.data)
+                }, function (res) {
+                    var data = res.data;
+
+                    if (res.code == 1) {
+                        $("#reservations_order_id").val(data.orderId);
+                        $("#addModal").modal({backdrop: false, show: true});
+                    } else {
+                        alert(res.message || "提交预订失败, 请稍后重试");
+                    }
+                })
+            });
+
+            // 确认支付
+            $(".reservations-pay-confirm").on("click", function (e) {
+                e.preventDefault();
+
+                var $form = $("#reservations_paid_form");
+                var conditions = $form.serialize();
+
+                if ($form.attr("submitting") == "submitting" || !$form.valid()) {
+                    return false;
+                }
+                $form.attr("submitting", "submitting");
+
+                $.post('/site/confirmOrder', conditions, function (res) {
+                    $form.attr("submitting", "");
+
+                    if (res.code == 1) {
+                        $("#addModal").modal({backdrop: false, show: false});
+                        alert("预订支付成功");
+                    } else {
+                        alert(res.message || "确认订单失败, 请稍后重试");
+                    }
+                });
+            });
+        },
+
+
+
+
+
+
         initEvents: function () {
             var content = this;
-            this.queryMembers();
-            this.querySportsArea();
+
+            //this.queryMembers();
+            //this.querySportsArea();
             //this.bookingVenue();
 
             /*var $txtStartTime = $("#block_time_start");
@@ -120,7 +231,7 @@
                     alert("终止日期不能小于起始日期!!");
                     $txtStartDate.val($(this).val());
                 }
-            });
+            });*/
 
             var $uiBookingVenue = $(".sc-booking-venue");
             var $txtPayType = $("#block_pay_type");
@@ -181,7 +292,6 @@
                 var $listVenues = $uiBookingVenue.find(".sc-booking-venues");
                 var conditions = $bookingVenueForm.serialize();
 
-                $bookingVenueForm.find(".sc-submit-tips").hide().removeClass("text-success,text-danger");
                 if (!clickable || !$bookingVenueForm.validate().form()) {
                     return;
                 }
@@ -211,7 +321,7 @@
                         .addClass("text-danger");
                     clickable = true;
                 });
-            });*/
+            });
         },
         // 查询会员[未完成]
         queryMembers: function () {

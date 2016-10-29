@@ -41,12 +41,16 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/settings/common', conditions, function (res) {
+                $.post('/settings/saveCommon', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $("#tips_modal").modal({show: true, backdrop: false});
+                        $("#tips_success_modal").modal({show: true, backdrop: false});
+                        /*setTimeout(function () {
+                            $("#tips_success_modal").modal("hide");
+                        }, 3000)*/
                     } else {
+                        $("#tips_error_modal").modal({show: true, backdrop: false});
                         alert(res.message || "常用设置失败, 请稍后重试");
                     }
                 });
