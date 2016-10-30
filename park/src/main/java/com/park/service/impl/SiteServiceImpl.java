@@ -357,7 +357,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		}
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("orderId", orderId);
-		resultMap.put("orderSumPrice", orderInfo.getOrderSumPrice());
+		resultMap.put("orderNo", orderInfo.getOrderNo());
 		return resultMap;
 	}
 	
@@ -414,6 +414,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	
 	@Override
 	public Integer updateConfirmOrder(OrderInfo orderInfo) throws ParseException{
+		if(orderInfo.getOrderId() == null) throw new MessageException("订单id为空");
 		//找到打折价，进行计算覆盖订单应付总价和打折价字段
 		SiteReserveBasic siteReserveBasic = this.getSiteReserveBasicAllByOrderId(orderInfo.getOrderId());
 		//计算打折价格
