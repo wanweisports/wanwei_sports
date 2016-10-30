@@ -176,9 +176,12 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 			baseDao.save(goodShopping, null);
 			return goodShopping.getShoppingId();
 		}else{
-			goodShoppingDB.setShoppingGoodAmount(goodShoppingDB.getShoppingGoodAmount()+amount);
-			goodShoppingDB.setUpdateTime(nowDate);
-			baseDao.save(goodShoppingDB, goodId);
+			int addAmount = goodShoppingDB.getShoppingGoodAmount() + amount;
+			if(addAmount > 0){
+				goodShoppingDB.setShoppingGoodAmount(addAmount);
+				goodShoppingDB.setUpdateTime(nowDate);
+				baseDao.save(goodShoppingDB, goodId);
+			}
 			return goodShoppingDB.getShoppingId();
 		}
 	}
