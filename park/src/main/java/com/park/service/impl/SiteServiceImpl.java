@@ -458,7 +458,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	private Map<String, Object> getReserveIntersection(int siteId, String startDate, String endDate, String weeks, String startTime, String endTime){
 		StringBuilder sql = new StringBuilder("SELECT * FROM site_reserve_basic srb, site_reserve_date srd, site_reserve_time srt WHERE srb.siteReserveId = srd.siteReserveId AND srd.reserveDateId = srt.reserveDateId");
 		sql.append(" AND siteId = ?");
-		sql.append(" AND NOT ((DATE(reserveEndDate) <= DATE(?)) OR (DATE(reserveStartDate) >= DATE(?)))");
+		sql.append(" AND NOT ((DATE(reserveEndDate) <= DATE(?)) OR (DATE(reserveStartDate) > DATE(?)))");
 		sql.append(" AND NOT ((TIME(siteEndTime) <= TIME(?)) OR (TIME(siteStartTime) >= TIME(?)))");
 		if(StrUtil.isNotBlank(weeks)){
 			sql.append(" AND reserveWeek regexp ?");
