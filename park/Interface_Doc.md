@@ -240,6 +240,22 @@
     invoiceIds    领取的发票id（多个逗号分隔）
 >
 
+### 12.  全文向后模糊查询会员列表
+目的是根据会员名, 会员ID, 会员卡号, 手机号, 身份证号向后模糊查询会员列表。
+> 请求地址：
+>
+    member/searchMember.do
+> 
+> 请求类型：POST（application/json）
+> 
+> 请求参数：
+> 
+    members         会员列表数组(字段格式如下)
+    memberMobile    会员手机号
+    memberId        会员ID
+    memberName      会员姓名
+>
+
 ## 商品管理
 主要是管理商品的设置，销售，进销存等。
 
