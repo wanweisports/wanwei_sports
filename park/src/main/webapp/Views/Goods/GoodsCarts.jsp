@@ -248,6 +248,59 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="tips_confirm_modal" tabindex="-1" role="dialog" aria-labelledby="tips_confirm_modal_label">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="tips_confirm_modal_label">确认框</h5>
+                </div>
+                <div class="modal-body">
+                    <p class="text-success text-content">您确认要移除购物车吗?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-warning" type="button" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-ok"></span> 确 定
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="tips_success_modal" tabindex="-1" role="dialog" aria-labelledby="tips_success_modal_label">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="tips_success_modal_label">提示框</h5>
+                </div>
+                <div class="modal-body">
+                    <p class="text-danger text-content">添加购物车成功!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="tips_error_modal" tabindex="-1" role="dialog" aria-labelledby="tips_error_modal_label">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="tips_error_modal_label">提示框</h5>
+                </div>
+                <div class="modal-body">
+                    <p class="text-danger text-content">添加购物车失败!</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </layout:override>
 
 <c:import url="../Shared/Layout_New.jsp">

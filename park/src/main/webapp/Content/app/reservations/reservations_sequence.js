@@ -254,7 +254,7 @@
                     siteReserveDateList: [{
                         reserveStartDate: content.opts.Current_Date,
                         reserveEndDate: content.opts.Current_Date,
-                        reserveWeek: (new Date(content.opts.Current_Date)).getDay(),
+                        reserveWeek: (new Date(content.opts.Current_Date)).getDay() || 7,
                         siteReserveTimeList: data
                     }]
                 };
