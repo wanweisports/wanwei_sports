@@ -25,12 +25,6 @@
             var $uiGoodsList = $(".goods-buy-list");
             var $btnCart = $(".good-cart-count");
 
-            /*$.getJSON('/goods/QueryGoodsCart', function (res) {
-                content.opts.data = res.data.carts;
-
-                $btnCart.find(".badge").html(parseInt(content.calCartCount()));
-            });*/
-
             $uiGoodsList.on("click", ".good-cart-add", function (e) {
                 e.preventDefault();
 
@@ -51,9 +45,10 @@
                 $btnCart.find(".badge").html(content.calCartCount());
 
                 $.post('/good/addGoodsToCart', {goodId: goodId, amount: 1}, function (res) {
-                    if (res.code == 1) {
-                    } else {
-                        alert(res.message || "添加购物车失败, 请稍后重试");
+                    if (res.code != 1) {
+                        $("#tips_error_modal").modal({show: true, backdrop: false})
+                            .find(".text-content").text(res.message || "添加购物车失败, 请稍后重试");
+                        console.log(res.message || "添加购物车失败, 请稍后重试");
                     }
                 });
             });

@@ -13,13 +13,21 @@
                     var res = JSON.parse(element.innerText.trim());
 
                     if (res.code == 1) {
-                        location.assign('/good/getGoods');
+                        $("#tips_success_modal").modal({show: true, backdrop: false})
+                            .find(".text-content").text(res.message || "商品类别设置保存成功");
+                        setTimeout(function () {
+                            $("#tips_success_modal").modal("hide");
+                            location.assign('/good/getGoods');
+                        }, 3000);
                     } else {
-                        alert(res.message || "商品设置提交失败, 请稍后重试");
+                        $("#tips_error_modal").modal({show: true, backdrop: false})
+                            .find(".text-content").text(res.message || "商品设置提交失败, 请稍后重试");
+                        console.log(res.message || "商品设置提交失败, 请稍后重试");
                     }
                 } catch (e) {
+                    $("#tips_error_modal").modal({show: true, backdrop: false})
+                        .find(".text-content").text("商品设置提交错误, 请稍后重试");
                     console.log(e);
-                    alert("商品设置提交错误, 请稍后重试");
                 }
 
                 $("#good_form").attr("submitting", "");

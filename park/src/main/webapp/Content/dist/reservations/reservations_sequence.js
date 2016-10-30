@@ -165,17 +165,17 @@
 
                             // 已锁定
                             if (reserveInfo.siteReserveStatus == 3) {
-                                $site.removeClass().addClass("locked");
+                                $site.removeClass().addClass("locked").html("");
                             }
 
                             // 不可使用
                             if (reserveInfo.siteReserveStatus == 4) {
-                                $site.removeClass().addClass("disabled");
+                                $site.removeClass().addClass("disabled").html("");
                             }
 
                             // 空场地
                             if (reserveInfo.siteReserveStatus == 5) {
-                                $site.removeClass().addClass("null");
+                                $site.removeClass().addClass("null").html("");
                             }
                         }
                     }
@@ -254,7 +254,7 @@
                     siteReserveDateList: [{
                         reserveStartDate: content.opts.Current_Date,
                         reserveEndDate: content.opts.Current_Date,
-                        reserveWeek: (new Date(content.opts.Current_Date)).getDay(),
+                        reserveWeek: (new Date(content.opts.Current_Date)).getDay() || 7,
                         siteReserveTimeList: data
                     }]
                 };
@@ -292,8 +292,8 @@
                 $reservationsSteps.find(".reservations-steps").steps("next", 1);
 
                 var data = content.opts.data;
-                data.name = "散客";
-                data.mobile = "13051788101";
+                data.name = $("#reservations_name").val();
+                data.mobile = $("#reservations_mobile").val();
                 //data.memberId = "";
                 data.opType = "2";
                 data.reserveType = "1";
@@ -306,6 +306,7 @@
 
                     if (res.code == 1) {
                         $("#reservations_order_id").val(data.orderId);
+                        $("#reservations_order_no").val(data.orderNo);
                         $reservationsSteps.find(".reservations-steps").steps("next", 1);
                     } else {
                         alert(res.message || "提交预订失败, 请稍后重试");
@@ -330,7 +331,8 @@
 
                     if (res.code == 1) {
                         $reservationsSteps.modal("hide");
-                        location.reload();
+                        content.loadReservations();
+                        //location.reload();
                     } else {
                         alert(res.message || "确认订单失败, 请稍后重试");
                     }

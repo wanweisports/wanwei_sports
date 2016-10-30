@@ -306,6 +306,9 @@ input[type=checkbox] {
 .panel .panel-heading {
   padding: 8px 12px;
 }
+.panel .modal-body {
+  overflow: hidden;
+}
 .table-responsive .table {
   margin-bottom: 0;
 }

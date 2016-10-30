@@ -51,7 +51,21 @@
             });
 
             this.initEvents2();
-            //this.initEvents();
+            this.searchMembers();
+        },
+        // 查询会员
+        searchMembers: function () {
+            $(".user-search").on("click", function (e) {
+                e.preventDefault();
+
+                var $keywords = $("#block_user_phone");
+
+                $.post('member/searchMember', {
+                    search: $keywords.val().trim()
+                }, function (res) {
+                    console.log(res);
+                });
+            });
         },
         initEvents2: function () {
             var content = this;
@@ -82,7 +96,7 @@
 
                 data.reserveStartDate = $("#block_start_date").val();
                 data.reserveEndDate = $("#block_end_date").val();
-                data.reserveWeek = __getCheckbox().value;
+                data.reserveWeek = __getCheckbox().value.join(",");
                 data.siteReserveTimeList = [{
                     siteStartTime: $("#block_time_start").val(),
                     siteEndTime: $("#block_time_end").val(),
@@ -120,11 +134,12 @@
 
                     if (res.code == 1) {
                         $("#reservations_order_id").val(data.orderId);
-                        $("#addModal").modal({backdrop: false, show: true});
+                        $("#reservations_order_no").val(data.orderNo);
+                        $("#zhifuModal").modal({backdrop: false, show: true});
                     } else {
                         alert(res.message || "提交预订失败, 请稍后重试");
                     }
-                })
+                });
             });
 
             // 确认支付
@@ -143,7 +158,7 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $("#addModal").modal({backdrop: false, show: false});
+                        $("#zhifuModal").modal({backdrop: false, show: false});
                         alert("预订支付成功");
                     } else {
                         alert(res.message || "确认订单失败, 请稍后重试");
