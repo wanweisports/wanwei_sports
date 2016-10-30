@@ -13,7 +13,6 @@ import com.park.common.po.MemberCardType;
 import com.park.common.po.OtherBalance;
 import com.park.common.po.OtherInvoice;
 import com.park.common.po.UserMember;
-import com.park.common.po.UserOperator;
 
 
 public interface IMemberService {
@@ -75,4 +74,6 @@ public interface IMemberService {
 	public List<Map<String, Object>> getMemberNames(MemberInputView memberInputView);
 	
 	public String getCardNo();
+	
+	public List<Map<String, Object>> searchMember(String search);
 }

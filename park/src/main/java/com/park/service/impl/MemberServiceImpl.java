@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -537,6 +538,17 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		}
 		sql.append(" AND memberStatus = ").append(IDBConstant.LOGIC_STATUS_YES);
 		return baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(memberInputView));
+	}
+	
+	@Override
+	public List<Map<String, Object>> searchMember(String search){
+		if(StrUtil.isBlank(search)) throw new MessageException("请输入搜索条件");
+		StringBuilder sql = new StringBuilder("SELECT um.memberId, memberName, memberMobile FROM user_member um, member_card mc");
+		sql.append(" WHERE um.memberId = mc.memberId");
+		sql.append(" AND (memberMobile LIKE :search OR memberName LIKE :search OR memberIdcard LIKE :search OR mc.cardNo LIKE :search)");
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("search", search+"%");
+		return baseDao.queryBySql(sql.toString(), paramMap);
 	}
 	
 	@Override
