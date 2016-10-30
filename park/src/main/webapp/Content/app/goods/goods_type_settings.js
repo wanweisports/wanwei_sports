@@ -28,9 +28,16 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        location.reload();
+                        $("#tips_success_modal").modal({show: true, backdrop: false})
+                            .find(".text-content").text(res.message || "商品类别设置保存成功");
+                        setTimeout(function () {
+                            $("#tips_success_modal").modal("hide");
+                            location.reload();
+                        }, 3000);
                     } else {
-                        alert(res.message || "商品类别设置保存失败, 请稍后重试");
+                        $("#tips_error_modal").modal({show: true, backdrop: false})
+                            .find(".text-content").text(res.message || "商品类别设置保存失败, 请稍后重试");
+                        console.log(res.message || "商品类别设置保存失败, 请稍后重试");
                     }
                 });
             });
@@ -49,7 +56,9 @@
                         $("#good_type_name").val(data.goodTypeName);
                         $("#good_type_remark").val(data.goodTypeDescribe);
                     } else {
-                        alert(res.message || "商品类别信息查询失败, 请稍后重试");
+                        $("#tips_error_modal").modal({show: true, backdrop: false})
+                            .find(".text-content").text(res.message || "商品类别信息查询失败, 请稍后重试");
+                        console.log(res.message || "商品类别信息查询失败, 请稍后重试");
                     }
                 });
             });

@@ -57,10 +57,10 @@
                                     <p class="text-primary good-price" data-text="${good.goodPrice}"
                                        style="margin-bottom: 1px">${good.goodPrice}元</p>
                                     <p style="margin-bottom: 1px; overflow: hidden">
-                                        <a href="javascript:;" class="btn btn-warning pull-left good-cart-buy"
+                                        <!--<a href="javascript:;" class="btn btn-warning pull-left good-cart-buy"
                                            data-id="${good.goodId}" title="直接购买">
                                             <span class="glyphicon glyphicon-usd"></span>
-                                        </a>
+                                        </a>-->
                                         <a href="javascript:;" class="btn btn-primary pull-right good-cart-add"
                                             data-id="${good.goodId}" title="加入购物车">
                                             <span class="glyphicon glyphicon-shopping-cart"></span>
