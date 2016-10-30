@@ -147,7 +147,7 @@ public class DateUtil {
 		Calendar startCal = Calendar.getInstance();
 		startCal.setTime(startDate);
 		int num = 0;
-		while (startCal.getTime().before(endDate)) {
+		while (startCal.getTime().before(endCal.getTime())) {
 			if(weekList.contains(StrUtil.objToStr(getWeek(startCal.getTime())))) num++;
 			startCal.add(Calendar.DATE, 1);
 		}
