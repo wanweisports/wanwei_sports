@@ -31,6 +31,7 @@ public class OrderInfo implements java.io.Serializable {
 	private Double additionalPrice;
 	private String checkNo;
 	private String orderRemark;
+	private Integer orderDiscount;
 	private String createTime;
 	private String updateTime;
 	private Integer salesId;
@@ -46,8 +47,8 @@ public class OrderInfo implements java.io.Serializable {
 			String orderServiceType, String orderStatus, String payStatus,
 			String payType, String payTime, Double orderSumPrice,
 			Double paySumPrice, Double subAmount, Double additionalPrice,
-			String checkNo, String orderRemark, String createTime,
-			String updateTime, Integer salesId) {
+			String checkNo, String orderRemark, Integer orderDiscount,
+			String createTime, String updateTime, Integer salesId) {
 		this.orderNo = orderNo;
 		this.operatorId = operatorId;
 		this.memberId = memberId;
@@ -62,6 +63,7 @@ public class OrderInfo implements java.io.Serializable {
 		this.additionalPrice = additionalPrice;
 		this.checkNo = checkNo;
 		this.orderRemark = orderRemark;
+		this.orderDiscount = orderDiscount;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
 		this.salesId = salesId;
@@ -203,6 +205,15 @@ public class OrderInfo implements java.io.Serializable {
 
 	public void setOrderRemark(String orderRemark) {
 		this.orderRemark = orderRemark;
+	}
+
+	@Column(name = "orderDiscount")
+	public Integer getOrderDiscount() {
+		return this.orderDiscount;
+	}
+
+	public void setOrderDiscount(Integer orderDiscount) {
+		this.orderDiscount = orderDiscount;
 	}
 
 	@Column(name = "createTime", length = 20)

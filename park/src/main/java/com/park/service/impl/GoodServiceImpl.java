@@ -1,6 +1,8 @@
 package com.park.service.impl;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,18 +18,30 @@ import com.park.common.exception.MessageException;
 import com.park.common.po.GoodInfo;
 import com.park.common.po.GoodShopping;
 import com.park.common.po.GoodType;
+import com.park.common.po.OrderDetail;
+import com.park.common.po.OrderInfo;
+import com.park.common.po.UserMember;
 import com.park.common.util.DateUtil;
 import com.park.common.util.FileUtil;
 import com.park.common.util.JsonUtils;
+import com.park.common.util.SQLUtil;
 import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
 import com.park.service.IGoodService;
+import com.park.service.IMemberService;
+import com.park.service.IOrderService;
 
 @Service
 public class GoodServiceImpl extends BaseService implements IGoodService {
 
 	@Autowired
 	private IBaseDao baseDao;
+	
+	@Autowired
+	private IMemberService memberService;
+	
+	@Autowired
+	private IOrderService orderService;
 	
 	@Override
 	public Integer saveGood(GoodInfo goodInfo, MultipartHttpServletRequest multipartRequest) throws IOException {
@@ -224,6 +238,74 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 	@Override
 	public GoodType getGoodType(int goodTypeId){
 		return baseDao.getToEvict(GoodType.class, goodTypeId);
+	}
+	
+	@Override
+	public Map<String, Object> calculateShoppingMoney(GoodInputView goodInputView){
+		List<GoodShopping> shoppingList = getShoppings(goodInputView.getShoppingIds(), goodInputView.getSalesId());
+
+		double memberDiscount = memberService.getMemberDiscount(goodInputView.getMemberId(), goodInputView.getOpType());
+		
+		Double originalPriceSum = 0.0; //原价
+		for(GoodShopping goodShopping : shoppingList){
+			GoodInfo goodInfo = getGoodInfo(goodShopping.getGoodId());
+			originalPriceSum += (goodInfo.getGoodPrice() * goodShopping.getShoppingGoodAmount());
+		}
+		
+		Double presentPriceSum = originalPriceSum * (memberDiscount/100); //打折后的价格
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("originalPrice", originalPriceSum);
+		resultMap.put("presentPrice", presentPriceSum);
+		resultMap.put("memberDiscount", memberDiscount);
+		return resultMap;
+	}
+
+	private List<GoodShopping> getShoppings(String shoppingIds, int salesId) {
+		Map<String, Object> paramMap = SQLUtil.getInToSQL("shoppingIds", shoppingIds);
+		paramMap.put("salesId", salesId);
+		List<GoodShopping> shoppingList = baseDao.queryByHql("FROM GoodShopping WHERE shoppingId IN(:shoppingIds) AND salesId = :salesId", paramMap);
+		return shoppingList;
+	}
+	
+	@Override
+	public Integer saveOrder(GoodInputView goodInputView){
+		List<GoodShopping> shoppingList = getShoppings(goodInputView.getShoppingIds(), goodInputView.getSalesId());
+		OrderInfo orderInfo = goodInputView.getOrderInfo();
+		orderInfo.setOrderServiceType(IDBConstant.ORDER_SERVICE_TYPE_GOODS);
+		orderInfo.setPayStatus(IDBConstant.LOGIC_STATUS_NO); //未支付
+		orderInfo.setSalesId(goodInputView.getSalesId());
+		UserMember member = null;
+		if(IDBConstant.LOGIC_STATUS_YES.equals(goodInputView.getOpType())){
+			member = memberService.getUserMember(goodInputView.getMemberId());
+			orderInfo.setMemberId(member.getMemberId());
+		}else{
+			orderInfo.setMemberId(0); //散客
+		}
+		Map<String, Object> priceMap = calculateShoppingMoney(goodInputView); //计算价格
+		orderInfo.setOrderSumPrice(StrUtil.objToDouble(priceMap.get("originalPrice")));
+		orderInfo.setOrderDiscount(StrUtil.objToInt(priceMap.get("memberDiscount"))); //折扣
+		
+		List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
+		
+		OrderDetail orderDetail = new OrderDetail();
+		for(GoodShopping goodShopping : shoppingList){
+			GoodInfo goodInfo = getGoodInfo(goodShopping.getGoodId());
+			orderDetail.setItemId(goodInfo.getGoodId());
+			orderDetail.setItemPrice(goodInfo.getGoodPrice());
+			orderDetail.setItemMoneyType(goodInfo.getGoodMoneyType());
+			orderDetail.setItemName(goodInfo.getGoodName());
+			orderDetails.add(orderDetail);
+		}
+		
+		Integer orderId = orderService.saveOrderInfo(orderInfo, orderDetails);
+		
+		return orderId;
+	}
+	
+	@Override
+	public void updateConfirmOrder(OrderInfo orderInfo){
+		if(orderInfo.getOrderId() == null) throw new MessageException("订单id为空");
+		Integer orderId = orderService.updateConfirmOrder(orderInfo);
 	}
 	
 }

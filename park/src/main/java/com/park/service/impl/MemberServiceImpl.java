@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -549,6 +548,19 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("search", search+"%");
 		return baseDao.queryBySql(sql.toString(), paramMap);
+	}
+	
+	@Override
+	public double getMemberDiscount(Integer memberId, String opType){
+		if(IDBConstant.LOGIC_STATUS_YES.equals(opType) && memberId != null){ //会员打折
+			//获取会员的会员卡，（如果后期有多张会员卡，则需要在前端用户选择哪张卡，把会员卡id传到后台查询折扣）
+			List<MemberCard> memberCards = getMemberCards(memberId);
+			if(memberCards.size() > 0){ //memberCards.size()==0：没有会员卡按不打折计算   throw new MessageException("该用户没有绑定会员卡");
+				MemberCardType memberCardType = getMemberCardType(memberCards.get(0).getCardTypeId());
+				return memberCardType.getCardTypeDiscount();
+			}
+		}
+		return 100;
 	}
 	
 	@Override

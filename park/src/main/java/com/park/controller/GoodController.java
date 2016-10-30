@@ -17,6 +17,7 @@ import com.park.common.exception.MessageException;
 import com.park.common.po.GoodInfo;
 import com.park.common.po.GoodShopping;
 import com.park.common.po.GoodType;
+import com.park.common.po.OrderInfo;
 import com.park.common.po.UserOperator;
 import com.park.common.util.JsonUtils;
 import com.park.service.IGoodService;
@@ -304,4 +305,53 @@ public class GoodController extends BaseController {
     public String getGoodsStockDetails() {
         return "Goods/GoodStockDetails";
     }
+    
+    @ResponseBody
+    @RequestMapping("calculateShoppingMoney")
+    public ResponseBean calculateShoppingMoney(GoodInputView goodInputView){
+    	try {
+            goodInputView.setSalesId(super.getUserInfo().getId());
+            return new ResponseBean(goodService.calculateShoppingMoney(goodInputView));
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+    
+    @ResponseBody
+    @RequestMapping("saveOrder")
+    public ResponseBean saveOrder(GoodInputView goodInputView, OrderInfo orderInfo){
+    	try {
+    		goodInputView.setSalesId(super.getUserInfo().getId());
+            Map<String, Object> data = new HashMap<String, Object>();
+            goodInputView.setOrderInfo(orderInfo);
+            data.put("orderId", goodService.saveOrder(goodInputView));
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+    
+    @ResponseBody
+    @RequestMapping("confirmOrder")
+    public ResponseBean confirmOrder(OrderInfo orderInfo){
+    	try {
+            goodService.updateConfirmOrder(orderInfo);
+            return new ResponseBean(true);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+    
 }

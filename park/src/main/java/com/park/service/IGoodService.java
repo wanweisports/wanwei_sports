@@ -11,6 +11,7 @@ import com.park.common.bean.PageBean;
 import com.park.common.po.GoodInfo;
 import com.park.common.po.GoodShopping;
 import com.park.common.po.GoodType;
+import com.park.common.po.OrderInfo;
 
 public interface IGoodService {
 	
@@ -43,5 +44,11 @@ public interface IGoodService {
 	public Integer saveGoodType(GoodType goodType);
 	
 	public GoodType getGoodType(int goodTypeId);
+	
+	public Map<String, Object> calculateShoppingMoney(GoodInputView goodInputView);
+	
+	public Integer saveOrder(GoodInputView goodInputView);
+	
+	public void updateConfirmOrder(OrderInfo orderInfo);
 	
 }

@@ -48,7 +48,7 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 		OrderInfo orderInfoDB = getOrderInfo(orderInfo.getOrderId());
 		if(orderInfoDB == null) throw new MessageException("订单不存在");
 		if(IDBConstant.LOGIC_STATUS_YES.equals(orderInfoDB.getPayStatus())) throw new MessageException("该订单已支付过了，请不要重复支付");
-		Double orderSumPrice = orderInfo.getOrderSumPrice();
+		Double orderSumPrice = orderInfoDB.getOrderSumPrice();
 		orderInfoDB.setPaySumPrice((orderInfoDB.getPaySumPrice()!=null?orderInfoDB.getPaySumPrice():0) + orderInfo.getPaySumPrice()); //加上之前已经支付过多少钱
 		if(orderInfoDB.getPaySumPrice() >= orderSumPrice){
 			orderInfoDB.setPayStatus(IDBConstant.LOGIC_STATUS_YES); //已支付
@@ -59,7 +59,7 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 		orderInfoDB.setAdditionalPrice(orderInfo.getAdditionalPrice());
 		orderInfoDB.setCheckNo(orderInfo.getCheckNo());
 		orderInfoDB.setOrderRemark(orderInfo.getOrderRemark());
-		orderInfoDB.setOrderSumPrice(orderSumPrice);
+		//orderInfoDB.setOrderSumPrice(orderSumPrice);
 		
 		orderInfoDB.setSubAmount(orderInfo.getSubAmount());
 		orderInfoDB.setPayType(orderInfo.getPayType());

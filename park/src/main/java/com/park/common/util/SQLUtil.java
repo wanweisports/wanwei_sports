@@ -12,10 +12,15 @@ public class SQLUtil {
     public static Map getInToSQL(String inKey, Object ...paramObj){
         Map param = new HashMap();
         if(paramObj != null && paramObj.length > 0) {
-            List<String> list = new ArrayList();
+            List<Object> list = new ArrayList();
             for(int i = 0; i < paramObj.length; i++){
-                if(paramObj[i] != null) {
-                    list.add(StrUtil.trim(String.valueOf(paramObj[i])));
+            	Object paramValue = paramObj[i];
+                if(paramValue != null) {
+                	if(paramValue.toString().matches("\\d*")){
+                		list.add(Integer.valueOf(paramValue.toString()));
+                	}else if(paramValue instanceof Integer){
+                		list.add(StrUtil.trim(paramValue.toString()));
+                	}
                 }
             }
             param.put(inKey, list.toArray());

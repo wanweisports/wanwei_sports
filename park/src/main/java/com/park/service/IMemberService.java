@@ -73,6 +73,8 @@ public interface IMemberService {
 	
 	public List<Map<String, Object>> getMemberNames(MemberInputView memberInputView);
 	
+	public double getMemberDiscount(Integer memberId, String opType);
+	
 	public String getCardNo();
 	
 	public List<Map<String, Object>> searchMember(String search);

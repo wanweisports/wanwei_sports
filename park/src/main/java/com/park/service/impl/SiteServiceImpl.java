@@ -17,8 +17,6 @@ import com.park.common.bean.out.Site;
 import com.park.common.bean.out.SiteReserveOutputView;
 import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
-import com.park.common.po.MemberCard;
-import com.park.common.po.MemberCardType;
 import com.park.common.po.OrderInfo;
 import com.park.common.po.ParkBusiness;
 import com.park.common.po.SiteInfo;
@@ -304,56 +302,12 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 					 throw new MessageException(siteReserveTime.getSiteStartTime()+"-"+siteReserveTime.getSiteEndTime()+"不在该场地时间范围内");
 				}
 				//判断时间是否重复
-				Map<String, Object> reserveRepeatMap = this.getReserveIntersection(siteReserveTime.getSiteId(), siteReserveDate.getReserveStartDate(), siteReserveDate.getReserveEndDate(), siteReserveDate.getReserveWeek(), siteReserveTime.getSiteStartTime(), siteReserveTime.getSiteEndTime());
+				Map<String, Object> reserveRepeatMap = this.getReserveIntersection(siteReserveTime.getSiteId(), DateUtil.getAddDay(siteReserveDate.getReserveStartDate(), -1), siteReserveDate.getReserveEndDate(), siteReserveDate.getReserveWeek(), siteReserveTime.getSiteStartTime(), siteReserveTime.getSiteEndTime());
 				if(reserveRepeatMap != null) throw new MessageException("【"+siteReserveDate.getReserveStartDate()+"至"+siteReserveDate.getReserveEndDate()+"日期，"+siteReserveTime.getSiteStartTime()+"-"+siteReserveTime.getSiteEndTime()+"，星期："+siteReserveDate.getReserveWeek()+"】与其他顾客预定时间有冲突，请重新选择");
 				
 				siteReserveTime.setReserveDateId(siteReserveDate.getReserveDateId());
 				baseDao.save(siteReserveTime, null);
 			}
-			
-			/*Integer siteId = siteOpInfo.getSiteId();
-			
-			String startTime = siteOpInfo.getStartTime();
-			String endTime = siteOpInfo.getEndTime();
-			String siteDate = siteOpInfo.getSiteDate();
-			
-			Map<String, Object> siteSport = getSiteSportName(siteId);
-			
-			//场馆类型开场时间
-			String sportStartTimeStr = StrUtil.objToStr(siteSport.get("startTime"));
-			String sportEndTimeStr = StrUtil.objToStr(siteSport.get("endTime"));
-			Date sportStartTime = DateUtil.getHHMM(sportStartTimeStr);
-			Date sportEndTime = DateUtil.getHHMM(sportEndTimeStr);
-			
-			//不在场馆类型时间内
-			if(!(sportStartTime.getTime() <= DateUtil.getHHMM(startTime).getTime() && sportEndTime.getTime() >= DateUtil.getHHMM(endTime).getTime())) throw new MessageException("场馆["+siteSport.get("siteName")+"]开场时间为："+sportStartTimeStr+"-"+sportEndTimeStr+"，请选择正确的时间");
-			String siteName = StrUtil.objToStr(siteSport.get("siteName"));
-			
-			SiteReserve reserveIntersection = getReserveIntersection(startTime, endTime, siteDate);
-			//！if(reserveIntersection != null) throw new MessageException("["+siteName+"]"+reserveIntersection.getSiteStartTime()+"-"+reserveIntersection.getSiteEndTime()+"时间段已有顾客预定");
-			
-			SiteReserve siteReserve = new SiteReserve();
-			siteReserve.setSiteReserveStatus(orderInfo.getPayStatus());
-			siteReserve.setMemberId(orderInfo.getMemberId());
-			siteReserve.setReserveStartDate(siteDate);
-			siteReserve.setReserveEndDate(reserveEndDate)
-			siteReserve.setSiteId(siteId);
-			siteReserve.setSalesId(salesId);
-			siteReserve.setSiteStartTime(startTime);
-			siteReserve.setSiteEndTime(endTime);
-			siteReserve.setReserveType(reserveType);
-			siteReserve.setCreateTime(nowDate);
-			if(member != null){
-				siteReserve.setName(member.getMemberName());
-				siteReserve.setMobile(member.getMemberMobile());
-				siteReserve.setMemberId(memberId);
-			}else{
-				siteReserve.setMobile(mobile);
-				siteReserve.setName(name);
-			}
-			siteReserve.setOpType(opType);
-			siteReserves.add(siteReserve);
-			*/
 		}
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("orderId", orderId);
@@ -380,17 +334,9 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		
 		return resultMap;
 	}
-
+	
 	private Map<String, Object> getPrice(List<SiteReserveDate> siteReserveDateList, Integer memberId, String opType) throws ParseException {
-		double discount = 100;
-		if(IDBConstant.LOGIC_STATUS_YES.equals(opType) && memberId != null){ //会员打折
-			//获取会员的会员卡，（如果后期有多张会员卡，则需要在前端用户选择哪张卡，把会员卡id传到后台查询折扣）
-			List<MemberCard> memberCards = memberService.getMemberCards(memberId);
-			if(memberCards.size() > 0){ //memberCards.size()==0：没有会员卡按不打折计算   throw new MessageException("该用户没有绑定会员卡");
-				MemberCardType memberCardType = memberService.getMemberCardType(memberCards.get(0).getCardTypeId());
-				discount = memberCardType.getCardTypeDiscount();
-			}
-		}
+		double memberDiscount = memberService.getMemberDiscount(memberId, opType); //会员折扣
 		
 		Double originalPriceSum = 0.0; //原价
 		for(SiteReserveDate siteReserveDate : siteReserveDateList){
@@ -404,7 +350,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 			}
 			originalPriceSum += originalPrice * weekNums; //每一段时间多少钱（总场地钱数*星期个数）
 		}
-		Double presentPriceSum = originalPriceSum * (discount/100); //打折后的价格
+		Double presentPriceSum = originalPriceSum * (memberDiscount/100); //打折后的价格
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("originalPrice", originalPriceSum);
@@ -417,9 +363,9 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		if(orderInfo.getOrderId() == null) throw new MessageException("订单id为空");
 		//找到打折价，进行计算覆盖订单应付总价和打折价字段
 		SiteReserveBasic siteReserveBasic = this.getSiteReserveBasicAllByOrderId(orderInfo.getOrderId());
-		//计算打折价格
-		Map<String, Object> priceMap = getPrice(siteReserveBasic.getSiteReserveDateList(), siteReserveBasic.getMemberId(), IDBConstant.LOGIC_STATUS_YES);
-		orderInfo.setOrderSumPrice(StrUtil.objToDouble(priceMap.get("presentPrice")));
+		//计算打折价格【点击去支付，已经生成了订单总价】
+		/*Map<String, Object> priceMap = getPrice(siteReserveBasic.getSiteReserveDateList(), siteReserveBasic.getMemberId(), IDBConstant.LOGIC_STATUS_YES);
+		orderInfo.setOrderSumPrice(StrUtil.objToDouble(priceMap.get("presentPrice")));*/
 		
 		Integer orderId = orderService.updateConfirmOrder(orderInfo);
 		 //同步更新到序列图表的状态
