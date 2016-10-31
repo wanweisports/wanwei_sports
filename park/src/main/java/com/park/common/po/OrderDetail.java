@@ -26,6 +26,7 @@ public class OrderDetail implements java.io.Serializable {
 	private String itemRemark;
 	private String itemMoneyType;
 	private Integer itemDiscount;
+	private String orderDetailStatus;
 
 	// Constructors
 
@@ -36,7 +37,8 @@ public class OrderDetail implements java.io.Serializable {
 	/** full constructor */
 	public OrderDetail(Integer orderId, Integer itemId, String itemName,
 			Double itemPrice, String itemStartTime, String itemEndTime,
-			String itemRemark, String itemMoneyType, Integer itemDiscount) {
+			String itemRemark, String itemMoneyType, Integer itemDiscount,
+			String orderDetailStatus) {
 		this.orderId = orderId;
 		this.itemId = itemId;
 		this.itemName = itemName;
@@ -46,6 +48,7 @@ public class OrderDetail implements java.io.Serializable {
 		this.itemRemark = itemRemark;
 		this.itemMoneyType = itemMoneyType;
 		this.itemDiscount = itemDiscount;
+		this.orderDetailStatus = orderDetailStatus;
 	}
 
 	// Property accessors
@@ -139,6 +142,15 @@ public class OrderDetail implements java.io.Serializable {
 
 	public void setItemDiscount(Integer itemDiscount) {
 		this.itemDiscount = itemDiscount;
+	}
+
+	@Column(name = "orderDetailStatus", length = 1)
+	public String getOrderDetailStatus() {
+		return this.orderDetailStatus;
+	}
+
+	public void setOrderDetailStatus(String orderDetailStatus) {
+		this.orderDetailStatus = orderDetailStatus;
 	}
 
 }

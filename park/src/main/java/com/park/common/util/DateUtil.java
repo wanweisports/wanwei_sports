@@ -11,6 +11,8 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
+import com.park.common.constant.IDBConstant;
+
 public class DateUtil {
 	public static final String YYYYMMDD_S = "yyyyMMdd";
 	public static final String YYYYMMDD_HMS = "yyyyMMddHHmmss";
@@ -167,6 +169,19 @@ public class DateUtil {
 		int week = c.get(Calendar.DAY_OF_WEEK);
 		if(week == 1) return 7; //周日
 		return week-1; //其他星期-1
+	}
+	
+	/**
+	 * 当前时间在时间范围
+	 */
+	public static String withinTheTime(String startTimeStr, String endTimeStr) throws Exception{
+		Date startTime = stringToDate(startTimeStr, YYYYMMDDHHMM);
+		Date endTime = stringToDate(endTimeStr, YYYYMMDDHHMM);
+		Date nowTime = stringToDate(dateToString(new Date(), YYYYMMDDHHMM), YYYYMMDDHHMM);
+		if(nowTime.before(startTime)) return IDBConstant.LOGIC_STATUS_NO; //未完成
+		if(nowTime.after(startTime) && nowTime.before(endTime)) return IDBConstant.LOGIC_STATUS_OTHER; //进行中
+		if(nowTime.after(endTime)) return IDBConstant.LOGIC_STATUS_YES; //已完成
+		return "";
 	}
 	
 	/*

@@ -15,8 +15,8 @@ public interface IOrderService {
 	
 	public OrderInfo getOrderInfo(Integer orderId);
 	
-	public PageBean getOrderList(OrderInputView orderInputView);
+	public PageBean getOrderList(OrderInputView orderInputView) throws Exception;
 	
-	public List<OrderDetail> getOrderDetails(int orderId);
+	public List<OrderDetail> getOrderDetails(int orderId) throws Exception;
 	
 }

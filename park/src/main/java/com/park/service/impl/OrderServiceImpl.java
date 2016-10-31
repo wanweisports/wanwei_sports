@@ -80,7 +80,7 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 	}
 	
 	@Override
-	public PageBean getOrderList(OrderInputView orderInputView){
+	public PageBean getOrderList(OrderInputView orderInputView) throws Exception{
 		
 		String operatorId = orderInputView.getOperatorId();
 		
@@ -94,14 +94,40 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 		PageBean pageBean = super.getPageBean(headSql, bodySql, whereSql, orderInputView);
 		List<Map<String, Object>> list = pageBean.getList();
 		for(Map<String, Object> map : list){
-			map.put("orderDetailList", getOrderDetails(StrUtil.objToInt(map.get("orderId"))));
+			List<OrderDetail> orderDetailList = getOrderDetails(StrUtil.objToInt(map.get("orderId")));
+			map.put("orderDetailList", orderDetailList);
+			if(isAllComplete(orderDetailList)){ //子订单全部完成
+				map.put("orderStatus", IDBConstant.LOGIC_STATUS_YES);
+			}
 		}
 		return pageBean;
 	}
 	
 	@Override
-	public List<OrderDetail> getOrderDetails(int orderId){
-		return baseDao.queryByHql("FROM OrderDetail WHERE orderId = ?", orderId);
+	public List<OrderDetail> getOrderDetails(int orderId) throws Exception{
+		List<OrderDetail> orderDetailList = baseDao.queryByHql("FROM OrderDetail WHERE orderId = ?", orderId);
+		return calculateTime(orderDetailList);
+	}
+	
+	private List<OrderDetail> calculateTime(List<OrderDetail> orderDetailList) throws Exception{
+		if(orderDetailList.size() > 0){
+			for(OrderDetail orderDetail : orderDetailList){
+				if(IDBConstant.LOGIC_STATUS_NO.equals(orderDetail.getOrderDetailStatus())){
+					orderDetail.setOrderDetailStatus(DateUtil.withinTheTime(orderDetail.getItemStartTime(), orderDetail.getItemEndTime()));
+				}
+			}
+		}
+		return orderDetailList;
+	}
+	
+	private boolean isAllComplete(List<OrderDetail> orderDetailList){
+		int count = 0;
+		for(OrderDetail orderDetail : orderDetailList){
+			if(IDBConstant.LOGIC_STATUS_YES.equals(orderDetail.getOrderDetailStatus())){
+				count++;
+			}
+		}
+		return count == orderDetailList.size();
 	}
 	
 	private String getOrderNo(){
