@@ -18,21 +18,21 @@
                     "itemPrice": 10,         //子订单价格
                     "itemStartTime": "2016-11-01 08:00", //开始时间
                     "itemEndTime": "2016-11-01 09:00",    //结束时间
-		    "orderDetailStatus": "2" //【新】子订单状态（1：已完成  2：未完成  3：进行中）
+		    "orderDetailStatus": "1" //【新】子订单状态（1：已完成  2：未完成  3：进行中）
                 },
                 {
                     "itemName": "【羽毛球】场地预定",
                     "itemPrice": 20,
-                    "itemStartTime": "2016-11-02 08:00",
-                    "itemEndTime": "2016-11-02 09:00",
+                    "itemStartTime": "2016-11-02 11:00",
+                    "itemEndTime": "2016-11-02 12:00",
                     "orderDetailStatus": "3"
                 },
                 {
                     "itemName": "【篮球】场地预定",
                     "itemPrice": 50,
-                    "itemStartTime": "2016-11-02 09:00",
-                    "itemEndTime": "2016-11-02 10:00",
-                    "orderDetailStatus": "1"
+                    "itemStartTime": "2016-11-02 16:00",
+                    "itemEndTime": "2016-11-02 17:00",
+                    "orderDetailStatus": "2"
                 }
             ]
         }
