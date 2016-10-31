@@ -119,7 +119,7 @@
                         </tr>
                         <tr class="list-nav-item site ${param.subNav == "order" ? "active" : ""}">
                             <td>
-                                <span><a href="/site/getSiteReservationOrders">预订订单</a></span>
+                                <span><a href="/order/getOrderList">预订订单</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item site ${param.subNav == "pda" ? "active" : ""}">

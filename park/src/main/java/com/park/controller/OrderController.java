@@ -34,7 +34,7 @@ public class OrderController extends BaseController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "";
+        return "Reservation/ReservationsOrders";
     } 
 	
 }

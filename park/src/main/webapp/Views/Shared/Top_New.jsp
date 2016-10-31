@@ -54,7 +54,7 @@
                     <div class="short-enter">快捷入口:</div>
                     <ul>
                         <li><a href="/member/regMember"><span>新会员办理</span></a></li>
-                        <li><a href="/member/getMembersCardRecharge"><span>新会员办理</span></a></li>
+                        <li><a href="/member/getMembersCardRecharge"><span>会员卡充值</span></a></li>
                         <li><a href="/site/getSiteReservationInfo"><span>场地预订</span></a></li>
                         <li><a href="/site/getSiteReservationBatch"><span>批量预订</span></a></li>
                         <li><a href="/good/getGoodsMarket"><span>商品销售</span></a></li>
