@@ -49,7 +49,7 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $("#tips_modal").modal({show: true, backdrop: false});
+                        location.assign('/settings/getUsers');
                     } else {
                         alert(res.message || "设置用户失败, 请稍后重试");
                     }

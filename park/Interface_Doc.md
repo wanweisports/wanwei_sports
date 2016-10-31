@@ -332,28 +332,12 @@
 ## 系统设置
 主要是一些系统的参数的设置，以及操作用户的设置等。
 
-### 1.  场馆信息显示
+### 1.  场馆信息设置
 目的是设置当前场馆的基础信息。
-> 请求地址：
+> 页面路由：
 >
     settings/common.do
-> 
-> 请求类型：GET（JSP页面）
-> 
-> 返回数据：
-> 
-    businessId           场馆ID
-    businessStartTime    营业开始时间
-    businessEndTime      营业结束时间
-    businessName         场馆名称
-    businessAreaName     场馆所在省市
-    businessContact      场馆联系人
-    businessPhone        场馆联系电话
-    businessAddress      场馆详细地址
 >
-
-### 2.  场馆信息设置
-目的是设置当前场馆的基础信息。
 > 请求地址：
 >
     settings/saveCommon.do
@@ -370,4 +354,50 @@
     businessContact      场馆联系人
     businessPhone        场馆联系电话
     businessAddress      场馆详细地址
+>
+
+### 2.  员工的激活和锁定
+目的是场馆员工的激活或者锁定。
+> 页面路由：
+>
+    settings/getUsers.do
+>
+> 请求地址：
+>
+    settings/lockEmployee.do
+> 
+> 请求类型：POST（application/json）
+> 
+> 请求参数：
+> 
+    operatorId    员工账号
+    lock          锁定true或者激活false
+>
+
+### 3.  设置员工信息
+目的是更新或者增加员工信息。
+> 页面路由：
+>
+    settings/getUsersView.do
+>
+> 请求地址：
+>
+    settings/lockEmployee.do
+> 
+> 请求类型：POST（application/json）
+> 
+> 请求参数：
+> 
+    id                    员工ID
+    operatorId            员工账号
+    operatorName          员工真实姓名
+    operatorMobile        员工手机号码
+    operatorNo            员工编号
+    operatorEffectDate    生效时间
+    operatorEndDate       截止时间
+    operatorBirthday      员工生日
+    operatorContact       联系人
+    operatorAddress       通讯地址
+    operatorSex           性别
+    roleId                员工权限
 >

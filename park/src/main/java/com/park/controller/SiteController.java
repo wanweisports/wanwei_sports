@@ -203,6 +203,12 @@ public class SiteController extends BaseController {
 		return "Reservation/ReservationsBatch";
 	}
 
+    // 获取预订订单
+    @RequestMapping("getSiteReservationOrders")
+    public String getSiteReservationOrders(Model model){
+        return "Reservation/ReservationsOrders";
+    }
+
     // 热点
     @RequestMapping("getReservationsSequencePDA")
     public String getReservationsSequencePDA(Model model){

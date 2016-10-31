@@ -35,6 +35,42 @@
                     location.assign(content.opts.URL + '?page=' + pageIndex);
                 }
             });
+
+            // 激活用户
+            $(".user-active").on("click", function (e) {
+                e.preventDefault();
+
+                var operatorId = $(this).attr("data-id");
+
+                $.post('settings/lockEmployee', {
+                    operatorId: operatorId,
+                    lock: false
+                }, function (res) {
+                    if (res.code == 1) {
+                        location.reload();
+                    } else {
+                        alert(res.message || '激活员工用户失败, 请稍后重试');
+                    }
+                });
+            });
+
+            // 锁定用户
+            $(".user-lock").on("click", function (e) {
+                e.preventDefault();
+
+                var operatorId = $(this).attr("data-id");
+
+                $.post('settings/lockEmployee', {
+                    operatorId: operatorId,
+                    lock: true
+                }, function (res) {
+                    if (res.code == 1) {
+                        location.reload();
+                    } else {
+                        alert(res.message || '锁定员工用户失败, 请稍后重试');
+                    }
+                });
+            });
         }
     };
 

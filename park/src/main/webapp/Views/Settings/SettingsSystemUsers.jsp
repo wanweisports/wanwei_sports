@@ -20,14 +20,15 @@
             <div class="panel-body">
                 <form id="users_filter_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
-                        <select class="form-control" id="user_role" name="userRole" style="width:160px;">
+                        <select class="form-control" id="user_role" name="roleId" style="width:160px;">
                             <option value="">员工权限</option>
-                            <option value="1">经理</option>
-                            <option value="1">收银</option>
+                            <c:forEach var="role" items="${roleNames}">
+                                <option value="${role.roleId}">${role.roleName}</option>
+                            </c:forEach>
                         </select>
                     </div>
                     <div class="form-group">
-                        <select class="form-control" id="user_state" name="userState" style="width:160px;">
+                        <select class="form-control" id="user_state" name="status" style="width:160px;">
                             <option value="">员工状态</option>
                             <option value="1">正常</option>
                             <option value="2">锁定</option>
@@ -39,10 +40,10 @@
                         </a>
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary">
+                        <a href="javascript:;" class="btn btn-primary user-active">
                             <span class="glyphicon glyphicon-flash"></span> 激活员工
                         </a>
-                        <a href="javascript:;" class="btn btn-warning">
+                        <a href="javascript:;" class="btn btn-warning user-lock">
                             <span class="glyphicon glyphicon-lock"></span> 锁定员工
                         </a>
                     </div>
@@ -59,7 +60,8 @@
                 <div class="table-responsive card-type-list">
                     <table class="table">
                         <thead>
-                        <tr class="">
+                        <tr>
+                            <th>选择</th>
                             <th>员工编号</th>
                             <th>登录账号</th>
                             <th>员工姓名</th>
@@ -67,69 +69,40 @@
                             <th>生效日期</th>
                             <th>截止日期</th>
                             <th>状态</th>
-                            <th></th>
+                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>00000</td>
-                            <td>xiaoan.li@wanwei.com</td>
-                            <td>李小安</td>
-                            <td>收银</td>
-                            <td>2016-01-01</td>
-                            <td>--</td>
-                            <td class="text-success">正常</td>
-                            <td>
-                                <a class="btn btn-primary" href="/settings/getUsersView?userId=1">
-                                    <span class="glyphicon glyphicon-share-alt"></span>  查看
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>00012</td>
-                            <td>xiaoan.li@wanwei.com</td>
-                            <td>李晓丹</td>
-                            <td>收银</td>
-                            <td>2016-01-01</td>
-                            <td>--</td>
-                            <td class="text-success">正常</td>
-                            <td>
-                                <a class="btn btn-primary" href="/settings/getUsersView?userId=2">
-                                    <span class="glyphicon glyphicon-share-alt"></span>  查看
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>00032</td>
-                            <td>xiaoan.li@wanwei.com</td>
-                            <td>李晓丹</td>
-                            <td>收银</td>
-                            <td>2016-01-01</td>
-                            <td>2016-10-13</td>
-                            <td class="text-danger">锁定</td>
-                            <td>
-                                <a class="btn btn-primary" href="/settings/getUsersView?userId=3">
-                                    <span class="glyphicon glyphicon-share-alt"></span>  查看
-                                </a>
-                            </td>
-                        </tr>
-                        <c:forEach var="user" items="${users}">
+                        <c:forEach var="user" items="${list}">
                             <tr>
-                                <td><label><input type="checkbox" name="user_status" value="${loop.index}"></label></td>
-                                <td>${loop.index}</td>
-                                <td><a href="/settings/systemUsers/${user.user_id}">${user.user_name}</a></td>
-                                <td>${user.user_account}</td>
-                                <td>${user.user_department}</td>
-                                <td>${user.user_role}</td>
-                                <td>2016-01-01</td>
-                                <td>2016-12-31</td>
-                                <td>2016-08-21 12:23:25</td>
-                                {% if user.user_status == 1 %}
-                                <td class="text-success">正常</td>
-                                {% else %}
-                                <td class="text-danger">锁定</td>
-                                {% endif %}
-                                <td>2016-08-21 12:23:25</td>
+                                <td><label><input type="checkbox" name="user_status" value="${user.operatorNo}"></label></td>
+                                <td>${user.operatorNo}</td>
+                                <td>${user.operatorId}</td>
+                                <td>${user.operatorName}</td>
+                                <td>${user.roleName}</td>
+                                <td>${user.operatorEffectDate}</td>
+                                <td>${user.operatorEndDate}</td>
+                                <c:if test="${user.status == 1}">
+                                    <td class="text-success">正常</td>
+                                </c:if>
+                                <c:if test="${user.status != 1}">
+                                    <td class="text-danger">锁定</td>
+                                </c:if>
+                                <td>
+                                    <a class="btn btn-primary" href="/settings/getUsersView?operatorId=${user.operatorId}">
+                                        <span class="glyphicon glyphicon-share-alt"></span>  查看
+                                    </a>
+                                    <c:if test="${user.status == 1}">
+                                        <a href="javascript:;" class="btn btn-warning user-lock" data-id="${user.operatorId}">
+                                            <span class="glyphicon glyphicon-lock"></span> 锁定
+                                        </a>
+                                    </c:if>
+                                    <c:if test="${user.status != 1}">
+                                        <a href="javascript:;" class="btn btn-primary user-active" data-id="${user.operatorId}">
+                                            <span class="glyphicon glyphicon-flash"></span> 激活
+                                        </a>
+                                    </c:if>
+                                </td>
                             </tr>
                         </c:forEach>
                         </tbody>

@@ -21,6 +21,8 @@
             $('#users_form').validate({
                 ignore: ":hidden"
             });
+
+            $("#user_role").val('${roleId}');
         });
     </script>
 </layout:override>
@@ -32,6 +34,7 @@
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <form id="users_form" class="form-horizontal" novalidate onsubmit="return false;">
+            <input type="hidden" name="id" value="${id}">
             <div class="panel panel-default">
                 <div class="panel-heading">员工信息设置</div>
                 <div class="panel-body">
@@ -42,10 +45,10 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="user_no" name="user_no"
-                                       placeholder="员工编号" autocomplete="off"
-                                       data-val="true" data-val-required="员工编号不能为空" readonly>
-                                <div data-valmsg-for="user_no" data-valmsg-replace="true"></div>
+                                <input type="text" class="form-control" id="user_no" name="operatorNo"
+                                       placeholder="员工编号" autocomplete="off" value="${operatorNo}"
+                                       data-val="true" data-val-required="员工编号不能为空">
+                                <div data-valmsg-for="operatorNo" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -54,10 +57,10 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="user_name" name="userName"
-                                       placeholder="用户姓名" autocomplete="off"
+                                <input type="text" class="form-control" id="user_name" name="operatorName"
+                                       placeholder="用户姓名" autocomplete="off" value="${operatorName}"
                                        data-val="true" data-val-required="用户姓名不能为空">
-                                <div data-valmsg-for="userName" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="operatorName" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -66,10 +69,10 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="start_date" name="startDate"
-                                       placeholder="生效时间" autocomplete="off"
+                                <input type="text" class="form-control" id="start_date" name="operatorEffectDate"
+                                       placeholder="生效时间" autocomplete="off" value="${operatorEffectDate}"
                                        data-val="true" data-val-required="生效时间不能为空">
-                                <div data-valmsg-for="startDate" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="operatorEffectDate" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -78,10 +81,10 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="data_birthday" name="data_birthday"
-                                       placeholder="生效时间" autocomplete="off"
+                                <input type="text" class="form-control" id="data_birthday" name="operatorBirthday"
+                                       placeholder="生效时间" autocomplete="off" value="${operatorBirthday}"
                                        data-val="true" data-val-required="生效时间不能为空">
-                                <div data-valmsg-for="data_birthday" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="operatorBirthday" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -90,9 +93,10 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="contact_name" name="contact_name"
-                                       placeholder="联系人" autocomplete="off">
-                                <div data-valmsg-for="contactMame" data-valmsg-replace="true"></div>
+                                <input type="text" class="form-control" id="contact_name" name="operatorContact"
+                                       placeholder="联系人" autocomplete="off" value="${operatorContact}"
+                                       data-val="true" data-val-required="联系人不能为空">
+                                <div data-valmsg-for="operatorContact" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -103,10 +107,10 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="user_account" name="userAccount"
-                                       placeholder="登录账户" autocomplete="off"
+                                <input type="text" class="form-control" id="user_account" name="operatorId"
+                                       placeholder="登录账户" autocomplete="off" value="${operatorId}"
                                        data-val="true" data-val-required="登录账户不能为空">
-                                <div data-valmsg-for="userAccount" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="operatorId" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -115,11 +119,14 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <select class="form-control" id="user_role" name="userRole">
-                                    <option value="1">经理</option>
-                                    <option value="2">前台收银</option>
+                                <select class="form-control" id="user_role" name="roleId"
+                                        data-val="true" data-val-required="请选择员工权限">
+                                    <option value="">请选择</option>
+                                    <c:forEach var="role" items="${roleNames}">
+                                        <option value="${role.roleId}">${role.roleName}</option>
+                                    </c:forEach>
                                 </select>
-                                <div data-valmsg-for="userRole" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="roleId" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -128,10 +135,10 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="end_date" name="endDate"
-                                       placeholder="截止日期" autocomplete="off"
+                                <input type="text" class="form-control" id="end_date" name="operatorEndDate"
+                                       placeholder="截止日期" autocomplete="off" value="${operatorEndDate}"
                                        data-val="true" data-val-required="截止日期不能为空">
-                                <div data-valmsg-for="endDate" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="operatorEndDate" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -140,10 +147,10 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="contact_phone" name="contact_phone"
-                                       placeholder="联系电话" autocomplete="off"
+                                <input type="text" class="form-control" id="contact_phone" name="operatorMobile"
+                                       placeholder="联系电话" autocomplete="off" value="${operatorMobile}"
                                        data-val="true" data-val-required="联系电话不能为空">
-                                <div data-valmsg-for="contact_phone"></div>
+                                <div data-valmsg-for="operatorMobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -152,8 +159,8 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="contact_address" name="contact_address"
-                                       placeholder="联系电话" autocomplete="off">
+                                <input type="text" class="form-control" id="contact_address" name="operatorAddress"
+                                       placeholder="联系电话" autocomplete="off" value="${operatorAddress}">
                             </div>
                         </div>
                     </div>
