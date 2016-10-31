@@ -28,8 +28,6 @@ public class SiteInputView extends BaseInputView {
 	
 	private String reserveType;
 	
-	private Integer salesId;
-	
 	private String payType;
 	
 	private String siteOperationJson;
@@ -98,14 +96,6 @@ public class SiteInputView extends BaseInputView {
 
 	public void setTimes(String times) {
 		this.times = times;
-	}
-
-	public Integer getSalesId() {
-		return salesId;
-	}
-
-	public void setSalesId(Integer salesId) {
-		this.salesId = salesId;
 	}
 
 	public String getName() {

@@ -12,7 +12,6 @@ public class GoodInputView extends BaseInputView {
 	private String name;
 	private String mobile;
 	private String opType;
-	private Integer salesId;
 	private OrderInfo orderInfo;
 	
 	public String getGoodName() {
@@ -62,12 +61,6 @@ public class GoodInputView extends BaseInputView {
 	}
 	public void setOpType(String opType) {
 		this.opType = opType;
-	}
-	public Integer getSalesId() {
-		return salesId;
-	}
-	public void setSalesId(Integer salesId) {
-		this.salesId = salesId;
 	}
 	public OrderInfo getOrderInfo() {
 		return orderInfo;

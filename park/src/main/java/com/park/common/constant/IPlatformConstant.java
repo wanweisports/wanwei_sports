@@ -23,6 +23,10 @@ public interface IPlatformConstant {
     public final String time24 = " 23:59:59";
     
     public final String LOGIN_USER = "loginUser";
+    
+    public final String ADMIN = "admin";
+    
+    public final String ORDER_SITE_NAME = "场地预定";
 	
 	public static final String APP_ID = (String) CustomizedPropertyConfigurer.getContextProperty("app_id"); //appid
 	

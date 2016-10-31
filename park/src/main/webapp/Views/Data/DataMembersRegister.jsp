@@ -25,11 +25,11 @@
             <div class="panel-body">
                 <form id="data_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
-                        <select class="form-control" style="width: 160px;">
-                            <option value="0">今日数据</option>
-                            <option value="1">昨日数据</option>
-                            <option value="2">本周数据</option>
-                            <option value="3">本月数据</option>
+                        <select class="form-control" style="width: 160px;" name="countNum">
+                            <option value="1" <c:if test='${countNum==1}'>selected</c:if>>今日数据</option>
+                            <option value="2" <c:if test='${countNum==2}'>selected</c:if>>昨日数据</option>
+                            <option value="3" <c:if test='${countNum==3}'>selected</c:if>>本周数据</option>
+                            <option value="4" <c:if test='${countNum==4}'>selected</c:if>>本月数据</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -67,7 +67,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="member" items="${data}" varStatus="loop">
+                        <c:forEach var="member" items="${data.list}" varStatus="loop">
                             <tr>
                                 <td>${loop.index + 1}</td>
                                 <td>${member.cardTypeName}</td>
@@ -76,7 +76,7 @@
                                 <td>${member.countMoney}</td>
                             </tr>
                         </c:forEach>
-                        <tr>
+                        <!-- <tr>
                             <td>1</td>
                             <td>金卡会员</td>
                             <td>1000.00</td>
@@ -103,13 +103,13 @@
                             <td>0.00</td>
                             <td>210</td>
                             <td>0.00</td>
-                        </tr>
+                        </tr> -->
                         <tr class="info">
                             <th></th>
                             <th></th>
                             <th>合计</th>
-                            <th>379</th>
-                            <th>15640.00</th>
+                            <th>${data.sumCount}</th>
+                            <th>${data.sumCountMoney}</th>
                         </tr>
                         </tbody>
                     </table>

@@ -16,7 +16,9 @@ import com.park.common.bean.out.ReserveInfo;
 import com.park.common.bean.out.Site;
 import com.park.common.bean.out.SiteReserveOutputView;
 import com.park.common.constant.IDBConstant;
+import com.park.common.constant.IPlatformConstant;
 import com.park.common.exception.MessageException;
+import com.park.common.po.OrderDetail;
 import com.park.common.po.OrderInfo;
 import com.park.common.po.ParkBusiness;
 import com.park.common.po.SiteInfo;
@@ -209,7 +211,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 					reserveInfo.setOpType(StrUtil.objToStr(reserveIntersectionMap.get("opType")));
 					reserveInfo.setReserveType(StrUtil.objToStr(reserveIntersectionMap.get("reserveType")));
 					reserveInfo.setSiteReserveStatus(StrUtil.objToStr(reserveIntersectionMap.get("siteReserveStatus")));
-				}else{  //每个开始-结束数据段在 场地类型时间 之类
+				}else{  //每个开始-结束数据段在 场地类型时间 之内
 					if(siteStartTime.getTime() <= DateUtil.getHHMM(startTime).getTime() && siteEndTime.getTime() >= DateUtil.getHHMM(endTime).getTime()){
 						reserveInfo.setSiteReserveStatus("5");
 					}else{
@@ -246,10 +248,6 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		return baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(siteInputView));
 	}
 	
-	/*private SiteReserve getSiteReserve(String siteDate, String startTime, String endTime, int siteId){
-		return baseDao.queryByHqlFirst("FROM SiteReserve WHERE siteDate=? AND siteStartTime=? AND siteEndTime=? AND siteId = ?", siteDate, startTime, endTime, siteId);
-	}*/
-	
 	//先生成订单，在修改订单
 	@Override
 	public Map<String, Object> saveReservationSite(SiteInputView siteInputView) throws ParseException{
@@ -275,12 +273,14 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		
 		Map<String, Object> priceMap = getPrice(siteReserveDateList, siteReserveBasic.getMemberId(), siteReserveBasic.getOpType());
 		orderInfo.setOrderSumPrice(StrUtil.objToDouble(priceMap.get("originalPrice")));
+		orderInfo.setOrderDiscount(StrUtil.objToInt(priceMap.get("memberDiscount")));
 		
-		Integer orderId = orderService.saveOrderInfo(orderInfo, null);
+		List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
 		
-		siteReserveBasic.setOrderId(orderId);
 		siteReserveBasic.setSiteReserveStatus(orderInfo.getPayStatus());
 		baseDao.save(siteReserveBasic, null);
+		
+		double memberDiscount = StrUtil.objToDouble(priceMap.get("memberDiscount"))/100;
 		
 		for(SiteReserveDate siteReserveDate : siteReserveDateList){
 			
@@ -307,8 +307,21 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 				
 				siteReserveTime.setReserveDateId(siteReserveDate.getReserveDateId());
 				baseDao.save(siteReserveTime, null);
+				
+				OrderDetail orderDetail = new OrderDetail();
+				orderDetail.setItemMoneyType(IDBConstant.LOGIC_STATUS_NO); //计时收费
+				orderDetail.setItemId(siteReserveTime.getReserveTimeId());
+				orderDetail.setItemName("【"+siteSportInfo.getSportName()+"】"+IPlatformConstant.ORDER_SITE_NAME);
+				orderDetail.setItemPrice(getHourPrice(siteReserveTime)*memberDiscount);
+				orderDetail.setItemStartTime(siteReserveDate.getReserveStartDate()+" "+siteReserveTime.getSiteStartTime());
+				orderDetail.setItemEndTime(siteReserveDate.getReserveEndDate()+" "+siteReserveTime.getSiteEndTime());
+				orderDetails.add(orderDetail);
 			}
 		}
+		Integer orderId = orderService.saveOrderInfo(orderInfo, orderDetails);
+		siteReserveBasic.setOrderId(orderId);
+		baseDao.save(siteReserveBasic, siteReserveBasic.getSiteReserveId());
+		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("orderId", orderId);
 		resultMap.put("orderNo", orderInfo.getOrderNo());
@@ -344,9 +357,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 			List<SiteReserveTime> siteReserveTimeList = siteReserveDate.getSiteReserveTimeList();
 			Double originalPrice = 0.0;
 			for(SiteReserveTime siteReserveTime : siteReserveTimeList){
-				int hourNums = DateUtil.getTimeHourNums(siteReserveTime.getSiteStartTime(), siteReserveTime.getSiteEndTime());
-				Map<String, Object> siteSport = getSiteSportName(siteReserveTime.getSiteId());
-				originalPrice += StrUtil.objToDouble(siteSport.get("sportMoney"))*hourNums; //最底层每个场地多少钱（小时数*价格）
+				originalPrice += getHourPrice(siteReserveTime);
 			}
 			originalPriceSum += originalPrice * weekNums; //每一段时间多少钱（总场地钱数*星期个数）
 		}
@@ -355,7 +366,14 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("originalPrice", originalPriceSum);
 		resultMap.put("presentPrice", presentPriceSum);
+		resultMap.put("memberDiscount", memberDiscount);
 		return resultMap;
+	}
+
+	private Double getHourPrice(SiteReserveTime siteReserveTime) throws ParseException {
+		int hourNums = DateUtil.getTimeHourNums(siteReserveTime.getSiteStartTime(), siteReserveTime.getSiteEndTime());
+		Map<String, Object> siteSport = getSiteSportName(siteReserveTime.getSiteId());
+		return StrUtil.objToDouble(siteSport.get("sportMoney"))*hourNums; //最底层每个场地多少钱（小时数*价格）
 	}
 	
 	@Override
