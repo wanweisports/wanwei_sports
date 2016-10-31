@@ -27,6 +27,11 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		return baseDao.queryBySql(sql.toString());
 	}
 	
+	/*@Override
+	public Map<String, Object> count(List<Map<String, Object>> dataList){
+		
+	}*/
+	
 	private String getCountSql(Integer countNum, String field) {
 		countNum = countNum != null ? countNum : 1;
 		switch (countNum) {
