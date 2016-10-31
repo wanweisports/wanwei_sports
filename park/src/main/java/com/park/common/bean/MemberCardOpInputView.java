@@ -20,8 +20,6 @@ public class MemberCardOpInputView extends BaseInputView {
 	
 	private String remark;
 	
-	private Integer salesId;
-	
 	private String newCardNo;
 
 	public String getNewCardNo() {
@@ -94,14 +92,6 @@ public class MemberCardOpInputView extends BaseInputView {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
-	}
-
-	public Integer getSalesId() {
-		return salesId;
-	}
-
-	public void setSalesId(Integer salesId) {
-		this.salesId = salesId;
 	}
 
 	public String getGivingAmount() {

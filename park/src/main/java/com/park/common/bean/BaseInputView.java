@@ -18,6 +18,12 @@ public class BaseInputView implements Serializable {
 
     @GsonExclude
     private String groupBy;
+    
+    @GsonExclude
+    private String operatorId;
+    
+    @GsonExclude
+    private Integer salesId;
 
     public int getPage() {
         return page;
@@ -54,4 +60,21 @@ public class BaseInputView implements Serializable {
     public void setGroupBy(String groupBy) {
         this.groupBy = groupBy;
     }
+
+	public String getOperatorId() {
+		return operatorId;
+	}
+
+	public void setOperatorId(String operatorId) {
+		this.operatorId = operatorId;
+	}
+
+	public Integer getSalesId() {
+		return salesId;
+	}
+
+	public void setSalesId(Integer salesId) {
+		this.salesId = salesId;
+	}
+    
 }

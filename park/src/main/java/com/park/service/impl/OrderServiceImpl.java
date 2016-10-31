@@ -2,15 +2,20 @@ package com.park.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.park.common.bean.OrderInputView;
+import com.park.common.bean.PageBean;
 import com.park.common.constant.IDBConstant;
+import com.park.common.constant.IPlatformConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.OrderDetail;
 import com.park.common.po.OrderInfo;
 import com.park.common.util.DateUtil;
+import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
 import com.park.service.IOrderService;
 
@@ -72,6 +77,31 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 	@Override
 	public OrderInfo getOrderInfo(Integer orderId){
 		return baseDao.getToEvict(OrderInfo.class, orderId);
+	}
+	
+	@Override
+	public PageBean getOrderList(OrderInputView orderInputView){
+		
+		String operatorId = orderInputView.getOperatorId();
+		
+		StringBuilder headSql = new StringBuilder("SELECT *");
+		StringBuilder bodySql = new StringBuilder(" FROM order_info");
+		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
+		if(!IPlatformConstant.ADMIN.equals(operatorId)){
+			whereSql.append(" AND salesId = :salesId");
+		}
+		
+		PageBean pageBean = super.getPageBean(headSql, bodySql, whereSql, orderInputView);
+		List<Map<String, Object>> list = pageBean.getList();
+		for(Map<String, Object> map : list){
+			map.put("orderDetailList", getOrderDetails(StrUtil.objToInt(map.get("orderId"))));
+		}
+		return pageBean;
+	}
+	
+	@Override
+	public List<OrderDetail> getOrderDetails(int orderId){
+		return baseDao.queryByHql("FROM OrderDetail WHERE orderId = ?", orderId);
 	}
 	
 	private String getOrderNo(){

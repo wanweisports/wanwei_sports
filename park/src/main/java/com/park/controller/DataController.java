@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.park.common.bean.DataInputView;
+import com.park.common.util.JsonUtils;
 import com.park.service.IDataService;
 
 /**
@@ -22,7 +23,8 @@ public class DataController extends BaseController {
     @RequestMapping("getMembersRegister")
     public String getMembersRegister(DataInputView dataInputView, Model model) {
     	try {
-			model.addAttribute("data", dataService.getMembersRegister(dataInputView));
+    		model.addAllAttributes(JsonUtils.fromJson(dataInputView));
+			model.addAttribute("data", dataService.countMembersRegister(dataService.getMembersRegister(dataInputView)));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
