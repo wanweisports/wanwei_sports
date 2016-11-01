@@ -45,7 +45,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('', conditions, function (res) {
+                $.post('/settings/saveEmployee', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {

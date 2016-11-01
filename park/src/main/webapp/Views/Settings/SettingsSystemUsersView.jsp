@@ -7,7 +7,6 @@
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
     <link href="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/style/settings/settings_users.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
@@ -160,7 +159,7 @@
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="contact_address" name="operatorAddress"
-                                       placeholder="联系电话" autocomplete="off" value="${operatorAddress}">
+                                       placeholder="联系地址" autocomplete="off" value="${operatorAddress}">
                             </div>
                         </div>
                     </div>

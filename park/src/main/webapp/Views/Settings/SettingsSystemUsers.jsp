@@ -39,14 +39,6 @@
                             <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
                         </a>
                     </div>
-                    <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary user-active">
-                            <span class="glyphicon glyphicon-flash"></span> 激活员工
-                        </a>
-                        <a href="javascript:;" class="btn btn-warning user-lock">
-                            <span class="glyphicon glyphicon-lock"></span> 锁定员工
-                        </a>
-                    </div>
                     <div class="form-group pull-right">
                         <a href="/settings/getUsersView" class="btn btn-primary">
                             <span class="glyphicon glyphicon-plus"></span> 添加员工

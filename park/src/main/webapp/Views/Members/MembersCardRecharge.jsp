@@ -32,14 +32,21 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label for="card_no" class="col-sm-2 control-label">
-                                <span class="text-danger">*</span> 会员卡号
+                                <span class="text-danger">*</span> 关键字
                             </label>
 
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" id="card_no" name="cardNo" value="${cardNo}"
-                                       placeholder="请输入会员卡号" autocomplete="off"
-                                       data-val="true" data-val-required="会员卡号不能为空">
-                                <div data-valmsg-for="cardNo" data-valmsg-replace="true"></div>
+                                <input type="text" class="form-control" id="card_no" name="search" value="${cardNo}"
+                                       placeholder="会员姓名, 手机号, 会员卡号" autocomplete="off"
+                                       data-val="true" data-val-required="请输入搜索关键字">
+                                <div data-valmsg-for="search" data-valmsg-replace="true"></div>
+                                <ul class="list-group">
+                                    <li class="list-group-item">Cras justo odio</li>
+                                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item">Morbi leo risus</li>
+                                    <li class="list-group-item">Porta ac consectetur ac</li>
+                                    <li class="list-group-item">Vestibulum at eros</li>
+                                </ul>
                             </div>
                             <div class="col-sm-4">
                                 <a href="javascript:;" class="btn btn-primary member-card-filter">
