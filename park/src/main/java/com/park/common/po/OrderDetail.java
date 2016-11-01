@@ -23,6 +23,7 @@ public class OrderDetail implements java.io.Serializable {
 	private Double itemPrice;
 	private String itemStartTime;
 	private String itemEndTime;
+	private Integer itemAmount;
 	private String itemRemark;
 	private String itemMoneyType;
 	private Integer itemDiscount;
@@ -37,14 +38,15 @@ public class OrderDetail implements java.io.Serializable {
 	/** full constructor */
 	public OrderDetail(Integer orderId, Integer itemId, String itemName,
 			Double itemPrice, String itemStartTime, String itemEndTime,
-			String itemRemark, String itemMoneyType, Integer itemDiscount,
-			String orderDetailStatus) {
+			Integer itemAmount, String itemRemark, String itemMoneyType,
+			Integer itemDiscount, String orderDetailStatus) {
 		this.orderId = orderId;
 		this.itemId = itemId;
 		this.itemName = itemName;
 		this.itemPrice = itemPrice;
 		this.itemStartTime = itemStartTime;
 		this.itemEndTime = itemEndTime;
+		this.itemAmount = itemAmount;
 		this.itemRemark = itemRemark;
 		this.itemMoneyType = itemMoneyType;
 		this.itemDiscount = itemDiscount;
@@ -115,6 +117,15 @@ public class OrderDetail implements java.io.Serializable {
 
 	public void setItemEndTime(String itemEndTime) {
 		this.itemEndTime = itemEndTime;
+	}
+
+	@Column(name = "itemAmount")
+	public Integer getItemAmount() {
+		return this.itemAmount;
+	}
+
+	public void setItemAmount(Integer itemAmount) {
+		this.itemAmount = itemAmount;
 	}
 
 	@Column(name = "itemRemark", length = 65535)

@@ -317,6 +317,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 				orderDetail.setItemStartTime(siteReserveDate.getReserveStartDate()+" "+siteReserveTime.getSiteStartTime());
 				orderDetail.setItemEndTime(siteReserveDate.getReserveEndDate()+" "+siteReserveTime.getSiteEndTime());
 				orderDetail.setOrderDetailStatus(IDBConstant.LOGIC_STATUS_NO); //子订单：未完成
+				orderDetail.setItemAmount(1); //场地预定，数量为1
 				orderDetails.add(orderDetail);
 			}
 		}
