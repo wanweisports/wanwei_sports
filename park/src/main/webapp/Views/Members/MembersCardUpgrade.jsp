@@ -29,17 +29,18 @@
             <div class="panel-heading">会员卡升级</div>
             <div class="panel-body">
                 <form id="member_card_form" class="form-horizontal" novalidate onsubmit="return false;">
+                    <input type="hidden" name="cardNo" value="${cardNo}">
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label for="card_no" class="col-sm-2 control-label">
-                                <span class="text-danger">*</span> 会员卡号
+                                <span class="text-danger">*</span> 关键字
                             </label>
 
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" id="card_no" name="cardNo" value="${cardNo}"
-                                       placeholder="请输入会员卡号" autocomplete="off"
-                                       data-val="true" data-val-required="会员卡号不能为空">
-                                <div data-valmsg-for="cardNo" data-valmsg-replace="true"></div>
+                                <input type="text" class="form-control" id="card_no" name="search" value="${cardNo}"
+                                       placeholder="会员姓名, 手机号, 会员卡号" autocomplete="off"
+                                       data-val="true" data-val-required="请输入搜索关键字">
+                                <div data-valmsg-for="search" data-valmsg-replace="true"></div>
                             </div>
                             <div class="col-sm-4">
                                 <a href="javascript:;" class="btn btn-primary member-card-filter">

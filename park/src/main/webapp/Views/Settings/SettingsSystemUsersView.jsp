@@ -108,7 +108,8 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="user_account" name="operatorId"
                                        placeholder="登录账户" autocomplete="off" value="${operatorId}"
-                                       data-val="true" data-val-required="登录账户不能为空">
+                                       data-val="true" data-val-required="登录账户不能为空"
+                                       <c:if test="${operatorId != ''}">readonly</c:if> >
                                 <div data-valmsg-for="operatorId" data-valmsg-replace="true"></div>
                             </div>
                         </div>

@@ -5,7 +5,12 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="/Content/lib/jquery/jquery-select2/select2.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/lib/jquery/jquery-select2/select2.full.min.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
     <script src="/Content/app/members/members_card_recharge.js?v=${static_resource_version}"></script>
@@ -29,6 +34,7 @@
             <div class="panel-heading">会员卡充值</div>
             <div class="panel-body">
                 <form id="member_card_form" class="form-horizontal" novalidate onsubmit="return false;">
+                    <input type="hidden" name="cardNo" value="${cardNo}">
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label for="card_no" class="col-sm-2 control-label">
@@ -40,13 +46,6 @@
                                        placeholder="会员姓名, 手机号, 会员卡号" autocomplete="off"
                                        data-val="true" data-val-required="请输入搜索关键字">
                                 <div data-valmsg-for="search" data-valmsg-replace="true"></div>
-                                <ul class="list-group">
-                                    <li class="list-group-item">Cras justo odio</li>
-                                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                                    <li class="list-group-item">Morbi leo risus</li>
-                                    <li class="list-group-item">Porta ac consectetur ac</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
-                                </ul>
                             </div>
                             <div class="col-sm-4">
                                 <a href="javascript:;" class="btn btn-primary member-card-filter">
