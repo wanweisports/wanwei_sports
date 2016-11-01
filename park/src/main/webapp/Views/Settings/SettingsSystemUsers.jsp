@@ -6,7 +6,7 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="/Content/dist/settings/settings_users.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/settings/settings_users.js?v=${static_resource_version}"></script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
@@ -53,7 +53,6 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>选择</th>
                             <th>员工编号</th>
                             <th>登录账号</th>
                             <th>员工姓名</th>
@@ -67,7 +66,6 @@
                         <tbody>
                         <c:forEach var="user" items="${list}">
                             <tr>
-                                <td><label><input type="checkbox" name="user_status" value="${user.operatorNo}"></label></td>
                                 <td>${user.operatorNo}</td>
                                 <td>${user.operatorId}</td>
                                 <td>${user.operatorName}</td>
