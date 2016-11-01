@@ -70,6 +70,9 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 		orderInfoDB.setPayType(orderInfo.getPayType());
 		orderInfoDB.setPayTime(nowDate);
 		orderInfoDB.setUpdateTime(nowDate);
+		if(StrUtil.isNotBlank(orderInfo.getOrderStatus())){
+			orderInfoDB.setOrderStatus(orderInfo.getOrderStatus());
+		}
 		baseDao.save(orderInfoDB, orderInfoDB.getOrderId());
 		return orderInfoDB.getOrderId();
 	}
@@ -105,8 +108,12 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 	
 	@Override
 	public List<OrderDetail> getOrderDetails(int orderId) throws Exception{
+		OrderInfo orderInfo = getOrderInfo(orderId);
 		List<OrderDetail> orderDetailList = baseDao.queryByHql("FROM OrderDetail WHERE orderId = ?", orderId);
-		return calculateTime(orderDetailList);
+		if(IDBConstant.ORDER_SERVICE_TYPE_SITE.equals(orderInfo.getOrderServiceType())||IDBConstant.ORDER_SERVICE_TYPE_BLOCK_SITE.equals(orderInfo.getOrderServiceType())){
+			return calculateTime(orderDetailList);
+		}
+		return orderDetailList;
 	}
 	
 	private List<OrderDetail> calculateTime(List<OrderDetail> orderDetailList) throws Exception{

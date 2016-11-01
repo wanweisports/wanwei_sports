@@ -273,8 +273,10 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 	@Override
 	public Integer saveOrder(GoodInputView goodInputView){
 		List<GoodShopping> shoppingList = getShoppings(goodInputView.getShoppingIds(), goodInputView.getSalesId());
+		if(shoppingList.size() == 0) throw new MessageException("请选择购物车商品");
 		OrderInfo orderInfo = goodInputView.getOrderInfo();
 		orderInfo.setOrderServiceType(IDBConstant.ORDER_SERVICE_TYPE_GOODS);
+		orderInfo.setOrderStatus(IDBConstant.LOGIC_STATUS_NO); //未完成
 		orderInfo.setPayStatus(IDBConstant.LOGIC_STATUS_NO); //未支付
 		orderInfo.setSalesId(goodInputView.getSalesId());
 		UserMember member = null;
@@ -290,14 +292,18 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 		
 		List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
 		
-		OrderDetail orderDetail = new OrderDetail();
 		for(GoodShopping goodShopping : shoppingList){
 			GoodInfo goodInfo = getGoodInfo(goodShopping.getGoodId());
+			OrderDetail orderDetail = new OrderDetail();
 			orderDetail.setItemId(goodInfo.getGoodId());
-			orderDetail.setItemPrice(goodInfo.getGoodPrice());
+			orderDetail.setItemPrice(goodInfo.getGoodPrice()*goodShopping.getShoppingGoodAmount());
 			orderDetail.setItemMoneyType(goodInfo.getGoodMoneyType());
 			orderDetail.setItemName(goodInfo.getGoodName());
+			orderDetail.setItemAmount(goodShopping.getShoppingGoodAmount());
+			orderDetail.setOrderDetailStatus(IDBConstant.LOGIC_STATUS_NO);
 			orderDetails.add(orderDetail);
+			//购买后，删除购物车的商品
+			baseDao.delete(goodShopping);
 		}
 		
 		Integer orderId = orderService.saveOrderInfo(orderInfo, orderDetails);
@@ -308,7 +314,9 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 	@Override
 	public void updateConfirmOrder(OrderInfo orderInfo){
 		if(orderInfo.getOrderId() == null) throw new MessageException("订单id为空");
+		orderInfo.setOrderStatus(IDBConstant.LOGIC_STATUS_YES); //商品支付后，直接已完成
 		Integer orderId = orderService.updateConfirmOrder(orderInfo);
+		baseDao.updateBySql("UPDATE order_detail SET orderDetailStatus = ? WHERE orderId = ?", IDBConstant.LOGIC_STATUS_YES, orderId);
 	}
 	
 }
