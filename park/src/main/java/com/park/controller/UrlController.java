@@ -88,8 +88,25 @@ public class UrlController extends BaseController {
     	UserOperator operator = operatorService.getOperator(super.getUserInfo().getOperatorId());
     	operator.setOperatorPwd(null);
     	model.addAllAttributes(JsonUtils.fromJsonDF(operator));
-    	System.out.println(JsonUtils.toJson(operator));
         return "Center/CenterProfileComplete";
+    }
+    
+    @ResponseBody
+    @RequestMapping("/passport/updateProfile")
+    public ResponseBean updateProfile(UserOperator userOperator) {
+    	try {
+    		UserOperator userInfo = super.getUserInfo();
+    		userOperator.setId(userInfo.getId());
+    		userOperator.setOperatorId(userInfo.getOperatorId());
+    		operatorService.updateProfile(userOperator);
+    		return new ResponseBean(true);
+		} catch (MessageException e) {
+			e.printStackTrace();
+			return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
     }
 
     // 修改密码

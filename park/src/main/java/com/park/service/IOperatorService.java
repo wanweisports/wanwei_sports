@@ -25,6 +25,8 @@ public interface IOperatorService {
 	
 	public void updateLockEmployee(String operatorIds, boolean lock);
 	
+	public void updateProfile(UserOperator operator);
+	
 	public UserOperator innerLogin(String name);
 	
 	public void saveLastLoginTime(int id);

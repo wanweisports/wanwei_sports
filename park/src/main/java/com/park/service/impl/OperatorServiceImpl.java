@@ -123,24 +123,18 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 		}
 		return saveOperator(operator, roleId);
 	}
-	/*
-	 *  真实姓名 
-陈小松
-* 生效日期 
-2016-10-10
-* 员工生日 
-1990-09-30
-* 联系人 
-李金花
-* 登录账户 
-111111
-* 员工权限 
-* 截止日期 
-2016-11-10
-* 联系电话 
-15110275787
-* 联系地址
-	 */
+	
+	@Override
+	public void updateProfile(UserOperator operator){
+		UserOperator operatorDB = getOperator(operator.getOperatorId());
+		operatorDB.setOperatorName(operator.getOperatorName());
+		operatorDB.setOperatorBirthday(operator.getOperatorBirthday());
+		operatorDB.setOperatorMobile(operator.getOperatorMobile());
+		operatorDB.setOperatorAddress(operator.getOperatorAddress());
+		operatorDB.setOperatorSex(operator.getOperatorSex());
+		operatorDB.setUpdateTime(DateUtil.getNowDate());
+		baseDao.save(operatorDB, operatorDB.getId());
+	}
 	
 	@Override
 	public void updateLockEmployee(String operatorIds, boolean lock){
