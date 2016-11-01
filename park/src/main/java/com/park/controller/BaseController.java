@@ -102,6 +102,7 @@ public class BaseController {
         if(userInfo == null){
         	userInfo = new UserOperator();
         	userInfo.setId(1);
+        	userInfo.setOperatorId("123456");
         }
         return userInfo;
     }

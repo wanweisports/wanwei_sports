@@ -116,6 +116,29 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 		return orderDetailList;
 	}
 	
+	@Override
+	public void deleteOrder(OrderInputView orderInputView){
+		OrderInfo orderInfo = getOrder(orderInputView.getOrderId(), orderInputView.getSalesId(), orderInputView.getOperatorId());
+		baseDao.delete(orderInfo);
+		baseDao.delete("order_detail", "orderId", orderInfo.getOrderId());
+	}
+	
+	@Override
+	public void updateOrderStatus(OrderInputView orderInputView){
+		if(StrUtil.isBlank(orderInputView.getStatus())) throw new MessageException("操作错误");
+		OrderInfo orderInfo = getOrder(orderInputView.getOrderId(), orderInputView.getSalesId(), orderInputView.getOperatorId());
+		orderInfo.setOrderStatus(orderInputView.getStatus());
+		baseDao.save(orderInfo, orderInfo.getOrderId());
+	}
+	
+	private OrderInfo getOrder(int orderId, int salesId, String operatorId){
+		OrderInfo orderInfo = getOrderInfo(orderId);
+		if(!IPlatformConstant.ADMIN.equals(operatorId)){
+			if(salesId != orderInfo.getSalesId()) throw new MessageException("操作错误");
+		}
+		return orderInfo;
+	}
+	
 	private List<OrderDetail> calculateTime(List<OrderDetail> orderDetailList) throws Exception{
 		if(orderDetailList.size() > 0){
 			for(OrderDetail orderDetail : orderDetailList){
