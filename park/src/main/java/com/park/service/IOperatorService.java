@@ -23,10 +23,12 @@ public interface IOperatorService {
 	
 	public String saveEmployee(UserOperator userOperator, int roleId);
 	
-	public void updateLockEmployee(String operatorId, boolean lock);
+	public void updateLockEmployee(String operatorIds, boolean lock);
 	
 	public UserOperator innerLogin(String name);
 	
 	public void saveLastLoginTime(int id);
+	
+	public void updatePassword(String oldPwd, String newPwd, String operatorId);
 	
 }

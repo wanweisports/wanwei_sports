@@ -108,9 +108,9 @@ public class SettingsController extends BaseController {
     //锁定/解锁员工信息
     @ResponseBody
     @RequestMapping("lockEmployee")
-    public ResponseBean lockEmployee(String operatorId, boolean lock){
+    public ResponseBean lockEmployee(String operatorIds, boolean lock){
     	try {
-    		operatorService.updateLockEmployee(operatorId, lock);
+    		operatorService.updateLockEmployee(operatorIds, lock);
     		return new ResponseBean(true);
 		} catch (MessageException e) {
 			e.printStackTrace();

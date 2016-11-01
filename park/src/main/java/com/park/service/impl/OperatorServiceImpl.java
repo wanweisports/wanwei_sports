@@ -120,12 +120,16 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 	}
 	
 	@Override
-	public void updateLockEmployee(String operatorId, boolean lock){
-		SystemRoleOperator operatorRole = roleService.getOperatorRole(operatorId);
-		if(operatorRole.getId().getRoleId() < IDBConstant.ROLE_EMPLOYEE) throw new MessageException("操作错误");
-		UserOperator operator = getOperator(operatorId);
-		operator.setStatus(lock ? IDBConstant.LOGIC_STATUS_NO : IDBConstant.LOGIC_STATUS_YES);
-		baseDao.save(operator, operatorId);
+	public void updateLockEmployee(String operatorIds, boolean lock){
+		if(StrUtil.isBlank(operatorIds)) throw new MessageException("请选择员工");
+		String[] operatorIdArr = operatorIds.split(",");
+		for(String operatorId : operatorIdArr){
+			SystemRoleOperator operatorRole = roleService.getOperatorRole(operatorId);
+			if(operatorRole.getId().getRoleId() < IDBConstant.ROLE_EMPLOYEE) throw new MessageException("操作错误");
+			UserOperator operator = getOperator(operatorId);
+			operator.setStatus(lock ? IDBConstant.LOGIC_STATUS_NO : IDBConstant.LOGIC_STATUS_YES);
+			baseDao.save(operator, operatorId);
+		}
 	}
 	
 	@Override
@@ -136,6 +140,14 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 	@Override
 	public void saveLastLoginTime(int id){
 		baseDao.updateBySql("UPDATE user_operator SET lastLoginTime = ? WHERE id = ?", DateUtil.getNowDate(), id);
+	}
+	
+	@Override
+	public void updatePassword(String oldPwd, String newPwd, String operatorId){
+		UserOperator operator = getOperator(operatorId);
+		if(!oldPwd.equals(operator.getOperatorPwd())) throw new MessageException("原密码错误");
+		operator.setOperatorPwd(newPwd);
+		baseDao.save(operator, operator.getId());
 	}
 	
 }

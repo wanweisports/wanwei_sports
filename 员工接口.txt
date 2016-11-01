@@ -44,7 +44,7 @@ settings/saveEmployee?operatorId=111111&operatorName=陈小松&operatorMobile=15
 }
 ===============================================================================================================================================================
 锁定/解锁员工：
-请求：settings/lockEmployee?operatorId=111111&lock=true  //lock：true锁定  false解锁
+请求：settings/lockEmployee?operatorIds=111111,123456&lock=true  //【新】operatorIds:多个逗号分隔   lock：true锁定  false解锁
 
 返回：
 {

@@ -11,6 +11,7 @@ import com.park.common.bean.ResponseBean;
 import com.park.common.constant.IPlatformConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.UserOperator;
+import com.park.common.util.JsonUtils;
 import com.park.common.util.StrUtil;
 import com.park.service.IOperatorService;
 
@@ -83,7 +84,11 @@ public class UrlController extends BaseController {
 
     // 完善信息
     @RequestMapping("/passport/profile")
-    public String passportProfile() {
+    public String passportProfile(Model model) {
+    	UserOperator operator = operatorService.getOperator(super.getUserInfo().getOperatorId());
+    	operator.setOperatorPwd(null);
+    	model.addAllAttributes(JsonUtils.fromJsonDF(operator));
+    	System.out.println(JsonUtils.toJson(operator));
         return "Center/CenterProfileComplete";
     }
 
@@ -91,6 +96,25 @@ public class UrlController extends BaseController {
     @RequestMapping("/passport/modifyPassword")
     public String modifyPassword() {
         return "Center/CenterPasswordModification";
+    }
+    
+    @ResponseBody
+    @RequestMapping("/passport/updatePwd")
+    public ResponseBean updatePwd(String oldPwd, String newPwd, String confirmPwd){
+    	try {
+    		if(StrUtil.isBlank(oldPwd)) throw new MessageException("请输入原密码");
+    		if(StrUtil.isBlank(newPwd)) throw new MessageException("请输入新密码");
+    		if(StrUtil.isBlank(confirmPwd)) throw new MessageException("请输入确认密码");
+    		if(!newPwd.equals(confirmPwd)) throw new MessageException("两次密码不一致");
+    		operatorService.updatePassword(oldPwd, newPwd, super.getUserInfo().getOperatorId());
+    		return new ResponseBean(true);
+		} catch (MessageException e) {
+			e.printStackTrace();
+			return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
     }
 
     // 帮助文档

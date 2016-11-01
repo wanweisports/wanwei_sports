@@ -19,4 +19,8 @@ public interface IOrderService {
 	
 	public List<OrderDetail> getOrderDetails(int orderId) throws Exception;
 	
+	public void deleteOrder(OrderInputView orderInputView);
+	
+	public void updateOrderStatus(OrderInputView orderInputView);
+	
 }
