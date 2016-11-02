@@ -93,11 +93,11 @@
 
                             <div class="col-sm-8">
                                 <label class="radio-inline">
-                                    <input type="radio" name="user_sex" id="user_sex1" value="1"
+                                    <input type="radio" name="operatorSex" id="user_sex1" value="1"
                                         <c:if test="${operatorSex == 1}">checked</c:if>> 男
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="user_sex" id="user_sex2" value="2"
+                                    <input type="radio" name="operatorSex" id="user_sex2" value="2"
                                        <c:if test="${operatorSex == 2}">checked</c:if>> 女
                                 </label>
                                 <div data-valmsg-for="operatorSex" data-valmsg-replace="true"></div>
