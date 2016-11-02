@@ -36,6 +36,7 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 		if(systemRole == null) throw new MessageException("角色不存在");
 		if(!IDBConstant.LOGIC_STATUS_YES.equals(systemRole.getRoleStatus())) throw new MessageException("角色不可用");
 		if(userOperator.getId() == null){
+			if(getOperator(userOperator.getOperatorId()) != null) throw new MessageException("登录账户重复，请重新");
 			userOperator.setOperatorPwd("123456"); //密码暂时设置为123456
 			userOperator.setCreateTime(DateUtil.getNowDate());
 			userOperator.setStatus(IDBConstant.LOGIC_STATUS_YES);
@@ -108,15 +109,31 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 	public String saveEmployee(UserOperator operator, int roleId){
 		if(roleId < IDBConstant.ROLE_EMPLOYEE) throw new MessageException("操作错误");
 		if(operator.getId() != null){
-			//保留用户之前的数据，这个接口不做修改
 			UserOperator operatorDB = getOperator(operator.getOperatorId());
-			operator.setCreateTime(operatorDB.getCreateTime());
-			operator.setOperatorPwd(operatorDB.getOperatorPwd());
-			operator.setOperatorNo(operatorDB.getOperatorNo());
-			
-			operator.setUpdateTime(DateUtil.getNowDate());
+			operatorDB.setOperatorNo(operator.getOperatorNo());
+			operatorDB.setOperatorName(operator.getOperatorName());
+			operatorDB.setOperatorBirthday(operator.getOperatorBirthday());
+			operatorDB.setOperatorContact(operator.getOperatorContact());
+			operatorDB.setOperatorMobile(operator.getOperatorMobile());
+			operatorDB.setOperatorEffectDate(operator.getOperatorEffectDate());
+			operatorDB.setOperatorEndDate(operator.getOperatorEndDate());
+			operatorDB.setOperatorAddress(operator.getOperatorAddress());
+			operatorDB.setUpdateTime(DateUtil.getNowDate());
+			return saveOperator(operatorDB, roleId);
 		}
 		return saveOperator(operator, roleId);
+	}
+	
+	@Override
+	public void updateProfile(UserOperator operator){
+		UserOperator operatorDB = getOperator(operator.getOperatorId());
+		operatorDB.setOperatorName(operator.getOperatorName());
+		operatorDB.setOperatorBirthday(operator.getOperatorBirthday());
+		operatorDB.setOperatorMobile(operator.getOperatorMobile());
+		operatorDB.setOperatorAddress(operator.getOperatorAddress());
+		operatorDB.setOperatorSex(operator.getOperatorSex());
+		operatorDB.setUpdateTime(DateUtil.getNowDate());
+		baseDao.save(operatorDB, operatorDB.getId());
 	}
 	
 	@Override

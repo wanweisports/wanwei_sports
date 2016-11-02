@@ -168,7 +168,7 @@
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
                                 <p class="sc-submit-tips"></p>
-                                <button type="button" class="btn btn-primary col-sm-4 users-save"">
+                                <button type="button" class="btn btn-primary col-sm-4 users-save">
                                     <span class="glyphicon glyphicon-ok"></span> 设置用户
                                 </button>
                             </div>
