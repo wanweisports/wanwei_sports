@@ -36,10 +36,10 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="password" class="form-control" id="user_password" name="user_password"
+                                <input type="password" class="form-control" id="user_password" name="oldPwd"
                                        placeholder="请输入原始密码" autocomplete="off"
                                        data-val="true" data-val-required="原始密码不能为空">
-                                <div data-valmsg-for="user_password" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="oldPwd" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -48,10 +48,10 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="new_password" name="new_password"
+                                <input type="text" class="form-control" id="new_password" name="newPwd"
                                        placeholder="请输入新密码" autocomplete="off"
                                        data-val="true" data-val-required="新密码不能为空">
-                                <div data-valmsg-for="new_password" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="newPwd" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -60,10 +60,10 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="confirm_password" name="confirm_password"
+                                <input type="text" class="form-control" id="confirm_password" name="confirmPwd"
                                        placeholder="请选择确认密码" autocomplete="off"
                                        data-val="true" data-val-required="确认密码不能为空">
-                                <div data-valmsg-for="confirm_password" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="confirmPwd" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">

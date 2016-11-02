@@ -4,8 +4,6 @@
             this.initEvents();
         },
         initEvents: function () {
-            var content = this;
-
             // 密码修改提交
             $(".password-confirm").on("click", function (e) {
                 e.preventDefault();
@@ -18,7 +16,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('', conditions, function (res) {
+                $.post('passport/updatePwd', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {

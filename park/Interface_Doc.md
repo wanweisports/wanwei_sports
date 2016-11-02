@@ -401,3 +401,48 @@
     operatorSex           性别
     roleId                员工权限
 >
+
+## 通行证
+主要是个人账户信息的管理，如密码的修改，信息的完善等。
+
+### 1.  保存完善信息
+目的是更新登录账号的账户信息。
+> 页面路由：
+>
+    passport/profile
+>
+> 请求地址：
+>
+    passport/updateProfile.do
+> 
+> 请求类型：POST（application/json）
+> 
+> 请求参数：
+> 
+     operatorId            员工账号
+     operatorName          员工真实姓名
+     operatorMobile        员工手机号码
+     operatorNo            员工编号
+     operatorBirthday      员工生日
+     operatorAddress       通讯地址
+     operatorSex           性别
+>
+
+### 2.  重置密码
+目的是修改密码。
+> 页面路由：
+>
+    passport/modifyPassword
+>
+> 请求地址：
+>
+    passport/updatePwd.do
+> 
+> 请求类型：POST（application/json）
+> 
+> 请求参数：
+> 
+     oldPwd        旧密码
+     newPwd        新密码
+     confirmPwd    确认密码
+>
