@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.park.common.annotation.NotProtected;
 import com.park.common.bean.ResponseBean;
+import com.park.common.constant.IDBConstant;
 import com.park.common.constant.IPlatformConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.UserOperator;
@@ -61,6 +62,7 @@ public class UrlController extends BaseController {
 			UserOperator operator = operatorService.innerLogin(name);
 			if(operator == null) throw new MessageException("用户名错误！");
 			if(!pwd.equals(operator.getOperatorPwd())) throw new MessageException("密码错误！");
+			if(!IDBConstant.LOGIC_STATUS_YES.equals(operator.getStatus())) throw new MessageException("您的帐号已被锁定，请联系管理员！");
 			operator.setOperatorPwd(null);
 			operatorService.saveLastLoginTime(operator.getId());
 			super.getRequest().getSession().setAttribute(IPlatformConstant.LOGIN_USER, operator);
