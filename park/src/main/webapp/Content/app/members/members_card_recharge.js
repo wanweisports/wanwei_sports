@@ -23,10 +23,10 @@
                             location.assign('/member/getMembersCardRecharge?cardNo='
                                 + data.members[0].cardNo);
                         } else {
-                            alert(res.message || '没有搜索到会员');
+                            alert('没有搜索到会员');
                         }
                     } else {
-                        alert(res.message || '搜索会员失败, 请稍后重试');
+                        alert('搜索会员失败, 请稍后重试');
                     }
                 });
             });

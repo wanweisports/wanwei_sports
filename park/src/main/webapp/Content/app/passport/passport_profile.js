@@ -8,7 +8,7 @@
                 timepicker: false,
                 lang: "zh",
                 format:'Y-m-d',
-                defaultDate: new Date()
+                maxDate: 0
             });
 
             $(".user-birthday-select").on("click", function (e) {
@@ -20,8 +20,6 @@
             this.initEvents();
         },
         initEvents: function () {
-            var content = this;
-
             // 完善提交
             $(".profile-submit").on("click", function (e) {
                 e.preventDefault();
@@ -34,7 +32,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('', conditions, function (res) {
+                $.post('passport/updateProfile', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {

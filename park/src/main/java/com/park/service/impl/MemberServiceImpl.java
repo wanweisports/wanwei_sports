@@ -542,7 +542,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	@Override
 	public List<Map<String, Object>> searchMember(String search){
 		if(StrUtil.isBlank(search)) throw new MessageException("请输入搜索条件");
-		StringBuilder sql = new StringBuilder("SELECT um.memberId, memberName, memberMobile FROM user_member um, member_card mc");
+		StringBuilder sql = new StringBuilder("SELECT um.memberId, memberName, memberMobile, mc.cardNo FROM user_member um, member_card mc");
 		sql.append(" WHERE um.memberId = mc.memberId");
 		sql.append(" AND (memberMobile LIKE :search OR memberName LIKE :search OR memberIdcard LIKE :search OR mc.cardNo LIKE :search)");
 		Map<String, Object> paramMap = new HashMap<String, Object>();

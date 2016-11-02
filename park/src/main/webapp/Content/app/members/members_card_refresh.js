@@ -26,7 +26,20 @@
                     return false;
                 }
 
-                location.assign('/member/getMembersCardRefresh?' + conditions);
+                $.post('member/searchMember', conditions, function (res) {
+                    var data = res.data;
+
+                    if (res.code == 1) {
+                        if (data && data.members && data.members.length > 0) {
+                            location.assign('/member/getMembersCardRefresh?cardNo='
+                                + data.members[0].cardNo);
+                        } else {
+                            alert('没有搜索到会员');
+                        }
+                    } else {
+                        alert('搜索会员失败, 请稍后重试');
+                    }
+                });
             });
 
             // 会员卡补办

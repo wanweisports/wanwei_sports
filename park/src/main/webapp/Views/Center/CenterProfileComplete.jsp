@@ -41,8 +41,8 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="user_no" name="user_no"
-                                       placeholder="员工编号" autocomplete="off" value="88888" readonly>
+                                <input type="text" class="form-control" id="user_no" name="operatorNo"
+                                       placeholder="员工编号" autocomplete="off" value="${operatorNo}" readonly>
                             </div>
                         </div>
                         <div class="form-group">
@@ -51,10 +51,10 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="user_name" name="user_name"
+                                <input type="text" class="form-control" id="user_name" name="operatorName"
                                        placeholder="请输入姓名" autocomplete="off"
-                                       data-val="true" data-val-required="姓名不能为空">
-                                <div data-valmsg-for="user_name" data-valmsg-replace="true"></div>
+                                       data-val="true" data-val-required="姓名不能为空" value="${operatorName}">
+                                <div data-valmsg-for="operatorName" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -64,13 +64,14 @@
 
                             <div class="col-sm-8">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="user_birthday" name="userBirthday"
-                                           data-val="true" data-val-required="生日不能为空" placeholder="生日">
+                                    <input type="text" class="form-control" id="user_birthday" name="operatorBirthday"
+                                           data-val="true" data-val-required="生日不能为空" placeholder="生日"
+                                           value="${operatorBirthday}">
                                     <span class="input-group-addon user-birthday-select">
                                         <i class="glyphicon glyphicon-calendar"></i>
                                     </span>
                                 </div>
-                                <div data-valmsg-for="userBirthday" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="operatorBirthday" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -81,8 +82,8 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="user_account" name="user_account"
-                                       placeholder="登录账号" autocomplete="off" value="admin" readonly>
+                                <input type="text" class="form-control" id="user_account" name="operatorId"
+                                       placeholder="登录账号" autocomplete="off" value="${operatorId}" readonly>
                             </div>
                         </div>
                         <div class="form-group">
@@ -92,12 +93,14 @@
 
                             <div class="col-sm-8">
                                 <label class="radio-inline">
-                                    <input type="radio" name="user_sex" id="user_sex1" value="1" checked> 男
+                                    <input type="radio" name="user_sex" id="user_sex1" value="1"
+                                        <c:if test="${operatorSex == 1}">checked</c:if>> 男
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="user_sex" id="user_sex2" value="2"> 女
+                                    <input type="radio" name="user_sex" id="user_sex2" value="2"
+                                       <c:if test="${operatorSex == 2}">checked</c:if>> 女
                                 </label>
-                                <div data-valmsg-for="user_sex" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="operatorSex" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -106,12 +109,12 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="user_mobile" name="user_mobile"
+                                <input type="text" class="form-control" id="user_mobile" name="operatorMobile"
                                        placeholder="请输入联系电话" autocomplete="off"
                                        data-val="true" data-val-required="联系电话不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
-                                       data-val-regex="联系电话格式错误">
-                                <div data-valmsg-for="user_mobile" data-valmsg-replace="true"></div>
+                                       data-val-regex="联系电话格式错误" value="${operatorMobile}">
+                                <div data-valmsg-for="operatorMobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -120,8 +123,8 @@
                             <label for="user_address" class="col-sm-2 control-label">联系地址</label>
 
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="user_address" name="user_address"
-                                       placeholder="请输入联系地址">
+                                <input type="text" class="form-control" id="user_address" name="operatorAddress"
+                                       placeholder="请输入联系地址" value="${operatorAddress}">
                             </div>
                         </div>
                         <div class="form-group">

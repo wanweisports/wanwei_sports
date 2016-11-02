@@ -7,6 +7,12 @@
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/app/settings/settings_users.js?v=${static_resource_version}"></script>
+    <script>
+        $(document).ready(function () {
+            $("#user_role").val('${roleId}');
+            $("#user_state").val('${status}');
+        });
+    </script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
