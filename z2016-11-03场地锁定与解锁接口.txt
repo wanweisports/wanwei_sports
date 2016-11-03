@@ -1,7 +1,7 @@
 场地锁定：【AJax】
 请求接口：site/lockSite?lock=true
 
-请求参数：【与预定场地格式一致，只是参数变少了】
+请求参数：【与预定场地格式一致，只是参数变少了，多余的参数可传可不传】
 siteOperationJson是Key
 
 下面是Value
@@ -37,7 +37,7 @@ siteOperationJson是Key
 场地解锁：【AJax】
 请求接口：site/lockSite?lock=false
 
-请求参数：【与预定场地格式一致，只是参数变少了】
+请求参数：【与预定场地格式一致，只是参数变少了，多余的参数可传可不传】
 siteOperationJson是Key
 
 下面是Value
