@@ -59,7 +59,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		countNum = countNum != null ? countNum : 1;
 		switch (countNum) {
 		case 2: //昨日
-			return " AND DATE_FORMAT(adddate("+field+",-1), '%Y-%m-%d') = CURDATE()";
+			return " AND DATE_FORMAT("+field+", '%Y-%m-%d') = adddate(CURDATE(), -1)";
 		case 3: //本周
 			return " AND YEARWEEK("+field+") = YEARWEEK(CURDATE())";
 		case 4: //本月

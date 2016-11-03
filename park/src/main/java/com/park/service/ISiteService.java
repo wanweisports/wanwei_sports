@@ -41,7 +41,7 @@ public interface ISiteService {
 	
 	public List<Map<String, Object>> getSites(SiteInputView siteInputView);
 	
-	public Integer updateLockSite(SiteInputView siteInputView);
+	public void updateLockSite(SiteInputView siteInputView) throws ParseException;
 	
 	public Map<String, Object> calculateSiteMoney(SiteInputView siteInputView) throws ParseException;
 	

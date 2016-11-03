@@ -2,6 +2,7 @@ package com.park.common.bean.out;
 
 public class ReserveInfo{
 	
+	private Integer reserveTimeId;
 	private String startTime;
 	private String endTime;
 	private String siteReserveStatus;
@@ -12,6 +13,12 @@ public class ReserveInfo{
 	private String reserveType;
 	
 	
+	public Integer getReserveTimeId() {
+		return reserveTimeId;
+	}
+	public void setReserveTimeId(Integer reserveTimeId) {
+		this.reserveTimeId = reserveTimeId;
+	}
 	public String getStartTime() {
 		return startTime;
 	}

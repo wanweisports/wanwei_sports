@@ -1,0 +1,67 @@
+场地锁定：【AJax】
+请求接口：site/lockSite?lock=true
+
+请求参数：【与预定场地格式一致，只是参数变少了】
+siteOperationJson是Key
+
+下面是Value
+{
+    "siteReserveDateList": [
+        {
+            "reserveStartDate": "2016-11-05",
+            "reserveEndDate": "2016-11-05",
+            "reserveWeek": "6",
+            "siteReserveTimeList": [
+                {
+                    "siteId": "1",
+                    "siteStartTime": "09:00",
+                    "siteEndTime": "10:00"
+                },
+                {
+                    "siteId": "1",
+                    "siteStartTime": "10:00",
+                    "siteEndTime": "11:00"
+                }
+            ]
+        }
+    ]
+}
+
+返回：
+{
+    "code": "1",
+    "message": "操作成功",
+    "data": { }
+}
+================================================================================================================
+场地解锁：【AJax】
+请求接口：site/lockSite?lock=false
+
+请求参数：【与预定场地格式一致，只是参数变少了】
+siteOperationJson是Key
+
+下面是Value
+{
+    "siteReserveDateList": [
+        {
+            "reserveStartDate": "2016-11-05",
+            "reserveEndDate": "2016-11-05",
+	    "reserveWeek": "6",
+            "siteReserveTimeList": [
+                {
+                    "reserveTimeId": 29,  //【新，此字段会在dynamicSiteReservation(Ajax动态显示场地序列图)接口返回,被锁定的单元格必定有值】
+                    "siteId": "1",
+                    "siteStartTime": "09:00",
+                    "siteEndTime": "10:00"
+                }
+            ]
+        }
+    ]
+}
+
+返回：
+{
+    "code": "1",
+    "message": "操作成功",
+    "data": { }
+}

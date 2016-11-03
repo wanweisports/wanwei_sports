@@ -34,6 +34,10 @@ public class SiteInputView extends BaseInputView {
 	
 	private Integer orderId;
 	
+	private Integer siteReserveId;
+	
+	private Boolean lock;
+	
 	public Integer getSiteId() {
 		return siteId;
 	}
@@ -160,6 +164,22 @@ public class SiteInputView extends BaseInputView {
 
 	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
+	}
+
+	public Integer getSiteReserveId() {
+		return siteReserveId;
+	}
+
+	public void setSiteReserveId(Integer siteReserveId) {
+		this.siteReserveId = siteReserveId;
+	}
+
+	public Boolean getLock() {
+		return lock;
+	}
+
+	public void setLock(Boolean lock) {
+		this.lock = lock;
 	}
 
 }

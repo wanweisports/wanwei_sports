@@ -189,7 +189,6 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		SiteReserveOutputView siteReserveOutputView = new SiteReserveOutputView();
 		List<Site> siteInfos = new ArrayList<Site>();
 		
-		String siteDateSub1 = DateUtil.getAddDay(siteDate, -1);
 		for(Map<String, Object> map : list){
 			Site site = new Site();
 			site.setSiteId(StrUtil.objToStr(map.get("siteId")));
@@ -204,13 +203,14 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 				String startTime = StrUtil.objToStr(p.get("startTime"));
 				String endTime = StrUtil.objToStr(p.get("endTime"));
 				
-				Map<String, Object> reserveIntersectionMap = this.getReserveIntersection(StrUtil.objToInt(site.getSiteId()), siteDateSub1, siteDate, StrUtil.objToStr(DateUtil.getWeek(DateUtil.stringToDate(siteDate, null))), startTime, endTime);
+				Map<String, Object> reserveIntersectionMap = this.getReserveIntersection(StrUtil.objToInt(site.getSiteId()), siteDate, siteDate, StrUtil.objToStr(DateUtil.getWeek(DateUtil.stringToDate(siteDate, null))), startTime, endTime);
 				if(reserveIntersectionMap != null){
 					reserveInfo.setOperatorName(StrUtil.objToStr(reserveIntersectionMap.get("name")));
 					reserveInfo.setOperatorMobile(StrUtil.objToStr(reserveIntersectionMap.get("mobile")));
 					reserveInfo.setOpType(StrUtil.objToStr(reserveIntersectionMap.get("opType")));
 					reserveInfo.setReserveType(StrUtil.objToStr(reserveIntersectionMap.get("reserveType")));
 					reserveInfo.setSiteReserveStatus(StrUtil.objToStr(reserveIntersectionMap.get("siteReserveStatus")));
+					reserveInfo.setReserveTimeId(StrUtil.objToInt(reserveIntersectionMap.get("reserveTimeId"))); //根据时间id，来解锁
 				}else{  //每个开始-结束数据段在 场地类型时间 之内
 					if(siteStartTime.getTime() <= DateUtil.getHHMM(startTime).getTime() && siteEndTime.getTime() >= DateUtil.getHHMM(endTime).getTime()){
 						reserveInfo.setSiteReserveStatus("5");
@@ -303,7 +303,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 					 throw new MessageException(siteReserveTime.getSiteStartTime()+"-"+siteReserveTime.getSiteEndTime()+"不在该场地时间范围内");
 				}
 				//判断时间是否重复
-				Map<String, Object> reserveRepeatMap = this.getReserveIntersection(siteReserveTime.getSiteId(), DateUtil.getAddDay(siteReserveDate.getReserveStartDate(), -1), siteReserveDate.getReserveEndDate(), siteReserveDate.getReserveWeek(), siteReserveTime.getSiteStartTime(), siteReserveTime.getSiteEndTime());
+				Map<String, Object> reserveRepeatMap = this.getReserveIntersection(siteReserveTime.getSiteId(), siteReserveDate.getReserveStartDate(), siteReserveDate.getReserveEndDate(), siteReserveDate.getReserveWeek(), siteReserveTime.getSiteStartTime(), siteReserveTime.getSiteEndTime());
 				if(reserveRepeatMap != null) throw new MessageException("【"+siteReserveDate.getReserveStartDate()+"至"+siteReserveDate.getReserveEndDate()+"日期，"+siteReserveTime.getSiteStartTime()+"-"+siteReserveTime.getSiteEndTime()+"，星期："+siteReserveDate.getReserveWeek()+"】与其他顾客预定时间有冲突，请重新选择");
 				
 				siteReserveTime.setReserveDateId(siteReserveDate.getReserveDateId());
@@ -332,11 +332,57 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	}
 	
 	@Override
-	public Integer updateLockSite(SiteInputView siteInputView){
-		//String lockSiteJson = siteInputView.getLockSiteJson();
+	public void updateLockSite(SiteInputView siteInputView) throws ParseException{
+		SiteReserveBasic siteReserveBasic = JsonUtils.fromJsonDF(siteInputView.getSiteOperationJson(), SiteReserveBasic.class);
+		List<SiteReserveDate> siteReserveDateList = siteReserveBasic.getSiteReserveDateList();
+		Boolean lock = siteInputView.getLock();
 		
-		return 0;
-		
+		if(lock == null || lock){ //锁定
+			siteReserveBasic.setCreateTime(DateUtil.getNowDate());
+			siteReserveBasic.setSalesId(siteInputView.getSalesId());
+			siteReserveBasic.setSiteReserveStatus(IDBConstant.LOGIC_STATUS_OTHER);
+			baseDao.save(siteReserveBasic, null);
+			for(SiteReserveDate siteReserveDate : siteReserveDateList){
+				siteReserveDate.setSiteReserveId(siteReserveBasic.getSiteReserveId());
+				baseDao.save(siteReserveDate, null);
+				List<SiteReserveTime> siteReserveTimeList = siteReserveDate.getSiteReserveTimeList();
+				for(SiteReserveTime siteReserveTime : siteReserveTimeList){
+					Map<String, Object> reserveIntersectionMap = this.getReserveIntersection(siteReserveTime.getSiteId(), siteReserveDate.getReserveStartDate(), siteReserveDate.getReserveEndDate(), null, siteReserveTime.getSiteStartTime(), siteReserveTime.getSiteEndTime());
+					if(reserveIntersectionMap != null) throw new MessageException("操作错误，请刷新页面重试"); 
+					siteReserveTime.setReserveDateId(siteReserveDate.getReserveDateId());
+					baseDao.save(siteReserveTime, null);
+				}
+			}
+		}else{ //解锁
+			SiteReserveBasic siteReserveBasicDB = null;
+			for(SiteReserveDate siteReserveDate : siteReserveDateList){
+				List<SiteReserveTime> siteReserveTimeList = siteReserveDate.getSiteReserveTimeList();
+				SiteReserveDate siteReserveDateDB = null;
+				for(SiteReserveTime siteReserveTime : siteReserveTimeList){
+					if(siteReserveDateDB == null) siteReserveDateDB = getReserveDateByTimeId(siteReserveTime.getReserveTimeId());
+					baseDao.delete(siteReserveTime);
+				}
+				//若没有时间，则删除日期
+				if(baseDao.queryBySqlFirst("SELECT 1 FROM site_reserve_time WHERE reserveDateId = ?", siteReserveDateDB.getReserveDateId()) == null){
+					baseDao.delete(siteReserveDateDB);
+				}
+				if(siteReserveBasicDB == null) siteReserveBasicDB = getReserveBasic(siteReserveDateDB.getSiteReserveId());
+				if(!IDBConstant.LOGIC_STATUS_OTHER.equals(siteReserveBasicDB.getSiteReserveStatus())) throw new MessageException("操作错误，请刷新页面重试");
+			}
+			//若没有日期，则删除basic
+			if(baseDao.queryBySqlFirst("SELECT 1 FROM site_reserve_date WHERE siteReserveId = ?", siteReserveBasicDB.getSiteReserveId()) == null){
+				baseDao.delete(siteReserveBasicDB);
+			}
+		}
+	}
+	
+	private SiteReserveBasic getReserveBasic(int siteReserveId){
+		return baseDao.getToEvict(SiteReserveBasic.class, siteReserveId);
+	}
+	
+	private SiteReserveDate getReserveDateByTimeId(int reserveTimeId){
+		SiteReserveTime siteReserveTime = baseDao.getToEvict(SiteReserveTime.class, reserveTimeId);
+		return baseDao.getToEvict(SiteReserveDate.class, siteReserveTime.getReserveDateId());
 	}
 	
 	@Override
@@ -422,7 +468,9 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		return siteReserveBasic;
 	}
 	
-	private Map<String, Object> getReserveIntersection(int siteId, String startDate, String endDate, String weeks, String startTime, String endTime){
+	private Map<String, Object> getReserveIntersection(int siteId, String startDate, String endDate, String weeks, String startTime, String endTime) throws ParseException{
+		startDate = DateUtil.getAddDay(startDate, -1);
+		
 		StringBuilder sql = new StringBuilder("SELECT * FROM site_reserve_basic srb, site_reserve_date srd, site_reserve_time srt WHERE srb.siteReserveId = srd.siteReserveId AND srd.reserveDateId = srt.reserveDateId");
 		sql.append(" AND siteId = ?");
 		sql.append(" AND NOT ((DATE(reserveEndDate) <= DATE(?)) OR (DATE(reserveStartDate) > DATE(?)))");
