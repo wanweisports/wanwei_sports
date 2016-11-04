@@ -63,7 +63,7 @@ public class RoleServiceImpl extends BaseService implements IRoleService {
 		
 		resultMap.put("role", getSystemRole(roleId));
 		resultMap.put("roleMenuList", getRoleMenu(menuOutputViews, 0));
-		
+		System.out.println(menuOutputViews.size());
 		return resultMap;
 	}
 	
@@ -71,17 +71,19 @@ public class RoleServiceImpl extends BaseService implements IRoleService {
 	private List<MenuOutputView> getRoleMenu(List<MenuOutputView> menuOutputViews, int parentId){
 		List<SystemMenu> menus = menuService.getMenusByParentId(parentId); //查询子菜单
 		if(menus != null && menus.size() > 0){
+			List<MenuOutputView> childrenmenuOutputViews = new ArrayList<MenuOutputView>();
 			for(SystemMenu systemMenu : menus){
 				MenuOutputView menuOutputView = new MenuOutputView();
 				menuOutputView.setText(systemMenu.getMenuName());
 				menuOutputView.setId(systemMenu.getMenuId().toString());
-				menuOutputView.setChildren(getRoleMenu(menuOutputViews, systemMenu.getMenuId()));
-				menuOutputViews.add(menuOutputView);
+				if(parentId == systemMenu.getParentMenuId()){ //全部查询菜单出来List，这里加一句这个就搞定
+					List<MenuOutputView> roleMenu = getRoleMenu(menuOutputViews, systemMenu.getMenuId());
+					menuOutputView.setChildren(roleMenu);
+					childrenmenuOutputViews.add(menuOutputView);
+				}
 			}
-			System.out.println(menuOutputViews.size()+"-1");
-			return menuOutputViews;
+			return childrenmenuOutputViews;
 		}
-		System.out.println(menuOutputViews.size()+"-2");
 		return null; 
 	}
 	
