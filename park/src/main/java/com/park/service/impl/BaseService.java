@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.park.common.bean.BaseInputView;
 import com.park.common.bean.PageBean;
+import com.park.common.constant.IPlatformConstant;
 import com.park.common.constant.SqlConfig;
 import com.park.common.util.JsonUtils;
 import com.park.common.util.StrUtil;
@@ -47,5 +48,16 @@ public class BaseService {
         pageBean.setParamsMap(JsonUtils.fromJsonDF(baseInputView)); //解析一些参数，不解析的不在前台显示，如userId
         return pageBean;
     }
+    
+    protected boolean isAdmin(BaseInputView baseInputView) {
+		return isAdmin(baseInputView.getOperatorId());
+	}
+    
+    protected boolean isAdmin(String operatorId) {
+		if(IPlatformConstant.ADMIN.equals(operatorId)){
+			return true;
+		}
+		return false;
+	}
 
 }

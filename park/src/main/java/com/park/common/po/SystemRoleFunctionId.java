@@ -4,26 +4,26 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- * SystemRolePrivilegeId entity. @author MyEclipse Persistence Tools
+ * SystemRoleFunctionId entity. @author MyEclipse Persistence Tools
  */
 @Embeddable
-public class SystemRolePrivilegeId implements java.io.Serializable {
+public class SystemRoleFunctionId implements java.io.Serializable {
 
 	// Fields
 
 	private Integer roleId;
-	private Integer privilegeId;
+	private String functionId;
 
 	// Constructors
 
 	/** default constructor */
-	public SystemRolePrivilegeId() {
+	public SystemRoleFunctionId() {
 	}
 
 	/** full constructor */
-	public SystemRolePrivilegeId(Integer roleId, Integer privilegeId) {
+	public SystemRoleFunctionId(Integer roleId, String functionId) {
 		this.roleId = roleId;
-		this.privilegeId = privilegeId;
+		this.functionId = functionId;
 	}
 
 	// Property accessors
@@ -37,13 +37,13 @@ public class SystemRolePrivilegeId implements java.io.Serializable {
 		this.roleId = roleId;
 	}
 
-	@Column(name = "privilegeId", nullable = false)
-	public Integer getPrivilegeId() {
-		return this.privilegeId;
+	@Column(name = "functionId", nullable = false, length = 16)
+	public String getFunctionId() {
+		return this.functionId;
 	}
 
-	public void setPrivilegeId(Integer privilegeId) {
-		this.privilegeId = privilegeId;
+	public void setFunctionId(String functionId) {
+		this.functionId = functionId;
 	}
 
 	public boolean equals(Object other) {
@@ -51,17 +51,17 @@ public class SystemRolePrivilegeId implements java.io.Serializable {
 			return true;
 		if ((other == null))
 			return false;
-		if (!(other instanceof SystemRolePrivilegeId))
+		if (!(other instanceof SystemRoleFunctionId))
 			return false;
-		SystemRolePrivilegeId castOther = (SystemRolePrivilegeId) other;
+		SystemRoleFunctionId castOther = (SystemRoleFunctionId) other;
 
 		return ((this.getRoleId() == castOther.getRoleId()) || (this
 				.getRoleId() != null && castOther.getRoleId() != null && this
 				.getRoleId().equals(castOther.getRoleId())))
-				&& ((this.getPrivilegeId() == castOther.getPrivilegeId()) || (this
-						.getPrivilegeId() != null
-						&& castOther.getPrivilegeId() != null && this
-						.getPrivilegeId().equals(castOther.getPrivilegeId())));
+				&& ((this.getFunctionId() == castOther.getFunctionId()) || (this
+						.getFunctionId() != null
+						&& castOther.getFunctionId() != null && this
+						.getFunctionId().equals(castOther.getFunctionId())));
 	}
 
 	public int hashCode() {
@@ -71,7 +71,7 @@ public class SystemRolePrivilegeId implements java.io.Serializable {
 				+ (getRoleId() == null ? 0 : this.getRoleId().hashCode());
 		result = 37
 				* result
-				+ (getPrivilegeId() == null ? 0 : this.getPrivilegeId()
+				+ (getFunctionId() == null ? 0 : this.getFunctionId()
 						.hashCode());
 		return result;
 	}

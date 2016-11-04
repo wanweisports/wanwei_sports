@@ -20,8 +20,11 @@ public class SystemRole implements java.io.Serializable {
 	private String roleName;
 	private String roleStatus;
 	private String readOnly;
+	private String roleDescribe;
+	private Integer roleLevel;
 	private String createTime;
 	private String updateTime;
+	private Integer salesId;
 
 	// Constructors
 
@@ -38,12 +41,16 @@ public class SystemRole implements java.io.Serializable {
 
 	/** full constructor */
 	public SystemRole(String roleName, String roleStatus, String readOnly,
-			String createTime, String updateTime) {
+			String roleDescribe, Integer roleLevel, String createTime,
+			String updateTime, Integer salesId) {
 		this.roleName = roleName;
 		this.roleStatus = roleStatus;
 		this.readOnly = readOnly;
+		this.roleDescribe = roleDescribe;
+		this.roleLevel = roleLevel;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
+		this.salesId = salesId;
 	}
 
 	// Property accessors
@@ -85,6 +92,24 @@ public class SystemRole implements java.io.Serializable {
 		this.readOnly = readOnly;
 	}
 
+	@Column(name = "roleDescribe")
+	public String getRoleDescribe() {
+		return this.roleDescribe;
+	}
+
+	public void setRoleDescribe(String roleDescribe) {
+		this.roleDescribe = roleDescribe;
+	}
+
+	@Column(name = "roleLevel")
+	public Integer getRoleLevel() {
+		return this.roleLevel;
+	}
+
+	public void setRoleLevel(Integer roleLevel) {
+		this.roleLevel = roleLevel;
+	}
+
 	@Column(name = "createTime", length = 20)
 	public String getCreateTime() {
 		return this.createTime;
@@ -101,6 +126,15 @@ public class SystemRole implements java.io.Serializable {
 
 	public void setUpdateTime(String updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	@Column(name = "salesId")
+	public Integer getSalesId() {
+		return this.salesId;
+	}
+
+	public void setSalesId(Integer salesId) {
+		this.salesId = salesId;
 	}
 
 }

@@ -1,8 +1,12 @@
 package com.park.common.po;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Transient;
+
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -16,12 +20,14 @@ public class SystemMenu implements java.io.Serializable {
 
 	// Fields
 
-	private String menuId;
-	private String parentMenuId;
+	private Integer menuId;
+	private Integer parentMenuId;
 	private String menuName;
 	private String menuCode;
 	private String menuUrl;
 
+	@Transient
+	private List<SystemMenu> menuList;
 	// Constructors
 
 	/** default constructor */
@@ -35,7 +41,7 @@ public class SystemMenu implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public SystemMenu(String parentMenuId, String menuName, String menuCode,
+	public SystemMenu(Integer parentMenuId, String menuName, String menuCode,
 			String menuUrl) {
 		this.parentMenuId = parentMenuId;
 		this.menuName = menuName;
@@ -46,21 +52,21 @@ public class SystemMenu implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "menuId", unique = true, nullable = false, length = 16)
-	public String getMenuId() {
+	@Column(name = "menuId", unique = true, nullable = false)
+	public Integer getMenuId() {
 		return this.menuId;
 	}
 
-	public void setMenuId(String menuId) {
+	public void setMenuId(Integer menuId) {
 		this.menuId = menuId;
 	}
 
-	@Column(name = "parentMenuId", length = 16)
-	public String getParentMenuId() {
+	@Column(name = "parentMenuId")
+	public Integer getParentMenuId() {
 		return this.parentMenuId;
 	}
 
-	public void setParentMenuId(String parentMenuId) {
+	public void setParentMenuId(Integer parentMenuId) {
 		this.parentMenuId = parentMenuId;
 	}
 
@@ -89,6 +95,16 @@ public class SystemMenu implements java.io.Serializable {
 
 	public void setMenuUrl(String menuUrl) {
 		this.menuUrl = menuUrl;
+	}
+
+	@Transient
+	public List<SystemMenu> getMenuList() {
+		return menuList;
+	}
+
+	@Transient
+	public void setMenuList(List<SystemMenu> menuList) {
+		this.menuList = menuList;
 	}
 
 }

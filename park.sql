@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2016-11-02 19:25:25
+Date: 2016-11-04 16:28:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -76,12 +76,13 @@ CREATE TABLE `good_type` (
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`goodTypeId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='商品类型表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='商品类型表';
 
 -- ----------------------------
 -- Records of good_type
 -- ----------------------------
 INSERT INTO `good_type` VALUES ('1', '饮料', '饮料，水', '1', '2016-10-10 15:30:00', null, '1');
+INSERT INTO `good_type` VALUES ('2', '骑马', '射箭', '1', '2016-11-02 19:43:28', '2016-11-02 19:43:50', '1');
 
 -- ----------------------------
 -- Table structure for member_card
@@ -160,7 +161,7 @@ CREATE TABLE `order_detail` (
   `itemDiscount` int(11) DEFAULT NULL COMMENT '当时的商品折扣（0-100）',
   `orderDetailStatus` varchar(1) DEFAULT NULL COMMENT '订单详情状态（1：已完成  2：未完成  3：进行中）',
   PRIMARY KEY (`orderDetailId`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='订单详情表';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='订单详情表';
 
 -- ----------------------------
 -- Records of order_detail
@@ -169,6 +170,8 @@ INSERT INTO `order_detail` VALUES ('1', '33', '4', '【羽毛球】场地预定'
 INSERT INTO `order_detail` VALUES ('2', '33', '5', '【羽毛球】场地预定', '50.00', '2016-10-31 21:00', '2016-10-31 22:00', null, null, '2', null, '2');
 INSERT INTO `order_detail` VALUES ('13', '41', '1', '农夫山泉', '6.00', null, null, '3', null, '2', null, '2');
 INSERT INTO `order_detail` VALUES ('14', '41', '2', '3', '2.00', null, null, '1', null, '2', null, '2');
+INSERT INTO `order_detail` VALUES ('16', '43', '24', '【羽毛球】场地预定', '50.00', '2016-11-05 09:00', '2016-11-05 10:00', '1', null, '2', null, '2');
+INSERT INTO `order_detail` VALUES ('17', '43', '25', '【篮球】场地预定', '1.00', '2016-11-05 10:00', '2016-11-05 11:00', '1', null, '2', null, '2');
 
 -- ----------------------------
 -- Table structure for order_info
@@ -195,13 +198,14 @@ CREATE TABLE `order_info` (
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`orderId`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COMMENT='订单表';
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COMMENT='订单表';
 
 -- ----------------------------
 -- Records of order_info
 -- ----------------------------
 INSERT INTO `order_info` VALUES ('33', '20161031215244', null, '0', '1', '3', '2', null, null, '100.00', null, null, null, null, null, '100', '2016-10-31 21:52:44', null, '1');
 INSERT INTO `order_info` VALUES ('41', '20161101115955', null, '10', '2', '2', '2', null, null, '8.00', null, null, null, null, null, '10', '2016-11-01 11:59:55', null, '1');
+INSERT INTO `order_info` VALUES ('43', '20161103135633', null, '0', '3', '2', '2', null, null, '51.00', null, null, null, null, null, '100', '2016-11-03 13:56:33', null, '1');
 
 -- ----------------------------
 -- Table structure for other_balance
@@ -459,13 +463,14 @@ CREATE TABLE `site_reserve_time` (
   `siteStartTime` varchar(20) DEFAULT NULL COMMENT '开始时间',
   `siteEndTime` varchar(20) DEFAULT NULL COMMENT '结束时间',
   PRIMARY KEY (`reserveTimeId`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='场地预定时间表';
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='场地预定时间表';
 
 -- ----------------------------
 -- Records of site_reserve_time
 -- ----------------------------
 INSERT INTO `site_reserve_time` VALUES ('4', '19', '1', '08:00', '09:00');
 INSERT INTO `site_reserve_time` VALUES ('5', '19', '1', '09:00', '10:00');
+INSERT INTO `site_reserve_time` VALUES ('20', '27', '1', '09:00', '15:00');
 
 -- ----------------------------
 -- Table structure for site_sport
@@ -530,62 +535,50 @@ INSERT INTO `system_dict` VALUES ('52', null, 'BALANCE_STYLE', '3', '微信', nu
 -- ----------------------------
 DROP TABLE IF EXISTS `system_menu`;
 CREATE TABLE `system_menu` (
-  `menuId` varchar(16) NOT NULL COMMENT '菜单标识',
-  `parentMenuId` varchar(16) DEFAULT NULL COMMENT '父菜单标识',
+  `menuId` int(11) NOT NULL AUTO_INCREMENT COMMENT '菜单标识',
+  `parentMenuId` int(11) DEFAULT NULL COMMENT '父菜单标识',
   `menuName` varchar(32) NOT NULL COMMENT '菜单名称',
   `menuCode` varchar(32) DEFAULT NULL COMMENT '菜单代码',
   `menuURL` text NOT NULL COMMENT '菜单链接',
   PRIMARY KEY (`menuId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单';
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COMMENT='菜单';
 
 -- ----------------------------
 -- Records of system_menu
 -- ----------------------------
-
--- ----------------------------
--- Table structure for system_privilege
--- ----------------------------
-DROP TABLE IF EXISTS `system_privilege`;
-CREATE TABLE `system_privilege` (
-  `privilegeId` int(11) NOT NULL AUTO_INCREMENT COMMENT '权限标识',
-  `privilegeName` varchar(32) NOT NULL COMMENT '权限名称',
-  `privilegeStatus` varchar(16) NOT NULL COMMENT '权限状态',
-  `createTime` varchar(20) DEFAULT NULL COMMENT '创建时间',
-  `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`privilegeId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限';
-
--- ----------------------------
--- Records of system_privilege
--- ----------------------------
-
--- ----------------------------
--- Table structure for system_privilege_function
--- ----------------------------
-DROP TABLE IF EXISTS `system_privilege_function`;
-CREATE TABLE `system_privilege_function` (
-  `privilegeId` int(11) NOT NULL COMMENT '权限标识',
-  `functionId` varchar(16) NOT NULL COMMENT '功能标识',
-  PRIMARY KEY (`privilegeId`,`functionId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限功能';
-
--- ----------------------------
--- Records of system_privilege_function
--- ----------------------------
-
--- ----------------------------
--- Table structure for system_privilege_menu
--- ----------------------------
-DROP TABLE IF EXISTS `system_privilege_menu`;
-CREATE TABLE `system_privilege_menu` (
-  `privilegeId` int(11) NOT NULL COMMENT '权限标识',
-  `menuId` varchar(16) NOT NULL COMMENT '菜单标识',
-  PRIMARY KEY (`privilegeId`,`menuId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限菜单';
-
--- ----------------------------
--- Records of system_privilege_menu
--- ----------------------------
+INSERT INTO `system_menu` VALUES ('1', '0', '会员管理', null, '');
+INSERT INTO `system_menu` VALUES ('2', '1', '新会员办理', null, '');
+INSERT INTO `system_menu` VALUES ('3', '1', '会员查询', null, '');
+INSERT INTO `system_menu` VALUES ('4', '1', '会员卡充值', null, '');
+INSERT INTO `system_menu` VALUES ('5', '1', '会员卡升级', null, '');
+INSERT INTO `system_menu` VALUES ('6', '1', '会员卡补办', null, '');
+INSERT INTO `system_menu` VALUES ('7', '1', '应收款管理', null, '');
+INSERT INTO `system_menu` VALUES ('8', '1', '发票登记查询', null, '');
+INSERT INTO `system_menu` VALUES ('9', '1', '会员类型设置', null, '');
+INSERT INTO `system_menu` VALUES ('10', '0', '预定管理', null, '');
+INSERT INTO `system_menu` VALUES ('11', '10', '场地预定', null, '');
+INSERT INTO `system_menu` VALUES ('12', '10', '批量预定', null, '');
+INSERT INTO `system_menu` VALUES ('13', '10', '批量预定订单查询', null, '');
+INSERT INTO `system_menu` VALUES ('14', '10', '场地热点分析', null, '');
+INSERT INTO `system_menu` VALUES ('15', '10', '场地设置', null, '');
+INSERT INTO `system_menu` VALUES ('16', '10', '场地类型设置', null, '');
+INSERT INTO `system_menu` VALUES ('17', '0', '商品管理', null, '');
+INSERT INTO `system_menu` VALUES ('18', '17', '商品设置', null, '');
+INSERT INTO `system_menu` VALUES ('19', '17', '进销存管理', null, '');
+INSERT INTO `system_menu` VALUES ('20', '17', '商品销售', null, '');
+INSERT INTO `system_menu` VALUES ('21', '17', '库存明细日志', null, '');
+INSERT INTO `system_menu` VALUES ('22', '0', '数据统计', null, '');
+INSERT INTO `system_menu` VALUES ('23', '22', '会员办理统计', null, '');
+INSERT INTO `system_menu` VALUES ('24', '22', '营业收支统计', null, '');
+INSERT INTO `system_menu` VALUES ('25', '22', '场地使用率', null, '');
+INSERT INTO `system_menu` VALUES ('26', '22', '签到记录', null, '');
+INSERT INTO `system_menu` VALUES ('27', '0', '系统设置', null, '');
+INSERT INTO `system_menu` VALUES ('28', '27', '基础设置', null, '');
+INSERT INTO `system_menu` VALUES ('29', '27', '员工信息设置', null, '');
+INSERT INTO `system_menu` VALUES ('30', '27', '员工权限设置', null, '');
+INSERT INTO `system_menu` VALUES ('31', '27', '通知管理', null, '');
+INSERT INTO `system_menu` VALUES ('32', '27', '数据库操作', null, '');
+INSERT INTO `system_menu` VALUES ('33', '27', '系统日志', null, '');
 
 -- ----------------------------
 -- Table structure for system_role
@@ -596,19 +589,50 @@ CREATE TABLE `system_role` (
   `roleName` varchar(32) NOT NULL COMMENT '角色名称',
   `roleStatus` varchar(16) NOT NULL COMMENT '角色状态',
   `readOnly` varchar(16) NOT NULL COMMENT '只读',
+  `roleDescribe` varchar(255) DEFAULT NULL COMMENT '角色说明',
+  `roleLevel` int(11) DEFAULT NULL COMMENT '显示优先级',
   `createTime` varchar(20) DEFAULT NULL COMMENT '创建时间',
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
+  `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`roleId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1002 DEFAULT CHARSET=utf8 COMMENT='角色';
 
 -- ----------------------------
 -- Records of system_role
 -- ----------------------------
-INSERT INTO `system_role` VALUES ('1', '超级管理员', '1', '1', '2016-10-13 10:00:00', null);
-INSERT INTO `system_role` VALUES ('2', '会员', '1', '1', '2016-10-13 10:00:00', null);
-INSERT INTO `system_role` VALUES ('3', '普通用户', '1', '1', '2016-10-13 10:00:00', null);
-INSERT INTO `system_role` VALUES ('1000', '经理', '1', '1', '2016-10-13 10:00:00', null);
-INSERT INTO `system_role` VALUES ('1001', '收银', '1', '1', '2016-10-13 10:00:00', null);
+INSERT INTO `system_role` VALUES ('1', '超级管理员', '1', '1', null, null, '2016-10-13 10:00:00', null, '1');
+INSERT INTO `system_role` VALUES ('2', '会员', '1', '1', null, null, '2016-10-13 10:00:00', null, '1');
+INSERT INTO `system_role` VALUES ('3', '普通用户', '1', '1', null, null, '2016-10-13 10:00:00', null, '1');
+INSERT INTO `system_role` VALUES ('1000', '经理', '1', '1', null, null, '2016-10-13 10:00:00', null, '1');
+INSERT INTO `system_role` VALUES ('1001', '收银', '1', '1', null, null, '2016-10-13 10:00:00', null, '1');
+
+-- ----------------------------
+-- Table structure for system_role_function
+-- ----------------------------
+DROP TABLE IF EXISTS `system_role_function`;
+CREATE TABLE `system_role_function` (
+  `roleId` int(11) NOT NULL COMMENT '角色标识',
+  `functionId` varchar(16) NOT NULL COMMENT '功能标识',
+  PRIMARY KEY (`roleId`,`functionId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色功能';
+
+-- ----------------------------
+-- Records of system_role_function
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for system_role_menu
+-- ----------------------------
+DROP TABLE IF EXISTS `system_role_menu`;
+CREATE TABLE `system_role_menu` (
+  `roleId` int(11) NOT NULL COMMENT '角色标识',
+  `menuId` int(11) NOT NULL COMMENT '菜单标识',
+  PRIMARY KEY (`roleId`,`menuId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限菜单';
+
+-- ----------------------------
+-- Records of system_role_menu
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for system_role_operator
@@ -629,23 +653,9 @@ INSERT INTO `system_role_operator` VALUES ('2', '559564');
 INSERT INTO `system_role_operator` VALUES ('2', '589456');
 INSERT INTO `system_role_operator` VALUES ('2', '864422');
 INSERT INTO `system_role_operator` VALUES ('2', '993345');
+INSERT INTO `system_role_operator` VALUES ('1000', '1');
 INSERT INTO `system_role_operator` VALUES ('1000', '111111');
-INSERT INTO `system_role_operator` VALUES ('1001', '1');
 INSERT INTO `system_role_operator` VALUES ('1001', '1234567');
-
--- ----------------------------
--- Table structure for system_role_privilege
--- ----------------------------
-DROP TABLE IF EXISTS `system_role_privilege`;
-CREATE TABLE `system_role_privilege` (
-  `roleId` int(11) NOT NULL COMMENT '角色标识',
-  `privilegeId` int(11) NOT NULL COMMENT '权限标识',
-  PRIMARY KEY (`roleId`,`privilegeId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色权限';
-
--- ----------------------------
--- Records of system_role_privilege
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for user_member
@@ -710,13 +720,13 @@ CREATE TABLE `user_operator` (
 -- ----------------------------
 -- Records of user_operator
 -- ----------------------------
-INSERT INTO `user_operator` VALUES ('1', '123456', '佟大为', '123456', '13051788102', '1', '2016-09-23 19:10:23', '2016-11-01 18:36:46', '2016-11-02 13:49:28', '001', null, null, '1990-07-20', null, '北京市天府路', '1');
+INSERT INTO `user_operator` VALUES ('1', '123456', '佟大为', '123456', '13051788102', '1', '2016-09-23 19:10:23', '2016-11-02 19:40:50', '2016-11-04 14:51:12', '001', null, null, '1990-07-21', null, '北京市天府路', '1');
 INSERT INTO `user_operator` VALUES ('2', '864422', '发送', '123456', '11111111111', '1', '2016-10-13 10:41:49', null, null, null, null, null, null, null, null, null);
 INSERT INTO `user_operator` VALUES ('3', '262768', '欧阳资源传话', '123456', '18701562971', '1', '2016-10-24 14:16:06', null, null, null, null, null, null, null, null, null);
 INSERT INTO `user_operator` VALUES ('4', '993345', '陈楚生', '123456', '12345678913', '1', '2016-10-24 14:52:41', null, null, null, null, null, null, null, null, null);
 INSERT INTO `user_operator` VALUES ('5', '559564', '葫芦娃', '123456', '12345678912', '1', '2016-10-24 15:08:42', null, null, null, null, null, null, null, null, null);
-INSERT INTO `user_operator` VALUES ('7', '111111', '陈小松', '123456', '15110275787', '1', '2016-10-27 21:08:42', '2016-11-01 17:52:57', null, '00002', '2016-10-10', '2016-11-10', '1990-09-30', '李金花', '北京市', null);
-INSERT INTO `user_operator` VALUES ('8', '1', '1', '123456', '213', '1', '2016-11-01 17:53:33', '2016-11-01 17:58:22', null, '2', '2016-11-02', '2016-11-01', '2016-11-01', '11', '123', null);
+INSERT INTO `user_operator` VALUES ('7', '111111', '陈小松', '123456', '15110275787', '1', '2016-10-27 21:08:42', '2016-11-04 14:51:40', null, '00002', '2016-10-10', '2016-11-10', '1990-09-30', '李金花', '北京市', null);
+INSERT INTO `user_operator` VALUES ('8', '1', '1', '123456', '213', '1', '2016-11-01 17:53:33', '2016-11-04 14:51:36', null, '2', '2016-11-02', '2016-11-01', '2016-11-01', '11', '123', null);
 INSERT INTO `user_operator` VALUES ('9', '1234567', '1', '123456', '321', '1', '2016-11-01 17:59:19', '2016-11-01 17:59:23', '2016-11-02 11:29:10', '3', '2016-11-03', '2016-11-01', '2016-11-01', '12', '213', null);
 INSERT INTO `user_operator` VALUES ('10', '589456', '大黄', '123456', '12345678912', '1', '2016-11-02 14:37:26', null, null, null, null, null, null, null, null, null);
 

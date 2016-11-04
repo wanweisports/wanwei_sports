@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.park.common.bean.OperatorInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.bean.ResponseBean;
+import com.park.common.bean.RoleInputView;
 import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.ParkBusiness;
@@ -123,13 +124,28 @@ public class SettingsController extends BaseController {
 
     // 角色设置详情
     @RequestMapping("getRolesView")
-    public String getRolesView() {
+    public String getRolesView(int roleId, Model model) {
+    	try {
+    		model.addAllAttributes(roleService.getRolesView(roleId));
+    		System.out.println(JsonUtils.toJson(roleService.getRolesView(roleId)));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         return "Settings/SettingsSystemRolesView";
     }
 
     // 角色设置
-    @RequestMapping("settings/getRoles")
-    public String getRoles() {
+    @RequestMapping("getRoles")
+    public String getRoles(RoleInputView roleInputView, Model model) {
+    	try{
+    		model.addAllAttributes(JsonUtils.fromJsonDF(roleInputView));
+    		roleInputView.setMinRoleId(IDBConstant.ROLE_EMPLOYEE);
+            PageBean pageBean = roleService.getRoles(roleInputView);
+            System.out.println(JsonUtils.toJson(pageBean));
+            super.setPageInfo(model, pageBean);
+    	} catch (Exception e) {
+            e.printStackTrace();
+        }
         return "Settings/SettingsSystemRoles";
     }
 
@@ -150,4 +166,5 @@ public class SettingsController extends BaseController {
     public String systemLogs() {
         return "Settings/SettingsSystemLogs";
     }
+    
 }

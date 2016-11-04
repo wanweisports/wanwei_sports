@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.park.common.bean.OrderInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.constant.IDBConstant;
-import com.park.common.constant.IPlatformConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.OrderDetail;
 import com.park.common.po.OrderInfo;
@@ -90,7 +89,7 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 		StringBuilder headSql = new StringBuilder("SELECT *");
 		StringBuilder bodySql = new StringBuilder(" FROM order_info");
 		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
-		if(!IPlatformConstant.ADMIN.equals(operatorId)){
+		if(!super.isAdmin(orderInputView)){
 			whereSql.append(" AND salesId = :salesId");
 		}
 		
@@ -133,7 +132,7 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 	
 	private OrderInfo getOrder(int orderId, int salesId, String operatorId){
 		OrderInfo orderInfo = getOrderInfo(orderId);
-		if(!IPlatformConstant.ADMIN.equals(operatorId)){
+		if(!super.isAdmin(operatorId)){
 			if(salesId != orderInfo.getSalesId()) throw new MessageException("操作错误");
 		}
 		return orderInfo;

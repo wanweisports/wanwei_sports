@@ -8,37 +8,37 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * SystemPrivilegeFunction entity. @author MyEclipse Persistence Tools
+ * SystemRoleFunction entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "system_privilege_function", catalog = "park")
-public class SystemPrivilegeFunction implements java.io.Serializable {
+@Table(name = "system_role_function", catalog = "park")
+public class SystemRoleFunction implements java.io.Serializable {
 
 	// Fields
 
-	private SystemPrivilegeFunctionId id;
+	private SystemRoleFunctionId id;
 
 	// Constructors
 
 	/** default constructor */
-	public SystemPrivilegeFunction() {
+	public SystemRoleFunction() {
 	}
 
 	/** full constructor */
-	public SystemPrivilegeFunction(SystemPrivilegeFunctionId id) {
+	public SystemRoleFunction(SystemRoleFunctionId id) {
 		this.id = id;
 	}
 
 	// Property accessors
 	@EmbeddedId
 	@AttributeOverrides({
-			@AttributeOverride(name = "privilegeId", column = @Column(name = "privilegeId", nullable = false)),
+			@AttributeOverride(name = "roleId", column = @Column(name = "roleId", nullable = false)),
 			@AttributeOverride(name = "functionId", column = @Column(name = "functionId", nullable = false, length = 16)) })
-	public SystemPrivilegeFunctionId getId() {
+	public SystemRoleFunctionId getId() {
 		return this.id;
 	}
 
-	public void setId(SystemPrivilegeFunctionId id) {
+	public void setId(SystemRoleFunctionId id) {
 		this.id = id;
 	}
 
