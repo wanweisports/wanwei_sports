@@ -82,7 +82,6 @@ public class SettingsController extends BaseController {
     		model.addAllAttributes(JsonUtils.fromJsonDF(operatorInputView));
     		model.addAttribute("roleNames", roleService.getRoleNames(IDBConstant.ROLE_EMPLOYEE));
 			PageBean pageBean = operatorService.getOperatorList(operatorInputView);
-			System.out.println(JsonUtils.toJson(pageBean));
 			super.setPageInfo(model, pageBean);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -141,7 +140,6 @@ public class SettingsController extends BaseController {
     		model.addAllAttributes(JsonUtils.fromJsonDF(roleInputView));
     		roleInputView.setMinRoleId(IDBConstant.ROLE_EMPLOYEE);
             PageBean pageBean = roleService.getRoles(roleInputView);
-            System.out.println(JsonUtils.toJson(pageBean));
             super.setPageInfo(model, pageBean);
     	} catch (Exception e) {
             e.printStackTrace();
