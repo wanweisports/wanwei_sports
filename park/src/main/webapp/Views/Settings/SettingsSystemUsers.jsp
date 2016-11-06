@@ -171,6 +171,26 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="tips_modal" tabindex="-1" role="dialog" aria-labelledby="tipsModalLabel">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="tipsModalLabel">确认框</h5>
+                </div>
+                <div class="modal-body">
+                    <p class="text-danger text-message">锁定员工后，会导致此员工无法登陆系统；您确定要锁定此用户吗? </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">取 消</button>
+                    <button type="button" class="btn btn-warning lock-confirm">确 认</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </layout:override>
 
 <c:import url="../Shared/Layout_New.jsp">

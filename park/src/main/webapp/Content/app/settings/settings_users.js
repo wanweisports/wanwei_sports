@@ -58,6 +58,17 @@
             $(".user-lock").on("click", function (e) {
                 e.preventDefault();
 
+                $("#tips_modal").modal({show: true, backdrop: false});
+
+                $("#tips_modal").find(".lock-confirm").attr("data-id", $(this).attr("data-id"));
+            });
+
+            // 锁定用户确认
+            $(".lock-confirm").on("click", function (e) {
+                e.preventDefault();
+
+                $("#tips_success_modal").modal("hide");
+
                 var operatorId = $(this).attr("data-id");
 
                 $.post('settings/lockEmployee', {
