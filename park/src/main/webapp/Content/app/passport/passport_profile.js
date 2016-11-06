@@ -36,7 +36,10 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        alert("完善信息保存成功");
+                        $("#tips_modal").modal({show: true, backdrop: false});
+                        setTimeout(function () {
+                            $("#tips_modal").modal("hide");
+                        }, 3000);
                     } else {
                         alert(res.message || "完善信息保存失败, 请稍后重试");
                     }
