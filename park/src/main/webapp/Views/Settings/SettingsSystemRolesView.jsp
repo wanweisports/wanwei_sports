@@ -31,6 +31,7 @@
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <form id="roles_form" class="form-horizontal" novalidate onsubmit="return false;">
+            <input type="hidden" name="roleId" value="${role.roleId}">
             <div class="panel panel-default">
                 <div class="panel-heading">员工权限设置</div>
                 <div class="panel-body">
@@ -42,36 +43,31 @@
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="role_name" name="roleName"
-                                       placeholder="权限名称" autocomplete="off"
+                                       placeholder="权限名称" autocomplete="off" value="${role.roleName}"
                                        data-val="true" data-val-required="角色名称不能为空">
                                 <div data-valmsg-for="roleName" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="role_remark" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 权限说明
-                            </label>
+                            <label for="role_remark" class="col-sm-4 control-label">权限说明</label>
 
                             <div class="col-sm-8">
-                                <textarea class="form-control" rows="3" id="role_remark" name="roleRemark"
-                                          placeholder="权限说明"
-                                          data-val="true" data-val-required="角色说明不能为空"></textarea>
-                                <div data-valmsg-for="roleRemark" data-valmsg-replace="true"></div>
+                                <textarea class="form-control" rows="3" id="role_remark" name="roleDescribe"
+                                          placeholder="权限说明" value="${role.roleDescribe}"></textarea>
+                                <div data-valmsg-for="roleDescribe" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <!-- 未用到 -->
                         <div class="form-group">
-                            <label for="role_priority" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 显示优先级
-                            </label>
+                            <label for="role_priority" class="col-sm-4 control-label">显示优先级</label>
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="role_priority" name="rolePriority"
-                                       placeholder="显示优先级" autocomplete="off" value="1"
+                                       placeholder="显示优先级" autocomplete="off"
                                        data-val="true" data-val-required="显示优先级不能为空"
-                                       data-val-regex-pattern="^\d{1,3}$"
+                                       data-val-regex-pattern="^\d{1,3}$" value="${role.roleLevel}"
                                        data-val-regex="显示优先级只能是1~3位数字">
-                                <div data-valmsg-for="rolePriority" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="roleLevel" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -81,18 +77,20 @@
 
                             <div class="col-sm-8">
                                 <label class="radio-inline">
-                                    <input type="radio" name="roleStatus" id="role_status1" value="1" checked> 正常
+                                    <input type="radio" name="roleStatus" id="role_status1" value="1"
+                                           <c:if test="${roleStatus == 1}">checked</c:if>> 正常
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="roleStatus" id="role_status2" value="2"> 锁定
+                                    <input type="radio" name="roleStatus" id="role_status2" value="2"
+                                           <c:if test="${roleStatus == 1}">checked</c:if>> 锁定
                                 </label>
                                 <div data-valmsg-for="roleStatus" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-offset-4 col-sm-4">
+                            <div class="col-sm-offset-4 col-sm-8">
                                 <p class="sc-submit-tips"></p>
-                                <button type="submit" class="btn btn-primary roles-save" style="width: 100%;">
+                                <button type="submit" class="btn btn-primary col-sm-4 roles-save">
                                     <span class="glyphicon glyphicon-ok"></span> 设置权限
                                 </button>
                             </div>
@@ -113,10 +111,10 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="tipsModalLabel">提示框</h4>
+                    <h5 class="modal-title" id="tipsModalLabel">提示框</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-success tips-content" role="alert">角色设置保存成功!</div>
+                    <p class="text-success">角色设置保存成功!</p>
                 </div>
             </div>
         </div>

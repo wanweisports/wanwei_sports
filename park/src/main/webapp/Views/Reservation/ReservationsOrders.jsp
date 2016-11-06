@@ -5,6 +5,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+   <link href="/Content/style/reservations/reservations_orders.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/app/reservations/reservations_orders.js?v=${static_resource_version}"></script>
 </layout:override>
@@ -37,68 +41,91 @@
         </div>
         <div class="panel panel-default">
             <div class="panel-body">
-                <div class="table-responsive card-type-list">
-                    <table class="table">
+                <div class="table-responsive">
+                    <table class="table orders-list">
                         <thead>
                         <tr>
-                            <th>预订时间</th>
-                            <th>订单编号</th>
-                            <th>订单类型</th>
+                            <th>订单详情</th>
+                            <th>订单状态</th>
                             <th>订单价格</th>
                             <th>订单状态</th>
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="order" items="${list}">
-                            <tr>
-                                <td>${order.createTime}</td>
-                                <td>${order.orderNo}</td>
-                                <c:if test="${order.orderServiceType == 1}">
-                                    <td>场地预订</td>
-                                </c:if>
-                                <c:if test="${order.orderServiceType == 2}">
-                                    <td>购买商品</td>
-                                </c:if>
-                                <c:if test="${order.orderServiceType == 3}">
-                                    <td>批量预订</td>
-                                </c:if>
-                                <td>${order.orderSumPrice}</td>
-                                <c:if test="${order.payStatus == 1}">
-                                    <td>已支付</td>
-                                </c:if>
-                                <c:if test="${order.payStatus == 2}">
-                                    <td>未支付</td>
-                                </c:if>
-                                <c:if test="${order.payStatus == 3}">
-                                    <td>部分支付</td>
-                                </c:if>
-                                <td>
-                                    <button class="btn btn-warning">
+                        <c:forEach var="order" items="${list}" varStatus="loop">
+                            <tr class="tr-th">
+                                <td colspan="5">
+                                    <span class="order-date-time">${order.createTime}</span>
+                                    <span class="order-number">订单号：<a href="">${order.orderNo}</a></span>
+                                    <c:if test="${order.orderServiceType == 1}">
+                                        <span>订单类型: 场地预订</span>
+                                    </c:if>
+                                    <c:if test="${order.orderServiceType == 2}">
+                                        <span>订单类型: 商品订单</span>
+                                    </c:if>
+                                    <c:if test="${order.orderServiceType == 3}">
+                                        <span>订单类型: 批量预订</span>
+                                    </c:if>
+
+                                    <button class="btn btn-warning pull-right">
                                         <span class="glyphicon glyphicon-trash"></span> 删除
                                     </button>
-                                    <button class="btn btn-danger">
-                                        <span class="glyphicon glyphicon-remove"></span> 取消
-                                    </button>
-                                    <button class="btn btn-primary">
-                                        <span class="glyphicon glyphicon-usd"></span> 支付
-                                    </button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td colspan="6">
-                                    <ul class="list-group">
-                                        <c:forEach var="item" items="${order.orderDetailList}">
-                                        <li class="list-group-item">
-                                            ${item.itemName}
-                                            ${item.itemPrice}
-                                            ${item.itemStartTime}
-                                            ${item.itemEndTime}
-                                        </li>
-                                        </c:forEach>
-                                    </ul>
-                                </td>
-                            </tr>
+                            <c:forEach var="item" items="${order.orderDetailList}">
+                                <tr class="tr-bd">
+                                    <td>
+                                        <p>预订场地: ${item.itemName}</p>
+                                        <p>预订价格: ${item.itemPrice}</p>
+                                        <p>预订时间: ${item.itemStartTime} ~ ${item.itemEndTime}</p>
+                                    </td>
+
+                                    <c:if test="${item.orderDetailStatus == 1}">
+                                        <td>已完成</td>
+                                    </c:if>
+                                    <c:if test="${item.orderDetailStatus == 2}">
+                                        <td class="text-danger">未完成</td>
+                                    </c:if>
+                                    <c:if test="${item.orderDetailStatus == 3}">
+                                        <td class="text-success">进行中</td>
+                                    </c:if>
+
+                                    <td>${order.orderSumPrice}</td>
+
+                                    <td>
+                                        <c:if test="${order.payStatus == 1}">
+                                            <p class="text-success">已支付</p>
+                                        </c:if>
+                                        <c:if test="${order.payStatus == 2}">
+                                            <p class="text-danger">未支付</p>
+                                        </c:if>
+                                        <c:if test="${order.payStatus == 3}">
+                                            <p class="text-danger">部分支付</p>
+                                        </c:if>
+
+                                        <c:if test="${order.orderStatus == 1}">
+                                            <p class="text-success">已完成</p>
+                                        </c:if>
+                                        <c:if test="${order.orderStatus == 2}">
+                                            <p class="text-danger">未完成</p>
+                                        </c:if>
+                                        <c:if test="${order.orderStatus == 3}">
+                                            <p>已取消</p>
+                                        </c:if>
+                                    </td>
+                                    <td>
+                                        <c:if test="${item.orderDetailStatus != 1}">
+                                            <button class="btn btn-danger">
+                                                <span class="glyphicon glyphicon-remove"></span> 取消
+                                            </button>
+                                        </c:if>
+                                        <button class="btn btn-primary">
+                                            <span class="glyphicon glyphicon-usd"></span> 支付
+                                        </button>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                         </c:forEach>
                         </tbody>
                     </table>

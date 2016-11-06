@@ -7,6 +7,11 @@
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/app/settings/settings_roles.js?v=${static_resource_version}"></script>
+    <script>
+        $(document).ready(function () {
+            $("#role_state").val('${status}');
+        });
+    </script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
@@ -20,7 +25,7 @@
             <div class="panel-body">
                 <form id="roles_filter_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
-                        <select class="form-control" id="role_state" name="roleState" style="width: 160px;">
+                        <select class="form-control" id="role_state" name="status" style="width: 160px;">
                             <option value="">所有状态</option>
                             <option value="1">正常</option>
                             <option value="2">锁定</option>
@@ -45,7 +50,7 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>#</th>
+                            <th>序号</th>
                             <th>权限名称</th>
                             <th>权限说明</th>
                             <th>权限状态</th>
@@ -55,47 +60,21 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>经理</td>
-                            <td>管理营业</td>
-                            <td class="text-success">正常</td>
-                            <td>李小安</td>
-                            <td>2016-08-21 12:23:25</td>
-                            <td>
-                                <a class="btn btn-primary" href="/settings/getRolesView?roleId=2">
-                                    <span class="glyphicon glyphicon-share-alt"></span>  查看
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>收银</td>
-                            <td>日常工作</td>
-                            <td class="text-success">正常</td>
-                            <td>李小安</td>
-                            <td>2016-08-21 12:23:25</td>
-                            <td>
-                                <a class="btn btn-primary" href="/settings/getRolesView?roleId=1">
-                                    <span class="glyphicon glyphicon-share-alt"></span>  查看
-                                </a>
-                            </td>
-                        </tr>
-                        <c:forEach var="roles" items="${roles}" varStatus="loop">
+                        <c:forEach var="role" items="${list}" varStatus="loop">
                             <tr>
-                                <td>${loop.index}</td>
-                                <td>${role.role_name}</td>
-                                <td>${role.role_remark}</td>
-                                <c:if test="${role.role_status == 1}">
+                                <td>${loop.index + 1}</td>
+                                <td>${role.roleName}</td>
+                                <td>${role.roleDescribe}</td>
+                                <c:if test="${role.roleStatus == 1}">
                                     <td class="text-success">正常</td>
                                 </c:if>
-                                <c:if test="${role.role_status == 2}">
+                                <c:if test="${role.roleStatus == 2}">
                                     <td class="text-danger">锁定</td>
                                 </c:if>
-                                <td>李小安</td>
-                                <td>2016-08-21 12:23:25</td>
+                                <td>${role.operatorName}</td>
+                                <td>${role.createTime}</td>
                                 <td>
-                                    <a class="btn btn-primary" href="/settings/getRolesView?roleId=${role.role_id}">
+                                    <a class="btn btn-primary" href="/settings/getRolesView?roleId=${role.roleId}">
                                         <span class="glyphicon glyphicon-share-alt"></span>  查看
                                     </a>
                                 </td>
@@ -103,6 +82,70 @@
                         </c:forEach>
                         </tbody>
                     </table>
+                    <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >
+                        <p class="pull-left" style="margin: 12px 14px;">
+                            <span>${pageSize}条/页</span>
+                            <span>总${count}条</span>
+                        </p>
+                        <ul class="pagination pull-right">
+                            <c:if test="${currentPage == 1}">
+                                <li class="disabled">
+                                    <a href="javascript:;" data-index="1">
+                                        <span>首页</span>
+                                    </a>
+                                </li>
+                                <li class="disabled">
+                                    <a href="javascript:;" data-index="1">
+                                        <span>上一页</span>
+                                    </a>
+                                </li>
+                            </c:if>
+                            <c:if test="${currentPage != 1}">
+                                <li>
+                                    <a class="page-first" href="javascript:;" data-index="1">
+                                        <span>首页</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="page-prev" href="javascript:;" data-index="${currentPage - 1}">
+                                        <span>上一页</span>
+                                    </a>
+                                </li>
+                            </c:if>
+                            <c:forEach var="i" begin="1" end="${lastPage}">
+                                <c:if test="${i == currentPage}">
+                                    <li class="active"><a href="javascript:;" data-index="${i}">${i}</a></li>
+                                </c:if>
+                                <c:if test="${i != currentPage}">
+                                    <li><a class="page-index" href="javascript:;" data-index="${i}">${i}</a></li>
+                                </c:if>
+                            </c:forEach>
+                            <c:if test="${currentPage == lastPage}">
+                                <li class="disabled">
+                                    <a href="javascript:;" data-index="1">
+                                        <span>下一页</span>
+                                    </a>
+                                </li>
+                                <li class="disabled">
+                                    <a href="javascript:;" data-index="1">
+                                        <span>末页</span>
+                                    </a>
+                                </li>
+                            </c:if>
+                            <c:if test="${currentPage != lastPage}">
+                                <li>
+                                    <a class="page-next" href="javascript:;" data-index="${currentPage + 1}">
+                                        <span>下一页</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="page-last" href="javascript:;" data-index="${lastPage}">
+                                        <span>末页</span>
+                                    </a>
+                                </li>
+                            </c:if>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
