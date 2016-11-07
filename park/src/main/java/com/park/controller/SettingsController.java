@@ -123,10 +123,11 @@ public class SettingsController extends BaseController {
 
     // 角色设置详情
     @RequestMapping("getRolesView")
-    public String getRolesView(int roleId, Model model) {
+    public String getRolesView(Integer roleId, Model model) {
     	try {
-    		model.addAllAttributes(roleService.getRolesView(roleId));
-    		System.out.println(JsonUtils.toJson(roleService.getRolesView(roleId)));
+    		if(roleId != null){
+    			model.addAllAttributes(roleService.getRolesView(roleId));
+    		}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

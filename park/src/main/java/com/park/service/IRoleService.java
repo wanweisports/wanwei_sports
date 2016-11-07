@@ -20,4 +20,6 @@ public interface IRoleService {
 	
 	public Map<String, Object> getRolesView(int roleId);
 	
+	public Map<String, Object> getAllRoles(int roleId);
+	
 }
