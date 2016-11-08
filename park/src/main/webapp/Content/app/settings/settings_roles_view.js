@@ -6,8 +6,29 @@
         },
         // 初始化树
         initTree: function () {
+            $.post('/system/getAllRoles', {}, function (res) {
+                var data = {
+                    "id": "root",
+                    "text" : "全部权限",
+                    "state" : {"opened": true, "selected": true },
+                    "children" : []
+                };
+
+                if (res.code == 1) {
+                    data.children = res.data.roleMenuList;
+                }
+
+                $('#role_tree').jstree({
+                    "plugins": ["wholerow", "checkbox"],
+                    'core': {
+                        data : [data]
+                    }
+                });
+                $('#role_tree').jstree('select_node', $('[name="menuIds"]').val());
+            });
+
             // lazy demo
-            $('#role_tree').jstree({
+            /*$('#role_tree').jstree({
                 "plugins" : ["wholerow", "checkbox"],
                 'core' : {
                     'data' : [{
@@ -121,7 +142,7 @@
                         }]
                     }]
                 }
-            });
+            });*/
         },
         initEvents: function () {
             // 角色设置
@@ -141,6 +162,8 @@
                     return false;
                 }
                 $form.attr("submitting", "submitting");
+
+                conditions.menuIds = conditions.limit.join(",");
 
                 $.post('/settings/roles', conditions, function (res) {
                     $form.attr("submitting", "");

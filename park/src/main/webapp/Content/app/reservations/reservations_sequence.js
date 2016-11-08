@@ -145,19 +145,19 @@
                                 if (reserveInfo.reserveType == 1) {
                                     $site.removeClass().addClass('unpaid computer')
                                         .html(content.opts.Reservation_Tpl
-                                            .replace(/#USERNAME#/, reserveInfo.operatorName.substr(1) + "*")
+                                            .replace(/#USERNAME#/, reserveInfo.operatorName.substr(0,2) + "*")
                                             .replace(/#USERMOBILE#/, "*" + reserveInfo.operatorMobile.substr(-4))
                                         );
                                 } else if (reserveInfo.reserveType == 2) {
                                     $site.removeClass().addClass('unpaid mobile')
                                         .html(content.opts.Reservation_Tpl
-                                            .replace(/#USERNAME#/, reserveInfo.operatorName.substr(1) + "*")
+                                            .replace(/#USERNAME#/, reserveInfo.operatorName.substr(0,2) + "*")
                                             .replace(/#USERMOBILE#/, "*" + reserveInfo.operatorMobile.substr(-4))
                                         );
                                 } else if (reserveInfo.reserveType == 3) {
                                     $site.removeClass().addClass('unpaid phone')
                                         .html(content.opts.Reservation_Tpl
-                                            .replace(/#USERNAME#/, reserveInfo.operatorName.substr(1) + "*")
+                                            .replace(/#USERNAME#/, reserveInfo.operatorName.substr(0,2) + "*")
                                             .replace(/#USERMOBILE#/, "*" + reserveInfo.operatorMobile.substr(-4))
                                         );
                                 }
@@ -237,7 +237,60 @@
             $(".sequence-lock").on("click", function (e) {
                 e.preventDefault();
 
-                $(".tips-modal").modal({backdrop: false, show: true});
+                var data = _findSelectedArea();
+
+                if (data.length === 0) {
+                    return alert("请选择场地");
+                }
+
+                content.opts.data = {
+                    siteReserveDateList: [{
+                        reserveStartDate: content.opts.Current_Date,
+                        reserveEndDate: content.opts.Current_Date,
+                        reserveWeek: (new Date(content.opts.Current_Date)).getDay() || 7,
+                        siteReserveTimeList: data
+                    }]
+                };
+                $.post('/site/lockSite', {
+                    siteOperationJson: JSON.stringify(content.opts.data),
+                    lock: true
+                }, function (res) {
+                    if (res.code == 1) {
+                        $(".tips-modal").modal({backdrop: false, show: true});
+                    } else {
+                        alert(res.message || "锁场失败, 请稍后重试");
+                    }
+                });
+            });
+
+            // 解锁
+            $(".sequence-unlock").on("click", function (e) {
+                e.preventDefault();
+
+                var data = _findSelectedArea();
+
+                if (data.length === 0) {
+                    return alert("请选择场地");
+                }
+
+                content.opts.data = {
+                    siteReserveDateList: [{
+                        reserveStartDate: content.opts.Current_Date,
+                        reserveEndDate: content.opts.Current_Date,
+                        reserveWeek: (new Date(content.opts.Current_Date)).getDay() || 7,
+                        siteReserveTimeList: data
+                    }]
+                };
+                $.post('/site/lockSite', {
+                    siteOperationJson: JSON.stringify(content.opts.data),
+                    lock: false
+                }, function (res) {
+                    if (res.code == 1) {
+                        $(".tips-modal").modal({backdrop: false, show: true});
+                    } else {
+                        alert(res.message || "解锁失败, 请稍后重试");
+                    }
+                });
             });
 
             // 预订
@@ -337,6 +390,43 @@
                         alert(res.message || "确认订单失败, 请稍后重试");
                     }
                 });
+            });
+
+            // 检索会员
+            $("#reservations_name").autosuggest({
+                url: '/member/searchMember',
+                method: 'post',
+                queryParamName: 'search',
+                dataCallback:function(res) {
+                    var data = res.data;
+                    var json = [];
+
+                    if (res.code == 1) {
+                        if (data && data.members && data.members.length > 0) {
+                            for (var i = 0; i < data.members.length; i++) {
+                                json.push({
+                                    id: data.members[i].memberMobile,
+                                    label: data.members[i].memberId,
+                                    value: data.members[i].memberName
+                                });
+                            }
+                            return json;
+                        } else {
+                            alert('没有搜索到会员');
+                            return [];
+                        }
+                    } else {
+                        alert('搜索会员失败, 请稍后重试');
+                        return [];
+                    }
+                },
+                onSelect:function(elm) {
+                    var memberId = elm.data('label');
+                    var mobile = elm.data('id');
+
+                    $('#reservations_member').val(memberId);
+                    $('#reservations_mobile').val(mobile);
+                }
             });
         }
     };

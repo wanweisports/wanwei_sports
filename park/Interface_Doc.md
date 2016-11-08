@@ -256,6 +256,23 @@
     memberName      会员姓名
 >
 
+## 预订管理
+主要是管理场地的预订，批量预订，场地的操作等。
+
+### 1.  场地锁定与解锁
+目的是锁定或者解锁某些场地的预订。
+> 请求地址：
+>
+    site/lockSite.do
+> 
+> 请求类型：POST（application/json）
+>
+> 请求格式：
+> 
+    lock                 锁场吗? true : false
+    siteOperationJson    场次信息
+>
+
 ## 商品管理
 主要是管理商品的设置，销售，进销存等。
 
@@ -328,6 +345,43 @@
 > 
 > 请求类型：POST（application/json）
 > 
+
+## 订单管理
+主要是管理场地，商品等的购买产生的订单管理。
+
+### 1.  取消订单
+目的是订单的取消操作。
+> 页面路由：
+>
+    order/getOrderList.do
+>
+> 请求地址：
+>
+    order/cancelOrder.do
+> 
+> 请求类型：GET（application/json || JSP页面）
+>
+> 请求地址：
+> 
+    orderId    订单ID
+>
+
+### 1.  删除订单
+目的是订单的删除操作。
+> 页面路由：
+>
+    order/getOrderList.do
+>
+> 请求地址：
+>
+    order/deleteOrder.do
+> 
+> 请求类型：GET（application/json || JSP页面）
+>
+> 请求地址：
+> 
+    orderId    订单ID
+>
 
 ## 系统设置
 主要是一些系统的参数的设置，以及操作用户的设置等。
@@ -402,6 +456,45 @@
     roleId                员工权限
 >
 
+### 4.  系统可配置权限的功能列表
+目的是查询系统中可以配置权限控制的所有功能。
+> 页面路由：
+>
+    settings/getRolesView.do
+>
+> 请求地址：
+>
+    system/getAllRoles.do
+> 
+> 请求类型：POST（application/json）
+> 
+> 请求参数：
+> 
+    roleMenuList    菜单列表
+>
+
+### 5.  设置员工权限
+目的是更新或者增加员工的权限信息。
+> 页面路由：
+>
+    settings/getRolesView.do
+>
+> 请求地址：
+>
+    settings/saveRole.do
+> 
+> 请求类型：POST（application/json）
+> 
+> 请求参数：
+> 
+    roleName        权限名称
+    roleStatus      权限可用状态
+    roleDescribe    说明描述
+    roleLevel       权限优先级(当前没用)
+    menuIds         功能权限(2,3,4,5,6,7)
+    roleId          权限ID
+>
+
 ## 通行证
 主要是个人账户信息的管理，如密码的修改，信息的完善等。
 
@@ -446,3 +539,28 @@
      newPwd        新密码
      confirmPwd    确认密码
 >
+
+## 附件
+
+### 1.  功能菜单列表(roleMenuList)格式
+```javascript
+[{
+    "id": "1",
+    "text": "会员管理",
+    "children": [{
+        "id": "2",
+        "text": "新会员办理"
+    }, {
+        "id": "3",
+        "text": "会员查询"
+    }...]
+}, {
+    "id": "10",
+    "text": "预定管理",
+    "children": [{
+        "id": "11",
+        "text": "场地预定"
+    }...]
+}...]
+```
+

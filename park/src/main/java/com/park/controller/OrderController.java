@@ -39,15 +39,20 @@ public class OrderController extends BaseController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "Reservation/ReservationsOrders";
+
+        if (orderInputView.getOrderServiceTypes().equals("2")) {
+            return "Goods/GoodsOrders";
+        } else {
+            return "Reservation/ReservationsOrders";
+        }
     }
 	
 	/**
 	 * 删除订单
 	 */
 	@ResponseBody
-	@RequestMapping("delOrder")
-    public ResponseBean delOrder(int orderId){
+	@RequestMapping("deleteOrder")
+    public ResponseBean deleteOrder(int orderId){
         try {
         	UserOperator userInfo = getUserInfo();
         	OrderInputView orderInputView = new OrderInputView();
@@ -69,8 +74,8 @@ public class OrderController extends BaseController {
 	 * 取消订单
 	 */
 	@ResponseBody
-	@RequestMapping("cancleOrder")
-    public ResponseBean cancleOrder(int orderId){
+	@RequestMapping("cancelOrder")
+    public ResponseBean cancelOrder(int orderId){
         try {
         	UserOperator userInfo = getUserInfo();
         	OrderInputView orderInputView = new OrderInputView();

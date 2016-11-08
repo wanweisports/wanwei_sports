@@ -14,13 +14,13 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>预订管理</span> &gt;&gt; <span>预订订单</span>
+    当前位置: <span>商品管理</span> &gt;&gt; <span>商品订单</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
-            <div class="panel-heading">预订订单查询</div>
+            <div class="panel-heading">商品订单查询</div>
             <div class="panel-body">
                 <form id="orders_filter_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
@@ -58,12 +58,7 @@
                                 <td colspan="5">
                                     <span class="order-date-time">${order.createTime}</span>
                                     <span class="order-number">订单号：<a href="">${order.orderNo}</a></span>
-                                    <c:if test="${order.orderServiceType == 1}">
-                                        <span>订单类型: 场地预订</span>
-                                    </c:if>
-                                    <c:if test="${order.orderServiceType == 3}">
-                                        <span>订单类型: 批量预订</span>
-                                    </c:if>
+                                    <span>订单类型: 商品订单</span>
 
                                     <button class="btn btn-warning pull-right order-delete" data-id="${order.orderId}">
                                         <span class="glyphicon glyphicon-trash"></span> 删除
@@ -73,9 +68,9 @@
                             <c:forEach var="item" items="${order.orderDetailList}">
                                 <tr class="tr-bd">
                                     <td>
-                                        <p>预订场地: ${item.itemName}</p>
-                                        <p>预订价格: ${item.itemPrice}</p>
-                                        <p>预订时间: ${item.itemStartTime} ~ ${item.itemEndTime}</p>
+                                        <p>商品名称: ${item.itemName}</p>
+                                        <p>商品价格: ${item.itemPrice}</p>
+                                        <p>购买数量: ${item.itemAmount}</p>
                                     </td>
 
                                     <c:if test="${item.orderDetailStatus == 1}">

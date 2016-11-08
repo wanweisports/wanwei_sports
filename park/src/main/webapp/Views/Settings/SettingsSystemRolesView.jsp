@@ -31,7 +31,8 @@
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <form id="roles_form" class="form-horizontal" novalidate onsubmit="return false;">
-            <input type="hidden" name="roleId" value="${role.roleId}">
+            <input type="hidden" name="roleId" value="${roleId}">
+            <input type="hidden" name="menuIds" value="${menuIds}">
             <div class="panel panel-default">
                 <div class="panel-heading">员工权限设置</div>
                 <div class="panel-body">
@@ -43,7 +44,7 @@
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="role_name" name="roleName"
-                                       placeholder="权限名称" autocomplete="off" value="${role.roleName}"
+                                       placeholder="权限名称" autocomplete="off" value="${roleName}"
                                        data-val="true" data-val-required="角色名称不能为空">
                                 <div data-valmsg-for="roleName" data-valmsg-replace="true"></div>
                             </div>
@@ -53,7 +54,7 @@
 
                             <div class="col-sm-8">
                                 <textarea class="form-control" rows="3" id="role_remark" name="roleDescribe"
-                                          placeholder="权限说明" value="${role.roleDescribe}"></textarea>
+                                          placeholder="权限说明" value="${roleDescribe}"></textarea>
                                 <div data-valmsg-for="roleDescribe" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -65,7 +66,7 @@
                                 <input type="text" class="form-control" id="role_priority" name="rolePriority"
                                        placeholder="显示优先级" autocomplete="off"
                                        data-val="true" data-val-required="显示优先级不能为空"
-                                       data-val-regex-pattern="^\d{1,3}$" value="${role.roleLevel}"
+                                       data-val-regex-pattern="^\d{1,3}$" value="${roleLevel}"
                                        data-val-regex="显示优先级只能是1~3位数字">
                                 <div data-valmsg-for="roleLevel" data-valmsg-replace="true"></div>
                             </div>

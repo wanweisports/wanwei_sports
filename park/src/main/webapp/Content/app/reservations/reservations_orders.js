@@ -35,6 +35,69 @@
                     location.assign(content.opts.URL + '?page=' + pageIndex);
                 }
             });
+
+            // 取消订单
+            $(".order-cancel").on("click", function (e) {
+                e.preventDefault();
+
+                var conditions = {
+                    orderId: $(this).attr("data-id")
+                };
+
+                if ($(this).attr("working") == "working") {
+                    return false;
+                }
+                $(this).attr("working", "working");
+
+                $.post('/order/cancelOrder', conditions, function (res) {
+                    $(this).attr("working", "");
+
+                    if (res.code == 1) {
+                        location.reload();
+                    } else {
+                        alert(res.message || "取消订单失败, 请稍后重试");
+                    }
+                });
+            });
+
+            // 删除订单
+            $(".order-delete").on("click", function (e) {
+                e.preventDefault();
+
+                var conditions = {
+                    orderId: $(this).attr("data-id")
+                };
+
+                if ($(this).attr("working") == "working") {
+                    return false;
+                }
+                $(this).attr("working", "working");
+
+                $.post('/order/deleteOrder', conditions, function (res) {
+                    $(this).attr("working", "");
+
+                    if (res.code == 1) {
+                        location.reload();
+                    } else {
+                        alert(res.message || "取消订单失败, 请稍后重试");
+                    }
+                });
+            });
+
+            // 支付
+            $(".order-pay").on("click", function (e) {
+                e.preventDefault();
+
+                $("#zhifuModal").modal({backdrop: false, show: true});
+            });
+
+            // 确认支付
+            $(".reservations-pay-confirm").on("click", function (e) {
+                e.preventDefault();
+
+                $("#zhifuModal").modal("hide");
+                location.reload();
+            });
         }
     };
 

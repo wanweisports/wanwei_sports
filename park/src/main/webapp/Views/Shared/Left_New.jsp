@@ -99,6 +99,30 @@
                     </table>
                 </td>
             </tr>
+            <tr class="list-nav-header" data-item="student">
+                <td>
+                    <span><a href="javascript:;">学生管理</a></span>
+                </td>
+            </tr>
+            <tr class="list-nav-list student" style="${param.nav == "student" ? "" : "display:none;"}">
+                <td>
+                    <table style="width: 100%;">
+                        <tr class="list-nav-item student ${param.subNav == "list" ? "active" : ""}">
+                            <td>
+                                <span><a href="/student/list">学生查询</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item student ${param.subNav == "data" ? "active" : ""}">
+                            <td>
+                                <span><a href="/student/data">用场统计</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item site last-nav-item">
+                            <td>&nbsp;</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
             <tr class="list-nav-header" data-item="site">
                 <td>
                     <span><a href="javascript:;">预订管理</a></span>
@@ -119,7 +143,7 @@
                         </tr>
                         <tr class="list-nav-item site ${param.subNav == "order" ? "active" : ""}">
                             <td>
-                                <span><a href="/order/getOrderList?orderServiceType=1">预订订单</a></span>
+                                <span><a href="/order/getOrderList?orderServiceTypes=1,3">场地订单</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item site ${param.subNav == "pda" ? "active" : ""}">
@@ -169,6 +193,11 @@
                         <tr class="list-nav-item good ${param.subNav == "market" ? "active" : ""}">
                             <td>
                                 <span><a href="/good/getGoodsMarket">商品销售</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item good ${param.subNav == "order" ? "active" : ""}">
+                            <td>
+                                <span><a href="/order/getOrderList?orderServiceTypes=2">商品订单</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item good ${param.subNav == "detail" ? "active" : ""}">

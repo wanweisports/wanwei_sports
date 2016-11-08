@@ -6,12 +6,14 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="/Content/lib/jquery/autosuggest/autosuggest.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
     <link href="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
     <link href="/Content/lib/jquery/jquery-steps/jquery.steps.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
     <link href="/Content/style/reservations/reservations_sequence.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/lib/jquery/autosuggest/autosuggest.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
@@ -72,6 +74,9 @@
                 </nav>
                 <div class="form-inline sequence-btns">
                     <div class="form-group pull-right">
+                        <button type="button" class="btn btn-default sequence-unlock">
+                            <span class="glyphicon glyphicon-lock"></span> 解 锁
+                        </button>
                         <button type="button" class="btn btn-default sequence-lock">
                             <span class="glyphicon glyphicon-lock"></span> 锁 场
                         </button>
@@ -130,18 +135,14 @@
                                 <div class="panel-body">
                                     <form id="reservations_user_form" class="form-horizontal" novalidate onsubmit="return false;">
                                         <input type="hidden" id="reservations_op_type" name="opType" value="2">
+                                        <input type="hidden" id="reservations_member" name="memberId" value="">
                                         <div class="form-group">
                                             <label for="reservations_name" class="col-sm-3 control-label">姓名</label>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-9">
                                                 <input type="text" class="form-control" id="reservations_name"
                                                        name="name" placeholder="姓名" value="散客" autocomplete="off"
                                                        data-val="true" data-val-required="姓名不能为空">
                                                 <div data-valmsg-for="name" data-valmsg-replace="true"></div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <a class="btn btn-primary reservations-user-search" href="javascript:void(0);">
-                                                    <span class="glyphicon glyphicon-search"></span>
-                                                </a>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -229,14 +230,14 @@
                                                     <div data-valmsg-for="subAmount" data-valmsg-replace="true"></div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                            <!--<div class="form-group">
                                                 <label for="reservations_money_no" class="col-sm-4 control-label">支票号</label>
 
                                                 <div class="col-sm-8">
                                                     <input type="text" class="form-control" id="reservations_money_no" name="checkNo"
                                                            placeholder="支票号" value="" autocomplete="off">
                                                 </div>
-                                            </div>
+                                            </div>-->
                                         </div>
                                         <div class="col-sm-12">
                                             <div class="form-group">
@@ -258,6 +259,7 @@
                                                            data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                                            data-val-regex="实收金额格式错误">
                                                     <div data-valmsg-for="paySumPrice" data-valmsg-replace="true"></div>
+                                                    <!--<p class="bg-info">应收: 100元</p>-->
                                                 </div>
                                                 <div class="col-sm-2">
                                                     <button class="btn btn-primary reservations-pay-confirm">
