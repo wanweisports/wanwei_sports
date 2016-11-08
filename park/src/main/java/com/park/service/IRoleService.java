@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.park.common.bean.PageBean;
 import com.park.common.bean.RoleInputView;
+import com.park.common.po.SystemMenu;
 import com.park.common.po.SystemRole;
 import com.park.common.po.SystemRoleOperator;
 
@@ -21,5 +22,9 @@ public interface IRoleService {
 	public Map<String, Object> getRolesView(int roleId);
 	
 	public Map<String, Object> getAllRoles(int roleId);
+	
+	public List<SystemMenu> getRoleMenus(int roleId);
+	
+	public Integer saveRole(SystemRole systemRole, String menuIds);
 	
 }

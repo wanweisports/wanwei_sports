@@ -26,7 +26,7 @@ public interface IPlatformConstant {
     
     public final String ADMIN = "admin";
     
-    public final String ORDER_SITE_NAME = "场地预定";
+    public final String ORDER_SITE_NAME = ""; //场地预定
 	
 	public static final String APP_ID = (String) CustomizedPropertyConfigurer.getContextProperty("app_id"); //appid
 	

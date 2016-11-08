@@ -4,6 +4,7 @@ public class OrderInputView extends BaseInputView {
 
 	private Integer orderId;
 	private String status;
+	private String orderServiceTypes;
 	
 	public Integer getOrderId() {
 		return orderId;
@@ -19,6 +20,14 @@ public class OrderInputView extends BaseInputView {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getOrderServiceTypes() {
+		return orderServiceTypes;
+	}
+
+	public void setOrderServiceTypes(String orderServiceTypes) {
+		this.orderServiceTypes = orderServiceTypes;
 	}
 	
 }

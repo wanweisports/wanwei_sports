@@ -14,6 +14,7 @@ import com.park.common.exception.MessageException;
 import com.park.common.po.OrderDetail;
 import com.park.common.po.OrderInfo;
 import com.park.common.util.DateUtil;
+import com.park.common.util.SQLUtil;
 import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
 import com.park.service.IOrderService;
@@ -85,6 +86,7 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 	public PageBean getOrderList(OrderInputView orderInputView) throws Exception{
 		
 		String operatorId = orderInputView.getOperatorId();
+		String orderServiceTypes = orderInputView.getOrderServiceTypes();
 		
 		StringBuilder headSql = new StringBuilder("SELECT *");
 		StringBuilder bodySql = new StringBuilder(" FROM order_info");
@@ -92,8 +94,11 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 		if(!super.isAdmin(orderInputView)){
 			whereSql.append(" AND salesId = :salesId");
 		}
+		if(StrUtil.isNotBlank(orderServiceTypes)){
+			whereSql.append(" AND orderServiceType IN (:orderServiceTypes)");
+		}
 		
-		PageBean pageBean = super.getPageBean(headSql, bodySql, whereSql, orderInputView);
+		PageBean pageBean = super.getPageBean(headSql, bodySql, whereSql, orderInputView, SQLUtil.getInToSQL("orderServiceTypes", orderServiceTypes));
 		List<Map<String, Object>> list = pageBean.getList();
 		for(Map<String, Object> map : list){
 			List<OrderDetail> orderDetailList = getOrderDetails(StrUtil.objToInt(map.get("orderId")));

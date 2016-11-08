@@ -1,5 +1,5 @@
 订单列表：【带分页】
-请求：order/getOrderList
+请求：order/getOrderList&orderServiceTypes=2,3   //订单业务类型（1. 预定场地   2. 购买商品   3.场地包场），多个逗号分隔
 
 返回：
 {

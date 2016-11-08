@@ -1,5 +1,8 @@
 package com.park.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +16,7 @@ import com.park.common.bean.RoleInputView;
 import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.ParkBusiness;
+import com.park.common.po.SystemRole;
 import com.park.common.po.UserOperator;
 import com.park.common.util.JsonUtils;
 import com.park.service.IOperatorService;
@@ -127,11 +131,30 @@ public class SettingsController extends BaseController {
     	try {
     		if(roleId != null){
     			model.addAllAttributes(roleService.getRolesView(roleId));
+    			System.out.println(JsonUtils.toJson(roleService.getRolesView(roleId)));
     		}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
         return "Settings/SettingsSystemRolesView";
+    }
+    
+    //添加/修改角色权限菜单
+    @ResponseBody
+    @RequestMapping("saveRole")
+    public ResponseBean saveRole(SystemRole systemRole, String menuIds){
+    	try {
+    		systemRole.setSalesId(getUserInfo().getId());
+    		Map<String, Object> data = new HashMap<String, Object>();
+    		data.put("roleId", roleService.saveRole(systemRole, menuIds));
+    		return new ResponseBean(data);
+		} catch (MessageException e) {
+			e.printStackTrace();
+			return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
     }
 
     // 角色设置
