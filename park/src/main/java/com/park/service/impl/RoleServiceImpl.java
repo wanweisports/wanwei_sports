@@ -66,7 +66,14 @@ public class RoleServiceImpl extends BaseService implements IRoleService {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
 		resultMap.put("role", getSystemRole(roleId));
-		resultMap.put("menus", getRoleMenus(roleId));
+		List<SystemMenu> systemMenus = getRoleMenus(roleId);
+		List<String> menuIds = new ArrayList<String>();
+		if(systemMenus != null && systemMenus.size() > 0){
+			for(SystemMenu systemMenu : systemMenus){
+				menuIds.add(systemMenu.getMenuId().toString());
+			}
+		}
+		resultMap.put("menuIds", StrUtil.join(menuIds.toArray(), ","));
 		/*List<MenuOutputView> menuOutputViews = new ArrayList<MenuOutputView>();
 		resultMap.put("roleMenuList", getRoleMenu(menuOutputViews, 0));*/
 		return resultMap;
