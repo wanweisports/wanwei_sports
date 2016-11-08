@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2016-11-04 16:28:13
+Date: 2016-11-08 11:51:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -378,13 +378,14 @@ CREATE TABLE `site_info` (
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`siteId`),
   UNIQUE KEY `siteNo_Unique` (`siteNo`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='场地表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='场地表';
 
 -- ----------------------------
 -- Records of site_info
 -- ----------------------------
 INSERT INTO `site_info` VALUES ('1', '万能的场地', '646841', '场地1', '1', '1', '2016-10-11 21:10:26', '2016-10-24 15:25:42', '1');
 INSERT INTO `site_info` VALUES ('2', '场地2', '888523', '', '2', '1', '2016-10-13 13:06:09', '2016-10-24 15:25:48', '1');
+INSERT INTO `site_info` VALUES ('3', '场地2', '104065', '', '1', '1', '2016-11-06 14:29:11', null, '1');
 
 -- ----------------------------
 -- Table structure for site_order
@@ -595,7 +596,7 @@ CREATE TABLE `system_role` (
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`roleId`)
-) ENGINE=InnoDB AUTO_INCREMENT=1002 DEFAULT CHARSET=utf8 COMMENT='角色';
+) ENGINE=InnoDB AUTO_INCREMENT=1003 DEFAULT CHARSET=utf8 COMMENT='角色';
 
 -- ----------------------------
 -- Records of system_role
@@ -603,8 +604,9 @@ CREATE TABLE `system_role` (
 INSERT INTO `system_role` VALUES ('1', '超级管理员', '1', '1', null, null, '2016-10-13 10:00:00', null, '1');
 INSERT INTO `system_role` VALUES ('2', '会员', '1', '1', null, null, '2016-10-13 10:00:00', null, '1');
 INSERT INTO `system_role` VALUES ('3', '普通用户', '1', '1', null, null, '2016-10-13 10:00:00', null, '1');
-INSERT INTO `system_role` VALUES ('1000', '经理', '1', '1', null, null, '2016-10-13 10:00:00', null, '1');
-INSERT INTO `system_role` VALUES ('1001', '收银', '1', '1', null, null, '2016-10-13 10:00:00', null, '1');
+INSERT INTO `system_role` VALUES ('1000', '经理', '1', '2', null, null, '2016-10-13 10:00:00', null, '1');
+INSERT INTO `system_role` VALUES ('1001', '收银', '1', '2', null, null, '2016-10-13 10:00:00', null, '1');
+INSERT INTO `system_role` VALUES ('1002', '测试权限1', '1', '2', '说明描述', '10', '2016-11-08 11:26:37', '2016-11-08 11:31:30', '1');
 
 -- ----------------------------
 -- Table structure for system_role_function
@@ -633,6 +635,11 @@ CREATE TABLE `system_role_menu` (
 -- ----------------------------
 -- Records of system_role_menu
 -- ----------------------------
+INSERT INTO `system_role_menu` VALUES ('1002', '3');
+INSERT INTO `system_role_menu` VALUES ('1002', '4');
+INSERT INTO `system_role_menu` VALUES ('1002', '5');
+INSERT INTO `system_role_menu` VALUES ('1002', '6');
+INSERT INTO `system_role_menu` VALUES ('1002', '7');
 
 -- ----------------------------
 -- Table structure for system_role_operator
@@ -720,13 +727,13 @@ CREATE TABLE `user_operator` (
 -- ----------------------------
 -- Records of user_operator
 -- ----------------------------
-INSERT INTO `user_operator` VALUES ('1', '123456', '佟大为', '123456', '13051788102', '1', '2016-09-23 19:10:23', '2016-11-02 19:40:50', '2016-11-04 14:51:12', '001', null, null, '1990-07-21', null, '北京市天府路', '1');
+INSERT INTO `user_operator` VALUES ('1', '123456', '佟大为', '123456', '13051788102', '1', '2016-09-23 19:10:23', '2016-11-02 19:40:50', '2016-11-08 11:32:52', '001', null, null, '1990-07-21', null, '北京市天府路', '1');
 INSERT INTO `user_operator` VALUES ('2', '864422', '发送', '123456', '11111111111', '1', '2016-10-13 10:41:49', null, null, null, null, null, null, null, null, null);
 INSERT INTO `user_operator` VALUES ('3', '262768', '欧阳资源传话', '123456', '18701562971', '1', '2016-10-24 14:16:06', null, null, null, null, null, null, null, null, null);
 INSERT INTO `user_operator` VALUES ('4', '993345', '陈楚生', '123456', '12345678913', '1', '2016-10-24 14:52:41', null, null, null, null, null, null, null, null, null);
 INSERT INTO `user_operator` VALUES ('5', '559564', '葫芦娃', '123456', '12345678912', '1', '2016-10-24 15:08:42', null, null, null, null, null, null, null, null, null);
 INSERT INTO `user_operator` VALUES ('7', '111111', '陈小松', '123456', '15110275787', '1', '2016-10-27 21:08:42', '2016-11-04 14:51:40', null, '00002', '2016-10-10', '2016-11-10', '1990-09-30', '李金花', '北京市', null);
-INSERT INTO `user_operator` VALUES ('8', '1', '1', '123456', '213', '1', '2016-11-01 17:53:33', '2016-11-04 14:51:36', null, '2', '2016-11-02', '2016-11-01', '2016-11-01', '11', '123', null);
+INSERT INTO `user_operator` VALUES ('8', '1', '1', '123456', '213', '1', '2016-11-01 17:53:33', '2016-11-07 18:47:49', null, '2', '2016-11-02', '2016-11-01', '2016-11-01', '11', '123', null);
 INSERT INTO `user_operator` VALUES ('9', '1234567', '1', '123456', '321', '1', '2016-11-01 17:59:19', '2016-11-01 17:59:23', '2016-11-02 11:29:10', '3', '2016-11-03', '2016-11-01', '2016-11-01', '12', '213', null);
 INSERT INTO `user_operator` VALUES ('10', '589456', '大黄', '123456', '12345678912', '1', '2016-11-02 14:37:26', null, null, null, null, null, null, null, null, null);
 
