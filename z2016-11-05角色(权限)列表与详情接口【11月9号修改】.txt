@@ -201,32 +201,7 @@
 
 返回：
 {
-    "menus": [
-        {
-            "menuId": "2",
-            "parentMenuId": "1"
-        },
-        {
-            "menuId": "3",
-            "parentMenuId": "1"
-        },
-        {
-            "menuId": "4",
-            "parentMenuId": "1"
-        },
-        {
-            "menuId": "5",
-            "parentMenuId": "1"
-        },
-        {
-            "menuId": "6",
-            "parentMenuId": "1"
-        },
-        {
-            "menuId": "7",
-            "parentMenuId": "1"
-        }
-    ],
+    "menuIds": "3,4,5,6,7",  //【新】菜单id,逗号分隔
     "role": {
         "roleId": "1002",
         "roleName": "测试权限1",
