@@ -107,14 +107,29 @@
             <tr class="list-nav-list student" style="${param.nav == "student" ? "" : "display:none;"}">
                 <td>
                     <table style="width: 100%;">
-                        <tr class="list-nav-item student ${param.subNav == "list" ? "active" : ""}">
+                        <tr class="list-nav-item student ${param.subNav == "register" ? "active" : ""}">
                             <td>
-                                <span><a href="/student/list">学生查询</a></span>
+                                <span><a href="/students/register">学生注册</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item student ${param.subNav == "data" ? "active" : ""}">
+                        <tr class="list-nav-item student ${param.subNav == "list" ? "active" : ""}">
                             <td>
-                                <span><a href="/student/data">用场统计</a></span>
+                                <span><a href="/students/list">学生查询</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item student ${param.subNav == "sdata" ? "active" : ""}">
+                            <td>
+                                <span><a href="/students/sdata">学生用场明细</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item student ${param.subNav == "class" ? "active" : ""}">
+                            <td>
+                                <span><a href="/students/class">班级管理</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item student ${param.subNav == "cdata" ? "active" : ""}">
+                            <td>
+                                <span><a href="/students/cdata">班级用场明细</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item site last-nav-item">

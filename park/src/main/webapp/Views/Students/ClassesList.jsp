@@ -6,36 +6,20 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="/Content/app/students/students_list_query.js?v=${static_resource_version}"></script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>学生管理</span> &gt;&gt; <span>学生查询</span>
+    当前位置: <span>学生管理</span> &gt;&gt; <span>班级管理</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
-            <div class="panel-heading">学生查询</div>
+            <div class="panel-heading">班级管理</div>
             <div class="panel-body">
-                <form id="student_filter_form" class="form-inline" method="post" novalidate onsubmit="return false;">
-                    <div class="form-group">
-                        <select class="form-control" id="student_degree" name="student_degree" style="width: 160px;">
-                            <option value="">所在年级</option>
-                            <option value="1">16级02班</option>
-                            <option value="2">16级03班</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="student_name" name="student_name"
-                               placeholder="请输入学生姓名">
-                    </div>
-                    <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary member-filter">
-                            <span class="glyphicon glyphicon-search"></span> 检索 & 显示
-                        </a>
-                    </div>
-                </form>
+                <a href="#classModal" class="btn btn-primary" data-toggle="modal" data-backdrop="false">
+                    <span class="glyphicon glyphicon-plus"></span> 添加班级
+                </a>
             </div>
         </div>
         <div class="panel panel-default">
@@ -44,173 +28,183 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>姓名</th>
-                            <th>所在班级</th>
-                            <th>用场次数</th>
+                            <th>班级名称</th>
+                            <th>总计人数</th>
+                            <th>总计用场</th>
                             <th>状态</th>
                             <th>操作人</th>
-                            <th>办卡时间</th>
+                            <th>创建时间</th>
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td style="vertical-align: middle;">王晓红</td>
                             <td style="vertical-align: middle;">16级01班</td>
-                            <td style="vertical-align: middle;">10</td>
-                            <td style="vertical-align: middle;" class="text-success">正常</td>
+                            <td style="vertical-align: middle;">
+                                <a href="">22人</a>
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <a href="">1232次</a>
+                            </td>
+                            <td style="vertical-align: middle;">正常</td>
                             <td style="vertical-align: middle;">张丹丹</td>
                             <td style="vertical-align: middle;">2016-12-11 10:00:12</td>
                             <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </a>
                                 <a class="btn btn-danger" href="">
-                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 删除
+                                    <span class="glyphicon glyphicon-trash"></span> 删除
                                 </a>
                             </td>
                         </tr>
                         <tr>
-                            <td style="vertical-align: middle;">王晓红</td>
                             <td style="vertical-align: middle;">16级01班</td>
-                            <td style="vertical-align: middle;">10</td>
-                            <td style="vertical-align: middle;" class="text-success">正常</td>
+                            <td style="vertical-align: middle;">
+                                <a href="">22人</a>
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <a href="">1232次</a>
+                            </td>
+                            <td style="vertical-align: middle;">正常</td>
                             <td style="vertical-align: middle;">张丹丹</td>
                             <td style="vertical-align: middle;">2016-12-11 10:00:12</td>
                             <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </a>
                                 <a class="btn btn-danger" href="">
-                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 删除
+                                    <span class="glyphicon glyphicon-trash"></span> 删除
                                 </a>
                             </td>
                         </tr>
                         <tr>
-                            <td style="vertical-align: middle;">王晓红</td>
                             <td style="vertical-align: middle;">16级01班</td>
-                            <td style="vertical-align: middle;">10</td>
-                            <td style="vertical-align: middle;" class="text-success">正常</td>
+                            <td style="vertical-align: middle;">
+                                <a href="">22人</a>
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <a href="">1232次</a>
+                            </td>
+                            <td style="vertical-align: middle;">正常</td>
                             <td style="vertical-align: middle;">张丹丹</td>
                             <td style="vertical-align: middle;">2016-12-11 10:00:12</td>
                             <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </a>
                                 <a class="btn btn-danger" href="">
-                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 删除
+                                    <span class="glyphicon glyphicon-trash"></span> 删除
                                 </a>
                             </td>
                         </tr>
                         <tr>
-                            <td style="vertical-align: middle;">王晓红</td>
                             <td style="vertical-align: middle;">16级01班</td>
-                            <td style="vertical-align: middle;">10</td>
-                            <td style="vertical-align: middle;" class="text-success">正常</td>
+                            <td style="vertical-align: middle;">
+                                <a href="">22人</a>
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <a href="">1232次</a>
+                            </td>
+                            <td style="vertical-align: middle;">正常</td>
                             <td style="vertical-align: middle;">张丹丹</td>
                             <td style="vertical-align: middle;">2016-12-11 10:00:12</td>
                             <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </a>
                                 <a class="btn btn-danger" href="">
-                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 删除
+                                    <span class="glyphicon glyphicon-trash"></span> 删除
                                 </a>
                             </td>
                         </tr>
                         <tr>
-                            <td style="vertical-align: middle;">王晓红</td>
                             <td style="vertical-align: middle;">16级01班</td>
-                            <td style="vertical-align: middle;">10</td>
-                            <td style="vertical-align: middle;" class="text-success">正常</td>
+                            <td style="vertical-align: middle;">
+                                <a href="">22人</a>
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <a href="">1232次</a>
+                            </td>
+                            <td style="vertical-align: middle;">正常</td>
                             <td style="vertical-align: middle;">张丹丹</td>
                             <td style="vertical-align: middle;">2016-12-11 10:00:12</td>
                             <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </a>
                                 <a class="btn btn-danger" href="">
-                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 删除
+                                    <span class="glyphicon glyphicon-trash"></span> 删除
                                 </a>
                             </td>
                         </tr>
                         <tr>
-                            <td style="vertical-align: middle;">王晓红</td>
                             <td style="vertical-align: middle;">16级01班</td>
-                            <td style="vertical-align: middle;">10</td>
-                            <td style="vertical-align: middle;" class="text-success">正常</td>
+                            <td style="vertical-align: middle;">
+                                <a href="">22人</a>
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <a href="">1232次</a>
+                            </td>
+                            <td style="vertical-align: middle;">正常</td>
                             <td style="vertical-align: middle;">张丹丹</td>
                             <td style="vertical-align: middle;">2016-12-11 10:00:12</td>
                             <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </a>
                                 <a class="btn btn-danger" href="">
-                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 删除
+                                    <span class="glyphicon glyphicon-trash"></span> 删除
                                 </a>
                             </td>
                         </tr>
                         <tr>
-                            <td style="vertical-align: middle;">王晓红</td>
                             <td style="vertical-align: middle;">16级01班</td>
-                            <td style="vertical-align: middle;">10</td>
-                            <td style="vertical-align: middle;" class="text-success">正常</td>
+                            <td style="vertical-align: middle;">
+                                <a href="">22人</a>
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <a href="">1232次</a>
+                            </td>
+                            <td style="vertical-align: middle;">正常</td>
                             <td style="vertical-align: middle;">张丹丹</td>
                             <td style="vertical-align: middle;">2016-12-11 10:00:12</td>
                             <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </a>
                                 <a class="btn btn-danger" href="">
-                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 删除
+                                    <span class="glyphicon glyphicon-trash"></span> 删除
                                 </a>
                             </td>
                         </tr>
                         <tr>
-                            <td style="vertical-align: middle;">王晓红</td>
                             <td style="vertical-align: middle;">16级01班</td>
-                            <td style="vertical-align: middle;">10</td>
-                            <td style="vertical-align: middle;" class="text-success">正常</td>
+                            <td style="vertical-align: middle;">
+                                <a href="">22人</a>
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <a href="">1232次</a>
+                            </td>
+                            <td style="vertical-align: middle;">正常</td>
                             <td style="vertical-align: middle;">张丹丹</td>
                             <td style="vertical-align: middle;">2016-12-11 10:00:12</td>
                             <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </a>
                                 <a class="btn btn-danger" href="">
-                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 删除
+                                    <span class="glyphicon glyphicon-trash"></span> 删除
                                 </a>
                             </td>
                         </tr>
                         <tr>
-                            <td style="vertical-align: middle;">王晓红</td>
                             <td style="vertical-align: middle;">16级01班</td>
-                            <td style="vertical-align: middle;">10</td>
-                            <td style="vertical-align: middle;" class="text-success">正常</td>
+                            <td style="vertical-align: middle;">
+                                <a href="">22人</a>
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <a href="">1232次</a>
+                            </td>
+                            <td style="vertical-align: middle;">正常</td>
                             <td style="vertical-align: middle;">张丹丹</td>
                             <td style="vertical-align: middle;">2016-12-11 10:00:12</td>
                             <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </a>
                                 <a class="btn btn-danger" href="">
-                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 删除
+                                    <span class="glyphicon glyphicon-trash"></span> 删除
                                 </a>
                             </td>
                         </tr>
                         <tr>
-                            <td style="vertical-align: middle;">王晓红</td>
                             <td style="vertical-align: middle;">16级01班</td>
-                            <td style="vertical-align: middle;">10</td>
-                            <td style="vertical-align: middle;" class="text-success">正常</td>
+                            <td style="vertical-align: middle;">
+                                <a href="">22人</a>
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <a href="">1232次</a>
+                            </td>
+                            <td style="vertical-align: middle;">正常</td>
                             <td style="vertical-align: middle;">张丹丹</td>
                             <td style="vertical-align: middle;">2016-12-11 10:00:12</td>
                             <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </a>
                                 <a class="btn btn-danger" href="">
-                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 删除
+                                    <span class="glyphicon glyphicon-trash"></span> 删除
                                 </a>
                             </td>
                         </tr>
@@ -284,9 +278,39 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="classModal" tabindex="-1" role="dialog" aria-labelledby="classModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="classModalLabel">增加班级</h5>
+                </div>
+                <div class="modal-body" style="clear: both;">
+                    <form id="class_form" class="form-horizontal" onsubmit="return false;">
+                        <div class="form-group">
+                            <label for="class_name" class="col-sm-2 control-label">班级名称</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="class_name" name="className"
+                                       placeholder="请输入班级名称">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary confirm-count" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-ok"></span> 确 认
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </layout:override>
 
 <c:import url="../Shared/Layout_New.jsp">
     <c:param name="nav" value="student"/>
-    <c:param name="subNav" value="list"/>
+    <c:param name="subNav" value="class"/>
 </c:import>
