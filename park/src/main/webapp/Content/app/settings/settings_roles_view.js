@@ -8,9 +8,9 @@
         initTree: function () {
             $.post('/system/getAllRoles', {}, function (res) {
                 var data = {
-                    "id": "root",
+                    "id": "0",
                     "text" : "全部权限",
-                    "state" : {"opened": true, "selected": true },
+                    "state" : {"opened": true, "selected": false },
                     "children" : []
                 };
 
@@ -24,7 +24,9 @@
                         data : [data]
                     }
                 });
-                $('#role_tree').jstree('select_node', $('[name="menuIds"]').val());
+                setTimeout(function () {
+                    $('#role_tree').jstree('select_node', $('[name="menuIds"]').val().split(","));
+                }, 1500);
             });
 
             // lazy demo
@@ -164,12 +166,18 @@
                 $form.attr("submitting", "submitting");
 
                 conditions.menuIds = conditions.limit.join(",");
+                delete conditions.limit;
 
-                $.post('/settings/roles', conditions, function (res) {
+                $.post('/settings/saveRole', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
                         $("#tips_modal").modal({show: true, backdrop: false});
+
+                        setTimeout(function () {
+                            $("#tips_modal").modal("hide");
+                            location.assign("/settings/getRoles");
+                        }, 2000);
                     } else {
                         alert(res.message || "设置角色失败, 请稍后重试");
                     }
