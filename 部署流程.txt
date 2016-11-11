@@ -1,0 +1,16 @@
+本项目为，部署流程如下：
+一、环境配置
+1. 下载JDK7，并安装。
+2. 配置JDK环境变量，Path与JAVA_HOME，并指向JDK的bin路径。
+3. 下载tomcat7, 它的默认端口为8080。
+
+二、数据库安装与配置
+1. 下载mysql数据库5.6版本或者以上，并安装，安装时输入用户名密码，与咱们项目相同。
+2. 新建park数据库，导入初始化数据库文件。
+
+三、项目部署
+1. 将项目打包成war包：可通过idea的maven打包，或者用bat文件使用maven命令打包。
+2. 将war包放到tomcat7中的webapps文件的ROOT文件下。
+3. 执行tomcat7中的bin文件下startup.bat。
+
+访问：localhost:8080查看访问系统。
