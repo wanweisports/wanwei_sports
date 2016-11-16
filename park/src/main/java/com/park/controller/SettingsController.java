@@ -44,7 +44,6 @@ public class SettingsController extends BaseController {
     public String settingsCommon(Model model) {
     	try {
 			model.addAllAttributes(JsonUtils.fromJson(parkService.getParkBusiness()));
-			System.out.println(JsonUtils.toJson(parkService.getParkBusiness()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

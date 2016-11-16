@@ -28,6 +28,7 @@ public class ParkBusiness implements java.io.Serializable {
 	private String createTime;
 	private String updateTime;
 	private Integer salesId;
+	private Integer points;
 
 	// Constructors
 
@@ -40,7 +41,7 @@ public class ParkBusiness implements java.io.Serializable {
 			String businessTimePeriod, String businessName,
 			String businessAreaName, String businessContact,
 			String businessPhone, String businessAddress, String createTime,
-			String updateTime, Integer salesId) {
+			String updateTime, Integer salesId, Integer points) {
 		this.businessStartTime = businessStartTime;
 		this.businessEndTime = businessEndTime;
 		this.businessTimePeriod = businessTimePeriod;
@@ -52,6 +53,7 @@ public class ParkBusiness implements java.io.Serializable {
 		this.createTime = createTime;
 		this.updateTime = updateTime;
 		this.salesId = salesId;
+		this.points = points;
 	}
 
 	// Property accessors
@@ -163,6 +165,15 @@ public class ParkBusiness implements java.io.Serializable {
 
 	public void setSalesId(Integer salesId) {
 		this.salesId = salesId;
+	}
+
+	@Column(name = "points")
+	public Integer getPoints() {
+		return this.points;
+	}
+
+	public void setPoints(Integer points) {
+		this.points = points;
 	}
 
 }
