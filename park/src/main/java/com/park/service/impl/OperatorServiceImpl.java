@@ -129,6 +129,7 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 			return saveOperator(operatorDB, roleId);
 		}else { //新建员工不能超过安装点数
 			ParkBusiness business = parkService.getBusiness();
+			if(business == null) throw new MessageException("请先初始化场馆信息！");
 			Integer points = business.getPoints();
 			if(points != null && points > 0){
 				if(getEmployeeCount() >= points) throw new MessageException("添加员工数量已超过上线，请联系管理员！");
