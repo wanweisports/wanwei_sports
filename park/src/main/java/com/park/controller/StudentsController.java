@@ -21,17 +21,13 @@ public class StudentsController extends BaseController {
         return "Students/StudentsList";
     }
 
-    // 班级管理
-    @RequestMapping("class")
-    public String studentsClass() {
-        return "Students/ClassesList";
+    // 学生详情
+    @RequestMapping("view")
+    public String studentsView() {
+        return "Students/StudentsView";
     }
 
     // 学生用场流水
-    @RequestMapping("sdata")
+    @RequestMapping("data")
     public String studentsVenueData() {return "Students/StudentsVenueData";}
-
-    // 班级用场流水
-    @RequestMapping("cdata")
-    public String classesVenueData() {return "Students/ClassesVenueData";}
 }

@@ -455,6 +455,12 @@ public class MemberController extends BaseController {
     public String getConsumes(Model model) {
         return "Members/ConsumeList";
     }
+
+    // 会员子会员
+    @RequestMapping(value = "getMembersChildren")
+    public String getMembersChildren(Model model) {
+        return "Members/MembersChildren";
+    }
     
     /**
      * 查询是个全文模糊查询  即我可能输入手机号，姓名，身份证号，会员卡号信息  来匹配会员

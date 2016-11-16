@@ -5,99 +5,123 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="/Content/app/members/members_list_query.js?v=${static_resource_version}"></script>
-    <script>
-        (function ($) {
-            $("#payment_type").val('${memberType}');
-        })(jQuery);
-    </script>
+    <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>会员管理</span> &gt;&gt; <span>会员查询</span>
+    当前位置: <span>教师管理</span> &gt;&gt; <span>教师订餐统计</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
-    <div class="container-fluid" style="text-align: left">
+    <div class="container-fluid" style="text-align: left;">
         <div class="panel panel-default">
-            <div class="panel-heading">会员查询</div>
+            <div class="panel-heading">教师订餐统计</div>
             <div class="panel-body">
-                <form id="member_filter_form" class="form-inline" novalidate onsubmit="return false;">
+                <form class="form-inline" id="data_filter_form" onsubmit="return false;">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="member_mobile" name="memberMobile"
-                               placeholder="手机号码" value="${memberMobile}">
+                        <div class="btn-group">
+                            <a href="javascript:;" class="btn btn-primary">今天</a>
+                            <a href="javascript:;" class="btn btn-default">昨天</a>
+                            <a href="javascript:;" class="btn btn-default">本周</a>
+                            <a href="javascript:;" class="btn btn-default">本月</a>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="card_no" name="cardNo"
-                               placeholder="会员卡号" value="${cardNo}">
+                        <input type="text" class="form-control" id="student_name" name="student_name"
+                               placeholder="请输入教师姓名">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="member_idcard" name="memberIdcard"
-                               placeholder="身份证号" value="${memberIdcard}">
+                        <input type="text" class="form-control" id="createTimeStart" name="createTimeStart" placeholder="开始日期"
+                               value="${createTimeStart}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary member-filter">
+                        <input type="text" class="form-control" id="createTimeEnd" name="createTimeEnd" placeholder="结束日期"
+                               value="${createTimeEnd}">
+                    </div>
+                    <div class="form-group">
+                        <a href="javascript:;" class="btn btn-primary">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
+                        </a>
+                    </div>
+                    <div class="form-group pull-right">
+                        <a href="javascript:;" class="btn btn-warning">
+                            <span class="glyphicon glyphicon-tag"></span> 订餐登记
                         </a>
                     </div>
                 </form>
             </div>
         </div>
+
+        <div class="alert alert-info clearfix">
+            <ul class="nav nav-pills pull-left">
+                <li style="margin-right: 15px;">订餐总计:</li>
+                <li style="margin-right: 15px;">普通餐 <span class="badge">42份</span></li>
+            </ul>
+            <div class="pull-right">
+                <a href="javascript:;" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-export"></span> 导出数据
+                </a>
+                <a href="javascript:;" class="btn btn-primary" style="display: none;">
+                    <span class="glyphicon glyphicon-stats"></span> 图表显示
+                </a>
+            </div>
+        </div>
         <div class="panel panel-default">
             <div class="panel-body">
-                <div class="table-responsive">
+                <div class="table-responsive card-type-list">
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>姓名</th>
-                            <th>手机号码</th>
-                            <th>会员卡号</th>
-                            <th>会员类型</th>
-                            <th>截止日期</th>
-                            <th>余额(元)</th>
-                            <th>子会员</th>
-                            <th>状态</th>
+                            <th>序号</th>
+                            <th>订单号</th>
+                            <th>教师姓名</th>
+                            <th>手机号</th>
+                            <th>场地类型</th>
+                            <th>订餐类型</th>
+                            <th>订餐份数</th>
                             <th>操作人</th>
-                            <th>办卡时间</th>
-                            <th>操作</th>
+                            <th>操作时间</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="member" items="${list}">
-                            <tr>
-                                <td>${member.memberName}</td>
-                                <td>${member.memberMobile}</td>
-                                <td>${member.cardNo}</td>
-                                <td>${member.cardTypeName}</td>
-                                <td>${member.cardDeadline}</td>
-                                <td>${member.cardBalance}</td>
-                                <td><a href="/member/getMembersChildren">22人</a></td>
-                                <c:if test="${member.cardStatus == null}">
-                                    <td></td>
-                                </c:if>
-                                <c:if test="${member.cardStatus == 1}">
-                                    <td class="text-success">有效</td>
-                                </c:if>
-                                <c:if test="${member.cardStatus == 2}">
-                                    <td class="text-danger">锁定</td>
-                                </c:if>
-                                <td>${member.operatorName}</td>
-                                <td>${member.createTime}</td>
-                                <td>
-                                    <c:if test="${member.tempCardNo == null}">
-                                        <a class="btn btn-primary" href="/member/memberInfo?memberId=${member.memberId}">
-                                            <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                        </a>
-                                    </c:if>
-                                    <c:if test="${member.tempCardNo != null}">
-                                        <a class="btn btn-warning" href="/member/membersInfoCar?memberId=${member.memberId}">
-                                            <span class="glyphicon glyphicon-credit-card"></span> 绑卡
-                                        </a>
-                                    </c:if>
-                                </td>
-                            </tr>
-                        </c:forEach>
+                        <tr>
+                            <td>1</td>
+                            <td>23reewe3324</td>
+                            <td>李洪旭</td>
+                            <td>11012345678</td>
+                            <td>羽毛球</td>
+                            <td>普通餐</td>
+                            <td>2份</td>
+                            <td>李晓丹</td>
+                            <td>2016-09-03</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>23reewe3324</td>
+                            <td>李洪旭</td>
+                            <td>11012345678</td>
+                            <td>羽毛球</td>
+                            <td>普通餐</td>
+                            <td>1份</td>
+                            <td>李晓丹</td>
+                            <td>2016-09-03</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>23reewe3324</td>
+                            <td>李洪旭</td>
+                            <td>11012345678</td>
+                            <td>羽毛球</td>
+                            <td>普通餐</td>
+                            <td>4份</td>
+                            <td>李晓丹</td>
+                            <td>2016-09-03</td>
+                        </tr>
                         </tbody>
                     </table>
                     <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >
@@ -171,6 +195,6 @@
 </layout:override>
 
 <c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="member"/>
-    <c:param name="subNav" value="list"/>
+    <c:param name="nav" value="teacher"/>
+    <c:param name="subNav" value="meals"/>
 </c:import>

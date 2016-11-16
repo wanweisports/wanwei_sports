@@ -21,7 +21,7 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>学生管理</span> &gt;&gt; <span>学生办卡</span>
+    当前位置: <span>学生管理</span> &gt;&gt; <span>学生查询</span>&gt;&gt; <span>学生详情</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -120,11 +120,10 @@
                                       placeholder="备注"></textarea>
                             </div>
                         </div>
-                        <div class="alert alert-warning" role="alert">押金: 50.00元</div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
                                 <button type="button" class="btn btn-primary col-sm-4 register-student">
-                                    <span class="glyphicon glyphicon-ok"></span>  注册 & 办卡
+                                    <span class="glyphicon glyphicon-ok"></span>  保 存
                                 </button>
                             </div>
                         </div>

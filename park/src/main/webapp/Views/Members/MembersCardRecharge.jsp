@@ -128,17 +128,6 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="recharge_discount" class="col-sm-4 control-label">优惠金额(元)</label>
-
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="recharge_discount" name="subMoney"
-                                       placeholder="请输入优惠金额(元)" autocomplete="off"
-                                       data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
-                                       data-val-regex="优惠金额格式错误">
-                                <div data-valmsg-for="subMoney" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label for="recharge_send" class="col-sm-4 control-label">赠送金额(元)</label>
 
                             <div class="col-sm-8">
@@ -147,6 +136,14 @@
                                        data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                        data-val-regex="赠送金额格式错误">
                                 <div data-valmsg-for="givingAmount" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="recharge_total" class="col-sm-4 control-label">卡内总额(元)</label>
+
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="recharge_total" name="totalAmount"
+                                       autocomplete="off" disabled value="充值金额 + 赠送金额">
                             </div>
                         </div>
                     </div>

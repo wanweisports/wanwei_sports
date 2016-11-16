@@ -99,6 +99,40 @@
                     </table>
                 </td>
             </tr>
+            <tr class="list-nav-header" data-item="teacher">
+                <td>
+                    <span><a href="javascript:;">教师管理</a></span>
+                </td>
+            </tr>
+            <tr class="list-nav-list teacher" style="${param.nav == "teacher" ? "" : "display:none;"}">
+                <td>
+                    <table style="width: 100%;">
+                        <tr class="list-nav-item teacher ${param.subNav == "register" ? "active" : ""}">
+                            <td>
+                                <span><a href="/teachers/register">教师办卡</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item teacher ${param.subNav == "list" ? "active" : ""}">
+                            <td>
+                                <span><a href="/teachers/list">教师查询</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item teacher ${param.subNav == "data" ? "active" : ""}">
+                            <td>
+                                <span><a href="/teachers/data">教师用场统计</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item teacher ${param.subNav == "meals" ? "active" : ""}">
+                            <td>
+                                <span><a href="/teachers/orderMeal">教师订餐统计</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item teacher last-nav-item">
+                            <td>&nbsp;</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
             <tr class="list-nav-header" data-item="student">
                 <td>
                     <span><a href="javascript:;">学生管理</a></span>
@@ -109,7 +143,7 @@
                     <table style="width: 100%;">
                         <tr class="list-nav-item student ${param.subNav == "register" ? "active" : ""}">
                             <td>
-                                <span><a href="/students/register">学生注册</a></span>
+                                <span><a href="/students/register">学生办卡</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item student ${param.subNav == "list" ? "active" : ""}">
@@ -117,22 +151,12 @@
                                 <span><a href="/students/list">学生查询</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item student ${param.subNav == "sdata" ? "active" : ""}">
+                        <tr class="list-nav-item student ${param.subNav == "data" ? "active" : ""}">
                             <td>
-                                <span><a href="/students/sdata">学生用场明细</a></span>
+                                <span><a href="/students/data">学生用场统计</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item student ${param.subNav == "class" ? "active" : ""}">
-                            <td>
-                                <span><a href="/students/class">班级管理</a></span>
-                            </td>
-                        </tr>
-                        <tr class="list-nav-item student ${param.subNav == "cdata" ? "active" : ""}">
-                            <td>
-                                <span><a href="/students/cdata">班级用场明细</a></span>
-                            </td>
-                        </tr>
-                        <tr class="list-nav-item site last-nav-item">
+                        <tr class="list-nav-item student last-nav-item">
                             <td>&nbsp;</td>
                         </tr>
                     </table>
@@ -151,6 +175,11 @@
                                 <span><a href="/site/getSiteReservationInfo">场地预订</a></span>
                             </td>
                         </tr>
+                        <tr class="list-nav-item site ${param.subNav == "fixed" ? "active" : ""}">
+                            <td>
+                                <span><a href="/site/getSiteReservationFixed">定场预订</a></span>
+                            </td>
+                        </tr>
                         <tr class="list-nav-item site ${param.subNav == "batch" ? "active" : ""}">
                             <td>
                                 <span><a href="/site/getSiteReservationBatch">批量预订</a></span>
@@ -161,11 +190,11 @@
                                 <span><a href="/order/getOrderList?orderServiceTypes=1,3">场地订单</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item site ${param.subNav == "pda" ? "active" : ""}">
+                        <!--<tr class="list-nav-item site ${param.subNav == "pda" ? "active" : ""}">
                             <td>
                                 <span><a href="/site/getReservationsSequencePDA">场地热点分析</a></span>
                             </td>
-                        </tr>
+                        </tr>-->
                         <tr class="list-nav-item site ${param.subNav == "site" ? "active" : ""}">
                             <td>
                                 <span><a href="/site/getSiteInfos">场地设置</a></span>
@@ -288,11 +317,6 @@
                                 <span><a href="/settings/getRoles">员工权限设置</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item setting ${param.subNav == "notification" ? "active" : ""}">
-                            <td>
-                                <span><a href="/settings/notification">通知管理</a></span>
-                            </td>
-                        </tr>
                         <tr class="list-nav-item setting ${param.subNav == "database" ? "active" : ""}">
                             <td>
                                 <span><a href="/settings/database">数据库操作</a></span>
@@ -304,6 +328,30 @@
                             </td>
                         </tr>
                         <tr class="list-nav-item setting last-nav-item">
+                            <td>&nbsp;</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="list-nav-header" data-item="office">
+                <td>
+                    <span><a href="javascript:;">办公系统</a></span>
+                </td>
+            </tr>
+            <tr class="list-nav-list office" style="${param.nav == "office" ? "" : "display:none;"}">
+                <td>
+                    <table style="width: 100%;">
+                        <tr class="list-nav-item office ${param.subNav == "notification" ? "active" : ""}">
+                            <td>
+                                <span><a href="/office/notifications">通知管理</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item office ${param.subNav == "schedule" ? "active" : ""}">
+                            <td>
+                                <span><a href="/office/schedule">排班管理</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item office last-nav-item">
                             <td>&nbsp;</td>
                         </tr>
                     </table>
@@ -327,9 +375,9 @@
                                 <span><a href="/passport/modifyPassword">密码重置</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item passport ${param.subNav == "questions" ? "active" : ""}">
+                        <tr class="list-nav-item passport ${param.subNav == "message" ? "active" : ""}">
                             <td>
-                                <span><a href="/error/questions">操作指南</a></span>
+                                <span><a href="/passport/message">我的消息</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item passport last-nav-item">

@@ -5,53 +5,35 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
-<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
-    <link href="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/app/data/data_members_attendance.js?v=${static_resource_version}"></script>
-</layout:override>
-
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>数据统计</span> &gt;&gt; <span>会员签到记录</span>
+    当前位置: <span>办公系统</span> &gt;&gt; <span>通知管理</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
-            <div class="panel-heading">会员签到记录</div>
+            <div class="panel-heading">通知管理</div>
             <div class="panel-body">
-                <form id="data_form" class="form-inline" onsubmit="return false;">
+                <form id="notification_form" class="form-inline" novalidate onsubmit="return false;">
                     <div class="form-group">
-                        <div class="btn-group">
-                            <a href="javascript:;" class="btn btn-primary">今天</a>
-                            <a href="javascript:;" class="btn btn-default">昨天</a>
-                            <a href="javascript:;" class="btn btn-default">本周</a>
-                            <a href="javascript:;" class="btn btn-default">本月</a>
-                        </div>
+                        <select class="form-control" name="status" style="width: 200px;">
+                            <option value="">全部状态</option>
+                            <option value="1">未读</option>
+                            <option value="2">已读</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="student_name" name="student_name"
-                               placeholder="会员姓名">
+                        <input type="text" class="form-control" name="title" placeholder="通知标题">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="createTimeStart" name="createTimeStart" placeholder="开始日期"
-                               value="${createTimeStart}">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="createTimeEnd" name="createTimeEnd" placeholder="结束日期"
-                               value="${createTimeEnd}">
-                    </div>
-                    <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary data-filter">
+                        <a href="javascript:;" class="btn btn-primary notification-filter">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>
                     <div class="form-group pull-right">
-                        <a href="javascript:;" class="btn btn-danger goods-filter">
-                            <span class="glyphicon glyphicon-export"></span> 导出数据
+                        <a href="#fasongModal" class="btn btn-primary" data-toggle="modal"
+                           data-backdrop="false">
+                            <span class="glyphicon glyphicon-send"></span> 发送通知
                         </a>
                     </div>
                 </form>
@@ -63,42 +45,70 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>会员卡号</th>
-                            <th>会员姓名</th>
-                            <th>签到时间</th>
-                            <th>对应订单</th>
-                            <th>签到人</th>
-                            <th>手机号</th>
+                            <th>发送标题</th>
+                            <th>发送内容</th>
+                            <th>有无附件</th>
+                            <th>发送时间</th>
+                            <th>发送人</th>
+                            <th>收件人</th>
+                            <th>通知状态</th>
+                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td>234545243</td>
+                            <td>关于2016年场馆建设意见</td>
+                            <td>关于2016年场馆建设意见, 关于2016年场馆建设意见....</td>
+                            <td>无</td>
+                            <td>2016-12-11 10:11</td>
                             <td>李洪旭</td>
-                            <td>2016-10-20 10:00</td>
-                            <td>order_23435543</td>
-                            <td>李洪旭</td>
-                            <td>110****3242</td>
-                        </tr>
-                        <tr>
-                            <td>234545243</td>
-                            <td>煤炭公司</td>
-                            <td>2016-10-20 10:00</td>
-                            <td>order_23435543</td>
-                            <td>张三</td>
-                            <td>110****3242</td>
-                        </tr>
-                        <tr>
-                            <td>234545243</td>
-                            <td>北体高科</td>
-                            <td>2016-10-20 10:00</td>
-                            <td>order_23435543</td>
                             <td>栾宝石</td>
-                            <td>110****3242</td>
+                            <td>未读</td>
+                            <td>
+                                <a class="btn btn-primary" href="">
+                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
+                                </a>
+                                <a class="btn btn-danger" href="">
+                                    <span class="glyphicon glyphicon-trash"></span> 删除
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>关于2016年场馆建设意见</td>
+                            <td>关于2016年场馆建设意见, 关于2016年场馆建设意见....</td>
+                            <td>2个文件</td>
+                            <td>2016-12-11 10:11</td>
+                            <td>李洪旭</td>
+                            <td>栾宝石</td>
+                            <td>已读</td>
+                            <td>
+                                <a class="btn btn-primary" href="">
+                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
+                                </a>
+                                <a class="btn btn-danger" href="">
+                                    <span class="glyphicon glyphicon-trash"></span> 删除
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>关于2016年场馆建设意见</td>
+                            <td>关于2016年场馆建设意见, 关于2016年场馆建设意见....</td>
+                            <td>5个文件</td>
+                            <td>2016-12-11 10:11</td>
+                            <td>李洪旭</td>
+                            <td>栾宝石</td>
+                            <td>已读</td>
+                            <td>
+                                <a class="btn btn-primary" href="">
+                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
+                                </a>
+                                <a class="btn btn-danger" href="">
+                                    <span class="glyphicon glyphicon-trash"></span> 删除
+                                </a>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
-
                     <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >
                         <p class="pull-left" style="margin: 12px 14px;">
                             <span>${pageSize}条/页</span>
@@ -167,9 +177,43 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="fasongModal" tabindex="-1" role="dialog" aria-labelledby="fasongModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="fasongModalLabel">发送通知</h5>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="收件人">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="消息标题">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3" placeholder="消息内容"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <p class="help-block">请上传附件</p>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-send"></span> 发 送
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </layout:override>
 
 <c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="data"/>
-    <c:param name="subNav" value="attendance"/>
+    <c:param name="nav" value="office"/>
+    <c:param name="subNav" value="notification"/>
 </c:import>

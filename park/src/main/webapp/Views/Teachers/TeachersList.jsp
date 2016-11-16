@@ -6,33 +6,33 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="/Content/app/students/students_list_query.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/teachers/teachers_list.js?v=${static_resource_version}"></script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>学生管理</span> &gt;&gt; <span>学生查询</span>
+    当前位置: <span>教师管理</span> &gt;&gt; <span>教师查询</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
-            <div class="panel-heading">学生查询</div>
+            <div class="panel-heading">教师查询</div>
             <div class="panel-body">
-                <form id="student_filter_form" class="form-inline" method="post" novalidate onsubmit="return false;">
+                <form id="member_filter_form" class="form-inline" method="post" novalidate onsubmit="return false;">
                     <div class="form-group">
-                        <select class="form-control" id="student_status" name="student_status" style="width: 160px;">
+                        <select class="form-control" id="teacher_status" name="teacher_status" style="width: 160px;">
                             <option value="">全部状态</option>
                             <option value="1">正常</option>
                             <option value="2">锁定</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="student_card" name="student_card"
-                               placeholder="请输入学生卡号">
+                        <input type="text" class="form-control" id="teacher_card" name="teacher_card"
+                               placeholder="请输入教师卡号">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="student_name" name="student_name"
-                               placeholder="请输入学生姓名">
+                        <input type="text" class="form-control" id="teacher_name" name="teacher_name"
+                               placeholder="请输入教师姓名">
                     </div>
                     <div class="form-group">
                         <a href="javascript:;" class="btn btn-primary member-filter">
@@ -45,12 +45,12 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table teachers-list">
                         <thead>
                         <tr>
                             <th>卡号</th>
                             <th>姓名</th>
-                            <th>所在班级</th>
+                            <th>手机号码</th>
                             <th>用场次数</th>
                             <th>截止日期</th>
                             <th>状态</th>
@@ -63,147 +63,66 @@
                         <tr>
                             <td style="vertical-align: middle;">1242354ewe</td>
                             <td style="vertical-align: middle;">王晓红</td>
-                            <td style="vertical-align: middle;">16级01班</td>
-                            <td style="vertical-align: middle;">10</td>
+                            <td style="vertical-align: middle;">11012345678</td>
+                            <td style="vertical-align: middle;">142</td>
                             <td style="vertical-align: middle;">2016-12-11</td>
                             <td style="vertical-align: middle;" class="text-success">正常</td>
                             <td style="vertical-align: middle;">张丹丹</td>
                             <td style="vertical-align: middle;">2016-12-11</td>
                             <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="/students/view">
+                                <a class="btn btn-primary" href="/teachers/view">
                                     <span class="glyphicon glyphicon-share-alt"></span> 查看
                                 </a>
-                                <a class="btn btn-warning" href="">
+                                <a href="#buban_modal" class="btn btn-primary teachers-buban" data-toggle="modal"
+                                    data-backdrop="false">
                                     <span class="glyphicon glyphicon-refresh"></span> 补办
                                 </a>
                                 <a class="btn btn-danger" href="">
-                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 退卡
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 删除
                                 </a>
                             </td>
                         </tr>
                         <tr>
                             <td style="vertical-align: middle;">1242354ewe</td>
                             <td style="vertical-align: middle;">王晓红</td>
-                            <td style="vertical-align: middle;">16级01班</td>
-                            <td style="vertical-align: middle;">10</td>
+                            <td style="vertical-align: middle;">11012345678</td>
+                            <td style="vertical-align: middle;">142</td>
                             <td style="vertical-align: middle;">2016-12-11</td>
                             <td style="vertical-align: middle;" class="text-success">正常</td>
                             <td style="vertical-align: middle;">张丹丹</td>
                             <td style="vertical-align: middle;">2016-12-11</td>
                             <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="/students/view">
+                                <a class="btn btn-primary" href="/teachers/view">
                                     <span class="glyphicon glyphicon-share-alt"></span> 查看
                                 </a>
-                                <a class="btn btn-warning" href="">
+                                <a href="#buban_modal" class="btn btn-primary teachers-buban" data-toggle="modal"
+                                   data-backdrop="false">
                                     <span class="glyphicon glyphicon-refresh"></span> 补办
                                 </a>
                                 <a class="btn btn-danger" href="">
-                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 退卡
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 删除
                                 </a>
                             </td>
                         </tr>
                         <tr>
                             <td style="vertical-align: middle;">1242354ewe</td>
                             <td style="vertical-align: middle;">王晓红</td>
-                            <td style="vertical-align: middle;">16级01班</td>
-                            <td style="vertical-align: middle;">10</td>
+                            <td style="vertical-align: middle;">11012345678</td>
+                            <td style="vertical-align: middle;">142</td>
                             <td style="vertical-align: middle;">2016-12-11</td>
                             <td style="vertical-align: middle;" class="text-success">正常</td>
                             <td style="vertical-align: middle;">张丹丹</td>
                             <td style="vertical-align: middle;">2016-12-11</td>
                             <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="/students/view">
+                                <a class="btn btn-primary" href="/teachers/view">
                                     <span class="glyphicon glyphicon-share-alt"></span> 查看
                                 </a>
-                                <a class="btn btn-warning" href="">
+                                <a href="#buban_modal" class="btn btn-primary teachers-buban" data-toggle="modal"
+                                   data-backdrop="false">
                                     <span class="glyphicon glyphicon-refresh"></span> 补办
                                 </a>
                                 <a class="btn btn-danger" href="">
-                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 退卡
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="vertical-align: middle;">1242354ewe</td>
-                            <td style="vertical-align: middle;">王晓红</td>
-                            <td style="vertical-align: middle;">16级01班</td>
-                            <td style="vertical-align: middle;">10</td>
-                            <td style="vertical-align: middle;">2016-12-11</td>
-                            <td style="vertical-align: middle;" class="text-success">正常</td>
-                            <td style="vertical-align: middle;">张丹丹</td>
-                            <td style="vertical-align: middle;">2016-12-11</td>
-                            <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="/students/view">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </a>
-                                <a class="btn btn-warning" href="">
-                                    <span class="glyphicon glyphicon-refresh"></span> 补办
-                                </a>
-                                <a class="btn btn-danger" href="">
-                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 退卡
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="vertical-align: middle;">1242354ewe</td>
-                            <td style="vertical-align: middle;">王晓红</td>
-                            <td style="vertical-align: middle;">16级01班</td>
-                            <td style="vertical-align: middle;">10</td>
-                            <td style="vertical-align: middle;">2016-12-11</td>
-                            <td style="vertical-align: middle;" class="text-success">正常</td>
-                            <td style="vertical-align: middle;">张丹丹</td>
-                            <td style="vertical-align: middle;">2016-12-11</td>
-                            <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="/students/view">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </a>
-                                <a class="btn btn-warning" href="">
-                                    <span class="glyphicon glyphicon-refresh"></span> 补办
-                                </a>
-                                <a class="btn btn-danger" href="">
-                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 退卡
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="vertical-align: middle;">1242354ewe</td>
-                            <td style="vertical-align: middle;">王晓红</td>
-                            <td style="vertical-align: middle;">16级01班</td>
-                            <td style="vertical-align: middle;">10</td>
-                            <td style="vertical-align: middle;">2016-12-11</td>
-                            <td style="vertical-align: middle;" class="text-success">正常</td>
-                            <td style="vertical-align: middle;">张丹丹</td>
-                            <td style="vertical-align: middle;">2016-12-11</td>
-                            <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="/students/view">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </a>
-                                <a class="btn btn-warning" href="">
-                                    <span class="glyphicon glyphicon-refresh"></span> 补办
-                                </a>
-                                <a class="btn btn-danger" href="">
-                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 退卡
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="vertical-align: middle;">1242354ewe</td>
-                            <td style="vertical-align: middle;">王晓红</td>
-                            <td style="vertical-align: middle;">16级01班</td>
-                            <td style="vertical-align: middle;">10</td>
-                            <td style="vertical-align: middle;">2016-12-11</td>
-                            <td style="vertical-align: middle;" class="text-success">正常</td>
-                            <td style="vertical-align: middle;">张丹丹</td>
-                            <td style="vertical-align: middle;">2016-12-11</td>
-                            <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="/students/view">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </a>
-                                <a class="btn btn-warning" href="">
-                                    <span class="glyphicon glyphicon-refresh"></span> 补办
-                                </a>
-                                <a class="btn btn-danger" href="">
-                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 退卡
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 删除
                                 </a>
                             </td>
                         </tr>
@@ -277,9 +196,41 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="buban_modal" tabindex="-1" role="dialog" aria-labelledby="buban_modal_label">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="buban_modal_label">教师卡补办</h5>
+                </div>
+                <div class="modal-body" style="clear: both;">
+                    <form id="buban_form" class="form-horizontal" onsubmit="return false;">
+                        <input type="hidden" name="goodId">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="buban_no" name="buban_no"
+                                       placeholder="请输入补办后的卡号"
+                                       data-val="true" data-val-required="补办后的卡号不能为空"
+                                       data-val-regex-pattern="^[1-9]\d*$">
+                                <div data-valmsg-for="buban_no" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary confirm-buban" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-ok"></span> 确 认
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </layout:override>
 
 <c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="student"/>
+    <c:param name="nav" value="teacher"/>
     <c:param name="subNav" value="list"/>
 </c:import>

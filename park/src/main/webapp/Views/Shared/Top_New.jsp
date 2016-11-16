@@ -29,10 +29,10 @@
                         <td class="top-header-menu">
                             <div class="menu">
                                 <ul>
+                                    <li><a href="/passport/message"><span>我的消息</span><span class="label label-default">10</span></a></li>
                                     <li><a href="/passport/profile"><span>完善信息</span></a></li>
                                     <li><a href="/passport/modifyPassword"><span>密码重置</span></a></li>
                                     <li><a class="user-logout" href="/passport/logout"><span>安全退出</span></a></li>
-                                    <li><a href="/error/questions"><span>操作指南</span></a></li>
                                 </ul>
                             </div>
                         </td>

@@ -14,7 +14,7 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>学生管理</span> &gt;&gt; <span>学生用场明细</span>
+    当前位置: <span>学生管理</span> &gt;&gt; <span>学生用场统计</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -23,6 +23,13 @@
             <div class="panel-heading">学生用场明细</div>
             <div class="panel-body">
                 <form class="form-inline" id="data_filter_form" onsubmit="return false;">
+                    <div class="form-group">
+                        <select class="form-control" id="student_sports" name="student_sports" style="width: 160px;">
+                            <option value="">全部场地</option>
+                            <option value="1">羽毛球</option>
+                            <option value="2">篮球</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="student_name" name="student_name"
                                placeholder="请输入学生姓名">
@@ -44,6 +51,22 @@
             </div>
         </div>
 
+        <div class="alert alert-info clearfix">
+            <ul class="nav nav-pills pull-left">
+                <li style="margin-right: 15px;">场地类型总计:</li>
+                <li style="margin-right: 15px;">全部 <span class="badge">42次</span></li>
+                <li style="margin-right: 15px;">羽毛球 <span class="badge">21次</span></li>
+                <li style="margin-right: 15px;">篮球 <span class="badge">21次</span></li>
+            </ul>
+            <div class="pull-right">
+                <a href="javascript:;" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-export"></span> 导出数据
+                </a>
+                <a href="javascript:;" class="btn btn-primary" style="display: none;">
+                    <span class="glyphicon glyphicon-stats"></span> 图表显示
+                </a>
+            </div>
+        </div>
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="table-responsive card-type-list">
@@ -52,6 +75,7 @@
                         <tr>
                             <th>序号</th>
                             <th>学生姓名</th>
+                            <th>所在班级</th>
                             <th>用场时间</th>
                             <th>场地类型</th>
                             <th>操作人</th>
@@ -62,6 +86,7 @@
                         <tr>
                             <td>1</td>
                             <td>李洪旭</td>
+                            <td>6年级1班</td>
                             <td>2016-10-25 12:11</td>
                             <td>羽毛球</td>
                             <td>李晓丹</td>
@@ -70,6 +95,7 @@
                         <tr>
                             <td>2</td>
                             <td>李洪旭</td>
+                            <td>6年级1班</td>
                             <td>2016-10-25 12:11</td>
                             <td>羽毛球</td>
                             <td>李晓丹</td>
@@ -78,6 +104,7 @@
                         <tr>
                             <td>3</td>
                             <td>李洪旭</td>
+                            <td>6年级1班</td>
                             <td>2016-10-25 12:11</td>
                             <td>羽毛球</td>
                             <td>李晓丹</td>
@@ -86,6 +113,7 @@
                         <tr>
                             <td>4</td>
                             <td>李洪旭</td>
+                            <td>6年级1班</td>
                             <td>2016-10-25 12:11</td>
                             <td>羽毛球</td>
                             <td>李晓丹</td>
@@ -94,6 +122,7 @@
                         <tr>
                             <td>5</td>
                             <td>李洪旭</td>
+                            <td>6年级1班</td>
                             <td>2016-10-25 12:11</td>
                             <td>羽毛球</td>
                             <td>李晓丹</td>
@@ -102,6 +131,7 @@
                         <tr>
                             <td>6</td>
                             <td>李洪旭</td>
+                            <td>6年级1班</td>
                             <td>2016-10-25 12:11</td>
                             <td>羽毛球</td>
                             <td>李晓丹</td>
@@ -110,6 +140,7 @@
                         <tr>
                             <td>7</td>
                             <td>李洪旭</td>
+                            <td>6年级1班</td>
                             <td>2016-10-25 12:11</td>
                             <td>羽毛球</td>
                             <td>李晓丹</td>
@@ -118,6 +149,7 @@
                         <tr>
                             <td>8</td>
                             <td>李洪旭</td>
+                            <td>6年级1班</td>
                             <td>2016-10-25 12:11</td>
                             <td>羽毛球</td>
                             <td>李晓丹</td>
@@ -126,6 +158,7 @@
                         <tr>
                             <td>9</td>
                             <td>李洪旭</td>
+                            <td>6年级1班</td>
                             <td>2016-10-25 12:11</td>
                             <td>羽毛球</td>
                             <td>李晓丹</td>
@@ -134,6 +167,7 @@
                         <tr>
                             <td>10</td>
                             <td>李洪旭</td>
+                            <td>6年级1班</td>
                             <td>2016-10-25 12:11</td>
                             <td>羽毛球</td>
                             <td>李晓丹</td>
@@ -213,5 +247,5 @@
 
 <c:import url="../Shared/Layout_New.jsp">
     <c:param name="nav" value="student"/>
-    <c:param name="subNav" value="sdata"/>
+    <c:param name="subNav" value="data"/>
 </c:import>
