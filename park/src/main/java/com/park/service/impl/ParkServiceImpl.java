@@ -57,7 +57,7 @@ public class ParkServiceImpl extends BaseService implements IParkService {
 			parkBusinessDB.setBusinessContact(parkBusiness.getBusinessContact());
 			parkBusinessDB.setBusinessStartTime(parkBusiness.getBusinessStartTime());
 			parkBusinessDB.setBusinessEndTime(parkBusiness.getBusinessEndTime());
-			parkBusinessDB.setBusinessName(parkBusiness.getBusinessName());
+			//parkBusinessDB.setBusinessName(parkBusiness.getBusinessName());
 			parkBusinessDB.setBusinessPhone(parkBusiness.getBusinessPhone());
 			parkBusinessDB.setUpdateTime(nowDate);
 			parkBusinessDB.setSalesId(parkBusiness.getSalesId());

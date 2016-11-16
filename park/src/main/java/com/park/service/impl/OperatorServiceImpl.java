@@ -10,6 +10,7 @@ import com.park.common.bean.PageBean;
 import com.park.common.bean.out.ReserveInfo;
 import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
+import com.park.common.po.ParkBusiness;
 import com.park.common.po.SystemRole;
 import com.park.common.po.SystemRoleOperator;
 import com.park.common.po.SystemRoleOperatorId;
@@ -19,6 +20,7 @@ import com.park.common.util.JsonUtils;
 import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
 import com.park.service.IOperatorService;
+import com.park.service.IParkService;
 import com.park.service.IRoleService;
 
 @Service
@@ -30,6 +32,9 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 	@Autowired
 	private IRoleService roleService;
 	
+	@Autowired
+	private IParkService parkService;
+	
 	@Override
 	public String saveOperator(UserOperator userOperator, int roleId){
 		SystemRole systemRole = roleService.getSystemRole(roleId);
@@ -37,7 +42,9 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 		if(!IDBConstant.LOGIC_STATUS_YES.equals(systemRole.getRoleStatus())) throw new MessageException("角色不可用");
 		if(userOperator.getId() == null){
 			if(getOperator(userOperator.getOperatorId()) != null) throw new MessageException("登录账户重复，请重新");
-			userOperator.setOperatorPwd("123456"); //密码暂时设置为123456
+			if(StrUtil.isBlank(userOperator.getOperatorPwd())){
+				userOperator.setOperatorPwd("123456"); //密码暂时设置为123456
+			}
 			userOperator.setCreateTime(DateUtil.getNowDate());
 			userOperator.setStatus(IDBConstant.LOGIC_STATUS_YES);
 		}
@@ -120,6 +127,12 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 			operatorDB.setOperatorAddress(operator.getOperatorAddress());
 			operatorDB.setUpdateTime(DateUtil.getNowDate());
 			return saveOperator(operatorDB, roleId);
+		}else { //新建员工不能超过安装点数
+			ParkBusiness business = parkService.getBusiness();
+			Integer points = business.getPoints();
+			if(points != null && points > 0){
+				if(getEmployeeCount() >= points) throw new MessageException("添加员工数量已超过上线，请联系管理员！");
+			}
 		}
 		return saveOperator(operator, roleId);
 	}
@@ -165,6 +178,10 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 		if(!oldPwd.equals(operator.getOperatorPwd())) throw new MessageException("原密码错误");
 		operator.setOperatorPwd(newPwd);
 		baseDao.save(operator, operator.getId());
+	}
+	
+	private int getEmployeeCount(){
+		return baseDao.getUniqueResult("SELECT COUNT(1) FROM user_operator").intValue();
 	}
 	
 }
