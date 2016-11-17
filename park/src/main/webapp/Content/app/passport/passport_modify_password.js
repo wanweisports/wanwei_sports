@@ -25,6 +25,7 @@
                             $("#tips_modal").modal("hide");
                         }, 3000);
                     } else {
+                        console.log(res.message || "密码修改失败, 请稍后重试");
                         alert(res.message || "密码修改失败, 请稍后重试");
                     }
                 });

@@ -25,8 +25,6 @@
             });
         },
         initEvents: function () {
-            var content = this;
-
             $(".init-confirm").on("click", function (e) {
                 e.preventDefault();
 
@@ -42,8 +40,13 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        location.assign('/');
+                        $("#tips_success_modal").modal({show: true, backdrop: false});
+                        setTimeout(function () {
+                            $("#tips_success_modal").modal("hide");
+                            location.assign('/passport/login');
+                        }, 3000);
                     } else {
+                        console.log(res.message || "初始化失败, 请稍后重试");
                         alert(res.message || "初始化失败, 请稍后重试");
                     }
                 });

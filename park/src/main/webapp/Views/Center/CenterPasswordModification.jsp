@@ -38,7 +38,9 @@
                             <div class="col-sm-8">
                                 <input type="password" class="form-control" id="user_password" name="oldPwd"
                                        placeholder="请输入原始密码" autocomplete="off"
-                                       data-val="true" data-val-required="原始密码不能为空">
+                                       data-val="true" data-val-required="原始密码不能为空"
+                                       data-val-regex-pattern="^[A-za-z][A-Za-z0-9_]{5,31}$"
+                                       data-val-regex="原始密码格式错误">
                                 <div data-valmsg-for="oldPwd" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -48,9 +50,11 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="new_password" name="newPwd"
+                                <input type="password" class="form-control" id="new_password" name="newPwd"
                                        placeholder="请输入新密码" autocomplete="off"
-                                       data-val="true" data-val-required="新密码不能为空">
+                                       data-val="true" data-val-required="新密码不能为空"
+                                       data-val-regex-pattern="^[A-za-z][A-Za-z0-9_]{5,31}$"
+                                       data-val-regex="新密码格式错误">
                                 <div data-valmsg-for="newPwd" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -60,16 +64,20 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="confirm_password" name="confirmPwd"
+                                <input type="password" class="form-control" id="confirm_password" name="confirmPwd"
                                        placeholder="请选择确认密码" autocomplete="off"
-                                       data-val="true" data-val-required="确认密码不能为空">
+                                       data-val="true" data-val-required="确认密码不能为空"
+                                       data-val-regex-pattern="^[A-za-z][A-Za-z0-9_]{5,31}$"
+                                       data-val-regex="确认密码格式错误"
+                                       data-val-equalto="新密码和确认密码不一致"
+                                       data-val-equalto-other="newPwd">
                                 <div data-valmsg-for="confirmPwd" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
                                 <p class="sc-submit-tips"></p>
-                                <button type="submit" class="btn btn-primary password-confirm">
+                                <button type="submit" class="btn btn-primary col-sm-4 password-confirm">
                                     <span class="glyphicon glyphicon-ok"></span> 确 定
                                 </button>
                             </div>
