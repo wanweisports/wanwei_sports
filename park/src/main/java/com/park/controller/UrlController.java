@@ -142,6 +142,11 @@ public class UrlController extends BaseController {
         return "Error/Questions";
     }
 
+	// 我的消息
+	@RequestMapping("/passport/message")
+	public String myMessage() {
+		return "Center/CenterNotification";
+	}
 }
 
 

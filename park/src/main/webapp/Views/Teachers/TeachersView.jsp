@@ -13,7 +13,7 @@
     <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
-    <script src="/Content/app/members/members_info_enter.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/teachers/teachers_create.js?v=${static_resource_version}"></script>
     <script>
         $(document).ready(function () {
             // 配置表单校验
@@ -25,44 +25,29 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>会员管理</span> &gt;&gt; <span>新会员办理</span>
+    当前位置: <span>教师管理</span> &gt;&gt; <span>教师查询</span> &gt;&gt; <span>教师信息</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <form id="member_form" class="form-horizontal" novalidate onsubmit="return false;">
+            <input type="hidden" name="teachersId">
             <div class="panel panel-default">
-                <div class="panel-heading">新会员办理</div>
+                <div class="panel-heading">教师信息</div>
                 <div class="panel-body">
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="cardNo" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 会员卡号
+                                <span class="text-danger">*</span> 教师卡号
                             </label>
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="cardNo" name="tempCardNo"
-                                       placeholder="会员卡号" value="${cardNo}"
-                                       data-val="true" data-val-required="会员卡号不能为空">
+                                       placeholder="教师卡号" value="${cardNo}"
+                                       data-val="true" data-val-required="教师卡号不能为空">
                                 <div data-valmsg-for="tempCardNo" data-valmsg-replace="true"></div>
                             </div>
                         </div>
-                        <input type="hidden" name="memberType" value="1">
-                        <!--<div class="form-group">
-                            <label for="memberType1" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 支付类型
-                            </label>
-
-                            <div class="col-sm-8">
-                                <label class="radio-inline">
-                                    <input type="radio" name="memberType" id="memberType1" value="1" checked> 预付类型
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="memberType" id="memberType2" value="2"> 记账类型
-                                </label>
-                                <div data-valmsg-for="memberType" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>-->
                         <div class="form-group">
                             <label for="member_mobile" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 手机号码
@@ -78,42 +63,31 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="memberBirthday" class="col-sm-4 control-label">会员生日</label>
+                            <label for="memberBirthday" class="col-sm-4 control-label">教师生日</label>
 
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="memberBirthday" name="memberBirthday"
-                                           placeholder="会员生日">
+                                           placeholder="教师生日">
                                     <span class="input-group-addon member-birthday-select">
                                         <i class="glyphicon glyphicon-calendar"></i>
                                     </span>
                                 </div>
                             </div>
                         </div>
-                        <!--<div class="form-group">
-                            <label for="member_mobile2" class="col-sm-4 control-label">备用手机</label>
-
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="member_mobile2" name="memberMobile2"
-                                       placeholder="请输入备用手机号码" autocomplete="off"
-                                       data-val-regex-pattern="^1\d{10}$"
-                                       data-val-regex="备用手机号码格式错误">
-                                <div data-valmsg-for="memberMobile2" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>-->
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="memberName" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 会员姓名
+                                <span class="text-danger">*</span> 教师姓名
                             </label>
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="memberName" name="memberName"
-                                       placeholder="请输入会员姓名" autocomplete="off"
-                                       data-val="true" data-val-required="会员姓名不能为空"
+                                       placeholder="请输入教师姓名" autocomplete="off"
+                                       data-val="true" data-val-required="教师姓名不能为空"
                                        data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,9}$"
-                                       data-val-regex="会员姓名长度只能2~12个字符">
+                                       data-val-regex="教师姓名长度只能2~12个字符">
                                 <div data-valmsg-for="memberName" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -133,7 +107,7 @@
                         </div>
                         <div class="form-group">
                             <label for="memberSex1" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 会员性别
+                                <span class="text-danger">*</span> 教师性别
                             </label>
 
                             <div class="col-sm-8">
@@ -167,7 +141,7 @@
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
                                 <button type="button" class="btn btn-primary col-sm-4 register-member">
-                                    <span class="glyphicon glyphicon-ok"></span>  注册 & 绑卡
+                                    <span class="glyphicon glyphicon-ok"></span>  保 存
                                 </button>
                             </div>
                         </div>
@@ -176,9 +150,26 @@
             </div>
         </form>
     </div>
+
+    <div class="modal fade" id="tips_success_modal" tabindex="-1" role="dialog"
+         aria-labelledby="tips_success_modal_label">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="tips_success_modal_label">提示框</h5>
+                </div>
+                <div class="modal-body">
+                    <p class="text-success">信息更新成功!</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </layout:override>
 
 <c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="member"/>
-    <c:param name="subNav" value="register"/>
+    <c:param name="nav" value="teacher"/>
+    <c:param name="subNav" value="list"/>
 </c:import>

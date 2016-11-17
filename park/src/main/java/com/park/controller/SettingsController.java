@@ -170,12 +170,6 @@ public class SettingsController extends BaseController {
         return "Settings/SettingsSystemRoles";
     }
 
-    // 通知设置
-    @RequestMapping("notification")
-    public String notification() {
-        return "Settings/SettingsNotification";
-    }
-
     // 数据库操作
     @RequestMapping("database")
     public String systemDatabase() {

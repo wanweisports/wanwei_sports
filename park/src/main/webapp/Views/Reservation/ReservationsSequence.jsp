@@ -48,7 +48,7 @@
                     <button type="button" class="btn btn-default sports-item">
                         <img class="sports-icon sports-active" src="/Content/images/sports/swimming-active.png?v=${static_resource_version}">
                         <img class="sports-icon sports-inactive" src="/Content/images/sports/swimming.png?v=${static_resource_version}">
-                        游泳
+                        篮球
                     </button>
                 </div>
             </div>
@@ -74,6 +74,9 @@
                 </nav>
                 <div class="form-inline sequence-btns">
                     <div class="form-group pull-right">
+                        <button type="button" class="btn btn-default sequence-refresh">
+                            <span class="glyphicon glyphicon-refresh"></span> 换 场
+                        </button>
                         <button type="button" class="btn btn-default sequence-unlock">
                             <span class="glyphicon glyphicon-lock"></span> 解 锁
                         </button>

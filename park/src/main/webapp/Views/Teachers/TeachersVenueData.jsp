@@ -11,30 +11,28 @@
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/app/data/data_members_attendance.js?v=${static_resource_version}"></script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>数据统计</span> &gt;&gt; <span>会员签到记录</span>
+    当前位置: <span>教师管理</span> &gt;&gt; <span>教师用场统计</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
-    <div class="container-fluid" style="text-align: left">
+    <div class="container-fluid" style="text-align: left;">
         <div class="panel panel-default">
-            <div class="panel-heading">会员签到记录</div>
+            <div class="panel-heading">教师用场统计</div>
             <div class="panel-body">
-                <form id="data_form" class="form-inline" onsubmit="return false;">
+                <form class="form-inline" id="data_filter_form" onsubmit="return false;">
                     <div class="form-group">
-                        <div class="btn-group">
-                            <a href="javascript:;" class="btn btn-primary">今天</a>
-                            <a href="javascript:;" class="btn btn-default">昨天</a>
-                            <a href="javascript:;" class="btn btn-default">本周</a>
-                            <a href="javascript:;" class="btn btn-default">本月</a>
-                        </div>
+                        <select class="form-control" id="student_sports" name="student_sports" style="width: 160px;">
+                            <option value="">全部场地</option>
+                            <option value="1">羽毛球</option>
+                            <option value="2">篮球</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="student_name" name="student_name"
-                               placeholder="会员姓名">
+                               placeholder="请输入教师姓名">
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="createTimeStart" name="createTimeStart" placeholder="开始日期"
@@ -45,60 +43,149 @@
                                value="${createTimeEnd}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary data-filter">
+                        <a href="javascript:;" class="btn btn-primary">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
-                        </a>
-                    </div>
-                    <div class="form-group pull-right">
-                        <a href="javascript:;" class="btn btn-danger goods-filter">
-                            <span class="glyphicon glyphicon-export"></span> 导出数据
                         </a>
                     </div>
                 </form>
             </div>
         </div>
+
+        <div class="alert alert-info clearfix">
+            <ul class="nav nav-pills pull-left">
+                <li style="margin-right: 15px;">场地类型总计:</li>
+                <li style="margin-right: 15px;">全部 <span class="badge">42次</span><span class="badge">46小时</span></li>
+                <li style="margin-right: 15px;">羽毛球 <span class="badge">21次</span><span class="badge">22小时</span></li>
+                <li style="margin-right: 15px;">篮球 <span class="badge">21次</span><span class="badge">24小时</span></li>
+            </ul>
+            <div class="pull-right">
+                <a href="javascript:;" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-export"></span> 导出数据
+                </a>
+                <a href="javascript:;" class="btn btn-primary" style="display: none;">
+                    <span class="glyphicon glyphicon-stats"></span> 图表显示
+                </a>
+            </div>
+        </div>
         <div class="panel panel-default">
             <div class="panel-body">
-                <div class="table-responsive">
+                <div class="table-responsive card-type-list">
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>会员卡号</th>
-                            <th>会员姓名</th>
-                            <th>签到时间</th>
-                            <th>对应订单</th>
-                            <th>签到人</th>
+                            <th>序号</th>
+                            <th>教师姓名</th>
                             <th>手机号</th>
+                            <th>签到时间</th>
+                            <th>用场时长</th>
+                            <th>场地类型</th>
+                            <th>操作人</th>
+                            <th>操作时间</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td>234545243</td>
+                            <td>1</td>
                             <td>李洪旭</td>
-                            <td>2016-10-20 10:00</td>
-                            <td>order_23435543</td>
-                            <td>李洪旭</td>
-                            <td>110****3242</td>
+                            <td>11012345678</td>
+                            <td>2016-10-25 12:11</td>
+                            <td>1小时</td>
+                            <td>羽毛球</td>
+                            <td>李晓丹</td>
+                            <td>2016-09-03</td>
                         </tr>
                         <tr>
-                            <td>234545243</td>
-                            <td>煤炭公司</td>
-                            <td>2016-10-20 10:00</td>
-                            <td>order_23435543</td>
-                            <td>张三</td>
-                            <td>110****3242</td>
+                            <td>2</td>
+                            <td>李洪旭</td>
+                            <td>11012345678</td>
+                            <td>2016-10-25 12:11</td>
+                            <td>1小时</td>
+                            <td>羽毛球</td>
+                            <td>李晓丹</td>
+                            <td>2016-09-03</td>
                         </tr>
                         <tr>
-                            <td>234545243</td>
-                            <td>北体高科</td>
-                            <td>2016-10-20 10:00</td>
-                            <td>order_23435543</td>
-                            <td>栾宝石</td>
-                            <td>110****3242</td>
+                            <td>3</td>
+                            <td>李洪旭</td>
+                            <td>11012345678</td>
+                            <td>2016-10-25 12:11</td>
+                            <td>1小时</td>
+                            <td>羽毛球</td>
+                            <td>李晓丹</td>
+                            <td>2016-09-03</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>李洪旭</td>
+                            <td>11012345678</td>
+                            <td>2016-10-25 12:11</td>
+                            <td>2小时</td>
+                            <td>羽毛球</td>
+                            <td>李晓丹</td>
+                            <td>2016-09-03</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>李洪旭</td>
+                            <td>11012345678</td>
+                            <td>2016-10-25 12:11</td>
+                            <td>1小时</td>
+                            <td>羽毛球</td>
+                            <td>李晓丹</td>
+                            <td>2016-09-03</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>李洪旭</td>
+                            <td>11012345678</td>
+                            <td>2016-10-25 12:11</td>
+                            <td>2小时</td>
+                            <td>羽毛球</td>
+                            <td>李晓丹</td>
+                            <td>2016-09-03</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>李洪旭</td>
+                            <td>11012345678</td>
+                            <td>2016-10-25 12:11</td>
+                            <td>1小时</td>
+                            <td>羽毛球</td>
+                            <td>李晓丹</td>
+                            <td>2016-09-03</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>李洪旭</td>
+                            <td>11012345678</td>
+                            <td>2016-10-25 12:11</td>
+                            <td>1小时</td>
+                            <td>羽毛球</td>
+                            <td>李晓丹</td>
+                            <td>2016-09-03</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>李洪旭</td>
+                            <td>11012345678</td>
+                            <td>2016-10-25 12:11</td>
+                            <td>1小时</td>
+                            <td>羽毛球</td>
+                            <td>李晓丹</td>
+                            <td>2016-09-03</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>李洪旭</td>
+                            <td>11012345678</td>
+                            <td>2016-10-25 12:11</td>
+                            <td>1小时</td>
+                            <td>羽毛球</td>
+                            <td>李晓丹</td>
+                            <td>2016-09-03</td>
                         </tr>
                         </tbody>
                     </table>
-
                     <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >
                         <p class="pull-left" style="margin: 12px 14px;">
                             <span>${pageSize}条/页</span>
@@ -170,6 +257,6 @@
 </layout:override>
 
 <c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="data"/>
-    <c:param name="subNav" value="attendance"/>
+    <c:param name="nav" value="teacher"/>
+    <c:param name="subNav" value="data"/>
 </c:import>

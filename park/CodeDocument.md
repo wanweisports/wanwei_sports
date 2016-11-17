@@ -495,6 +495,29 @@
     roleId          权限ID
 >
 
+
+### 6.  系统初始化
+目的是系统初始化配置。
+> 页面路由：
+>
+    init/settings.do
+>
+> 请求地址：
+>
+    init/saveInit.do
+> 
+> 请求类型：POST（application/json）
+> 
+> 请求参数：
+> 
+    operatorNo           管理员编号
+    operatorPwd          管理员密码
+    businessName         场馆名称
+    points               安装点数量
+    businessStartTime    营业开始时间
+    businessEndTime      营业结束时间
+>
+
 ## 通行证
 主要是个人账户信息的管理，如密码的修改，信息的完善等。
 
