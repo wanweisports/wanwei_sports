@@ -31,16 +31,13 @@
                 <form id="site_filter_form" class="form-inline col-sm-10" onsubmit="return false;">
                     <div class="form-group">
                         <label>场地类型</label>
-                        <select class="form-control" name="sportId" style="width: 160px;">
+                        <select class="form-control" name="sportId" style="width: 200px;">
                             <option value="">全部类型</option>
                             <c:forEach var="sport" items="${siteSportNames}">
                                 <option value="${sport.sportId}"
                                         <c:if test="${sport.sportId == sportId}">selected</c:if> >${sport.sportName}</option>
                             </c:forEach>
                         </select>
-                        <a href="/site/getSiteSports" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-plus"></span>
-                        </a>
                     </div>
                     <div class="form-group">
                         <label>场地名称</label>

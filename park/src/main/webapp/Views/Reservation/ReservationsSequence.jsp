@@ -26,6 +26,9 @@
             $('#reservations_user_form, #reservations_paid_form').validate({
                 ignore: ":hidden"
             });
+
+            // 设置运动类型
+            $(".sports-item[data-value='${sportId}']").removeClass("btn-default").addClass("btn-primary");
         });
     </script>
 </layout:override>
@@ -35,21 +38,45 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
+    <c:set var="basketball" value="篮球"/>
+    <c:set var="shuttercock" value="羽毛球"/>
+    <c:set var="swimming" value="游泳"/>
+    <c:set var="football" value="足球"/>
+    <c:set var="pingpong" value="乒乓球"/>
+
     <div class="container-fluid" style="text-align: left;">
         <div class="panel panel-default sequence-filter">
             <div class="panel-heading">
                 <span>场地预订  </span>
                 <div class="sports-list">
-                    <button type="button" class="btn btn-primary sports-item" data-value="1">
-                        <img class="sports-icon sports-active" src="/Content/images/sports/shuttercock-active.png?v=${static_resource_version}">
-                        <img class="sports-icon sports-inactive" src="/Content/images/sports/shuttercock.png?v=${static_resource_version}">
-                        羽毛球
-                    </button>
-                    <button type="button" class="btn btn-default sports-item">
-                        <img class="sports-icon sports-active" src="/Content/images/sports/swimming-active.png?v=${static_resource_version}">
-                        <img class="sports-icon sports-inactive" src="/Content/images/sports/swimming.png?v=${static_resource_version}">
-                        篮球
-                    </button>
+                    <c:forEach var="sport" items="${siteSports}">
+                        <a href="/site/getSiteReservationInfo?sportId=${sport.sportId}" class="btn btn-default sports-item"
+                                data-value="${sport.sportId}" data-text="${sport.sportName}">
+                            <c:choose>
+                                <c:when test="${sport.sportName == shuttercock}">
+                                    <img class="sports-icon sports-active" src="/Content/images/sports/shuttercock-active.png?v=${static_resource_version}">
+                                    <img class="sports-icon sports-inactive" src="/Content/images/sports/shuttercock.png?v=${static_resource_version}">
+                                </c:when>
+                                <c:when test="${sport.sportName == basketball}">
+                                    <img class="sports-icon sports-active" src="/Content/images/sports/basketball-active.png?v=${static_resource_version}">
+                                    <img class="sports-icon sports-inactive" src="/Content/images/sports/basketball.png?v=${static_resource_version}">
+                                </c:when>
+                                <c:when test="${sport.sportName == swimming}">
+                                    <img class="sports-icon sports-active" src="/Content/images/sports/swimming-active.png?v=${static_resource_version}">
+                                    <img class="sports-icon sports-inactive" src="/Content/images/sports/swimming.png?v=${static_resource_version}">
+                                </c:when>
+                                <c:when test="${sport.sportName == football}">
+                                    <img class="sports-icon sports-active" src="/Content/images/sports/football-active.png?v=${static_resource_version}">
+                                    <img class="sports-icon sports-inactive" src="/Content/images/sports/football.png?v=${static_resource_version}">
+                                </c:when>
+                                <c:when test="${sport.sportName == pingpong}">
+                                    <img class="sports-icon sports-active" src="/Content/images/sports/pingpong-active.png?v=${static_resource_version}">
+                                    <img class="sports-icon sports-inactive" src="/Content/images/sports/pingpong.png?v=${static_resource_version}">
+                                </c:when>
+                            </c:choose>
+                            ${sport.sportName}
+                        </a>
+                    </c:forEach>
                 </div>
             </div>
             <div class="panel-body">

@@ -150,6 +150,7 @@ public class SiteController extends BaseController {
 			siteInputView.setSiteStatus(IDBConstant.LOGIC_STATUS_YES);
 			List<Map<String, Object>> sites = siteService.getSites(siteInputView);
 			List<Map<String, Object>> timePeriod = parkService.getTimePeriod(parkService.getBusiness());
+            model.addAttribute("sportId", sportId);
 			model.addAttribute("siteSports", siteSports);
 			model.addAttribute("sites", sites);
 			model.addAttribute("timePeriod", timePeriod);

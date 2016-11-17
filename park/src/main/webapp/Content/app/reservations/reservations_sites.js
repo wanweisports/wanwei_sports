@@ -60,17 +60,20 @@
 
                 _resetSitesForm();
 
-                $.post("/site/getSiteInfo", {
-                    siteId: $this.attr("data-id")
-                }, function (res) {
+                $.post("/site/getSiteInfo", {siteId: $this.attr("data-id")}, function (res) {
                     var data = res.data;
 
-                    $.each(data, function (key, item) {
-                        $("#site_form").find("*[name='" + key + "']").not(":radio").val(item);
-                    });
-                    $("#site_form").find("input[name='siteStatus'][value='" + data.siteStatus + "']")
-                        .prop("checked", true);
-                    $("#settingModal").modal({backdrop: false, show: true});
+                    if (res.code == 1) {
+                        $.each(data, function (key, item) {
+                            $("#site_form").find("*[name='" + key + "']").not(":radio").val(item);
+                        });
+                        $("#site_form").find("input[name='siteStatus'][value='" + data.siteStatus + "']")
+                            .prop("checked", true);
+                        $("#settingModal").modal({backdrop: false, show: true});
+                    } else {
+                        console.log(res.message || "场地查询失败, 请稍后重试");
+                        alert(res.message || "场地查询失败, 请稍后重试");
+                    }
                 });
             });
 
@@ -92,6 +95,7 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
+                        console.log(res.message || "场地设置失败, 请稍后重试");
                         alert(res.message || "场地设置失败, 请稍后重试");
                     }
                 });
