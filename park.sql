@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2016-11-16 10:19:31
+Date: 2016-11-17 13:33:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -283,7 +283,7 @@ CREATE TABLE `park_business` (
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   `points` int(11) DEFAULT NULL COMMENT '安装点数（限制能创建几个员工）',
   PRIMARY KEY (`businessId`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COMMENT='场馆表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='场馆表';
 
 -- ----------------------------
 -- Records of park_business
@@ -513,7 +513,7 @@ CREATE TABLE `system_role` (
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`roleId`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='角色';
+) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='角色';
 
 -- ----------------------------
 -- Records of system_role
@@ -617,7 +617,7 @@ CREATE TABLE `user_operator` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `operatorId_Unique` (`operatorId`),
   KEY `operatorId_Normal` (`operatorId`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='登录用户表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='登录用户表';
 
 -- ----------------------------
 -- Records of user_operator
