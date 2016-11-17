@@ -294,6 +294,30 @@
                     </table>
                 </td>
             </tr>
+            <tr class="list-nav-header" data-item="office">
+                <td>
+                    <span><a href="javascript:;">办公系统</a></span>
+                </td>
+            </tr>
+            <tr class="list-nav-list office" style="${param.nav == "office" ? "" : "display:none;"}">
+                <td>
+                    <table style="width: 100%;">
+                        <tr class="list-nav-item office ${param.subNav == "notification" ? "active" : ""}">
+                            <td>
+                                <span><a href="/office/notifications">通知管理</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item office ${param.subNav == "schedule" ? "active" : ""}">
+                            <td>
+                                <span><a href="/office/schedule">排班管理</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item office last-nav-item">
+                            <td>&nbsp;</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
             <tr class="list-nav-header" data-item="setting">
                 <td>
                     <span><a href="javascript:;">系统设置</a></span>
@@ -328,30 +352,6 @@
                             </td>
                         </tr>
                         <tr class="list-nav-item setting last-nav-item">
-                            <td>&nbsp;</td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr class="list-nav-header" data-item="office">
-                <td>
-                    <span><a href="javascript:;">办公系统</a></span>
-                </td>
-            </tr>
-            <tr class="list-nav-list office" style="${param.nav == "office" ? "" : "display:none;"}">
-                <td>
-                    <table style="width: 100%;">
-                        <tr class="list-nav-item office ${param.subNav == "notification" ? "active" : ""}">
-                            <td>
-                                <span><a href="/office/notifications">通知管理</a></span>
-                            </td>
-                        </tr>
-                        <tr class="list-nav-item office ${param.subNav == "schedule" ? "active" : ""}">
-                            <td>
-                                <span><a href="/office/schedule">排班管理</a></span>
-                            </td>
-                        </tr>
-                        <tr class="list-nav-item office last-nav-item">
                             <td>&nbsp;</td>
                         </tr>
                     </table>

@@ -51,7 +51,7 @@ public class RoleServiceImpl extends BaseService implements IRoleService {
 	@Override
 	public PageBean getRoles(RoleInputView roleInputView){
 		String status = roleInputView.getStatus();
-		StringBuilder headSql = new StringBuilder("SELECT roleId, roleName, roleStatus, roleDescribe, operatorName, sr.createTime");
+		StringBuilder headSql = new StringBuilder("SELECT roleId, roleName, roleStatus, roleDescribe, uo.operatorName, sr.createTime");
 		StringBuilder bodySql = new StringBuilder(" FROM system_role sr, user_operator uo");
 		StringBuilder whereSql = new StringBuilder(" WHERE sr.salesId = uo.id AND roleId >= :minRoleId");
 		if(StrUtil.isNotBlank(status)){
