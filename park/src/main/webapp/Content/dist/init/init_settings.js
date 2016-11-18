@@ -1,5 +1,5 @@
 (function ($) {
-    var Settings_Common = {
+    var Init_Settings = {
         init: function () {
             this.initEvents();
             this.initTimePicker();
@@ -25,11 +25,10 @@
             });
         },
         initEvents: function () {
-            // 所有常用设置
-            $(".common-save").on("click", function (e) {
+            $(".init-confirm").on("click", function (e) {
                 e.preventDefault();
 
-                var $form = $("#common_form");
+                var $form = $("#init_form");
                 var conditions = $form.serialize();
 
                 if ($form.attr("submitting") == "submitting" || !$form.valid()) {
@@ -37,22 +36,23 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/settings/saveCommon', conditions, function (res) {
+                $.post('/init/saveInit', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
                         $("#tips_success_modal").modal({show: true, backdrop: false});
                         setTimeout(function () {
                             $("#tips_success_modal").modal("hide");
+                            location.assign('/passport/login');
                         }, 3000);
                     } else {
-                        $("#tips_error_modal").modal({show: true, backdrop: false});
-                        console.log(res.message || "场馆基础信息设置失败, 请稍后重试");
+                        console.log(res.message || "初始化失败, 请稍后重试");
+                        alert(res.message || "初始化失败, 请稍后重试");
                     }
                 });
             });
         }
     };
 
-    Settings_Common.init();
+    Init_Settings.init();
 })(jQuery);

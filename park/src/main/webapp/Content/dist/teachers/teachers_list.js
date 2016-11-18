@@ -1,7 +1,7 @@
 (function ($) {
-    var Members_Invoince_List = {
+    var Teachers_List = {
         opts: {
-            URL: '/member/getInvoices'
+            URL: '/teachers/list'
         },
         init: function () {
             this.initEvents();
@@ -9,11 +9,11 @@
         initEvents: function () {
             var content = this;
 
-            // 筛选会员类型
-            $(".ticket-filter").on("click", function (e) {
+            // 检索显示会员列表
+            $(".member-filter").on("click", function (e) {
                 e.preventDefault();
 
-                var conditions = $("#ticket_filter_form").serialize();
+                var conditions = $("#member_filter_form").serialize();
 
                 location.assign(content.opts.URL + '?' + conditions);
             });
@@ -36,39 +36,35 @@
                 }
             });
 
-            // 领取发票状态改变
-            $(".ticket-print").on("click", function (e) {
+            // 补办
+            $(".teachers-list").on("click", ".teachers-buban", function () {
+                var $this = $(this);
+            });
+
+            // 确认补办
+            $("#kucunModal").on("click", ".confirm-count", function (e) {
                 e.preventDefault();
 
-                var $this = $(this);
-                var $tickets = $("[name='ticket_id']:checked");
+                var $form = $("#buban_form");
+                var conditions = $form.serialize();
 
-                if ($tickets.size() === 0) {
-                    return alert("请选择已领取的发票");
-                }
-
-                if ($this.attr("working") == "working") {
+                if ($form.attr("submitting") == "submitting" || !$form.valid()) {
                     return false;
                 }
-                $this.attr("working", "working");
+                $form.attr("submitting", "submitting");
 
-                var val = [];
-                for (var i = 0; i < $tickets.size(); i++) {
-                    val.push($tickets.eq(i).val());
-                }
-
-                $.post('/member/updateGetInvoices', {invoiceIds: val.join(",")}, function (res) {
-                    $this.attr("working", "");
+                $.post("/", conditions, function (res) {
+                    $form.attr("submitting", "");
 
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        alert(res.message || "发票状态改变失败, 请稍后重试");
+                        alert(res.message || "教师卡补办失败, 请稍后重试");
                     }
                 });
             });
         }
     };
 
-    Members_Invoince_List.init();
+    Teachers_List.init();
 })(jQuery);

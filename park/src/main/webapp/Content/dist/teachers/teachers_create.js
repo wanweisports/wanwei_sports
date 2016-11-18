@@ -1,35 +1,30 @@
 (function ($) {
-    var Settings_Common = {
+    var Teachers_Create = {
         init: function () {
-            this.initEvents();
-            this.initTimePicker();
-        },
-        // 初始化时间选择器
-        initTimePicker: function () {
             $.datetimepicker.setLocale('zh');
 
-            // 营业开始时间
-            $('#start_time').datetimepicker({
-                datepicker: false,
+            // 表单时间控件设置
+            $('#memberBirthday').datetimepicker({
+                timepicker: false,
                 lang: "zh",
-                format: "H:i",
-                step: 60
+                format:'Y-m-d',
+                defaultDate: new Date(),
+                maxDate: 0
             });
 
-            // 营业结束时间
-            $('#end_time').datetimepicker({
-                datepicker: false,
-                lang: "zh",
-                format: "H:i",
-                step: 60
-            });
-        },
-        initEvents: function () {
-            // 所有常用设置
-            $(".common-save").on("click", function (e) {
+            $(".member-birthday-select").on("click", function (e) {
                 e.preventDefault();
 
-                var $form = $("#common_form");
+                $('#memberBirthday').datetimepicker("show");
+            });
+
+            this.initEvents();
+        },
+        initEvents: function () {
+            $(".register-member").on("click", function (e) {
+                e.preventDefault();
+
+                var $form = $("#member_form");
                 var conditions = $form.serialize();
 
                 if ($form.attr("submitting") == "submitting" || !$form.valid()) {
@@ -37,16 +32,17 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/settings/saveCommon', conditions, function (res) {
+                $.post('/member/saveMember', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
                         $("#tips_success_modal").modal({show: true, backdrop: false});
                         setTimeout(function () {
                             $("#tips_success_modal").modal("hide");
+                            location.assign('/teachers/list');
                         }, 3000);
                     } else {
-                        $("#tips_error_modal").modal({show: true, backdrop: false});
+                        alert(res.message || "场馆基础信息设置失败, 请稍后重试");
                         console.log(res.message || "场馆基础信息设置失败, 请稍后重试");
                     }
                 });
@@ -54,5 +50,5 @@
         }
     };
 
-    Settings_Common.init();
+    Teachers_Create.init();
 })(jQuery);

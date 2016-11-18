@@ -86,21 +86,45 @@
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav sequence-date">
                             <li class="other-date-select">
-                                <a href="javascript:;" class="other-date">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                    <span class="icon-text">选择日期</span>
-                                </a>
-                                <div class="other-date-calendar"
-                                     style="position: absolute; display: none; z-index: 1;">
+                                <div class="input-group" style="margin-top: 3px;">
                                     <input type="text" class="form-control" id="other_date" name="otherDate"
-                                           autocomplete="off">
+                                           placeholder="选择日期">
+                                    <span class="input-group-addon other-date-calendar">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
                                 </div>
                             </li>
                         </ul>
                     </div>
                 </nav>
-                <div class="form-inline sequence-btns">
-                    <div class="form-group pull-right">
+                <form class="form-inline" novalidate onsubmit="return false;" style="clear: both;">
+                    <div class="form-group">
+                        <label style="margin-left: 10px;">场地状态:</label>
+
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="venue_state" value="1" checked style="margin-top: 4px;"> 未付款
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="venue_state" value="2" checked style="margin-top: 4px;"> 已付款
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="venue_state" value="3" checked style="margin-top: 4px;"> 已锁定
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="venue_state" value="4" checked style="margin-top: 4px;"> 不可预订
+                        </label>
+                    </div>
+                    <div class="form-group" style="margin-left: 20px;">
+                        <label style="margin-left: 10px;">用户类型:</label>
+
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="user_state" value="1" checked style="margin-top: 4px;"> 会员
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="user_state" value="2" checked style="margin-top: 4px;"> 散客
+                        </label>
+                    </div>
+                    <div class="form-group pull-right" style="display: none;">
                         <button type="button" class="btn btn-default sequence-refresh">
                             <span class="glyphicon glyphicon-refresh"></span> 换 场
                         </button>
@@ -114,7 +138,7 @@
                             <span class="glyphicon glyphicon-ok"></span> 预 订
                         </button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
         <div class="panel panel-default sequence-show">
@@ -122,23 +146,24 @@
                 <table class="table table-bordered venue-large" id="timing_table">
                     <tr class="timing-header">
                         <td></td>
-                        <c:forEach var="site" items="${sites}">
-                            <td data-id="${site.siteId}">${site.siteName}</td>
+                        <c:forEach var="site" items="${sites}" varStatus="loop">
+                            <td data-id="${site.siteId}" data-col="${loop.index}">${site.siteName}</td>
                         </c:forEach>
                     </tr>
                     <c:forEach var="time" items="${timePeriod}">
                         <tr class="timing-body" data-start="${time.startTime}" data-end="${time.endTime}">
                             <td class="time">${time.startTime} ~ ${time.endTime}</td>
-                            <c:forEach var="site" items="${sites}">
+                            <c:forEach var="site" items="${sites}" varStatus="loop">
                                 <td class="null" data-id="${site.siteId}" data-start="${time.startTime}"
-                                    data-end="${time.endTime}"></td>
+                                    data-end="${time.endTime}" data-name="${site.siteName}"
+                                    data-col="${loop.index + 1}"></td>
                             </c:forEach>
                         </tr>
                     </c:forEach>
                 </table>
             </div>
         </div>
-        <div class="panel panel-default sequence-tips">
+        <div class="panel panel-default sequence-tips" style="display: none;">
             <div class="panel-body">
                 <span class="unpaid">未付款</span>
                 <span class="ordered">已付款</span>
@@ -326,6 +351,46 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="right-order-plane show-orders-list">
+        <div class="title">
+            <ul>
+                <li><span class="ordered"></span></li><li>已选定</li>
+                <li><span class="unpaid"></span></li><li>未选定</li>
+                <li><span class="disabled"></span></li><li>不可预定</li>
+            </ul>
+        </div>
+        <div class="info">
+            <dl>
+                <dt>项目：</dt><dd><strong class="category-name">羽毛球</strong></dd>
+                <dt>日期：</dt><dd class="current-book-date">2016年11月18日(周五)</dd>
+                <dt>场次：</dt>
+            </dl>
+            <ul class="selected-booking">
+                <li class="none">请点击左侧列表选择场次</li>
+            </ul>
+            <div class="court-display">已选择 <span class="number">0</span>场地<span class="append-msg">，再次单击取消</span></div>
+            <div class="price-display" style="display: none;">共计<span class="number">0元</span></div>
+
+            <div style="clear: both; padding-top: 10px;">
+                <button type="button" class="btn btn-default sequence-refresh" style="display: none;">
+                    <span class="glyphicon glyphicon-refresh"></span> 换 场
+                </button>
+                <button type="button" class="btn btn-default sequence-unlock" style="display: none;">
+                    <span class="glyphicon glyphicon-lock"></span> 解 锁
+                </button>
+                <button type="button" class="btn btn-default sequence-lock" style="display: none;">
+                    <span class="glyphicon glyphicon-lock"></span> 锁 场
+                </button>
+            </div>
+
+            <a href="javascript:void(0);" class="submit-button sequence-order" style="display: none;">预订支付</a>
+        </div>
+    </div>
+
+    <div class="side-bar show-orders-btn">
+        <a href="javascript:;" class="btn btn-warning">隐藏</a>
     </div>
 </layout:override>
 
