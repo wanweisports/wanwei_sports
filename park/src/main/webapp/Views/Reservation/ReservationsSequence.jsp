@@ -343,7 +343,7 @@
                     <h5 class="modal-title" id="tipsModalLabel">提示框</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-info text-message" role="alert">您确定要锁定这些场地?</div>
+                    <p class="text-danger text-message">您确定要锁定这些场地?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
@@ -374,18 +374,18 @@
             <div class="price-display" style="display: none;">共计<span class="number">0元</span></div>
 
             <div style="clear: both; padding-top: 10px;">
-                <button type="button" class="btn btn-default sequence-refresh" style="display: none;">
+                <button type="button" class="btn btn-default sequence-refresh" data-click="no">
                     <span class="glyphicon glyphicon-refresh"></span> 换 场
                 </button>
-                <button type="button" class="btn btn-default sequence-unlock" style="display: none;">
+                <button type="button" class="btn btn-default sequence-unlock" data-click="no" style="display: none;">
                     <span class="glyphicon glyphicon-lock"></span> 解 锁
                 </button>
-                <button type="button" class="btn btn-default sequence-lock" style="display: none;">
+                <button type="button" class="btn btn-default sequence-lock" data-click="no">
                     <span class="glyphicon glyphicon-lock"></span> 锁 场
                 </button>
             </div>
 
-            <a href="javascript:void(0);" class="submit-button sequence-order" style="display: none;">预订支付</a>
+            <a href="javascript:void(0);" class="submit-button sequence-order" data-click="no" style="display: none;">预订支付</a>
         </div>
     </div>
 
