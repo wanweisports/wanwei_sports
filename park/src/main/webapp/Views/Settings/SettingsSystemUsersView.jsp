@@ -81,8 +81,8 @@
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="data_birthday" name="operatorBirthday"
-                                       placeholder="生效时间" autocomplete="off" value="${operatorBirthday}"
-                                       data-val="true" data-val-required="生效时间不能为空">
+                                       placeholder="员工生日" autocomplete="off" value="${operatorBirthday}"
+                                       data-val="true" data-val-required="员工生日不能为空">
                                 <div data-valmsg-for="operatorBirthday" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -108,8 +108,7 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="user_account" name="operatorId"
                                        placeholder="登录账户" autocomplete="off" value="${operatorId}"
-                                       data-val="true" data-val-required="登录账户不能为空"
-                                       <c:if test="${operatorId != ''}">readonly</c:if> >
+                                       data-val="true" data-val-required="登录账户不能为空">
                                 <div data-valmsg-for="operatorId" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -149,7 +148,9 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="contact_phone" name="operatorMobile"
                                        placeholder="联系电话" autocomplete="off" value="${operatorMobile}"
-                                       data-val="true" data-val-required="联系电话不能为空">
+                                       data-val="true" data-val-required="联系电话不能为空"
+                                       data-val-regex-pattern="^1\d{10}$"
+                                       data-val-regex="联系电话格式错误">
                                 <div data-valmsg-for="operatorMobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -177,6 +178,22 @@
                 </div>
             </div>
         </form>
+    </div>
+
+    <div class="modal fade" id="tips_modal" tabindex="-1" role="dialog" aria-labelledby="tipsModalLabel">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="tipsModalLabel">提示框</h5>
+                </div>
+                <div class="modal-body">
+                    <p class="text-success">员工信息保存成功!</p>
+                </div>
+            </div>
+        </div>
     </div>
 </layout:override>
 

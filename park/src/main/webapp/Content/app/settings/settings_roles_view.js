@@ -179,7 +179,8 @@
                             location.assign("/settings/getRoles");
                         }, 2000);
                     } else {
-                        alert(res.message || "设置角色失败, 请稍后重试");
+                        console.log(res.message || "员工权限设置失败, 请稍后重试");
+                        alert(res.message || "员工权限设置失败, 请稍后重试");
                     }
                 });
             });

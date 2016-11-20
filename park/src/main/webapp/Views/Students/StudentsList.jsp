@@ -6,7 +6,7 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="/Content/dist/students/students_list_query.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/students/students_list_query.js?v=${static_resource_version}"></script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
@@ -20,11 +20,15 @@
             <div class="panel-body">
                 <form id="student_filter_form" class="form-inline" method="post" novalidate onsubmit="return false;">
                     <div class="form-group">
-                        <select class="form-control" id="student_degree" name="student_degree">
-                            <option value="">所在年级</option>
-                            <option value="1">16级02班</option>
-                            <option value="2">16级03班</option>
+                        <select class="form-control" id="student_status" name="student_status" style="width: 160px;">
+                            <option value="">全部状态</option>
+                            <option value="1">正常</option>
+                            <option value="2">锁定</option>
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="student_card" name="student_card"
+                               placeholder="请输入学生卡号">
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="student_name" name="student_name"
@@ -33,11 +37,6 @@
                     <div class="form-group">
                         <a href="javascript:;" class="btn btn-primary member-filter">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
-                        </a>
-                    </div>
-                    <div class="form-group pull-right">
-                        <a href="" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-plus"></span> 添加学生
                         </a>
                     </div>
                 </form>
@@ -49,10 +48,11 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>照片</th>
+                            <th>卡号</th>
                             <th>姓名</th>
-                            <th>班级</th>
-                            <th>使用次数</th>
+                            <th>所在班级</th>
+                            <th>用场次数</th>
+                            <th>截止日期</th>
                             <th>状态</th>
                             <th>操作人</th>
                             <th>办卡时间</th>
@@ -61,83 +61,149 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td style="vertical-align: middle;">
-                                <img src="/Content/images/demo/mp60650501_1456481736483_2.jpeg" class="img-rounded"
-                                     style="width: 100px; height: 80px;">
-                            </td>
+                            <td style="vertical-align: middle;">1242354ewe</td>
                             <td style="vertical-align: middle;">王晓红</td>
                             <td style="vertical-align: middle;">16级01班</td>
                             <td style="vertical-align: middle;">10</td>
+                            <td style="vertical-align: middle;">2016-12-11</td>
                             <td style="vertical-align: middle;" class="text-success">正常</td>
                             <td style="vertical-align: middle;">张丹丹</td>
-                            <td style="vertical-align: middle;">2016-12-11 10:00:12</td>
+                            <td style="vertical-align: middle;">2016-12-11</td>
                             <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="">
+                                <a class="btn btn-primary" href="/students/view">
                                     <span class="glyphicon glyphicon-share-alt"></span> 查看
+                                </a>
+                                <a class="btn btn-warning" href="">
+                                    <span class="glyphicon glyphicon-refresh"></span> 补办
+                                </a>
+                                <a class="btn btn-danger" href="">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 退卡
                                 </a>
                             </td>
                         </tr>
                         <tr>
-                            <td style="vertical-align: middle;">
-                                <img src="/Content/images/demo/mp60650501_1456481736483_2.jpeg" class="img-rounded"
-                                     style="width: 100px; height: 80px;">
-                            </td>
+                            <td style="vertical-align: middle;">1242354ewe</td>
                             <td style="vertical-align: middle;">王晓红</td>
                             <td style="vertical-align: middle;">16级01班</td>
+                            <td style="vertical-align: middle;">10</td>
+                            <td style="vertical-align: middle;">2016-12-11</td>
                             <td style="vertical-align: middle;" class="text-success">正常</td>
                             <td style="vertical-align: middle;">张丹丹</td>
-                            <td style="vertical-align: middle;">2016-12-11 10:00:12</td>
+                            <td style="vertical-align: middle;">2016-12-11</td>
                             <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="">
+                                <a class="btn btn-primary" href="/students/view">
                                     <span class="glyphicon glyphicon-share-alt"></span> 查看
+                                </a>
+                                <a class="btn btn-warning" href="">
+                                    <span class="glyphicon glyphicon-refresh"></span> 补办
+                                </a>
+                                <a class="btn btn-danger" href="">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 退卡
                                 </a>
                             </td>
                         </tr>
                         <tr>
-                            <td style="vertical-align: middle;">
-                                <img src="/Content/images/demo/mp60650501_1456481736483_2.jpeg" class="img-rounded"
-                                     style="width: 100px; height: 80px;">
-                            </td>
+                            <td style="vertical-align: middle;">1242354ewe</td>
                             <td style="vertical-align: middle;">王晓红</td>
                             <td style="vertical-align: middle;">16级01班</td>
+                            <td style="vertical-align: middle;">10</td>
+                            <td style="vertical-align: middle;">2016-12-11</td>
                             <td style="vertical-align: middle;" class="text-success">正常</td>
                             <td style="vertical-align: middle;">张丹丹</td>
-                            <td style="vertical-align: middle;">2016-12-11 10:00:12</td>
+                            <td style="vertical-align: middle;">2016-12-11</td>
                             <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="">
+                                <a class="btn btn-primary" href="/students/view">
                                     <span class="glyphicon glyphicon-share-alt"></span> 查看
+                                </a>
+                                <a class="btn btn-warning" href="">
+                                    <span class="glyphicon glyphicon-refresh"></span> 补办
+                                </a>
+                                <a class="btn btn-danger" href="">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 退卡
                                 </a>
                             </td>
                         </tr>
                         <tr>
-                            <td style="vertical-align: middle;">
-                                <img src="/Content/images/demo/mp60650501_1456481736483_2.jpeg" class="img-rounded"
-                                     style="width: 100px; height: 80px;">
-                            </td>
+                            <td style="vertical-align: middle;">1242354ewe</td>
                             <td style="vertical-align: middle;">王晓红</td>
                             <td style="vertical-align: middle;">16级01班</td>
+                            <td style="vertical-align: middle;">10</td>
+                            <td style="vertical-align: middle;">2016-12-11</td>
                             <td style="vertical-align: middle;" class="text-success">正常</td>
                             <td style="vertical-align: middle;">张丹丹</td>
-                            <td style="vertical-align: middle;">2016-12-11 10:00:12</td>
+                            <td style="vertical-align: middle;">2016-12-11</td>
                             <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="">
+                                <a class="btn btn-primary" href="/students/view">
                                     <span class="glyphicon glyphicon-share-alt"></span> 查看
+                                </a>
+                                <a class="btn btn-warning" href="">
+                                    <span class="glyphicon glyphicon-refresh"></span> 补办
+                                </a>
+                                <a class="btn btn-danger" href="">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 退卡
                                 </a>
                             </td>
                         </tr>
                         <tr>
-                            <td style="vertical-align: middle;">
-                                <img src="/Content/images/demo/mp60650501_1456481736483_2.jpeg" class="img-rounded"
-                                     style="width: 100px; height: 80px;">
-                            </td>
+                            <td style="vertical-align: middle;">1242354ewe</td>
                             <td style="vertical-align: middle;">王晓红</td>
                             <td style="vertical-align: middle;">16级01班</td>
+                            <td style="vertical-align: middle;">10</td>
+                            <td style="vertical-align: middle;">2016-12-11</td>
                             <td style="vertical-align: middle;" class="text-success">正常</td>
                             <td style="vertical-align: middle;">张丹丹</td>
-                            <td style="vertical-align: middle;">2016-12-11 10:00:12</td>
+                            <td style="vertical-align: middle;">2016-12-11</td>
                             <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="">
+                                <a class="btn btn-primary" href="/students/view">
                                     <span class="glyphicon glyphicon-share-alt"></span> 查看
+                                </a>
+                                <a class="btn btn-warning" href="">
+                                    <span class="glyphicon glyphicon-refresh"></span> 补办
+                                </a>
+                                <a class="btn btn-danger" href="">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 退卡
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle;">1242354ewe</td>
+                            <td style="vertical-align: middle;">王晓红</td>
+                            <td style="vertical-align: middle;">16级01班</td>
+                            <td style="vertical-align: middle;">10</td>
+                            <td style="vertical-align: middle;">2016-12-11</td>
+                            <td style="vertical-align: middle;" class="text-success">正常</td>
+                            <td style="vertical-align: middle;">张丹丹</td>
+                            <td style="vertical-align: middle;">2016-12-11</td>
+                            <td style="vertical-align: middle;">
+                                <a class="btn btn-primary" href="/students/view">
+                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
+                                </a>
+                                <a class="btn btn-warning" href="">
+                                    <span class="glyphicon glyphicon-refresh"></span> 补办
+                                </a>
+                                <a class="btn btn-danger" href="">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 退卡
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle;">1242354ewe</td>
+                            <td style="vertical-align: middle;">王晓红</td>
+                            <td style="vertical-align: middle;">16级01班</td>
+                            <td style="vertical-align: middle;">10</td>
+                            <td style="vertical-align: middle;">2016-12-11</td>
+                            <td style="vertical-align: middle;" class="text-success">正常</td>
+                            <td style="vertical-align: middle;">张丹丹</td>
+                            <td style="vertical-align: middle;">2016-12-11</td>
+                            <td style="vertical-align: middle;">
+                                <a class="btn btn-primary" href="/students/view">
+                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
+                                </a>
+                                <a class="btn btn-warning" href="">
+                                    <span class="glyphicon glyphicon-refresh"></span> 补办
+                                </a>
+                                <a class="btn btn-danger" href="">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 退卡
                                 </a>
                             </td>
                         </tr>

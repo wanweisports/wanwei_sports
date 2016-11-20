@@ -177,13 +177,14 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="card_payment_type" class="col-sm-4 control-label">
-                                    <span class="text-danger">*</span> 支付类型
+                                    <span class="text-danger">*</span> 卡类型
                                 </label>
 
                                 <div class="col-sm-8">
                                     <select class="form-control" id="card_payment_type" name="cardType">
-                                        <option value="1">预存类型</option>
-                                        <option value="2">记账类型</option>
+                                        <option value="1">会员卡</option>
+                                        <option value="2">教师卡</option>
+                                        <option value="3">学生卡</option>
                                     </select>
                                 </div>
                             </div>
@@ -526,20 +527,6 @@
                                            data-val-regex-pattern="^(0(\.[0-9]{1,2})?)|([1-9][0-9]*(\.[0-9]{1,2})?)$"
                                            data-val-regex="会费格式错误">
                                     <div data-valmsg-for="cardTypeMoney" data-valmsg-replace="true"></div>
-                                </div>
-                            </div>
-                            <div class="form-group card-type-overdraw" style="display: none;">
-                                <label for="card_type_overdraw" class="col-sm-4 control-label">
-                                    <span class="text-danger">*</span> 信用额度
-                                </label>
-
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="card_type_overdraw" name="cardTypeCredit"
-                                           placeholder="信用额度(元)" autocomplete="off"
-                                           data-val="true" data-val-required="信用额度不能为空"
-                                           data-val-regex-pattern="^(0(\.[0-9]{1,2})?)|([1-9][0-9]*(\.[0-9]{1,2})?)$"
-                                           data-val-regex="信用额度格式错误">
-                                    <div data-valmsg-for="cardTypeCredit" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
                         </div>

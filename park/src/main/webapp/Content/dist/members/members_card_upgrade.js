@@ -1,1 +1,125 @@
-!function(e){var r={init:function(){this.initEvents()},initEvents:function(){function r(r){e.post("/member/getMemberCarType",{cardTypeId:r},function(r){var a=r.data;1==r.code?(e("#upgrade_cost").val(a.cardTypeMoney+"元"),e("#upgrade_discount").val(a.cardTypeDiscount+"折"),e("#upgrade_deadline").val(a.cardDeadline)):alert("卡类型信息查询失败, 请稍后重试")})}e(".member-card-filter").on("click",function(r){r.preventDefault();var a=e("#member_card_form"),t=a.serialize();return!!a.valid()&&void e.post("member/searchMember",t,function(e){var r=e.data;1==e.code?r&&r.members&&r.members.length>0?location.assign("/member/getMembersCardUpgrade?cardNo="+r.members[0].cardNo):alert("没有搜索到会员"):alert("搜索会员失败, 请稍后重试")})}),e("[name='cardTypeId']").on("change",function(a){a.preventDefault();var t=e(this).val();r(t)}),e("[name='cardTypeId']").change(),e(".upgrade-card-submit").on("click",function(r){r.preventDefault();var a=e("#upgrade_card_form"),t=a.serialize();return""===e("#upgrade_cardId").val()?(alert("请先选择会员卡"),!1):!("submitting"==a.attr("submitting")||!a.valid())&&(a.attr("submitting","submitting"),void e.post("/member/memberCardUpLevel",t,function(e){a.attr("submitting",""),1==e.code?alert("会员升级成功"):alert("会员升级失败, 请稍后重试")}))})}};r.init()}(jQuery);
+(function ($) {
+    var Members_Card_Upgrade = {
+        init: function () {
+            this.initEvents();
+        },
+        initEvents: function () {
+            $("#keywords").autosuggest({
+                url: '/member/searchMember',
+                method: 'post',
+                queryParamName: 'search',
+                dataCallback:function(res) {
+                    var data = res.data;
+                    var json = [];
+
+                    if (res.code == 1) {
+                        if (data && data.members && data.members.length > 0) {
+                            for (var i = 0; i < data.members.length; i++) {
+                                json.push({
+                                    id: data.members[i].memberId,
+                                    label: data.members[i].cardNo,
+                                    value: data.members[i].memberName + '(' + data.members[i].memberMobile + ',' + data.members[i].cardNo + ')'
+                                });
+                            }
+                            return json;
+                        } else {
+                            alert('没有搜索到会员');
+                            return [];
+                        }
+                    } else {
+                        alert('搜索会员失败, 请稍后重试');
+                        return [];
+                    }
+                },
+                onSelect:function(elm) {
+                    var cardNo = elm.data('label');
+
+                    $('#card_no').val(cardNo);
+                    location.assign('/member/getMembersCardUpgrade?cardNo=' + cardNo);
+                }
+            });
+
+            // 筛选
+            $(".member-card-filter").on("click", function (e) {
+                e.preventDefault();
+
+                var $form = $("#member_card_form");
+                var conditions = $form.serialize();
+
+                if (!$form.valid()) {
+                    return false;
+                }
+
+                $.post('member/searchMember', conditions, function (res) {
+                    var data = res.data;
+
+                    if (res.code == 1) {
+                        if (data && data.members && data.members.length > 0) {
+                            location.assign('/member/getMembersCardUpgrade?cardNo='
+                                + data.members[0].cardNo);
+                        } else {
+                            alert('没有搜索到会员');
+                        }
+                    } else {
+                        alert('搜索会员失败, 请稍后重试');
+                    }
+                });
+            });
+
+            function _getMemberCarType(id) {
+                $.post('/member/getMemberCarType', {cardTypeId: id}, function (res) {
+                    var data = res.data;
+
+                    if (res.code == 1) {
+                        $("#upgrade_cost").val(data.cardTypeMoney + "元");
+                        $("#upgrade_discount").val(data.cardTypeDiscount + "折");
+                        $("#upgrade_deadline").val(data.cardDeadline);
+                    } else {
+                        alert("卡类型信息查询失败, 请稍后重试");
+                    }
+                });
+            }
+
+            // 卡类型改变查询
+            $("[name='cardTypeId']").on("change", function (e) {
+                e.preventDefault();
+
+                var id = $(this).val();
+
+                _getMemberCarType(id);
+            });
+            $("[name='cardTypeId']").change();
+
+            // 会员卡升级
+            $(".upgrade-card-submit").on("click", function (e) {
+                e.preventDefault();
+
+                // 生成新的会员卡号
+                var $form = $("#upgrade_card_form");
+                var conditions = $form.serialize();
+
+                if ($("#upgrade_cardId").val() === "") {
+                    alert("请先选择会员卡");
+                    return false;
+                }
+
+                if ($form.attr("submitting") == "submitting" || !$form.valid()) {
+                    return false;
+                }
+                $form.attr("submitting", "submitting");
+
+                $.post('/member/memberCardUpLevel', conditions, function (res) {
+                    $form.attr("submitting", "");
+
+                    if (res.code == 1) {
+                        alert("会员升级成功");
+                    } else {
+                        alert("会员升级失败, 请稍后重试");
+                    }
+                });
+            });
+        }
+    };
+
+    Members_Card_Upgrade.init();
+})(jQuery);

@@ -6,7 +6,7 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="/Content/dist/members/members_list_query.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/members/members_list_query.js?v=${static_resource_version}"></script>
     <script>
         (function ($) {
             $("#payment_type").val('${memberType}');
@@ -23,67 +23,23 @@
         <div class="panel panel-default">
             <div class="panel-heading">会员查询</div>
             <div class="panel-body">
-                <form id="member_filter_form" class="form-horizontal" method="post" novalidate
-                      onsubmit="return false;">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="member_mobile" class="col-sm-4 control-label">手机号码</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="member_mobile" name="memberMobile"
-                                       placeholder="请输入手机号码" value="${memberMobile}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="payment_type" class="col-sm-4 control-label">支付类型</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" id="payment_type" name="memberType">
-                                    <option value="">全部类型</option>
-                                    <option value="1">预付类型</option>
-                                    <option value="2">记账类型</option>
-                                </select>
-                            </div>
-                        </div>
+                <form id="member_filter_form" class="form-inline" novalidate onsubmit="return false;">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="member_mobile" name="memberMobile"
+                               placeholder="手机号码" value="${memberMobile}">
                     </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="card_no" class="col-sm-4 control-label">会员卡号</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="card_no" name="cardNo"
-                                       placeholder="请输入会员卡号" value="${cardNo}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="member_type" class="col-sm-4 control-label">会员类型</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" id="member_type" name="cardTypeId">
-                                    <option value="">全部类型</option>
-                                    <c:forEach var="type" items="${memberCarTypeNames}">
-                                        <c:if test="${type.cardTypeId == cardTypeId}">
-                                            <option value="${type.cardTypeId}" selected>${type.cardTypeName}</option>
-                                        </c:if>
-                                        <c:if test="${type.cardTypeId != cardTypeId}">
-                                            <option value="${type.cardTypeId}">${type.cardTypeName}</option>
-                                        </c:if>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="card_no" name="cardNo"
+                               placeholder="会员卡号" value="${cardNo}">
                     </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="member_idcard" class="col-sm-4 control-label">身份证号</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="member_idcard" name="memberIdcard"
-                                       placeholder="请输入身份证号" value="${memberIdcard}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class=" col-sm-offset-4 col-sm-8">
-                                <a href="javascript:;" class="btn btn-primary member-filter">
-                                    <span class="glyphicon glyphicon-search"></span> 检索 & 显示
-                                </a>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="member_idcard" name="memberIdcard"
+                               placeholder="身份证号" value="${memberIdcard}">
+                    </div>
+                    <div class="form-group">
+                        <a href="javascript:;" class="btn btn-primary member-filter">
+                            <span class="glyphicon glyphicon-search"></span> 检索 & 显示
+                        </a>
                     </div>
                 </form>
             </div>
@@ -100,6 +56,7 @@
                             <th>会员类型</th>
                             <th>截止日期</th>
                             <th>余额(元)</th>
+                            <th>子会员</th>
                             <th>状态</th>
                             <th>操作人</th>
                             <th>办卡时间</th>
@@ -115,6 +72,7 @@
                                 <td>${member.cardTypeName}</td>
                                 <td>${member.cardDeadline}</td>
                                 <td>${member.cardBalance}</td>
+                                <td><a href="/member/getMembersChildren">22人</a></td>
                                 <c:if test="${member.cardStatus == null}">
                                     <td></td>
                                 </c:if>

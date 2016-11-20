@@ -46,7 +46,8 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        alert(res.message || "会员类型设置失败, 请稍后重试");
+                        console.log(res.message || "场地运动类型设置失败, 请稍后重试");
+                        alert(res.message || "场地运动类型设置失败, 请稍后重试");
                     }
                 });
             });
@@ -77,9 +78,7 @@
 
                 _resetSportsForm();
 
-                $.post("/site/getSiteSport", {
-                    sportId: $this.attr("data-id")
-                }, function (res) {
+                $.post("/site/getSiteSport", {sportId: $this.attr("data-id")}, function (res) {
                     var data = res.data;
 
                     if (res.code == 1) {
@@ -91,7 +90,8 @@
 
                         $("#settingModal").modal({backdrop: false, show: true});
                     } else {
-                        alert(res.message || "场地类型查询失败 请稍后重试");
+                        console.log(res.message || "场地运动类型查询失败, 请稍后重试");
+                        alert(res.message || "场地运动类型查询失败, 请稍后重试");
                     }
                 });
             });

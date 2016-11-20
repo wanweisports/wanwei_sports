@@ -20,7 +20,7 @@ public class AuthorizationHandlerInterceptor implements HandlerInterceptor {
 	
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if(1==1) return true;
+        
     	if (!(handler instanceof HandlerMethod)) {
             return true;
         }

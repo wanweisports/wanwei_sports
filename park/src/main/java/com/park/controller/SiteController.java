@@ -150,6 +150,7 @@ public class SiteController extends BaseController {
 			siteInputView.setSiteStatus(IDBConstant.LOGIC_STATUS_YES);
 			List<Map<String, Object>> sites = siteService.getSites(siteInputView);
 			List<Map<String, Object>> timePeriod = parkService.getTimePeriod(parkService.getBusiness());
+            model.addAttribute("sportId", sportId);
 			model.addAttribute("siteSports", siteSports);
 			model.addAttribute("sites", sites);
 			model.addAttribute("timePeriod", timePeriod);
@@ -198,12 +199,24 @@ public class SiteController extends BaseController {
 	}
 
 	// 批量预订
+	@RequestMapping("getSiteReservationBooking")
+	public String getSiteReservationBooking(Model model){
+		return "Reservation/ReservationsBooking";
+	}
+
+	// 批量预订
 	@RequestMapping("getSiteReservationBatch")
 	public String getSiteReservationBatch(Model model){
 		return "Reservation/ReservationsBatch";
 	}
 
-    // 获取预订订单
+	// 固定场预订
+	@RequestMapping("getSiteReservationFixed")
+	public String getSiteReservationFixed(Model model){
+		return "Reservation/ReservationsFixed";
+	}
+
+	// 获取预订订单
     @RequestMapping("getSiteReservationOrders")
     public String getSiteReservationOrders(Model model){
         return "Reservation/ReservationsOrders";

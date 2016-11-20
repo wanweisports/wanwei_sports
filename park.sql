@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2016-11-08 11:51:31
+Date: 2016-11-17 13:33:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -35,13 +35,11 @@ CREATE TABLE `good_info` (
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`goodId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='商品表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品表';
 
 -- ----------------------------
 -- Records of good_info
 -- ----------------------------
-INSERT INTO `good_info` VALUES ('1', 'F0001', '农夫山泉', null, null, '2', '2.00', '1', '1', '11', '矿泉水', '2016-10-11 15:16:37', '2016-10-24 10:49:13', '1');
-INSERT INTO `good_info` VALUES ('2', '1', '3', '/photo/imgs/09869d87ae5a4ce0ad9da7011b9b3ef4.jpg', null, '2', '2.00', '2', '1', '1', '5', '2016-10-12 13:11:01', '2016-10-24 10:51:04', '1');
 
 -- ----------------------------
 -- Table structure for good_shopping
@@ -56,12 +54,11 @@ CREATE TABLE `good_shopping` (
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`shoppingId`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='购物车表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='购物车表';
 
 -- ----------------------------
 -- Records of good_shopping
 -- ----------------------------
-INSERT INTO `good_shopping` VALUES ('4', '2', '3', '1', '2016-11-02 13:21:49', null, '1');
 
 -- ----------------------------
 -- Table structure for good_type
@@ -76,13 +73,11 @@ CREATE TABLE `good_type` (
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`goodTypeId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='商品类型表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品类型表';
 
 -- ----------------------------
 -- Records of good_type
 -- ----------------------------
-INSERT INTO `good_type` VALUES ('1', '饮料', '饮料，水', '1', '2016-10-10 15:30:00', null, '1');
-INSERT INTO `good_type` VALUES ('2', '骑马', '射箭', '1', '2016-11-02 19:43:28', '2016-11-02 19:43:50', '1');
 
 -- ----------------------------
 -- Table structure for member_card
@@ -102,14 +97,11 @@ CREATE TABLE `member_card` (
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`cardId`),
   UNIQUE KEY `cardNo_Unique` (`cardNo`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='会员卡信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会员卡信息表';
 
 -- ----------------------------
 -- Records of member_card
 -- ----------------------------
-INSERT INTO `member_card` VALUES ('7', '10', '262768', '10300.00', '0', '1', '2', '2016-10-24 14:43:32', null, '', '1');
-INSERT INTO `member_card` VALUES ('8', '11', '993345', '4000.00', '0', '1', '5', '2016-10-24 15:03:29', null, '', '1');
-INSERT INTO `member_card` VALUES ('9', '13', '589456', '100.00', '2017-05-02', '1', '3', '2016-11-02 14:55:25', null, '', '1');
 
 -- ----------------------------
 -- Table structure for member_card_type
@@ -132,16 +124,11 @@ CREATE TABLE `member_card_type` (
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   `cardTypeDiscount` int(11) DEFAULT NULL COMMENT '类别折扣	0-100',
   PRIMARY KEY (`cardTypeId`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='会员卡类型表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会员卡类型表';
 
 -- ----------------------------
 -- Records of member_card_type
 -- ----------------------------
-INSERT INTO `member_card_type` VALUES ('2', '金卡', '1', '1', '0', '1,2,3,4,5,6,7', '08:00,08:00,08:00,08:00,08:00,08:00,08:00', '20:00,20:00,20:00,20:00,20:00,20:00,20:00', '0', '10.00', '0.00', '2016-10-10 10:34:34', null, '1', '10');
-INSERT INTO `member_card_type` VALUES ('3', '真金卡', '1', '1', '6', '1,2,3,4,5,6,7', '08:00,08:00,08:00,08:00,08:00,08:00,08:00', '20:00,20:00,20:00,20:00,20:00,20:00,20:00', '10', '20.00', '0.00', '2016-10-10 13:44:55', null, '1', '20');
-INSERT INTO `member_card_type` VALUES ('4', '大撒旦', '2', '1', '0', '1,2,3,4,5,6,7', '08:00,08:00,08:00,08:00,08:00,08:00,08:00', '20:00,20:00,20:00,20:00,20:00,20:00,20:00', '0', '0.00', null, '2016-10-10 16:25:09', null, '1', '0');
-INSERT INTO `member_card_type` VALUES ('5', '教师白玩卡', '1', '1', '0', '1,2,3,4,6,7', '08:00,08:00,08:00,08:00,08:00,08:00,08:00', '20:00,20:00,20:00,20:00,20:00,20:00,20:00', '0', '0.00', '0.00', '2016-10-24 14:55:12', null, '1', '3');
-INSERT INTO `member_card_type` VALUES ('6', '记账', '2', '1', '0', '1,2,3,4,5,6,7', '08:00,08:00,08:00,08:00,08:00,08:00,08:00', '20:00,20:00,20:00,20:00,20:00,20:00,20:00', '0', '0.00', '1000.00', '2016-10-24 15:09:51', null, '1', '9');
 
 -- ----------------------------
 -- Table structure for order_detail
@@ -161,17 +148,11 @@ CREATE TABLE `order_detail` (
   `itemDiscount` int(11) DEFAULT NULL COMMENT '当时的商品折扣（0-100）',
   `orderDetailStatus` varchar(1) DEFAULT NULL COMMENT '订单详情状态（1：已完成  2：未完成  3：进行中）',
   PRIMARY KEY (`orderDetailId`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='订单详情表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单详情表';
 
 -- ----------------------------
 -- Records of order_detail
 -- ----------------------------
-INSERT INTO `order_detail` VALUES ('1', '33', '4', '【羽毛球】场地预定', '50.00', '2016-11-31 08:00', '2016-11-31 09:00', null, null, '2', null, '2');
-INSERT INTO `order_detail` VALUES ('2', '33', '5', '【羽毛球】场地预定', '50.00', '2016-10-31 21:00', '2016-10-31 22:00', null, null, '2', null, '2');
-INSERT INTO `order_detail` VALUES ('13', '41', '1', '农夫山泉', '6.00', null, null, '3', null, '2', null, '2');
-INSERT INTO `order_detail` VALUES ('14', '41', '2', '3', '2.00', null, null, '1', null, '2', null, '2');
-INSERT INTO `order_detail` VALUES ('16', '43', '24', '【羽毛球】场地预定', '50.00', '2016-11-05 09:00', '2016-11-05 10:00', '1', null, '2', null, '2');
-INSERT INTO `order_detail` VALUES ('17', '43', '25', '【篮球】场地预定', '1.00', '2016-11-05 10:00', '2016-11-05 11:00', '1', null, '2', null, '2');
 
 -- ----------------------------
 -- Table structure for order_info
@@ -198,14 +179,11 @@ CREATE TABLE `order_info` (
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`orderId`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COMMENT='订单表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单表';
 
 -- ----------------------------
 -- Records of order_info
 -- ----------------------------
-INSERT INTO `order_info` VALUES ('33', '20161031215244', null, '0', '1', '3', '2', null, null, '100.00', null, null, null, null, null, '100', '2016-10-31 21:52:44', null, '1');
-INSERT INTO `order_info` VALUES ('41', '20161101115955', null, '10', '2', '2', '2', null, null, '8.00', null, null, null, null, null, '10', '2016-11-01 11:59:55', null, '1');
-INSERT INTO `order_info` VALUES ('43', '20161103135633', null, '0', '3', '2', '2', null, null, '51.00', null, null, null, null, null, '100', '2016-11-03 13:56:33', null, '1');
 
 -- ----------------------------
 -- Table structure for other_balance
@@ -232,28 +210,11 @@ CREATE TABLE `other_balance` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`balanceId`),
   UNIQUE KEY `balanceNo_Unique` (`balanceNo`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='收支流水表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='收支流水表';
 
 -- ----------------------------
 -- Records of other_balance
 -- ----------------------------
-INSERT INTO `other_balance` VALUES ('2', '20161010103450', '10', '2', null, '3', '1', '11.00', '19.00', '2.00', '1.00', null, '1', '2016-10-10 10:34:50', '2016-10-10 10:34:50', null, '1', null);
-INSERT INTO `other_balance` VALUES ('3', '20161010115052', '10', '3', null, '3', '1', '11.00', '20.00', '1.00', '0.00', null, '1', '2016-10-10 11:50:52', '2016-10-10 11:50:52', null, '1', null);
-INSERT INTO `other_balance` VALUES ('4', '20161010115323', '10', '4', null, '3', '1', '1.00', '10.00', '1.00', '1.00', null, '1', '2016-10-10 11:53:23', '2016-10-10 11:53:23', null, '1', null);
-INSERT INTO `other_balance` VALUES ('5', '20161010134526', '12', '4', null, '3', '1', '1.00', '1.00', '0.00', '0.00', null, null, '2016-10-10 13:45:26', '2016-10-10 13:45:26', null, '1', '1');
-INSERT INTO `other_balance` VALUES ('6', '20161010134554', '12', '3', null, '3', '1', '1.00', '1.00', '0.00', '10.00', null, null, '2016-10-10 13:45:54', '2016-10-10 13:45:54', null, '1', '1');
-INSERT INTO `other_balance` VALUES ('7', '20161010140227', '11', '4', null, '1', '1', '6.00', '6.00', '0.00', '0.00', null, null, '2016-10-10 14:02:27', '2016-10-10 14:02:27', null, '1', '维权');
-INSERT INTO `other_balance` VALUES ('8', '20161010145824', '13', '2', null, '3', '1', '1.00', '1.00', '0.00', '0.00', null, null, '2016-10-10 14:58:24', '2016-10-10 14:58:24', null, '1', '13');
-INSERT INTO `other_balance` VALUES ('9', '20161010183545', '10', '5', null, '3', '1', '1.00', '10.00', '1.00', '1.00', null, '1', '2016-10-10 18:35:45', '2016-10-10 18:35:45', null, '1', null);
-INSERT INTO `other_balance` VALUES ('10', '20161010183735', '10', '6', null, '3', '0', '1.00', '10.00', '1.00', '1.00', null, '1', '2016-10-10 18:37:35', '2016-10-10 18:37:35', null, '1', null);
-INSERT INTO `other_balance` VALUES ('11', '20161024144332', '10', '7', null, '3', '1', '10000.00', '9810.00', '200.00', '300.00', null, '1', '2016-10-24 14:43:32', '2016-10-24 14:43:32', null, '1', null);
-INSERT INTO `other_balance` VALUES ('12', '20161024150329', '10', '8', null, '3', '2', '2000.00', '1500.00', '500.00', '2000.00', null, '1', '2016-10-24 15:03:29', '2016-10-24 15:03:29', null, '1', null);
-INSERT INTO `other_balance` VALUES ('13', '20161025161156', '11', '5', null, '1', '1', '10000.00', '9500.00', '500.00', '500.00', null, null, '2016-10-25 16:11:55', '2016-10-25 16:11:55', null, '1', '');
-INSERT INTO `other_balance` VALUES ('14', '20161025161210', '11', '5', null, '1', '1', '10000.00', '9500.00', '500.00', '500.00', null, null, '2016-10-25 16:12:10', '2016-10-25 16:12:10', null, '1', '');
-INSERT INTO `other_balance` VALUES ('15', '20161025161459', '11', '4', null, '1', '1', '1000.00', '500.00', '500.00', '500.00', null, null, '2016-10-25 16:14:59', '2016-10-25 16:14:59', null, '1', '');
-INSERT INTO `other_balance` VALUES ('16', '20161025163827', '11', '2', null, '1', '1', '1000.00', '1000.00', '0.00', '0.00', null, null, '2016-10-25 16:38:27', '2016-10-25 16:38:27', null, '1', '');
-INSERT INTO `other_balance` VALUES ('17', '20161025164203', '11', '2', null, '1', '1', '1000.00', '1000.00', '0.00', '0.00', null, null, '2016-10-25 16:42:03', '2016-10-25 16:42:03', null, '1', '');
-INSERT INTO `other_balance` VALUES ('18', '20161102145525', '10', '9', null, '3', '2', '100.00', '110.00', '10.00', null, null, '1', '2016-11-02 14:55:25', '2016-11-02 14:55:25', null, '1', null);
 
 -- ----------------------------
 -- Table structure for other_invoice
@@ -273,19 +234,11 @@ CREATE TABLE `other_invoice` (
   `printTime` varchar(20) DEFAULT NULL COMMENT '打印时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`invoiceId`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='发票登记表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='发票登记表';
 
 -- ----------------------------
 -- Records of other_invoice
 -- ----------------------------
-INSERT INTO `other_invoice` VALUES ('2', null, '10', '4', '', '', null, '', '2', '2016-10-10 10:34:55', null, '1');
-INSERT INTO `other_invoice` VALUES ('3', null, '10', '5', '', '', null, '', '2', '2016-10-10 11:50:53', null, '1');
-INSERT INTO `other_invoice` VALUES ('4', null, '10', '6', '', '', null, '', '2', '2016-10-10 11:53:25', null, '1');
-INSERT INTO `other_invoice` VALUES ('5', '20161010183551', '10', '7', '', '', null, '', '2', '2016-10-10 18:35:51', null, '1');
-INSERT INTO `other_invoice` VALUES ('6', '20161010183804', '10', '8', '', '', null, '', '2', '2016-10-10 18:38:04', null, '1');
-INSERT INTO `other_invoice` VALUES ('7', '20161024144332', '10', '10', '万维体育公司', '场地费', '10000.00', '2016年12月前开出', '2', '2016-10-24 14:43:32', null, '1');
-INSERT INTO `other_invoice` VALUES ('8', '20161024150329', '10', '11', '', '', null, '', '2', '2016-10-24 15:03:29', null, '1');
-INSERT INTO `other_invoice` VALUES ('9', '20161102145525', '10', '13', '', '', null, '', '2', '2016-11-02 14:55:25', null, '1');
 
 -- ----------------------------
 -- Table structure for other_resource
@@ -328,39 +281,13 @@ CREATE TABLE `park_business` (
   `createTime` varchar(20) DEFAULT NULL COMMENT '创建时间',
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
+  `points` int(11) DEFAULT NULL COMMENT '安装点数（限制能创建几个员工）',
   PRIMARY KEY (`businessId`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='营业时间表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='场馆表';
 
 -- ----------------------------
 -- Records of park_business
 -- ----------------------------
-INSERT INTO `park_business` VALUES ('1', '08:00', '15:00', '1', null, null, null, null, null, '2016-10-12 19:41:31', null, '1');
-INSERT INTO `park_business` VALUES ('3', null, null, null, null, null, null, null, null, '2016-10-26 18:28:41', null, null);
-INSERT INTO `park_business` VALUES ('4', null, null, null, null, null, null, null, null, '2016-10-27 21:02:34', null, null);
-INSERT INTO `park_business` VALUES ('5', null, null, null, null, null, null, null, null, '2016-10-27 21:02:35', null, null);
-INSERT INTO `park_business` VALUES ('6', null, null, null, null, null, null, null, null, '2016-10-27 21:02:38', null, null);
-INSERT INTO `park_business` VALUES ('7', null, null, null, null, null, null, null, null, '2016-10-27 21:03:04', null, null);
-INSERT INTO `park_business` VALUES ('8', null, null, null, null, null, null, null, null, '2016-10-27 21:05:10', null, null);
-
--- ----------------------------
--- Table structure for park_business_period
--- ----------------------------
-DROP TABLE IF EXISTS `park_business_period`;
-CREATE TABLE `park_business_period` (
-  `businessPeriodId` int(11) NOT NULL AUTO_INCREMENT,
-  `businessId` int(11) DEFAULT NULL COMMENT '营业时间id',
-  `periodStartTime` varchar(20) DEFAULT NULL COMMENT '时间段开始时间',
-  `periodEndTime` varchar(20) DEFAULT NULL COMMENT '时间段结束时间',
-  PRIMARY KEY (`businessPeriodId`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='营业时间段表';
-
--- ----------------------------
--- Records of park_business_period
--- ----------------------------
-INSERT INTO `park_business_period` VALUES ('1', '1', '08:00', '09:00');
-INSERT INTO `park_business_period` VALUES ('2', '1', '09:00', '10:00');
-INSERT INTO `park_business_period` VALUES ('3', '1', '11:00', '12:00');
-INSERT INTO `park_business_period` VALUES ('4', '1', '12:00', '13:00');
 
 -- ----------------------------
 -- Table structure for site_info
@@ -378,14 +305,11 @@ CREATE TABLE `site_info` (
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`siteId`),
   UNIQUE KEY `siteNo_Unique` (`siteNo`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='场地表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='场地表';
 
 -- ----------------------------
 -- Records of site_info
 -- ----------------------------
-INSERT INTO `site_info` VALUES ('1', '万能的场地', '646841', '场地1', '1', '1', '2016-10-11 21:10:26', '2016-10-24 15:25:42', '1');
-INSERT INTO `site_info` VALUES ('2', '场地2', '888523', '', '2', '1', '2016-10-13 13:06:09', '2016-10-24 15:25:48', '1');
-INSERT INTO `site_info` VALUES ('3', '场地2', '104065', '', '1', '1', '2016-11-06 14:29:11', null, '1');
 
 -- ----------------------------
 -- Table structure for site_order
@@ -428,12 +352,11 @@ CREATE TABLE `site_reserve_basic` (
   `memberId` int(11) DEFAULT NULL COMMENT '会员id',
   `orderId` int(11) DEFAULT NULL COMMENT '订单id',
   PRIMARY KEY (`siteReserveId`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8 COMMENT='场地序列图表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='场地序列图表';
 
 -- ----------------------------
 -- Records of site_reserve_basic
 -- ----------------------------
-INSERT INTO `site_reserve_basic` VALUES ('41', '散客', '12345612341', '2', '2', '1', '1', '2016-10-31 21:52:44', null, '1', null, '33');
 
 -- ----------------------------
 -- Table structure for site_reserve_date
@@ -446,12 +369,11 @@ CREATE TABLE `site_reserve_date` (
   `reserveEndDate` varchar(20) DEFAULT NULL COMMENT '预定结束日期',
   `reserveWeek` varchar(20) DEFAULT NULL COMMENT '预定时间范围内的哪些周（多个逗号分隔）',
   PRIMARY KEY (`reserveDateId`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COMMENT='场地预定日期表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='场地预定日期表';
 
 -- ----------------------------
 -- Records of site_reserve_date
 -- ----------------------------
-INSERT INTO `site_reserve_date` VALUES ('19', '41', '2016-10-31', '2016-10-31', '1');
 
 -- ----------------------------
 -- Table structure for site_reserve_time
@@ -464,14 +386,11 @@ CREATE TABLE `site_reserve_time` (
   `siteStartTime` varchar(20) DEFAULT NULL COMMENT '开始时间',
   `siteEndTime` varchar(20) DEFAULT NULL COMMENT '结束时间',
   PRIMARY KEY (`reserveTimeId`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='场地预定时间表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='场地预定时间表';
 
 -- ----------------------------
 -- Records of site_reserve_time
 -- ----------------------------
-INSERT INTO `site_reserve_time` VALUES ('4', '19', '1', '08:00', '09:00');
-INSERT INTO `site_reserve_time` VALUES ('5', '19', '1', '09:00', '10:00');
-INSERT INTO `site_reserve_time` VALUES ('20', '27', '1', '09:00', '15:00');
 
 -- ----------------------------
 -- Table structure for site_sport
@@ -490,13 +409,11 @@ CREATE TABLE `site_sport` (
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`sportId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='场地类型表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='场地类型表';
 
 -- ----------------------------
 -- Records of site_sport
 -- ----------------------------
-INSERT INTO `site_sport` VALUES ('1', '羽毛球', '50.00', '100.00', '08:00', '11:00', '1', null, '2016-10-11 21:07:04', null, '1');
-INSERT INTO `site_sport` VALUES ('2', '篮球', '1.00', '1.00', '10:00', '13:00', '1', null, '2016-10-13 13:05:48', null, '1');
 
 -- ----------------------------
 -- Table structure for system_dict
@@ -596,17 +513,14 @@ CREATE TABLE `system_role` (
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`roleId`)
-) ENGINE=InnoDB AUTO_INCREMENT=1003 DEFAULT CHARSET=utf8 COMMENT='角色';
+) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='角色';
 
 -- ----------------------------
 -- Records of system_role
 -- ----------------------------
-INSERT INTO `system_role` VALUES ('1', '超级管理员', '1', '1', null, null, '2016-10-13 10:00:00', null, '1');
-INSERT INTO `system_role` VALUES ('2', '会员', '1', '1', null, null, '2016-10-13 10:00:00', null, '1');
-INSERT INTO `system_role` VALUES ('3', '普通用户', '1', '1', null, null, '2016-10-13 10:00:00', null, '1');
-INSERT INTO `system_role` VALUES ('1000', '经理', '1', '2', null, null, '2016-10-13 10:00:00', null, '1');
-INSERT INTO `system_role` VALUES ('1001', '收银', '1', '2', null, null, '2016-10-13 10:00:00', null, '1');
-INSERT INTO `system_role` VALUES ('1002', '测试权限1', '1', '2', '说明描述', '10', '2016-11-08 11:26:37', '2016-11-08 11:31:30', '1');
+INSERT INTO `system_role` VALUES ('1', '超级管理员', '1', '1', null, null, '2016-10-13 10:00:00', null, null);
+INSERT INTO `system_role` VALUES ('2', '会员', '1', '1', null, null, '2016-10-13 10:00:00', null, null);
+INSERT INTO `system_role` VALUES ('3', '普通用户', '1', '1', null, null, '2016-10-13 10:00:00', null, null);
 
 -- ----------------------------
 -- Table structure for system_role_function
@@ -635,11 +549,6 @@ CREATE TABLE `system_role_menu` (
 -- ----------------------------
 -- Records of system_role_menu
 -- ----------------------------
-INSERT INTO `system_role_menu` VALUES ('1002', '3');
-INSERT INTO `system_role_menu` VALUES ('1002', '4');
-INSERT INTO `system_role_menu` VALUES ('1002', '5');
-INSERT INTO `system_role_menu` VALUES ('1002', '6');
-INSERT INTO `system_role_menu` VALUES ('1002', '7');
 
 -- ----------------------------
 -- Table structure for system_role_operator
@@ -654,15 +563,6 @@ CREATE TABLE `system_role_operator` (
 -- ----------------------------
 -- Records of system_role_operator
 -- ----------------------------
-INSERT INTO `system_role_operator` VALUES ('1', '123456');
-INSERT INTO `system_role_operator` VALUES ('2', '262768');
-INSERT INTO `system_role_operator` VALUES ('2', '559564');
-INSERT INTO `system_role_operator` VALUES ('2', '589456');
-INSERT INTO `system_role_operator` VALUES ('2', '864422');
-INSERT INTO `system_role_operator` VALUES ('2', '993345');
-INSERT INTO `system_role_operator` VALUES ('1000', '1');
-INSERT INTO `system_role_operator` VALUES ('1000', '111111');
-INSERT INTO `system_role_operator` VALUES ('1001', '1234567');
 
 -- ----------------------------
 -- Table structure for user_member
@@ -687,16 +587,11 @@ CREATE TABLE `user_member` (
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   `tempCardNo` varchar(32) DEFAULT NULL COMMENT '临时会员卡号（第一次注册未绑卡使用）',
   PRIMARY KEY (`memberId`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='会员信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会员信息表';
 
 -- ----------------------------
 -- Records of user_member
 -- ----------------------------
-INSERT INTO `user_member` VALUES ('9', '864422', '发送', '1', '11111111111', '11111111111', '1', '511111111111111111', '2016-10-01', null, null, '11111111111', '11111111111', '2016-10-13 10:41:49', null, '1', '864422');
-INSERT INTO `user_member` VALUES ('10', '262768', '欧阳资源传话', '1', '18701562971', '', '1', '123123123456789452', '2016-01-07', null, null, '', '', '2016-10-24 14:16:06', '2016-10-26 21:19:54', '1', null);
-INSERT INTO `user_member` VALUES ('11', '993345', '陈楚生', '1', '12345678913', '', '1', '12323323323322322X', '2017-03-01', null, null, '', '', '2016-10-24 14:52:41', null, '1', null);
-INSERT INTO `user_member` VALUES ('12', '559564', '葫芦娃', '2', '12345678912', '', '1', '', '2016-10-03', null, null, '', '', '2016-10-24 15:08:42', null, '1', '559564');
-INSERT INTO `user_member` VALUES ('13', '589456', '大黄', '1', '12345678912', '', '1', '123456789123456789', '', null, null, '', '', '2016-11-02 14:37:26', null, '1', null);
 
 -- ----------------------------
 -- Table structure for user_operator
@@ -722,20 +617,11 @@ CREATE TABLE `user_operator` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `operatorId_Unique` (`operatorId`),
   KEY `operatorId_Normal` (`operatorId`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='登录用户表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='登录用户表';
 
 -- ----------------------------
 -- Records of user_operator
 -- ----------------------------
-INSERT INTO `user_operator` VALUES ('1', '123456', '佟大为', '123456', '13051788102', '1', '2016-09-23 19:10:23', '2016-11-02 19:40:50', '2016-11-08 11:32:52', '001', null, null, '1990-07-21', null, '北京市天府路', '1');
-INSERT INTO `user_operator` VALUES ('2', '864422', '发送', '123456', '11111111111', '1', '2016-10-13 10:41:49', null, null, null, null, null, null, null, null, null);
-INSERT INTO `user_operator` VALUES ('3', '262768', '欧阳资源传话', '123456', '18701562971', '1', '2016-10-24 14:16:06', null, null, null, null, null, null, null, null, null);
-INSERT INTO `user_operator` VALUES ('4', '993345', '陈楚生', '123456', '12345678913', '1', '2016-10-24 14:52:41', null, null, null, null, null, null, null, null, null);
-INSERT INTO `user_operator` VALUES ('5', '559564', '葫芦娃', '123456', '12345678912', '1', '2016-10-24 15:08:42', null, null, null, null, null, null, null, null, null);
-INSERT INTO `user_operator` VALUES ('7', '111111', '陈小松', '123456', '15110275787', '1', '2016-10-27 21:08:42', '2016-11-04 14:51:40', null, '00002', '2016-10-10', '2016-11-10', '1990-09-30', '李金花', '北京市', null);
-INSERT INTO `user_operator` VALUES ('8', '1', '1', '123456', '213', '1', '2016-11-01 17:53:33', '2016-11-07 18:47:49', null, '2', '2016-11-02', '2016-11-01', '2016-11-01', '11', '123', null);
-INSERT INTO `user_operator` VALUES ('9', '1234567', '1', '123456', '321', '1', '2016-11-01 17:59:19', '2016-11-01 17:59:23', '2016-11-02 11:29:10', '3', '2016-11-03', '2016-11-01', '2016-11-01', '12', '213', null);
-INSERT INTO `user_operator` VALUES ('10', '589456', '大黄', '123456', '12345678912', '1', '2016-11-02 14:37:26', null, null, null, null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for user_operator_card

@@ -54,7 +54,7 @@
 
                             <div class="col-sm-8">
                                 <textarea class="form-control" rows="3" id="role_remark" name="roleDescribe"
-                                          placeholder="权限说明" value="${role.roleDescribe}"></textarea>
+                                          placeholder="权限说明">${role.roleDescribe}</textarea>
                                 <div data-valmsg-for="roleDescribe" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -114,7 +114,7 @@
                     <h5 class="modal-title" id="tipsModalLabel">提示框</h5>
                 </div>
                 <div class="modal-body">
-                    <p class="text-success">角色设置保存成功!</p>
+                    <p class="text-success">员工权限设置保存成功!</p>
                 </div>
             </div>
         </div>

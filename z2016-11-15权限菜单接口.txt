@@ -1,0 +1,210 @@
+权限菜单接口：【Ajax】 
+请求：/system/getMenus
+
+返回：
+{
+    "code": "1",
+    "message": "操作成功",
+    "data": {
+        "menus": [
+            {
+                "menuId": 1,
+                "menuName": "会员管理",
+                "menuList": [
+                    {
+                        "menuId": 2,
+                        "parentMenuId": 1,
+                        "menuName": "新会员办理",
+                        "menuUrl": "/member/regMember"
+                    },
+                    {
+                        "menuId": 3,
+                        "parentMenuId": 1,
+                        "menuName": "会员查询",
+                        "menuUrl": ""
+                    },
+                    {
+                        "menuId": 4,
+                        "parentMenuId": 1,
+                        "menuName": "会员卡充值",
+                        "menuUrl": ""
+                    },
+                    {
+                        "menuId": 5,
+                        "parentMenuId": 1,
+                        "menuName": "会员卡升级",
+                        "menuUrl": ""
+                    },
+                    {
+                        "menuId": 6,
+                        "parentMenuId": 1,
+                        "menuName": "会员卡补办",
+                        "menuUrl": ""
+                    },
+                    {
+                        "menuId": 7,
+                        "parentMenuId": 1,
+                        "menuName": "应收款管理",
+                        "menuUrl": ""
+                    },
+                    {
+                        "menuId": 8,
+                        "parentMenuId": 1,
+                        "menuName": "发票登记查询",
+                        "menuUrl": ""
+                    },
+                    {
+                        "menuId": 9,
+                        "parentMenuId": 1,
+                        "menuName": "会员类型设置",
+                        "menuUrl": ""
+                    }
+                ]
+            },
+            {
+                "menuId": 10,
+                "menuName": "预定管理",
+                "menuList": [
+                    {
+                        "menuId": 11,
+                        "parentMenuId": 10,
+                        "menuName": "场地预定",
+                        "menuUrl": ""
+                    },
+                    {
+                        "menuId": 12,
+                        "parentMenuId": 10,
+                        "menuName": "批量预定",
+                        "menuUrl": ""
+                    },
+                    {
+                        "menuId": 13,
+                        "parentMenuId": 10,
+                        "menuName": "批量预定订单查询",
+                        "menuUrl": ""
+                    },
+                    {
+                        "menuId": 14,
+                        "parentMenuId": 10,
+                        "menuName": "场地热点分析",
+                        "menuUrl": ""
+                    },
+                    {
+                        "menuId": 15,
+                        "parentMenuId": 10,
+                        "menuName": "场地设置",
+                        "menuUrl": ""
+                    },
+                    {
+                        "menuId": 16,
+                        "parentMenuId": 10,
+                        "menuName": "场地类型设置",
+                        "menuUrl": ""
+                    }
+                ]
+            },
+            {
+                "menuId": 17,
+                "menuName": "商品管理",
+                "menuList": [
+                    {
+                        "menuId": 18,
+                        "parentMenuId": 17,
+                        "menuName": "商品设置",
+                        "menuUrl": ""
+                    },
+                    {
+                        "menuId": 19,
+                        "parentMenuId": 17,
+                        "menuName": "进销存管理",
+                        "menuUrl": ""
+                    },
+                    {
+                        "menuId": 20,
+                        "parentMenuId": 17,
+                        "menuName": "商品销售",
+                        "menuUrl": ""
+                    },
+                    {
+                        "menuId": 21,
+                        "parentMenuId": 17,
+                        "menuName": "库存明细日志",
+                        "menuUrl": ""
+                    }
+                ]
+            },
+            {
+                "menuId": 22,
+                "menuName": "数据统计",
+                "menuList": [
+                    {
+                        "menuId": 23,
+                        "parentMenuId": 22,
+                        "menuName": "会员办理统计",
+                        "menuUrl": ""
+                    },
+                    {
+                        "menuId": 24,
+                        "parentMenuId": 22,
+                        "menuName": "营业收支统计",
+                        "menuUrl": ""
+                    },
+                    {
+                        "menuId": 25,
+                        "parentMenuId": 22,
+                        "menuName": "场地使用率",
+                        "menuUrl": ""
+                    },
+                    {
+                        "menuId": 26,
+                        "parentMenuId": 22,
+                        "menuName": "签到记录",
+                        "menuUrl": ""
+                    }
+                ]
+            },
+            {
+                "menuId": 27,
+                "menuName": "系统设置",
+                "menuList": [
+                    {
+                        "menuId": 28,
+                        "parentMenuId": 27,
+                        "menuName": "基础设置",
+                        "menuUrl": ""
+                    },
+                    {
+                        "menuId": 29,
+                        "parentMenuId": 27,
+                        "menuName": "员工信息设置",
+                        "menuUrl": ""
+                    },
+                    {
+                        "menuId": 30,
+                        "parentMenuId": 27,
+                        "menuName": "员工权限设置",
+                        "menuUrl": ""
+                    },
+                    {
+                        "menuId": 31,
+                        "parentMenuId": 27,
+                        "menuName": "通知管理",
+                        "menuUrl": ""
+                    },
+                    {
+                        "menuId": 32,
+                        "parentMenuId": 27,
+                        "menuName": "数据库操作",
+                        "menuUrl": ""
+                    },
+                    {
+                        "menuId": 33,
+                        "parentMenuId": 27,
+                        "menuName": "系统日志",
+                        "menuUrl": ""
+                    }
+                ]
+            }
+        ]
+    }
+}

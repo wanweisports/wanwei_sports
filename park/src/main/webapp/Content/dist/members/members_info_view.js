@@ -1,1 +1,162 @@
-!function(e){var t={init:function(){this.initEvents(),e.datetimepicker.setLocale("zh"),e("#member_birthday").datetimepicker({timepicker:!1,lang:"zh",format:"Y-m-d",defaultDate:new Date}),e(".member-birthday-select").on("click",function(t){t.preventDefault(),e("#member_birthday").datetimepicker("show")}),e.post("member/getNewCardNo",function(t){var a=t.data;1==t.code?e("#newCardNo").val(a.newCardNo):alert(t.message||"新会员卡号生成失败, 请稍后重试")},"json")},initEvents:function(){function t(t){e.post("member/getMemberCarType",{cardTypeId:t},function(t){var a=t.data;1==t.code?(e("#upgrade_cost").val(a.cardTypeMoney),e("#upgrade_discount").val(a.cardTypeDiscount),e("#upgrade_deadline").val(a.cardDeadline)):alert(t.message||"卡类型信息查询失败, 请稍后重试")})}e(".gengxin-modal").on("click",function(t){t.preventDefault();var a=e("#member_form"),i=a.serialize();return!("submitting"==a.attr("submitting")||!a.valid())&&(a.attr("submitting","submitting"),void e.post("/member/saveMember",i,function(t){a.attr("submitting",""),1==t.code?e("#gengxinModal").modal({backdrop:!1,show:!0}):alert(t.message||"会员信息更新失败, 请稍后重试")}))}),e(".recharge-card-submit").on("click",function(t){t.preventDefault();var a=e(".recharge-card-form"),i=a.serialize();return!("submitting"==a.attr("submitting")||!a.valid())&&(a.attr("submitting","submitting"),void e.post("/member/memberCardCZ",i,function(e){a.attr("submitting",""),1==e.code?location.reload():alert(e.message||"会员充值失败, 请稍后重试")}))}),e(".refresh-card-submit").on("click",function(t){t.preventDefault();var a=e(".refresh-card-form"),i=a.serialize();return!("submitting"==a.attr("submitting")||!a.valid())&&(a.attr("submitting","submitting"),void e.post("/member/memberCardBuBan",i,function(e){a.attr("submitting",""),1==e.code?location.reload():alert(e.message||"会员补办失败, 请稍后重试")}))}),e(".shengji-modal").on("click",function(a){a.preventDefault();var i=e('[name="cardTypeId"]').val();t(i)}),e("[name='cardTypeId']").on("change",function(a){a.preventDefault();var i=e(this).val();t(i)}),e(".upgrade-card-submit").on("click",function(t){t.preventDefault();var a=e(".upgrade-card-form"),i=a.serialize();return!("submitting"==a.attr("submitting")||!a.valid())&&(a.attr("submitting","submitting"),void e.post("member/memberCardUpLevel",i,function(e){a.attr("submitting",""),1==e.code?location.reload():alert(e.message||"会员升级失败, 请稍后重试")}))})}};t.init()}(jQuery);
+(function ($) {
+    var Member_Info_View = {
+        init: function () {
+            this.initEvents();
+
+            $.datetimepicker.setLocale('zh');
+
+            // 表单时间控件设置
+            $('#member_birthday').datetimepicker({
+                timepicker: false,
+                lang: "zh",
+                format:'Y-m-d',
+                defaultDate: new Date()
+            });
+
+            $(".member-birthday-select").on("click", function (e) {
+                e.preventDefault();
+
+                $('#member_birthday').datetimepicker("show");
+            });
+
+            // 生成新卡号
+            $.post('member/getNewCardNo', function (res) {
+                var data = res.data;
+                if (res.code == 1) {
+                    $("#newCardNo").val(data.newCardNo);
+                } else {
+                    alert(res.message || "新会员卡号生成失败, 请稍后重试");
+                }
+            }, 'json');
+        },
+        initEvents: function () {
+            // 更新会员信息
+            $(".gengxin-modal").on("click", function (e) {
+                e.preventDefault();
+
+                var $form = $("#member_form");
+                var conditions = $form.serialize();
+
+                if ($form.attr("submitting") == "submitting" || !$form.valid()) {
+                    return false;
+                }
+                $form.attr("submitting", "submitting");
+
+                $.post('/member/saveMember', conditions, function (res) {
+                    $form.attr("submitting", "");
+
+                    if (res.code == 1) {
+                        $("#gengxinModal").modal({backdrop: false, show: true});
+                    } else {
+                        alert(res.message || "会员信息更新失败, 请稍后重试");
+                    }
+                });
+            });
+
+            // 会员卡充值
+            $(".recharge-card-submit").on("click", function (e) {
+                e.preventDefault();
+
+                var $form = $(".recharge-card-form");
+                var conditions = $form.serialize();
+
+                if ($form.attr("submitting") == "submitting" || !$form.valid()) {
+                    return false;
+                }
+                $form.attr("submitting", "submitting");
+
+                $.post('/member/memberCardCZ', conditions, function (res) {
+                    $form.attr("submitting", "");
+
+                    if (res.code == 1) {
+                        location.reload();
+                    } else {
+                        alert(res.message || "会员充值失败, 请稍后重试");
+                    }
+                });
+            });
+
+            // 会员卡补办
+            $(".refresh-card-submit").on("click", function (e) {
+                e.preventDefault();
+
+                // 生成新的会员卡号
+                var $form = $(".refresh-card-form");
+                var conditions = $form.serialize();
+
+                if ($form.attr("submitting") == "submitting" || !$form.valid()) {
+                    return false;
+                }
+                $form.attr("submitting", "submitting");
+
+                $.post('/member/memberCardBuBan', conditions, function (res) {
+                    $form.attr("submitting", "");
+
+                    if (res.code == 1) {
+                        location.reload();
+                    } else {
+                        alert(res.message || "会员补办失败, 请稍后重试");
+                    }
+                });
+            });
+
+            function getMemberCarType(id) {
+                $.post('member/getMemberCarType', {cardTypeId: id}, function (res) {
+                    var data = res.data;
+
+                    if (res.code == 1) {
+                        $("#upgrade_cost").val(data.cardTypeMoney);
+                        $("#upgrade_discount").val(data.cardTypeDiscount);
+                        $("#upgrade_deadline").val(data.cardDeadline);
+                    } else {
+                        alert(res.message || "卡类型信息查询失败, 请稍后重试");
+                    }
+                });
+            }
+
+            // 升级弹窗
+            $(".shengji-modal").on("click", function (e) {
+                e.preventDefault();
+
+                var id = $('[name="cardTypeId"]').val();
+
+                getMemberCarType(id);
+            });
+
+            // 卡类型改变查询
+            $("[name='cardTypeId']").on("change", function (e) {
+                e.preventDefault();
+
+                var id = $(this).val();
+
+                getMemberCarType(id);
+            });
+
+            // 会员卡升级
+            $(".upgrade-card-submit").on("click", function (e) {
+                e.preventDefault();
+
+                // 生成新的会员卡号
+                var $form = $(".upgrade-card-form");
+                var conditions = $form.serialize();
+
+                if ($form.attr("submitting") == "submitting" || !$form.valid()) {
+                    return false;
+                }
+                $form.attr("submitting", "submitting");
+
+                $.post('member/memberCardUpLevel', conditions, function (res) {
+                    $form.attr("submitting", "");
+
+                    if (res.code == 1) {
+                        location.reload();
+                    } else {
+                        alert(res.message || "会员升级失败, 请稍后重试");
+                    }
+                });
+            });
+        }
+    };
+
+    Member_Info_View.init();
+})(jQuery);

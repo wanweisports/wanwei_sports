@@ -19,6 +19,7 @@ import com.park.common.po.ParkBusiness;
 import com.park.common.po.SystemRole;
 import com.park.common.po.UserOperator;
 import com.park.common.util.JsonUtils;
+import com.park.common.util.StrUtil;
 import com.park.service.IOperatorService;
 import com.park.service.IParkService;
 import com.park.service.IRoleService;
@@ -44,7 +45,6 @@ public class SettingsController extends BaseController {
     public String settingsCommon(Model model) {
     	try {
 			model.addAllAttributes(JsonUtils.fromJson(parkService.getParkBusiness()));
-			System.out.println(JsonUtils.toJson(parkService.getParkBusiness()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -72,7 +72,9 @@ public class SettingsController extends BaseController {
     public String getUsersView(String operatorId, Model model) {
     	try {
     		model.addAttribute("roleNames", roleService.getRoleNames(IDBConstant.ROLE_EMPLOYEE));
-			model.addAllAttributes(operatorService.getEmployee(operatorId));
+    		if(StrUtil.isNotBlank(operatorId)){
+    			model.addAllAttributes(operatorService.getEmployee(operatorId));
+    		}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -169,12 +171,6 @@ public class SettingsController extends BaseController {
             e.printStackTrace();
         }
         return "Settings/SettingsSystemRoles";
-    }
-
-    // 通知设置
-    @RequestMapping("notification")
-    public String notification() {
-        return "Settings/SettingsNotification";
     }
 
     // 数据库操作

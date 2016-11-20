@@ -47,7 +47,8 @@
                                 <div data-valmsg-for="tempCardNo" data-valmsg-replace="true"></div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <input type="hidden" name="memberType" value="1">
+                        <!--<div class="form-group">
                             <label for="memberType1" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 支付类型
                             </label>
@@ -61,7 +62,7 @@
                                 </label>
                                 <div data-valmsg-for="memberType" data-valmsg-replace="true"></div>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="form-group">
                             <label for="member_mobile" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 手机号码
@@ -77,6 +78,19 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="memberBirthday" class="col-sm-4 control-label">会员生日</label>
+
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="memberBirthday" name="memberBirthday"
+                                           placeholder="会员生日">
+                                    <span class="input-group-addon member-birthday-select">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="form-group">
                             <label for="member_mobile2" class="col-sm-4 control-label">备用手机</label>
 
                             <div class="col-sm-8">
@@ -86,7 +100,7 @@
                                        data-val-regex="备用手机号码格式错误">
                                 <div data-valmsg-for="memberMobile2" data-valmsg-replace="true"></div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -115,19 +129,6 @@
                                        data-val-regex-pattern="^\d{17}(\d|X|x)$"
                                        data-val-regex="身份证号格式错误">
                                 <div data-valmsg-for="memberIdcard" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="memberBirthday" class="col-sm-4 control-label">会员生日</label>
-
-                            <div class="col-sm-8">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="memberBirthday" name="memberBirthday"
-                                           placeholder="会员生日">
-                                    <span class="input-group-addon member-birthday-select">
-                                        <i class="glyphicon glyphicon-calendar"></i>
-                                    </span>
-                                </div>
                             </div>
                         </div>
                         <div class="form-group">

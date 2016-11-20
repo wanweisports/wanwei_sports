@@ -49,9 +49,15 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        location.assign('/settings/getUsers');
+                        $("#tips_modal").modal({show: true, backdrop: false});
+
+                        setTimeout(function () {
+                            $("#tips_modal").modal("hide");
+                            location.assign('/settings/getUsers');
+                        }, 2000);
                     } else {
-                        alert(res.message || "设置用户失败, 请稍后重试");
+                        console.log(res.message || "员工信息保存失败, 请稍后重试");
+                        alert(res.message || "员工信息保存失败, 请稍后重试");
                     }
                 });
             });

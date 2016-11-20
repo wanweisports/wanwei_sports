@@ -1,1 +1,113 @@
-!function(e){var t={init:function(){this.initEvents()},initEvents:function(){function t(t){var a=e("#card_type_form");e.each(t,function(e,t){a.find("input[name='"+e+"']").not(":radio").not(":checkbox").val(t),a.find("select[name='"+e+"']").not(".timeWeek").val(t)}),t.cardTypeStatus&&e("input[name='cardTypeStatus'][value='"+t.cardTypeStatus+"']").prop("checked",!0);var r=t.cardTypeTimeStart.split(","),n=t.cardTypeTimeEnd.split(","),i=0;e.each(e("input[name='cardTypeWeek']"),function(){t.cardTypeWeek.indexOf(e(this).val())>=0?(e(this).prop("checked",!0),e(this).parent().parent().find("select[name='cardTypeTimeStart']").val(r[i]),e(this).parent().parent().find("select[name='cardTypeTimeEnd']").val(n[i]),i++):e(this).prop("checked",!1)})}e(".card-type-filter").on("click",function(t){t.preventDefault();var a=e("#card_filter_form").serialize();location.assign("/member/getMemberCarTypes?"+a)}),e(".card-type-add").on("click",function(t){t.preventDefault(),e("#card_type_id").val(""),e("#card_type_name").val(""),e("#card_type_month").val(0),e("#card_type_discount").val(0),e("#card_type_money").val(0),e("#card_type_overdraw").val(0),e("#card_payment_type").val(1),e("#card_type_ahead").val(0),e("#cardTypeStatus1").prop("checked",!0)}),e("#card_payment_type").on("change",function(t){t.preventDefault();var a=e(this).val();1==a?e(".card-type-overdraw").hide():e(".card-type-overdraw").show()}),e("#save_card_type").on("click",function(t){t.preventDefault();var a=e("#card_type_form"),r=a.serialize();return!("submitting"==a.attr("submitting")||!a.valid())&&(a.attr("submitting","submitting"),void e.post("/member/saveMemberCardType",r,function(e){a.attr("submitting",""),1==e.code?location.reload():alert(e.message||"会员设置保存失败, 请稍后重试")}))}),e(".card-type-list").on("click",".type-item",function(a){a.preventDefault();var r=e(this).attr("data-id");e.post("member/getMemberCarType",{cardTypeId:r},function(e){1==e.code?t(e.data):alert(e.message||"卡类型信息查询失败, 请稍后重试")})})}};t.init()}(jQuery);
+(function ($) {
+    var Members_Card_Types = {
+        init: function () {
+            this.initEvents();
+        },
+        initEvents: function () {
+            // 筛选会员类型
+            $(".card-type-filter").on("click", function (e) {
+                e.preventDefault();
+
+                var conditions = $("#card_filter_form").serialize();
+
+                location.assign('/member/getMemberCarTypes?' + conditions);
+            });
+
+            // 增加会员类型
+            $(".card-type-add").on("click", function (e) {
+                e.preventDefault();
+
+                $("#card_type_id").val("");
+                $("#card_type_name").val("");
+                $("#card_type_month").val(0);
+                $("#card_type_discount").val(0);
+                $("#card_type_money").val(0);
+                $("#card_type_overdraw").val(0);
+                $("#card_payment_type").val(1);
+                $("#card_type_ahead").val(0);
+                $("#cardTypeStatus1").prop("checked", true);
+            });
+
+            // 支付类型改变
+            $("#card_payment_type").on("change", function (e) {
+                e.preventDefault();
+
+                var val = $(this).val();
+
+                if (val == 1) {
+                    $(".card-type-overdraw").hide();
+                } else {
+                    $(".card-type-overdraw").show();
+                }
+            });
+
+            $("#save_card_type").on("click", function (e) {
+                e.preventDefault();
+
+                var $form = $("#card_type_form");
+                var conditions = $form.serialize();
+
+                if ($form.attr("submitting") == "submitting" || !$form.valid()) {
+                    return false;
+                }
+                $form.attr("submitting", "submitting");
+
+                $.post('/member/saveMemberCardType', conditions, function (res) {
+                    $form.attr("submitting", "");
+
+                    if (res.code == 1) {
+                        location.reload();
+                    } else {
+                        alert(res.message || "会员设置保存失败, 请稍后重试");
+                    }
+                });
+            });
+
+            // 会员卡类型信息弹窗
+            function renderCardTypeData(data) {
+                var $form = $("#card_type_form");
+
+                $.each(data, function (key, item) {
+                    $form.find("input[name='" + key + "']").not(":radio").not(":checkbox").val(item);
+                    $form.find("select[name='" + key + "']").not(".timeWeek").val(item);
+                });
+
+                if (data.cardTypeStatus) {
+                    $("input[name='cardTypeStatus'][value='" + data.cardTypeStatus + "']").prop("checked", true);
+                }
+
+                //时间处理
+                var timeStart = data.cardTypeTimeStart.split(",");
+                var timeEnd = data.cardTypeTimeEnd.split(",");
+                var selectIndex = 0;
+                $.each($("input[name='cardTypeWeek']"), function () {
+                    if(data.cardTypeWeek.indexOf($(this).val()) >= 0) {
+                        $(this).prop("checked", true);
+                        $(this).parent().parent().find("select[name='cardTypeTimeStart']").val(timeStart[selectIndex]);
+                        $(this).parent().parent().find("select[name='cardTypeTimeEnd']").val(timeEnd[selectIndex]);
+                        selectIndex++;
+                    }else{
+                        $(this).prop("checked", false);
+                    }
+                });
+            }
+
+            // 卡类型详情
+            $(".card-type-list").on("click", ".type-item", function (e) {
+                e.preventDefault();
+
+                var id = $(this).attr("data-id");
+
+                $.post('member/getMemberCarType', {cardTypeId: id}, function (res) {
+                    if (res.code == 1) {
+                        renderCardTypeData(res.data);
+                    } else {
+                        alert(res.message || "卡类型信息查询失败, 请稍后重试");
+                    }
+                });
+            });
+        }
+    };
+
+    Members_Card_Types.init();
+})(jQuery);

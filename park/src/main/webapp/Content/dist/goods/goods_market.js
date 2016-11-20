@@ -1,1 +1,66 @@
-!function(t){var o={opts:{data:{}},calCartCount:function(){var t,o=this.opts.data,a=0;for(t in o)a+=o[t].goodCount;return a},init:function(){this.initEvents();var o=location.search.replace("?goodType=","");t(".good-type-list").find('[data-type="'+o+'"]').addClass("btn-warning").removeClass("btn-primary")},initEvents:function(){var o=this,a=t(".goods-buy-list"),n=t(".good-cart-count");a.on("click",".good-cart-add",function(a){a.preventDefault();var d=t(this),i=d.attr("data-id");o.opts.data[i]||(o.opts.data[i]={goodId:i,name:d.parents(".goods-list-item").find(".good-name").attr("data-text"),price:d.parents(".goods-list-item").find(".good-price").attr("data-text"),url:d.parents(".goods-list-item").find(".good-image").attr("src"),goodCount:0}),o.opts.data[i].goodCount++,n.find(".badge").html(o.calCartCount()),t.post("/good/addGoodsToCart",{goodId:i,amount:1},function(o){1!=o.code&&(t("#tips_error_modal").modal({show:!0,backdrop:!1}).find(".text-content").text(o.message||"添加购物车失败, 请稍后重试"),console.log(o.message||"添加购物车失败, 请稍后重试"))})}),n.on("click",function(t){t.preventDefault(),location.assign("/good/getGoodsCart")})}};o.init()}(jQuery);
+(function ($) {
+    var Goods_Buy_List = {
+        opts: {
+            data: {}
+        },
+        calCartCount: function () {
+            var goods = this.opts.data, id;
+            var count = 0;
+
+            for (id in goods) {
+                count += goods[id].goodCount;
+            }
+
+            return count;
+        },
+        init: function () {
+            this.initEvents();
+
+            var goodType = location.search.replace("?goodType=", "");
+            $(".good-type-list").find('[data-type="' + goodType + '"]')
+                .addClass("btn-warning").removeClass("btn-primary");
+        },
+        initEvents: function () {
+            var content = this;
+            var $uiGoodsList = $(".goods-buy-list");
+            var $btnCart = $(".good-cart-count");
+
+            $uiGoodsList.on("click", ".good-cart-add", function (e) {
+                e.preventDefault();
+
+                var $this = $(this);
+                var goodId = $this.attr("data-id");
+
+                if (!content.opts.data[goodId]) {
+                    content.opts.data[goodId] = {
+                        goodId: goodId,
+                        name: $this.parents(".goods-list-item").find(".good-name").attr("data-text"),
+                        price: $this.parents(".goods-list-item").find(".good-price").attr("data-text"),
+                        url: $this.parents(".goods-list-item").find(".good-image").attr("src"),
+                        goodCount: 0
+                    };
+                }
+                content.opts.data[goodId].goodCount++;
+
+                $btnCart.find(".badge").html(content.calCartCount());
+
+                $.post('/good/addGoodsToCart', {goodId: goodId, amount: 1}, function (res) {
+                    if (res.code != 1) {
+                        $("#tips_error_modal").modal({show: true, backdrop: false})
+                            .find(".text-content").text(res.message || "添加购物车失败, 请稍后重试");
+                        console.log(res.message || "添加购物车失败, 请稍后重试");
+                    }
+                });
+            });
+
+            // 跳转购物车列表
+            $btnCart.on("click", function (e) {
+                e.preventDefault();
+
+                location.assign("/good/getGoodsCart");
+            });
+        }
+    };
+
+    Goods_Buy_List.init();
+})(jQuery);

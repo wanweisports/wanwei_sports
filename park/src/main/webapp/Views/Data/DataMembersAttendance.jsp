@@ -15,33 +15,42 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>数据统计</span> &gt;&gt; <span>客户签到记录</span>
+    当前位置: <span>数据统计</span> &gt;&gt; <span>会员签到记录</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
-            <div class="panel-heading">客户签到记录</div>
+            <div class="panel-heading">会员签到记录</div>
             <div class="panel-body">
                 <form id="data_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
-                        <select class="form-control" style="width: 160px;">
-                            <option value="0">今日签到</option>
-                            <option value="1">昨日签到</option>
-                        </select>
+                        <div class="btn-group">
+                            <a href="javascript:;" class="btn btn-primary">今天</a>
+                            <a href="javascript:;" class="btn btn-default">昨天</a>
+                            <a href="javascript:;" class="btn btn-default">本周</a>
+                            <a href="javascript:;" class="btn btn-default">本月</a>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="dateSelect" name="dateSelect"
-                               placeholder="选择日期" value="${dateSelect}">
+                        <input type="text" class="form-control" id="student_name" name="student_name"
+                               placeholder="会员姓名">
                     </div>
-
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="createTimeStart" name="createTimeStart" placeholder="开始日期"
+                               value="${createTimeStart}">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="createTimeEnd" name="createTimeEnd" placeholder="结束日期"
+                               value="${createTimeEnd}">
+                    </div>
                     <div class="form-group">
                         <a href="javascript:;" class="btn btn-primary data-filter">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>
                     <div class="form-group pull-right">
-                        <a href="javascript:;" class="btn btn-primary goods-filter">
+                        <a href="javascript:;" class="btn btn-danger goods-filter">
                             <span class="glyphicon glyphicon-export"></span> 导出数据
                         </a>
                     </div>
@@ -55,115 +64,38 @@
                         <thead>
                         <tr>
                             <th>会员卡号</th>
-                            <th>姓名</th>
-                            <th>会员类型</th>
-                            <th>签到入口</th>
+                            <th>会员姓名</th>
                             <th>签到时间</th>
                             <th>对应订单</th>
-                            <th>签到日期</th>
+                            <th>签到人</th>
+                            <th>手机号</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
                             <td>234545243</td>
                             <td>李洪旭</td>
-                            <td>金卡</td>
-                            <td>四楼B口</td>
-                            <td>10:00</td>
+                            <td>2016-10-20 10:00</td>
                             <td>order_23435543</td>
-                            <td>2016-10-20</td>
+                            <td>李洪旭</td>
+                            <td>110****3242</td>
                         </tr>
                         <tr>
                             <td>234545243</td>
-                            <td>李洪旭</td>
-                            <td>金卡</td>
-                            <td>四楼B口</td>
-                            <td>10:00</td>
+                            <td>煤炭公司</td>
+                            <td>2016-10-20 10:00</td>
                             <td>order_23435543</td>
-                            <td>2016-10-20</td>
+                            <td>张三</td>
+                            <td>110****3242</td>
                         </tr>
                         <tr>
                             <td>234545243</td>
-                            <td>李洪旭</td>
-                            <td>金卡</td>
-                            <td>四楼B口</td>
-                            <td>10:00</td>
+                            <td>北体高科</td>
+                            <td>2016-10-20 10:00</td>
                             <td>order_23435543</td>
-                            <td>2016-10-20</td>
+                            <td>栾宝石</td>
+                            <td>110****3242</td>
                         </tr>
-                        <tr>
-                            <td>234545243</td>
-                            <td>李洪旭</td>
-                            <td>金卡</td>
-                            <td>四楼B口</td>
-                            <td>10:00</td>
-                            <td>order_23435543</td>
-                            <td>2016-10-20</td>
-                        </tr>
-                        <tr>
-                            <td>234545243</td>
-                            <td>李洪旭</td>
-                            <td>金卡</td>
-                            <td>四楼B口</td>
-                            <td>10:00</td>
-                            <td>order_23435543</td>
-                            <td>2016-10-20</td>
-                        </tr>
-                        <tr>
-                            <td>234545243</td>
-                            <td>李洪旭</td>
-                            <td>金卡</td>
-                            <td>四楼B口</td>
-                            <td>10:00</td>
-                            <td>order_23435543</td>
-                            <td>2016-10-20</td>
-                        </tr>
-                        <tr>
-                            <td>234545243</td>
-                            <td>李洪旭</td>
-                            <td>金卡</td>
-                            <td>四楼B口</td>
-                            <td>10:00</td>
-                            <td>order_23435543</td>
-                            <td>2016-10-20</td>
-                        </tr>
-                        <tr>
-                            <td>234545243</td>
-                            <td>李洪旭</td>
-                            <td>金卡</td>
-                            <td>四楼B口</td>
-                            <td>10:00</td>
-                            <td>order_23435543</td>
-                            <td>2016-10-20</td>
-                        </tr>
-                        <tr>
-                            <td>234545243</td>
-                            <td>李洪旭</td>
-                            <td>金卡</td>
-                            <td>四楼B口</td>
-                            <td>10:00</td>
-                            <td>order_23435543</td>
-                            <td>2016-10-20</td>
-                        </tr>
-                        <tr>
-                            <td>234545243</td>
-                            <td>李洪旭</td>
-                            <td>金卡</td>
-                            <td>四楼B口</td>
-                            <td>10:00</td>
-                            <td>order_23435543</td>
-                            <td>2016-10-20</td>
-                        </tr>
-                        <c:forEach var="enter" items="${attendances}">
-                            <tr>
-                                <td>${enter.card_id}</td>
-                                <td>${enter.member_name}</td>
-                                <td>${enter.card_type}</td>
-                                <td>${enter.entrance}</td>
-                                <td>${enter.entrance_time}</td>
-                                <td>${enter.order_no}</td>
-                            </tr>
-                        </c:forEach>
                         </tbody>
                     </table>
 

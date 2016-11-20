@@ -1,1 +1,31 @@
-!function(n){n(".ww-logout").on("click",function(n){n.preventDefault(),location.assign("/passport/login")}),n(".ww-nav > li").not(".nav-home").hover(function(){n(this).addClass("nav-moon")},function(){n(this).removeClass("nav-moon")}),n.fn.serializeObject=function(){var n={};return this.serializeArray().map(function(o){n[o.name]=o.value}),n}}(jQuery);
+(function ($) {
+    /* 全局事件 */
+
+    // 退出登录
+    $(".ww-logout").on("click", function (e) {
+        e.preventDefault();
+
+        //alert("成功登出");
+        location.assign('/passport/login');
+    });
+
+    // 导航切换
+    $(".ww-nav > li").not(".nav-home").hover(function () {
+        $(this).addClass("nav-moon");
+    }, function () {
+        $(this).removeClass("nav-moon");
+    });
+
+    /* jQuery扩展 */
+
+    // 将form表单数据序列化为json
+    $.fn.serializeObject = function () {
+        var data = {};
+
+        this.serializeArray().map(function (x) {
+            data[x.name] = x.value;
+        });
+
+        return data;
+    };
+})(jQuery);
