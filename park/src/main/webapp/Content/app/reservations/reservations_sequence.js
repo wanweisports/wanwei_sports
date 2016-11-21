@@ -66,7 +66,7 @@
                 } else if (date.format('e') == (weekday + 1)) {
                     week = '明天';
                 } else if (date.format('e') == (weekday - 1)) {
-                    week = '明天';
+                    week = '昨天';
                 } else {
                     week = Weeks[date.format('e')];
                 }
@@ -129,6 +129,10 @@
                         $(el).find("td:not(.time)").removeClass().addClass("disabled").addClass("time-end").html("");
                     }
                 });
+            }
+
+            if (content.opts.Current_Date < currentDate.format("YYYY-MM-DD")) {
+                $sequence.find("tr.timing-body").find("td:not(.time)").removeClass().addClass("disabled").addClass("time-end").html("");
             }
 
             $.post('/site/dynamicSiteReservation', {
