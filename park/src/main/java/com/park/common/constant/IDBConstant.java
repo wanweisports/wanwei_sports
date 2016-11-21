@@ -60,5 +60,8 @@ public interface IDBConstant {
     public static final String ORDER_SERVICE_TYPE_BLOCK_SITE = "3";//包场
     
     public static final int ROLE_EMPLOYEE = 4;//员工角色最低主键值
-    
+
+    public static final String NOTIFICATIONS_STATE_YES = "1";//已读
+    public static final String NOTIFICATIONS_STATE_NO = "2";//未读
+    public static final String NOTIFICATIONS_STATE_UNSEND = "3";//未发送
 }
