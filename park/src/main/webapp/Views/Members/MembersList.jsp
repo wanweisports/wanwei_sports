@@ -72,7 +72,7 @@
                                 <td>${member.cardTypeName}</td>
                                 <td>${member.cardDeadline}</td>
                                 <td>${member.cardBalance}</td>
-                                <td><a href="/member/getMembersChildren">22人</a></td>
+                                <td><a href="/member/getMembersChildren?memberId=${member.memberId}">${member.childrenCount}人</a></td>
                                 <c:if test="${member.cardStatus == null}">
                                     <td></td>
                                 </c:if>

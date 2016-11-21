@@ -53,6 +53,7 @@ public class MenuServiceImpl extends BaseService implements IMenuService {
 					SystemMenu parentMenu = getMenu(systemMenu.getParentMenuId());
 					parentMenu.setMenuList(getMenuByParentId(menus, parentMenu.getMenuId()));
 					parentIds.add(parentMenu.getMenuId());
+					parentMenus.add(parentMenu);
 				}
 			}
 		}

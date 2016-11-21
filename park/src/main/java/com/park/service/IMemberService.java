@@ -78,4 +78,13 @@ public interface IMemberService {
 	public String getCardNo();
 	
 	public List<Map<String, Object>> searchMember(String search);
+	
+	public Map<String, Object> getMembersChildren(int memberId);
+	
+	public void deleteChildrenMember(int memberId);
+	
+	public Integer saveChildrenMember(UserMember userMember);
+	
+	public boolean availableMobile(String mobile);
+	
 }

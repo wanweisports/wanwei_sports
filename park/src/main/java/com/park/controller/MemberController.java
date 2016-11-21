@@ -232,10 +232,8 @@ public class MemberController extends BaseController {
             PageBean pageBean = memberService.getUserMembers(memberInputView);
             super.setPageInfo(model, pageBean);
             model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(memberInputView));
-            //return new ResponseBean(JsonUtils.fromJsonDF(memberService.getUserMembers(super.getData(param, MemberInputView.class))));
         } catch (Exception e) {
             e.printStackTrace();
-            //return new ResponseBean(false);
         }
         return "Members/MembersList";
     }
@@ -458,8 +456,57 @@ public class MemberController extends BaseController {
 
     // 会员子会员
     @RequestMapping(value = "getMembersChildren")
-    public String getMembersChildren(Model model) {
+    public String getMembersChildren(int memberId, Model model) {
+    	model.addAllAttributes(memberService.getMembersChildren(memberId));
+    	System.out.println(JsonUtils.toJson(memberService.getMembersChildren(memberId)));
         return "Members/MembersChildren";
+    }
+    
+    //添加子会员
+    @ResponseBody
+    @RequestMapping("saveChildrenMember")
+    public ResponseBean saveChildrenMember(UserMember userMember){
+    	try{
+    		memberService.saveChildrenMember(userMember);
+            return new ResponseBean(true);
+    	} catch (MessageException e) {
+    		e.printStackTrace();
+    		return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+    		e.printStackTrace();
+    		return new ResponseBean(false);
+		}
+    }
+    
+    //删除子会员
+    @ResponseBody
+    @RequestMapping("delChildrenMember")
+    public ResponseBean deleteChildrenMember(int memberId){
+    	try{
+    		memberService.deleteChildrenMember(memberId);
+            return new ResponseBean(true);
+    	} catch (MessageException e) {
+    		e.printStackTrace();
+    		return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+    		e.printStackTrace();
+    		return new ResponseBean(false);
+		}
+    }
+    
+    //验证会员是否重复手机号true可用  false重复
+    @ResponseBody
+    @RequestMapping("availableMobile")
+    public boolean availableMobile(String mobile){
+    	try{
+    		return memberService.availableMobile(mobile);
+    	} catch (MessageException e) {
+    		e.printStackTrace();
+    		return false;
+		} catch (Exception e) {
+    		e.printStackTrace();
+    		return false;
+		}
     }
     
     /**
@@ -477,7 +524,7 @@ public class MemberController extends BaseController {
     		return new ResponseBean(e.getMessage());
 		} catch (Exception e) {
     		e.printStackTrace();
-    		return new ResponseBean(true);
+    		return new ResponseBean(false);
 		}
     }
 

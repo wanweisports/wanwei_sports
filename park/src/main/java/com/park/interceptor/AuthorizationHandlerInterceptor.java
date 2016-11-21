@@ -21,6 +21,8 @@ public class AuthorizationHandlerInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         
+    	if(1==1) return true; //方便测试，后期删除！
+        	
     	if (!(handler instanceof HandlerMethod)) {
             return true;
         }

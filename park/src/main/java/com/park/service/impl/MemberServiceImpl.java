@@ -71,6 +71,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			userMemberDB.setMemberBirthday(userMember.getMemberBirthday());
 			userMemberDB.setMemberAddress(userMember.getMemberAddress());
 			userMemberDB.setMemberRemark(userMember.getMemberRemark());
+			userMemberDB.setParentMemberId(userMember.getParentMemberId()); //父会员id
 			userMemberDB.setSalesId(userMember.getSalesId());
 			userMemberDB.setUpdateTime(nowDate);
 			baseDao.save(userMemberDB, userMemberDB.getMemberId());
@@ -187,11 +188,15 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	public PageBean getMemberCarTypes(MemberInputView memberInputView) {
 		String cardTypeStatus = memberInputView.getCardTypeStatus();
 		StringBuilder headSql = new StringBuilder("SELECT uo.operatorName, cardTypeId, cardType, cardTypeAhead, cardTypeCredit, cardTypeName, cardTypeStatus, cardTypeMonth, cardTypeMoney, cardTypeDiscount, cardTypeWeek, cardTypeTimeStart, cardTypeTimeEnd, salesId, DATE_FORMAT(mct.createTime,'%Y-%m-%d') createTime");
-		StringBuilder bodySql = new StringBuilder(" FROM member_card_type mct, user_operator uo");
-		StringBuilder whereSql = new StringBuilder(" WHERE mct.salesId = uo.id");
+		StringBuilder bodySql = new StringBuilder(" FROM member_card_type mct");
+		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
 		if(StrUtil.isNotBlank(cardTypeStatus)){
 			whereSql.append(" AND cardTypeStatus = :cardTypeStatus");
 		}
+		/*if(!super.isAdmin(memberInputView)){
+			bodySql.append(", user_operator uo");
+			whereSql.append(" AND mct.salesId = uo.id");
+		}*/
 		return super.getPageBean(headSql, bodySql, whereSql, memberInputView);
 	}
 	
@@ -264,11 +269,11 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		String cardTypeId = memberInputView.getCardTypeId();
 		String memberType = memberInputView.getMemberType();
 		
-		StringBuilder headSql = new StringBuilder("SELECT uo.operatorName, um.memberId, mc.cardId, um.memberName, um.memberMobile, um.memberIdcard, mc.cardNo, mc.cardTypeId, mc.cardDeadline, mc.cardBalance, mc.cardStatus, mc.salesId, DATE_FORMAT(mc.createTime,'%Y-%m-%d') createTime, tempCardNo");
+		StringBuilder headSql = new StringBuilder("SELECT uo.operatorName, um.memberId, mc.cardId, um.memberName, um.memberMobile, um.memberIdcard, mc.cardNo, mc.cardTypeId, mc.cardDeadline, mc.cardBalance, mc.cardStatus, mc.salesId, DATE_FORMAT(mc.createTime,'%Y-%m-%d') createTime, tempCardNo, (SELECT COUNT(1) FROM user_member umc WHERE umc.parentMemberId=um.memberId) childrenCount");
 		StringBuilder bodySql = new StringBuilder(" FROM user_member um");
 		bodySql.append(" LEFT JOIN member_card mc ON(um.memberId = mc.memberId)");
 		bodySql.append(" LEFT JOIN user_operator uo ON(mc.salesId = uo.id)");
-		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
+		StringBuilder whereSql = new StringBuilder(" WHERE um.parentMemberId IS NULL");
 		if(StrUtil.isNotBlank(memberMobile)){
 			whereSql.append(" AND um.memberMobile = :memberMobile");
 		}
@@ -576,6 +581,52 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	
 	private String getBalanceNo(){
 		return DateUtil.dateToString(new Date(), DateUtil.YYYYMMDD_HMS);
+	}
+	
+	@Override
+	public Map<String, Object> getMembersChildren(int memberId){
+		UserMember userMember = getUserMember(memberId);
+		if(userMember == null) throw new MessageException("操作错误");
+		List<MemberCard> memberCards = getMemberCards(memberId);
+		if(memberCards.size() == 0) throw new MessageException("该会员未绑定会员卡");
+		Map<String, Object> memberMap = new HashMap<String, Object>();
+		memberMap.put("cardNo", memberCards.get(0).getCardNo());
+		memberMap.put("memberName", userMember.getMemberName());
+		
+		List<Map<String, Object>> childrenMembers = baseDao.queryBySql("SELECT memberName, memberMobile FROM user_member WHERE parentMemberId = ? ORDER BY createTime DESC", memberId);
+
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("member", memberMap);
+		resultMap.put("childrenMembers", childrenMembers);
+		
+		return resultMap;
+	}
+	
+	@Override
+	public Integer saveChildrenMember(UserMember userMember){
+		Integer parentMemberId = userMember.getParentMemberId();
+		UserMember userMemberDB = getUserMember(parentMemberId);
+		if(userMemberDB == null) throw new MessageException("父会员不存在，操作错误");
+		if(!availableMobile(userMember.getMemberMobile())) throw new MessageException("会员手机号重复");
+		String nowDate = DateUtil.getNowDate();
+		userMember.setCreateTime(nowDate);
+		userMember.setUpdateTime(nowDate);
+		baseDao.save(userMember, userMember.getMemberId());
+		return userMember.getMemberId();
+	}
+	
+	@Override
+	public void deleteChildrenMember(int memberId){
+		UserMember userMember = getUserMember(memberId);
+		if(userMember == null) throw new MessageException("操作错误");
+		if(userMember.getParentMemberId() == null) throw new MessageException("该会员不是子会员");
+		baseDao.delete(userMember);
+	}
+	
+	@Override
+	public boolean availableMobile(String mobile){
+		Map<String, Object> map = baseDao.queryBySqlFirst("SELECT 1 FROM user_member WHERE memberMobile = ?", mobile);
+		return map == null ? true : false;
 	}
 	
 }
