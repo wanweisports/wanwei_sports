@@ -270,19 +270,25 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		orderInfo.setOrderServiceType(IDBConstant.LOGIC_STATUS_YES.equals(siteReserveBasic.getReserveModel()) ? IDBConstant.ORDER_SERVICE_TYPE_SITE : IDBConstant.ORDER_SERVICE_TYPE_BLOCK_SITE);
 		orderInfo.setOrderStatus(IDBConstant.LOGIC_STATUS_NO); //未完成
 		orderInfo.setPayStatus(IDBConstant.LOGIC_STATUS_NO); //未支付
+		orderInfo.setUseCount(siteReserveBasic.getUseCount()); //使用次数（缴纳的次数）
+	
 		orderInfo.setSalesId(siteReserveBasic.getSalesId());
 		
-		Map<String, Object> priceMap = getPrice(siteReserveDateList, siteReserveBasic.getMemberId(), siteReserveBasic.getOpType());
+		//老需求
+		/*Map<String, Object> priceMap = getPrice(siteReserveDateList, siteReserveBasic.getMemberId(), siteReserveBasic.getOpType());
 		orderInfo.setOrderSumPrice(StrUtil.objToDouble(priceMap.get("originalPrice")));
 		orderInfo.setOrderDiscount(StrUtil.objToInt(priceMap.get("memberDiscount")));
+		double memberDiscount = StrUtil.objToDouble(priceMap.get("memberDiscount"))/100;*/
+		//新需求
+		orderInfo.setOrderSumPrice(siteReserveBasic.getOrderSumPrice());
 		
 		List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
 		
 		siteReserveBasic.setSiteReserveStatus(orderInfo.getPayStatus());
 		baseDao.save(siteReserveBasic, null);
 		
-		double memberDiscount = StrUtil.objToDouble(priceMap.get("memberDiscount"))/100;
 		
+		int hourNums = 0;
 		for(SiteReserveDate siteReserveDate : siteReserveDateList){
 			
 			siteReserveDate.setSiteReserveId(siteReserveBasic.getSiteReserveId());
@@ -313,14 +319,17 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 				orderDetail.setItemMoneyType(IDBConstant.LOGIC_STATUS_NO); //计时收费
 				orderDetail.setItemId(siteReserveTime.getReserveTimeId());
 				orderDetail.setItemName("【"+siteSportInfo.getSportName()+"】"+IPlatformConstant.ORDER_SITE_NAME);
-				orderDetail.setItemPrice(getHourPrice(siteReserveTime)*memberDiscount);
+				//orderDetail.setItemPrice(getHourPrice(siteReserveTime)*memberDiscount); //老需求(计算每个具体多少钱)
+				orderDetail.setItemPrice(siteReserveBasic.getOrderSumPrice()); //新需求(手动输入多少钱)
 				orderDetail.setItemStartTime(siteReserveDate.getReserveStartDate()+" "+siteReserveTime.getSiteStartTime());
 				orderDetail.setItemEndTime(siteReserveDate.getReserveEndDate()+" "+siteReserveTime.getSiteEndTime());
 				orderDetail.setOrderDetailStatus(IDBConstant.LOGIC_STATUS_NO); //子订单：未完成
 				orderDetail.setItemAmount(1); //场地预定，数量为1
 				orderDetails.add(orderDetail);
+				hourNums = DateUtil.getTimeHourNums(siteReserveTime.getSiteStartTime(), siteReserveTime.getSiteEndTime());
 			}
 		}
+		orderInfo.setSumCount(hourNums); //总次数（通过计算）
 		Integer orderId = orderService.saveOrderInfo(orderInfo, orderDetails);
 		siteReserveBasic.setOrderId(orderId);
 		baseDao.save(siteReserveBasic, siteReserveBasic.getSiteReserveId());

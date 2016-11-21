@@ -18,6 +18,7 @@ public class UserMember implements java.io.Serializable {
 
 	private Integer memberId;
 	private String operationId;
+	private Integer parentMemberId;
 	private String memberName;
 	private String memberType;
 	private String memberMobile;
@@ -41,13 +42,15 @@ public class UserMember implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public UserMember(String operationId, String memberName, String memberType,
-			String memberMobile, String memberMobile2, String memberSex,
-			String memberIdcard, String memberBirthday,
-			String memberPayPassword, String memberStatus,
-			String memberAddress, String memberRemark, String createTime,
-			String updateTime, Integer salesId, String tempCardNo) {
+	public UserMember(String operationId, Integer parentMemberId,
+			String memberName, String memberType, String memberMobile,
+			String memberMobile2, String memberSex, String memberIdcard,
+			String memberBirthday, String memberPayPassword,
+			String memberStatus, String memberAddress, String memberRemark,
+			String createTime, String updateTime, Integer salesId,
+			String tempCardNo) {
 		this.operationId = operationId;
+		this.parentMemberId = parentMemberId;
 		this.memberName = memberName;
 		this.memberType = memberType;
 		this.memberMobile = memberMobile;
@@ -84,6 +87,15 @@ public class UserMember implements java.io.Serializable {
 
 	public void setOperationId(String operationId) {
 		this.operationId = operationId;
+	}
+
+	@Column(name = "parentMemberId")
+	public Integer getParentMemberId() {
+		return this.parentMemberId;
+	}
+
+	public void setParentMemberId(Integer parentMemberId) {
+		this.parentMemberId = parentMemberId;
 	}
 
 	@Column(name = "memberName", length = 16)

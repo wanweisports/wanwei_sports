@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.park.common.annotation.NotProtected;
 import com.park.common.bean.ResponseBean;
 import com.park.common.exception.MessageException;
 import com.park.common.po.ParkBusiness;
@@ -22,6 +23,7 @@ public class InitController extends BaseController {
 	private IInitService initService;
 	
     // 初始化系统
+	@NotProtected
     @RequestMapping("settings")
     public String typeGood(){
         return "Init/InitSettings";
