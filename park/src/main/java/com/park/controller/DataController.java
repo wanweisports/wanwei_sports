@@ -42,4 +42,10 @@ public class DataController extends BaseController {
     public String getBusinessIncome() {
         return "Data/DataBusinessIncome";
     }
+
+    // 场地使用率
+    @RequestMapping("getVenuePercentage")
+    public String getVenuePercentage() {
+        return "Data/DataVenuePercentage";
+    }
 }

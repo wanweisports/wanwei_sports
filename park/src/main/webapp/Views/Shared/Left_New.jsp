@@ -294,7 +294,7 @@
                         </tr>
                         <tr class="list-nav-item data ${param.subNav == "percent" ? "active" : ""}">
                             <td>
-                                <span><a href="/data/getBusinessIncome">场地使用率</a></span>
+                                <span><a href="/data/getVenuePercentage">场地使用率</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item data ${param.subNav == "attendance" ? "active" : ""}">
