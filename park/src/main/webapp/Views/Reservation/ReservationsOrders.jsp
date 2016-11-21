@@ -32,6 +32,9 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <input type="text" class="form-control" placeholder="订单号" name="orderNo">
+                    </div>
+                    <div class="form-group">
                         <a href="javascript:;" class="btn btn-primary orders-filter">
                             <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
                         </a>
@@ -39,159 +42,173 @@
                 </form>
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table class="table orders-list">
-                        <thead>
-                        <tr>
-                            <th>订单详情</th>
-                            <th>订单状态</th>
-                            <th>订单价格</th>
-                            <th>订单状态</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach var="order" items="${list}" varStatus="loop">
-                            <tr class="tr-th">
-                                <td colspan="5">
-                                    <span class="order-date-time">${order.createTime}</span>
-                                    <span class="order-number">订单号：<a href="">${order.orderNo}</a></span>
-                                    <c:if test="${order.orderServiceType == 1}">
-                                        <span>订单类型: 场地预订</span>
-                                    </c:if>
-                                    <c:if test="${order.orderServiceType == 3}">
-                                        <span>订单类型: 批量预订</span>
-                                    </c:if>
+        <div class="panel-group" role="tablist">
+            <c:forEach var="order" items="${list}" varStatus="loop">
+            <div class="panel panel-default">
+                <div class="panel-heading" id="order_header_${loop.index}">
+                    <h5 class="panel-title" style="font-size: 14px;">
+                        <a data-toggle="collapse" href="#order_body_${loop.index}" aria-expanded="true"
+                           aria-controls="#order_body_${loop.index}">
+                            订单号：<span class="text-primary">${order.orderNo}</span>
+                        </a>
 
-                                    <button class="btn btn-warning pull-right order-delete" data-id="${order.orderId}">
-                                        <span class="glyphicon glyphicon-trash"></span> 删除
-                                    </button>
-                                </td>
+                        <div class="pull-right">
+                            <small class="text-muted">${order.createTime} </small>
+                        <c:if test="${order.orderStatus == 1}">
+                            <span class="text-success">已完成</span>
+                        </c:if>
+                        <c:if test="${order.orderStatus == 2}">
+                            <c:if test="${order.payStatus == 1}">
+                                <span class="text-success">已支付</span>
+                            </c:if>
+                            <c:if test="${order.payStatus == 2}">
+                                <span class="text-danger">未支付</span>
+                            </c:if>
+                            <c:if test="${order.payStatus == 3}">
+                                <span class="text-danger">部分支付</span>
+                            </c:if>
+                        </c:if>
+                        <c:if test="${order.orderStatus == 3}">
+                            <span class="text-muted">已取消</span>
+                        </c:if>
+                        </div>
+                    </h5>
+                </div>
+                <div id="#order_body_${loop.index}" class="panel-collapse collapse in" role="tabpanel"
+                     aria-labelledby="order_header_${loop.index}" aria-expanded="true">
+                    <div class="table-responsive">
+                        <table class="table orders-list">
+                            <thead>
+                            <tr>
+                                <th>预订项</th>
+                                <th>开始时间</th>
+                                <th>结束时间</th>
+                                <th>预订状态</th>
                             </tr>
+                            </thead>
                             <c:forEach var="item" items="${order.orderDetailList}">
-                                <tr class="tr-bd">
-                                    <td>
-                                        <p>预订场地: ${item.itemName}</p>
-                                        <p>预订价格: ${item.itemPrice}</p>
-                                        <p>预订时间: ${item.itemStartTime} ~ ${item.itemEndTime}</p>
-                                    </td>
-
-                                    <c:if test="${item.orderDetailStatus == 1}">
-                                        <td>已完成</td>
-                                    </c:if>
-                                    <c:if test="${item.orderDetailStatus == 2}">
-                                        <td class="text-danger">未完成</td>
-                                    </c:if>
-                                    <c:if test="${item.orderDetailStatus == 3}">
-                                        <td class="text-success">进行中</td>
-                                    </c:if>
-
-                                    <td>${order.orderSumPrice}</td>
-
-                                    <td>
-                                        <c:if test="${order.payStatus == 1}">
-                                            <p class="text-success">已支付</p>
-                                        </c:if>
-                                        <c:if test="${order.payStatus == 2}">
-                                            <p class="text-danger">未支付</p>
-                                        </c:if>
-                                        <c:if test="${order.payStatus == 3}">
-                                            <p class="text-danger">部分支付</p>
-                                        </c:if>
-
-                                        <c:if test="${order.orderStatus == 1}">
-                                            <p class="text-success">已完成</p>
-                                        </c:if>
-                                        <c:if test="${order.orderStatus == 2}">
-                                            <p class="text-danger">未完成</p>
-                                        </c:if>
-                                        <c:if test="${order.orderStatus == 3}">
-                                            <p>已取消</p>
-                                        </c:if>
-                                    </td>
-                                    <td>
-                                        <c:if test="${item.orderDetailStatus != 1}">
-                                            <button class="btn btn-danger order-cancel" data-id="${order.orderId}">
-                                                <span class="glyphicon glyphicon-remove"></span> 取消
-                                            </button>
-                                        </c:if>
-                                        <button class="btn btn-primary order-pay">
-                                            <span class="glyphicon glyphicon-usd"></span> 支付
-                                        </button>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                    <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >
-                        <p class="pull-left" style="margin: 12px 14px;">
-                            <span>${pageSize}条/页</span>
-                            <span>总${count}条</span>
-                        </p>
-                        <ul class="pagination pull-right">
-                            <c:if test="${currentPage == 1}">
-                                <li class="disabled">
-                                    <a href="javascript:;" data-index="1">
-                                        <span>首页</span>
-                                    </a>
-                                </li>
-                                <li class="disabled">
-                                    <a href="javascript:;" data-index="1">
-                                        <span>上一页</span>
-                                    </a>
-                                </li>
-                            </c:if>
-                            <c:if test="${currentPage != 1}">
-                                <li>
-                                    <a class="page-first" href="javascript:;" data-index="1">
-                                        <span>首页</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="page-prev" href="javascript:;" data-index="${currentPage - 1}">
-                                        <span>上一页</span>
-                                    </a>
-                                </li>
-                            </c:if>
-                            <c:forEach var="i" begin="1" end="${lastPage}">
-                                <c:if test="${i == currentPage}">
-                                    <li class="active"><a href="javascript:;" data-index="${i}">${i}</a></li>
+                            <tr>
+                                <td>${item.itemName}</td>
+                                <td>${item.itemStartTime}</td>
+                                <td>${item.itemEndTime}</td>
+                                <c:if test="${item.orderDetailStatus == 1}">
+                                    <td>已完成</td>
                                 </c:if>
-                                <c:if test="${i != currentPage}">
-                                    <li><a class="page-index" href="javascript:;" data-index="${i}">${i}</a></li>
+                                <c:if test="${item.orderDetailStatus == 2}">
+                                    <td class="text-danger">未完成</td>
                                 </c:if>
+                                <c:if test="${item.orderDetailStatus == 3}">
+                                    <td class="text-success">进行中</td>
+                                </c:if>
+                            </tr>
                             </c:forEach>
-                            <c:if test="${currentPage == lastPage}">
-                                <li class="disabled">
-                                    <a href="javascript:;" data-index="1">
-                                        <span>下一页</span>
-                                    </a>
-                                </li>
-                                <li class="disabled">
-                                    <a href="javascript:;" data-index="1">
-                                        <span>末页</span>
-                                    </a>
-                                </li>
+                        </table>
+                    </div>
+                    <div class="panel-footer">
+                        合计金额: <strong class="text-danger">${order.orderSumPrice}</strong> 元
+                        <div class="pull-right">
+                            <c:if test="${order.orderStatus == 1}">
+                                <button class="btn btn-warning btn-sm order-delete" data-id="${order.orderId}">
+                                    <span class="glyphicon glyphicon-trash"></span> 删除
+                                </button>
                             </c:if>
-                            <c:if test="${currentPage != lastPage}">
-                                <li>
-                                    <a class="page-next" href="javascript:;" data-index="${currentPage + 1}">
-                                        <span>下一页</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="page-last" href="javascript:;" data-index="${lastPage}">
-                                        <span>末页</span>
-                                    </a>
-                                </li>
+                            <c:if test="${order.orderStatus == 2}">
+                                <c:if test="${order.payStatus == 1}">
+                                    <button class="btn btn-danger btn-sm order-cancel" data-id="${order.orderId}">
+                                        <span class="glyphicon glyphicon-remove"></span> 取消
+                                    </button>
+                                </c:if>
+                                <c:if test="${order.payStatus == 2}">
+                                    <button class="btn btn-primary btn-sm order-pay" data-id="${order.orderId}">
+                                        <span class="glyphicon glyphicon-usd"></span> 支付
+                                    </button>
+                                    <button class="btn btn-danger btn-sm order-cancel" data-id="${order.orderId}">
+                                        <span class="glyphicon glyphicon-remove"></span> 取消
+                                    </button>
+                                </c:if>
+                                <c:if test="${order.payStatus == 3}">
+                                    <button class="btn btn-primary btn-sm order-pay" data-id="${order.orderId}">
+                                        <span class="glyphicon glyphicon-usd"></span> 支付
+                                    </button>
+                                    <button class="btn btn-danger order-cancel" data-id="${order.orderId}">
+                                        <span class="glyphicon glyphicon-remove"></span> 取消
+                                    </button>
+                                </c:if>
                             </c:if>
-                        </ul>
-                    </nav>
+                            <c:if test="${order.orderStatus == 3}">
+                                <button class="btn btn-warning order-delete" data-id="${order.orderId}">
+                                    <span class="glyphicon glyphicon-trash"></span> 删除
+                                </button>
+                            </c:if>
+                        </div>
+                    </div>
                 </div>
             </div>
+            </c:forEach>
+            <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >
+                <p class="pull-left" style="margin: 12px 14px;">
+                    <span>${pageSize}条/页</span>
+                    <span>总${count}条</span>
+                </p>
+                <ul class="pagination pull-right">
+                    <c:if test="${currentPage == 1}">
+                        <li class="disabled">
+                            <a href="javascript:;" data-index="1">
+                                <span>首页</span>
+                            </a>
+                        </li>
+                        <li class="disabled">
+                            <a href="javascript:;" data-index="1">
+                                <span>上一页</span>
+                            </a>
+                        </li>
+                    </c:if>
+                    <c:if test="${currentPage != 1}">
+                        <li>
+                            <a class="page-first" href="javascript:;" data-index="1">
+                                <span>首页</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="page-prev" href="javascript:;" data-index="${currentPage - 1}">
+                                <span>上一页</span>
+                            </a>
+                        </li>
+                    </c:if>
+                    <c:forEach var="i" begin="1" end="${lastPage}">
+                        <c:if test="${i == currentPage}">
+                            <li class="active"><a href="javascript:;" data-index="${i}">${i}</a></li>
+                        </c:if>
+                        <c:if test="${i != currentPage}">
+                            <li><a class="page-index" href="javascript:;" data-index="${i}">${i}</a></li>
+                        </c:if>
+                    </c:forEach>
+                    <c:if test="${currentPage == lastPage}">
+                        <li class="disabled">
+                            <a href="javascript:;" data-index="1">
+                                <span>下一页</span>
+                            </a>
+                        </li>
+                        <li class="disabled">
+                            <a href="javascript:;" data-index="1">
+                                <span>末页</span>
+                            </a>
+                        </li>
+                    </c:if>
+                    <c:if test="${currentPage != lastPage}">
+                        <li>
+                            <a class="page-next" href="javascript:;" data-index="${currentPage + 1}">
+                                <span>下一页</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="page-last" href="javascript:;" data-index="${lastPage}">
+                                <span>末页</span>
+                            </a>
+                        </li>
+                    </c:if>
+                </ul>
+            </nav>
         </div>
     </div>
 

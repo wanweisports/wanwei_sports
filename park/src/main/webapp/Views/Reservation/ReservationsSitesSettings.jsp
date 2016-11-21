@@ -30,9 +30,8 @@
             <div class="panel-body">
                 <form id="site_filter_form" class="form-inline col-sm-10" onsubmit="return false;">
                     <div class="form-group">
-                        <label>场地类型</label>
-                        <select class="form-control" name="sportId" style="width: 200px;">
-                            <option value="">全部类型</option>
+                        <select class="form-control" name="sportId" style="width: 160px;">
+                            <option value="">场地类型</option>
                             <c:forEach var="sport" items="${siteSportNames}">
                                 <option value="${sport.sportId}"
                                         <c:if test="${sport.sportId == sportId}">selected</c:if> >${sport.sportName}</option>
@@ -40,7 +39,6 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>场地名称</label>
                         <input type="text" class="form-control" placeholder="场地名称" name="siteName">
                     </div>
                     <div class="form-group">

@@ -18,6 +18,18 @@
         <div class="panel panel-default">
             <div class="panel-heading">排班表</div>
             <div class="panel-body">
+                <button type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target="#settingsModal" data-backdrop="false">
+                    <span class="glyphicon glyphicon-cog"></span> 设置值班段
+                </button>
+                <button type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target="#addModal" data-backdrop="false">
+                    <span class="glyphicon glyphicon-plus"></span> 添加值班老师
+                </button>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
                 <div class="table-responsive">
                     <table class="table">
                         <thead>

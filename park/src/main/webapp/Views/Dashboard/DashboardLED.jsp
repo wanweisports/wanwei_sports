@@ -18,10 +18,44 @@
         <div class="panel panel-default">
             <div class="panel-heading">羽毛球</div>
             <div class="panel-body">
+                <div class="col-sm-2">.col-md-1</div>
+                <div class="col-sm-2">.col-md-1</div>
+                <div class="col-sm-2">.col-md-1</div>
+                <div class="col-sm-2">.col-md-1</div>
+                <div class="col-sm-2">.col-md-1</div>
+                <div class="col-sm-2">.col-md-1</div>
+                <div class="col-sm-2">.col-md-1</div>
+                <div class="col-sm-2">.col-md-1</div>
             </div>
         </div>
         <div class="panel panel-default">
+            <div class="panel-heading">篮球</div>
             <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-2">.col-md-1</div>
+                    <div class="col-sm-2">.col-md-1</div>
+                    <div class="col-sm-2">.col-md-1</div>
+                    <div class="col-sm-2">.col-md-1</div>
+                    <div class="col-sm-2">.col-md-1</div>
+                    <div class="col-sm-2">.col-md-1</div>
+                    <div class="col-sm-2">.col-md-1</div>
+                    <div class="col-sm-2">.col-md-1</div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">乒乓球</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-2">.col-md-1</div>
+                    <div class="col-sm-2">.col-md-1</div>
+                    <div class="col-sm-2">.col-md-1</div>
+                    <div class="col-sm-2">.col-md-1</div>
+                    <div class="col-sm-2">.col-md-1</div>
+                    <div class="col-sm-2">.col-md-1</div>
+                    <div class="col-sm-2">.col-md-1</div>
+                    <div class="col-sm-2">.col-md-1</div>
+                </div>
             </div>
         </div>
     </div>

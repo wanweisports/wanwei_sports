@@ -54,22 +54,28 @@
             var date = moment(content.opts.Current_Date);
             var Weeks = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
             var htmlArr = [];
+            var week;
+            var weekday = date.weekday();
 
-            htmlArr.push(
-                content.opts.Reservation_Date_Tpl
-                    .replace(/#DATEACTIVE#/, 'active')
-                    .replace(/#DATEVALUE#/, date.format('YYYY-MM-DD'))
-                    .replace(/#DATETEXT#/, '今天(' + date.format('MM-DD') + ')')
-            );
+            for (var i = 1 - weekday; i <= 7 - weekday; i++) {
+                date = moment(content.opts.Current_Date);
+                date.add(i, 'd');
 
-            for (var i = 0; i < 6; i++) {
-                date.add(1, 'd');
+                if (date.format('e') == weekday) {
+                    week = '今天';
+                } else if (date.format('e') == (weekday + 1)) {
+                    week = '明天';
+                } else if (date.format('e') == (weekday - 1)) {
+                    week = '明天';
+                } else {
+                    week = Weeks[date.format('e')];
+                }
 
                 htmlArr.push(
                     content.opts.Reservation_Date_Tpl
-                        .replace(/#DATEACTIVE#/, '')
+                        .replace(/#DATEACTIVE#/, week != '今天' ? '' : 'active')
                         .replace(/#DATEVALUE#/, date.format('YYYY-MM-DD'))
-                        .replace(/#DATETEXT#/, (i !== 0 ? Weeks[date.format('e')] : "明天") + '(' + date.format('MM-DD') + ')')
+                        .replace(/#DATETEXT#/, week + '(' + date.format('MM-DD') + ')')
                 );
             }
 

@@ -20,4 +20,15 @@ public class OfficeController extends BaseController {
     public String schedule() {
         return "Office/OfficeSchedule";
     }
+
+    // 培训报名
+    @RequestMapping("trains")
+    public String trains() {
+        return "Office/OfficeTrains";
+    }
+    // 培训报名学生
+    @RequestMapping("trainsStudents")
+    public String trainsStuednts() {
+        return "Office/OfficeTrainsStudents";
+    }
 }

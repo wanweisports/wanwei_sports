@@ -1,6 +1,10 @@
 (function ($, moment) {
     var Site_Reservations = {
         opts: {
+            STATUS: 0,       // 状态
+            ORDERED: 1,      // 预订
+            LOCKED: 2,       // 锁场
+            REFRESHED: 3,    // 换场
             Current_Date: $("#current_date").val(),
             Current_Sport: $("#current_sport").val(),
             Reservation_Tpl: '<span>#USERNAME#</span><span>#USERMOBILE#</span>',
@@ -50,22 +54,28 @@
             var date = moment(content.opts.Current_Date);
             var Weeks = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
             var htmlArr = [];
+            var week;
+            var weekday = date.weekday();
 
-            htmlArr.push(
-                content.opts.Reservation_Date_Tpl
-                    .replace(/#DATEACTIVE#/, 'active')
-                    .replace(/#DATEVALUE#/, date.format('YYYY-MM-DD'))
-                    .replace(/#DATETEXT#/, '今天(' + date.format('MM-DD') + ')')
-            );
+            for (var i = 1 - weekday; i <= 7 - weekday; i++) {
+                date = moment(content.opts.Current_Date);
+                date.add(i, 'd');
 
-            for (var i = 0; i < 6; i++) {
-                date.add(1, 'd');
+                if (date.format('e') == weekday) {
+                    week = '今天';
+                } else if (date.format('e') == (weekday + 1)) {
+                    week = '明天';
+                } else if (date.format('e') == (weekday - 1)) {
+                    week = '明天';
+                } else {
+                    week = Weeks[date.format('e')];
+                }
 
                 htmlArr.push(
                     content.opts.Reservation_Date_Tpl
-                        .replace(/#DATEACTIVE#/, '')
+                        .replace(/#DATEACTIVE#/, week != '今天' ? '' : 'active')
                         .replace(/#DATEVALUE#/, date.format('YYYY-MM-DD'))
-                        .replace(/#DATETEXT#/, (i !== 0 ? Weeks[date.format('e')] : "明天") + '(' + date.format('MM-DD') + ')')
+                        .replace(/#DATETEXT#/, week + '(' + date.format('MM-DD') + ')')
                 );
             }
 
@@ -208,15 +218,37 @@
             });
         },
         // 显示右侧所选场地
-        addReservationsSelected: function () {
+        addReservationsSelected: function (status) {
             var content = this;
 
             var $sequenceTable = $(".sequence-show");
-            var $selected = $sequenceTable.find('td.selected');
             var $ordersList = $(".show-orders-list");
             var $ordersListSelected = $ordersList.find(".selected-booking");
+            var $selected;
             var data = [];
             var html = "";
+
+            if (status === content.opts.ORDERED) {
+                $selected = $sequenceTable.find('td.selected');
+                $(".sequence-order").attr("data-click", "yes").show();
+                $(".sequence-lock").attr("data-click", "yes").show();
+                $(".sequence-unlock").attr("data-click", "no").hide();
+                $(".sequence-refresh").attr("data-click", "no").show();
+            }
+            if (status === content.opts.REFRESHED) {
+                $selected = $sequenceTable.find('td.sel');
+                $(".sequence-order").attr("data-click", "no").show();
+                $(".sequence-lock").attr("data-click", "no").show();
+                $(".sequence-unlock").attr("data-click", "no").hide();
+                $(".sequence-refresh").attr("data-click", "yes").show();
+            }
+            if (status === content.opts.LOCKED) {
+                $selected = $sequenceTable.find('td.sel');
+                $(".sequence-order").attr("data-click", "no").show();
+                $(".sequence-lock").attr("data-click", "no").hide();
+                $(".sequence-unlock").attr("data-click", "yes").show();
+                $(".sequence-refresh").attr("data-click", "no").show();
+            }
 
             $ordersListSelected.find(".court").remove();
 
@@ -261,7 +293,7 @@
                 var $this = $(this);
 
                 $this.addClass("selected").removeClass("null").html("");
-                content.addReservationsSelected();
+                content.addReservationsSelected(content.opts.ORDERED);
             });
 
             // 已选择的取消
@@ -271,7 +303,17 @@
                 var $this = $(this);
 
                 $this.addClass("null").removeClass("selected").html("");
-                content.addReservationsSelected();
+                content.addReservationsSelected(content.opts.ORDERED);
+            });
+
+            // 换场选择
+            $sequenceTable.on("click", "td.ordered,td.unpaid", function (e) {
+                e.preventDefault();
+
+                var $this = $(this);
+
+                $this.addClass("sel");
+                content.addReservationsSelected(content.opts.REFRESHED);
             });
 
             // 锁场选择
@@ -280,45 +322,77 @@
 
                 var $this = $(this);
 
-                $this.addClass("null").removeClass("selected").html("");
-                content.addReservationsSelected();
+                $this.addClass("sel");
+                content.addReservationsSelected(content.opts.LOCKED);
             });
+
+            // 选择
+            $sequenceTable.on("click", "td.sel", function (e) {
+                e.preventDefault();
+
+                var $this = $(this);
+
+                $this.removeClass("sel");
+                content.addReservationsSelected(content.opts.LOCKED);
+            });
+        },
+        // 找到选中的场地
+        findReservationsSelected: function (status) {
+            var content = this;
+
+            var $sequenceTable = $(".sequence-show");
+            var $selected;
+            var data = [];
+
+            if (status === content.opts.ORDERED) {
+                $sequenceTable.find('td.sel').removeClass("sel");
+                $selected = $sequenceTable.find('td.selected');
+            }
+            if (status === content.opts.REFRESHED) {
+                $sequenceTable.find('td.locked.sel').removeClass("sel");
+                $selected = $sequenceTable.find('td.sel');
+            }
+            if (status === content.opts.LOCKED) {
+                $sequenceTable.find('td.ordered.sel').removeClass("sel");
+                $sequenceTable.find('td.unpaid.sel').removeClass("sel");
+                $selected = $sequenceTable.find('td.sel');
+            }
+
+            if ($selected.size() === 0) {
+                return data;
+            }
+
+            for (var i = 0; i < $selected.size(); i++) {
+                var $sel = $selected.eq(i);
+
+                data.push({
+                    siteStartTime: $sel.attr("data-start"),
+                    siteEndTime: $sel.attr("data-end"),
+                    siteId: $sel.attr("data-id")
+                });
+            }
+
+            return data;
         },
         // 初始化菜单操作
         initMenuButtons: function () {
             var content = this;
             var $reservationsSteps = $("#zhifuModal");
 
-            function _findSelectedArea() {
-                var $sequenceTable = $(".sequence-show");
-                var $selected = $sequenceTable.find('td.selected');
-                var data = [];
-
-                if ($selected.size() === 0) {
-                    return data;
-                }
-
-                for (var i = 0; i < $selected.size(); i++) {
-                    var $sel = $selected.eq(i);
-
-                    data.push({
-                        siteStartTime: $sel.attr("data-start"),
-                        siteEndTime: $sel.attr("data-end"),
-                        siteId: $sel.attr("data-id")
-                    });
-                }
-
-                return data;
-            }
-
             // 锁场
             $(".sequence-lock").on("click", function (e) {
                 e.preventDefault();
 
-                var data = _findSelectedArea();
+                var $this = $(this);
+
+                if ($this.attr("data-click") === "no") {
+                    return alert("当前不能锁定场地");
+                }
+
+                var data = content.findReservationsSelected(content.opts.ORDERED);
 
                 if (data.length === 0) {
-                    return alert("请选择场地");
+                    return alert("请先选择场地");
                 }
 
                 content.opts.data = {
@@ -345,10 +419,16 @@
             $(".sequence-unlock").on("click", function (e) {
                 e.preventDefault();
 
-                var data = _findSelectedArea();
+                var $this = $(this);
+
+                if ($this.attr("data-click") === "no") {
+                    return alert("当前不能解锁场地");
+                }
+
+                var data = content.findReservationsSelected(content.opts.LOCKED);
 
                 if (data.length === 0) {
-                    return alert("请选择场地");
+                    return alert("请先选择场地");
                 }
 
                 content.opts.data = {
@@ -375,10 +455,16 @@
             $(".sequence-order").on("click", function (e) {
                 e.preventDefault();
 
-                var data = _findSelectedArea();
+                var $this = $(this);
+
+                if ($this.attr("data-click") === "no") {
+                    return alert("当前不能预订场地");
+                }
+
+                var data = content.findReservationsSelected(content.opts.ORDERED);
 
                 if (data.length === 0) {
-                    return alert("请选择场地");
+                    return alert("请先选择场地");
                 }
 
                 content.opts.data = {
@@ -403,6 +489,42 @@
                 });
 
                 $reservationsSteps.modal({backdrop: false, show: true});
+            });
+
+            // 换场
+            $(".sequence-refresh").on("click", function (e) {
+                e.preventDefault();
+
+                var $this = $(this);
+
+                if ($this.attr("data-click") === "no") {
+                    return alert("当前不能调换场地");
+                }
+
+                var data = content.findReservationsSelected(content.opts.REFRESHED);
+
+                if (data.length === 0) {
+                    return alert("请先选择场地");
+                }
+
+                content.opts.data = {
+                    siteReserveDateList: [{
+                        reserveStartDate: content.opts.Current_Date,
+                        reserveEndDate: content.opts.Current_Date,
+                        reserveWeek: (new Date(content.opts.Current_Date)).getDay() || 7,
+                        siteReserveTimeList: data
+                    }]
+                };
+                $.post('', {
+                    siteOperationJson: JSON.stringify(content.opts.data),
+                    lock: true
+                }, function (res) {
+                    if (res.code == 1) {
+                        $(".tips-modal").modal({backdrop: false, show: true});
+                    } else {
+                        alert(res.message || "锁场失败, 请稍后重试");
+                    }
+                });
             });
         },
         // 预订弹窗弹窗

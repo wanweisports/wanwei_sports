@@ -72,6 +72,9 @@
 .sequence-show table.venue-large td.active {
   background-color: #f9f9f9;
 }
+.sequence-show table.venue-large td.sel {
+  border: 1px solid #3187bf;
+}
 .sequence-show table.venue-large td.time {
   width: 114px;
 }

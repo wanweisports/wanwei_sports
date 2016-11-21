@@ -357,14 +357,14 @@
         <div class="title">
             <ul>
                 <li><span class="ordered"></span></li><li>已选定</li>
-                <li><span class="unpaid"></span></li><li>未选定</li>
+                <li><span class="unpaid"></span></li><li>未预订</li>
                 <li><span class="disabled"></span></li><li>不可预定</li>
             </ul>
         </div>
         <div class="info">
             <dl>
-                <dt>项目：</dt><dd><strong class="category-name">羽毛球</strong></dd>
-                <dt>日期：</dt><dd class="current-book-date">2016年11月18日(周五)</dd>
+                <!--<dt>项目：</dt><dd><strong class="category-name">羽毛球</strong></dd>-->
+                <dt>日期：</dt><dd class="current-book-date">${curDate}</dd>
                 <dt>场次：</dt>
             </dl>
             <ul class="selected-booking">
@@ -385,7 +385,7 @@
                 </button>
             </div>
 
-            <a href="javascript:void(0);" class="submit-button sequence-order" data-click="no" style="display: none;">预订支付</a>
+            <a href="javascript:void(0);" class="submit-button sequence-order" data-click="no">预订支付</a>
         </div>
     </div>
 

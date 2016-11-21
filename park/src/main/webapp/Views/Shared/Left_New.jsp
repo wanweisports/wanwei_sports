@@ -35,6 +35,30 @@
             </tr>-->
         </table>
         <table class="list list-nav">
+            <tr class="list-nav-header" data-item="dashboard" style="display: none;">
+                <td>
+                    <span><a href="javascript:;">工作平台</a></span>
+                </td>
+            </tr>
+            <tr class="list-nav-list dashboard" style="${param.nav == "dashboard" ? "" : "display:none;"}">
+                <td>
+                    <table style="width: 100%;">
+                        <tr class="list-nav-item dashboard ${param.subNav == "led" ? "active" : ""}">
+                            <td>
+                                <span><a href="/dashboard/led">场地实时</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item dashboard ${param.subNav == "rota" ? "active" : ""}">
+                            <td>
+                                <span><a href="/dashboard/rota">值班表</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item dashboard last-nav-item">
+                            <td>&nbsp;</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
             <tr class="list-nav-header" data-item="member">
                 <td>
                     <span><a href="javascript:;">会员管理</a></span>
@@ -58,11 +82,6 @@
                                 <span><a href="/member/getMembersCardRecharge">会员卡充值</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item member ${param.subNav == "upgrade" ? "active" : ""}">
-                            <td>
-                                <span><a href="/member/getMembersCardUpgrade">会员卡升级</a></span>
-                            </td>
-                        </tr>
                         <tr class="list-nav-item member ${param.subNav == "refresh" ? "active" : ""}">
                             <td>
                                 <span><a href="/member/getMembersCardRefresh">会员卡补办</a></span>
@@ -73,11 +92,6 @@
                                 <span><a href="/member/getMembersCardCancel">会员卡注销</a></span>
                             </td>
                         </tr>
-                        <!--<tr class="list-nav-item member ${param.subNav == "operation" ? "active" : ""}">
-                            <td>
-                                <span><a href="/member/getOperations">会员卡操作</a></span>
-                            </td>
-                        </tr>-->
                         <tr class="list-nav-item member ${param.subNav == "loan" ? "active" : ""}">
                             <td>
                                 <span><a href="/member/getMembersLoans">应收款管理</a></span>
@@ -310,6 +324,11 @@
                         <tr class="list-nav-item office ${param.subNav == "schedule" ? "active" : ""}">
                             <td>
                                 <span><a href="/office/schedule">排班管理</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item office ${param.subNav == "trains" ? "active" : ""}">
+                            <td>
+                                <span><a href="/office/trains">培训报名</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item office last-nav-item">
