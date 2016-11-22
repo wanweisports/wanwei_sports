@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2016-11-22 09:51:54
+Date: 2016-11-22 18:51:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -102,7 +102,7 @@ CREATE TABLE `member_card` (
 -- ----------------------------
 -- Records of member_card
 -- ----------------------------
-INSERT INTO `member_card` VALUES ('1', '1', '593089', '1000.00', '0', '1', '2', '2016-11-21 15:35:50', null, '', '2');
+INSERT INTO `member_card` VALUES ('1', '1', '593089', '0.00', '0', '1', '2', '2016-11-21 15:35:50', null, '', '1');
 
 -- ----------------------------
 -- Table structure for member_card_type
@@ -134,6 +134,24 @@ INSERT INTO `member_card_type` VALUES ('1', '教师卡', '1', '1', '0', '1,2,3,4
 INSERT INTO `member_card_type` VALUES ('2', '团体会员卡', '1', '1', '0', '1,2,3,4,5,6,7', '06:00', '23:00', '0', '0.00', null, '', '', null, '100');
 
 -- ----------------------------
+-- Table structure for member_receivable
+-- ----------------------------
+DROP TABLE IF EXISTS `member_receivable`;
+CREATE TABLE `member_receivable` (
+  `receivableId` int(11) NOT NULL AUTO_INCREMENT COMMENT '应收款id',
+  `memberId` int(11) DEFAULT NULL COMMENT '会员id',
+  `orderId` int(11) DEFAULT NULL COMMENT '订单id',
+  `createTime` varchar(20) DEFAULT NULL COMMENT '创建时间',
+  `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
+  `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
+  PRIMARY KEY (`receivableId`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='应收款表';
+
+-- ----------------------------
+-- Records of member_receivable
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for member_site_sign
 -- ----------------------------
 DROP TABLE IF EXISTS `member_site_sign`;
@@ -143,6 +161,8 @@ CREATE TABLE `member_site_sign` (
   `signName` varchar(32) DEFAULT NULL COMMENT '签到人',
   `signMobile` varchar(16) DEFAULT NULL COMMENT '签到人手机',
   `orderId` int(11) DEFAULT NULL COMMENT '订单id',
+  `signType` varchar(1) DEFAULT NULL COMMENT '签到类型（1：会员  2：散客）',
+  `reserveTimeId` int(11) DEFAULT NULL COMMENT '场地预定时间id（不能重复签到）',
   `createTime` varchar(20) DEFAULT NULL COMMENT '创建时间',
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
@@ -171,11 +191,12 @@ CREATE TABLE `order_detail` (
   `itemDiscount` int(11) DEFAULT NULL COMMENT '当时的商品折扣（0-100）',
   `orderDetailStatus` varchar(1) DEFAULT NULL COMMENT '订单详情状态（1：已完成  2：未完成  3：进行中）',
   PRIMARY KEY (`orderDetailId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单详情表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='订单详情表';
 
 -- ----------------------------
 -- Records of order_detail
 -- ----------------------------
+INSERT INTO `order_detail` VALUES ('2', '3', '8', '【测试场地】', '2000.00', '2016-10-01 15:00', '2016-10-21 20:00', '1', null, '2', null, '2');
 
 -- ----------------------------
 -- Table structure for order_info
@@ -204,11 +225,12 @@ CREATE TABLE `order_info` (
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`orderId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='订单表';
 
 -- ----------------------------
 -- Records of order_info
 -- ----------------------------
+INSERT INTO `order_info` VALUES ('3', '20161122151339', null, '1', '3', '2', '1', null, '2016-11-22 17:28:32', '2000.00', '2000.00', null, null, '11111', '老司机', '45', '30', null, '2016-11-22 15:13:39', '2016-11-22 17:28:32', '1');
 
 -- ----------------------------
 -- Table structure for other_balance
@@ -338,7 +360,7 @@ CREATE TABLE `site_info` (
 -- ----------------------------
 -- Records of site_info
 -- ----------------------------
-INSERT INTO `site_info` VALUES ('1', '万维场地', '656047', '', '1', '1', '2016-11-21 11:35:03', null, '2');
+INSERT INTO `site_info` VALUES ('1', '万维场地', '656047', '', '1', '1', '2016-11-21 11:35:03', null, '1');
 
 -- ----------------------------
 -- Table structure for site_order
@@ -381,11 +403,12 @@ CREATE TABLE `site_reserve_basic` (
   `memberId` int(11) DEFAULT NULL COMMENT '会员id',
   `orderId` int(11) DEFAULT NULL COMMENT '订单id',
   PRIMARY KEY (`siteReserveId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='场地序列图表';
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='场地序列图表';
 
 -- ----------------------------
 -- Records of site_reserve_basic
 -- ----------------------------
+INSERT INTO `site_reserve_basic` VALUES ('16', '张三', '15110275787', '1', '1', '1', '2', '2016-11-22 15:13:39', null, '1', '1', '3');
 
 -- ----------------------------
 -- Table structure for site_reserve_date
@@ -398,11 +421,12 @@ CREATE TABLE `site_reserve_date` (
   `reserveEndDate` varchar(20) DEFAULT NULL COMMENT '预定结束日期',
   `reserveWeek` varchar(20) DEFAULT NULL COMMENT '预定时间范围内的哪些周（多个逗号分隔）',
   PRIMARY KEY (`reserveDateId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='场地预定日期表';
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='场地预定日期表';
 
 -- ----------------------------
 -- Records of site_reserve_date
 -- ----------------------------
+INSERT INTO `site_reserve_date` VALUES ('16', '16', '2016-10-01', '2016-10-21', '2,3,4');
 
 -- ----------------------------
 -- Table structure for site_reserve_time
@@ -415,11 +439,12 @@ CREATE TABLE `site_reserve_time` (
   `siteStartTime` varchar(20) DEFAULT NULL COMMENT '开始时间',
   `siteEndTime` varchar(20) DEFAULT NULL COMMENT '结束时间',
   PRIMARY KEY (`reserveTimeId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='场地预定时间表';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='场地预定时间表';
 
 -- ----------------------------
 -- Records of site_reserve_time
 -- ----------------------------
+INSERT INTO `site_reserve_time` VALUES ('8', '16', '1', '15:00', '20:00');
 
 -- ----------------------------
 -- Table structure for site_sport
@@ -443,7 +468,7 @@ CREATE TABLE `site_sport` (
 -- ----------------------------
 -- Records of site_sport
 -- ----------------------------
-INSERT INTO `site_sport` VALUES ('1', '测试场地', '50.00', '100.00', '06:00', '11:00', '1', null, '2016-11-21 11:34:49', null, '2');
+INSERT INTO `site_sport` VALUES ('1', '测试场地', '50.00', '100.00', '06:00', '23:00', '1', null, '2016-11-21 11:34:49', null, '1');
 
 -- ----------------------------
 -- Table structure for system_dict
@@ -630,6 +655,31 @@ INSERT INTO `user_member` VALUES ('3', null, '1', '李思', null, '13000000012',
 INSERT INTO `user_member` VALUES ('4', null, '1', '王武', null, '13000000013', null, null, null, null, null, null, null, null, '2016-11-21 15:23:22', '2016-11-21 15:23:22', null, null);
 
 -- ----------------------------
+-- Table structure for user_notifications
+-- ----------------------------
+DROP TABLE IF EXISTS `user_notifications`;
+CREATE TABLE `user_notifications` (
+  `noteId` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `noteTitle` varchar(200) DEFAULT NULL COMMENT '通知标题',
+  `noteContent` text COMMENT '通知内容',
+  `noteSender` int(11) DEFAULT NULL COMMENT '通知发送人',
+  `noteReceiver` int(11) DEFAULT NULL COMMENT '通知接收人',
+  `noteAttachments` text COMMENT '通知附件',
+  `noteStatus` varchar(1) DEFAULT NULL COMMENT '通知状态；1，未读；2，已读；3，未发送',
+  `noteCreateTime` varchar(20) DEFAULT NULL COMMENT '通知创建时间',
+  `noteReadTime` varchar(20) DEFAULT NULL COMMENT '通知阅读时间',
+  `noteUpdateTime` varchar(20) DEFAULT NULL COMMENT '通知更新时间',
+  PRIMARY KEY (`noteId`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user_notifications
+-- ----------------------------
+INSERT INTO `user_notifications` VALUES ('1', '关于2016年场馆建设意见', '关于2016年场馆建设意见关于2016年场馆建设意见关于2016年场馆建设意见关于2016年场馆建设意见关于2016年场馆建设意见', '13', '14', null, '2', '2016-11-22 00:41:23', null, null);
+INSERT INTO `user_notifications` VALUES ('2', '关于2016年场馆建设意见', '关于2016年场馆建设意见，关于2016年场馆建设意见，关于2016年场馆建设意见，关于2016年场馆建设意见，关于2016年场馆建设意见。', '13', null, null, '3', '2016-11-22 00:57:23', null, null);
+INSERT INTO `user_notifications` VALUES ('3', '关于2016年场馆建设意见', '关于2016年场馆建设意见，关于2016年场馆建设意见，关于2016年场馆建设意见，关于2016年场馆建设意见，关于2016年场馆建设意见。关于2016年场馆建设意见，关于2016年场馆建设意见，关于2016年场馆建设意见，关于2016年场馆建设意见，关于2016年场馆建设意见。关于2016年场馆建设意见，关于2016年场馆建设意见，关于2016年场馆建设意见，关于2016年场馆建设意见，关于2016年场馆建设意见。关于2016年场馆建设意见，关于2016年场馆建设意见，关于2016年场馆建设意见，关于2016年场馆建设意见，关于2016年场馆建设意见。', '13', '15', null, '1', '2016-11-22 01:10:23', '2016-11-22 01:11:23', null);
+
+-- ----------------------------
 -- Table structure for user_operator
 -- ----------------------------
 DROP TABLE IF EXISTS `user_operator`;
@@ -658,7 +708,7 @@ CREATE TABLE `user_operator` (
 -- ----------------------------
 -- Records of user_operator
 -- ----------------------------
-INSERT INTO `user_operator` VALUES ('2', 'admin', null, 'a123456', null, '1', '2016-11-21 11:33:03', null, '2016-11-21 15:24:02', '1', null, null, null, null, null, null);
+INSERT INTO `user_operator` VALUES ('1', 'admin', null, 'a123456', null, '1', '2016-11-21 11:33:03', null, '2016-11-22 18:13:56', '1', null, null, null, null, null, null);
 INSERT INTO `user_operator` VALUES ('3', '593089', '团体', '123456', '13111111111', '1', '2016-11-21 14:25:43', null, null, null, null, null, null, null, null, null);
 
 -- ----------------------------
