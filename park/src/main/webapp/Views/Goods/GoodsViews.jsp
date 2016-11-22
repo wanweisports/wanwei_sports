@@ -68,13 +68,6 @@
                                 <p class="text-muted" style="font-size: 12px;">如需要重新上传图片, 请选择文件</p>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">已上传图片</label>
-
-                            <div class="col-sm-8">
-                                <img src="${goodPic}" alt="商品图片" class="show-good-pic" style="width: 110px;">
-                            </div>
-                        </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -95,7 +88,8 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <select class="form-control" id="good_type" name="goodTypeId">
+                                <select class="form-control" id="good_type" name="goodTypeId"
+                                        data-val="true" data-val-required="请选择商品类别">
                                     <option value="">请选择</option>
                                     <c:forEach var="type" items="${goodTypeNames}">
                                     	<option value="${type.goodTypeId}" <c:if test='${type.goodTypeId==goodTypeId}'>selected</c:if>>${type.goodTypeName}</option>
@@ -111,7 +105,7 @@
 
                             <div class="col-sm-8">
                                 <label class="radio-inline">
-                                    <input type="radio" name="goodMoneyType" id="good_mode1" value="1" checked> 计次收费
+                                    <input type="radio" name="goodMoneyType" id="good_mode1" value="1" checked> 计量收费
                                 </label>
                                 <label class="radio-inline">
                                     <input type="radio" name="goodMoneyType" id="good_mode2"
@@ -170,23 +164,7 @@
                     <h5 class="modal-title" id="tips_success_modal_label">提示框</h5>
                 </div>
                 <div class="modal-body">
-                    <p class="text-success text-content">商品设置提交失败成功!</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="tips_error_modal" tabindex="-1" role="dialog" aria-labelledby="tips_error_modal_label">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="tips_error_modal_label">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <p class="text-danger text-content">商品设置提交失败失败!</p>
+                    <p class="text-success text-content">商品设置提交成功!</p>
                 </div>
             </div>
         </div>

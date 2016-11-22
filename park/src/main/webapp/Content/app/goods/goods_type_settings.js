@@ -4,7 +4,7 @@
             this.initEvents();
         },
         initEvents: function () {
-            // 增加会员类型
+            // 增加商品类型
             $(".good-type-add").on("click", function (e) {
                 e.preventDefault();
 
@@ -35,9 +35,8 @@
                             location.reload();
                         }, 3000);
                     } else {
-                        $("#tips_error_modal").modal({show: true, backdrop: false})
-                            .find(".text-content").text(res.message || "商品类别设置保存失败, 请稍后重试");
                         console.log(res.message || "商品类别设置保存失败, 请稍后重试");
+                        alert(res.message || "商品类别设置保存失败, 请稍后重试");
                     }
                 });
             });
@@ -56,9 +55,8 @@
                         $("#good_type_name").val(data.goodTypeName);
                         $("#good_type_remark").val(data.goodTypeDescribe);
                     } else {
-                        $("#tips_error_modal").modal({show: true, backdrop: false})
-                            .find(".text-content").text(res.message || "商品类别信息查询失败, 请稍后重试");
                         console.log(res.message || "商品类别信息查询失败, 请稍后重试");
+                        alert(res.message || "商品类别信息查询失败, 请稍后重试");
                     }
                 });
             });
