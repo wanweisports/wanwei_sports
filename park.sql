@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2016-11-17 13:33:06
+Date: 2016-11-22 09:51:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -97,11 +97,12 @@ CREATE TABLE `member_card` (
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`cardId`),
   UNIQUE KEY `cardNo_Unique` (`cardNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会员卡信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='会员卡信息表';
 
 -- ----------------------------
 -- Records of member_card
 -- ----------------------------
+INSERT INTO `member_card` VALUES ('1', '1', '593089', '1000.00', '0', '1', '2', '2016-11-21 15:35:50', null, '', '2');
 
 -- ----------------------------
 -- Table structure for member_card_type
@@ -124,10 +125,32 @@ CREATE TABLE `member_card_type` (
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   `cardTypeDiscount` int(11) DEFAULT NULL COMMENT '类别折扣	0-100',
   PRIMARY KEY (`cardTypeId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会员卡类型表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='会员卡类型表';
 
 -- ----------------------------
 -- Records of member_card_type
+-- ----------------------------
+INSERT INTO `member_card_type` VALUES ('1', '教师卡', '1', '1', '0', '1,2,3,4,5,6,7', '06:00', '23:00', '0', '0.00', null, null, null, null, '100');
+INSERT INTO `member_card_type` VALUES ('2', '团体会员卡', '1', '1', '0', '1,2,3,4,5,6,7', '06:00', '23:00', '0', '0.00', null, '', '', null, '100');
+
+-- ----------------------------
+-- Table structure for member_site_sign
+-- ----------------------------
+DROP TABLE IF EXISTS `member_site_sign`;
+CREATE TABLE `member_site_sign` (
+  `signId` int(11) NOT NULL AUTO_INCREMENT,
+  `signMemberCardNo` varchar(32) DEFAULT NULL COMMENT '签到的会员卡号',
+  `signName` varchar(32) DEFAULT NULL COMMENT '签到人',
+  `signMobile` varchar(16) DEFAULT NULL COMMENT '签到人手机',
+  `orderId` int(11) DEFAULT NULL COMMENT '订单id',
+  `createTime` varchar(20) DEFAULT NULL COMMENT '创建时间',
+  `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
+  `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
+  PRIMARY KEY (`signId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会员场地签到表';
+
+-- ----------------------------
+-- Records of member_site_sign
 -- ----------------------------
 
 -- ----------------------------
@@ -174,6 +197,8 @@ CREATE TABLE `order_info` (
   `additionalPrice` decimal(10,2) DEFAULT NULL COMMENT '附加费用',
   `checkNo` varchar(64) DEFAULT NULL COMMENT '支票号',
   `orderRemark` text COMMENT '订单描述',
+  `sumCount` int(11) DEFAULT NULL COMMENT '总次数',
+  `useCount` int(11) DEFAULT NULL COMMENT '使用次数',
   `orderDiscount` int(11) DEFAULT NULL COMMENT '当时的商品折扣（0-100）',
   `createTime` varchar(20) DEFAULT NULL COMMENT '创建时间',
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
@@ -210,11 +235,12 @@ CREATE TABLE `other_balance` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`balanceId`),
   UNIQUE KEY `balanceNo_Unique` (`balanceNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='收支流水表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='收支流水表';
 
 -- ----------------------------
 -- Records of other_balance
 -- ----------------------------
+INSERT INTO `other_balance` VALUES ('1', '20161121153550', '10', '1', null, '3', '1', '1000.00', '1000.00', '0.00', '0.00', null, '1', '2016-11-21 15:35:50', '2016-11-21 15:35:50', null, '2', null);
 
 -- ----------------------------
 -- Table structure for other_invoice
@@ -234,11 +260,12 @@ CREATE TABLE `other_invoice` (
   `printTime` varchar(20) DEFAULT NULL COMMENT '打印时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`invoiceId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='发票登记表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='发票登记表';
 
 -- ----------------------------
 -- Records of other_invoice
 -- ----------------------------
+INSERT INTO `other_invoice` VALUES ('1', '20161121153550', '10', '1', null, null, null, null, '2', '2016-11-21 15:35:50', null, '2');
 
 -- ----------------------------
 -- Table structure for other_resource
@@ -283,11 +310,12 @@ CREATE TABLE `park_business` (
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   `points` int(11) DEFAULT NULL COMMENT '安装点数（限制能创建几个员工）',
   PRIMARY KEY (`businessId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='场馆表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='场馆表';
 
 -- ----------------------------
 -- Records of park_business
 -- ----------------------------
+INSERT INTO `park_business` VALUES ('1', '09:00', '19:00', null, '万维场馆', null, null, null, null, '2016-11-21 11:33:03', null, null, '0');
 
 -- ----------------------------
 -- Table structure for site_info
@@ -305,11 +333,12 @@ CREATE TABLE `site_info` (
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`siteId`),
   UNIQUE KEY `siteNo_Unique` (`siteNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='场地表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='场地表';
 
 -- ----------------------------
 -- Records of site_info
 -- ----------------------------
+INSERT INTO `site_info` VALUES ('1', '万维场地', '656047', '', '1', '1', '2016-11-21 11:35:03', null, '2');
 
 -- ----------------------------
 -- Table structure for site_order
@@ -409,11 +438,12 @@ CREATE TABLE `site_sport` (
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`sportId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='场地类型表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='场地类型表';
 
 -- ----------------------------
 -- Records of site_sport
 -- ----------------------------
+INSERT INTO `site_sport` VALUES ('1', '测试场地', '50.00', '100.00', '06:00', '11:00', '1', null, '2016-11-21 11:34:49', null, '2');
 
 -- ----------------------------
 -- Table structure for system_dict
@@ -513,7 +543,7 @@ CREATE TABLE `system_role` (
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`roleId`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='角色';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='角色';
 
 -- ----------------------------
 -- Records of system_role
@@ -563,6 +593,8 @@ CREATE TABLE `system_role_operator` (
 -- ----------------------------
 -- Records of system_role_operator
 -- ----------------------------
+INSERT INTO `system_role_operator` VALUES ('1', 'admin');
+INSERT INTO `system_role_operator` VALUES ('2', '593089');
 
 -- ----------------------------
 -- Table structure for user_member
@@ -571,6 +603,7 @@ DROP TABLE IF EXISTS `user_member`;
 CREATE TABLE `user_member` (
   `memberId` int(11) NOT NULL AUTO_INCREMENT COMMENT '会员id',
   `operationId` varchar(32) DEFAULT NULL COMMENT '用户帐号',
+  `parentMemberId` int(11) DEFAULT NULL COMMENT '父会员id',
   `memberName` varchar(16) DEFAULT NULL COMMENT '会员名称	汉字',
   `memberType` varchar(1) DEFAULT '1' COMMENT '支付类型 1.预付类型   2.记账类型',
   `memberMobile` varchar(16) DEFAULT NULL COMMENT '会员手机号	11位手机号',
@@ -587,11 +620,14 @@ CREATE TABLE `user_member` (
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   `tempCardNo` varchar(32) DEFAULT NULL COMMENT '临时会员卡号（第一次注册未绑卡使用）',
   PRIMARY KEY (`memberId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会员信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='会员信息表';
 
 -- ----------------------------
 -- Records of user_member
 -- ----------------------------
+INSERT INTO `user_member` VALUES ('1', '593089', null, '团体', '1', '13111111111', null, '1', '510603199007307988', '2016-11-21', null, null, '额外we额外', '第三方', '2016-11-21 14:25:42', null, '2', null);
+INSERT INTO `user_member` VALUES ('3', null, '1', '李思', null, '13000000012', null, null, null, null, null, null, null, null, '2016-11-21 15:23:11', '2016-11-21 15:23:11', null, null);
+INSERT INTO `user_member` VALUES ('4', null, '1', '王武', null, '13000000013', null, null, null, null, null, null, null, null, '2016-11-21 15:23:22', '2016-11-21 15:23:22', null, null);
 
 -- ----------------------------
 -- Table structure for user_operator
@@ -617,11 +653,13 @@ CREATE TABLE `user_operator` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `operatorId_Unique` (`operatorId`),
   KEY `operatorId_Normal` (`operatorId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='登录用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='登录用户表';
 
 -- ----------------------------
 -- Records of user_operator
 -- ----------------------------
+INSERT INTO `user_operator` VALUES ('2', 'admin', null, 'a123456', null, '1', '2016-11-21 11:33:03', null, '2016-11-21 15:24:02', '1', null, null, null, null, null, null);
+INSERT INTO `user_operator` VALUES ('3', '593089', '团体', '123456', '13111111111', '1', '2016-11-21 14:25:43', null, null, null, null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for user_operator_card
