@@ -629,6 +629,19 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		return map == null ? true : false;
 	}
 	
+	@Override
+	public UserMember getUserMemberByMobile(String mobile){
+		return baseDao.queryByHqlFirst("FROM UserMember WHERE memberMobile = ?", mobile);
+	}
+	
+	@Override
+	public UserMember getUserMemberByChildMobile(String childMobile){
+		UserMember userMember = getUserMemberByMobile(childMobile);
+		if(userMember == null) throw new MessageException("子会员手机不存在");
+		if(userMember.getParentMemberId() == null) throw new MessageException("该手机不是子会员手机号");
+		return userMember;
+	}
+	
 }
 
 

@@ -87,4 +87,8 @@ public interface IMemberService {
 	
 	public boolean availableMobile(String mobile);
 	
+	public UserMember getUserMemberByMobile(String mobile);
+	
+	public UserMember getUserMemberByChildMobile(String childMobile);
+	
 }

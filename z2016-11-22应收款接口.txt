@@ -1,0 +1,33 @@
+应收款列表：
+请求：/member/getMembersLoans
+
+
+返回：
+{
+    "list": [
+        {
+            "cardNo": "593089",
+            "owePrice": 900,
+            "receivableId": "3",
+            "orderNo": "20161122151339",
+            "memberMobile": "13111111111",
+            "memberName": "团体",
+            "orderSumPrice": 2000
+        }
+    ],
+    "count": "1",
+    "lastPage": "1",
+    "pageSize": "10"
+}
+==================================================================================================================
+应付款付款：【Ajax】，结清则会删除此应收款
+请求：/member/updateMemberReceivable?receivableId=3&payPrice=200
+                                      应收款id      支付金额
+
+
+返回：
+{
+    "code": "1",
+    "message": "操作成功",
+    "data": {}
+}

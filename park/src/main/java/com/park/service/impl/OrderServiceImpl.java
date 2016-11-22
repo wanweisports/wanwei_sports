@@ -11,12 +11,16 @@ import com.park.common.bean.OrderInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
+import com.park.common.po.MemberCard;
+import com.park.common.po.MemberReceivable;
 import com.park.common.po.OrderDetail;
 import com.park.common.po.OrderInfo;
 import com.park.common.util.DateUtil;
 import com.park.common.util.SQLUtil;
 import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
+import com.park.service.IMemberReceivableService;
+import com.park.service.IMemberService;
 import com.park.service.IOrderService;
 
 @Service
@@ -24,6 +28,12 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 	
 	@Autowired
 	private IBaseDao baseDao;
+	
+	@Autowired
+	private IMemberService memberService;
+	
+	@Autowired
+	private IMemberReceivableService memberReceivableService;
 	
 	@Override
 	public Integer saveOrderInfo(OrderInfo orderInfo, List<OrderDetail> orderDetails){
@@ -50,16 +60,42 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 	
 	@Override
 	public Integer updateConfirmOrder(OrderInfo orderInfo){
-		OrderInfo orderInfoDB = getOrderInfo(orderInfo.getOrderId());
+		int orderId = orderInfo.getOrderId();
+		OrderInfo orderInfoDB = getOrderInfo(orderId);
 		if(orderInfoDB == null) throw new MessageException("订单不存在");
 		if(IDBConstant.LOGIC_STATUS_YES.equals(orderInfoDB.getPayStatus())) throw new MessageException("该订单已支付过了，请不要重复支付");
 		Double orderSumPrice = orderInfoDB.getOrderSumPrice();
-		orderInfoDB.setPaySumPrice((orderInfoDB.getPaySumPrice()!=null?orderInfoDB.getPaySumPrice():0) + orderInfo.getPaySumPrice()); //加上之前已经支付过多少钱
-		if(orderInfoDB.getPaySumPrice() >= orderSumPrice){
+		//orderInfoDB.setPaySumPrice((orderInfoDB.getPaySumPrice()!=null?orderInfoDB.getPaySumPrice():0) + orderInfo.getPaySumPrice()); //【老需求】加上之前已经支付过多少钱
+		orderInfoDB.setPaySumPrice(orderInfo.getPaySumPrice()); //新需求：剩余金额在应收款中收取
+		//会员付款--->应收款（散客无应收款）
+		Integer memberId = orderInfoDB.getMemberId();
+		if(memberId != null && memberId > 0){
+			//扣除订单orderSumPrice金额：先扣除用户支付输入的金额
+			//不够：再扣会员卡金额
+			//还不够，则生成应收款，保存到应收款表，会员卡金额减少
+			Double remainingPrice = orderSumPrice - orderInfoDB.getPaySumPrice();
+			double payPrice = orderInfoDB.getPaySumPrice();
+			if(remainingPrice > 0){
+				List<MemberCard> memberCards = memberService.getMemberCards(memberId);
+				if(memberCards.size() > 0){
+					MemberCard memberCard = memberCards.get(0);
+					double remainingCardPrice = memberCard.getCardBalance() - remainingPrice;
+					payPrice += remainingCardPrice > 0 ? remainingPrice : memberCard.getCardBalance(); //支付够了就是减去的钱，不够就是卡的余额
+					memberCard.setCardBalance(remainingCardPrice > 0 ? remainingCardPrice : 0); //最低扣到0
+					baseDao.save(memberCard, memberCard.getCardId());
+					if(remainingCardPrice < 0){ //钱不够扣，生成应收款
+						memberReceivableService.saveMemberReceivable(new MemberReceivable(memberId, orderId, null, null, orderInfo.getSalesId()), 0);
+					}
+				}
+			}
+			orderInfoDB.setPaySumPrice(payPrice);
+		}
+		orderInfoDB.setPayStatus(IDBConstant.LOGIC_STATUS_YES); //已支付
+		/*if(orderInfoDB.getPaySumPrice() >= orderSumPrice){
 			orderInfoDB.setPayStatus(IDBConstant.LOGIC_STATUS_YES); //已支付
 		}else{
 			orderInfoDB.setPayStatus(IDBConstant.LOGIC_STATUS_OTHER); //部分支付
-		}
+		}*/
 		String nowDate = DateUtil.getNowDate();
 		orderInfoDB.setAdditionalPrice(orderInfo.getAdditionalPrice());
 		orderInfoDB.setCheckNo(orderInfo.getCheckNo());
@@ -73,8 +109,8 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 		if(StrUtil.isNotBlank(orderInfo.getOrderStatus())){
 			orderInfoDB.setOrderStatus(orderInfo.getOrderStatus());
 		}
-		baseDao.save(orderInfoDB, orderInfoDB.getOrderId());
-		return orderInfoDB.getOrderId();
+		baseDao.save(orderInfoDB, orderId);
+		return orderId;
 	}
 	
 	@Override

@@ -272,6 +272,7 @@ public class SiteController extends BaseController {
 	public ResponseBean confirmOrder(OrderInfo orderInfo){
 		try {
 			Map<String, Object> data = new HashMap<String, Object>();
+			orderInfo.setSalesId(getUserInfo().getId());
 			data.put("orderId", siteService.updateConfirmOrder(orderInfo));
 			return new ResponseBean(data);
 		} catch (MessageException e) {

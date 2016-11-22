@@ -11,6 +11,7 @@ import com.park.common.po.OrderInfo;
 import com.park.common.po.SiteInfo;
 import com.park.common.po.SiteReserveBasic;
 import com.park.common.po.SiteReserveDate;
+import com.park.common.po.SiteReserveTime;
 import com.park.common.po.SiteSport;
 
 public interface ISiteService {
@@ -54,5 +55,11 @@ public interface ISiteService {
 	public List<SiteReserveDate> getSiteReserveDateTime(List<SiteReserveDate> siteReserveDateList);
 	
 	public SiteReserveBasic getSiteReserveBasicAllByOrderId(int orderId);
+	
+	public Map<String, Object> getSiteReserveBasicByMobile(String mobile);
+	
+	public Map<String, Object> getNextSiteReserveBasicByMobile(String mobile);
+	
+	public SiteReserveTime getSiteReserveTime(int reserveTimeId);
 	
 }

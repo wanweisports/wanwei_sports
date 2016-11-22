@@ -99,6 +99,13 @@ public class BaseController {
 
     protected UserOperator getUserInfo() {
         UserOperator userInfo = getUserInfo(getRequest().getSession());
+        //方便测试，后期删除！
+        if(userInfo == null){
+        	userInfo = new UserOperator();
+        	userInfo.setId(1);
+        	userInfo.setOperatorId("admin");
+        	userInfo.setOperatorName("管理员");
+        }
         return userInfo;
     }
 

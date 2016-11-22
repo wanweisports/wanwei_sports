@@ -17,6 +17,8 @@ public class MemberInputView extends BaseInputView {
 	private String memberType;
 	
 	private String memberName;
+	
+	private String orderNo;
 
 	public String getMemberMobile() {
 		return memberMobile;
@@ -80,6 +82,14 @@ public class MemberInputView extends BaseInputView {
 
 	public void setMemberName(String memberName) {
 		this.memberName = memberName;
+	}
+
+	public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
 	}
 
 }
