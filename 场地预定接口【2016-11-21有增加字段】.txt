@@ -38,7 +38,7 @@
     "opType": 2,
     "reserveType": 1,
     "reserveModel": 2,
-    "useCount": 30, //【2016-11-21新加，此字段为手动输入场次数】
+    "payCount": 30, //【2016-11-21新加，此字段为手动输入场次数】useCount改为payCount
     "orderSumPrice": 2000,  //【2016-11-21新加，此字段为手动输入价格】
     "siteReserveDateList": [
         {

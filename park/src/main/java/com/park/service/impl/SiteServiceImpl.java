@@ -271,7 +271,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		orderInfo.setOrderServiceType(IDBConstant.LOGIC_STATUS_YES.equals(siteReserveBasic.getReserveModel()) ? IDBConstant.ORDER_SERVICE_TYPE_SITE : IDBConstant.ORDER_SERVICE_TYPE_BLOCK_SITE);
 		orderInfo.setOrderStatus(IDBConstant.LOGIC_STATUS_NO); //未完成
 		orderInfo.setPayStatus(IDBConstant.LOGIC_STATUS_NO); //未支付
-		orderInfo.setUseCount(siteReserveBasic.getUseCount()); //使用次数（缴纳的次数）
+		orderInfo.setPayCount(siteReserveBasic.getPayCount()); //支付次数（缴纳的次数）
 	
 		orderInfo.setSalesId(siteReserveBasic.getSalesId());
 		

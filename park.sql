@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2016-11-22 18:51:02
+Date: 2016-11-23 14:54:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -95,6 +95,7 @@ CREATE TABLE `member_card` (
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `cardRemark` varchar(255) DEFAULT NULL COMMENT '备注信息',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
+  `cardDeposit` decimal(10,2) DEFAULT NULL COMMENT '当时办卡的押金',
   PRIMARY KEY (`cardId`),
   UNIQUE KEY `cardNo_Unique` (`cardNo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='会员卡信息表';
@@ -102,7 +103,7 @@ CREATE TABLE `member_card` (
 -- ----------------------------
 -- Records of member_card
 -- ----------------------------
-INSERT INTO `member_card` VALUES ('1', '1', '593089', '0.00', '0', '1', '2', '2016-11-21 15:35:50', null, '', '1');
+INSERT INTO `member_card` VALUES ('1', '1', '593089', '0.00', '0', '1', '2', '2016-11-21 15:35:50', null, '', '1', null);
 
 -- ----------------------------
 -- Table structure for member_card_type
@@ -123,15 +124,17 @@ CREATE TABLE `member_card_type` (
   `createTime` varchar(20) DEFAULT NULL COMMENT '创建时间',
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
+  `cardDeposit` decimal(10,2) DEFAULT NULL COMMENT '卡押金',
   `cardTypeDiscount` int(11) DEFAULT NULL COMMENT '类别折扣	0-100',
   PRIMARY KEY (`cardTypeId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='会员卡类型表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='会员卡类型表';
 
 -- ----------------------------
 -- Records of member_card_type
 -- ----------------------------
-INSERT INTO `member_card_type` VALUES ('1', '教师卡', '1', '1', '0', '1,2,3,4,5,6,7', '06:00', '23:00', '0', '0.00', null, null, null, null, '100');
-INSERT INTO `member_card_type` VALUES ('2', '团体会员卡', '1', '1', '0', '1,2,3,4,5,6,7', '06:00', '23:00', '0', '0.00', null, '', '', null, '100');
+INSERT INTO `member_card_type` VALUES ('1', '教师卡', '1', '1', '0', '1,2,3,4,5,6,7', '06:00', '23:00', '0', '0.00', null, null, null, null, null, '100');
+INSERT INTO `member_card_type` VALUES ('2', '团体会员卡', '1', '1', '0', '1,2,3,4,5,6,7', '06:00', '23:00', '0', '0.00', null, '', '', null, null, '100');
+INSERT INTO `member_card_type` VALUES ('3', '学生卡', '1', '1', '0', '1,2,3,4,5,6,7', '06:00', '23:00', '0', '0.00', null, '', '', null, null, '100');
 
 -- ----------------------------
 -- Table structure for member_receivable
@@ -145,11 +148,12 @@ CREATE TABLE `member_receivable` (
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`receivableId`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='应收款表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='应收款表';
 
 -- ----------------------------
 -- Records of member_receivable
 -- ----------------------------
+INSERT INTO `member_receivable` VALUES ('4', '1', '4', '2016-11-23 14:45:08', null, '1');
 
 -- ----------------------------
 -- Table structure for member_site_sign
@@ -191,12 +195,11 @@ CREATE TABLE `order_detail` (
   `itemDiscount` int(11) DEFAULT NULL COMMENT '当时的商品折扣（0-100）',
   `orderDetailStatus` varchar(1) DEFAULT NULL COMMENT '订单详情状态（1：已完成  2：未完成  3：进行中）',
   PRIMARY KEY (`orderDetailId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='订单详情表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='订单详情表';
 
 -- ----------------------------
 -- Records of order_detail
 -- ----------------------------
-INSERT INTO `order_detail` VALUES ('2', '3', '8', '【测试场地】', '2000.00', '2016-10-01 15:00', '2016-10-21 20:00', '1', null, '2', null, '2');
 
 -- ----------------------------
 -- Table structure for order_info
@@ -219,18 +222,18 @@ CREATE TABLE `order_info` (
   `checkNo` varchar(64) DEFAULT NULL COMMENT '支票号',
   `orderRemark` text COMMENT '订单描述',
   `sumCount` int(11) DEFAULT NULL COMMENT '总次数',
-  `useCount` int(11) DEFAULT NULL COMMENT '使用次数',
+  `payCount` int(11) DEFAULT NULL COMMENT '支付次数',
+  `useCount` int(11) DEFAULT NULL COMMENT '已使用次数',
   `orderDiscount` int(11) DEFAULT NULL COMMENT '当时的商品折扣（0-100）',
   `createTime` varchar(20) DEFAULT NULL COMMENT '创建时间',
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
   PRIMARY KEY (`orderId`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='订单表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='订单表';
 
 -- ----------------------------
 -- Records of order_info
 -- ----------------------------
-INSERT INTO `order_info` VALUES ('3', '20161122151339', null, '1', '3', '2', '1', null, '2016-11-22 17:28:32', '2000.00', '2000.00', null, null, '11111', '老司机', '45', '30', null, '2016-11-22 15:13:39', '2016-11-22 17:28:32', '1');
 
 -- ----------------------------
 -- Table structure for other_balance
@@ -403,12 +406,11 @@ CREATE TABLE `site_reserve_basic` (
   `memberId` int(11) DEFAULT NULL COMMENT '会员id',
   `orderId` int(11) DEFAULT NULL COMMENT '订单id',
   PRIMARY KEY (`siteReserveId`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='场地序列图表';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='场地序列图表';
 
 -- ----------------------------
 -- Records of site_reserve_basic
 -- ----------------------------
-INSERT INTO `site_reserve_basic` VALUES ('16', '张三', '15110275787', '1', '1', '1', '2', '2016-11-22 15:13:39', null, '1', '1', '3');
 
 -- ----------------------------
 -- Table structure for site_reserve_date
@@ -421,12 +423,11 @@ CREATE TABLE `site_reserve_date` (
   `reserveEndDate` varchar(20) DEFAULT NULL COMMENT '预定结束日期',
   `reserveWeek` varchar(20) DEFAULT NULL COMMENT '预定时间范围内的哪些周（多个逗号分隔）',
   PRIMARY KEY (`reserveDateId`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='场地预定日期表';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='场地预定日期表';
 
 -- ----------------------------
 -- Records of site_reserve_date
 -- ----------------------------
-INSERT INTO `site_reserve_date` VALUES ('16', '16', '2016-10-01', '2016-10-21', '2,3,4');
 
 -- ----------------------------
 -- Table structure for site_reserve_time
@@ -439,12 +440,11 @@ CREATE TABLE `site_reserve_time` (
   `siteStartTime` varchar(20) DEFAULT NULL COMMENT '开始时间',
   `siteEndTime` varchar(20) DEFAULT NULL COMMENT '结束时间',
   PRIMARY KEY (`reserveTimeId`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='场地预定时间表';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='场地预定时间表';
 
 -- ----------------------------
 -- Records of site_reserve_time
 -- ----------------------------
-INSERT INTO `site_reserve_time` VALUES ('8', '16', '1', '15:00', '20:00');
 
 -- ----------------------------
 -- Table structure for site_sport
@@ -708,7 +708,7 @@ CREATE TABLE `user_operator` (
 -- ----------------------------
 -- Records of user_operator
 -- ----------------------------
-INSERT INTO `user_operator` VALUES ('1', 'admin', null, 'a123456', null, '1', '2016-11-21 11:33:03', null, '2016-11-22 18:13:56', '1', null, null, null, null, null, null);
+INSERT INTO `user_operator` VALUES ('1', 'admin', null, 'a123456', null, '1', '2016-11-21 11:33:03', null, '2016-11-23 10:22:56', '1', null, null, null, null, null, null);
 INSERT INTO `user_operator` VALUES ('3', '593089', '团体', '123456', '13111111111', '1', '2016-11-21 14:25:43', null, null, null, null, null, null, null, null, null);
 
 -- ----------------------------
@@ -725,4 +725,29 @@ CREATE TABLE `user_operator_card` (
 
 -- ----------------------------
 -- Records of user_operator_card
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for user_student
+-- ----------------------------
+DROP TABLE IF EXISTS `user_student`;
+CREATE TABLE `user_student` (
+  `studentId` int(11) NOT NULL AUTO_INCREMENT,
+  `cardId` int(11) DEFAULT NULL COMMENT '学生卡id',
+  `studentName` varchar(32) DEFAULT NULL COMMENT '学生姓名',
+  `studentGrade` varchar(32) DEFAULT NULL COMMENT '学生年级',
+  `studentClass` varchar(32) DEFAULT NULL COMMENT '学生班级',
+  `siteCount` int(11) DEFAULT NULL COMMENT '用场次数',
+  `studentSex` varchar(1) DEFAULT '1' COMMENT '学生性别	1：男，2：女',
+  `studentStatus` varchar(1) DEFAULT '1' COMMENT '学生状态	1：有效，2：锁定',
+  `studentAddress` varchar(255) DEFAULT NULL COMMENT '学生联系地址',
+  `studentRemark` varchar(255) DEFAULT NULL COMMENT '备注信息',
+  `createTime` varchar(20) DEFAULT NULL COMMENT '创建时间',
+  `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
+  `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
+  PRIMARY KEY (`studentId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='学生表';
+
+-- ----------------------------
+-- Records of user_student
 -- ----------------------------
