@@ -64,4 +64,9 @@ public interface IDBConstant {
     public static final String NOTIFICATIONS_STATE_YES = "1";//已读
     public static final String NOTIFICATIONS_STATE_NO = "2";//未读
     public static final String NOTIFICATIONS_STATE_UNSEND = "3";//未发送
+    
+    public static final String CARD_TEACHERS = "1";//教师卡
+    public static final String CARD_TEAM = "2";//团体会员卡
+    public static final String CARD_STUDENT = "3"; //学生卡
+    
 }

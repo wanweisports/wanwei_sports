@@ -235,7 +235,7 @@ public class MemberController extends BaseController {
     public String getUserMembers(MemberInputView memberInputView, Model model) {
         try {
             model.addAllAttributes(JsonUtils.fromJsonDF(memberInputView));
-            memberInputView.setCardTypeId(IDBConstant.LOGIC_STATUS_NO); //团体卡类型
+            memberInputView.setCardTypeId(IDBConstant.CARD_TEAM); //团体卡类型
             PageBean pageBean = memberService.getUserMembers(memberInputView);
             super.setPageInfo(model, pageBean);
             //model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(memberInputView));
@@ -460,9 +460,9 @@ public class MemberController extends BaseController {
     //应收款付款
     @ResponseBody
     @RequestMapping("updateMemberReceivable")
-    public ResponseBean updateMemberReceivable(MemberReceivable memberReceivable, double payPrice){
+    public ResponseBean updateMemberReceivable(MemberReceivable memberReceivable, double payPrice, int payCount, String payType){
         try {
-            memberReceivableService.saveMemberReceivable(memberReceivable, payPrice);
+            memberReceivableService.saveMemberReceivable(memberReceivable, payPrice, payCount, payType);
             return new ResponseBean(true);
         } catch (MessageException e) {
             e.printStackTrace();

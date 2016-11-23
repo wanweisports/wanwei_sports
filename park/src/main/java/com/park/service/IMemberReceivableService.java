@@ -8,7 +8,7 @@ public interface IMemberReceivableService {
 
 	public MemberReceivable getMemberReceivable(int receivableId);
 	
-	public Integer saveMemberReceivable(MemberReceivable memberReceivable, double payPrice);
+	public Integer saveMemberReceivable(MemberReceivable memberReceivable, double payPrice, int payCount, String payType);
 	
 	public PageBean getMemberReceivables(MemberInputView memberInputView);
 	

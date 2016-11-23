@@ -84,7 +84,7 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 					memberCard.setCardBalance(remainingCardPrice > 0 ? remainingCardPrice : 0); //最低扣到0
 					baseDao.save(memberCard, memberCard.getCardId());
 					if(remainingCardPrice < 0){ //钱不够扣，生成应收款
-						memberReceivableService.saveMemberReceivable(new MemberReceivable(memberId, orderId, null, null, orderInfo.getSalesId()), 0);
+						memberReceivableService.saveMemberReceivable(new MemberReceivable(memberId, orderId, null, null, orderInfo.getSalesId()), 0, 0, StrUtil.EMPTY);
 					}
 				}
 			}

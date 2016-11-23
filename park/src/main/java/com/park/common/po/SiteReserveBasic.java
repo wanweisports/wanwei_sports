@@ -35,7 +35,7 @@ public class SiteReserveBasic implements java.io.Serializable {
 	@Transient
 	private Double orderSumPrice;
 	@Transient
-	private Integer useCount;
+	private Integer payCount;
 	@Transient
 	private List<SiteReserveDate> siteReserveDateList;
 
@@ -195,13 +195,13 @@ public class SiteReserveBasic implements java.io.Serializable {
 	}
 
 	@Transient
-	public Integer getUseCount() {
-		return useCount;
+	public Integer getPayCount() {
+		return payCount;
 	}
 
 	@Transient
-	public void setUseCount(Integer useCount) {
-		this.useCount = useCount;
+	public void setPayCount(Integer payCount) {
+		this.payCount = payCount;
 	}
-	
+
 }

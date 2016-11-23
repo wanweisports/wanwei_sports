@@ -32,7 +32,7 @@ public class TeachersController extends BaseController {
     public String teachersList(MemberInputView memberInputView, Model model) {
     	try {
             model.addAllAttributes(JsonUtils.fromJsonDF(memberInputView));
-            memberInputView.setCardTypeId(IDBConstant.LOGIC_STATUS_YES); //教师卡类型
+            memberInputView.setCardTypeId(IDBConstant.CARD_TEACHERS); //教师卡类型
             PageBean pageBean = memberService.getUserMembers(memberInputView);
             super.setPageInfo(model, pageBean);
             //model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(memberInputView));
