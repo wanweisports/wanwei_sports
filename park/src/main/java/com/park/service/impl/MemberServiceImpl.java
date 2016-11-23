@@ -637,8 +637,8 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	@Override
 	public UserMember getUserMemberByChildMobile(String childMobile){
 		UserMember userMember = getUserMemberByMobile(childMobile);
-		if(userMember == null) throw new MessageException("子会员手机不存在");
-		if(userMember.getParentMemberId() == null) throw new MessageException("该手机不是子会员手机号");
+		if(userMember == null) throw new MessageException("会员手机不存在"); //可能是自己，也可能是子会员
+		//if(userMember.getParentMemberId() == null) throw new MessageException("该手机不是子会员手机号");
 		return userMember;
 	}
 	

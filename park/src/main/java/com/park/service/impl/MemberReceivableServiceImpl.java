@@ -43,7 +43,7 @@ public class MemberReceivableServiceImpl extends BaseService implements IMemberR
 		orderInfo.setPayCount(orderInfo.getPayCount() + payCount);
 		orderInfo.setPaySumPrice(orderInfo.getPaySumPrice() + payPrice);
 		baseDao.save(orderInfo, orderInfo.getOrderId());
-		if(orderInfo.getSumCount() >= orderInfo.getPayCount()){ //应付款结清，删除此应收款
+		if(orderInfo.getPayCount() >= orderInfo.getSumCount()){ //应付款结清，删除此应收款
 			baseDao.delete(memberReceivableDB);
 		}
 		return receivableId;
