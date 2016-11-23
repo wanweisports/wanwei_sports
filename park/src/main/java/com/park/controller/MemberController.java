@@ -16,15 +16,18 @@ import com.park.common.bean.MemberCardOpInputView;
 import com.park.common.bean.MemberInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.bean.ResponseBean;
+import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.MemberCard;
 import com.park.common.po.MemberCardType;
+import com.park.common.po.MemberReceivable;
 import com.park.common.po.OtherBalance;
 import com.park.common.po.OtherInvoice;
 import com.park.common.po.UserMember;
 import com.park.common.po.UserOperator;
 import com.park.common.util.JsonUtils;
 import com.park.common.util.StrUtil;
+import com.park.service.IMemberReceivableService;
 import com.park.service.IMemberService;
 
 @Controller
@@ -33,6 +36,9 @@ public class MemberController extends BaseController {
 
     @Autowired
     private IMemberService memberService;
+    
+    @Autowired
+    private IMemberReceivableService memberReceivableService;
 
     /**
      * [页面]注册会员的录入会员信息页面,自动生成会员卡的编号
@@ -229,9 +235,10 @@ public class MemberController extends BaseController {
     public String getUserMembers(MemberInputView memberInputView, Model model) {
         try {
             model.addAllAttributes(JsonUtils.fromJsonDF(memberInputView));
+            memberInputView.setCardTypeId(IDBConstant.LOGIC_STATUS_NO); //团体卡类型
             PageBean pageBean = memberService.getUserMembers(memberInputView);
             super.setPageInfo(model, pageBean);
-            model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(memberInputView));
+            //model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(memberInputView));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -438,8 +445,32 @@ public class MemberController extends BaseController {
 
     // 应收款管理
     @RequestMapping(value = "getMembersLoans")
-    public String getMembersLoans(Model model) {
+    public String getMembersLoans(MemberInputView memberInputView, Model model) {
+    	try {
+            model.addAllAttributes(JsonUtils.fromJsonDF(memberInputView));
+            PageBean pageBean = memberReceivableService.getMemberReceivables(memberInputView);
+            System.out.println(JsonUtils.toJsonDF(pageBean));
+            super.setPageInfo(model, pageBean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "Members/MembersLoans";
+    }
+    
+    //应收款付款
+    @ResponseBody
+    @RequestMapping("updateMemberReceivable")
+    public ResponseBean updateMemberReceivable(MemberReceivable memberReceivable, double payPrice){
+        try {
+            memberReceivableService.saveMemberReceivable(memberReceivable, payPrice);
+            return new ResponseBean(true);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
     }
 
     // 会员卡注销
@@ -458,7 +489,6 @@ public class MemberController extends BaseController {
     @RequestMapping(value = "getMembersChildren")
     public String getMembersChildren(int memberId, Model model) {
     	model.addAllAttributes(memberService.getMembersChildren(memberId));
-    	System.out.println(JsonUtils.toJson(memberService.getMembersChildren(memberId)));
         return "Members/MembersChildren";
     }
     

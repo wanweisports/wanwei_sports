@@ -98,7 +98,8 @@
     "message": "操作成功",
     "data": {
         "originalPrice": 2250,  //原始价格
-        "presentPrice": 2250    //会员价格
+        "presentPrice": 2250,    //会员价格
+        "sumNums":  10 【2016-11-22新加，总场次数】
     }
 }
 

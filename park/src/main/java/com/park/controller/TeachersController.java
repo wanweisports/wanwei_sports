@@ -1,7 +1,15 @@
 package com.park.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.park.common.bean.MemberInputView;
+import com.park.common.bean.PageBean;
+import com.park.common.constant.IDBConstant;
+import com.park.common.util.JsonUtils;
+import com.park.service.IMemberService;
 
 /**
  * Created by wangjun on 16/11/15.
@@ -9,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("teachers")
 public class TeachersController extends BaseController {
+	
+	@Autowired
+	private IMemberService memberService;
+	
     // 教师注册
     @RequestMapping("register")
     public String teachersRegister() {
@@ -17,7 +29,16 @@ public class TeachersController extends BaseController {
 
     // 教师查询
     @RequestMapping("list")
-    public String teachersList() {
+    public String teachersList(MemberInputView memberInputView, Model model) {
+    	try {
+            model.addAllAttributes(JsonUtils.fromJsonDF(memberInputView));
+            memberInputView.setCardTypeId(IDBConstant.LOGIC_STATUS_YES); //教师卡类型
+            PageBean pageBean = memberService.getUserMembers(memberInputView);
+            super.setPageInfo(model, pageBean);
+            //model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(memberInputView));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "Teachers/TeachersList";
     }
 

@@ -262,6 +262,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		OrderInfo orderInfo = new OrderInfo();
 		if(IDBConstant.LOGIC_STATUS_YES.equals(siteReserveBasic.getOpType())){
 			member = memberService.getUserMember(siteReserveBasic.getMemberId());
+			if(member == null || member.getParentMemberId() != null) throw new MessageException("会员不存在");
 			orderInfo.setMemberId(member.getMemberId());
 		}else{
 			orderInfo.setMemberId(0); //散客
@@ -289,8 +290,9 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		
 		
 		int hourNums = 0;
+		int weekNums = 0;
 		for(SiteReserveDate siteReserveDate : siteReserveDateList){
-			
+			weekNums += getWeekNums(siteReserveDate);
 			siteReserveDate.setSiteReserveId(siteReserveBasic.getSiteReserveId());
 			baseDao.save(siteReserveDate, null);
 			List<SiteReserveTime> siteReserveTimeList = siteReserveDate.getSiteReserveTimeList();
@@ -326,10 +328,11 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 				orderDetail.setOrderDetailStatus(IDBConstant.LOGIC_STATUS_NO); //子订单：未完成
 				orderDetail.setItemAmount(1); //场地预定，数量为1
 				orderDetails.add(orderDetail);
-				hourNums = DateUtil.getTimeHourNums(siteReserveTime.getSiteStartTime(), siteReserveTime.getSiteEndTime());
+				hourNums = getHourNums(siteReserveTime);
 			}
 		}
-		orderInfo.setSumCount(hourNums); //总次数（通过计算）
+		orderInfo.setSumCount(weekNums * hourNums); //总次数（通过计算）
+		if(orderInfo.getSumCount() < orderInfo.getUseCount()) throw new MessageException("输入的场次数超过，最大场次数为："+orderInfo.getSumCount());
 		Integer orderId = orderService.saveOrderInfo(orderInfo, orderDetails);
 		siteReserveBasic.setOrderId(orderId);
 		baseDao.save(siteReserveBasic, siteReserveBasic.getSiteReserveId());
@@ -407,31 +410,44 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	}
 	
 	private Map<String, Object> getPrice(List<SiteReserveDate> siteReserveDateList, Integer memberId, String opType) throws ParseException {
-		double memberDiscount = memberService.getMemberDiscount(memberId, opType); //会员折扣
+		//double memberDiscount = memberService.getMemberDiscount(memberId, opType); //会员折扣
 		
 		Double originalPriceSum = 0.0; //原价
+		int sumWeekNums = 0;
+		int hourNums = 0;
 		for(SiteReserveDate siteReserveDate : siteReserveDateList){
-			int weekNums = DateUtil.getDateScopeWeekNums(siteReserveDate.getReserveStartDate(), siteReserveDate.getReserveEndDate(), siteReserveDate.getReserveWeek());
+			int weekNums = getWeekNums(siteReserveDate);
 			List<SiteReserveTime> siteReserveTimeList = siteReserveDate.getSiteReserveTimeList();
 			Double originalPrice = 0.0;
 			for(SiteReserveTime siteReserveTime : siteReserveTimeList){
 				originalPrice += getHourPrice(siteReserveTime);
+				hourNums += getHourNums(siteReserveTime);
 			}
 			originalPriceSum += originalPrice * weekNums; //每一段时间多少钱（总场地钱数*星期个数）
+			sumWeekNums += weekNums;
 		}
-		Double presentPriceSum = originalPriceSum * (memberDiscount/100); //打折后的价格
+		//Double presentPriceSum = originalPriceSum * (memberDiscount/100); //打折后的价格
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("originalPrice", originalPriceSum);
-		resultMap.put("presentPrice", presentPriceSum);
-		resultMap.put("memberDiscount", memberDiscount);
+		/*resultMap.put("presentPrice", presentPriceSum);
+		resultMap.put("memberDiscount", memberDiscount);*/ //【新需求没有折扣】
+		resultMap.put("sumNums", sumWeekNums * hourNums);
 		return resultMap;
 	}
 
+	private int getWeekNums(SiteReserveDate siteReserveDate) throws ParseException {
+		return DateUtil.getDateScopeWeekNums(siteReserveDate.getReserveStartDate(), siteReserveDate.getReserveEndDate(), siteReserveDate.getReserveWeek());
+	}
+
 	private Double getHourPrice(SiteReserveTime siteReserveTime) throws ParseException {
-		int hourNums = DateUtil.getTimeHourNums(siteReserveTime.getSiteStartTime(), siteReserveTime.getSiteEndTime());
+		int hourNums = getHourNums(siteReserveTime);
 		Map<String, Object> siteSport = getSiteSportName(siteReserveTime.getSiteId());
 		return StrUtil.objToDouble(siteSport.get("sportMoney"))*hourNums; //最底层每个场地多少钱（小时数*价格）
+	}
+
+	private int getHourNums(SiteReserveTime siteReserveTime) throws ParseException {
+		return DateUtil.getTimeHourNums(siteReserveTime.getSiteStartTime(), siteReserveTime.getSiteEndTime());
 	}
 	
 	@Override
@@ -475,6 +491,28 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		siteReserveBasic.setSiteReserveDateList(getSiteReserveDate(siteReserveBasic.getSiteReserveId()));
 		getSiteReserveDateTime(siteReserveBasic.getSiteReserveDateList());
 		return siteReserveBasic;
+	}
+	
+	@Override
+	public Map<String, Object> getSiteReserveBasicByMobile(String mobile){
+		StringBuilder sql = new StringBuilder("SELECT * FROM site_reserve_basic srb, site_reserve_date srd, site_reserve_time srt");
+		sql.append(" WHERE srb.mobile = ?");
+		sql.append(" AND CONCAT(srd.reserveStartDate,' ',srt.siteStartTime) >= DATE_ADD(NOW(),INTERVAL ? MINUTE)");
+		sql.append(" AND CONCAT(srd.reserveStartDate,' ',srt.siteStartTime) <= DATE_ADD(NOW(),INTERVAL ? MINUTE)");
+		return baseDao.queryBySqlFirst(sql.toString(), mobile, IPlatformConstant.SITE_ADVANCE_START_TIME, IPlatformConstant.SITE_LATE_START_TIME);
+	}
+	
+	@Override
+	public Map<String, Object> getNextSiteReserveBasicByMobile(String mobile){
+		StringBuilder sql = new StringBuilder("SELECT CONCAT(srd.reserveStartDate,' ',srt.siteStartTime) startSiteDate, srb.* FROM site_reserve_basic srb, site_reserve_date srd, site_reserve_time srt");
+		sql.append(" WHERE srb.mobile = ?");
+		sql.append(" AND CONCAT(srd.reserveStartDate,' ',srt.siteStartTime) >= DATE_ADD(NOW(),INTERVAL ? MINUTE)");
+		return baseDao.queryBySqlFirst(sql.toString(), mobile);
+	}
+	
+	@Override
+	public SiteReserveTime getSiteReserveTime(int reserveTimeId){
+		return baseDao.getToEvict(SiteReserveTime.class, reserveTimeId);
 	}
 	
 	private Map<String, Object> getReserveIntersection(int siteId, String startDate, String endDate, String weeks, String startTime, String endTime) throws ParseException{
