@@ -21,6 +21,7 @@
             this.initEvents();
         },
         initEvents: function () {
+            // 注册信息
             $(".register-member").on("click", function (e) {
                 e.preventDefault();
 
@@ -33,18 +34,30 @@
                 $form.attr("submitting", "submitting");
 
                 $.post('/member/saveMember', conditions, function (res) {
-                    $form.attr("submitting", "");
+                    var data = res.data;
 
-                    if (res.code == 1) {
-                        $("#tips_success_modal").modal({show: true, backdrop: false});
-                        setTimeout(function () {
-                            $("#tips_success_modal").modal("hide");
-                            location.assign('/teachers/list');
-                        }, 3000);
-                    } else {
-                        alert(res.message || "场馆基础信息设置失败, 请稍后重试");
-                        console.log(res.message || "场馆基础信息设置失败, 请稍后重试");
+                    if (res.code != 1) {
+                        console.log(res.message || "教师信息注册失败, 请稍后重试");
+                        alert(res.message || "教师信息注册失败, 请稍后重试");
+                        return;
                     }
+
+                    $('[name="memberId"]').val(data.memberId);
+                    conditions.memberId = data.memberId;
+                    $.post('/member/saveMemberCar', conditions, function (res) {
+                        $form.attr("submitting", "");
+
+                        if (res.code == 1) {
+                            $("#tips_success_modal").modal({show: true, backdrop: false});
+                            setTimeout(function () {
+                                $("#tips_success_modal").modal("hide");
+                                location.assign('/teachers/list');
+                            }, 3000);
+                        } else {
+                            console.log(res.message || "教师绑卡失败, 请稍后重试");
+                            alert(res.message || "教师绑卡失败, 请稍后重试");
+                        }
+                    });
                 });
             });
         }

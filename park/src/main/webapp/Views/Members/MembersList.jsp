@@ -53,13 +53,12 @@
                             <th>姓名</th>
                             <th>手机号码</th>
                             <th>会员卡号</th>
-                            <th>会员类型</th>
                             <th>截止日期</th>
                             <th>余额(元)</th>
                             <th>子会员</th>
                             <th>状态</th>
                             <th>操作人</th>
-                            <th>办卡时间</th>
+                            <th>操作时间</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -68,8 +67,12 @@
                             <tr>
                                 <td>${member.memberName}</td>
                                 <td>${member.memberMobile}</td>
-                                <td>${member.cardNo}</td>
-                                <td>${member.cardTypeName}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${member.tempCardNo == null}">${member.cardNo}</c:when>
+                                        <c:otherwise> -- </c:otherwise>
+                                    </c:choose>
+                                </td>
                                 <td>
                                     <c:choose>
                                         <c:when test="${member.cardDeadline == 0}">不限制</c:when>
@@ -77,17 +80,26 @@
                                     </c:choose>
                                 </td>
                                 <td>
-                                    <a href="/member/getBalances?cardId=${member.cardId}&memberId=${member.memberId}">${member.cardBalance}元</a>
+                                    <c:choose>
+                                        <c:when test="${member.tempCardNo == null}">
+                                            <a href="/member/getBalances?cardId=${member.cardId}&memberId=${member.memberId}">${member.cardBalance}元</a>
+                                        </c:when>
+                                        <c:otherwise> -- </c:otherwise>
+                                    </c:choose>
                                 </td>
                                 <td>
-                                    <a href="/member/getMembersChildren?memberId=${member.memberId}">${member.childrenCount}人</a>
+                                    <c:choose>
+                                        <c:when test="${member.tempCardNo == null}">
+                                            <a href="/member/getMembersChildren?memberId=${member.memberId}">${member.childrenCount}人</a>
+                                        </c:when>
+                                        <c:otherwise> -- </c:otherwise>
+                                    </c:choose>
                                 </td>
-                                <c:if test="${member.cardStatus == 1}">
-                                    <td class="text-success">有效</td>
-                                </c:if>
-                                <c:if test="${member.cardStatus == 2}">
-                                    <td class="text-danger">锁定</td>
-                                </c:if>
+                                <c:choose>
+                                    <c:when test="${member.cardStatus == 1}"><td class="text-success">有效</td></c:when>
+                                    <c:when test="${member.cardStatus == 2}"><td class="text-danger">锁定</td></c:when>
+                                    <c:otherwise><td>--</td></c:otherwise>
+                                </c:choose>
                                 <td>${member.operatorName}</td>
                                 <td>${member.createTime}</td>
                                 <td>

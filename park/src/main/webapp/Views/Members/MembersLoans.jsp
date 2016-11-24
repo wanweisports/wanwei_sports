@@ -6,11 +6,21 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
     <script src="/Content/app/members/members_loans.js?v=${static_resource_version}"></script>
+    <script>
+        $(document).ready(function () {
+            // 配置表单校验
+            $('#card_receipt_form').validate({
+                ignore: ":hidden"
+            });
+        });
+    </script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>会员管理</span> &gt;&gt; <span style="color: #f00;">应收款管理[未完成]</span>
+    当前位置: <span>会员管理</span> &gt;&gt; <span>应收款管理</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -57,22 +67,37 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>20161123121415</td>
-                            <td>北体高科公司</td>
-                            <td>11012345678</td>
-                            <td>100场</td>
-                            <td class="text-success">50场(2000.00元)</td>
-                            <td>60场</td>
-                            <td>50场(<span class="text-danger">10场欠款</span>)</td>
-                            <td>
-                                <button type="button" class="btn btn-danger receipt-dialog" data-toggle="modal"
-                                        data-target="#receiptModal" data-backdrop="false">
-                                    <span class="glyphicon glyphicon-usd"></span> 收款
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
+                        <c:forEach var="loan" items="${list}">
+                            <tr>
+                                <td>${loan.orderNo}</td>
+                                <td>${loan.memberName}</td>
+                                <td>${loan.memberMobile}</td>
+                                <td>${loan.sumCount}场</td>
+                                <td class="text-success">${loan.payCount}场(${loan.paySumPrice}元)</td>
+                                <td>${loan.useCount}场</td>
+                                <c:if test="${loan.oweCount > 0}">
+                                    <td>${sumCount - payCount}场(<span class="text-danger">${loan.oweCount}场欠款</span>)</td>
+                                </c:if>
+                                <c:if test="${loan.oweCount <= 0}">
+                                    <td>${sumCount - payCount}场(<span class="text-success">未欠款</span>)</td>
+                                </c:if>
+                                <td>
+                                    <c:if test="${loan.oweCount > 0}">
+                                        <button type="button" class="btn btn-danger receipt-dialog" data-toggle="modal"
+                                                data-target="#receiptModal" data-backdrop="false" data-id="${loan.receivableId}">
+                                            <span class="glyphicon glyphicon-usd"></span> 收款
+                                        </button>
+                                    </c:if>
+                                    <c:if test="${loan.oweCount <= 0}">
+                                        <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
+                                                data-target="#receiptModal" data-backdrop="false" data-id="${loan.receivableId}">
+                                            <span class="glyphicon glyphicon-usd"></span> 收款
+                                        </button>
+                                    </c:if>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        <!--<tr>
                             <td>20161123121415</td>
                             <td>北体高科公司</td>
                             <td>11012345678</td>
@@ -101,22 +126,7 @@
                                     <span class="glyphicon glyphicon-usd"></span> 收款
                                 </button>
                             </td>
-                        </tr>
-                        <tr>
-                            <td>20161123121415</td>
-                            <td>北体高科公司</td>
-                            <td>11012345678</td>
-                            <td>100场</td>
-                            <td class="text-success">50场(2000.00元)</td>
-                            <td>40场</td>
-                            <td>50场(未欠款)</td>
-                            <td>
-                                <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
-                                        data-target="#receiptModal" data-backdrop="false">
-                                    <span class="glyphicon glyphicon-usd"></span> 收款
-                                </button>
-                            </td>
-                        </tr>
+                        </tr>-->
                         </tbody>
                     </table>
                     <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >
@@ -199,24 +209,19 @@
                 </div>
                 <div class="modal-body" style="overflow: hidden;">
                     <form id="card_receipt_form" class="form-horizontal" onsubmit="return false;">
-                        <div class="form-group">
-                            <label for="card_receipt_order" class="col-sm-2 control-label">
-                                <span class="text-danger">*</span> 订单号
-                            </label>
-
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="card_receipt_order" name="orderNo"
-                                       placeholder="订单流水号" autocomplete="off" readonly value="FD0000121">
-                            </div>
-                        </div>
+                        <input type="hidden" name="receivableId">
                         <div class="form-group">
                             <label for="card_receipt_money" class="col-sm-2 control-label">
-                                <span class="text-danger">*</span> 场次数
+                                <span class="text-danger">*</span> 支付场数
                             </label>
 
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="card_receipt_money" name="money"
-                                       placeholder="所欠余额" autocomplete="off" readonly value="2000.00">
+                                <input type="text" class="form-control" id="card_receipt_money" name="payCount"
+                                       placeholder="支付场数" autocomplete="off"
+                                       data-val="true" data-val-required="支付场数不能为空"
+                                       data-val-regex-pattern="^[1-9]\d*$"
+                                       data-val-regex="支付场数格式错误">
+                                <div data-valmsg-for="payCount" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -225,12 +230,28 @@
                             </label>
 
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="card_receipt_money2" name="money2"
+                                <input type="text" class="form-control" id="card_receipt_money2" name="payPrice"
                                        placeholder="收款金额" autocomplete="off"
                                        data-val="true" data-val-required="收款金额不能为空"
-                                       data-val-regex-pattern="^[0-9]|[1-9][0-9]$"
-                                       data-val-regex="收款金额只能是数字">
-                                <div data-valmsg-for="money2" data-valmsg-replace="true"></div>
+                                       data-val-regex-pattern="^(0(\.[0-9]{1,2})?)|([1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                       data-val-regex="收款金额格式错误">
+                                <div data-valmsg-for="payPrice" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="card_pay_type" class="col-sm-2 control-label">
+                                <span class="text-danger">*</span> 支付方式
+                            </label>
+
+                            <div class="col-sm-10">
+                                <select class="form-control" id="card_pay_type" name="payType"
+                                        data-val="true" data-val-required="请选择支付方式">
+                                    <option value="">请选择</option>
+                                    <option value="1">现金</option>
+                                    <option value="2">支付宝</option>
+                                    <option value="3">微信</option>
+                                </select>
+                                <div data-valmsg-for="payType" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </form>

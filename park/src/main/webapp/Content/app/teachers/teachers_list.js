@@ -37,28 +37,53 @@
             });
 
             // 补办
-            $(".teachers-list").on("click", ".teachers-buban", function () {
+            $(".teachers-list").on("click", ".teachers-refresh", function () {
                 var $this = $(this);
+
+                $("#refresh_cardId").val($this.attr("data-cardId"));
+                $("#refresh_cardNo").val($this.attr("data-cardNo"));
+
+                // 生成新会员卡号
+                $.post('/member/getNewCardNo', function (res) {
+                    var data = res.data;
+
+                    if (res.code == 1) {
+                        $("#refresh_newNo").val(data.newCardNo).attr("readonly", "readonly");
+                    } else {
+                        console.log(res.message || "新会员卡号生成失败, 请稍后重试");
+                        alert(res.message || "新会员卡号生成失败, 请稍后重试");
+                    }
+                });
             });
 
-            // 确认补办
-            $("#kucunModal").on("click", ".confirm-count", function (e) {
+            // 补办
+            $(".confirm-refresh").on("click", function (e) {
                 e.preventDefault();
 
-                var $form = $("#buban_form");
+                var $form = $("#refresh_form");
                 var conditions = $form.serialize();
+
+                if ($("#refresh_cardId").val() === "") {
+                    alert("请先选择会员卡");
+                    return false;
+                }
 
                 if ($form.attr("submitting") == "submitting" || !$form.valid()) {
                     return false;
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post("/", conditions, function (res) {
+                $.post('/member/memberCardBuBan', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        location.reload();
+                        $("#refreshModal").modal({backdrop: false, show: true});
+                        setTimeout(function () {
+                            $("#refreshModal").modal("hide");
+                            location.reload();
+                        }, 3000);
                     } else {
+                        console.log(res.message || "教师卡补办失败, 请稍后重试");
                         alert(res.message || "教师卡补办失败, 请稍后重试");
                     }
                 });

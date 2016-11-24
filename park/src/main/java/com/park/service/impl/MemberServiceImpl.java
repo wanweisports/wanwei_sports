@@ -270,11 +270,12 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		String cardTypeId = memberInputView.getCardTypeId();
 		String memberType = memberInputView.getMemberType();
 		
-		StringBuilder headSql = new StringBuilder("SELECT uo.operatorName, um.memberId, mc.cardId, um.memberName, um.memberMobile, um.memberIdcard, mc.cardNo, mc.cardTypeId, mc.cardDeadline, mc.cardBalance, mc.cardStatus, mc.salesId, DATE_FORMAT(mc.createTime,'%Y-%m-%d') createTime, tempCardNo, (SELECT COUNT(1) FROM user_member umc WHERE umc.parentMemberId=um.memberId) childrenCount");
+		StringBuilder headSql = new StringBuilder("SELECT uo.operatorName, um.memberId, mc.cardId, um.memberName, um.memberMobile, um.memberIdcard, mc.cardNo, mc.cardTypeId, mc.cardDeadline, mc.cardBalance, mc.cardStatus, mc.salesId, DATE_FORMAT(uo.createTime,'%Y-%m-%d') createTime, tempCardNo, (SELECT COUNT(1) FROM user_member umc WHERE umc.parentMemberId=um.memberId) childrenCount");
 		StringBuilder bodySql = new StringBuilder(" FROM user_member um");
 		bodySql.append(" LEFT JOIN member_card mc ON(um.memberId = mc.memberId)");
-		bodySql.append(" LEFT JOIN user_operator uo ON(mc.salesId = uo.id)");
+		bodySql.append(" LEFT JOIN user_operator uo ON(um.salesId = uo.id)");
 		StringBuilder whereSql = new StringBuilder(" WHERE um.parentMemberId IS NULL AND um.memberStatus = ").append(IDBConstant.LOGIC_STATUS_YES);
+		
 		if(StrUtil.isNotBlank(memberMobile)){
 			whereSql.append(" AND um.memberMobile = :memberMobile");
 		}
