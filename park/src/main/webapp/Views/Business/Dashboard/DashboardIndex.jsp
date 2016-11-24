@@ -6,7 +6,7 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
-    <link href="/Content/style/mobile/home/dashboard.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="/Content/style/business/dashboard/dashboard.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -22,45 +22,57 @@
         <div class="weui-grids">
             <a href="/business/data/income" class="weui-grid">
                 <div class="weui-grid__icon">
-                    <img src="/Content/images/mobile/coins.png?v=${static_resource_version}" alt="数据统计">
+                    <img src="/Content/images/mobile/coins.png?v=${static_resource_version}" alt="营业数据">
                 </div>
                 <p class="weui-grid__label">营业数据</p>
             </a>
             <a href="/business/data/venuePercentage" class="weui-grid">
                 <div class="weui-grid__icon">
-                    <img src="/Content/images/mobile/chart.png?v=${static_resource_version}" alt="用户信息">
+                    <img src="/Content/images/mobile/chart.png?v=${static_resource_version}" alt="场地数据">
                 </div>
                 <p class="weui-grid__label">场地数据</p>
             </a>
             <a href="/business/oa/notifications" class="weui-grid">
                 <div class="weui-grid__icon">
-                    <img src="/Content/images/mobile/message.png?v=${static_resource_version}" alt="场地预订">
+                    <img src="/Content/images/mobile/email.png?v=${static_resource_version}" alt="消息通知">
                 </div>
                 <p class="weui-grid__label">消息通知</p>
             </a>
             <a href="/business/office/schedule" class="weui-grid">
                 <div class="weui-grid__icon">
-                    <img src="/Content/images/mobile/calendar.png?v=${static_resource_version}" alt="用户信息">
+                    <img src="/Content/images/mobile/calendar.png?v=${static_resource_version}" alt="值班安排">
                 </div>
                 <p class="weui-grid__label">值班安排</p>
             </a>
+            <a href="/business/training/list" class="weui-grid">
+                <div class="weui-grid__icon">
+                    <img src="/Content/images/mobile/classroom.png?v=${static_resource_version}" alt="培训报名">
+                </div>
+                <p class="weui-grid__label">培训管理</p>
+            </a>
             <a href="/mobile/center/profile" class="weui-grid">
                 <div class="weui-grid__icon">
-                    <img src="/Content/images/mobile/user.png?v=${static_resource_version}" alt="用户信息">
+                    <img src="/Content/images/mobile/user.png?v=${static_resource_version}" alt="完善信息">
                 </div>
-                <p class="weui-grid__label">我的信息</p>
+                <p class="weui-grid__label">完善信息</p>
             </a>
             <a href="/mobile/center/password" class="weui-grid">
                 <div class="weui-grid__icon">
-                    <img src="/Content/images/mobile/key.png?v=${static_resource_version}" alt="用户信息">
+                    <img src="/Content/images/mobile/key.png?v=${static_resource_version}" alt="重置密码">
                 </div>
-                <p class="weui-grid__label">修改密码</p>
+                <p class="weui-grid__label">重置密码</p>
             </a>
-            <a href="/mobile/center/about" class="weui-grid">
+            <a href="/mobile/center/password" class="weui-grid">
                 <div class="weui-grid__icon">
-                    <img src="/Content/images/mobile/about.png?v=${static_resource_version}" alt="系统消息">
+                    <img src="/Content/images/mobile/message.png?v=${static_resource_version}" alt="我的消息">
                 </div>
-                <p class="weui-grid__label">关于我们</p>
+                <p class="weui-grid__label">我的消息</p>
+            </a>
+            <a href="/business/passport/logout" class="weui-grid">
+                <div class="weui-grid__icon">
+                    <img src="/Content/images/mobile/logout.png?v=${static_resource_version}" alt="退出登录">
+                </div>
+                <p class="weui-grid__label">退出登录</p>
             </a>
         </div>
     </div>

@@ -6,24 +6,163 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
-    <link href="/Content/style/mobile/center/center_profile.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="/Content/style/business/schedule/office_schedule.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div id="main" class="container">
-        <div class="weui-grids">
-            <a href="javascript:;" class="weui-grid">
-                <p class="weui-grid__label">上午</p>
-                <p class="weui-grid__label">张老师</p>
-            </a>
-            <a href="javascript:;" class="weui-grid">
-                <p class="weui-grid__label">下午</p>
-                <p class="weui-grid__label">张老师</p>
-            </a>
-            <a href="javascript:;" class="weui-grid">
-                <p class="weui-grid__label">晚上</p>
-                <p class="weui-grid__label">张老师</p>
-            </a>
+        <div class="weui-cells">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>周一(2016-11-21)</p>
+                </div>
+            </div>
+            <div class="weui-grids">
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">上午</p>
+                    <p class="weui-grid__label">张老师</p>
+                </a>
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">下午</p>
+                    <p class="weui-grid__label">张老师</p>
+                </a>
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">晚上</p>
+                    <p class="weui-grid__label">张老师</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="weui-cells">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>周二(2016-11-22)</p>
+                </div>
+            </div>
+            <div class="weui-grids">
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">上午</p>
+                    <p class="weui-grid__label">张老师</p>
+                </a>
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">下午</p>
+                    <p class="weui-grid__label">张老师</p>
+                </a>
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">晚上</p>
+                    <p class="weui-grid__label">张老师</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="weui-cells">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>周三(2016-11-23)</p>
+                </div>
+            </div>
+            <div class="weui-grids">
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">上午</p>
+                    <p class="weui-grid__label">张老师</p>
+                </a>
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">下午</p>
+                    <p class="weui-grid__label">张老师</p>
+                </a>
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">晚上</p>
+                    <p class="weui-grid__label">张老师</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="weui-cells">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>周四(2016-11-24)</p>
+                </div>
+            </div>
+            <div class="weui-grids">
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">上午</p>
+                    <p class="weui-grid__label">张老师</p>
+                </a>
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">下午</p>
+                    <p class="weui-grid__label">张老师</p>
+                </a>
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">晚上</p>
+                    <p class="weui-grid__label">张老师</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="weui-cells">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>周五(2016-11-25)</p>
+                </div>
+            </div>
+            <div class="weui-grids">
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">上午</p>
+                    <p class="weui-grid__label">张老师</p>
+                </a>
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">下午</p>
+                    <p class="weui-grid__label">张老师</p>
+                </a>
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">晚上</p>
+                    <p class="weui-grid__label">张老师</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="weui-cells">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>周六(2016-11-26)</p>
+                </div>
+            </div>
+            <div class="weui-grids">
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">上午</p>
+                    <p class="weui-grid__label">张老师</p>
+                </a>
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">下午</p>
+                    <p class="weui-grid__label">张老师</p>
+                </a>
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">晚上</p>
+                    <p class="weui-grid__label">张老师</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="weui-cells">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>周日(2016-11-27)</p>
+                </div>
+            </div>
+            <div class="weui-grids">
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">上午</p>
+                    <p class="weui-grid__label">张老师</p>
+                </a>
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">下午</p>
+                    <p class="weui-grid__label">张老师</p>
+                </a>
+                <a href="javascript:;" class="weui-grid">
+                    <p class="weui-grid__label">晚上</p>
+                    <p class="weui-grid__label">张老师</p>
+                </a>
+            </div>
         </div>
     </div>
 </layout:override>

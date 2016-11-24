@@ -6,7 +6,7 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
-    <link href="/Content/style/mobile/center/center_profile.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="/Content/style/business/oa/oa_notifications_detail.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -14,13 +14,13 @@
         <div class="weui-tab">
             <div class="weui-navbar">
                 <div class="weui-navbar__item weui-bar__item_on">
-                    所有
+                    所有通知
                 </div>
                 <div class="weui-navbar__item">
-                    已被读
+                    已读通知
                 </div>
                 <div class="weui-navbar__item">
-                    未被读
+                    未读通知
                 </div>
             </div>
             <div class="weui-tab__panel">
@@ -28,7 +28,7 @@
                     <div class="weui-form-preview__hd">
                         <div class="weui-form-preview__item">
                             <label class="weui-form-preview__label">2016-11-11</label>
-                            <em class="weui-form-preview__value text-danger">对方未读</em>
+                            <em class="weui-form-preview__value warning-color">未读</em>
                         </div>
                     </div>
                     <div class="weui-form-preview__bd">
@@ -40,17 +40,21 @@
                             <label class="weui-form-preview__label">消息内容</label>
                             <span class="weui-form-preview__value">很长很长的名字很长很长的名字很长很长的名字很长很长的名字很长很长的名字...</span>
                         </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">有无附件</label>
+                            <span class="weui-form-preview__value">2个附件</span>
+                        </div>
                     </div>
                     <div class="weui-form-preview__ft">
-                        <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:">标记已读</a>
-                        <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">查看消息</a>
+                        <a class="weui-form-preview__btn weui-form-preview__btn_default"
+                           href="/business/oa/notificationsDetail">查看消息</a>
                     </div>
                 </div>
 
                 <div class="weui-form-preview">
                     <div class="weui-form-preview__hd">
                         <label class="weui-form-preview__label">2016-11-11</label>
-                        <em class="weui-form-preview__value text-success">对方已读</em>
+                        <em class="weui-form-preview__value tips-color">已读</em>
                     </div>
                     <div class="weui-form-preview__bd">
                         <div class="weui-form-preview__item">
@@ -61,16 +65,21 @@
                             <label class="weui-form-preview__label">消息内容</label>
                             <span class="weui-form-preview__value">很长很长的名字很长很长的名字很长很长的名字很长很长的名字很长很长的名字...</span>
                         </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">有无附件</label>
+                            <span class="weui-form-preview__value">2个附件</span>
+                        </div>
                     </div>
                     <div class="weui-form-preview__ft">
-                        <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:">查看消息</a>
+                        <a class="weui-form-preview__btn weui-form-preview__btn_default"
+                           href="/business/oa/notificationsDetail">查看消息</a>
                     </div>
                 </div>
                 <div class="weui-form-preview">
                     <div class="weui-form-preview__hd">
                         <div class="weui-form-preview__item">
                             <label class="weui-form-preview__label">2016-11-11</label>
-                            <em class="weui-form-preview__value text-danger">对方未读</em>
+                            <em class="weui-form-preview__value warning-color">未读</em>
                         </div>
                     </div>
                     <div class="weui-form-preview__bd">
@@ -82,17 +91,21 @@
                             <label class="weui-form-preview__label">消息内容</label>
                             <span class="weui-form-preview__value">很长很长的名字很长很长的名字很长很长的名字很长很长的名字很长很长的名字...</span>
                         </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">有无附件</label>
+                            <span class="weui-form-preview__value">2个附件</span>
+                        </div>
                     </div>
                     <div class="weui-form-preview__ft">
-                        <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:">标记已读</a>
-                        <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">查看消息</a>
+                        <a class="weui-form-preview__btn weui-form-preview__btn_default"
+                           href="/business/oa/notificationsDetail">查看消息</a>
                     </div>
                 </div>
 
                 <div class="weui-form-preview">
                     <div class="weui-form-preview__hd">
                         <label class="weui-form-preview__label">2016-11-11</label>
-                        <em class="weui-form-preview__value text-success">对方已读</em>
+                        <em class="weui-form-preview__value tips-color">已读</em>
                     </div>
                     <div class="weui-form-preview__bd">
                         <div class="weui-form-preview__item">
@@ -103,16 +116,21 @@
                             <label class="weui-form-preview__label">消息内容</label>
                             <span class="weui-form-preview__value">很长很长的名字很长很长的名字很长很长的名字很长很长的名字很长很长的名字...</span>
                         </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">有无附件</label>
+                            <span class="weui-form-preview__value">2个附件</span>
+                        </div>
                     </div>
                     <div class="weui-form-preview__ft">
-                        <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:">查看消息</a>
+                        <a class="weui-form-preview__btn weui-form-preview__btn_default"
+                           href="/business/oa/notificationsDetail">查看消息</a>
                     </div>
                 </div>
                 <div class="weui-form-preview">
                     <div class="weui-form-preview__hd">
                         <div class="weui-form-preview__item">
                             <label class="weui-form-preview__label">2016-11-11</label>
-                            <em class="weui-form-preview__value text-danger">对方未读</em>
+                            <em class="weui-form-preview__value warning-color">未读</em>
                         </div>
                     </div>
                     <div class="weui-form-preview__bd">
@@ -124,17 +142,21 @@
                             <label class="weui-form-preview__label">消息内容</label>
                             <span class="weui-form-preview__value">很长很长的名字很长很长的名字很长很长的名字很长很长的名字很长很长的名字...</span>
                         </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">有无附件</label>
+                            <span class="weui-form-preview__value">2个附件</span>
+                        </div>
                     </div>
                     <div class="weui-form-preview__ft">
-                        <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:">标记已读</a>
-                        <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">查看消息</a>
+                        <a class="weui-form-preview__btn weui-form-preview__btn_default"
+                           href="/business/oa/notificationsDetail">查看消息</a>
                     </div>
                 </div>
 
                 <div class="weui-form-preview">
                     <div class="weui-form-preview__hd">
                         <label class="weui-form-preview__label">2016-11-11</label>
-                        <em class="weui-form-preview__value text-success">对方已读</em>
+                        <em class="weui-form-preview__value tips-color">已读</em>
                     </div>
                     <div class="weui-form-preview__bd">
                         <div class="weui-form-preview__item">
@@ -145,9 +167,14 @@
                             <label class="weui-form-preview__label">消息内容</label>
                             <span class="weui-form-preview__value">很长很长的名字很长很长的名字很长很长的名字很长很长的名字很长很长的名字...</span>
                         </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">有无附件</label>
+                            <span class="weui-form-preview__value">2个附件</span>
+                        </div>
                     </div>
                     <div class="weui-form-preview__ft">
-                        <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:">查看消息</a>
+                        <a class="weui-form-preview__btn weui-form-preview__btn_default"
+                           href="/business/oa/notificationsDetail">查看消息</a>
                     </div>
                 </div>
                 <div class="weui-loadmore">

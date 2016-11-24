@@ -32,11 +32,17 @@
                 </div>
                 <p class="weui-grid__label">我的订单</p>
             </a>
+            <a href="mobile/training/list" class="weui-grid">
+                <div class="weui-grid__icon">
+                    <img src="/Content/images/mobile/classroom.png?v=${static_resource_version}" alt="用户信息">
+                </div>
+                <p class="weui-grid__label">培训报名</p>
+            </a>
             <a href="/mobile/center/profile" class="weui-grid">
                 <div class="weui-grid__icon">
                     <img src="/Content/images/mobile/user.png?v=${static_resource_version}" alt="用户信息">
                 </div>
-                <p class="weui-grid__label">账户编辑</p>
+                <p class="weui-grid__label">完善信息</p>
             </a>
             <a href="/mobile/center/password" class="weui-grid">
                 <div class="weui-grid__icon">
@@ -44,17 +50,17 @@
                 </div>
                 <p class="weui-grid__label">修改密码</p>
             </a>
+            <a href="mobile/center/children" class="weui-grid">
+                <div class="weui-grid__icon">
+                    <img src="/Content/images/mobile/groups.png?v=${static_resource_version}" alt="用户信息">
+                </div>
+                <p class="weui-grid__label">子会员</p>
+            </a>
             <a href="/mobile/center/card" class="weui-grid">
                 <div class="weui-grid__icon">
                     <img src="/Content/images/mobile/cards.png?v=${static_resource_version}" alt="用户信息">
                 </div>
                 <p class="weui-grid__label">会员卡</p>
-            </a>
-            <a href="mobile/training/list" class="weui-grid">
-                <div class="weui-grid__icon">
-                    <img src="/Content/images/mobile/classroom.png?v=${static_resource_version}" alt="用户信息">
-                </div>
-                <p class="weui-grid__label">培训报名</p>
             </a>
             <a href="/mobile/center/about" class="weui-grid">
                 <div class="weui-grid__icon">

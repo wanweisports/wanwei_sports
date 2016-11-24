@@ -54,7 +54,7 @@
                     <div class="weui-form-preview__hd">
                         <div class="weui-form-preview__item">
                             <label class="weui-form-preview__label">付款金额</label>
-                            <em class="weui-form-preview__value">¥2400.00</em>
+                            <em class="weui-form-preview__value warning-color">¥2400.00</em>
                         </div>
                     </div>
                     <div class="weui-form-preview__bd">

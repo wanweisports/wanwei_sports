@@ -15,40 +15,38 @@
         <div class="weui-cells">
             <div class="weui-cell">
                 <div class="weui-cell__bd">
-                    <p>支付类型</p>
-                </div>
-                <div class="weui-cell__ft">预付类型</div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
                     <p>会员类型</p>
                 </div>
-                <div class="weui-cell__ft">金卡</div>
+                <div class="weui-cell__ft">会员卡</div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <p>余额</p>
                 </div>
-                <div class="weui-cell__ft">100元</div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>折扣</p>
-                </div>
-                <div class="weui-cell__ft">8.0折</div>
+                <div class="weui-cell__ft">2100元</div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <p>截止日期</p>
                 </div>
-                <div class="weui-cell__ft">2016-11-31</div>
+                <div class="weui-cell__ft">不限制</div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <p>销售员</p>
                 </div>
-                <div class="weui-cell__ft">小星星</div>
+                <div class="weui-cell__ft">王老师</div>
             </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>办理日期</p>
+                </div>
+                <div class="weui-cell__ft">2016-11-25</div>
+            </div>
+        </div>
+
+        <div class="weui-btn-area">
+            <a class="weui-btn weui-btn_primary" href="javascript:">充 值</a>
         </div>
     </div>
 </layout:override>
