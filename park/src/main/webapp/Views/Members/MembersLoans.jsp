@@ -76,10 +76,10 @@
                                 <td class="text-success">${loan.payCount}场(${loan.paySumPrice}元)</td>
                                 <td>${loan.useCount}场</td>
                                 <c:if test="${loan.oweCount > 0}">
-                                    <td>${sumCount - payCount}场(<span class="text-danger">${loan.oweCount}场欠款</span>)</td>
+                                    <td>${loan.sumCount - loan.payCount}场(<span class="text-danger">${loan.oweCount}场欠款</span>)</td>
                                 </c:if>
                                 <c:if test="${loan.oweCount <= 0}">
-                                    <td>${sumCount - payCount}场(<span class="text-success">未欠款</span>)</td>
+                                    <td>${loan.sumCount - loan.payCount}场(<span class="text-success">未欠款</span>)</td>
                                 </c:if>
                                 <td>
                                     <c:if test="${loan.oweCount > 0}">

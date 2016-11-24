@@ -57,7 +57,7 @@ public class MemberReceivableServiceImpl extends BaseService implements IMemberR
 	@Override
 	public PageBean getMemberReceivables(MemberInputView memberInputView){
 		String memberName = memberInputView.getMemberName();
-		String cardNo = memberInputView.getCardNo();
+		String memberMobile = memberInputView.getMemberMobile();
 		String orderNo = memberInputView.getOrderNo();
 		
 		StringBuilder headSql = new StringBuilder("SELECT mr.receivableId, um.memberName, um.memberMobile, oi.sumCount, oi.payCount, oi.useCount, (oi.useCount - oi.payCount) oweCount, mc.cardNo, oi.orderNo, oi.orderSumPrice, oi.paySumPrice, (oi.orderSumPrice-oi.paySumPrice) owePrice");
@@ -66,8 +66,8 @@ public class MemberReceivableServiceImpl extends BaseService implements IMemberR
 		if(StrUtil.isNotBlank(memberName)){
 			whereSql.append(" AND memberName = :memberName");
 		}
-		if(StrUtil.isNotBlank(cardNo)){
-			whereSql.append(" AND cardNo = :cardNo");
+		if(StrUtil.isNotBlank(memberMobile)){
+			whereSql.append(" AND memberMobile = :memberMobile");
 		}
 		if(StrUtil.isNotBlank(orderNo)){
 			whereSql.append(" AND orderNo = :orderNo");
