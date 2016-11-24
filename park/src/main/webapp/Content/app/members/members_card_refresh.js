@@ -14,6 +14,15 @@
                 }
             });
         },
+        calculateRefreshMoney: function () {
+            var $money = $("#refresh_money");
+            var $send = $("#refresh_send");
+
+            var money = parseFloat($money.val() || "0.00");
+            var send = parseFloat($send.val() || "0.00");
+
+            return (money + send).toFixed(2);
+        },
         initEvents: function () {
             $("#keywords").autosuggest({
                 url: '/member/searchMember',
@@ -77,6 +86,13 @@
                 });
             });
 
+            // 补办金额,补办金额改变
+            $("#refresh_money, #refresh_send").on("change", function (e) {
+                e.preventDefault();
+
+                $(".refresh-total-money").text(content.calculateRefreshMoney());
+            });
+
             // 会员卡补办
             $(".refresh-card-submit").on("click", function (e) {
                 e.preventDefault();
@@ -98,8 +114,12 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        alert("会员补办成功");
+                        $("#refreshModal").modal({backdrop: false, show: true});
+                        setTimeout(function () {
+                            $("#refreshModal").modal("hide");
+                        }, 3000);
                     } else {
+                        console.log(res.message || "会员补办失败, 请稍后重试");
                         alert(res.message || "会员补办失败, 请稍后重试");
                     }
                 });

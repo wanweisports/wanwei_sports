@@ -82,7 +82,14 @@
                             <label class="col-sm-4 control-label">截止日期</label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" value="${cardDeadline }" disabled>
+                                <c:choose>
+                                    <c:when test="${cardDeadline == 0}">
+                                        <input type="text" class="form-control" value="不限制" disabled>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input type="text" class="form-control" value="${cardDeadline}" disabled>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                     </div>
@@ -138,23 +145,18 @@
                                 <div data-valmsg-for="givingAmount" data-valmsg-replace="true"></div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="recharge_total" class="col-sm-4 control-label">卡内总额(元)</label>
-
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="recharge_total" name="totalAmount"
-                                       autocomplete="off" disabled value="充值金额 + 赠送金额">
-                            </div>
-                        </div>
                     </div>
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label for="recharge_remark" class="col-sm-2 control-label">备注</label>
 
                             <div class="col-sm-10">
-                            <textarea class="form-control" id="recharge_remark" name="remark" rows="3"
+                                <textarea class="form-control" id="recharge_remark" name="remark" rows="3"
                                       placeholder="请输入备注" autocomplete="off"></textarea>
                             </div>
+                        </div>
+                        <div class="alert alert-info" role="alert">
+                            合计金额(充值金额 + 赠送金额): <span class="recharge-total-money">0</span>元
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
@@ -166,6 +168,22 @@
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="rechargeModal" tabindex="-1" role="dialog" aria-labelledby="rechargeModalLabel">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="rechargeModalLabel">提示框</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info" role="alert">会员卡充值成功!</div>
+                </div>
             </div>
         </div>
     </div>

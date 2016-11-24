@@ -25,11 +25,32 @@
                 if (res.code == 1) {
                     $("#newCardNo").val(data.newCardNo);
                 } else {
+                    console.log(res.message || "新会员卡号生成失败, 请稍后重试");
                     alert(res.message || "新会员卡号生成失败, 请稍后重试");
                 }
             }, 'json');
         },
+        calculateRechargeMoney: function () {
+            var $money = $("#recharge_money");
+            var $send = $("#recharge_send");
+
+            var money = parseFloat($money.val() || "0.00");
+            var send = parseFloat($send.val() || "0.00");
+
+            return (money + send).toFixed(2);
+        },
+        calculateRefreshMoney: function () {
+            var $money = $("#refresh_money");
+            var $send = $("#refresh_send");
+
+            var money = parseFloat($money.val() || "0.00");
+            var send = parseFloat($send.val() || "0.00");
+
+            return (money + send).toFixed(2);
+        },
         initEvents: function () {
+            var content = this;
+
             // 更新会员信息
             $(".gengxin-modal").on("click", function (e) {
                 e.preventDefault();
@@ -47,10 +68,28 @@
 
                     if (res.code == 1) {
                         $("#gengxinModal").modal({backdrop: false, show: true});
+                        setTimeout(function () {
+                            $("#gengxinModal").modal("hide");
+                        }, 3000);
                     } else {
+                        console.log(res.message || "会员信息更新失败, 请稍后重试");
                         alert(res.message || "会员信息更新失败, 请稍后重试");
                     }
                 });
+            });
+
+            // 充值金额,赠送金额改变
+            $("#recharge_money, #recharge_send").on("change", function (e) {
+                e.preventDefault();
+
+                $(".recharge-total-money").text(content.calculateRechargeMoney());
+            });
+
+            // 补办金额,补办金额改变
+            $("#refresh_money, #refresh_send").on("change", function (e) {
+                e.preventDefault();
+
+                $(".refresh-total-money").text(content.calculateRefreshMoney());
             });
 
             // 会员卡充值
@@ -71,6 +110,7 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
+                        console.log(res.message || "会员充值失败, 请稍后重试");
                         alert(res.message || "会员充值失败, 请稍后重试");
                     }
                 });

@@ -187,9 +187,9 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	@Override
 	public PageBean getMemberCarTypes(MemberInputView memberInputView) {
 		String cardTypeStatus = memberInputView.getCardTypeStatus();
-		StringBuilder headSql = new StringBuilder("SELECT uo.operatorName, cardTypeId, cardType, cardTypeAhead, cardTypeCredit, cardTypeName, cardTypeStatus, cardTypeMonth, cardTypeMoney, cardTypeDiscount, cardTypeWeek, cardTypeTimeStart, cardTypeTimeEnd, salesId, DATE_FORMAT(mct.createTime,'%Y-%m-%d') createTime");
-		StringBuilder bodySql = new StringBuilder(" FROM member_card_type mct");
-		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
+		StringBuilder headSql = new StringBuilder("SELECT uo.operatorName, cardTypeId, cardType, cardTypeAhead, cardTypeCredit, cardTypeName, cardTypeStatus, cardTypeMonth, cardTypeMoney, cardTypeDiscount, cardTypeWeek, cardTypeTimeStart, cardTypeTimeEnd, salesId, cardDeposit, DATE_FORMAT(mct.createTime,'%Y-%m-%d') createTime");
+		StringBuilder bodySql = new StringBuilder(" FROM member_card_type mct, user_operator uo");
+		StringBuilder whereSql = new StringBuilder(" WHERE mct.salesId=uo.id");
 		if(StrUtil.isNotBlank(cardTypeStatus)){
 			whereSql.append(" AND cardTypeStatus = :cardTypeStatus");
 		}
@@ -207,7 +207,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	
 	@Override
 	public Map<String, Object> getMemberCardTypeMap(int cardTypeId) {
-		Map<String, Object> memberCardType = baseDao.queryBySqlFirst("SELECT cardTypeId, cardTypeName, cardTypeMonth, cardTypeAhead, cardTypeCredit, cardType, cardTypeMoney, cardTypeDiscount, cardTypeWeek, cardTypeTimeStart, cardTypeTimeEnd, cardTypeStatus FROM member_card_type WHERE cardTypeId = ?", cardTypeId);
+		Map<String, Object> memberCardType = baseDao.queryBySqlFirst("SELECT cardTypeId, cardTypeName, cardTypeMonth, cardTypeAhead, cardTypeCredit, cardType, cardTypeMoney, cardTypeDiscount, cardTypeWeek, cardTypeTimeStart, cardTypeTimeEnd, cardTypeStatus, cardDeposit FROM member_card_type WHERE cardTypeId = ?", cardTypeId);
 		memberCardType.put("cardDeadline", DateUtil.getAddMonth(StrUtil.objToStr(memberCardType.get("cardTypeMonth"))));
 		return memberCardType;
 	}
@@ -592,8 +592,9 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		Map<String, Object> memberMap = new HashMap<String, Object>();
 		memberMap.put("cardNo", memberCards.get(0).getCardNo());
 		memberMap.put("memberName", userMember.getMemberName());
+		memberMap.put("memberId", userMember.getMemberId());
 		
-		List<Map<String, Object>> childrenMembers = baseDao.queryBySql("SELECT memberName, memberMobile FROM user_member WHERE parentMemberId = ? ORDER BY createTime DESC", memberId);
+		List<Map<String, Object>> childrenMembers = baseDao.queryBySql("SELECT memberId, memberName, memberMobile FROM user_member WHERE parentMemberId = ? ORDER BY createTime DESC", memberId);
 
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("member", memberMap);

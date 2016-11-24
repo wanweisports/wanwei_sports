@@ -3,6 +3,15 @@
         init: function () {
             this.initEvents();
         },
+        calculateRechargeMoney: function () {
+            var $money = $("#recharge_money");
+            var $send = $("#recharge_send");
+
+            var money = parseFloat($money.val() || "0.00");
+            var send = parseFloat($send.val() || "0.00");
+
+            return (money + send).toFixed(2);
+        },
         initEvents: function () {
             $("#keywords").autosuggest({
                 url: '/member/searchMember',
@@ -66,6 +75,13 @@
                 });
             });
 
+            // 充值金额,赠送金额改变
+            $("#recharge_money, #recharge_send").on("change", function (e) {
+                e.preventDefault();
+
+                $(".recharge-total-money").text(content.calculateRechargeMoney());
+            });
+
             // 会员卡充值
             $(".recharge-card-submit").on("click", function (e) {
                 e.preventDefault();
@@ -87,8 +103,12 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        alert("会员充值成功");
+                        $("#rechargeModal").modal({backdrop: false, show: true});
+                        setTimeout(function () {
+                            $("#rechargeModal").modal("hide");
+                        }, 3000);
                     } else {
+                        console.log(res.message || "会员充值失败, 请稍后重试");
                         alert(res.message || "会员充值失败, 请稍后重试");
                     }
                 });

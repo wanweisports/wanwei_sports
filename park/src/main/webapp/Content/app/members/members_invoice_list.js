@@ -61,8 +61,13 @@
                     $this.attr("working", "");
 
                     if (res.code == 1) {
-                        location.reload();
+                        $("#loanModal").modal({backdrop: false, show: true});
+                        setTimeout(function () {
+                            $("#loanModal").modal("hide");
+                            location.reload();
+                        }, 3000);
                     } else {
+                        console.log(res.message || "发票状态改变失败, 请稍后重试");
                         alert(res.message || "发票状态改变失败, 请稍后重试");
                     }
                 });

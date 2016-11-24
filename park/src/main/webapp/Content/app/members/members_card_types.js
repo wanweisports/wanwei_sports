@@ -25,6 +25,7 @@
                 $("#card_type_overdraw").val(0);
                 $("#card_payment_type").val(1);
                 $("#card_type_ahead").val(0);
+                $("#card_deposit").val(0);
                 $("#cardTypeStatus1").prop("checked", true);
             });
 
@@ -58,6 +59,7 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
+                        console.log(res.message || "会员设置保存失败, 请稍后重试");
                         alert(res.message || "会员设置保存失败, 请稍后重试");
                     }
                 });
@@ -102,7 +104,8 @@
                     if (res.code == 1) {
                         renderCardTypeData(res.data);
                     } else {
-                        alert(res.message || "卡类型信息查询失败, 请稍后重试");
+                        console.log(res.message || "会员卡类型信息查询失败, 请稍后重试");
+                        alert(res.message || "会员卡类型信息查询失败, 请稍后重试");
                     }
                 });
             });

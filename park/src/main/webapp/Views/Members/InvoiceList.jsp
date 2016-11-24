@@ -78,10 +78,25 @@
                                     </c:if>
                                 </td>
                                 <td>${invoice.invoiceNo}</td>
-                                <td>${invoice.invoiceHeader}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${invoice.invoiceHeader != ''}">${invoice.invoiceHeader}</c:when>
+                                        <c:otherwise> -- </c:otherwise>
+                                    </c:choose>
+                                </td>
                                 <td>${invoice.invoiceMoney}</td>
-                                <td>${invoice.invoiceContent}</td>
-                                <td>${invoice.invoiceRemark}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${invoice.invoiceContent != ''}">${invoice.invoiceContent}</c:when>
+                                        <c:otherwise> -- </c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${invoice.invoiceRemark != ''}">${invoice.invoiceRemark}</c:when>
+                                        <c:otherwise> -- </c:otherwise>
+                                    </c:choose>
+                                </td>
                                 <c:if test="${invoice.invoiceState == 1}">
                                     <td class="text-success">已领取</td>
                                     <td class="text-success">${invoice.printTime }</td>
@@ -162,6 +177,22 @@
                             </c:if>
                         </ul>
                     </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="loanModal" tabindex="-1" role="dialog" aria-labelledby="loanModalLabel">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="loanModalLabel">提示框</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info" role="alert">发票领取成功!</div>
                 </div>
             </div>
         </div>
