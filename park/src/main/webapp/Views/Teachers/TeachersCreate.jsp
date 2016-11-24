@@ -34,6 +34,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">教师办卡</div>
                 <div class="panel-body">
+                    <input type="hidden" name="memberType" value="1">
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="cardNo" class="col-sm-4 control-label">
@@ -41,7 +42,7 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="cardNo" name="tempCardNo"
+                                <input type="text" class="form-control" id="cardNo" name="cardNo"
                                        placeholder="教师卡号" value="${cardNo}"
                                        data-val="true" data-val-required="教师卡号不能为空">
                                 <div data-valmsg-for="tempCardNo" data-valmsg-replace="true"></div>
@@ -145,13 +146,19 @@
                             </div>
                         </div>
                     </div>
+
+                    <input type="hidden" name="memberId" value="">
+                    <input type="hidden" name="cardTypeId" value="1">
+                    <input type="hidden" name="cardBalance" value="0">
+                    <input type="hidden" name="balanceStyle" value="1">
+                    <input type="hidden" name="givingAmount" value="0">
+                    <input type="hidden" name="cardRemark" value="教师卡免费">
                 </div>
             </div>
         </form>
     </div>
 
-    <div class="modal fade" id="tips_success_modal" tabindex="-1" role="dialog"
-         aria-labelledby="tips_success_modal_label">
+    <div class="modal fade" id="tips_success_modal" tabindex="-1" role="dialog" aria-labelledby="tips_success_modal_label">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
@@ -161,7 +168,7 @@
                     <h5 class="modal-title" id="tips_success_modal_label">提示框</h5>
                 </div>
                 <div class="modal-body">
-                    <p class="text-success">教师办卡成功!</p>
+                    <div class="alert alert-success" role="alert">教师办卡成功!</div>
                 </div>
             </div>
         </div>

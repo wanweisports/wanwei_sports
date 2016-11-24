@@ -60,7 +60,7 @@ public class MemberReceivableServiceImpl extends BaseService implements IMemberR
 		String cardNo = memberInputView.getCardNo();
 		String orderNo = memberInputView.getOrderNo();
 		
-		StringBuilder headSql = new StringBuilder("SELECT mr.receivableId, um.memberName, um.memberMobile, oi.sumCount, oi.payCount, oi.useCount, (oi.useCount - oi.payCount) oweCount, mc.cardNo, oi.orderNo, oi.orderSumPrice, (oi.orderSumPrice-oi.paySumPrice) owePrice");
+		StringBuilder headSql = new StringBuilder("SELECT mr.receivableId, um.memberName, um.memberMobile, oi.sumCount, oi.payCount, oi.useCount, (oi.useCount - oi.payCount) oweCount, mc.cardNo, oi.orderNo, oi.orderSumPrice, oi.paySumPrice, (oi.orderSumPrice-oi.paySumPrice) owePrice");
 		StringBuilder bodySql = new StringBuilder(" FROM member_receivable mr, order_info oi, user_member um, member_card mc");
 		StringBuilder whereSql = new StringBuilder(" WHERE mr.orderId = oi.orderId AND mr.memberId = um.memberId AND um.memberId = mc.memberId");
 		if(StrUtil.isNotBlank(memberName)){

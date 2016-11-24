@@ -360,19 +360,6 @@ public class MemberController extends BaseController {
         }
     }
 
-    /*@RequestMapping(value = "getOperations")
-    public String getOperations(String cardNo, Model model) {
-        try {
-            if(StrUtil.isNotBlank(cardNo)){
-                model.addAllAttributes(memberService.getOperations(cardNo));
-            }
-            model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(new MemberInputView()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "Members/MembersOperations";
-    }*/
-
     @RequestMapping(value = "getMembersCardRecharge")
     public String getMembersCardRecharge(String cardNo, Model model) {
         try {
@@ -477,12 +464,6 @@ public class MemberController extends BaseController {
     @RequestMapping(value = "getMembersCardCancel")
     public String getMembersCardCancel(Model model) {
         return "Members/MembersCardCancel";
-    }
-
-    // 会员卡消费查询
-    @RequestMapping(value = "getConsumes")
-    public String getConsumes(Model model) {
-        return "Members/ConsumeList";
     }
 
     // 会员子会员

@@ -1,5 +1,6 @@
 package com.park.controller;
 
+import com.park.common.exception.MessageException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,8 @@ import com.park.common.bean.PageBean;
 import com.park.common.constant.IDBConstant;
 import com.park.common.util.JsonUtils;
 import com.park.service.IMemberService;
+
+import java.util.Map;
 
 /**
  * Created by wangjun on 16/11/15.
@@ -23,7 +26,8 @@ public class TeachersController extends BaseController {
 	
     // 教师注册
     @RequestMapping("register")
-    public String teachersRegister() {
+    public String teachersRegister(Model model) {
+        model.addAttribute("cardNo", memberService.getCardNo()); //注册会员之前，生成会员号
         return "Teachers/TeachersCreate";
     }
 
@@ -44,7 +48,21 @@ public class TeachersController extends BaseController {
 
     // 教师查询
     @RequestMapping("view")
-    public String teachersView() {
+    public String teachersView(Integer memberId, Model model) {
+        try {
+            Map<String, Object> userMemberAndCard = memberService.getUserMemberAndCard(memberId);
+            model.addAllAttributes(userMemberAndCard);
+            MemberInputView memberInputView = new  MemberInputView();
+            memberInputView.setCardType(userMemberAndCard.get("memberType").toString());
+            model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(memberInputView));
+            //return new ResponseBean(JsonUtils.fromJsonDF(memberService.getUserMemberAndCard(super.getData(param, UserMember.class).getMemberId())));
+        } catch (MessageException e) {
+            e.printStackTrace();
+            //return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //return new ResponseBean(false);
+        }
         return "Teachers/TeachersView";
     }
 
