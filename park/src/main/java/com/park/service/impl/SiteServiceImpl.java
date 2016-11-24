@@ -264,6 +264,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 			member = memberService.getUserMember(siteReserveBasic.getMemberId());
 			if(member == null || member.getParentMemberId() != null) throw new MessageException("会员不存在");
 			orderInfo.setMemberId(member.getMemberId());
+			siteReserveBasic.setMobile(member.getMemberMobile()); //如果预定是会员，预定为会员的手机号
 		}else{
 			orderInfo.setMemberId(0); //散客
 		}
@@ -272,6 +273,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		orderInfo.setOrderStatus(IDBConstant.LOGIC_STATUS_NO); //未完成
 		orderInfo.setPayStatus(IDBConstant.LOGIC_STATUS_NO); //未支付
 		orderInfo.setPayCount(siteReserveBasic.getPayCount()); //支付次数（缴纳的次数）
+		orderInfo.setUseCount(0);
 	
 		orderInfo.setSalesId(siteReserveBasic.getSalesId());
 		
@@ -332,7 +334,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 			}
 		}
 		orderInfo.setSumCount(weekNums * hourNums); //总次数（通过计算）
-		if(orderInfo.getSumCount() < orderInfo.getUseCount()) throw new MessageException("输入的场次数超过，最大场次数为："+orderInfo.getSumCount());
+		if(orderInfo.getSumCount() < orderInfo.getPayCount()) throw new MessageException("输入的场次数超过，最大场次数为："+orderInfo.getSumCount());
 		Integer orderId = orderService.saveOrderInfo(orderInfo, orderDetails);
 		siteReserveBasic.setOrderId(orderId);
 		baseDao.save(siteReserveBasic, siteReserveBasic.getSiteReserveId());
@@ -507,7 +509,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		StringBuilder sql = new StringBuilder("SELECT CONCAT(srd.reserveStartDate,' ',srt.siteStartTime) startSiteDate, srb.* FROM site_reserve_basic srb, site_reserve_date srd, site_reserve_time srt");
 		sql.append(" WHERE srb.mobile = ?");
 		sql.append(" AND CONCAT(srd.reserveStartDate,' ',srt.siteStartTime) >= DATE_ADD(NOW(),INTERVAL ? MINUTE)");
-		return baseDao.queryBySqlFirst(sql.toString(), mobile);
+		return baseDao.queryBySqlFirst(sql.toString(), mobile, IPlatformConstant.SITE_ADVANCE_START_TIME);
 	}
 	
 	@Override
