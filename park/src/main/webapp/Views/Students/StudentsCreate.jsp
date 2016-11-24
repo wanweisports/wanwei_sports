@@ -27,19 +27,18 @@
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <form id="student_form" class="form-horizontal" novalidate onsubmit="return false;">
-            <input type="hidden" name="studentId" value="${studentId}" />
             <div class="panel panel-default">
                 <div class="panel-heading">学生注册</div>
                 <div class="panel-body">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="card_id" class="col-sm-4 control-label">
+                            <label for="card_no" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 学生卡号
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="card_id" name="cardNo"
-                                       placeholder="学生卡号" value="2016000001" readonly>
+                                <input type="text" class="form-control" id="card_no" name="cardNo"
+                                       placeholder="学生卡号" value="${cardNo}" readonly>
                             </div>
                         </div>
                         <div class="form-group">
@@ -48,14 +47,20 @@
                             </label>
 
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="student_degree" name="studentDegree"
-                                       placeholder="所在年级">
-                                <div data-valmsg-for="studentClass" data-valmsg-replace="true"></div>
+                                <input type="text" class="form-control" id="student_degree" name="studentGrade"
+                                       placeholder="所在年级" autocomplete="off"
+                                       data-val="true" data-val-required="所在年级不能为空"
+                                       data-val-regex-pattern="^[1-9]\d*$"
+                                       data-val-regex="所在年级格式错误">
+                                <div data-valmsg-for="studentGrade" data-valmsg-replace="true"></div>
                             </div>
 
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" id="student_class" name="studentClass"
-                                       placeholder="所在班级">
+                                       placeholder="所在班级" autocomplete="off"
+                                       data-val="true" data-val-required="所在班级不能为空"
+                                       data-val-regex-pattern="^[1-9]\d*$"
+                                       data-val-regex="所在班级格式错误">
                                 <div data-valmsg-for="studentClass" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -83,7 +88,9 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="student_name" name="studentName"
                                        placeholder="请输入学生姓名" autocomplete="off"
-                                       data-val="true" data-val-required="学生姓名不能为空">
+                                       data-val="true" data-val-required="学生姓名不能为空"
+                                       data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,9}$"
+                                       data-val-regex="学生姓名长度只能2~12个字符">
                                 <div data-valmsg-for="studentName" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -132,6 +139,22 @@
                 </div>
             </div>
         </form>
+    </div>
+
+    <div class="modal fade" id="tips_success_modal" tabindex="-1" role="dialog" aria-labelledby="tips_success_modal_label">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="tips_success_modal_label">提示框</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-success" role="alert">学生办卡成功!</div>
+                </div>
+            </div>
+        </div>
     </div>
 </layout:override>
 
