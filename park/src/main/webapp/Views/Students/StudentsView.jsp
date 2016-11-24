@@ -8,7 +8,7 @@
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
-    <script src="/Content/app/students/students_register.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/students/students_view.js?v=${static_resource_version}"></script>
 
     <script>
         // 表单校验配置
@@ -48,14 +48,22 @@
                             </label>
 
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="student_degree" name="studentDegree"
-                                       placeholder="所在年级">
-                                <div data-valmsg-for="studentClass" data-valmsg-replace="true"></div>
+                                <input type="text" class="form-control" id="student_degree" name="studentGrade"
+                                       placeholder="所在年级" autocomplete="off"
+                                       data-val="true" data-val-required="所在年级不能为空"
+                                       data-val-regex-pattern="^[1-9]\d*$"
+                                       data-val-regex="所在年级格式错误"
+                                       value="${studentGrade}">
+                                <div data-valmsg-for="studentGrade" data-valmsg-replace="true"></div>
                             </div>
 
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" id="student_class" name="studentClass"
-                                       placeholder="所在班级">
+                                       placeholder="所在班级" autocomplete="off"
+                                       data-val="true" data-val-required="所在班级不能为空"
+                                       data-val-regex-pattern="^[1-9]\d*$"
+                                       data-val-regex="所在班级格式错误"
+                                       value="${studentClass}">
                                 <div data-valmsg-for="studentClass" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -65,12 +73,13 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="student_mobile" name="studentobile"
+                                <input type="text" class="form-control" id="student_mobile" name="studentMobile"
                                        placeholder="请输入手机号码" autocomplete="off"
                                        data-val="true" data-val-required="手机号码不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
-                                       data-val-regex="手机号码格式错误">
-                                <div data-valmsg-for="studentobile" data-valmsg-replace="true"></div>
+                                       data-val-regex="手机号码格式错误"
+                                       value="${studentMobile}">
+                                <div data-valmsg-for="studentMobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -83,7 +92,10 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="student_name" name="studentName"
                                        placeholder="请输入学生姓名" autocomplete="off"
-                                       data-val="true" data-val-required="学生姓名不能为空">
+                                       data-val="true" data-val-required="学生姓名不能为空"
+                                       data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,9}$"
+                                       data-val-regex="学生姓名长度只能2~12个字符"
+                                       value="${studentName}">
                                 <div data-valmsg-for="studentName" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -93,12 +105,22 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <label class="radio-inline">
-                                    <input type="radio" name="studentSex" id="student_sex1" value="1" checked> 男
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="studentSex" id="student_sex2" value="2"> 女
-                                </label>
+                                <c:if test="${studentSex == 1}">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="studentSex" id="student_sex1" value="1" checked> 男
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="studentSex" id="student_sex2" value="2"> 女
+                                    </label>
+                                </c:if>
+                                <c:if test="${studentSex == 2}">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="studentSex" id="student_sex1" value="1"> 男
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="studentSex" id="student_sex2" value="2" checked> 女
+                                    </label>
+                                </c:if>
                                 <div data-valmsg-for="studentSex" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -109,7 +131,7 @@
 
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="student_address" name="studentAddress"
-                                       placeholder="请输入联系地址">
+                                       placeholder="请输入联系地址" autocomplete="off" value="${studentAddress}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -117,12 +139,12 @@
 
                             <div class="col-sm-10">
                             <textarea class="form-control" id="student_remark" name="studentRemark" rows="3"
-                                      placeholder="备注"></textarea>
+                                      placeholder="备注">${studentRemark}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
-                                <button type="button" class="btn btn-primary col-sm-4 register-student">
+                                <button type="button" class="btn btn-primary col-sm-4 save-student">
                                     <span class="glyphicon glyphicon-ok"></span>  保 存
                                 </button>
                             </div>
@@ -132,9 +154,25 @@
             </div>
         </form>
     </div>
+
+    <div class="modal fade" id="tips_success_modal" tabindex="-1" role="dialog" aria-labelledby="tips_success_modal_label">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="tips_success_modal_label">提示框</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-success" role="alert">学生办卡成功!</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </layout:override>
 
 <c:import url="../Shared/Layout_New.jsp">
     <c:param name="nav" value="student"/>
-    <c:param name="subNav" value="register"/>
+    <c:param name="subNav" value="list"/>
 </c:import>
