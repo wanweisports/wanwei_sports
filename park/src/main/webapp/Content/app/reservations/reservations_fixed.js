@@ -1,10 +1,10 @@
-(function ($) {
+(function ($, moment) {
     var Venue_Bookings = {
         tpl: {
             BlockBooking: function () {
                 return '<tr>' +
-                    '<td>#BOOKING_SPORT#</td><td>#BOOKING_START_DATE# ~ #BOOKING_END_DATE#</td>' +
-                    '<td>#BOOKING_WEEK#</td><td>#BOOKING_START_TIME# ~ #BOOKING_END_TIME#</td><td>#BOOKING_AREA#</td>' +
+                    '<td>#BOOKING_SPORT#</td><td>#BOOKING_START_DATE#</td>' +
+                    '<td>#BOOKING_START_TIME# ~ #BOOKING_END_TIME#</td><td>#BOOKING_AREA#</td>' +
                     '<td><a href="javascript:;" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>' +
                     '</tr>';
             }
@@ -24,7 +24,7 @@
             $.datetimepicker.setLocale('zh');
 
             // 表单时间控件设置
-            $('#block_start_date').datetimepicker({
+            $('#block_date').datetimepicker({
                 timepicker: false,
                 lang: "zh",
                 format:'Y-m-d',
@@ -34,20 +34,7 @@
             $(".start-date-select").on("click", function (e) {
                 e.preventDefault();
 
-                $('#block_start_date').datetimepicker("show");
-            });
-
-            $('#block_end_date').datetimepicker({
-                timepicker: false,
-                lang: "zh",
-                format:'Y-m-d',
-                minDate: 0
-            });
-
-            $(".end-date-select").on("click", function (e) {
-                e.preventDefault();
-
-                $('#block_end_date').datetimepicker("show");
+                $('#block_date').datetimepicker("show");
             });
 
             this.initEvents2();
@@ -74,7 +61,7 @@
             $(".booking-add").on("click", function (e) {
                 e.preventDefault();
 
-                var $form = $("#reservations_batch_form");
+                var $form = $("#reservations_fixed_form");
                 var $list = $(".reservations-list");
                 var data = {};
 
@@ -82,21 +69,9 @@
                     return false;
                 }
 
-                function __getCheckbox() {
-                    var value = [];
-                    var text = [];
-
-                    $('input[name="reserveWeek"]:checked').each(function(){
-                        value.push($(this).val());
-                        text.push($(this).attr("data-text"));
-                    });
-
-                    return {value: value, text: text};
-                }
-
-                data.reserveStartDate = $("#block_start_date").val();
-                data.reserveEndDate = $("#block_end_date").val();
-                data.reserveWeek = __getCheckbox().value.join(",");
+                data.reserveStartDate = $("#block_date").val();
+                data.reserveEndDate = $("#block_date").val();
+                data.reserveWeek = moment(data.reserveStartDate).format("e");
                 data.siteReserveTimeList = [{
                     siteStartTime: $("#block_time_start").val(),
                     siteEndTime: $("#block_time_end").val(),
@@ -106,12 +81,10 @@
 
                 $list.append(content.tpl.BlockBooking()
                     .replace("#BOOKING_SPORT#", $("#block_user_degree").find("option:selected").text().trim())
-                    .replace("#BOOKING_START_DATE#", $("#block_start_date").val())
-                    .replace("#BOOKING_END_DATE#", $("#block_end_date").val())
+                    .replace("#BOOKING_START_DATE#", $("#block_date").val())
                     .replace("#BOOKING_START_TIME#", $("#block_time_start").find("option:selected").text().trim())
                     .replace("#BOOKING_END_TIME#", $("#block_time_end").find("option:selected").text().trim())
-                    .replace("#BOOKING_AREA#", $("#block_venue_name").find("option:selected").text().trim())
-                    .replace("#BOOKING_WEEK#", "(" + __getCheckbox().text + ")"));
+                    .replace("#BOOKING_AREA#", $("#block_venue_name").find("option:selected").text().trim()));
             });
 
             // 预订
@@ -450,4 +423,4 @@
     };
 
     Venue_Bookings.init();
-})(jQuery);
+})(jQuery, moment);

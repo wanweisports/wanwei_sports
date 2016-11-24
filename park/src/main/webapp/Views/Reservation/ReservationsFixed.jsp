@@ -13,6 +13,8 @@
     <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/moment/moment.min.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/reservations/reservations_fixed.js?v=${static_resource_version}"></script>
     <script>
         $(document).ready(function () {
             // 配置表单校验
@@ -69,6 +71,8 @@
                             </label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="block_time_start" name="siteStartTime">
+                                    <option value="06:00">06:00</option>
+                                    <option value="07:00">07:00</option>
                                     <option value="08:00">08:00</option>
                                     <option value="09:00">09:00</option>
                                     <option value="10:00">10:00</option>
@@ -84,6 +88,7 @@
                                     <option value="20:00">20:00</option>
                                     <option value="21:00">21:00</option>
                                     <option value="22:00">22:00</option>
+                                    <option value="23:00">23:00</option>
                                 </select>
                             </div>
                         </div>
@@ -124,6 +129,8 @@
                             </label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="block_time_end" name="siteEndTime">
+                                    <option value="06:00">06:00</option>
+                                    <option value="07:00">07:00</option>
                                     <option value="08:00">08:00</option>
                                     <option value="09:00">09:00</option>
                                     <option value="10:00">10:00</option>
@@ -139,6 +146,7 @@
                                     <option value="20:00">20:00</option>
                                     <option value="21:00">21:00</option>
                                     <option value="22:00">22:00</option>
+                                    <option value="23:00">23:00</option>
                                 </select>
                             </div>
                         </div>
@@ -167,6 +175,7 @@
                                     <option value="5">场地5</option>
                                     <option value="6">场地6</option>
                                     <option value="7">场地7</option>
+                                    <option value="7">场地8</option>
                                 </select>
                             </div>
                         </div>
@@ -184,28 +193,6 @@
                                     <th>预订时间</th>
                                     <th>场地</th>
                                     <th>操作</th>
-                                </tr>
-                                <tr>
-                                    <td>羽毛球</td>
-                                    <td>2016-07-01</td>
-                                    <td>10:00 ~ 11:00</td>
-                                    <td>场地1</td>
-                                    <td>
-                                        <a href="javascript:;" class="btn btn-danger">
-                                            <span class="glyphicon glyphicon-trash"></span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>羽毛球</td>
-                                    <td>2016-07-01</td>
-                                    <td>14:00 ~ 15:00</td>
-                                    <td>场地1</td>
-                                    <td>
-                                        <a href="javascript:;" class="btn btn-danger">
-                                            <span class="glyphicon glyphicon-trash"></span>
-                                        </a>
-                                    </td>
                                 </tr>
                             </table>
                         </div>
