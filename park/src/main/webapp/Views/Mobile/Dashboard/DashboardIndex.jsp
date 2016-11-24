@@ -68,6 +68,12 @@
                 </div>
                 <p class="weui-grid__label">关于我们</p>
             </a>
+            <a href="/mobile/passport/logout" class="weui-grid">
+                <div class="weui-grid__icon">
+                    <img src="/Content/images/mobile/logout.png?v=${static_resource_version}" alt="退出登录">
+                </div>
+                <p class="weui-grid__label">退出登录</p>
+            </a>
         </div>
     </div>
 </div>
