@@ -116,6 +116,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			//memberCard.setCardNo(getCardNo()); //会员卡编号	唯一的;
 			memberCard.setCreateTime(nowDate);
 			memberCard.setCardStatus(IDBConstant.LOGIC_STATUS_YES); //默认有效
+			memberCard.setCardDeposit(memberCarType.getCardDeposit()); //保存原始押金
 			
 			//原始金额（充值金额|升级金额|补办金额）
 			otherBalance.setOldAmount(memberCard.getCardBalance());
@@ -284,11 +285,16 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			whereSql.append(" AND mc.cardNo = :cardNo");
 		}
 		if(StrUtil.isNotBlank(cardTypeId)){
-			whereSql.append(" AND mc.cardTypeId = :cardTypeId");
+			if(memberInputView.isCommonCard()){
+				whereSql.append(" AND (mc.cardTypeId = :cardTypeId OR mc.cardTypeId IS NULL)");
+			}else{
+				whereSql.append(" AND mc.cardTypeId = :cardTypeId");
+			}
 		}
 		if(StrUtil.isNotBlank(memberType)){
 			whereSql.append(" AND um.memberType = :memberType");
 		}
+		whereSql.append(" ORDER BY um.createTime DESC");
 		PageBean pageBean = super.getPageBean(headSql, bodySql, whereSql, memberInputView);
 		List<Map<String, Object>> list = pageBean.getList();
 		for(Map<String, Object> map : list){

@@ -30,6 +30,7 @@ public class MemberCardType implements java.io.Serializable {
 	private String createTime;
 	private String updateTime;
 	private Integer salesId;
+	private Double cardDeposit;
 	private Integer cardTypeDiscount;
 
 	// Constructors
@@ -53,7 +54,7 @@ public class MemberCardType implements java.io.Serializable {
 			String cardTypeTimeStart, String cardTypeTimeEnd,
 			Integer cardTypeAhead, Double cardTypeMoney, Double cardTypeCredit,
 			String createTime, String updateTime, Integer salesId,
-			Integer cardTypeDiscount) {
+			Double cardDeposit, Integer cardTypeDiscount) {
 		this.cardTypeName = cardTypeName;
 		this.cardType = cardType;
 		this.cardTypeStatus = cardTypeStatus;
@@ -67,6 +68,7 @@ public class MemberCardType implements java.io.Serializable {
 		this.createTime = createTime;
 		this.updateTime = updateTime;
 		this.salesId = salesId;
+		this.cardDeposit = cardDeposit;
 		this.cardTypeDiscount = cardTypeDiscount;
 	}
 
@@ -197,6 +199,15 @@ public class MemberCardType implements java.io.Serializable {
 
 	public void setSalesId(Integer salesId) {
 		this.salesId = salesId;
+	}
+
+	@Column(name = "cardDeposit", precision = 10)
+	public Double getCardDeposit() {
+		return this.cardDeposit;
+	}
+
+	public void setCardDeposit(Double cardDeposit) {
+		this.cardDeposit = cardDeposit;
 	}
 
 	@Column(name = "cardTypeDiscount")

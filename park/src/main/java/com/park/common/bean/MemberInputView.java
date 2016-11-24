@@ -20,6 +20,8 @@ public class MemberInputView extends BaseInputView {
 	
 	private String orderNo;
 
+	private boolean isCommonCard;
+	
 	public String getMemberMobile() {
 		return memberMobile;
 	}
@@ -90,6 +92,14 @@ public class MemberInputView extends BaseInputView {
 
 	public void setOrderNo(String orderNo) {
 		this.orderNo = orderNo;
+	}
+
+	public boolean isCommonCard() {
+		return isCommonCard;
+	}
+
+	public void setCommonCard(boolean isCommonCard) {
+		this.isCommonCard = isCommonCard;
 	}
 
 }

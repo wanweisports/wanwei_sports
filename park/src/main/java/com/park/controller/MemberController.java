@@ -235,6 +235,7 @@ public class MemberController extends BaseController {
     public String getUserMembers(MemberInputView memberInputView, Model model) {
         try {
             model.addAllAttributes(JsonUtils.fromJsonDF(memberInputView));
+            memberInputView.setCommonCard(true);
             memberInputView.setCardTypeId(IDBConstant.CARD_TEAM); //团体卡类型
             PageBean pageBean = memberService.getUserMembers(memberInputView);
             super.setPageInfo(model, pageBean);

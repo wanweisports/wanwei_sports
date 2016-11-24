@@ -31,6 +31,7 @@ public class InitServiceImpl extends BaseService implements IInitService {
 		if(operatorService.getOperator(IPlatformConstant.ADMIN) != null) throw new MessageException("管理员已设置！");
 		parkService.saveParkBusiness(parkBusiness);
 		operator.setOperatorId(IPlatformConstant.ADMIN);
+		operator.setOperatorName(IPlatformConstant.ADMIN_NAME);
 		operatorService.saveOperator(operator, IDBConstant.ROLE_ADMIN);
 	}
 	

@@ -1,0 +1,51 @@
+学生列表：
+请求：/students/list
+
+返回：
+{
+    "list": [
+        {
+            "createTime": "2016-11-24 14:35:40",
+            "cardDeadline": "0",        //有效期（0：无限制）
+            "operatorName": "管理员",
+            "studentId": "9",
+            "studentStatus": "1",
+            "studentName": "石头",
+            "siteCount": "0",           //场次数
+            "gradeClass": "3年级2班"
+        }
+    ],
+    "count": "1",
+    "lastPage": "1",
+    "pageSize": "10"
+}
+
+==========================================================================================================
+新增/修改学生：【Ajax】
+请求：/students/saveStudent?studentName=石头&studentGrade=3年级&studentClass=2班&studentSex=1&studentStatus=1&studentAddress=石景山&studentRemark=此学生内力深厚&studentMobile=15111111111
+
+返回：
+{
+    "code": "-1",
+    "message": "学生手机号重复，请重新输入！",
+    "data": {}
+}
+
+==========================================================================================================
+学生详情：
+请求：/students/view?studentId=9
+
+
+返回：
+{
+    "studentId": "9",
+    "studentName": "石头",
+    "studentGrade": "3年级",
+    "studentClass": "2班",
+    "studentMobile": "15111111111",
+    "siteCount": "0",
+    "studentSex": "1",
+    "studentStatus": "1",
+    "studentAddress": "石景山",
+    "studentRemark": "此学生内力深厚"
+}
