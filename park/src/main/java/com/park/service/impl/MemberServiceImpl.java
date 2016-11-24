@@ -9,6 +9,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.zxing.client.result.ISBNParsedResult;
 import com.park.common.bean.BalanceInputView;
 import com.park.common.bean.InvoiceInputView;
 import com.park.common.bean.MemberCardOpInputView;
@@ -50,6 +51,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		String nowDate = DateUtil.getNowDate();
 		if(memberId == null){ //新增
 			userMember.setCreateTime(nowDate);
+			userMember.setMemberStatus(IDBConstant.LOGIC_STATUS_YES);
 			UserOperator operator = new UserOperator();
 			operator.setOperatorMobile(userMember.getMemberMobile());
 			operator.setOperatorId(userMember.getTempCardNo()); //会员帐号暂时使用第一次注册的会员卡号
