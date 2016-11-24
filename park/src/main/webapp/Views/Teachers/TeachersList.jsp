@@ -6,7 +6,17 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
     <script src="/Content/app/teachers/teachers_list.js?v=${static_resource_version}"></script>
+    <script>
+        // 表单校验配置
+        $(document).ready(function () {
+            $('#refresh_form').validate({
+                ignore: ":hidden"
+            });
+        });
+    </script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
@@ -18,21 +28,18 @@
         <div class="panel panel-default">
             <div class="panel-heading">教师查询</div>
             <div class="panel-body">
-                <form id="member_filter_form" class="form-inline" method="post" novalidate onsubmit="return false;">
+                <form id="member_filter_form" class="form-inline" novalidate onsubmit="return false;">
                     <div class="form-group">
-                        <select class="form-control" id="teacher_status" name="teacher_status" style="width: 160px;">
-                            <option value="">全部状态</option>
-                            <option value="1">正常</option>
-                            <option value="2">锁定</option>
-                        </select>
+                        <input type="text" class="form-control" id="member_mobile" name="memberMobile"
+                               placeholder="手机号码" value="${memberMobile}">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="teacher_card" name="teacher_card"
-                               placeholder="请输入教师卡号">
+                        <input type="text" class="form-control" id="card_no" name="cardNo"
+                               placeholder="教师卡号" value="${cardNo}">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="teacher_name" name="teacher_name"
-                               placeholder="请输入教师姓名">
+                        <input type="text" class="form-control" id="member_idcard" name="memberIdcard"
+                               placeholder="身份证号" value="${memberIdcard}">
                     </div>
                     <div class="form-group">
                         <a href="javascript:;" class="btn btn-primary member-filter">
@@ -48,84 +55,52 @@
                     <table class="table teachers-list">
                         <thead>
                         <tr>
-                            <th>卡号</th>
-                            <th>姓名</th>
+                            <th>教师姓名</th>
                             <th>手机号码</th>
-                            <th>用场次数</th>
+                            <th>教师卡号</th>
                             <th>截止日期</th>
+                            <th>用场次数</th>
                             <th>状态</th>
                             <th>操作人</th>
-                            <th>办卡时间</th>
+                            <th>操作时间</th>
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td style="vertical-align: middle;">1242354ewe</td>
-                            <td style="vertical-align: middle;">王晓红</td>
-                            <td style="vertical-align: middle;">11012345678</td>
-                            <td style="vertical-align: middle;">142</td>
-                            <td style="vertical-align: middle;">2016-12-11</td>
-                            <td style="vertical-align: middle;" class="text-success">正常</td>
-                            <td style="vertical-align: middle;">张丹丹</td>
-                            <td style="vertical-align: middle;">2016-12-11</td>
-                            <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="/teachers/view">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </a>
-                                <a href="#buban_modal" class="btn btn-primary teachers-buban" data-toggle="modal"
-                                    data-backdrop="false">
-                                    <span class="glyphicon glyphicon-refresh"></span> 补办
-                                </a>
-                                <a class="btn btn-danger" href="">
-                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 删除
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="vertical-align: middle;">1242354ewe</td>
-                            <td style="vertical-align: middle;">王晓红</td>
-                            <td style="vertical-align: middle;">11012345678</td>
-                            <td style="vertical-align: middle;">142</td>
-                            <td style="vertical-align: middle;">2016-12-11</td>
-                            <td style="vertical-align: middle;" class="text-success">正常</td>
-                            <td style="vertical-align: middle;">张丹丹</td>
-                            <td style="vertical-align: middle;">2016-12-11</td>
-                            <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="/teachers/view">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </a>
-                                <a href="#buban_modal" class="btn btn-primary teachers-buban" data-toggle="modal"
-                                   data-backdrop="false">
-                                    <span class="glyphicon glyphicon-refresh"></span> 补办
-                                </a>
-                                <a class="btn btn-danger" href="">
-                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 删除
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="vertical-align: middle;">1242354ewe</td>
-                            <td style="vertical-align: middle;">王晓红</td>
-                            <td style="vertical-align: middle;">11012345678</td>
-                            <td style="vertical-align: middle;">142</td>
-                            <td style="vertical-align: middle;">2016-12-11</td>
-                            <td style="vertical-align: middle;" class="text-success">正常</td>
-                            <td style="vertical-align: middle;">张丹丹</td>
-                            <td style="vertical-align: middle;">2016-12-11</td>
-                            <td style="vertical-align: middle;">
-                                <a class="btn btn-primary" href="/teachers/view">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </a>
-                                <a href="#buban_modal" class="btn btn-primary teachers-buban" data-toggle="modal"
-                                   data-backdrop="false">
-                                    <span class="glyphicon glyphicon-refresh"></span> 补办
-                                </a>
-                                <a class="btn btn-danger" href="">
-                                    <span class="glyphicon glyphicon glyphicon-trash"></span> 删除
-                                </a>
-                            </td>
-                        </tr>
+                        <c:forEach var="member" items="${list}">
+                            <tr>
+                                <td>${member.memberName}</td>
+                                <td>${member.memberMobile}</td>
+                                <td>${member.cardNo}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${member.cardDeadline == 0}">不限制</c:when>
+                                        <c:otherwise>${member.cardDeadline}</c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td>0次</td>
+                                <c:if test="${member.cardStatus == 1}">
+                                    <td class="text-success">有效</td>
+                                </c:if>
+                                <c:if test="${member.cardStatus == 2}">
+                                    <td class="text-danger">锁定</td>
+                                </c:if>
+                                <td>${member.operatorName}</td>
+                                <td>${member.createTime}</td>
+                                <td>
+                                    <a class="btn btn-primary" href="/teachers/view?memberId=${member.memberId}">
+                                        <span class="glyphicon glyphicon-share-alt"></span> 查看
+                                    </a>
+                                    <a href="#refresh_modal" class="btn btn-warning teachers-refresh" data-toggle="modal"
+                                       data-backdrop="false" data-cardId="${member.cardId}" data-cardNo="${member.cardNo}">
+                                        <span class="glyphicon glyphicon-refresh"></span> 补办
+                                    </a>
+                                    <!--<a class="btn btn-danger" href="">
+                                        <span class="glyphicon glyphicon glyphicon-trash"></span> 删除
+                                    </a>-->
+                                </td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                     <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >
@@ -197,33 +172,61 @@
         </div>
     </div>
 
-    <div class="modal fade" id="buban_modal" tabindex="-1" role="dialog" aria-labelledby="buban_modal_label">
+    <div class="modal fade" id="refresh_modal" tabindex="-1" role="dialog" aria-labelledby="refresh_modal_label">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h5 class="modal-title" id="buban_modal_label">教师卡补办</h5>
+                    <h5 class="modal-title" id="refresh_modal_label">教师卡补办</h5>
                 </div>
                 <div class="modal-body" style="clear: both;">
-                    <form id="buban_form" class="form-horizontal" onsubmit="return false;">
-                        <input type="hidden" name="goodId">
+                    <form id="refresh_form" class="form-horizontal" onsubmit="return false;">
+                        <input type="hidden" id="refresh_cardId" name="cardId">
+                        <input type="hidden" name="buBanMoney" value="0">
+                        <input type="hidden" name="balanceStyle" value="1">
+                        <input type="hidden" name="givingAmount" value="0">
+                        <input type="hidden" name="remark" value="教师卡免费补办">
                         <div class="form-group">
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control" id="buban_no" name="buban_no"
-                                       placeholder="请输入补办后的卡号"
-                                       data-val="true" data-val-required="补办后的卡号不能为空"
-                                       data-val-regex-pattern="^[1-9]\d*$">
-                                <div data-valmsg-for="buban_no" data-valmsg-replace="true"></div>
+                            <label for="refresh_cardNo" class="col-sm-2 control-label">旧的卡号</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="refresh_cardNo" name="cardNo" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="refresh_newNo" class="col-sm-2 control-label">新的卡号</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="refresh_newNo" name="newCardNo"
+                                       placeholder="请输入新卡号" autocomplete="off"
+                                       data-val="true" data-val-required="新卡号不能为空">
+                                <div data-valmsg-for="newCardNo" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary confirm-buban" data-dismiss="modal">
+                    <button type="button" class="btn btn-primary confirm-refresh" data-dismiss="modal">
                         <span class="glyphicon glyphicon-ok"></span> 确 认
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="refreshModal" tabindex="-1" role="dialog" aria-labelledby="refreshModalLabel">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="refreshModalLabel">提示框</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info" role="alert">教师卡补办成功!</div>
                 </div>
             </div>
         </div>

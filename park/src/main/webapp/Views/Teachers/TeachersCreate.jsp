@@ -42,7 +42,7 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="cardNo" name="cardNo"
+                                <input type="text" class="form-control" id="cardNo" name="tempCardNo"
                                        placeholder="教师卡号" value="${cardNo}"
                                        data-val="true" data-val-required="教师卡号不能为空">
                                 <div data-valmsg-for="tempCardNo" data-valmsg-replace="true"></div>
@@ -147,6 +147,8 @@
                         </div>
                     </div>
 
+                    <!-- 绑卡信息 -->
+                    <input type="hidden" name="cardNo" value="${cardNo}">
                     <input type="hidden" name="memberId" value="">
                     <input type="hidden" name="cardTypeId" value="1">
                     <input type="hidden" name="cardBalance" value="0">

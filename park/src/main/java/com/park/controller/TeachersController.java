@@ -55,13 +55,10 @@ public class TeachersController extends BaseController {
             MemberInputView memberInputView = new  MemberInputView();
             memberInputView.setCardType(userMemberAndCard.get("memberType").toString());
             model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(memberInputView));
-            //return new ResponseBean(JsonUtils.fromJsonDF(memberService.getUserMemberAndCard(super.getData(param, UserMember.class).getMemberId())));
         } catch (MessageException e) {
             e.printStackTrace();
-            //return new ResponseBean(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
-            //return new ResponseBean(false);
         }
         return "Teachers/TeachersView";
     }
