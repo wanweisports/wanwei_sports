@@ -66,6 +66,7 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 			student.setSiteCount(0);
 			student.setCardId(memberCard.getCardId());
 			student.setCreateTime(nowDate);
+			student.setStudentStatus(IDBConstant.LOGIC_STATUS_YES);
 			baseDao.save(student, null);
 			
 			
