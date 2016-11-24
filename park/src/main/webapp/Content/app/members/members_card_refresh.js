@@ -24,6 +24,8 @@
             return (money + send).toFixed(2);
         },
         initEvents: function () {
+            var content = this;
+
             $("#keywords").autosuggest({
                 url: '/member/searchMember',
                 method: 'post',
@@ -117,6 +119,7 @@
                         $("#refreshModal").modal({backdrop: false, show: true});
                         setTimeout(function () {
                             $("#refreshModal").modal("hide");
+                            location.reload();
                         }, 3000);
                     } else {
                         console.log(res.message || "会员补办失败, 请稍后重试");

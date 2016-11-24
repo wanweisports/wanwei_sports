@@ -453,7 +453,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		String cardId = balanceInputView.getCardId();
 		String balanceServiceType = balanceInputView.getBalanceServiceType();
 		
-		StringBuilder headSql = new StringBuilder("SELECT balanceId, balanceNo, memberName, balanceServiceType, balanceStyle, balanceServiceName, realAmount, balanceStatus, ob.salesId, uo.operatorName, DATE_FORMAT(ob.createTime,'%Y-%m-%d') createTime");
+		StringBuilder headSql = new StringBuilder("SELECT balanceId, balanceNo, memberName, balanceServiceType, balanceStyle, balanceServiceName, mc.cardNo, oldAmount, realAmount, givingAmount, mc.cardBalance, balanceStatus, ob.salesId, uo.operatorName, DATE_FORMAT(ob.createTime,'%Y-%m-%d') createTime");
 		StringBuilder bodySql = new StringBuilder(" FROM other_balance ob, member_card mc, user_member um, user_operator uo");
 		StringBuilder whereSql = new StringBuilder(" WHERE ob.balanceServiceId = mc.cardId AND mc.memberId = um.memberId AND ob.salesId = uo.id");
 		if(StrUtil.isNotBlank(balanceType)){

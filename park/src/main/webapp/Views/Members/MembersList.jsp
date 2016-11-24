@@ -76,8 +76,12 @@
                                         <c:otherwise>${member.cardDeadline}</c:otherwise>
                                     </c:choose>
                                 </td>
-                                <td>${member.cardBalance}</td>
-                                <td><a href="/member/getMembersChildren?memberId=${member.memberId}">${member.childrenCount}人</a></td>
+                                <td>
+                                    <a href="/member/getBalances?cardId=${member.cardId}&memberId=${member.memberId}">${member.cardBalance}元</a>
+                                </td>
+                                <td>
+                                    <a href="/member/getMembersChildren?memberId=${member.memberId}">${member.childrenCount}人</a>
+                                </td>
                                 <c:if test="${member.cardStatus == 1}">
                                     <td class="text-success">有效</td>
                                 </c:if>

@@ -13,6 +13,8 @@
             return (money + send).toFixed(2);
         },
         initEvents: function () {
+            var content = this;
+
             $("#keywords").autosuggest({
                 url: '/member/searchMember',
                 method: 'post',
@@ -106,6 +108,7 @@
                         $("#rechargeModal").modal({backdrop: false, show: true});
                         setTimeout(function () {
                             $("#rechargeModal").modal("hide");
+                            location.reload();
                         }, 3000);
                     } else {
                         console.log(res.message || "会员充值失败, 请稍后重试");

@@ -15,13 +15,13 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>会员管理</span> &gt;&gt; <span>会员查询</span> &gt;&gt; <span>会员详情</span> &gt;&gt; <span>储值明细</span>
+    当前位置: <span>会员管理</span> &gt;&gt; <span>会员查询</span> &gt;&gt; <span>余额流水明细</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left;">
         <div class="panel panel-default">
-            <div class="panel-heading">储值明细</div>
+            <div class="panel-heading">余额流水明细</div>
             <div class="panel-body">
                 <form class="form-inline" id="balance_filter_form" onsubmit="return false;">
                     <input type="hidden" name="cardId" value="${cardId}">
@@ -30,7 +30,6 @@
                             <option value="">全部类型</option>
                             <option value="10" <c:if test="${balanceServiceType == 10}">selected</c:if>>注册会员</option>
                             <option value="11" <c:if test="${balanceServiceType == 11}">selected</c:if>>会员充值</option>
-                            <option value="12" <c:if test="${balanceServiceType == 12}">selected</c:if>>会员升级</option>
                             <option value="13" <c:if test="${balanceServiceType == 13}">selected</c:if>>会员补办</option>
                         </select>
                     </div>
@@ -51,7 +50,7 @@
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>
-                    <div class="form-group pull-right">
+                    <div class="form-group pull-right" style="display: none;">
                         <a href="/member/getConsumes?cardId=${cardId}" class="btn btn-primary">
                             <span class="glyphicon glyphicon-th-list"></span> 消费明细
                         </a>
@@ -66,10 +65,13 @@
                         <thead>
                         <tr>
                             <th>交易流水号</th>
+                            <th>会员卡号</th>
                             <th>会员姓名</th>
                             <th>订单类型</th>
                             <th>支付方式</th>
-                            <th>支付金额</th>
+                            <th>支付金额(元)</th>
+                            <th>赠送金额(元)</th>
+                            <th>当前余额(元)</th>
                             <th>订单状态</th>
                             <th>操作人</th>
                             <th>操作时间</th>
@@ -79,11 +81,18 @@
                         <c:forEach var="balance" items="${list}">
                             <tr>
                                 <td>${balance.balanceNo}</td>
+                                <td>${balance.cardNo}</td>
                                 <td>${balance.memberName}</td>
                                 <td>${balance.balanceServiceTypeName}</td>
                                 <td>${balance.balanceStyleName}</td>
                                 <td>${balance.realAmount}</td>
-                                <td>${balance.balanceStatus}</td>
+                                <td>${balance.givingAmount}</td>
+                                <td>${balance.cardBalance}</td>
+                                <c:choose>
+                                    <c:when test="${balance.balanceStatus == 1}"><td class="text-success">已支付</td></c:when>
+                                    <c:when test="${balance.balanceStatus == 2}"><td class="text-danger">未支付</td></c:when>
+                                    <c:otherwise><td>--</td></c:otherwise>
+                                </c:choose>
                                 <td>${balance.operatorName}</td>
                                 <td>${balance.createTime}</td>
                             </tr>
