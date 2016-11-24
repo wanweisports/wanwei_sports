@@ -31,7 +31,7 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 	public PageBean getStudents(StudentInputView studentInputView){
 		StringBuilder headSql = new StringBuilder("SELECT us.studentId, us.studentName, CONCAT(us.studentGrade, us.studentClass) gradeClass, us.siteCount, mc.cardDeadline, us.studentStatus, uo.operatorName, us.createTime");
 		StringBuilder bodySql = new StringBuilder(" FROM user_student us");
-		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
+		StringBuilder whereSql = new StringBuilder(" WHERE us.studentStatus = ").append(IDBConstant.LOGIC_STATUS_YES);
 		
 		bodySql.append(" INNER JOIN user_operator uo ON(us.salesId = uo.id)");
 		bodySql.append(" LEFT JOIN member_card mc ON(us.cardId = mc.cardId)");
@@ -89,6 +89,14 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 	public boolean availableMobile(String mobile){
 		Map<String, Object> map = baseDao.queryBySqlFirst("SELECT 1 FROM user_student WHERE studentMobile = ?", mobile);
 		return map == null ? true : false;
+	}
+	
+	@Override
+	public void updateLockStudent(int studentId, int salesId){
+		UserStudent student = getStudent(studentId);
+		student.setStudentStatus(IDBConstant.LOGIC_STATUS_NO);
+		student.setSalesId(salesId);
+		baseDao.save(student, studentId);
 	}
 	
 }

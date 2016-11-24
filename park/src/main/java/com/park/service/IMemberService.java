@@ -91,4 +91,6 @@ public interface IMemberService {
 	
 	public UserMember getUserMemberByChildMobile(String childMobile);
 	
+	public void updateLockTeacher(int memberId, int salesId);
+	
 }

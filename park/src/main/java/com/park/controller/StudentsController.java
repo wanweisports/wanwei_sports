@@ -80,6 +80,20 @@ public class StudentsController extends BaseController {
     @RequestMapping("data")
     public String studentsVenueData() {return "Students/StudentsVenueData";}
     
+    @ResponseBody
+    @RequestMapping("lockStudent")
+    public ResponseBean lockStudent(int studentId){
+    	try{
+    		studentService.updateLockStudent(studentId, getUserInfo().getId());
+    		return new ResponseBean(true);
+    	} catch (MessageException e) {
+    		return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
+    }
+    
     
     //验证学生是否重复手机号true可用  false重复
     @ResponseBody

@@ -14,4 +14,6 @@ public interface IStudentService {
 	
 	public boolean availableMobile(String mobile);
 	
+	public void updateLockStudent(int studentId, int salesId);
+	
 }

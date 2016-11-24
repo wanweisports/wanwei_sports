@@ -274,7 +274,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		StringBuilder bodySql = new StringBuilder(" FROM user_member um");
 		bodySql.append(" LEFT JOIN member_card mc ON(um.memberId = mc.memberId)");
 		bodySql.append(" LEFT JOIN user_operator uo ON(mc.salesId = uo.id)");
-		StringBuilder whereSql = new StringBuilder(" WHERE um.parentMemberId IS NULL");
+		StringBuilder whereSql = new StringBuilder(" WHERE um.parentMemberId IS NULL AND um.memberStatus = ").append(IDBConstant.LOGIC_STATUS_YES);
 		if(StrUtil.isNotBlank(memberMobile)){
 			whereSql.append(" AND um.memberMobile = :memberMobile");
 		}
@@ -647,6 +647,14 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		if(userMember == null) throw new MessageException("会员手机不存在"); //可能是自己，也可能是子会员
 		//if(userMember.getParentMemberId() == null) throw new MessageException("该手机不是子会员手机号");
 		return userMember;
+	}
+	
+	@Override
+	public void updateLockTeacher(int memberId, int salesId){
+		UserMember userMember = getUserMember(memberId);
+		userMember.setMemberStatus(IDBConstant.LOGIC_STATUS_NO);
+		userMember.setSalesId(salesId);
+		baseDao.save(userMember, memberId);
 	}
 	
 }

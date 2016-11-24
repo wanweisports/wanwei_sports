@@ -4,10 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.park.common.bean.MemberInputView;
 import com.park.common.bean.PageBean;
+import com.park.common.bean.ResponseBean;
 import com.park.common.constant.IDBConstant;
+import com.park.common.exception.MessageException;
 import com.park.common.util.JsonUtils;
 import com.park.service.IMemberService;
 
@@ -55,4 +58,19 @@ public class TeachersController extends BaseController {
     // 教师订单统计
     @RequestMapping("orderMeal")
     public String teachersOrderMeal() {return "Teachers/TeachersMealData";}
+    
+    @ResponseBody
+    @RequestMapping("lockTeacher")
+    public ResponseBean lockTeacher(int memberId){
+    	try{
+    		memberService.updateLockTeacher(memberId, getUserInfo().getId());
+    		return new ResponseBean(true);
+    	} catch (MessageException e) {
+    		return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
+    }
+    
 }
