@@ -28,6 +28,7 @@ public class MemberCard implements java.io.Serializable {
 	private String updateTime;
 	private String cardRemark;
 	private Integer salesId;
+	private Double cardDeposit;
 
 	// Constructors
 
@@ -45,7 +46,7 @@ public class MemberCard implements java.io.Serializable {
 	public MemberCard(Integer memberId, String cardNo, Double cardBalance,
 			String cardDeadline, String cardStatus, Integer cardTypeId,
 			String createTime, String updateTime, String cardRemark,
-			Integer salesId) {
+			Integer salesId, Double cardDeposit) {
 		this.memberId = memberId;
 		this.cardNo = cardNo;
 		this.cardBalance = cardBalance;
@@ -56,6 +57,7 @@ public class MemberCard implements java.io.Serializable {
 		this.updateTime = updateTime;
 		this.cardRemark = cardRemark;
 		this.salesId = salesId;
+		this.cardDeposit = cardDeposit;
 	}
 
 	// Property accessors
@@ -158,6 +160,15 @@ public class MemberCard implements java.io.Serializable {
 
 	public void setSalesId(Integer salesId) {
 		this.salesId = salesId;
+	}
+
+	@Column(name = "cardDeposit", precision = 10)
+	public Double getCardDeposit() {
+		return this.cardDeposit;
+	}
+
+	public void setCardDeposit(Double cardDeposit) {
+		this.cardDeposit = cardDeposit;
 	}
 
 }

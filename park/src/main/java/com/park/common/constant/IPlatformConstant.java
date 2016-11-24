@@ -26,6 +26,8 @@ public interface IPlatformConstant {
     
     public final String ADMIN = "admin";
     
+    public final String ADMIN_NAME = "管理员";
+    
     public final String ORDER_SITE_NAME = ""; //场地预定
     
     public final int SITE_ADVANCE_START_TIME = -20; //场地开场可以提前20分钟签到
