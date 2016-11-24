@@ -6,6 +6,7 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/lib/holder/holder.min.js?v=${static_resource_version}"></script>
     <script src="/Content/app/goods/goods_market.js?v=${static_resource_version}"></script>
 </layout:override>
 
@@ -46,11 +47,11 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="row goods-buy-list">
-                    <c:forEach var="good" items="${goods}">
+                    <c:forEach var="good" items="${goods}" varStatus="loop">
                         <div class="col-sm-2 col-md-2 goods-list-item">
                             <div class="thumbnail">
-                                <img class="good-image" src="${good.goodPic}" alt="${good.goodName}"
-                                     style="width: 100%;height: 110px;">
+                                <img class="good-image" data-src="holder.js/300x110?text=${good.goodName}&random=yes&auto=yes"
+                                     src="${good.goodPic}" alt="${good.goodName}" style="width: 100%;height: 110px;">
                                 <div class="caption" style="padding: 0">
                                     <p class="good-name" data-text="${good.goodName}"
                                        style="margin-bottom: 1px">${good.goodName}</p>
@@ -70,38 +71,6 @@
                             </div>
                         </div>
                     </c:forEach>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="tips_success_modal" tabindex="-1" role="dialog" aria-labelledby="tips_success_modal_label">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="tips_success_modal_label">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <p class="text-success text-content">添加购物车成功!</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="tips_error_modal" tabindex="-1" role="dialog" aria-labelledby="tips_error_modal_label">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="tips_error_modal_label">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <p class="text-danger text-content">添加购物车失败!</p>
                 </div>
             </div>
         </div>

@@ -74,7 +74,7 @@
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
                                 <button type="button" class="btn btn-primary col-sm-4 genxin-submit">
-                                    <span class="glyphicon glyphicon-refresh"></span> 更新会员信息
+                                    <span class="glyphicon glyphicon-refresh"></span> 更新信息
                                 </button>
                             </div>
                         </div>
@@ -86,41 +86,23 @@
             <div class="panel panel-default">
                 <input type="hidden" name="memberId" value="${memberId}">
                 <input type="hidden" name="cardNo" value="${cardNo}" >
+                <input type="hidden" name="cardTypeId" value="2" >
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="member_type" class="col-sm-4 control-label">
-                                    <span class="text-danger">*</span> 会员类型
-                                </label>
+                                <label class="col-sm-4 control-label">会员类型</label>
 
-                                <div class="col-sm-6">
-                                    <select class="form-control" id="member_type" name="cardTypeId">
-                                        <option value="">请选择</option>
-                                        <c:forEach var="type" items="${memberCarTypeNames}">
-                                            <option value="${type.cardTypeId}">${type.cardTypeName}</option>
-                                        </c:forEach>
-                                    </select>
-                                    <div data-valmsg-for="cardTypeId" data-valmsg-replace="true"></div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <a href="/member/getMemberCarTypes" class="btn btn-primary">
-                                        <span class="glyphicon glyphicon-plus"></span>
-                                    </a>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" value="会员卡" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-4 control-label">会员折扣</label>
+                                <label class="col-sm-4 control-label">押金(元)</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" name='cardTypeDiscount' disabled>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">信用额度</label>
-
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" name='cardTypeCredit' disabled>
+                                    <input type="text" class="form-control" id="recharge_type_deposit"
+                                           name="cardDeposit" disabled>
                                 </div>
                             </div>
                         </div>
@@ -129,7 +111,8 @@
                                 <label class="col-sm-4 control-label">会费(元)</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="cardTypeMoney" disabled>
+                                    <input type="text" class="form-control" id="recharge_type_money"
+                                           name="cardTypeMoney" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -137,13 +120,6 @@
 
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" name="cardDeadline" disabled>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">提前天数</label>
-
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="cardTypeAhead" disabled>
                                 </div>
                             </div>
                         </div>
@@ -183,22 +159,11 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="recharge_discount" class="col-sm-4 control-label">优惠金额(元)</label>
-
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="recharge_discount" name="subAmount"
-                                           value="" placeholder="请输入优惠金额"
-                                           data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
-                                           data-val-regex="优惠金额格式错误">
-                                    <div data-valmsg-for="subAmount" data-valmsg-replace="true"></div>
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label for="recharge_send" class="col-sm-4 control-label">赠送金额(元)</label>
 
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="recharge_send" name="givingAmount"
-                                           value="" placeholder="请输入赠送金额"
+                                           placeholder="请输入赠送金额" autocomplete="off"
                                            data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                            data-val-regex="赠送金额格式错误">
                                     <div data-valmsg-for="givingAmount" data-valmsg-replace="true"></div>
@@ -214,10 +179,10 @@
                                               placeholder="备注"></textarea>
                                 </div>
                             </div>
-                            <!--<div class="alert alert-info" role="alert">
-                                合计金额(充值金额 + 赠送金额 - 优惠金额 - 会费): <span class=total-money>0</span>元
-                            </div>-->
-                            <div class="form-group sc-ui-submit">
+                            <div class="alert alert-info" role="alert">
+                                合计金额(充值金额 + 赠送金额 - 会费 - 押金): <span class="total-money">0</span>元
+                            </div>
+                            <div class="form-group">
                                 <div class="col-sm-offset-4 col-sm-8">
                                     <button type="button" class="btn btn-primary col-sm-4 register-recahrge">
                                         <span class="glyphicon glyphicon-ok"></span> 确定 & 付款

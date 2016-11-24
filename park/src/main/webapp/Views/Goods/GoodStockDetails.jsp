@@ -25,16 +25,23 @@
             <div class="panel-body">
                 <form class="form-inline" id="goods_filter_form" onsubmit="return false;">
                     <div class="form-group">
-                        <label for="good_no">商品编号</label>
-                        <input type="text" class="form-control" id="good_no" name="goodNo"
-                               placeholder="请输入商品编号" value="${goodNo}">
+                        <div class="btn-group">
+                            <a href="javascript:;" class="btn btn-primary">今天</a>
+                            <a href="javascript:;" class="btn btn-default">昨天</a>
+                            <a href="javascript:;" class="btn btn-default">本周</a>
+                            <a href="javascript:;" class="btn btn-default">本月</a>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="createTimeStart" name="createTimeStart" placeholder="开始时间"
+                        <input type="text" class="form-control" id="good_no" name="goodNo"
+                            placeholder="商品编号" value="${goodNo}">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="createTimeStart" name="createTimeStart" placeholder="开始日期"
                                value="${createTimeStart}">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="createTimeEnd" name="createTimeEnd" placeholder="结束时间"
+                        <input type="text" class="form-control" id="createTimeEnd" name="createTimeEnd" placeholder="结束日期"
                                value="${createTimeEnd}">
                     </div>
                     <div class="form-group">
@@ -42,22 +49,28 @@
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>
-                    <div class="form-group pull-right">
-                        <a href="javascript:;" class="btn btn-primary goods-filter">
-                            <span class="glyphicon glyphicon-export"></span> 导出数据
-                        </a>
-                    </div>
                 </form>
             </div>
         </div>
-        <div class="alert alert-info" role="alert">
-            销售量统计：
-            <span>今日：0件</span>
-            <span>昨日：0件</span>
-            <span>本周：0件</span>
-            <span>本月：0件</span>
-            <span>本年：0件</span>
+
+        <div class="alert alert-info clearfix">
+            <ul class="nav nav-pills pull-left">
+                <li style="margin-right: 15px;">商品销售总计:</li>
+                <li style="margin-right: 15px;">全部类别 <span class="badge">42件</span></li>
+                <li style="margin-right: 15px;">食品饮料 <span class="badge">0件</span></li>
+                <li style="margin-right: 15px;">服饰鞋帽 <span class="badge">21次</span></li>
+                <li style="margin-right: 15px;">运动器具 <span class="badge">21次</span></li>
+            </ul>
+            <div class="pull-right">
+                <a href="javascript:;" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-export"></span> 导出数据
+                </a>
+                <a href="javascript:;" class="btn btn-primary" style="display: none;">
+                    <span class="glyphicon glyphicon-stats"></span> 图表显示
+                </a>
+            </div>
         </div>
+
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="table-responsive">

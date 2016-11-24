@@ -34,6 +34,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">新会员办理</div>
                 <div class="panel-body">
+                    <input type="hidden" name="memberType" value="1">
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="cardNo" class="col-sm-4 control-label">
@@ -47,22 +48,6 @@
                                 <div data-valmsg-for="tempCardNo" data-valmsg-replace="true"></div>
                             </div>
                         </div>
-                        <input type="hidden" name="memberType" value="1">
-                        <!--<div class="form-group">
-                            <label for="memberType1" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 支付类型
-                            </label>
-
-                            <div class="col-sm-8">
-                                <label class="radio-inline">
-                                    <input type="radio" name="memberType" id="memberType1" value="1" checked> 预付类型
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="memberType" id="memberType2" value="2"> 记账类型
-                                </label>
-                                <div data-valmsg-for="memberType" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>-->
                         <div class="form-group">
                             <label for="member_mobile" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 手机号码
@@ -90,17 +75,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!--<div class="form-group">
-                            <label for="member_mobile2" class="col-sm-4 control-label">备用手机</label>
-
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="member_mobile2" name="memberMobile2"
-                                       placeholder="请输入备用手机号码" autocomplete="off"
-                                       data-val-regex-pattern="^1\d{10}$"
-                                       data-val-regex="备用手机号码格式错误">
-                                <div data-valmsg-for="memberMobile2" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>-->
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">

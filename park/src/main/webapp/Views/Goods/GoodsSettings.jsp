@@ -41,6 +41,14 @@
                                 <input type="text" class="form-control" id="good_no" name="goodNo"
                                        value="${goodNo}" placeholder="商品编号" autocomplete="off"
                                        data-val="true" data-val-required="商品编号不能为空">
+                                <!--<div class="input-group">
+                                    <input type="text" class="form-control" id="good_no" name="goodNo"
+                                           value="${goodNo}" placeholder="商品编号" autocomplete="off"
+                                           data-val="true" data-val-required="商品编号不能为空">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary">读 取</button>
+                                    </span>
+                                </div>-->
                                 <div data-valmsg-for="goodNo" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -51,7 +59,7 @@
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="good_price" name="goodPrice"
-                                       value="${goodPrice}" placeholder="商品价格" autocomplete="off"
+                                       value="${goodPrice}" placeholder="商品价格,例如10.00" autocomplete="off"
                                        data-val="true" data-val-required="商品价格不能为空"
                                        data-val-regex-pattern="^(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                        data-val-regex="商品价格格式错误">
@@ -59,27 +67,21 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 商品图片
-                            </label>
+                            <label class="col-sm-4 control-label">商品图片</label>
 
                             <div class="col-sm-8">
                                 <input type="file" id="good_pic" name="file" accept="image/*" value=""
-                                       placeholder="商品图片" autocomplete="off" data-val="true"
-                                       data-val-required="商品图片不能为空" style="font-size: 12px;">
+                                       placeholder="商品图片" autocomplete="off" style="font-size: 12px;">
                                 <div data-valmsg-for="goodPic" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="good_count" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 初始库存量
-                            </label>
+                            <label for="good_count" class="col-sm-4 control-label">初始库存量</label>
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="good_count" name="goodCount"
                                        value="${goodCount}" placeholder="初始库存量" autocomplete="off"
-                                       data-val="true" data-val-required="初始库存量不能为空"
-                                       data-val-regex-pattern="^0|[1-9]\d*$"
+                                       data-val-regex-pattern="^[1-9]\d*$"
                                        data-val-regex="初始库存量格式错误">
                                 <div data-valmsg-for="goodCount" data-valmsg-replace="true"></div>
                             </div>
@@ -104,7 +106,8 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <select class="form-control" id="good_type" name="goodTypeId">
+                                <select class="form-control" id="good_type" name="goodTypeId"
+                                        data-val="true" data-val-required="请选择商品类别">
                                     <option value="">请选择</option>
                                     <c:forEach var="type" items="${goodTypeNames}">
                                         <option value="${type.goodTypeId}" <c:if test='${type.goodTypeId == goodTypeId}'>selected</c:if>>${type.goodTypeName}</option>
@@ -120,7 +123,7 @@
 
                             <div class="col-sm-8">
                                 <label class="radio-inline">
-                                    <input type="radio" name="goodMoneyType" id="good_mode1" value="1" checked> 计次收费
+                                    <input type="radio" name="goodMoneyType" id="good_mode1" value="1" checked> 计量收费
                                 </label>
                                 <label class="radio-inline">
                                     <input type="radio" name="goodMoneyType" id="good_mode2"
@@ -179,23 +182,7 @@
                     <h5 class="modal-title" id="tips_success_modal_label">提示框</h5>
                 </div>
                 <div class="modal-body">
-                    <p class="text-success text-content">商品设置提交失败成功!</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="tips_error_modal" tabindex="-1" role="dialog" aria-labelledby="tips_error_modal_label">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="tips_error_modal_label">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <p class="text-danger text-content">商品设置提交失败失败!</p>
+                    <p class="text-success text-content">商品设置提交成功!</p>
                 </div>
             </div>
         </div>

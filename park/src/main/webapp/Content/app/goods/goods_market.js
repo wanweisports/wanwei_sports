@@ -46,8 +46,7 @@
 
                 $.post('/good/addGoodsToCart', {goodId: goodId, amount: 1}, function (res) {
                     if (res.code != 1) {
-                        $("#tips_error_modal").modal({show: true, backdrop: false})
-                            .find(".text-content").text(res.message || "添加购物车失败, 请稍后重试");
+                        alert(res.message || "添加购物车失败, 请稍后重试");
                         console.log(res.message || "添加购物车失败, 请稍后重试");
                     }
                 });

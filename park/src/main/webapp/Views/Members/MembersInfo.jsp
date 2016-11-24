@@ -36,6 +36,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">会员详情</div>
                 <div class="panel-body">
+                    <input type="hidden" name="memberType" value="1">
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="card_id" class="col-sm-4 control-label">
@@ -63,34 +64,16 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="member_mobile2" class="col-sm-4 control-label">备用手机</label>
+                            <label for="member_birthday" class="col-sm-4 control-label">会员生日</label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="member_mobile2" name="memberMobile2"
-                                       placeholder="请输入备用手机号码" autocomplete="off"
-                                       data-val-regex-pattern="^1\d{10}$"
-                                       data-val-regex="备用手机号码格式错误"
-                                       value="${memberMobile2}">
-                                <div data-valmsg-for="memberMobile2" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="payment_type" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 支付类型
-                            </label>
-
-                            <div class="col-sm-8">
-                                <select class="form-control" id="payment_type" name="memberType" disabled>
-                                    <c:if test="${memberType == 1}">
-                                        <option value="1" selected>预付类型</option>
-                                        <option value="2">记账类型</option>
-                                    </c:if>
-                                    <c:if test="${memberType == 2}">
-                                        <option value="1">预付类型</option>
-                                        <option value="2" selected>记账类型</option>
-                                    </c:if>
-                                </select>
-                                <div data-valmsg-for="memberType" data-valmsg-replace="true"></div>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="member_birthday" name="memberBirthday"
+                                           value="${memberBirthday}" placeholder="会员生日">
+                                    <span class="input-group-addon member-birthday-select">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -150,19 +133,6 @@
                                 <div data-valmsg-for="memberSex" data-valmsg-replace="true"></div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="member_birthday" class="col-sm-4 control-label">会员生日</label>
-
-                            <div class="col-sm-8">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="member_birthday" name="memberBirthday"
-                                           value="${memberBirthday}" placeholder="会员生日">
-                                    <span class="input-group-addon member-birthday-select">
-                                        <i class="glyphicon glyphicon-calendar"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="col-sm-12">
                         <div class="form-group">
@@ -187,28 +157,13 @@
             <div class="panel panel-default">
                 <div class="panel-heading">会员卡信息</div>
                 <div class="panel-body">
+                    <input type="hidden" name="cardTypeId" value="2" >
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="member_card_type1" class="col-sm-4 control-label">会员类型</label>
 
                             <div class="col-sm-8">
-                                <select class="form-control" id="member_card_type1" name="cardTypeId" disabled>
-                                    <c:forEach var="type" items="${memberCarTypeNames}">
-                                        <c:if test="${type.cardTypeId == cardTypeId}">
-                                            <option value="${type.cardTypeId}" selected>${type.cardTypeName}</option>
-                                        </c:if>
-                                        <c:if test="${type.cardTypeId != cardTypeId}">
-                                            <option value="${type.cardTypeId}">${type.cardTypeName}</option>
-                                        </c:if>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">会员折扣</label>
-
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" value="${cardTypeDiscount}折" disabled>
+                                <input type="text" class="form-control" id="member_card_type1" value="会员卡" disabled>
                             </div>
                         </div>
                         <div class="form-group">
@@ -223,13 +178,6 @@
                                 </a>
                             </div>
                         </div>
-                        <!--<div class="form-group">
-                            <label class="col-sm-4 control-label">每周许可</label>
-
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" value="${cardTypeWeek}" disabled>
-                            </div>
-                        </div>-->
                         <div class="form-group">
                             <label class="col-sm-4 control-label">操作人</label>
 
@@ -240,6 +188,20 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
+                            <label class="col-sm-4 control-label">截止日期</label>
+
+                            <div class="col-sm-8">
+                                <c:choose>
+                                    <c:when test="${cardDeadline == 0}">
+                                        <input type="text" class="form-control" value="不限制" disabled>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input type="text" class="form-control" value="${cardDeadline}" disabled>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-4 control-label">会员状态</label>
 
                             <div class="col-sm-8">
@@ -249,13 +211,6 @@
                                 <c:if test="${cardStatus == 2}">
                                     <input type="text" class="form-control" value="锁定" disabled>
                                 </c:if>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">有效期至</label>
-
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" value="${cardDeadline}" disabled>
                             </div>
                         </div>
                         <div class="form-group">
@@ -271,14 +226,15 @@
                             <div class="text-center">
                                 <p class="sc-submit-tips"></p>
                                 <a href="javascript:;" class="btn btn-primary gengxin-modal">
-                                    <span class="glyphicon glyphicon-refresh"></span> 更新会员信息
+                                    <span class="glyphicon glyphicon-refresh"></span> 更新信息
                                 </a>
                                 <a href="#chongzhiModal" class="btn btn-primary" data-toggle="modal" data-backdrop="false">
                                     <span class="glyphicon glyphicon-usd"></span> 会员卡充值
                                 </a>
-                                <a href="#shengjiModal" class="btn btn-primary shengji-modal" data-toggle="modal" data-backdrop="false">
+                                <!--<a href="#shengjiModal" class="btn btn-primary shengji-modal" data-toggle="modal"
+                                    data-backdrop="false">
                                     <span class="glyphicon glyphicon-flash"></span> 会员卡升级
-                                </a>
+                                </a>-->
                                 <a href="#bubanModal" class="btn btn-primary" data-toggle="modal" data-backdrop="false">
                                     <span class="glyphicon glyphicon-refresh"></span> 会员卡补办
                                 </a>
@@ -364,6 +320,9 @@
                                               placeholder="请输入备注" autocomplete="off"></textarea>
                                     </div>
                                 </div>
+                                <div class="alert alert-info" role="alert">
+                                    合计金额(补办金额 + 赠送金额): <span class="refresh-total-money">0</span>元
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -434,14 +393,6 @@
                                         <div data-valmsg-for="givingAmount" data-valmsg-replace="true"></div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="recharge_total" class="col-sm-4 control-label">卡内总额(元)</label>
-
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="recharge_total" name="totalAmount"
-                                               autocomplete="off" disabled value="充值金额 + 赠送金额">
-                                    </div>
-                                </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
@@ -451,6 +402,9 @@
                                     <textarea class="form-control" id="recharge_remark" name="remark" rows="3"
                                               placeholder="请输入备注" autocomplete="off"></textarea>
                                     </div>
+                                </div>
+                                <div class="alert alert-info" role="alert">
+                                    合计金额(充值金额 + 赠送金额): <span class="recharge-total-money">0</span>元
                                 </div>
                             </div>
                         </div>

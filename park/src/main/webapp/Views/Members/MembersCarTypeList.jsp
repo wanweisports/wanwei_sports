@@ -46,7 +46,7 @@
                         </a>
                     </div>
                 </form>
-                <div class="col-sm-4 text-right">
+                <div class="col-sm-4 text-right" style="display: none;">
                     <button type="button" class="btn btn-primary card-type-add" data-toggle="modal"
                             data-target="#addModal" data-backdrop="false">
                         <span class="glyphicon glyphicon-plus"></span> 增加会员类型
@@ -60,15 +60,12 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>#</th>
+                            <th>序号</th>
                             <th>会员类别</th>
-                            <th>支付类型</th>
                             <th>会员周期</th>
-                            <th>时间限制</th>
-                            <th>会员折扣</th>
-                            <th>提前时间</th>
                             <th>会费(元)</th>
-                            <th>信用额度(元)</th>
+                            <th>押金(元)</th>
+                            <th>时间限制</th>
                             <th>状态</th>
                             <th>操作人</th>
                             <th>操作时间</th>
@@ -81,10 +78,13 @@
                                 <td>${loop.index + 1}</td>
                                 <td>${type.cardTypeName}</td>
                                 <td>
-                                    <c:if test="${type.cardType == '1'}">预存类型</c:if>
-                                    <c:if test="${type.cardType == '2'}">记账类型</c:if>
+                                    <c:choose>
+                                        <c:when test="${type.cardTypeMonth > 0}">${type.cardTypeMonth}个月</c:when>
+                                        <c:otherwise>不限制</c:otherwise>
+                                    </c:choose>
                                 </td>
-                                <td>${type.cardTypeMonth}个月</td>
+                                <td>${type.cardTypeMoney}</td>
+                                <td>${type.cardDeposit}</td>
                                 <td>
                                         <%-- fn函数：切分逗号分隔的开始时间和结束时间为数组【c:set：定义变量】 --%>
                                     <c:set var="timeStart" value="${fn:split(type.cardTypeTimeStart, ',')}" />
@@ -94,10 +94,6 @@
                                         周${week}: ${timeStart[status.index]}-${timeEnd[status.index]}<br> <%-- status.index：循环的下标,从0开始 --%>
                                     </c:forEach>
                                 </td>
-                                <td>${type.cardTypeDiscount / 10.0}折</td>
-                                <td>${type.cardTypeAhead}天</td>
-                                <td>${type.cardTypeMoney}</td>
-                                <td>${type.cardTypeCredit}</td>
 
                                 <c:if test="${type.cardTypeStatus=='1'}">
                                     <td class="text-success">正常</td>
@@ -143,13 +139,15 @@
 
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="card_type_name" name="cardTypeName"
-                                           placeholder="例如:普通会员,金卡会员" autocomplete="off"
-                                           data-val="true" data-val-required="会员类别不能为空"
+                                           placeholder="例如:会员卡,教师卡" autocomplete="off"
+                                           data-val="true" data-val-required="类别名称不能为空"
                                            data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,5}$"
-                                           data-val-regex="会员类别长度只能2~6个字符">
+                                           data-val-regex="类别名称长度只能2~6个字符">
                                     <div data-valmsg-for="cardTypeName" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="card_type_month" class="col-sm-4 control-label">
                                     <span class="text-danger">*</span> 会员周期
@@ -158,48 +156,10 @@
                                 <div class="col-sm-8">
                                     <select class="form-control" id="card_type_month" name="cardTypeMonth">
                                         <option value="0">不限制</option>
-                                        <option value="1">1个月</option>
-                                        <option value="2">2个月</option>
-                                        <option value="3">3个月</option>
-                                        <option value="4">4个月</option>
-                                        <option value="5">5个月</option>
-                                        <option value="6">6个月</option>
-                                        <option value="7">7个月</option>
-                                        <option value="8">8个月</option>
-                                        <option value="9">9个月</option>
-                                        <option value="10">10个月</option>
-                                        <option value="11">11个月</option>
-                                        <option value="12">12个月</option>
+                                        <c:forEach var="i" begin="1" end="12">
+                                            <option value="${i}">${i}个月</option>
+                                        </c:forEach>
                                     </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="card_payment_type" class="col-sm-4 control-label">
-                                    <span class="text-danger">*</span> 卡类型
-                                </label>
-
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="card_payment_type" name="cardType">
-                                        <option value="1">会员卡</option>
-                                        <option value="2">教师卡</option>
-                                        <option value="3">学生卡</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="card_type_ahead" class="col-sm-4 control-label">
-                                    <span class="text-danger">*</span> 提前时间
-                                </label>
-
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="card_type_ahead" name="cardTypeAhead"
-                                           placeholder="提前预订时间(天)" autocomplete="off"
-                                           data-val="true" data-val-required="提前预订时间不能为空"
-                                           data-val-regex-pattern="^[0-9]|[1-9][0-9]$"
-                                           data-val-regex="提前预订时间只能是数字">
-                                    <div data-valmsg-for="cardTypeAhead" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
                         </div>
@@ -216,40 +176,26 @@
                                         </label>
                                         <div class="pull-left" style="width: 40%">
                                             <select class="form-control timeWeek" name="cardTypeTimeStart">
-                                                <option value="08:00">08:00</option>
-                                                <option value="09:00">09:00</option>
-                                                <option value="10:00">10:00</option>
-                                                <option value="11:00">11:00</option>
-                                                <option value="12:00">12:00</option>
-                                                <option value="13:00">13:00</option>
-                                                <option value="14:00">14:00</option>
-                                                <option value="15:00">15:00</option>
-                                                <option value="16:00">16:00</option>
-                                                <option value="17:00">17:00</option>
-                                                <option value="18:00">18:00</option>
-                                                <option value="19:00">19:00</option>
-                                                <option value="20:00">20:00</option>
-                                                <option value="21:00">21:00</option>
-                                                <option value="22:00">22:00</option>
+                                                <c:forEach var="i" begin="0" end="24">
+                                                    <c:if test="${i < 10}">
+                                                    <option value="0${i}:00">0${i}:00</option>
+                                                    </c:if>
+                                                    <c:if test="${i >= 10}">
+                                                        <option value="${i}:00">${i}:00</option>
+                                                    </c:if>
+                                                </c:forEach>
                                             </select>
                                         </div>
                                         <div class="pull-left" style="width: 40%">
                                             <select class="form-control timeWeek" name="cardTypeTimeEnd">
-                                                <option value="08:00">08:00</option>
-                                                <option value="09:00">09:00</option>
-                                                <option value="10:00">10:00</option>
-                                                <option value="11:00">11:00</option>
-                                                <option value="12:00">12:00</option>
-                                                <option value="13:00">13:00</option>
-                                                <option value="14:00">14:00</option>
-                                                <option value="15:00">15:00</option>
-                                                <option value="16:00">16:00</option>
-                                                <option value="17:00">17:00</option>
-                                                <option value="18:00">18:00</option>
-                                                <option value="19:00">19:00</option>
-                                                <option value="20:00">20:00</option>
-                                                <option value="21:00">21:00</option>
-                                                <option value="22:00" selected>22:00</option>
+                                                <c:forEach var="i" begin="0" end="24">
+                                                    <c:if test="${i < 10}">
+                                                        <option value="0${i}:00">0${i}:00</option>
+                                                    </c:if>
+                                                    <c:if test="${i >= 10}">
+                                                        <option value="${i}:00">${i}:00</option>
+                                                    </c:if>
+                                                </c:forEach>
                                             </select>
                                         </div>
                                     </div>
@@ -259,40 +205,26 @@
                                         </label>
                                         <div class="pull-left" style="width: 40%">
                                             <select class="form-control timeWeek" name="cardTypeTimeStart">
-                                                <option value="08:00">08:00</option>
-                                                <option value="09:00">09:00</option>
-                                                <option value="10:00">10:00</option>
-                                                <option value="11:00">11:00</option>
-                                                <option value="12:00">12:00</option>
-                                                <option value="13:00">13:00</option>
-                                                <option value="14:00">14:00</option>
-                                                <option value="15:00">15:00</option>
-                                                <option value="16:00">16:00</option>
-                                                <option value="17:00">17:00</option>
-                                                <option value="18:00">18:00</option>
-                                                <option value="19:00">19:00</option>
-                                                <option value="20:00">20:00</option>
-                                                <option value="21:00">21:00</option>
-                                                <option value="22:00">22:00</option>
+                                                <c:forEach var="i" begin="0" end="24">
+                                                    <c:if test="${i < 10}">
+                                                        <option value="0${i}:00">0${i}:00</option>
+                                                    </c:if>
+                                                    <c:if test="${i >= 10}">
+                                                        <option value="${i}:00">${i}:00</option>
+                                                    </c:if>
+                                                </c:forEach>
                                             </select>
                                         </div>
                                         <div class="pull-left" style="width: 40%">
                                             <select class="form-control timeWeek" name="cardTypeTimeEnd">
-                                                <option value="08:00">08:00</option>
-                                                <option value="09:00">09:00</option>
-                                                <option value="10:00">10:00</option>
-                                                <option value="11:00">11:00</option>
-                                                <option value="12:00">12:00</option>
-                                                <option value="13:00">13:00</option>
-                                                <option value="14:00">14:00</option>
-                                                <option value="15:00">15:00</option>
-                                                <option value="16:00">16:00</option>
-                                                <option value="17:00">17:00</option>
-                                                <option value="18:00">18:00</option>
-                                                <option value="19:00">19:00</option>
-                                                <option value="20:00">20:00</option>
-                                                <option value="21:00">21:00</option>
-                                                <option value="22:00" selected>22:00</option>
+                                                <c:forEach var="i" begin="0" end="24">
+                                                    <c:if test="${i < 10}">
+                                                        <option value="0${i}:00">0${i}:00</option>
+                                                    </c:if>
+                                                    <c:if test="${i >= 10}">
+                                                        <option value="${i}:00">${i}:00</option>
+                                                    </c:if>
+                                                </c:forEach>
                                             </select>
                                         </div>
                                     </div>
@@ -302,40 +234,26 @@
                                         </label>
                                         <div class="pull-left" style="width: 40%">
                                             <select class="form-control timeWeek" name="cardTypeTimeStart">
-                                                <option value="08:00">08:00</option>
-                                                <option value="09:00">09:00</option>
-                                                <option value="10:00">10:00</option>
-                                                <option value="11:00">11:00</option>
-                                                <option value="12:00">12:00</option>
-                                                <option value="13:00">13:00</option>
-                                                <option value="14:00">14:00</option>
-                                                <option value="15:00">15:00</option>
-                                                <option value="16:00">16:00</option>
-                                                <option value="17:00">17:00</option>
-                                                <option value="18:00">18:00</option>
-                                                <option value="19:00">19:00</option>
-                                                <option value="20:00">20:00</option>
-                                                <option value="21:00">21:00</option>
-                                                <option value="22:00">22:00</option>
+                                                <c:forEach var="i" begin="0" end="24">
+                                                    <c:if test="${i < 10}">
+                                                        <option value="0${i}:00">0${i}:00</option>
+                                                    </c:if>
+                                                    <c:if test="${i >= 10}">
+                                                        <option value="${i}:00">${i}:00</option>
+                                                    </c:if>
+                                                </c:forEach>
                                             </select>
                                         </div>
                                         <div class="pull-left" style="width: 40%">
                                             <select class="form-control timeWeek" name="cardTypeTimeEnd">
-                                                <option value="08:00">08:00</option>
-                                                <option value="09:00">09:00</option>
-                                                <option value="10:00">10:00</option>
-                                                <option value="11:00">11:00</option>
-                                                <option value="12:00">12:00</option>
-                                                <option value="13:00">13:00</option>
-                                                <option value="14:00">14:00</option>
-                                                <option value="15:00">15:00</option>
-                                                <option value="16:00">16:00</option>
-                                                <option value="17:00">17:00</option>
-                                                <option value="18:00">18:00</option>
-                                                <option value="19:00">19:00</option>
-                                                <option value="20:00">20:00</option>
-                                                <option value="21:00">21:00</option>
-                                                <option value="22:00" selected>22:00</option>
+                                                <c:forEach var="i" begin="0" end="24">
+                                                    <c:if test="${i < 10}">
+                                                        <option value="0${i}:00">0${i}:00</option>
+                                                    </c:if>
+                                                    <c:if test="${i >= 10}">
+                                                        <option value="${i}:00">${i}:00</option>
+                                                    </c:if>
+                                                </c:forEach>
                                             </select>
                                         </div>
                                     </div>
@@ -345,40 +263,26 @@
                                         </label>
                                         <div class="pull-left" style="width: 40%">
                                             <select class="form-control timeWeek" name="cardTypeTimeStart">
-                                                <option value="08:00">08:00</option>
-                                                <option value="09:00">09:00</option>
-                                                <option value="10:00">10:00</option>
-                                                <option value="11:00">11:00</option>
-                                                <option value="12:00">12:00</option>
-                                                <option value="13:00">13:00</option>
-                                                <option value="14:00">14:00</option>
-                                                <option value="15:00">15:00</option>
-                                                <option value="16:00">16:00</option>
-                                                <option value="17:00">17:00</option>
-                                                <option value="18:00">18:00</option>
-                                                <option value="19:00">19:00</option>
-                                                <option value="20:00">20:00</option>
-                                                <option value="21:00">21:00</option>
-                                                <option value="22:00">22:00</option>
+                                                <c:forEach var="i" begin="0" end="24">
+                                                    <c:if test="${i < 10}">
+                                                        <option value="0${i}:00">0${i}:00</option>
+                                                    </c:if>
+                                                    <c:if test="${i >= 10}">
+                                                        <option value="${i}:00">${i}:00</option>
+                                                    </c:if>
+                                                </c:forEach>
                                             </select>
                                         </div>
                                         <div class="pull-left" style="width: 40%">
                                             <select class="form-control timeWeek" name="cardTypeTimeEnd">
-                                                <option value="08:00">08:00</option>
-                                                <option value="09:00">09:00</option>
-                                                <option value="10:00">10:00</option>
-                                                <option value="11:00">11:00</option>
-                                                <option value="12:00">12:00</option>
-                                                <option value="13:00">13:00</option>
-                                                <option value="14:00">14:00</option>
-                                                <option value="15:00">15:00</option>
-                                                <option value="16:00">16:00</option>
-                                                <option value="17:00">17:00</option>
-                                                <option value="18:00">18:00</option>
-                                                <option value="19:00">19:00</option>
-                                                <option value="20:00">20:00</option>
-                                                <option value="21:00">21:00</option>
-                                                <option value="22:00" selected>22:00</option>
+                                                <c:forEach var="i" begin="0" end="24">
+                                                    <c:if test="${i < 10}">
+                                                        <option value="0${i}:00">0${i}:00</option>
+                                                    </c:if>
+                                                    <c:if test="${i >= 10}">
+                                                        <option value="${i}:00">${i}:00</option>
+                                                    </c:if>
+                                                </c:forEach>
                                             </select>
                                         </div>
                                     </div>
@@ -388,40 +292,26 @@
                                         </label>
                                         <div class="pull-left" style="width: 40%">
                                             <select class="form-control timeWeek" name="cardTypeTimeStart">
-                                                <option value="08:00">08:00</option>
-                                                <option value="09:00">09:00</option>
-                                                <option value="10:00">10:00</option>
-                                                <option value="11:00">11:00</option>
-                                                <option value="12:00">12:00</option>
-                                                <option value="13:00">13:00</option>
-                                                <option value="14:00">14:00</option>
-                                                <option value="15:00">15:00</option>
-                                                <option value="16:00">16:00</option>
-                                                <option value="17:00">17:00</option>
-                                                <option value="18:00">18:00</option>
-                                                <option value="19:00">19:00</option>
-                                                <option value="20:00">20:00</option>
-                                                <option value="21:00">21:00</option>
-                                                <option value="22:00">22:00</option>
+                                                <c:forEach var="i" begin="0" end="24">
+                                                    <c:if test="${i < 10}">
+                                                        <option value="0${i}:00">0${i}:00</option>
+                                                    </c:if>
+                                                    <c:if test="${i >= 10}">
+                                                        <option value="${i}:00">${i}:00</option>
+                                                    </c:if>
+                                                </c:forEach>
                                             </select>
                                         </div>
                                         <div class="pull-left" style="width: 40%">
                                             <select class="form-control timeWeek" name="cardTypeTimeEnd">
-                                                <option value="08:00">08:00</option>
-                                                <option value="09:00">09:00</option>
-                                                <option value="10:00">10:00</option>
-                                                <option value="11:00">11:00</option>
-                                                <option value="12:00">12:00</option>
-                                                <option value="13:00">13:00</option>
-                                                <option value="14:00">14:00</option>
-                                                <option value="15:00">15:00</option>
-                                                <option value="16:00">16:00</option>
-                                                <option value="17:00">17:00</option>
-                                                <option value="18:00">18:00</option>
-                                                <option value="19:00">19:00</option>
-                                                <option value="20:00">20:00</option>
-                                                <option value="21:00">21:00</option>
-                                                <option value="22:00" selected>22:00</option>
+                                                <c:forEach var="i" begin="0" end="24">
+                                                    <c:if test="${i < 10}">
+                                                        <option value="0${i}:00">0${i}:00</option>
+                                                    </c:if>
+                                                    <c:if test="${i >= 10}">
+                                                        <option value="${i}:00">${i}:00</option>
+                                                    </c:if>
+                                                </c:forEach>
                                             </select>
                                         </div>
                                     </div>
@@ -431,40 +321,26 @@
                                         </label>
                                         <div class="pull-left" style="width: 40%">
                                             <select class="form-control timeWeek" name="cardTypeTimeStart">
-                                                <option value="08:00">08:00</option>
-                                                <option value="09:00">09:00</option>
-                                                <option value="10:00">10:00</option>
-                                                <option value="11:00">11:00</option>
-                                                <option value="12:00">12:00</option>
-                                                <option value="13:00">13:00</option>
-                                                <option value="14:00">14:00</option>
-                                                <option value="15:00">15:00</option>
-                                                <option value="16:00">16:00</option>
-                                                <option value="17:00">17:00</option>
-                                                <option value="18:00">18:00</option>
-                                                <option value="19:00">19:00</option>
-                                                <option value="20:00">20:00</option>
-                                                <option value="21:00">21:00</option>
-                                                <option value="22:00">22:00</option>
+                                                <c:forEach var="i" begin="0" end="24">
+                                                    <c:if test="${i < 10}">
+                                                        <option value="0${i}:00">0${i}:00</option>
+                                                    </c:if>
+                                                    <c:if test="${i >= 10}">
+                                                        <option value="${i}:00">${i}:00</option>
+                                                    </c:if>
+                                                </c:forEach>
                                             </select>
                                         </div>
                                         <div class="pull-left" style="width: 40%">
                                             <select class="form-control timeWeek" name="cardTypeTimeEnd">
-                                                <option value="08:00">08:00</option>
-                                                <option value="09:00">09:00</option>
-                                                <option value="10:00">10:00</option>
-                                                <option value="11:00">11:00</option>
-                                                <option value="12:00">12:00</option>
-                                                <option value="13:00">13:00</option>
-                                                <option value="14:00">14:00</option>
-                                                <option value="15:00">15:00</option>
-                                                <option value="16:00">16:00</option>
-                                                <option value="17:00">17:00</option>
-                                                <option value="18:00">18:00</option>
-                                                <option value="19:00">19:00</option>
-                                                <option value="20:00">20:00</option>
-                                                <option value="21:00">21:00</option>
-                                                <option value="22:00" selected>22:00</option>
+                                                <c:forEach var="i" begin="0" end="24">
+                                                    <c:if test="${i < 10}">
+                                                        <option value="0${i}:00">0${i}:00</option>
+                                                    </c:if>
+                                                    <c:if test="${i >= 10}">
+                                                        <option value="${i}:00">${i}:00</option>
+                                                    </c:if>
+                                                </c:forEach>
                                             </select>
                                         </div>
                                     </div>
@@ -474,40 +350,26 @@
                                         </label>
                                         <div class="pull-left" style="width: 40%">
                                             <select class="form-control timeWeek" name="cardTypeTimeStart">
-                                                <option value="08:00">08:00</option>
-                                                <option value="09:00">09:00</option>
-                                                <option value="10:00">10:00</option>
-                                                <option value="11:00">11:00</option>
-                                                <option value="12:00">12:00</option>
-                                                <option value="13:00">13:00</option>
-                                                <option value="14:00">14:00</option>
-                                                <option value="15:00">15:00</option>
-                                                <option value="16:00">16:00</option>
-                                                <option value="17:00">17:00</option>
-                                                <option value="18:00">18:00</option>
-                                                <option value="19:00">19:00</option>
-                                                <option value="20:00">20:00</option>
-                                                <option value="21:00">21:00</option>
-                                                <option value="22:00">22:00</option>
+                                                <c:forEach var="i" begin="0" end="24">
+                                                    <c:if test="${i < 10}">
+                                                        <option value="0${i}:00">0${i}:00</option>
+                                                    </c:if>
+                                                    <c:if test="${i >= 10}">
+                                                        <option value="${i}:00">${i}:00</option>
+                                                    </c:if>
+                                                </c:forEach>
                                             </select>
                                         </div>
                                         <div class="pull-left" style="width: 40%">
                                             <select class="form-control timeWeek" name="cardTypeTimeEnd">
-                                                <option value="08:00">08:00</option>
-                                                <option value="09:00">09:00</option>
-                                                <option value="10:00">10:00</option>
-                                                <option value="11:00">11:00</option>
-                                                <option value="12:00">12:00</option>
-                                                <option value="13:00">13:00</option>
-                                                <option value="14:00">14:00</option>
-                                                <option value="15:00">15:00</option>
-                                                <option value="16:00">16:00</option>
-                                                <option value="17:00">17:00</option>
-                                                <option value="18:00">18:00</option>
-                                                <option value="19:00">19:00</option>
-                                                <option value="20:00">20:00</option>
-                                                <option value="21:00">21:00</option>
-                                                <option value="22:00" selected>22:00</option>
+                                                <c:forEach var="i" begin="0" end="24">
+                                                    <c:if test="${i < 10}">
+                                                        <option value="0${i}:00">0${i}:00</option>
+                                                    </c:if>
+                                                    <c:if test="${i >= 10}">
+                                                        <option value="${i}:00">${i}:00</option>
+                                                    </c:if>
+                                                </c:forEach>
                                             </select>
                                         </div>
                                     </div>
@@ -532,17 +394,17 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="card_type_discount" class="col-sm-4 control-label">
-                                    <span class="text-danger">*</span> 会员折扣
+                                <label for="card_deposit" class="col-sm-4 control-label">
+                                    <span class="text-danger">*</span> 押金
                                 </label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="card_type_discount" name="cardTypeDiscount"
-                                           placeholder="会员折扣" autocomplete="off"
-                                           data-val="true" data-val-required="会员折扣不能为空"
-                                           data-val-regex-pattern="^[0-9]\d{0,1}$"
-                                           data-val-regex="输入100以内的非负整数">
-                                    <div data-valmsg-for="cardTypeDiscount" data-valmsg-replace="true"></div>
+                                    <input type="text" class="form-control" id="card_deposit" name="cardDeposit"
+                                           placeholder="押金" autocomplete="off"
+                                           data-val="true" data-val-required="押金不能为空"
+                                           data-val-regex-pattern="^(0(\.[0-9]{1,2})?)|([1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                           data-val-regex="押金格式错误">
+                                    <div data-valmsg-for="cardDeposit" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
                         </div>

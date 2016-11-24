@@ -28,7 +28,7 @@
                                value="${memberMobile}">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="orderNo" placeholder="订单流水号"
+                        <input type="text" class="form-control" name="orderNo" placeholder="订单号"
                                value="${orderNo}">
                     </div>
                     <div class="form-group">
@@ -46,153 +46,74 @@
                     <table class="table">
                         <thead>
                         <tr>
+                            <th>订单号</th>
                             <th>会员姓名</th>
                             <th>手机号码</th>
-                            <th>会员卡号</th>
-                            <th>订单流水号</th>
-                            <th>订单金额(元)</th>
-                            <th>所欠余额</th>
+                            <th>总场次</th>
+                            <th>已支付场次</th>
+                            <th>已使用场次</th>
+                            <th>未支付场次</th>
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
+                            <td>20161123121415</td>
                             <td>北体高科公司</td>
                             <td>11012345678</td>
-                            <td>867567</td>
-                            <td>FD0000121</td>
-                            <td>10000.00元</td>
-                            <td>2000.00元</td>
+                            <td>100场</td>
+                            <td class="text-success">50场(2000.00元)</td>
+                            <td>60场</td>
+                            <td>50场(<span class="text-danger">10场欠款</span>)</td>
                             <td>
-                                <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
+                                <button type="button" class="btn btn-danger receipt-dialog" data-toggle="modal"
                                         data-target="#receiptModal" data-backdrop="false">
-                                    <span class="glyphicon glyphicon-ok"></span> 收款
+                                    <span class="glyphicon glyphicon-usd"></span> 收款
                                 </button>
                             </td>
                         </tr>
                         <tr>
-                            <td>李洪旭</td>
-                            <td>11012345678</td>
-                            <td>867567</td>
-                            <td>FD0000121</td>
-                            <td>10000.00元</td>
-                            <td>2000.00元</td>
-                            <td>
-                                <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
-                                        data-target="#receiptModal" data-backdrop="false">
-                                    <span class="glyphicon glyphicon-ok"></span> 收款
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>李洪旭</td>
-                            <td>11012345678</td>
-                            <td>867567</td>
-                            <td>FD0000121</td>
-                            <td>10000.00元</td>
-                            <td>2000.00元</td>
-                            <td>
-                                <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
-                                        data-target="#receiptModal" data-backdrop="false">
-                                    <span class="glyphicon glyphicon-ok"></span> 收款
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
+                            <td>20161123121415</td>
                             <td>北体高科公司</td>
                             <td>11012345678</td>
-                            <td>867567</td>
-                            <td>FD0000121</td>
-                            <td>10000.00元</td>
-                            <td>2000.00元</td>
+                            <td>100场</td>
+                            <td class="text-success">50场(2000.00元)</td>
+                            <td>60场</td>
+                            <td>50场(<span class="text-danger">10场欠款</span>)</td>
                             <td>
-                                <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
+                                <button type="button" class="btn btn-danger receipt-dialog" data-toggle="modal"
                                         data-target="#receiptModal" data-backdrop="false">
-                                    <span class="glyphicon glyphicon-ok"></span> 收款
+                                    <span class="glyphicon glyphicon-usd"></span> 收款
                                 </button>
                             </td>
                         </tr>
                         <tr>
+                            <td>20161123121415</td>
                             <td>北体高科公司</td>
                             <td>11012345678</td>
-                            <td>867567</td>
-                            <td>FD0000121</td>
-                            <td>10000.00元</td>
-                            <td>2000.00元</td>
+                            <td>100场</td>
+                            <td class="text-success">50场(2000.00元)</td>
+                            <td>40场</td>
+                            <td>50场(未欠款)</td>
                             <td>
                                 <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
                                         data-target="#receiptModal" data-backdrop="false">
-                                    <span class="glyphicon glyphicon-ok"></span> 收款
+                                    <span class="glyphicon glyphicon-usd"></span> 收款
                                 </button>
                             </td>
                         </tr>
                         <tr>
-                            <td>李洪旭</td>
-                            <td>11012345678</td>
-                            <td>867567</td>
-                            <td>FD0000121</td>
-                            <td>10000.00元</td>
-                            <td>2000.00元</td>
-                            <td>
-                                <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
-                                        data-target="#receiptModal" data-backdrop="false">
-                                    <span class="glyphicon glyphicon-ok"></span> 收款
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>李洪旭</td>
-                            <td>11012345678</td>
-                            <td>867567</td>
-                            <td>FD0000121</td>
-                            <td>10000.00元</td>
-                            <td>2000.00元</td>
-                            <td>
-                                <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
-                                        data-target="#receiptModal" data-backdrop="false">
-                                    <span class="glyphicon glyphicon-ok"></span> 收款
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
+                            <td>20161123121415</td>
                             <td>北体高科公司</td>
                             <td>11012345678</td>
-                            <td>867567</td>
-                            <td>FD0000121</td>
-                            <td>10000.00元</td>
-                            <td>2000.00元</td>
+                            <td>100场</td>
+                            <td class="text-success">50场(2000.00元)</td>
+                            <td>40场</td>
+                            <td>50场(未欠款)</td>
                             <td>
                                 <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
                                         data-target="#receiptModal" data-backdrop="false">
-                                    <span class="glyphicon glyphicon-ok"></span> 收款
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>北体高科公司</td>
-                            <td>11012345678</td>
-                            <td>867567</td>
-                            <td>FD0000121</td>
-                            <td>10000.00元</td>
-                            <td>2000.00元</td>
-                            <td>
-                                <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
-                                        data-target="#receiptModal" data-backdrop="false">
-                                    <span class="glyphicon glyphicon-ok"></span> 收款
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>李洪旭</td>
-                            <td>11012345678</td>
-                            <td>867567</td>
-                            <td>FD0000121</td>
-                            <td>10000.00元</td>
-                            <td>2000.00元</td>
-                            <td>
-                                <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
-                                        data-target="#receiptModal" data-backdrop="false">
-                                    <span class="glyphicon glyphicon-ok"></span> 收款
+                                    <span class="glyphicon glyphicon-usd"></span> 收款
                                 </button>
                             </td>
                         </tr>
@@ -267,7 +188,6 @@
         </div>
     </div>
 
-
     <div class="modal fade" id="receiptModal" tabindex="-1" role="dialog" aria-labelledby="receiptModalLabel">
         <div class="modal-dialog" style="width: 680px">
             <div class="modal-content">
@@ -281,7 +201,7 @@
                     <form id="card_receipt_form" class="form-horizontal" onsubmit="return false;">
                         <div class="form-group">
                             <label for="card_receipt_order" class="col-sm-2 control-label">
-                                <span class="text-danger">*</span> 订单流水号
+                                <span class="text-danger">*</span> 订单号
                             </label>
 
                             <div class="col-sm-10">
@@ -291,7 +211,7 @@
                         </div>
                         <div class="form-group">
                             <label for="card_receipt_money" class="col-sm-2 control-label">
-                                <span class="text-danger">*</span> 所欠余额
+                                <span class="text-danger">*</span> 场次数
                             </label>
 
                             <div class="col-sm-10">
@@ -317,7 +237,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary receipt-confirm">
-                        <span class="glyphicon glyphicon-ok"></span> 收 款
+                        <span class="glyphicon glyphicon-ok"></span> 确 定
+                    </button>
                 </div>
             </div>
         </div>

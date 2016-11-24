@@ -4,7 +4,32 @@
             ToURL: '/member/memberList'
         },
         init: function () {
+            $.post('/member/getMemberCarType', {cardTypeId: $('[name="cardTypeId"]').val()}, function (res) {
+                if (res.code == 1) {
+                    var data = res.data;
+
+                    $('[name="cardTypeMoney"]').val(data.cardTypeMoney || "0.00");
+                    $('[name="cardDeadline"]').val(data.cardDeadline);
+                    $('[name="cardDeposit"]').val(data.cardDeposit || "0.00");
+                } else {
+                    alert(res.message || "会员类别详情查询失败, 请稍后重试");
+                }
+            });
+
             this.initEvents();
+        },
+        calculateMoney: function () {
+            var $money = $("#recharge_money");
+            var $send = $("#recharge_send");
+            var $type = $("#recharge_type_money");
+            var $deposit = $("#recharge_type_deposit");
+
+            var money = parseFloat($money.val() || "0.00");
+            var send = parseFloat($send.val() || "0.00");
+            var type = parseFloat($type.val());
+            var deposit = parseFloat($deposit.val());
+
+            return (money + send - type - deposit).toFixed(2);
         },
         initEvents: function () {
             var content = this;
@@ -26,14 +51,18 @@
 
                     if (res.code == 1) {
                         $("#tips_modal").modal({backdrop: false, show: true});
+                        setTimeout(function () {
+                            $("#tips_modal").modal("hide");
+                        }, 3000);
                     } else {
+                        console.log(res.message || "会员信息更新失败, 请稍后重试");
                         alert(res.message || "会员信息更新失败, 请稍后重试");
                     }
                 });
             });
 
             // 会员卡类型改变
-            $("#member_type").on("change", function (e) {
+            /*$("#member_type").on("change", function (e) {
                 e.preventDefault();
 
                 $.post('/member/getMemberCarType', {cardTypeId: $(this).val()}, function (res) {
@@ -49,6 +78,13 @@
                         alert(res.message || "会员类别详情查询失败, 请稍后重试");
                     }
                 });
+            });*/
+
+            // 充值金额,赠送金额改变
+            $("#recharge_money, #recharge_send").on("change", function (e) {
+                e.preventDefault();
+
+                $(".total-money").text(content.calculateMoney());
             });
 
             // 会员绑卡充值
@@ -71,6 +107,7 @@
                             $("#member_card_ticket_form").find("input[name='" + key + "']").val(item);
                         });
                     } else {
+                        console.log(res.message || "会员卡充值失败, 请稍后重试");
                         alert(res.message || "会员卡充值失败, 请稍后重试");
                     }
                 });

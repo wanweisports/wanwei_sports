@@ -5,6 +5,20 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/members/members_children.js?v=${static_resource_version}"></script>
+    <script>
+        $(document).ready(function () {
+            // 配置表单校验
+            $('#member_form').validate({
+                ignore: ":hidden"
+            });
+        });
+    </script>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
     当前位置: <span>会员管理</span> &gt;&gt; <span>会员查询</span> &gt;&gt; <span>子会员管理</span>
 </layout:override>
@@ -16,25 +30,21 @@
             <div class="panel-body">
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="cardNo" class="col-sm-4 control-label">
-                            <span class="text-danger">*</span> 会员卡号
-                        </label>
+                        <label for="card_no" class="col-sm-4 control-label">会员卡号</label>
 
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="cardNo" name="tempCardNo"
-                                   placeholder="会员卡号" value="wewqe2323121" disabled>
+                            <input type="text" class="form-control" id="card_no" name="cardNo"
+                                   placeholder="会员卡号" value="${member.cardNo}" disabled>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="name" class="col-sm-4 control-label">
-                            <span class="text-danger">*</span> 会员姓名
-                        </label>
+                        <label for="member_name" class="col-sm-4 control-label">会员姓名</label>
 
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="会员卡号" value="北体高科技术公司" disabled>
+                            <input type="text" class="form-control" id="member_name" name="memberName"
+                                   placeholder="会员姓名" value="${member.memberName}" disabled>
                         </div>
                     </div>
                 </div>
@@ -45,117 +55,31 @@
                 <div class="panel-heading">子会员列表</div>
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table member-children-list">
                             <thead>
                             <tr>
-                                <th>姓名</th>
+                                <th>序号</th>
+                                <th>会员姓名</th>
                                 <th>手机号码</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
+                            <c:forEach var="user" items="${childrenMembers}" varStatus="loop">
                                 <tr>
-                                    <td>李洪旭</td>
-                                    <td>110****4453</td>
+                                    <td>${loop.index + 1}</td>
+                                    <td>${user.memberName}</td>
+                                    <td>${user.memberMobile}</td>
                                     <td>
-                                        <a class="btn btn-danger" href="">
+                                        <a class="btn btn-danger children-delete" href="javascript:;"
+                                            data-id="${user.memberId}">
                                             <span class="glyphicon glyphicon-trash"></span> 删除
                                         </a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>李洪旭</td>
-                                    <td>110****4453</td>
-                                    <td>
-                                        <a class="btn btn-danger" href="">
-                                            <span class="glyphicon glyphicon-trash"></span> 删除
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>李洪旭</td>
-                                    <td>110****4453</td>
-                                    <td>
-                                        <a class="btn btn-danger" href="">
-                                            <span class="glyphicon glyphicon-trash"></span> 删除
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>李洪旭</td>
-                                    <td>110****4453</td>
-                                    <td>
-                                        <a class="btn btn-danger" href="">
-                                            <span class="glyphicon glyphicon-trash"></span> 删除
-                                        </a>
-                                    </td>
-                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
-                        <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >
-                            <p class="pull-left" style="margin: 12px 14px;">
-                                <span>${pageSize}条/页</span>
-                                <span>总${count}条</span>
-                            </p>
-                            <ul class="pagination pull-right">
-                                <c:if test="${currentPage == 1}">
-                                    <li class="disabled">
-                                        <a href="javascript:;" data-index="1">
-                                            <span>首页</span>
-                                        </a>
-                                    </li>
-                                    <li class="disabled">
-                                        <a href="javascript:;" data-index="1">
-                                            <span>上一页</span>
-                                        </a>
-                                    </li>
-                                </c:if>
-                                <c:if test="${currentPage != 1}">
-                                    <li>
-                                        <a class="page-first" href="javascript:;" data-index="1">
-                                            <span>首页</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="page-prev" href="javascript:;" data-index="${currentPage - 1}">
-                                            <span>上一页</span>
-                                        </a>
-                                    </li>
-                                </c:if>
-                                <c:forEach var="i" begin="1" end="${lastPage}">
-                                    <c:if test="${i == currentPage}">
-                                        <li class="active"><a href="javascript:;" data-index="${i}">${i}</a></li>
-                                    </c:if>
-                                    <c:if test="${i != currentPage}">
-                                        <li><a class="page-index" href="javascript:;" data-index="${i}">${i}</a></li>
-                                    </c:if>
-                                </c:forEach>
-                                <c:if test="${currentPage == lastPage}">
-                                    <li class="disabled">
-                                        <a href="javascript:;" data-index="1">
-                                            <span>下一页</span>
-                                        </a>
-                                    </li>
-                                    <li class="disabled">
-                                        <a href="javascript:;" data-index="1">
-                                            <span>末页</span>
-                                        </a>
-                                    </li>
-                                </c:if>
-                                <c:if test="${currentPage != lastPage}">
-                                    <li>
-                                        <a class="page-next" href="javascript:;" data-index="${currentPage + 1}">
-                                            <span>下一页</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="page-last" href="javascript:;" data-index="${lastPage}">
-                                            <span>末页</span>
-                                        </a>
-                                    </li>
-                                </c:if>
-                            </ul>
-                        </nav>
                     </div>
                 </div>
             </div>
@@ -164,23 +88,35 @@
             <div class="panel panel-default">
                 <div class="panel-heading">子会员添加</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form">
+                    <form id="member_form" class="form-horizontal" onsubmit="return false;">
+                        <input type="hidden" name="parentMemberId" value="${member.memberId}">
                         <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">姓名</label>
+                            <label for="child_member_name" class="col-sm-2 control-label">会员姓名</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputEmail3" placeholder="姓名">
+                                <input type="text" class="form-control" id="child_member_name" name="memberName"
+                                       placeholder="请输入会员姓名" autocomplete="off"
+                                       data-val="true" data-val-required="会员姓名不能为空"
+                                       data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,9}$"
+                                       data-val-regex="会员姓名长度只能2~12个字符">
+                                <div data-valmsg-for="memberName" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="memberMobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputPassword3" class="col-sm-2 control-label">手机号</label>
+                            <label for="child_member_mobile" class="col-sm-2 control-label">手机号码</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputPassword3" placeholder="手机号">
+                                <input type="text" class="form-control" id="child_member_mobile" name="memberMobile"
+                                       placeholder="请输入手机号码" autocomplete="off"
+                                       data-val="true" data-val-required="手机号码不能为空"
+                                       data-val-regex-pattern="^1\d{10}$"
+                                       data-val-regex="手机号码格式错误">
+                                <div data-valmsg-for="memberMobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-plus"></span> 添 加
+                            <div class="col-sm-offset-4 col-sm-8">
+                                <button type="button" class="btn btn-primary col-sm-4 confirm-member">
+                                    <span class="glyphicon glyphicon-ok"></span> 确 认
                                 </button>
                             </div>
                         </div>

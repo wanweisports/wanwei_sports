@@ -11,6 +11,7 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/lib/holder/holder.min.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery-steps/jquery.steps.min.js?v=${static_resource_version}"></script>
     <script src="/Content/app/goods/goods_carts.js?v=${static_resource_version}"></script>
 </layout:override>
@@ -24,6 +25,12 @@
         <div class="panel panel-default">
             <div class="panel-heading">商品购物车</div>
             <div class="panel-body goods-cart-list">
+                <div class="alert alert-info" style="overflow: hidden">
+                    <p class="pull-left">商品预估总价: <span class="text-warning money-num">2000.00</span>元(<small>以实际支付金额为准</small>)</p>
+                    <a href="#zhifuModal" class="btn btn-primary pull-right" data-toggle="modal" data-backdrop="false">
+                        <span class="glyphicon glyphicon-usb"></span> 结算
+                    </a>
+                </div>
                 <table class="table">
                     <thead>
                     <tr>
@@ -40,8 +47,8 @@
                         <tr>
                             <td style="vertical-align: middle;">${good.goodNo}</td>
                             <td style="vertical-align: middle;">
-                                <img src="${good.goodPic}" alt="${good.goodName}"
-                                     class="img-rounded" style="width: 100px; height: 80px;">
+                                <img src="${good.goodPic}" data-src="holder.js/100x80?text=${good.goodName}&random=yes&auto=yes"
+                                     alt="${good.goodName}" class="img-rounded" style="width: 100px; height: 80px;">
                             </td>
                             <td style="vertical-align: middle;">${good.goodName}</td>
                             <td style="vertical-align: middle;">${good.goodPrice}元</td>
@@ -51,7 +58,7 @@
                                         <button class="btn btn-default goods-minus" data-id="${good.goodId}">-</button>
                                     </span>
                                     <input type="text" class="form-control good-count" value="${good.shoppingGoodAmount}"
-                                           style="width: 40px; padding: 6px 0; text-align: center">
+                                           style="width: 40px; padding: 6px 0; text-align: center" data-money="${good.goodPrice}">
                                     <span class="input-group-btn" style="width: auto">
                                         <button class="btn btn-default goods-plus" data-id="${good.goodId}">+</button>
                                     </span>
@@ -67,8 +74,8 @@
                     </tbody>
                 </table>
                 <div class="alert alert-info" style="overflow: hidden">
-                    <p class="pull-left">商品总价: 2000.00元(会员价: 1800.00元)</p>
-                    <a href="#zhifuModal" class="btn btn-primary pull-right" data-toggle="modal" data-backdrop="false">
+                    <p class="pull-left">商品预估总价: <span class="text-warning money-num">2000.00</span>元(<small>以实际支付金额为准</small>)</p>
+                    <a href="#zhifuModal" class="btn btn-primary pull-right goods-buy-money" data-toggle="modal" data-backdrop="false">
                         <span class="glyphicon glyphicon-usb"></span> 结算
                     </a>
                 </div>
@@ -265,38 +272,6 @@
                     <button class="btn btn-warning" type="button" data-dismiss="modal">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="tips_success_modal" tabindex="-1" role="dialog" aria-labelledby="tips_success_modal_label">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="tips_success_modal_label">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <p class="text-danger text-content">添加购物车成功!</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="tips_error_modal" tabindex="-1" role="dialog" aria-labelledby="tips_error_modal_label">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="tips_error_modal_label">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <p class="text-danger text-content">添加购物车失败!</p>
                 </div>
             </div>
         </div>

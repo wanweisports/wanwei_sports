@@ -13,9 +13,26 @@
             });
 
             this.bindPayEvents();
+            $(".money-num").text(this.calculateMoney());
+        },
+        calculateMoney: function () {
+            var $list = $(".goods-cart-list");
+            var $count = $list.find(".good-count");
+            var money = 0;
+
+            $count.each(function (index, item) {
+                var price = parseFloat($(item).attr("data-money"));
+                var count = parseInt($(item).val());
+
+                money += price * 100 * count;
+            });
+
+            return (money / 100).toFixed(2);
         },
         // 支付流程事件绑定
         bindPayEvents: function () {
+            var content = this;
+
             var $uiGoodsSteps = $("#zhifuModal");
             var $uiOverlay = $(".sc-ui-dialog-overlay");
             var $uiUserForm = $("#venue_goods_pay_form");
@@ -24,15 +41,8 @@
             var clickable = true;
 
             // 结算
-            $btnBuy.on("click", function (e) {
-                e.preventDefault();
-
-                $.getJSON('/goods/QueryGoodsCart', function (res) {
-                    $uiUserForm.find("#pay_goods_amount").val(res.data.cartAmount);
-                });
-
-                $uiGoodsSteps.show();
-                $uiOverlay.show();
+            $btnBuy.on("click", function () {
+                $uiUserForm.find("#pay_goods_amount").val(content.calculateMoney());
             });
 
             $uiGoodsSteps.on("click", ".user-search", function (e) {
@@ -134,6 +144,7 @@
             });
         },
         initEvents: function () {
+            var content = this;
             var $uiGoodsList = $(".goods-cart-list");
 
             // 购物车移除
@@ -166,6 +177,7 @@
                 }, function (res) {
                     if (res.code == 1) {
                         $this.parents(".input-group").find(".good-count").val(++count);
+                        $(".money-num").text(content.calculateMoney());
                     } else {
                         alert(res.message || "增加数量失败, 请稍后重试");
                     }
@@ -189,6 +201,7 @@
                 }, function (res) {
                     if (res.code == 1) {
                         $this.parents(".input-group").find(".good-count").val(--count);
+                        $(".money-num").text(content.calculateMoney());
                     } else {
                         alert(res.message || "减少数量失败, 请稍后重试");
                     }

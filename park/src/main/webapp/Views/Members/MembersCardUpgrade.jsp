@@ -82,7 +82,14 @@
                             <label class="col-sm-4 control-label">截止日期</label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" value="${cardDeadline }" disabled>
+                                <c:choose>
+                                    <c:when test="${cardDeadline == 0}">
+                                        <input type="text" class="form-control" value="不限制" disabled>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input type="text" class="form-control" value="${cardDeadline}" disabled>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                     </div>

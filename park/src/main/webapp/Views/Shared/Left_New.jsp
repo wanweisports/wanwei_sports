@@ -87,7 +87,7 @@
                                 <span><a href="/member/getMembersCardRefresh">会员卡补办</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item member ${param.subNav == "cancel" ? "active" : ""}">
+                        <tr class="list-nav-item member ${param.subNav == "cancel" ? "active" : ""}" style="display: none;">
                             <td>
                                 <span><a href="/member/getMembersCardCancel">会员卡注销</a></span>
                             </td>
