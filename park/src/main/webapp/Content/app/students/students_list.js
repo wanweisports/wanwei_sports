@@ -73,7 +73,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/member/memberCardBuBan', conditions, function (res) {
+                $.post('/students/studentCardBuBan', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {

@@ -17,30 +17,16 @@
                 $form.attr("submitting", "submitting");
 
                 $.post('/students/saveStudent', conditions, function (res) {
-                    var data = res.data;
-
-                    if (res.code != 1) {
-                        console.log(res.message || "学生信息注册失败, 请稍后重试");
-                        alert(res.message || "学生信息注册失败, 请稍后重试");
-                        return;
+                    if (res.code == 1) {
+                        $("#tips_success_modal").modal({show: true, backdrop: false});
+                        setTimeout(function () {
+                            $("#tips_success_modal").modal("hide");
+                            location.assign('/students/list');
+                        }, 3000);
+                    } else {
+                        console.log(res.message || "学生信息办理失败, 请稍后重试");
+                        alert(res.message || "学生信息办理失败, 请稍后重试");
                     }
-
-                    $('[name="memberId"]').val(data.memberId);
-                    conditions.memberId = data.memberId;
-                    $.post('/member/saveMemberCar', conditions, function (res) {
-                        $form.attr("submitting", "");
-
-                        if (res.code == 1) {
-                            $("#tips_success_modal").modal({show: true, backdrop: false});
-                            setTimeout(function () {
-                                $("#tips_success_modal").modal("hide");
-                                location.assign('/students/list');
-                            }, 3000);
-                        } else {
-                            console.log(res.message || "学生绑卡失败, 请稍后重试");
-                            alert(res.message || "学生绑卡失败, 请稍后重试");
-                        }
-                    });
                 });
             });
         }

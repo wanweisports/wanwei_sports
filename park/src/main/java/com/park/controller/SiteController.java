@@ -199,20 +199,16 @@ public class SiteController extends BaseController {
 	}
 
 	// 批量预订
-	@RequestMapping("getSiteReservationBooking")
-	public String getSiteReservationBooking(Model model){
-		return "Reservation/ReservationsBooking";
-	}
-
-	// 批量预订
 	@RequestMapping("getSiteReservationBatch")
-	public String getSiteReservationBatch(Model model){
+	public String getSiteReservationBatch(SiteInputView siteInputView, Model model){
+		model.addAttribute("siteSportNames", siteService.getSiteSportNames(siteInputView));
 		return "Reservation/ReservationsBatch";
 	}
 
 	// 固定场预订
 	@RequestMapping("getSiteReservationFixed")
-	public String getSiteReservationFixed(Model model){
+	public String getSiteReservationFixed(SiteInputView siteInputView, Model model){
+		model.addAttribute("siteSportNames", siteService.getSiteSportNames(siteInputView));
 		return "Reservation/ReservationsFixed";
 	}
 

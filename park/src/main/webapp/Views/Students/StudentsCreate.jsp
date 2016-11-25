@@ -47,20 +47,26 @@
                             </label>
 
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="student_degree" name="studentGrade"
-                                       placeholder="所在年级" autocomplete="off"
-                                       data-val="true" data-val-required="所在年级不能为空"
-                                       data-val-regex-pattern="^[1-9]\d*$"
-                                       data-val-regex="所在年级格式错误">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="student_degree" name="studentGrade"
+                                           placeholder="所在年级(例如,2016)" autocomplete="off"
+                                           data-val="true" data-val-required="所在年级不能为空"
+                                           data-val-regex-pattern="^[0-9]\d*$"
+                                           data-val-regex="所在年级格式错误">
+                                    <span class="input-group-addon">年级</span>
+                                </div>
                                 <div data-valmsg-for="studentGrade" data-valmsg-replace="true"></div>
                             </div>
 
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="student_class" name="studentClass"
-                                       placeholder="所在班级" autocomplete="off"
-                                       data-val="true" data-val-required="所在班级不能为空"
-                                       data-val-regex-pattern="^[1-9]\d*$"
-                                       data-val-regex="所在班级格式错误">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="student_class" name="studentClass"
+                                           placeholder="所在班级(例如,03)" autocomplete="off"
+                                           data-val="true" data-val-required="所在班级不能为空"
+                                           data-val-regex-pattern="^[0-9]\d*$"
+                                           data-val-regex="所在班级格式错误">
+                                    <span class="input-group-addon">班级</span>
+                                </div>
                                 <div data-valmsg-for="studentClass" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -127,7 +133,7 @@
                                       placeholder="备注"></textarea>
                             </div>
                         </div>
-                        <div class="alert alert-warning" role="alert">押金: 50.00元</div>
+                        <div class="alert alert-warning" role="alert">办卡押金: ${cardDeposit}元</div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
                                 <button type="button" class="btn btn-primary col-sm-4 register-student">

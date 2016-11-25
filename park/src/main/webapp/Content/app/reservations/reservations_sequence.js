@@ -261,8 +261,16 @@
                 return;
             }
 
+            var $sel = null, col = 0, rows = {};
             for (var i = 0; i < $selected.size(); i++) {
-                var $sel = $selected.eq(i);
+                $sel = $selected.eq(i);
+                col = $selected.eq(i).attr("data-col");
+
+                if (rows["cols" + col]) {
+                    rows["cols" + col].push($selected.eq(i).attr("data-startTime"));
+                } else {
+                    rows["cols" + col] = [];
+                }
 
                 html += content.opts.Reservation_list.replace("#SITENAME#", $sel.attr("data-name"))
                     .replace("#STARTTIME#", $sel.attr("data-start"))

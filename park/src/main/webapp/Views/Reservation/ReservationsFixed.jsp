@@ -6,10 +6,12 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="/Content/lib/jquery/autosuggest/autosuggest.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
     <link href="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/lib/jquery/autosuggest/autosuggest.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
@@ -35,10 +37,10 @@
             <div class="panel panel-default sc-booking-user">
                 <div class="panel-heading">定场预订</div>
                 <div class="panel-body">
-                    <input type="hidden" name="memberId" value="">
-                    <input type="hidden" name="opType" value="2"> <!--1会员2散客-->
+                    <input type="hidden" id="block_user_Id" name="memberId">
+                    <input type="hidden" id="block_op_type" name="opType" value="2"><!--1会员2散客-->
                     <input type="hidden" name="reserveType" value="1"><!--1PC-->
-                    <input type="hidden" name="reserveModel" value="2"><!--1普通2批量-->
+                    <input type="hidden" name="reserveModel" value="1"><!--1普通2批量-->
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="block_user_name" class="col-sm-4 control-label">
@@ -60,7 +62,10 @@
                             <div class="col-sm-8">
                                 <select class="form-control" id="block_user_degree" name="siteclass"
                                         data-val="true" data-val-required="请选择场地类型">
-                                    <option value="1">羽毛球</option>
+                                    <option value="">请选择</option>
+                                    <c:forEach var="sport" items="${siteSportNames}">
+                                        <option value="${sport.sportId}">${sport.sportName}</option>
+                                    </c:forEach>
                                 </select>
                                 <div data-valmsg-for="siteclass" data-valmsg-replace="true"></div>
                             </div>
@@ -70,26 +75,9 @@
                                 <span class="text-danger">*</span> 开始时间
                             </label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="block_time_start" name="siteStartTime">
-                                    <option value="06:00">06:00</option>
-                                    <option value="07:00">07:00</option>
-                                    <option value="08:00">08:00</option>
-                                    <option value="09:00">09:00</option>
-                                    <option value="10:00">10:00</option>
-                                    <option value="11:00">11:00</option>
-                                    <option value="12:00">12:00</option>
-                                    <option value="13:00">13:00</option>
-                                    <option value="14:00">14:00</option>
-                                    <option value="15:00">15:00</option>
-                                    <option value="16:00">16:00</option>
-                                    <option value="17:00">17:00</option>
-                                    <option value="18:00">18:00</option>
-                                    <option value="19:00">19:00</option>
-                                    <option value="20:00">20:00</option>
-                                    <option value="21:00">21:00</option>
-                                    <option value="22:00">22:00</option>
-                                    <option value="23:00">23:00</option>
-                                </select>
+                                <input class="form-control" id="block_time_start" name="siteStartTime"
+                                       data-val="true" data-val-required="请选择开始时间">
+                                <div data-valmsg-for="siteStartTime" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -128,26 +116,9 @@
                                 <span class="text-danger">*</span> 结束时间
                             </label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="block_time_end" name="siteEndTime">
-                                    <option value="06:00">06:00</option>
-                                    <option value="07:00">07:00</option>
-                                    <option value="08:00">08:00</option>
-                                    <option value="09:00">09:00</option>
-                                    <option value="10:00">10:00</option>
-                                    <option value="11:00">11:00</option>
-                                    <option value="12:00">12:00</option>
-                                    <option value="13:00">13:00</option>
-                                    <option value="14:00">14:00</option>
-                                    <option value="15:00">15:00</option>
-                                    <option value="16:00">16:00</option>
-                                    <option value="17:00">17:00</option>
-                                    <option value="18:00">18:00</option>
-                                    <option value="19:00">19:00</option>
-                                    <option value="20:00">20:00</option>
-                                    <option value="21:00">21:00</option>
-                                    <option value="22:00">22:00</option>
-                                    <option value="23:00">23:00</option>
-                                </select>
+                                <input class="form-control" id="block_time_end" name="siteEndTime"
+                                       data-val="true" data-val-required="请选择结束时间">
+                                <div data-valmsg-for="siteEndTime" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -157,7 +128,7 @@
                                 <a href="javascript:void(0);" class="btn btn-primary user-search" title="搜索">
                                     <span class="glyphicon glyphicon-search"></span> 搜索
                                 </a>
-                                <a href="/members/list" class="btn btn-primary" title="选择会员">
+                                <a href="/members/memberList" class="btn btn-primary" title="选择会员">
                                     <span class="glyphicon glyphicon-th-list"></span> 选择会员
                                 </a>
                             </div>
@@ -167,16 +138,11 @@
                                 <span class="text-danger">*</span> 场地编号
                             </label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="block_venue_name" name="siteId">
-                                    <option value="1">场地1</option>
-                                    <option value="2">场地2</option>
-                                    <option value="3">场地3</option>
-                                    <option value="4">场地4</option>
-                                    <option value="5">场地5</option>
-                                    <option value="6">场地6</option>
-                                    <option value="7">场地7</option>
-                                    <option value="7">场地8</option>
+                                <select class="form-control" id="block_venue_name" name="siteId"
+                                        data-val="true" data-val-required="请选择场地编号">
+                                    <option value="">请选择</option>
                                 </select>
+                                <div data-valmsg-for="siteId" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -186,7 +152,7 @@
                 <div class="panel-body">
                     <div class="col-sm-9">
                         <div class="table-responsive sc-table">
-                            <table class="table table-striped sc-booking-venues reservations-list">
+                            <table class="table table-striped reservations-list">
                                 <tr class="sc-table-header">
                                     <th>类型</th>
                                     <th>预订日期</th>
@@ -201,12 +167,12 @@
                         <p class="sc-submit-tips text-center"></p>
                         <div class="form-group col-sm-12">
                             <button type="button" class="btn btn-primary col-sm-12 booking-add">
-                                <span class="glyphicon glyphicon-plus"></span> 加场
+                                <span class="glyphicon glyphicon-plus"></span> 预订加场
                             </button>
                         </div>
                         <div class="form-group col-sm-12">
                             <button type="submit" class="btn btn-primary col-sm-12 booking-pay">
-                                <span class="glyphicon glyphicon-usd"></span> 预 订
+                                <span class="glyphicon glyphicon-usd"></span> 预订确认
                             </button>
                         </div>
                         <!--<div class="form-group col-sm-12" style="display: none;">
