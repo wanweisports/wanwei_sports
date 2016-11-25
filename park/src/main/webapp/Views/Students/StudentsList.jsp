@@ -91,9 +91,6 @@
                                        data-cardId="${student.cardId}" data-cardNo="${student.cardNo}">
                                         <span class="glyphicon glyphicon-refresh"></span> 补办
                                     </a>
-                                    <a class="btn btn-danger" href="javascript:;">
-                                        <span class="glyphicon glyphicon glyphicon-trash"></span> 退卡
-                                    </a>
                                 </td>
                             </tr>
                         </c:forEach>
