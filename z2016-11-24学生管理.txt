@@ -24,6 +24,8 @@
 新增/修改学生：【Ajax】
 请求：/students/saveStudent?studentName=石头&studentGrade=3年级&studentClass=2班&studentSex=1&studentStatus=1&studentAddress=石景山&studentRemark=此学生内力深厚&studentMobile=15111111111
 
+【2016-11-25新建cardNo 会员卡号字段，只有新增时有效】
+
 返回：
 {
     "code": "-1",

@@ -15,6 +15,7 @@ import com.park.common.bean.ResponseBean;
 import com.park.common.bean.StudentInputView;
 import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
+import com.park.common.po.MemberCard;
 import com.park.common.po.UserOperator;
 import com.park.common.po.UserStudent;
 import com.park.common.util.JsonUtils;
@@ -42,10 +43,10 @@ public class StudentsController extends BaseController {
     
     @ResponseBody
     @RequestMapping("saveStudent")
-    public ResponseBean saveStudent(UserStudent userStudent) {
+    public ResponseBean saveStudent(UserStudent userStudent, MemberCard memberCard) {
     	try{
     		userStudent.setSalesId(getUserInfo().getId());
-    		Integer studentId = studentService.saveStudent(userStudent);
+    		Integer studentId = studentService.saveStudent(userStudent, memberCard);
     		Map<String, Object> data = new HashMap<String, Object>();
     		data.put("studentId", studentId);
     		return new ResponseBean(data);

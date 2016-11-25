@@ -45,7 +45,7 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 	}
 	
 	@Override
-	public Integer saveStudent(UserStudent student){
+	public Integer saveStudent(UserStudent student, String cardNo){
 		if(!availableMobile(student.getStudentMobile())) throw new MessageException("学生手机号重复，请重新输入！");
 		String nowDate = DateUtil.getNowDate();
 		Integer studentId = student.getStudentId();
@@ -59,7 +59,7 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 			memberCard.setCreateTime(nowDate);
 			memberCard.setCardStatus(IDBConstant.LOGIC_STATUS_YES); //默认有效
 			memberCard.setCardDeposit(memberCarType.getCardDeposit()); //保存原始押金
-			memberCard.setCardNo(memberService.getCardNo());
+			memberCard.setCardNo(cardNo);
 			memberCard.setSalesId(student.getSalesId());
 			baseDao.save(memberCard, null);
 			
