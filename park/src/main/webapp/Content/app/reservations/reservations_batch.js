@@ -1,11 +1,11 @@
-(function ($) {
+(function ($, moment) {
     var Venue_Bookings = {
         tpl: {
             BlockBooking: function () {
-                return '<tr>' +
+                return '<tr data-start="#BOOKING_START_DATE#" data-end="#BOOKING_END_DATE#" data-site="#BOOKING_SITE#">' +
                     '<td>#BOOKING_SPORT#</td><td>#BOOKING_START_DATE# ~ #BOOKING_END_DATE#</td>' +
                     '<td>#BOOKING_WEEK#</td><td>#BOOKING_START_TIME# ~ #BOOKING_END_TIME#</td><td>#BOOKING_AREA#</td>' +
-                    '<td><a href="javascript:;" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></td>' +
+                    '<td><a href="javascript:;" class="btn btn-danger reservations-delete"><span class="glyphicon glyphicon-trash"></span></a></td>' +
                     '</tr>';
             }
         },
@@ -28,7 +28,8 @@
                 timepicker: false,
                 lang: "zh",
                 format:'Y-m-d',
-                minDate: 0
+                minDate: 0,
+                value: moment().format('YYYY-MM-DD')
             });
 
             $(".start-date-select").on("click", function (e) {
@@ -41,7 +42,8 @@
                 timepicker: false,
                 lang: "zh",
                 format:'Y-m-d',
-                minDate: 0
+                minDate: 0,
+                value: moment().format('YYYY-MM-DD')
             });
 
             $(".end-date-select").on("click", function (e) {
@@ -50,11 +52,66 @@
                 $('#block_end_date').datetimepicker("show");
             });
 
+            $('#block_time_start').datetimepicker({
+                datepicker: false,
+                format: 'H:i',
+                step: 60,
+                value: '06:00'
+            });
+
+            $('#block_time_end').datetimepicker({
+                datepicker: false,
+                format: 'H:i',
+                step: 60,
+                value: '22:00'
+            });
+
             this.initEvents2();
             this.searchMembers();
         },
         // 查询会员
         searchMembers: function () {
+            $("#block_user_phone").autosuggest({
+                url: '/member/searchMember',
+                method: 'post',
+                queryParamName: 'search',
+                dataCallback:function(res) {
+                    var data = res.data;
+                    var json = [];
+
+                    if (res.code == 1) {
+                        if (data && data.members && data.members.length > 0) {
+                            for (var i = 0; i < data.members.length; i++) {
+                                json.push({
+                                    id: data.members[i].memberId,
+                                    label: data.members[i].memberMobile,
+                                    value: data.members[i].memberName + '(' + data.members[i].memberMobile + ')'
+                                });
+                            }
+                            return json;
+                        } else {
+                            $('#block_user_Id').val("");
+                            $('#block_op_type').val("2");
+                            $('#block_user_name').val("散客");
+                            return [];
+                        }
+                    } else {
+                        alert('搜索会员失败, 请稍后重试');
+                        return [];
+                    }
+                },
+                onSelect:function(elm) {
+                    var memberMobile = elm.data('label');
+                    var memberId = elm.data('id');
+                    var memberName = elm.data('value');
+
+                    $('#block_user_phone').val(memberMobile);
+                    $('#block_user_Id').val(memberId);
+                    $('#block_op_type').val("1");
+                    $('#block_user_name').val(memberName.replace('(' + memberMobile + ')', ""));
+                }
+            });
+
             $(".user-search").on("click", function (e) {
                 e.preventDefault();
 
@@ -63,12 +120,74 @@
                 $.post('member/searchMember', {
                     search: $keywords.val().trim()
                 }, function (res) {
-                    console.log(res);
+                    var data = res.data;
+
+                    if (res.code == 1) {
+                        if (data && data.members && data.members.length > 0) {
+                            $('#block_user_phone').val(data.members[0].memberMobile);
+                            $('#block_user_Id').val(data.members[0].memberId);
+                            $('#block_op_type').val("1");
+                            $('#block_user_name').val(data.members[0].memberName);
+                        } else {
+                            $('#block_user_Id').val("");
+                            $('#block_op_type').val("2");
+                            $('#block_user_name').val("散客");
+                        }
+                    } else {
+                        alert('搜索会员失败, 请稍后重试');
+                    }
                 });
             });
         },
         initEvents2: function () {
             var content = this;
+
+            // 场地类型改变
+            $("#block_user_degree").on("change", function (e) {
+                e.preventDefault();
+
+                var $this = $(this);
+                var tmp = '<option value="#SITEID#">#SITENAME#</option>';
+
+                $.post('site/getSiteNames', {sportId: $this.val(), siteStatus: "1"}, function (res) {
+                    var data = res.data;
+                    var html = '';
+
+                    if (res.code == 1) {
+                        html += '<option value="">请选择</option>';
+
+                        for (var i = 0; i < data.siteNames.length; i++) {
+                            html += tmp.replace('#SITENAME#', data.siteNames[i].siteName)
+                                .replace('#SITEID#', data.siteNames[i].siteId);
+                        }
+
+                        $("#block_venue_name").html(html);
+                    } else {
+                        console.log(res.message || "查询场地失败, 请稍后重试");
+                        alert(res.message || "查询场地失败, 请稍后重试");
+                    }
+                });
+            });
+
+            // 删除
+            $(".reservations-list").on("click", ".reservations-delete", function (e) {
+                e.preventDefault();
+
+                var $list = $(this).parents("tr");
+                var start = $list.attr("data-start");
+                var end = $list.attr("data-end");
+                var site = $list.attr("data-site");
+                var list = content.opts.data.siteReserveDateList;
+
+                for (var i = 0; i < list.length; i++) {
+                    if (list[i].reserveStartDate == start && list[i].reserveEndDate == end &&
+                        list[i].siteReserveTimeList[0].siteId == site) {
+                        content.opts.data.siteReserveDateList.splice(i, 1);
+                        break;
+                    }
+                }
+                $list.remove();
+            });
 
             // 加场
             $(".booking-add").on("click", function (e) {
@@ -108,8 +227,8 @@
                     .replace("#BOOKING_SPORT#", $("#block_user_degree").find("option:selected").text().trim())
                     .replace("#BOOKING_START_DATE#", $("#block_start_date").val())
                     .replace("#BOOKING_END_DATE#", $("#block_end_date").val())
-                    .replace("#BOOKING_START_TIME#", $("#block_time_start").find("option:selected").text().trim())
-                    .replace("#BOOKING_END_TIME#", $("#block_time_end").find("option:selected").text().trim())
+                    .replace("#BOOKING_START_TIME#", $("#block_time_start").val())
+                    .replace("#BOOKING_END_TIME#", $("#block_time_end").val())
                     .replace("#BOOKING_AREA#", $("#block_venue_name").find("option:selected").text().trim())
                     .replace("#BOOKING_WEEK#", "(" + __getCheckbox().text + ")"));
             });
@@ -125,7 +244,10 @@
                 }
 
                 var data = content.opts.data;
-                data.mobile = "11012345678";
+                data.mobile = $("#block_user_phone").val();
+                data.name = $("#block_user_name").val();
+                data.memberId = $("#block_user_Id").val();
+                data.opType = $("#block_op_type").val();
 
                 $.post('site/saveReservationSite', {
                     siteOperationJson: JSON.stringify(content.opts.data)
@@ -450,4 +572,4 @@
     };
 
     Venue_Bookings.init();
-})(jQuery);
+})(jQuery, moment);

@@ -150,13 +150,13 @@
                             <td data-id="${site.siteId}" data-col="${loop.index}">${site.siteName}</td>
                         </c:forEach>
                     </tr>
-                    <c:forEach var="time" items="${timePeriod}">
+                    <c:forEach var="time" items="${timePeriod}" varStatus="row">
                         <tr class="timing-body" data-start="${time.startTime}" data-end="${time.endTime}">
                             <td class="time">${time.startTime} ~ ${time.endTime}</td>
-                            <c:forEach var="site" items="${sites}" varStatus="loop">
+                            <c:forEach var="site" items="${sites}" varStatus="col">
                                 <td class="null" data-id="${site.siteId}" data-start="${time.startTime}"
                                     data-end="${time.endTime}" data-name="${site.siteName}"
-                                    data-col="${loop.index + 1}"></td>
+                                    data-col="${col.index + 1}" data-row="${row.index + 1}"></td>
                             </c:forEach>
                         </tr>
                     </c:forEach>

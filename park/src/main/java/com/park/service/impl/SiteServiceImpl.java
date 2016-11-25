@@ -125,11 +125,15 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	@Override
 	public List<Map<String, Object>> getSiteNames(SiteInputView siteInputView) {
 		String siteStatus = siteInputView.getSiteStatus();
+		Integer sportId = siteInputView.getSportId();
 		
 		StringBuilder sql = new  StringBuilder("SELECT siteId, siteName, siteStatus FROM site_info WHERE 1=1");
 		if(StrUtil.isNotBlank(siteStatus)){
 			sql.append(" AND siteStatus = :siteStatus");
 		}
+        if(sportId != null){
+            sql.append(" AND siteType = :sportId");
+        }
 		Map<String, Object> paramMap = JsonUtils.fromJson(siteInputView);
 		return baseDao.queryBySql(sql.toString(), paramMap);
 	}
