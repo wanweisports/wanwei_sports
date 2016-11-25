@@ -38,6 +38,8 @@ public interface IDBConstant {
     public static final String BALANCE_SERVICE_TYPE_CARD_CZ = "11";//会员充值
     public static final String BALANCE_SERVICE_TYPE_CARD_UP = "12";//升级会员卡
     public static final String BALANCE_SERVICE_TYPE_CARD_BUBAN = "13";//补办会员卡
+    public static final String BALANCE_SERVICE_TYPE_CARD_BUBAN_TEACHER = "20";//教师补办会员卡
+    public static final String BALANCE_SERVICE_TYPE_CARD_BUBAN_STUDENT = "30";//学生补办会员卡
     
     public static final String BALANCE_STATUS = "BALANCE_STATUS";//流水状态
     public static final String BALANCE_STATUS_ALL = "1";//已收全款

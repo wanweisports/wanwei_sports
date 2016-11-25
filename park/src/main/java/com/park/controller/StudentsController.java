@@ -9,12 +9,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.park.common.bean.MemberCardOpInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.bean.ResponseBean;
 import com.park.common.bean.StudentInputView;
+import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
+import com.park.common.po.UserOperator;
 import com.park.common.po.UserStudent;
 import com.park.common.util.JsonUtils;
+import com.park.service.IMemberService;
 import com.park.service.IStudentService;
 
 /**
@@ -26,6 +30,9 @@ public class StudentsController extends BaseController {
 	
 	@Autowired
 	private IStudentService studentService;
+	
+	@Autowired
+	private IMemberService memberService;
 	
     // 学生注册
     @RequestMapping("register")
@@ -108,6 +115,26 @@ public class StudentsController extends BaseController {
     		e.printStackTrace();
     		return false;
 		}
+    }
+    
+    @ResponseBody
+    @RequestMapping("studentCardBuBan")
+    public ResponseBean studentCardBuBan(MemberCardOpInputView memberCardOpInputView){
+    	try {
+            UserOperator userOperator = super.getUserInfo();
+            memberCardOpInputView.setSalesId(userOperator.getId());
+            memberCardOpInputView.setBalanceServiceType(IDBConstant.BALANCE_SERVICE_TYPE_CARD_BUBAN_STUDENT);
+            Integer cardId = memberService.updateMemberCardBuBan(memberCardOpInputView);
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("cardId", cardId);
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
     }
     
 }

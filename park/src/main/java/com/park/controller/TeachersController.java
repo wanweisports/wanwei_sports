@@ -1,21 +1,23 @@
 package com.park.controller;
 
-import com.park.common.exception.MessageException;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.park.common.bean.MemberCardOpInputView;
 import com.park.common.bean.MemberInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.bean.ResponseBean;
 import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
+import com.park.common.po.UserOperator;
 import com.park.common.util.JsonUtils;
 import com.park.service.IMemberService;
-
-import java.util.Map;
 
 /**
  * Created by wangjun on 16/11/15.
@@ -86,6 +88,26 @@ public class TeachersController extends BaseController {
 			e.printStackTrace();
 			return new ResponseBean(false);
 		}
+    }
+    
+    @ResponseBody
+    @RequestMapping("teacherCardBuBan")
+    public ResponseBean teacherCardBuBan(MemberCardOpInputView memberCardOpInputView){
+    	try {
+            UserOperator userOperator = super.getUserInfo();
+            memberCardOpInputView.setSalesId(userOperator.getId());
+            memberCardOpInputView.setBalanceServiceType(IDBConstant.BALANCE_SERVICE_TYPE_CARD_BUBAN_TEACHER);
+            Integer cardId = memberService.updateMemberCardBuBan(memberCardOpInputView);
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("cardId", cardId);
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
     }
     
 }

@@ -21,6 +21,8 @@ public class MemberCardOpInputView extends BaseInputView {
 	private String remark;
 	
 	private String newCardNo;
+	
+	private String balanceServiceType;
 
 	public String getNewCardNo() {
 		return newCardNo;
@@ -100,6 +102,14 @@ public class MemberCardOpInputView extends BaseInputView {
 
 	public void setGivingAmount(String givingAmount) {
 		this.givingAmount = givingAmount;
+	}
+
+	public String getBalanceServiceType() {
+		return balanceServiceType;
+	}
+
+	public void setBalanceServiceType(String balanceServiceType) {
+		this.balanceServiceType = balanceServiceType;
 	}
 	
 }

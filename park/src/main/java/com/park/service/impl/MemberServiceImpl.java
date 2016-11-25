@@ -420,10 +420,13 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		Double buBanMoney = StrUtil.objToDouble(memberCardOpInputView.getBuBanMoney());
 		Double subMoney = StrUtil.objToDoubleDef0(memberCardOpInputView.getSubMoney());
 		Double givingAmount = StrUtil.objToDoubleDef0(memberCardOpInputView.getGivingAmount());
+		String newCardNo = memberCardOpInputView.getNewCardNo();
 		String remark = memberCardOpInputView.getRemark();
 		int salesId = StrUtil.objToInt(memberCardOpInputView.getSalesId());
 		MemberCard memberCard = getMemberCard(StrUtil.objToInt(cardId));
 		if(memberCard == null) throw new MessageException("会员卡信息不存在！");
+		
+		if(!availableCardNo(newCardNo)) throw new MessageException("会员卡号重复，请重新输入！");
 		
 		String nowDate = DateUtil.getNowDate();
 		
@@ -432,13 +435,13 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		memberCard.setUpdateTime(nowDate);
 		memberCard.setCardRemark(remark);
 		memberCard.setCardBalance(memberCard.getCardBalance()+givingAmount);
-		memberCard.setCardNo(memberCardOpInputView.getNewCardNo()); //补办新创建会员卡号
+		memberCard.setCardNo(newCardNo); //补办新创建会员卡号
 		baseDao.save(memberCard, memberCard.getCardId());
 		
 		OtherBalance balance = new OtherBalance();
 		balance.setBalanceNo(getBalanceNo());
 		balance.setBalanceServiceId(memberCard.getCardId());
-		balance.setBalanceServiceType(IDBConstant.BALANCE_SERVICE_TYPE_CARD_BUBAN);
+		balance.setBalanceServiceType(memberCardOpInputView.getBalanceServiceType());
 		balance.setBalanceStyle(balanceStyle);
 		balance.setOldAmount(buBanMoney);
 		balance.setSubAmount(subMoney);
@@ -584,8 +587,12 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			for(int i = 0; i < 6; i++){
 				no.append((int)(Math.random()*10));
 			}
-			if(baseDao.getUniqueResult("SELECT 1 FROM member_card WHERE cardNo = ?", no) == null) return no.toString(); 
+			if(availableCardNo(no.toString())) return no.toString(); 
 		} while (true);
+	}
+	
+	private boolean availableCardNo(String no){
+		return baseDao.getUniqueResult("SELECT 1 FROM member_card WHERE cardNo = ?", no) == null;
 	}
 	
 	private String getBalanceNo(){

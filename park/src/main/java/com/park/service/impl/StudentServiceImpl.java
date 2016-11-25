@@ -29,7 +29,7 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 	
 	@Override
 	public PageBean getStudents(StudentInputView studentInputView){
-		StringBuilder headSql = new StringBuilder("SELECT us.studentId, us.studentName, CONCAT(us.studentGrade, us.studentClass) gradeClass, us.siteCount, mc.cardDeadline, us.studentStatus, uo.operatorName, us.createTime");
+		StringBuilder headSql = new StringBuilder("SELECT mc.cardId, us.studentId, us.studentName, CONCAT(us.studentGrade, us.studentClass) gradeClass, us.siteCount, mc.cardDeadline, us.studentStatus, uo.operatorName, us.createTime");
 		StringBuilder bodySql = new StringBuilder(" FROM user_student us");
 		StringBuilder whereSql = new StringBuilder(" WHERE us.studentStatus = ").append(IDBConstant.LOGIC_STATUS_YES);
 		

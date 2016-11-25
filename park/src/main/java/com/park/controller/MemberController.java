@@ -309,6 +309,7 @@ public class MemberController extends BaseController {
         try {
             UserOperator userOperator = super.getUserInfo();
             memberCardOpInputView.setSalesId(userOperator.getId());
+            memberCardOpInputView.setBalanceServiceType(IDBConstant.BALANCE_SERVICE_TYPE_CARD_BUBAN);
             Integer cardId = memberService.updateMemberCardBuBan(memberCardOpInputView);
             Map<String, Object> data = new HashMap<String, Object>();
             data.put("cardId", cardId);
