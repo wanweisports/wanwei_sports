@@ -284,4 +284,18 @@ public class SiteController extends BaseController {
 		}
 	}
 	
+	@ResponseBody
+    @RequestMapping("getSiteSportTime")
+    public ResponseBean getSiteSportTime(int siteId){
+    	try {
+    		return new ResponseBean(siteService.getSiteSportTime(siteId));
+		} catch (MessageException e) {
+			e.printStackTrace();
+			return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
+    }
+	
 }
