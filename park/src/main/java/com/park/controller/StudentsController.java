@@ -78,8 +78,7 @@ public class StudentsController extends BaseController {
     @RequestMapping("view")
     public String studentsView(Integer studentId, Model model) {
     	try {
-			model.addAttribute("student", studentService.getStudent(studentId));
-			System.out.println(JsonUtils.toJsonDF(studentService.getStudent(studentId)));
+			model.addAttribute("student", studentService.studentsView(studentId));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
