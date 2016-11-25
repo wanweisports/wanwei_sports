@@ -11,17 +11,17 @@
             // 营业开始时间
             $('#start_time').datetimepicker({
                 datepicker: false,
-                lang: "zh",
                 format: "H:i",
-                step: 60
+                step: 60,
+                value: '06:00'
             });
 
             // 营业结束时间
             $('#end_time').datetimepicker({
                 datepicker: false,
-                lang: "zh",
                 format: "H:i",
-                step: 60
+                step: 60,
+                value: '22:00'
             });
         },
         initEvents: function () {

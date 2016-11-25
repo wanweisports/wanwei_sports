@@ -62,6 +62,6 @@ public interface ISiteService {
 	
 	public SiteReserveTime getSiteReserveTime(int reserveTimeId);
 	
-	public Map<String, Object> getSiteSportTime(int siteId);
+	public Map<String, Object> getSiteSportTime(int sportId);
 	
 }
