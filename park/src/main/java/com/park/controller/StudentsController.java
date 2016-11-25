@@ -15,10 +15,10 @@ import com.park.common.bean.ResponseBean;
 import com.park.common.bean.StudentInputView;
 import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
-import com.park.common.po.MemberCard;
 import com.park.common.po.UserOperator;
 import com.park.common.po.UserStudent;
 import com.park.common.util.JsonUtils;
+import com.park.common.util.StrUtil;
 import com.park.service.IMemberService;
 import com.park.service.IStudentService;
 
@@ -37,7 +37,8 @@ public class StudentsController extends BaseController {
 	
     // 学生注册
     @RequestMapping("register")
-    public String studentsRegister() {
+    public String studentsRegister(Model model) {
+    	model.addAllAttributes(studentService.getCardDeposit(StrUtil.objToInt(IDBConstant.CARD_STUDENT)));
         return "Students/StudentsCreate";
     }
     

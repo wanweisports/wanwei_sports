@@ -1,0 +1,7 @@
+卡押金  ps：此接口已存在，在此接口加了一个押金的返回参数
+请求：/students/register
+
+返回：
+{
+   "cardDeposit": 50	
+}

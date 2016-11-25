@@ -100,4 +100,9 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 		baseDao.save(student, studentId);
 	}
 	
+	@Override
+	public Map<String, Object> getCardDeposit(int cardTypeId){
+		return baseDao.queryBySqlFirst("SELECT cardDeposit FROM member_card_type", cardTypeId);
+	}
+	
 }
