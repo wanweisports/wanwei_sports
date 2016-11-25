@@ -38,6 +38,7 @@ public class StudentsController extends BaseController {
     // 学生注册
     @RequestMapping("register")
     public String studentsRegister(Model model) {
+    	model.addAttribute("cardNo", memberService.getCardNo());
     	model.addAllAttributes(studentService.getCardDeposit(StrUtil.objToInt(IDBConstant.CARD_STUDENT)));
         return "Students/StudentsCreate";
     }
@@ -77,8 +78,7 @@ public class StudentsController extends BaseController {
     @RequestMapping("view")
     public String studentsView(Integer studentId, Model model) {
     	try {
-			model.addAttribute("student", studentService.getStudent(studentId));
-			System.out.println(JsonUtils.toJsonDF(studentService.getStudent(studentId)));
+			model.addAttribute("student", studentService.studentsView(studentId));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

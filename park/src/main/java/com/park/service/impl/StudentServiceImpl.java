@@ -1,5 +1,6 @@
 package com.park.service.impl;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import com.park.common.po.MemberCard;
 import com.park.common.po.MemberCardType;
 import com.park.common.po.UserStudent;
 import com.park.common.util.DateUtil;
+import com.park.common.util.JsonUtils;
 import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
 import com.park.service.IMemberService;
@@ -29,7 +31,7 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 	
 	@Override
 	public PageBean getStudents(StudentInputView studentInputView){
-		StringBuilder headSql = new StringBuilder("SELECT mc.cardId, us.studentId, us.studentName, CONCAT(us.studentGrade, us.studentClass) gradeClass, us.siteCount, mc.cardDeadline, us.studentStatus, uo.operatorName, us.createTime");
+		StringBuilder headSql = new StringBuilder("SELECT mc.cardId, mc.cardNo, mc.cardDeposit, us.studentId, us.studentName, CONCAT(us.studentGrade, us.studentClass) gradeClass, us.siteCount, mc.cardDeadline, us.studentStatus, uo.operatorName, us.createTime");
 		StringBuilder bodySql = new StringBuilder(" FROM user_student us");
 		StringBuilder whereSql = new StringBuilder(" WHERE us.studentStatus = ").append(IDBConstant.LOGIC_STATUS_YES);
 		
@@ -42,6 +44,19 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 	@Override
 	public UserStudent getStudent(Integer studentId){
 		return baseDao.getToEvict(UserStudent.class, studentId);
+	}
+	
+	@Override
+	public Map<String, Object> studentsView(Integer studentId){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		UserStudent student = getStudent(studentId);
+		resultMap.putAll(JsonUtils.fromJson(student));
+		if(student.getCardId() != null){
+			MemberCard memberCard = memberService.getMemberCard(student.getCardId());
+			resultMap.put("cardNo", memberCard.getCardNo());
+			resultMap.put("cardDeposit", memberCard.getCardDeposit());
+		}
+		return resultMap;
 	}
 	
 	@Override

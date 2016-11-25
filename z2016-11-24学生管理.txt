@@ -12,7 +12,9 @@
             "studentStatus": "1",
             "studentName": "石头",
             "siteCount": "0",           //场次数
-            "gradeClass": "3年级2班"
+            "gradeClass": "3年级2班",
+            "cardNo": "123456", //会员卡号 【新2016-11-25新加】
+            "cardDeposit": 50   //当时交的卡押金 【新2016-11-25新加】
         }
     ],
     "count": "1",
@@ -49,5 +51,7 @@
     "studentSex": "1",
     "studentStatus": "1",
     "studentAddress": "石景山",
-    "studentRemark": "此学生内力深厚"
+    "studentRemark": "此学生内力深厚",
+    "cardNo": "123456", //会员卡号 【新2016-11-25新加】
+    "cardDeposit": 50   //当时交的卡押金 【新2016-11-25新加】
 }

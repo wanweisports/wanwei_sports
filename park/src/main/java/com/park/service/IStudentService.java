@@ -12,6 +12,8 @@ public interface IStudentService {
 	
 	public UserStudent getStudent(Integer studentId);
 	
+	public Map<String, Object> studentsView(Integer studentId);
+	
 	public Integer saveStudent(UserStudent student, String cardNo);
 	
 	public boolean availableMobile(String mobile);
