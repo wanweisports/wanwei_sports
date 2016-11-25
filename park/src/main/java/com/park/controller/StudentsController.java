@@ -43,10 +43,10 @@ public class StudentsController extends BaseController {
     
     @ResponseBody
     @RequestMapping("saveStudent")
-    public ResponseBean saveStudent(UserStudent userStudent, MemberCard memberCard) {
+    public ResponseBean saveStudent(UserStudent userStudent, String cardNo) {
     	try{
     		userStudent.setSalesId(getUserInfo().getId());
-    		Integer studentId = studentService.saveStudent(userStudent, memberCard);
+    		Integer studentId = studentService.saveStudent(userStudent, cardNo);
     		Map<String, Object> data = new HashMap<String, Object>();
     		data.put("studentId", studentId);
     		return new ResponseBean(data);

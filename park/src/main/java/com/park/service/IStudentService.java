@@ -11,7 +11,7 @@ public interface IStudentService {
 	
 	public UserStudent getStudent(Integer studentId);
 	
-	public Integer saveStudent(UserStudent student, MemberCard memberCard);
+	public Integer saveStudent(UserStudent student, String cardNo);
 	
 	public boolean availableMobile(String mobile);
 	
