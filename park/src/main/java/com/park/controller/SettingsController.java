@@ -185,4 +185,18 @@ public class SettingsController extends BaseController {
         return "Settings/SettingsSystemLogs";
     }
     
+    @ResponseBody
+    @RequestMapping("getBusinessTime")
+    public ResponseBean getBusinessTime(){
+    	try {
+    		return new ResponseBean(parkService.getBusinessTime());
+		} catch (MessageException e) {
+			e.printStackTrace();
+			return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
+    }
+    
 }

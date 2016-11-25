@@ -75,4 +75,9 @@ public class ParkServiceImpl extends BaseService implements IParkService {
 		return baseDao.queryByHqlFirst("FROM ParkBusiness");
 	}
 	
+	@Override
+	public Map<String, Object> getBusinessTime(){
+		return baseDao.queryBySqlFirst("SELECT businessId, businessStartTime, businessEndTime FROM park_business");
+	}
+	
 }

@@ -521,6 +521,11 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		return baseDao.getToEvict(SiteReserveTime.class, reserveTimeId);
 	}
 	
+	@Override
+	public Map<String, Object> getSiteSportTime(int siteId){
+		return baseDao.queryBySqlFirst("SELECT si.siteId ,ss.sportId, startTime, endTime FROM site_info si, site_sport ss WHERE si.siteType = ss.sportId AND si.siteId = ?", siteId);
+	}
+	
 	private Map<String, Object> getReserveIntersection(int siteId, String startDate, String endDate, String weeks, String startTime, String endTime) throws ParseException{
 		startDate = DateUtil.getAddDay(startDate, -1);
 		

@@ -1,8 +1,9 @@
 package com.park.service;
 
+import java.util.Map;
+
 import com.park.common.bean.PageBean;
 import com.park.common.bean.StudentInputView;
-import com.park.common.po.MemberCard;
 import com.park.common.po.UserStudent;
 
 public interface IStudentService {
@@ -16,5 +17,7 @@ public interface IStudentService {
 	public boolean availableMobile(String mobile);
 	
 	public void updateLockStudent(int studentId, int salesId);
+	
+	public Map<String, Object> getCardDeposit(int cardTypeId);
 	
 }
