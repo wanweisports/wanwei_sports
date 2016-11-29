@@ -77,11 +77,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
-                                <label>
-                                    <input type="checkbox" name="noteId" value="1">
-                                </label>
-                            </td>
+                            <td></td>
                             <td>关于2016年场馆建设意见</td>
                             <td>关于2016年场馆建设意见, 关于2016年场馆建设意见....</td>
                             <td>2个文件</td>
@@ -100,11 +96,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
-                                <label>
-                                    <input type="checkbox" name="noteId" value="1">
-                                </label>
-                            </td>
+                            <td></td>
                             <td>关于2016年场馆建设意见</td>
                             <td>关于2016年场馆建设意见, 关于2016年场馆建设意见....</td>
                             <td>5个文件</td>

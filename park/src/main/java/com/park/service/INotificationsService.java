@@ -8,9 +8,13 @@ public interface INotificationsService {
 
 	public PageBean getNotifications(NotificationsInputView notificationsInputView);
 
+    public PageBean getNotificationsReceiver(NotificationsInputView notificationsInputView);
+
     public NotificationsInfo getNotificationInfo(int noteId);
 	
 	public Integer setNotification(NotificationsInfo notificationInfo);
+
+    public Integer sendNotification(int noteId);
 
     public void markNotificationRead(int noteId);
 

@@ -1,16 +1,21 @@
 package com.park.controller;
 
-import com.park.common.bean.NotificationsInputView;
-import com.park.common.bean.PageBean;
-import com.park.common.bean.ResponseBean;
+import com.park.common.bean.*;
+import com.park.common.exception.MessageException;
+import com.park.common.po.NotificationsInfo;
+import com.park.common.po.UserOperator;
 import com.park.common.util.JsonUtils;
 import com.park.service.INotificationsService;
+import com.park.service.IOperatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by wangjun on 16/11/17.
@@ -22,12 +27,18 @@ public class OfficeController extends BaseController {
     @Autowired
     private INotificationsService notificationsService;
 
+    @Autowired
+    private IOperatorService operatorService;
+
     // 通知管理
     @RequestMapping("notifications")
     public String notifications(NotificationsInputView notificationsInputView, Model model) {
         try {
+            OperatorInputView operatorInputView = new OperatorInputView();
+            UserOperator userInfo = super.getUserInfo();
+            notificationsInputView.setNoteSender(userInfo.getId());
             model.addAllAttributes(JsonUtils.fromJsonDF(notificationsInputView));
-            //model.addAttribute("noteStatus", notificationsService.getGoodTypeNames());
+            model.addAttribute("operators", operatorService.getOperatorsName(operatorInputView));
             PageBean pageBean = notificationsService.getNotifications(notificationsInputView);
             super.setPageInfo(model, pageBean);
         } catch (Exception e) {
@@ -42,7 +53,10 @@ public class OfficeController extends BaseController {
     @RequestMapping(value = "viewNotifications", method = RequestMethod.POST)
     public ResponseBean viewNotifications(int noteId) {
         try {
-            return new ResponseBean(JsonUtils.fromJsonDF(notificationsService.getNotificationInfo(noteId)));
+            return new ResponseBean(JsonUtils.fromJson(notificationsService.getNotificationInfo(noteId)));
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseBean(false);
@@ -56,6 +70,63 @@ public class OfficeController extends BaseController {
         try {
             notificationsService.deleteNotification(noteId);
             return new ResponseBean(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
+    // 通知管理保存
+    @ResponseBody
+    @RequestMapping(value = "saveNotifications", method = RequestMethod.POST)
+    public ResponseBean saveNotifications(NotificationsInfo notificationsInfo) {
+        try {
+            UserOperator userInfo = super.getUserInfo();
+            notificationsInfo.setNoteSender(userInfo.getId());
+
+            System.out.println(JsonUtils.fromJson(notificationsInfo));
+
+            Integer noteId = notificationsService.setNotification(notificationsInfo);
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("noteId", noteId);
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
+    // 通知管理保存
+    @ResponseBody
+    @RequestMapping(value = "sendNotifications", method = RequestMethod.POST)
+    public ResponseBean sendNotifications(int noteId) {
+        try {
+            Integer notificationId = notificationsService.sendNotification(noteId);
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("noteId", notificationId);
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
+    // 通知管理标记发送
+    @ResponseBody
+    @RequestMapping(value = "markNotificationRead", method = RequestMethod.POST)
+    public ResponseBean markNotificationRead(int noteId) {
+        try {
+            notificationsService.markNotificationRead(noteId);
+            return new ResponseBean(true);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseBean(false);

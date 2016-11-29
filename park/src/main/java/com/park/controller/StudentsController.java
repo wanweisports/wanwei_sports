@@ -78,7 +78,7 @@ public class StudentsController extends BaseController {
     @RequestMapping("view")
     public String studentsView(Integer studentId, Model model) {
     	try {
-			model.addAttribute("student", studentService.studentsView(studentId));
+			model.addAllAttributes(studentService.studentsView(studentId));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

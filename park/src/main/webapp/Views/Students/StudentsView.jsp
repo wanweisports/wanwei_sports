@@ -29,8 +29,9 @@
         <form id="student_form" class="form-horizontal" novalidate onsubmit="return false;">
             <input type="hidden" name="studentId" value="${studentId}" />
             <div class="panel panel-default">
-                <div class="panel-heading">学生注册</div>
+                <div class="panel-heading">学生详情</div>
                 <div class="panel-body">
+                    <div class="alert alert-info text-center" role="alert">办卡押金: ${cardDeposit}元</div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="card_id" class="col-sm-4 control-label">
@@ -50,11 +51,11 @@
                             <div class="col-sm-4">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="student_degree" name="studentGrade"
-                                           placeholder="所在年级(例如,2016)" autocomplete="off"
+                                           placeholder="年级" autocomplete="off"
                                            data-val="true" data-val-required="所在年级不能为空"
                                            data-val-regex-pattern="^[0-9]\d*$"
                                            data-val-regex="所在年级格式错误" value="${studentGrade}">
-                                    <span class="input-group-addon">年级</span>
+                                    <span class="input-group-addon">级</span>
                                 </div>
                                 <div data-valmsg-for="studentGrade" data-valmsg-replace="true"></div>
                             </div>
@@ -62,11 +63,11 @@
                             <div class="col-sm-4">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="student_class" name="studentClass"
-                                           placeholder="所在班级(例如,03)" autocomplete="off"
+                                           placeholder="班级" autocomplete="off"
                                            data-val="true" data-val-required="所在班级不能为空"
                                            data-val-regex-pattern="^[0-9]\d*$"
                                            data-val-regex="所在班级格式错误" value="${studentClass}">
-                                    <span class="input-group-addon">班级</span>
+                                    <span class="input-group-addon">级</span>
                                 </div>
                                 <div data-valmsg-for="studentClass" data-valmsg-replace="true"></div>
                             </div>
