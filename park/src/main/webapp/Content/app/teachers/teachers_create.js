@@ -4,7 +4,7 @@
             $.datetimepicker.setLocale('zh');
 
             // 表单时间控件设置
-            $('#memberBirthday').datetimepicker({
+            $('#member_birthday').datetimepicker({
                 timepicker: false,
                 lang: "zh",
                 format:'Y-m-d',
@@ -15,7 +15,7 @@
             $(".member-birthday-select").on("click", function (e) {
                 e.preventDefault();
 
-                $('#memberBirthday').datetimepicker("show");
+                $('#member_birthday').datetimepicker("show");
             });
 
             this.initEvents();
@@ -43,7 +43,7 @@
                     }
 
                     $('[name="memberId"]').val(data.memberId);
-                    conditions.memberId = data.memberId;
+                    conditions = $form.serialize();
                     $.post('/member/saveMemberCar', conditions, function (res) {
                         $form.attr("submitting", "");
 
