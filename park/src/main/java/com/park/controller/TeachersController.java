@@ -70,7 +70,15 @@ public class TeachersController extends BaseController {
 
     // 教师用场流水
     @RequestMapping("data")
-    public String teachersVenueData() {return "Teachers/TeachersVenueData";}
+    public String teachersVenueData(MemberInputView memberInputView, Model model) {
+    	try {
+    		memberInputView.setCardId(IDBConstant.CARD_TEACHERS);
+			model.addAllAttributes(memberService.countTeacher(memberInputView));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	return "Teachers/TeachersVenueData";
+    }
 
     // 教师订单统计
     @RequestMapping("orderMeal")

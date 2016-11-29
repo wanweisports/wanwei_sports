@@ -93,4 +93,6 @@ public interface IMemberService {
 	
 	public void updateLockTeacher(int memberId, int salesId);
 	
+	public Map<String, Object> countTeacher(MemberInputView memberInputView) throws Exception ;
+	
 }

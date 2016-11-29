@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.park.common.bean.DataInputView;
+import com.park.common.bean.PageBean;
 import com.park.common.util.JsonUtils;
 import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
@@ -68,6 +69,54 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		default:
 			return " AND DATE_FORMAT("+field+", '%Y-%m-%d') = CURDATE()";
 		}
+	}
+	
+	@Override
+	public Map<String, Object> getSitePercentage(DataInputView dataInputView){
+		
+		int page = dataInputView.getPage();
+		int pageSize = dataInputView.getPageSize();
+		
+		StringBuilder sql = new StringBuilder("SELECT ss.sportName, si.siteName, SUM(LEFT(TIMEDIFF(siteEndTime, siteStartTime),2)) sumCount");
+		sql.append(",SUM(CASE srt.isUse WHEN 2 THEN LEFT(TIMEDIFF(siteEndTime, siteStartTime),2) ELSE 0 END) useCount");
+		sql.append(" FROM site_info si, site_sport ss, site_reserve_time srt");
+		sql.append(" WHERE si.siteType = ss.sportId AND srt.siteId = si.siteId");
+		
+		String siteGroup = " GROUP BY si.siteId";
+		sql.append(siteGroup);
+		List<Map<String, Object>> siteCountList = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
+		
+		String sportGroup = " GROUP BY ss.sportId";
+		List<Map<String, Object>> sportCountList = baseDao.queryBySql(sql.toString().replace(siteGroup, sportGroup), JsonUtils.fromJson(dataInputView));
+		
+		for(Map<String, Object> map : siteCountList){
+			Double sumCount = StrUtil.objToDoubleDef0(map.get("sumCount"));
+			Double useCount = StrUtil.objToDoubleDef0(map.get("useCount"));
+			map.put("percentage", StrUtil.roundKeepTwo(useCount/sumCount));
+		}
+		PageBean pageBean = new PageBean(siteCountList, page, pageSize, siteCountList.size());
+		pageBean.pagedList().init();
+		
+		double sumSportUsePercentage = 0;
+		int sportCount = 0;
+		for(Map<String, Object> map : sportCountList){
+			Double sumCount = StrUtil.objToDoubleDef0(map.get("sumCount"));
+			Double useCount = StrUtil.objToDoubleDef0(map.get("useCount"));
+			double percentage = StrUtil.roundKeepTwo(useCount/sumCount);
+			map.put("percentage", percentage);
+			sumSportUsePercentage += percentage;
+			sportCount++;
+		}
+		Map<String, Object> allSportCountMap = new HashMap<String, Object>();
+		allSportCountMap.put("sportName", "全部");
+		allSportCountMap.put("percentage", sumSportUsePercentage/sportCount);
+		sportCountList.add(0, allSportCountMap);
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("pageBean", pageBean);
+		resultMap.put("sportCountList", sportCountList);
+		
+		return resultMap;
 	}
 	
 }

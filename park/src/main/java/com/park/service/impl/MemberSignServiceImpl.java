@@ -15,6 +15,7 @@ import com.park.common.exception.MessageException;
 import com.park.common.po.MemberCard;
 import com.park.common.po.MemberSiteSign;
 import com.park.common.po.OrderInfo;
+import com.park.common.po.SiteReserveTime;
 import com.park.common.po.UserMember;
 import com.park.common.util.DateUtil;
 import com.park.common.util.StrUtil;
@@ -84,6 +85,11 @@ public class MemberSignServiceImpl extends BaseService implements IMemberSignSer
 		if(orderInfo == null) throw new MessageException("订单不存在");
 		orderInfo.setUseCount(orderInfo.getUseCount()+DateUtil.getTimeHourNums(StrUtil.objToStr(siteReserveBasic.get("siteStartTime")), StrUtil.objToStr(siteReserveBasic.get("siteEndTime")))); //计算场地时间有多少场
 		baseDao.save(orderInfo, orderId);
+		
+		//场次变为已使用状态
+		SiteReserveTime siteReserveTime = siteService.getSiteReserveTime(reserveTimeId);
+		siteReserveTime.setIsUse(IDBConstant.LOGIC_STATUS_YES);
+		baseDao.save(siteReserveTime, reserveTimeId);
 	}
 	
 	private MemberSiteSign getMemberSiteSign(int reserveTimeId){

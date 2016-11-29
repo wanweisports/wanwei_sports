@@ -1,5 +1,6 @@
 package com.park.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -664,6 +665,74 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		userMember.setMemberStatus(IDBConstant.LOGIC_STATUS_NO);
 		userMember.setSalesId(salesId);
 		baseDao.save(userMember, memberId);
+	}
+	
+	@Override
+	public Map<String, Object> countTeacher(MemberInputView memberInputView) throws Exception {
+		
+		int page = memberInputView.getPage();
+		int pageSize = memberInputView.getPageSize();
+		String siteType = memberInputView.getSiteType();
+		String cardId = memberInputView.getCardId();
+		String startTime = memberInputView.getStartTime();
+		String endTime = memberInputView.getEndTime();
+		
+		StringBuilder sql = new StringBuilder("SELECT um.memberId, um.memberName, um.memberMobile, mss.createTime signTime, LEFT(TIMEDIFF(siteEndTime, siteStartTime),2) duration, siteStartTime, siteEndTime, uo.operatorName, mss.createTime opTime, ss.sportName");
+		sql.append(" FROM user_member um, member_card mc, member_site_sign mss, site_reserve_time srt, user_operator uo, site_info si, site_sport ss");
+		sql.append(" WHERE um.memberId = mc.memberId AND mc.cardNo = mss.signMemberCardNo AND mss.reserveTimeId = srt.reserveTimeId AND uo.id = mss.salesId AND srt.siteId = si.siteId AND si.siteType = ss.sportId");
+		if(StrUtil.isNotBlank(siteType)){
+			sql.append(" AND si.siteType = :siteType");
+		}
+		if(StrUtil.isNotBlank(cardId)){
+			sql.append(" AND mc.cardId = :cardId");
+		}
+		if(StrUtil.isNotBlank(startTime)){
+			sql.append(" AND mss.createTime >= :startTime");
+		}
+		if(StrUtil.isNotBlank(endTime)){
+			sql.append(" AND mss.createTime <= :endTime");
+		}
+		List<Map<String, Object>> teacherCounts = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(memberInputView));
+		
+		PageBean pageBean = new PageBean(teacherCounts, page, pageSize, teacherCounts.size());
+		pageBean.pagedList().init();
+		
+		List<Map<String, Object>> typeCountList = new ArrayList<Map<String, Object>>();
+		Map<String, Object> all = new HashMap<String, Object>();
+		typeCountList.add(all);
+		
+		for(Map<String, Object> map : teacherCounts){
+			String sportName = StrUtil.objToStr(map.get("sportName"));
+			int hourNums = DateUtil.getTimeHourNums(StrUtil.objToStr(map.get("siteStartTime")), StrUtil.objToStr(map.get("siteEndTime")));
+			int index = getTypeIndex(typeCountList, sportName);
+			if(index == 0){
+				Map<String, Object> m = new HashMap<String, Object>();
+				m.put("sportName", sportName);
+				m.put("typeCount", 1);
+				m.put("typeTime", hourNums);
+				typeCountList.add(m);
+			}else{
+				Map<String, Object> m = typeCountList.get(index);
+				m.put("typeCount", StrUtil.objToInt(map.get("typeCount"))+1);
+				m.put("typeTime", StrUtil.objToInt(map.get("typeTime"))+hourNums);
+			}
+			all.put("sportName", "全部");
+			all.put("typeCount", all.get("typeCount")!=null?StrUtil.objToInt(all.get("typeCount"))+1:1);
+			all.put("typeTime", all.get("typeTime")!=null?StrUtil.objToInt(all.get("typeTime"))+hourNums:hourNums);
+		}
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("pageBean", pageBean);
+		resultMap.put("itemCounts", typeCountList);
+		return resultMap;
+	}
+	
+	private int getTypeIndex(List<Map<String, Object>> typeCountList, String sportName){
+		int index = 0;
+		for(Map<String, Object> map : typeCountList){
+			if(map.get("sportName").equals(sportName)) return index;
+			index++;
+		}
+		return 0;
 	}
 	
 }

@@ -19,6 +19,7 @@ public class DataController extends BaseController {
 	@Autowired
 	private IDataService dataService;
 	
+	
     // 会员注册统计
     @RequestMapping("getMembersRegister")
     public String getMembersRegister(DataInputView dataInputView, Model model) {
@@ -45,7 +46,13 @@ public class DataController extends BaseController {
 
     // 场地使用率
     @RequestMapping("getVenuePercentage")
-    public String getVenuePercentage() {
+    public String getVenuePercentage(DataInputView dataInputView, Model model) {
+    	try {
+			model.addAllAttributes(dataService.getSitePercentage(dataInputView));
+			System.out.println(JsonUtils.toJson(dataService.getSitePercentage(dataInputView)));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         return "Data/DataVenuePercentage";
     }
 }

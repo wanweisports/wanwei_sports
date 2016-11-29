@@ -321,6 +321,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 				if(reserveRepeatMap != null) throw new MessageException("【"+siteReserveDate.getReserveStartDate()+"至"+siteReserveDate.getReserveEndDate()+"日期，"+siteReserveTime.getSiteStartTime()+"-"+siteReserveTime.getSiteEndTime()+"，星期："+siteReserveDate.getReserveWeek()+"】与其他顾客预定时间有冲突，请重新选择");
 				
 				siteReserveTime.setReserveDateId(siteReserveDate.getReserveDateId());
+				siteReserveTime.setIsUse(IDBConstant.LOGIC_STATUS_NO);
 				baseDao.save(siteReserveTime, null);
 				
 				OrderDetail orderDetail = new OrderDetail();

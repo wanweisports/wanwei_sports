@@ -22,6 +22,14 @@ public class MemberInputView extends BaseInputView {
 
 	private boolean isCommonCard;
 	
+	private String cardId;
+	
+	private String startTime;
+	
+	private String endTime;
+	
+	private String siteType;
+	
 	public String getMemberMobile() {
 		return memberMobile;
 	}
@@ -102,4 +110,36 @@ public class MemberInputView extends BaseInputView {
 		this.isCommonCard = isCommonCard;
 	}
 
+	public String getCardId() {
+		return cardId;
+	}
+
+	public void setCardId(String cardId) {
+		this.cardId = cardId;
+	}
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+
+	public String getSiteType() {
+		return siteType;
+	}
+
+	public void setSiteType(String siteType) {
+		this.siteType = siteType;
+	}
+	
 }
