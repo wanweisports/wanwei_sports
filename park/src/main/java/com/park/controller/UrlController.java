@@ -1,5 +1,8 @@
 package com.park.controller;
 
+import com.park.common.bean.NotificationsInputView;
+import com.park.common.bean.PageBean;
+import com.park.service.INotificationsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +24,12 @@ public class UrlController extends BaseController {
 	
 	@Autowired
 	private IOperatorService operatorService;
-	
-	@RequestMapping("request")
+
+    @Autowired
+    private INotificationsService notificationsService;
+
+
+    @RequestMapping("request")
 	public String toRequest() {
 		return "Request";
 	}
@@ -144,9 +151,20 @@ public class UrlController extends BaseController {
 
 	// 我的消息
 	@RequestMapping("/passport/message")
-	public String myMessage() {
-		return "Center/CenterNotification";
-	}
+    public String notificationsReceiver(NotificationsInputView notificationsInputView, Model model) {
+        try {
+            UserOperator userInfo = super.getUserInfo();
+            notificationsInputView.setNoteReceiver(userInfo.getId());
+            model.addAllAttributes(JsonUtils.fromJsonDF(notificationsInputView));
+            //model.addAttribute("noteStatus", notificationsService.getGoodTypeNames());
+            PageBean pageBean = notificationsService.getNotificationsReceiver(notificationsInputView);
+            super.setPageInfo(model, pageBean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "Center/CenterNotification";
+    }
 }
 
 

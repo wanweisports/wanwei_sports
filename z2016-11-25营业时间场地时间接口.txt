@@ -14,14 +14,13 @@
 
 ====================================================================
 场地营业时间：
-请求：/site/getSiteSportTime?site=1  //场地id
+请求：/site/getSiteSportTime?sportId=1
 
 返回：
 {
     "code": "1",
     "message": "操作成功",
     "data": {
-	  "siteId": 1,   //场地id
 	  "sportId": 1,  //场地类型id
 	  "startTime": "09:00",
 	  "endTime": "12:00"

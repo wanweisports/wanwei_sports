@@ -66,7 +66,7 @@
                         <c:forEach var="student" items="${list}">
                             <tr>
                                 <td>${student.studentName}</td>
-                                <td>${student.gradeClass}</td>
+                                <td>${student.studentGrade}级${student.studentClass}班</td>
                                 <td>${student.cardNo}</td>
                                 <td>
                                     <c:choose>
@@ -84,7 +84,7 @@
                                 <td>${student.operatorName}</td>
                                 <td>${student.createTime}</td>
                                 <td>
-                                    <a class="btn btn-primary" href="/students/view?studentId=${member.memberId}">
+                                    <a class="btn btn-primary" href="/students/view?studentId=${student.studentId}">
                                         <span class="glyphicon glyphicon-share-alt"></span> 查看
                                     </a>
                                     <a class="btn btn-warning students-refresh" href="javascript:;"

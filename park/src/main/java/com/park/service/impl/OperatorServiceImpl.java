@@ -1,5 +1,6 @@
 package com.park.service.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,6 +100,21 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 		}
 		return super.getPageBean(headSql, bodySql, whereSql, operatorInputView);
 	}
+
+    @Override
+    public List<Map<String, Object>> getOperatorsName(OperatorInputView operatorInputView) {
+        String status = operatorInputView.getStatus();
+
+        StringBuilder sql = new StringBuilder("SELECT uo.id, uo.operatorNo, uo.operatorId, uo.operatorName, sr.roleName, uo.operatorEffectDate, uo.operatorEndDate, uo.status");
+        sql.append(" FROM user_operator uo, system_role_operator sro, system_role sr");
+        sql.append(" WHERE uo.operatorId = sro.operatorId AND sro.roleId = sr.roleId");
+        sql.append(" AND sr.roleId >= ").append(IDBConstant.ROLE_EMPLOYEE);
+
+        if(StrUtil.isNotBlank(status)){
+            sql.append(" AND uo.status = :status");
+        }
+        return baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(operatorInputView));
+    }
 	
 	@Override
 	public Map<String, Object> getEmployee(String operatorId){

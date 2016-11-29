@@ -282,9 +282,9 @@ public class SiteController extends BaseController {
 	
 	@ResponseBody
     @RequestMapping("getSiteSportTime")
-    public ResponseBean getSiteSportTime(int siteId){
+    public ResponseBean getSiteSportTime(int sportId){
     	try {
-    		return new ResponseBean(siteService.getSiteSportTime(siteId));
+    		return new ResponseBean(siteService.getSiteSportTime(sportId));
 		} catch (MessageException e) {
 			e.printStackTrace();
 			return new ResponseBean(e.getMessage());

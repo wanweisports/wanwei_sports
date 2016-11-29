@@ -1,5 +1,5 @@
 (function ($) {
-    var Teachers_View = {
+    var Students_View = {
         init: function () {
             this.initEvents();
         },
@@ -16,7 +16,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/member/saveMember', conditions, function (res) {
+                $.post('/students/saveStudent', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
@@ -34,5 +34,5 @@
         }
     };
 
-    Teachers_View.init();
+    Students_View.init();
 })(jQuery);

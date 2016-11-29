@@ -8,7 +8,7 @@
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
-    <script src="/Content/app/students/students_register.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/students/students_create.js?v=${static_resource_version}"></script>
 
     <script>
         // 表单校验配置
@@ -30,6 +30,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">学生注册</div>
                 <div class="panel-body">
+                    <div class="alert alert-info text-center" role="alert">办卡押金: ${cardDeposit}元</div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="card_no" class="col-sm-4 control-label">
@@ -49,7 +50,7 @@
                             <div class="col-sm-4">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="student_degree" name="studentGrade"
-                                           placeholder="所在年级(例如,2016)" autocomplete="off"
+                                           placeholder="年级" autocomplete="off"
                                            data-val="true" data-val-required="所在年级不能为空"
                                            data-val-regex-pattern="^[0-9]\d*$"
                                            data-val-regex="所在年级格式错误">
@@ -61,7 +62,7 @@
                             <div class="col-sm-4">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="student_class" name="studentClass"
-                                           placeholder="所在班级(例如,03)" autocomplete="off"
+                                           placeholder="班级" autocomplete="off"
                                            data-val="true" data-val-required="所在班级不能为空"
                                            data-val-regex-pattern="^[0-9]\d*$"
                                            data-val-regex="所在班级格式错误">
@@ -76,12 +77,12 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="student_mobile" name="studentobile"
+                                <input type="text" class="form-control" id="student_mobile" name="studentMobile"
                                        placeholder="请输入手机号码" autocomplete="off"
                                        data-val="true" data-val-required="手机号码不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
                                        data-val-regex="手机号码格式错误">
-                                <div data-valmsg-for="studentobile" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="studentMobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -129,11 +130,10 @@
                             <label for="student_remark" class="col-sm-2 control-label">备注</label>
 
                             <div class="col-sm-10">
-                            <textarea class="form-control" id="student_remark" name="studentRemark" rows="3"
+                                <textarea class="form-control" id="student_remark" name="studentRemark" rows="3"
                                       placeholder="备注"></textarea>
                             </div>
                         </div>
-                        <div class="alert alert-warning" role="alert">办卡押金: ${cardDeposit}元</div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
                                 <button type="button" class="btn btn-primary col-sm-4 register-student">

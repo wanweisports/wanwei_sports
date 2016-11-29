@@ -7,24 +7,48 @@
         initTimePicker: function () {
             $.datetimepicker.setLocale('zh');
 
-            // 营业开始时间
-            $('#start_time').datetimepicker({
-                datepicker: false,
-                lang: "zh",
-                format: "H:i",
-                allowTimes: ['06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00',
-                    '17:00','18:00','19:00','20:00','21:00','22:00','23:00'],
-                step: 5
-            });
+            $.post("/settings/getBusinessTime", {}, function (res) {
+                var data = res.data;
 
-            // 营业结束时间
-            $('#end_time').datetimepicker({
-                datepicker: false,
-                lang: "zh",
-                format: "H:i",
-                allowTimes: ['06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00',
-                    '17:00','18:00','19:00','20:00','21:00','22:00','23:00'],
-                step: 5
+                if (res.code == 1) {
+                    // 营业开始时间
+                    $('#start_time').datetimepicker({
+                        datepicker: false,
+                        format: "H:i",
+                        step: 60,
+                        value: data.businessStartTime,
+                        minTime: data.businessStartTime,
+                        maxTime: data.businessEndTime
+                    });
+
+                    // 营业结束时间
+                    $('#end_time').datetimepicker({
+                        datepicker: false,
+                        format: "H:i",
+                        step: 60,
+                        value: data.businessEndTime,
+                        minTime: data.businessStartTime,
+                        maxTime: data.businessEndTime
+                    });
+                } else {
+                    console.log(res.message || "运营时间查询失败, 请稍后重试");
+                    alert(res.message || "运营时间查询失败, 请稍后重试");
+                    // 营业开始时间
+                    $('#start_time').datetimepicker({
+                        datepicker: false,
+                        format: "H:i",
+                        step: 60,
+                        value: "06:00"
+                    });
+
+                    // 营业结束时间
+                    $('#end_time').datetimepicker({
+                        datepicker: false,
+                        format: "H:i",
+                        step: 60,
+                        value: "22:00"
+                    });
+                }
             });
         },
         initEvents: function () {

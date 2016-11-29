@@ -2,7 +2,12 @@ package com.park.common.po;
 
 import javax.persistence.*;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * GoodInfo entity. @author MyEclipse Persistence Tools
@@ -22,7 +27,6 @@ public class NotificationsInfo implements java.io.Serializable {
 	private String noteCreateTime;
 	private String noteReadTime;
     private String noteUpdateTime;
-    private String operatorName;
 
 	// Constructors
 
@@ -144,14 +148,5 @@ public class NotificationsInfo implements java.io.Serializable {
 
     public void setNoteUpdateTime(String noteUpdateTime) {
         this.noteUpdateTime = noteUpdateTime;
-    }
-
-    @Column(name = "operatorName")
-    public String getOperatorName() {
-        return this.operatorName;
-    }
-
-    public void setOperatorName(String operatorName) {
-        this.operatorName = operatorName;
     }
 }

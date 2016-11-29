@@ -1,5 +1,6 @@
 package com.park.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.park.common.bean.OperatorInputView;
@@ -18,6 +19,8 @@ public interface IOperatorService {
 	public ReserveInfo getOperatorNameInfo(String operatorId);
 	
 	public PageBean getOperatorList(OperatorInputView operatorInputView);
+
+    public List<Map<String, Object>> getOperatorsName(OperatorInputView operatorInputView);
 	
 	public Map<String, Object> getEmployee(String operatorId);
 	

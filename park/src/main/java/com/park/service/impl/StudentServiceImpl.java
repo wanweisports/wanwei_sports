@@ -31,7 +31,7 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 	
 	@Override
 	public PageBean getStudents(StudentInputView studentInputView){
-		StringBuilder headSql = new StringBuilder("SELECT mc.cardId, mc.cardNo, mc.cardDeposit, us.studentId, us.studentName, CONCAT(us.studentGrade, us.studentClass) gradeClass, us.siteCount, mc.cardDeadline, us.studentStatus, uo.operatorName, us.createTime");
+		StringBuilder headSql = new StringBuilder("SELECT mc.cardId, mc.cardNo, mc.cardDeposit, us.studentId, us.studentName, us.studentGrade, us.studentClass, CONCAT(us.studentGrade, us.studentClass) gradeClass, us.siteCount, mc.cardDeadline, us.studentStatus, uo.operatorName, us.createTime");
 		StringBuilder bodySql = new StringBuilder(" FROM user_student us");
 		StringBuilder whereSql = new StringBuilder(" WHERE us.studentStatus = ").append(IDBConstant.LOGIC_STATUS_YES);
 		
@@ -117,7 +117,7 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 	
 	@Override
 	public Map<String, Object> getCardDeposit(int cardTypeId){
-		return baseDao.queryBySqlFirst("SELECT cardDeposit FROM member_card_type WHERE cardTypeId=?", cardTypeId);
+		return baseDao.queryBySqlFirst("SELECT cardDeposit FROM member_card_type WHERE cardTypeId = ?", cardTypeId);
 	}
 	
 }
