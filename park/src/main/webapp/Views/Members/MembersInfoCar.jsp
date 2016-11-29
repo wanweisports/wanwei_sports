@@ -29,15 +29,15 @@
             <div class="panel panel-default">
                 <div class="panel-heading">会员绑卡充值</div>
                 <div class="panel-body">
-                    <input type="hidden" name="memberId" value="${memberId}">
+                    <input type="hidden" id="member_id" name="memberId" value="${memberId}">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="card_no" class="col-sm-4 control-label">
+                            <label for="member_card_no" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 会员卡号
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="card_no" name="cardNo"
+                                <input type="text" class="form-control" id="member_card_no" name="cardNo"
                                        placeholder="会员卡号" value="${tempCardNo}" readonly>
                             </div>
                         </div>
@@ -179,8 +179,8 @@
                                               placeholder="备注"></textarea>
                                 </div>
                             </div>
-                            <div class="alert alert-info" role="alert">
-                                合计金额(充值金额 + 赠送金额 - 会费 - 押金): <span class="total-money">0</span>元
+                            <div class="alert alert-info text-center" role="alert">
+                                合计金额：<span class="total-money text-danger">0</span>元（ = 充值金额 + 赠送金额 - 会费 - 押金）
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-4 col-sm-8">
@@ -206,7 +206,7 @@
                     <h5 class="modal-title" id="confirmModalLabel">订单流水单</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-success">会员卡已经办理成功, 需要打印收款单?</div>
+                    <div class="alert alert-success">会员卡已经办理成功，需要登记领取发票？</div>
                     <div class="panel panel-default">
                         <form id="member_card_ticket_form" class="form-horizontal" novalidate onsubmit="return false;">
                             <div class="panel-body">

@@ -34,15 +34,25 @@
             <div class="panel panel-default">
                 <div class="panel-heading">新会员办理</div>
                 <div class="panel-body">
-                    <input type="hidden" name="memberType" value="1">
+                    <input type="hidden" id="member_type" name="memberType" value="1">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="cardNo" class="col-sm-4 control-label">
+                            <label for="member_card_no" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 会员卡号
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="cardNo" name="tempCardNo"
+                                <!--<div class="input-group">
+                                    <input type="text" class="form-control" id="member_card_no" name="tempCardNo"
+                                           placeholder="会员卡号" value="${cardNo}"
+                                           data-val="true" data-val-required="会员卡号不能为空">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-warning">
+                                            <i class="glyphicon glyphicon-transfer"></i> 读取
+                                        </button>
+                                    </span>
+                                </div>-->
+                                <input type="text" class="form-control" id="member_card_no" name="tempCardNo"
                                        placeholder="会员卡号" value="${cardNo}"
                                        data-val="true" data-val-required="会员卡号不能为空">
                                 <div data-valmsg-for="tempCardNo" data-valmsg-replace="true"></div>
@@ -63,14 +73,18 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="memberBirthday" class="col-sm-4 control-label">会员生日</label>
+                            <label for="member_birthday" class="col-sm-4 control-label">会员生日</label>
 
                             <div class="col-sm-8">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="memberBirthday" name="memberBirthday"
-                                           placeholder="会员生日">
-                                    <span class="input-group-addon member-birthday-select">
-                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    <input type="text" class="form-control" id="member_birthday" name="memberBirthday"
+                                           placeholder="会员生日" autocomplete="off"
+                                           data-val-regex-pattern="^\d{4}-\d{2}-\d{2}$"
+                                           data-val-regex="会员生日格式错误">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary member-birthday-select">
+                                            <i class="glyphicon glyphicon-calendar"></i> 日历
+                                        </button>
                                     </span>
                                 </div>
                             </div>
@@ -78,12 +92,12 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="memberName" class="col-sm-4 control-label">
+                            <label for="member_name" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 会员姓名
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="memberName" name="memberName"
+                                <input type="text" class="form-control" id="member_name" name="memberName"
                                        placeholder="请输入会员姓名" autocomplete="off"
                                        data-val="true" data-val-required="会员姓名不能为空"
                                        data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,9}$"
@@ -92,12 +106,24 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="memberIdcard" class="col-sm-4 control-label">
+                            <label for="member_idcard" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 身份证号
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="memberIdcard" name="memberIdcard"
+                                <!--<div class="input-group">
+                                    <input type="text" class="form-control" id="member_idcard" name="memberIdcard"
+                                           placeholder="请输入18位身份证号" autocomplete="off"
+                                           data-val="true" data-val-required="身份证号不能为空"
+                                           data-val-regex-pattern="^\d{17}(\d|X|x)$"
+                                           data-val-regex="身份证号格式错误">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-warning">
+                                            <i class="glyphicon glyphicon-transfer"></i> 读取
+                                        </button>
+                                    </span>
+                                </div>-->
+                                <input type="text" class="form-control" id="member_idcard" name="memberIdcard"
                                        placeholder="请输入18位身份证号" autocomplete="off"
                                        data-val="true" data-val-required="身份证号不能为空"
                                        data-val-regex-pattern="^\d{17}(\d|X|x)$"
@@ -106,16 +132,16 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="memberSex1" class="col-sm-4 control-label">
+                            <label class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 会员性别
                             </label>
 
                             <div class="col-sm-8">
                                 <label class="radio-inline">
-                                    <input type="radio" name="memberSex" id="memberSex1" value="1" checked> 男
+                                    <input type="radio" name="memberSex" value="1" checked> 男
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="memberSex" id="memberSex2" value="2"> 女
+                                    <input type="radio" name="memberSex" value="2"> 女
                                 </label>
                                 <div data-valmsg-for="memberSex" data-valmsg-replace="true"></div>
                             </div>
@@ -123,18 +149,18 @@
                     </div>
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <label for="memberAddress" class="col-sm-2 control-label">联系地址</label>
+                            <label for="member_address" class="col-sm-2 control-label">联系地址</label>
 
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="memberAddress" name="memberAddress"
+                                <input type="text" class="form-control" id="member_address" name="memberAddress"
                                        placeholder="请输入联系地址">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="memberRemark" class="col-sm-2 control-label">备注</label>
+                            <label for="member_remark" class="col-sm-2 control-label">备注</label>
 
                             <div class="col-sm-10">
-                            <textarea class="form-control" id="memberRemark" name="memberRemark" rows="3"
+                            <textarea class="form-control" id="member_remark" name="memberRemark" rows="3"
                                       placeholder="备注"></textarea>
                             </div>
                         </div>
@@ -149,6 +175,22 @@
                 </div>
             </div>
         </form>
+    </div>
+
+    <div class="modal fade" id="tips_modal" tabindex="-1" role="dialog" aria-labelledby="tipsModalLabel">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="tipsModalLabel">提示框</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-success" role="alert">会员信息录入成功!</div>
+                </div>
+            </div>
+        </div>
     </div>
 </layout:override>
 
