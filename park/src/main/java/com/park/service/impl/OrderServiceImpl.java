@@ -15,6 +15,9 @@ import com.park.common.po.MemberCard;
 import com.park.common.po.MemberReceivable;
 import com.park.common.po.OrderDetail;
 import com.park.common.po.OrderInfo;
+import com.park.common.po.SiteReserveBasic;
+import com.park.common.po.SiteReserveDate;
+import com.park.common.po.SiteReserveTime;
 import com.park.common.util.DateUtil;
 import com.park.common.util.SQLUtil;
 import com.park.common.util.StrUtil;
@@ -22,6 +25,7 @@ import com.park.dao.IBaseDao;
 import com.park.service.IMemberReceivableService;
 import com.park.service.IMemberService;
 import com.park.service.IOrderService;
+import com.park.service.ISiteService;
 
 @Service
 public class OrderServiceImpl extends BaseService implements IOrderService {
@@ -34,6 +38,9 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 	
 	@Autowired
 	private IMemberReceivableService memberReceivableService;
+	
+	@Autowired
+	private ISiteService siteService;
 	
 	@Override
 	public Integer saveOrderInfo(OrderInfo orderInfo, List<OrderDetail> orderDetails){
@@ -67,11 +74,13 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 		if(IDBConstant.LOGIC_STATUS_YES.equals(orderInfoDB.getPayStatus())) throw new MessageException("该订单已支付过了，请不要重复支付");
 		Double orderSumPrice = orderInfoDB.getOrderSumPrice();
 		//orderInfoDB.setPaySumPrice((orderInfoDB.getPaySumPrice()!=null?orderInfoDB.getPaySumPrice():0) + orderInfo.getPaySumPrice()); //【老需求】加上之前已经支付过多少钱
-		orderInfoDB.setPaySumPrice(orderInfo.getPaySumPrice()); //新需求：剩余金额在应收款中收取
+		Double paySumPrice = orderInfo.getPaySumPrice();
+		orderInfoDB.setPaySumPrice(paySumPrice); //新需求：剩余金额在应收款中收取
 		//会员付款--->应收款（散客无应收款）
 		Integer memberId = orderInfoDB.getMemberId();
 		if(memberId != null && memberId > 0){
-			//扣除订单orderSumPrice金额：先扣除用户支付输入的金额
+			//之前的逻辑
+			/*//扣除订单orderSumPrice金额：先扣除用户支付输入的金额
 			//不够：再扣会员卡金额
 			//还不够，则生成应收款，保存到应收款表，会员卡金额减少
 			Double remainingPrice = orderSumPrice - orderInfoDB.getPaySumPrice();
@@ -89,7 +98,19 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 					}
 				}
 			}
-			orderInfoDB.setPaySumPrice(payPrice);
+			orderInfoDB.setPaySumPrice(payPrice);*/
+			//新逻辑
+			List<MemberCard> memberCards = memberService.getMemberCards(memberId);
+			if(memberCards.size() > 0){
+				MemberCard memberCard = memberCards.get(0);
+				double remainingCardPrice = memberCard.getCardBalance() - paySumPrice;
+				memberCard.setCardBalance(remainingCardPrice > 0 ? remainingCardPrice : 0); //最低扣到0
+				baseDao.save(memberCard, memberCard.getCardId());
+				if(orderInfo.getPayCount() < orderInfoDB.getSumCount()){ //场次不是最大，生成应收款
+					memberReceivableService.saveMemberReceivable(new MemberReceivable(memberId, orderId, null, null, orderInfo.getSalesId()), 0, 0, StrUtil.EMPTY);
+				}
+			}else throw new MessageException("该会员未绑定会员卡");
+			orderInfoDB.setPaySumPrice(paySumPrice);
 		}
 		orderInfoDB.setPayStatus(IDBConstant.LOGIC_STATUS_YES); //已支付
 		/*if(orderInfoDB.getPaySumPrice() >= orderSumPrice){
@@ -159,9 +180,23 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 	
 	@Override
 	public void deleteOrder(OrderInputView orderInputView){
-		OrderInfo orderInfo = getOrder(orderInputView.getOrderId(), orderInputView.getSalesId(), orderInputView.getOperatorId());
+		Integer orderId = orderInputView.getOrderId();
+		OrderInfo orderInfo = getOrder(orderId, orderInputView.getSalesId(), orderInputView.getOperatorId());
 		baseDao.delete(orderInfo);
 		baseDao.delete("order_detail", "orderId", orderInfo.getOrderId());
+		//删除订单相关的场地
+		if(IDBConstant.ORDER_SERVICE_TYPE_SITE.equals(orderInfo.getOrderServiceType()) || IDBConstant.ORDER_SERVICE_TYPE_BLOCK_SITE.equals(orderInfo.getOrderServiceType())){
+			SiteReserveBasic siteReserveBasic = siteService.getSiteReserveBasicByOrderId(orderId);
+			List<SiteReserveDate> siteReserveDates = siteService.getSiteReserveDate(siteReserveBasic.getSiteReserveId());
+			for(SiteReserveDate siteReserveDate : siteReserveDates){
+				List<SiteReserveTime> siteReserveTimes = siteService.getSiteReserveTimeByDateId(siteReserveDate.getReserveDateId());
+				for(SiteReserveTime siteReserveTime : siteReserveTimes){
+					baseDao.delete(siteReserveTime);
+				}
+				baseDao.delete(siteReserveDate);
+			}
+			baseDao.delete(siteReserveBasic);
+		}
 	}
 	
 	@Override

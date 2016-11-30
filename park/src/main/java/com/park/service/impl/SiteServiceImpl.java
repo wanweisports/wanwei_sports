@@ -490,6 +490,11 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	}
 	
 	@Override
+	public List<SiteReserveTime> getSiteReserveTimeByDateId(int reserveDateId){
+		return baseDao.queryByHql("FROM SiteReserveTime WHERE reserveDateId = ?", reserveDateId);
+	}
+	
+	@Override
 	public List<SiteReserveDate> getSiteReserveDateTime(List<SiteReserveDate> siteReserveDateList){
 		for(SiteReserveDate siteReserveDate : siteReserveDateList){
 			siteReserveDate.setSiteReserveTimeList((List)baseDao.queryByHql("FROM SiteReserveTime WHERE reserveDateId = ?", siteReserveDate.getReserveDateId()));
