@@ -37,13 +37,13 @@
 }
 ================================================================================================================
 
-场地使用率统计：【上面的统计暂定】
+场地使用率统计：
 
 请求：/data/getVenuePercentage 【带分页】
 
 返回：
 {
-    "pageBean": {
+    "pageBean": { 【分页列表】
         "list": [
             {
                 "sportName": "篮球场",
@@ -58,7 +58,7 @@
         "currentPage": "1",
         "pageSize": "10"
     },
-    "sportCountList": [
+    "sportCountList": [ 【总的统计】
         {
             "percentage": 0.53,
             "sportName": "全部"
