@@ -42,8 +42,8 @@
                     </div>
                 </form>
                 <div class="col-sm-4 text-right">
-                    <button type="button" class="btn btn-primary ticket-print">
-                        <span class="glyphicon glyphicon-ok"></span> 领取发票
+                    <button type="button" class="btn btn-warning ticket-print">
+                        <span class="glyphicon glyphicon-tags"></span> 领取发票
                     </button>
                 </div>
             </div>
@@ -67,7 +67,6 @@
                         </tr>
                         </thead>
                         <tbody>
-
                         <c:forEach var="invoice" items="${list}">
                             <tr>
                                 <td>
@@ -192,7 +191,7 @@
                     <h5 class="modal-title" id="loanModalLabel">提示框</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-info" role="alert">发票领取成功!</div>
+                    <div class="alert alert-success" role="alert">发票领取成功!</div>
                 </div>
             </div>
         </div>

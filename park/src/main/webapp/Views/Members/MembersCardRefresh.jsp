@@ -72,7 +72,7 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">当前余额</label>
+                            <label class="col-sm-4 control-label">当前余额(元)</label>
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" value="<c:if test='${cardBalance!=null}'>${cardBalance}元</c:if>" disabled>
@@ -162,8 +162,8 @@
                                       placeholder="请输入备注" autocomplete="off"></textarea>
                             </div>
                         </div>
-                        <div class="alert alert-info" role="alert">
-                            合计金额(补办金额 + 赠送金额): <span class="refresh-total-money">0</span>元
+                        <div class="alert alert-info text-center" role="alert">
+                            合计金额：<span class="refresh-total-money ">0</span>元（ = 补办金额 + 赠送金额）
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
@@ -189,7 +189,7 @@
                     <h5 class="modal-title" id="refreshModalLabel">提示框</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-info" role="alert">会员卡补办成功!</div>
+                    <div class="alert alert-success" role="alert">会员卡补办成功!</div>
                 </div>
             </div>
         </div>

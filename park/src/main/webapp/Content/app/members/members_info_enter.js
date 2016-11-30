@@ -7,7 +7,7 @@
             $.datetimepicker.setLocale('zh');
 
             // 表单时间控件设置
-            $('#memberBirthday').datetimepicker({
+            $('#member_birthday').datetimepicker({
                 timepicker: false,
                 lang: "zh",
                 format:'Y-m-d',
@@ -18,7 +18,7 @@
             $(".member-birthday-select").on("click", function (e) {
                 e.preventDefault();
 
-                $('#memberBirthday').datetimepicker("show");
+                $('#member_birthday').datetimepicker("show");
             });
 
             this.initEvents();
@@ -44,7 +44,11 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        location.assign(content.opts.ToURL + '?memberId=' + data.memberId);
+                        $("#tips_modal").modal({backdrop: false, show: true});
+                        setTimeout(function () {
+                            $("#tips_modal").modal("hide");
+                            location.assign(content.opts.ToURL + '?memberId=' + data.memberId);
+                        }, 3000);
                     } else {
                         alert(res.message || "会员信息保存失败, 请稍后重试");
                     }

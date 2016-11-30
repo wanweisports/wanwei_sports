@@ -99,6 +99,18 @@
                             </label>
 
                             <div class="col-sm-8">
+                                <!--<div class="input-group">
+                                    <input type="text" class="form-control" id="member_idcard" name="memberIdcard"
+                                           placeholder="请输入18位身份证号" autocomplete="off"
+                                           data-val="true" data-val-required="身份证号不能为空"
+                                           data-val-regex-pattern="^\d{17}(\d|X|x)$"
+                                           data-val-regex="身份证号格式错误">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-warning">
+                                            <i class="glyphicon glyphicon-transfer"></i> 读取
+                                        </button>
+                                    </span>
+                                </div>-->
                                 <input type="text" class="form-control" id="member_idcard" name="memberIdcard"
                                        placeholder="请输入18位身份证号" autocomplete="off"
                                        data-val="true" data-val-required="身份证号不能为空"
@@ -169,13 +181,15 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label">余额(元)</label>
 
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" value="${cardBalance}元" disabled>
-                            </div>
-                            <div class="col-sm-2">
-                                <a href="/member/getBalances?cardId=${cardId}&memberId=${memberId}" class="btn btn-primary" title="收支明细">
-                                    <span class="glyphicon glyphicon-th-list"></span>
-                                </a>
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" value="${cardBalance}元" disabled>
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-primary" href="/member/getBalances?cardId=${cardId}&memberId=${memberId}">
+                                            <i class="glyphicon glyphicon-th-list"></i> 明细
+                                        </a>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -320,8 +334,8 @@
                                               placeholder="请输入备注" autocomplete="off"></textarea>
                                     </div>
                                 </div>
-                                <div class="alert alert-info" role="alert">
-                                    合计金额(补办金额 + 赠送金额): <span class="refresh-total-money">0</span>元
+                                <div class="alert alert-info text-center" role="alert">
+                                    合计金额：<span class="refresh-total-money text-danger">0</span>元（ = 补办金额 + 赠送金额）
                                 </div>
                             </div>
                         </div>
@@ -403,8 +417,8 @@
                                               placeholder="请输入备注" autocomplete="off"></textarea>
                                     </div>
                                 </div>
-                                <div class="alert alert-info" role="alert">
-                                    合计金额(充值金额 + 赠送金额): <span class="recharge-total-money">0</span>元
+                                <div class="alert alert-info text-center" role="alert">
+                                    合计金额：<span class="recharge-total-money text-danger">0</span>元（ = 充值金额 + 赠送金额）
                                 </div>
                             </div>
                         </div>
@@ -542,7 +556,7 @@
                     <h5 class="modal-title" id="gengxinModalLabel">提示框</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-info" role="alert">会员信息更新成功!</div>
+                    <div class="alert alert-success" role="alert">会员信息更新成功!</div>
                 </div>
             </div>
         </div>

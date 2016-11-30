@@ -31,7 +31,6 @@
             <div class="panel panel-default">
                 <div class="panel-heading">学生详情</div>
                 <div class="panel-body">
-                    <div class="alert alert-info text-center" role="alert">办卡押金: ${cardDeposit}元</div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="card_id" class="col-sm-4 control-label">

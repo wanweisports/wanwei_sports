@@ -37,12 +37,22 @@
                     <input type="hidden" name="memberType" value="1">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="cardNo" class="col-sm-4 control-label">
+                            <label for="member_card_no" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 教师卡号
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="cardNo" name="tempCardNo"
+                                <!--<div class="input-group">
+                                    <input type="text" class="form-control" id="member_card_no" name="tempCardNo"
+                                           placeholder="教师卡号" value="${cardNo}"
+                                           data-val="true" data-val-required="教师卡号不能为空">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-warning">
+                                            <i class="glyphicon glyphicon-transfer"></i> 读取
+                                        </button>
+                                    </span>
+                                </div>-->
+                                <input type="text" class="form-control" id="member_card_no" name="tempCardNo"
                                        placeholder="教师卡号" value="${cardNo}"
                                        data-val="true" data-val-required="教师卡号不能为空">
                                 <div data-valmsg-for="tempCardNo" data-valmsg-replace="true"></div>
@@ -63,14 +73,18 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="memberBirthday" class="col-sm-4 control-label">教师生日</label>
+                            <label for="member_birthday" class="col-sm-4 control-label">教师生日</label>
 
                             <div class="col-sm-8">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="memberBirthday" name="memberBirthday"
-                                           placeholder="教师生日">
-                                    <span class="input-group-addon member-birthday-select">
-                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    <input type="text" class="form-control" id="member_birthday" name="memberBirthday"
+                                           placeholder="会员生日" autocomplete="off"
+                                           data-val-regex-pattern="^\d{4}-\d{2}-\d{2}$"
+                                           data-val-regex="会员生日格式错误">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary member-birthday-select">
+                                            <i class="glyphicon glyphicon-calendar"></i> 日历
+                                        </button>
                                     </span>
                                 </div>
                             </div>
@@ -92,12 +106,24 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="memberIdcard" class="col-sm-4 control-label">
+                            <label for="member_idcard" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 身份证号
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="memberIdcard" name="memberIdcard"
+                                <!--<div class="input-group">
+                                    <input type="text" class="form-control" id="member_idcard" name="memberIdcard"
+                                           placeholder="请输入18位身份证号" autocomplete="off"
+                                           data-val="true" data-val-required="身份证号不能为空"
+                                           data-val-regex-pattern="^\d{17}(\d|X|x)$"
+                                           data-val-regex="身份证号格式错误">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-warning">
+                                            <i class="glyphicon glyphicon-transfer"></i> 读取
+                                        </button>
+                                    </span>
+                                </div>-->
+                                <input type="text" class="form-control" id="member_idcard" name="memberIdcard"
                                        placeholder="请输入18位身份证号" autocomplete="off"
                                        data-val="true" data-val-required="身份证号不能为空"
                                        data-val-regex-pattern="^\d{17}(\d|X|x)$"
@@ -170,7 +196,7 @@
                     <h5 class="modal-title" id="tips_success_modal_label">提示框</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-success" role="alert">教师办卡成功!</div>
+                    <div class="alert alert-success" role="alert">教师卡办理成功!</div>
                 </div>
             </div>
         </div>

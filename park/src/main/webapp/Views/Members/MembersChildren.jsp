@@ -27,7 +27,7 @@
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
             <div class="panel-heading">主会员信息</div>
-            <div class="panel-body">
+            <div class="panel-body form-horizontal">
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="card_no" class="col-sm-4 control-label">会员卡号</label>
@@ -99,7 +99,6 @@
                                        data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,9}$"
                                        data-val-regex="会员姓名长度只能2~12个字符">
                                 <div data-valmsg-for="memberName" data-valmsg-replace="true"></div>
-                                <div data-valmsg-for="memberMobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">

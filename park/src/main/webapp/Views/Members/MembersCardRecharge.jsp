@@ -155,8 +155,8 @@
                                       placeholder="请输入备注" autocomplete="off"></textarea>
                             </div>
                         </div>
-                        <div class="alert alert-info" role="alert">
-                            合计金额(充值金额 + 赠送金额): <span class="recharge-total-money">0</span>元
+                        <div class="alert alert-info text-center" role="alert">
+                            合计金额：<span class="recharge-total-money text-danger">0</span>元（ = 充值金额 + 赠送金额）
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
@@ -182,7 +182,7 @@
                     <h5 class="modal-title" id="rechargeModalLabel">提示框</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-info" role="alert">会员卡充值成功!</div>
+                    <div class="alert alert-success" role="alert">会员卡充值成功!</div>
                 </div>
             </div>
         </div>
