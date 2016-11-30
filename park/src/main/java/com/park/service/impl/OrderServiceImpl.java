@@ -15,6 +15,9 @@ import com.park.common.po.MemberCard;
 import com.park.common.po.MemberReceivable;
 import com.park.common.po.OrderDetail;
 import com.park.common.po.OrderInfo;
+import com.park.common.po.SiteReserveBasic;
+import com.park.common.po.SiteReserveDate;
+import com.park.common.po.SiteReserveTime;
 import com.park.common.util.DateUtil;
 import com.park.common.util.SQLUtil;
 import com.park.common.util.StrUtil;
@@ -22,6 +25,7 @@ import com.park.dao.IBaseDao;
 import com.park.service.IMemberReceivableService;
 import com.park.service.IMemberService;
 import com.park.service.IOrderService;
+import com.park.service.ISiteService;
 
 @Service
 public class OrderServiceImpl extends BaseService implements IOrderService {
@@ -34,6 +38,9 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 	
 	@Autowired
 	private IMemberReceivableService memberReceivableService;
+	
+	@Autowired
+	private ISiteService siteService;
 	
 	@Override
 	public Integer saveOrderInfo(OrderInfo orderInfo, List<OrderDetail> orderDetails){
@@ -173,9 +180,23 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 	
 	@Override
 	public void deleteOrder(OrderInputView orderInputView){
-		OrderInfo orderInfo = getOrder(orderInputView.getOrderId(), orderInputView.getSalesId(), orderInputView.getOperatorId());
+		Integer orderId = orderInputView.getOrderId();
+		OrderInfo orderInfo = getOrder(orderId, orderInputView.getSalesId(), orderInputView.getOperatorId());
 		baseDao.delete(orderInfo);
 		baseDao.delete("order_detail", "orderId", orderInfo.getOrderId());
+		//删除订单相关的场地
+		if(IDBConstant.ORDER_SERVICE_TYPE_SITE.equals(orderInfo.getOrderServiceType()) || IDBConstant.ORDER_SERVICE_TYPE_BLOCK_SITE.equals(orderInfo.getOrderServiceType())){
+			SiteReserveBasic siteReserveBasic = siteService.getSiteReserveBasicByOrderId(orderId);
+			List<SiteReserveDate> siteReserveDates = siteService.getSiteReserveDate(siteReserveBasic.getSiteReserveId());
+			for(SiteReserveDate siteReserveDate : siteReserveDates){
+				List<SiteReserveTime> siteReserveTimes = siteService.getSiteReserveTimeByDateId(siteReserveDate.getReserveDateId());
+				for(SiteReserveTime siteReserveTime : siteReserveTimes){
+					baseDao.delete(siteReserveTime);
+				}
+				baseDao.delete(siteReserveDate);
+			}
+			baseDao.delete(siteReserveBasic);
+		}
 	}
 	
 	@Override

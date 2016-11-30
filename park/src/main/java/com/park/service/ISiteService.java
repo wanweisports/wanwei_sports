@@ -62,6 +62,8 @@ public interface ISiteService {
 	
 	public SiteReserveTime getSiteReserveTime(int reserveTimeId);
 	
+	public List<SiteReserveTime> getSiteReserveTimeByDateId(int reserveDateId);
+	
 	public Map<String, Object> getSiteSportTime(int sportId);
 	
 }
