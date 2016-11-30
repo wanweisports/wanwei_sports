@@ -38,8 +38,6 @@
     "opType": 2,
     "reserveType": 1,
     "reserveModel": 2,
-    "payCount": 30, //【2016-11-21新加，此字段为手动输入场次数】useCount改为payCount
-    "orderSumPrice": 2000,  //【2016-11-21新加，此字段为手动输入价格】
     "siteReserveDateList": [
         {
             "reserveStartDate": "2016-10-01",
@@ -99,7 +97,7 @@
     "data": {
         "originalPrice": 2250,  //原始价格
         "presentPrice": 2250,    //会员价格
-        "sumNums":  10 【2016-11-22新加，总场次数】
+        "sumNums":  10 【2016-11-22新增，总场次数】
     }
 }
 
@@ -108,6 +106,7 @@
 请求：site/confirmOrder?orderId=47&paySumPrice=2250&subAmount=100&additionalPrice=100&payType=1&checkNo=11111&orderRemark=老司机
                         订单id      支付了的总价     优惠金额      附加金额            支付方式    支票号       订单描述
                
+【2016-11-30新增字段：payCount支付场次数 orderSumPrice订单总价】
 
 返回：
 {

@@ -276,7 +276,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		orderInfo.setOrderServiceType(IDBConstant.LOGIC_STATUS_YES.equals(siteReserveBasic.getReserveModel()) ? IDBConstant.ORDER_SERVICE_TYPE_SITE : IDBConstant.ORDER_SERVICE_TYPE_BLOCK_SITE);
 		orderInfo.setOrderStatus(IDBConstant.LOGIC_STATUS_NO); //未完成
 		orderInfo.setPayStatus(IDBConstant.LOGIC_STATUS_NO); //未支付
-		orderInfo.setPayCount(siteReserveBasic.getPayCount()); //支付次数（缴纳的次数）
+		//orderInfo.setPayCount(siteReserveBasic.getPayCount()); //支付次数（缴纳的次数）
 		orderInfo.setUseCount(0);
 	
 		orderInfo.setSalesId(siteReserveBasic.getSalesId());
@@ -287,7 +287,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		orderInfo.setOrderDiscount(StrUtil.objToInt(priceMap.get("memberDiscount")));
 		double memberDiscount = StrUtil.objToDouble(priceMap.get("memberDiscount"))/100;*/
 		//新需求
-		orderInfo.setOrderSumPrice(siteReserveBasic.getOrderSumPrice());
+		//orderInfo.setOrderSumPrice(siteReserveBasic.getOrderSumPrice());
 		
 		List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
 		
@@ -329,7 +329,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 				orderDetail.setItemId(siteReserveTime.getReserveTimeId());
 				orderDetail.setItemName("【"+siteSportInfo.getSportName()+"】"+IPlatformConstant.ORDER_SITE_NAME);
 				//orderDetail.setItemPrice(getHourPrice(siteReserveTime)*memberDiscount); //老需求(计算每个具体多少钱)
-				orderDetail.setItemPrice(siteReserveBasic.getOrderSumPrice()); //新需求(手动输入多少钱)
+				//orderDetail.setItemPrice(siteReserveBasic.getOrderSumPrice()); //新需求(手动输入多少钱)
 				orderDetail.setItemStartTime(siteReserveDate.getReserveStartDate()+" "+siteReserveTime.getSiteStartTime());
 				orderDetail.setItemEndTime(siteReserveDate.getReserveEndDate()+" "+siteReserveTime.getSiteEndTime());
 				orderDetail.setOrderDetailStatus(IDBConstant.LOGIC_STATUS_NO); //子订单：未完成
@@ -339,7 +339,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 			}
 		}
 		orderInfo.setSumCount(weekNums * hourNums); //总次数（通过计算）
-		if(orderInfo.getSumCount() < orderInfo.getPayCount()) throw new MessageException("输入的场次数超过，最大场次数为："+orderInfo.getSumCount());
+		//if(orderInfo.getSumCount() < orderInfo.getPayCount()) throw new MessageException("输入的场次数超过，最大场次数为："+orderInfo.getSumCount());
 		Integer orderId = orderService.saveOrderInfo(orderInfo, orderDetails);
 		siteReserveBasic.setOrderId(orderId);
 		baseDao.save(siteReserveBasic, siteReserveBasic.getSiteReserveId());
@@ -459,14 +459,20 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	
 	@Override
 	public Integer updateConfirmOrder(OrderInfo orderInfo) throws ParseException{
-		if(orderInfo.getOrderId() == null) throw new MessageException("订单id为空");
+		Integer orderId = orderInfo.getOrderId();
+		if(orderId == null) throw new MessageException("订单id为空");
 		//找到打折价，进行计算覆盖订单应付总价和打折价字段
-		SiteReserveBasic siteReserveBasic = this.getSiteReserveBasicAllByOrderId(orderInfo.getOrderId());
+		SiteReserveBasic siteReserveBasic = this.getSiteReserveBasicAllByOrderId(orderId);
 		//计算打折价格【点击去支付，已经生成了订单总价】
 		/*Map<String, Object> priceMap = getPrice(siteReserveBasic.getSiteReserveDateList(), siteReserveBasic.getMemberId(), IDBConstant.LOGIC_STATUS_YES);
 		orderInfo.setOrderSumPrice(StrUtil.objToDouble(priceMap.get("presentPrice")));*/
+		OrderInfo orderInfoDB = orderService.getOrderInfo(orderId);
+		if(orderInfoDB.getSumCount() < orderInfo.getPayCount()) throw new MessageException("输入的场次数超过，最大场次数为："+orderInfoDB.getSumCount());
+		orderInfoDB.setOrderSumPrice(orderInfo.getOrderSumPrice());
+		orderInfoDB.setPayCount(orderInfo.getPayCount());
+		baseDao.save(orderInfoDB, orderId);
 		
-		Integer orderId = orderService.updateConfirmOrder(orderInfo);
+		orderId = orderService.updateConfirmOrder(orderInfo);
 		 //同步更新到序列图表的状态
 		siteReserveBasic.setSiteReserveStatus(IDBConstant.LOGIC_STATUS_YES);
 		baseDao.save(siteReserveBasic, siteReserveBasic.getSiteReserveId());

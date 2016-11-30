@@ -31,12 +31,24 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 	
 	@Override
 	public PageBean getStudents(StudentInputView studentInputView){
+		
+		String cardNo = studentInputView.getCardNo();
+		String studentName = studentInputView.getStudentName();
+		
 		StringBuilder headSql = new StringBuilder("SELECT mc.cardId, mc.cardNo, mc.cardDeposit, us.studentId, us.studentName, us.studentGrade, us.studentClass, CONCAT(us.studentGrade, us.studentClass) gradeClass, us.siteCount, mc.cardDeadline, us.studentStatus, uo.operatorName, us.createTime");
 		StringBuilder bodySql = new StringBuilder(" FROM user_student us");
 		StringBuilder whereSql = new StringBuilder(" WHERE us.studentStatus = ").append(IDBConstant.LOGIC_STATUS_YES);
 		
 		bodySql.append(" INNER JOIN user_operator uo ON(us.salesId = uo.id)");
 		bodySql.append(" LEFT JOIN member_card mc ON(us.cardId = mc.cardId)");
+		
+		if(StrUtil.isNotBlank(cardNo)){
+			whereSql.append(" AND mc.cardNo = :cardNo");
+		}
+		if(StrUtil.isNotBlank(studentName)){
+			whereSql.append(" AND us.studentName LIKE :studentName");
+			studentInputView.setStudentName(studentName + "%");
+		}
 		
 		return super.getPageBean(headSql, bodySql, whereSql, studentInputView);
 	}
@@ -95,7 +107,8 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 		studentDB.setStudentName(student.getStudentName());
 		studentDB.setStudentRemark(student.getStudentRemark());
 		studentDB.setStudentSex(student.getStudentSex());
-		studentDB.setStudentStatus(student.getStudentStatus());
+		studentDB.setStudentStatus(IDBConstant.LOGIC_STATUS_YES);
+		studentDB.setStudentMobile(student.getStudentMobile());
 		studentDB.setUpdateTime(nowDate);
 		baseDao.save(studentDB, studentId);
 		return studentId;

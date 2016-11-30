@@ -30,11 +30,11 @@
             <div class="panel-body">
                 <form id="student_filter_form" class="form-inline" method="post" novalidate onsubmit="return false;">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="student_card" name="cardNo"
+                        <input type="text" class="form-control" id="student_card" name="cardNo" value="${cardNo}"
                                placeholder="请输入学生卡号">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="student_name" name="studentName"
+                        <input type="text" class="form-control" id="student_name" name="studentName" value="${studentName}"
                                placeholder="请输入学生姓名">
                     </div>
                     <div class="form-group">

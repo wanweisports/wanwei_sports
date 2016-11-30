@@ -45,13 +45,14 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 		
 		if(orderDetails != null && orderDetails.size() > 0){
 			for(OrderDetail orderDetail : orderDetails){
-				sumPrice += orderDetail.getItemPrice();
+				if(orderDetail.getItemPrice() != null){
+					sumPrice += orderDetail.getItemPrice();
+				}
 			}
 			orderInfo.setOrderSumPrice(sumPrice);
 			for(OrderDetail orderDetail : orderDetails){
 				orderDetail.setOrderId(orderInfo.getOrderId());
 				baseDao.save(orderDetail, null);
-				sumPrice += orderDetail.getItemPrice();
 			}
 			baseDao.save(orderInfo, orderInfo.getOrderId());
 		}
@@ -83,7 +84,7 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 					payPrice += remainingCardPrice > 0 ? remainingPrice : memberCard.getCardBalance(); //支付够了就是减去的钱，不够就是卡的余额
 					memberCard.setCardBalance(remainingCardPrice > 0 ? remainingCardPrice : 0); //最低扣到0
 					baseDao.save(memberCard, memberCard.getCardId());
-					if(remainingCardPrice < 0){ //钱不够扣，生成应收款
+					if(remainingCardPrice < 0){ //钱不够扣，生成应收款[商品生成应收款吗]
 						memberReceivableService.saveMemberReceivable(new MemberReceivable(memberId, orderId, null, null, orderInfo.getSalesId()), 0, 0, StrUtil.EMPTY);
 					}
 				}

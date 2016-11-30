@@ -66,7 +66,6 @@ public class StudentsController extends BaseController {
     	try{
     		model.addAllAttributes(JsonUtils.fromJsonDF(studentInputView));
     		PageBean pageBean = studentService.getStudents(studentInputView);
-    		System.out.println(JsonUtils.toJsonDF(pageBean));
     		super.setPageInfo(model, pageBean);
     	}catch (Exception e) {
 			e.printStackTrace();
