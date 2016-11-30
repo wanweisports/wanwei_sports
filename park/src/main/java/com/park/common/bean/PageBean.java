@@ -154,6 +154,20 @@ public class PageBean {
 		final int curPage = (page == 0 ? 1 : page);
 		return curPage;
 	}
+	
+	public PageBean pagedList() {
+        int fromIndex = (currentPage-1) * pageSize;
+        if (fromIndex >= list.size()) {
+            return this;
+        }
+        
+        int toIndex = currentPage * pageSize;
+        if (toIndex >= list.size()) {
+            toIndex = list.size();
+        }
+        list = list.subList(fromIndex, toIndex);
+        return this;
+    }
 
 	public Map<String, Object> getParamsMap() {
 		return paramsMap;

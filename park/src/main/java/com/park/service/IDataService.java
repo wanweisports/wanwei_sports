@@ -11,4 +11,6 @@ public interface IDataService {
 	
 	public Map<String, Object> countMembersRegister(List<Map<String, Object>> dataList);
 	
+	public Map<String, Object> getSitePercentage(DataInputView dataInputView);
+	
 }

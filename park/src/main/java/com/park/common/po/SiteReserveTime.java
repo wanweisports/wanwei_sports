@@ -21,6 +21,7 @@ public class SiteReserveTime implements java.io.Serializable {
 	private Integer siteId;
 	private String siteStartTime;
 	private String siteEndTime;
+	private String isUse;
 
 	// Constructors
 
@@ -30,11 +31,12 @@ public class SiteReserveTime implements java.io.Serializable {
 
 	/** full constructor */
 	public SiteReserveTime(Integer reserveDateId, Integer siteId,
-			String siteStartTime, String siteEndTime) {
+			String siteStartTime, String siteEndTime, String isUse) {
 		this.reserveDateId = reserveDateId;
 		this.siteId = siteId;
 		this.siteStartTime = siteStartTime;
 		this.siteEndTime = siteEndTime;
+		this.isUse = isUse;
 	}
 
 	// Property accessors
@@ -83,6 +85,15 @@ public class SiteReserveTime implements java.io.Serializable {
 
 	public void setSiteEndTime(String siteEndTime) {
 		this.siteEndTime = siteEndTime;
+	}
+
+	@Column(name = "isUse", length = 1)
+	public String getIsUse() {
+		return this.isUse;
+	}
+
+	public void setIsUse(String isUse) {
+		this.isUse = isUse;
 	}
 
 }

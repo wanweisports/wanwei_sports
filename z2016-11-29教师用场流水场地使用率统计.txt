@@ -1,0 +1,71 @@
+教师用场流水统计：
+
+请求：/teachers/data 【带分页】
+
+返回：
+{
+    "itemCounts": [ 【总的统计】
+        {
+            "typeTime": "9",     //时间数
+            "typeCount": "1",    //场次数
+            "sportName": "全部"  //统计名称
+        },
+        {
+            "typeTime": "9",
+            "typeCount": "1",
+            "sportName": "篮球场"
+        }
+    ],
+    "pageBean": { 【分页列表】
+        "list": [
+            {
+                "opTime": "2016-11-24 10:01:19",    //操作时间
+                "duration": "09",                   //场次时间
+                "operatorName": "管理员",           //操作人
+                "signTime": "2016-11-24 10:01:19",  //签到时间
+                "sportName": "篮球场",              //场地类型名称
+                "memberMobile": "13111111111",      //教师手机
+                "memberId": "1",                    //教师会员id
+                "memberName": "陈老师"              //教师名称
+            }
+        ],
+        "count": "1",
+        "lastPage": "1",
+        "currentPage": "1",
+        "pageSize": "10"
+    }
+}
+================================================================================================================
+
+场地使用率统计：【上面的统计暂定】
+
+请求：/data/getVenuePercentage 【带分页】
+
+返回：
+{
+    "pageBean": {
+        "list": [
+            {
+                "sportName": "篮球场",
+                "useCount": 10,
+                "percentage": 0.53,   //场地使用率
+                "sumCount": 19,
+                "siteName": "万维场地"
+            }
+        ],
+        "count": "1",
+        "lastPage": "1",
+        "currentPage": "1",
+        "pageSize": "10"
+    },
+    "sportCountList": [
+        {
+            "percentage": 0.53,
+            "sportName": "全部"
+        },
+        {
+            "sportName": "篮球场",
+            "percentage": 0.53
+        }
+    ]
+}
