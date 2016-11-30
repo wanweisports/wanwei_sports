@@ -54,6 +54,9 @@
         <div class="alert alert-info clearfix">
             <ul class="nav nav-pills pull-left">
                 <li style="margin-right: 15px;">场地类型总计:</li>
+                <c:forEach var="item" items="${itemCounts}">
+                    <li style="margin-right: 15px;">${item.sportName} <span class="badge">${item.typeCount}次</span><span class="badge">${item.typeTime}小时</span></li>
+                </c:forEach>
                 <li style="margin-right: 15px;">全部 <span class="badge">42次</span><span class="badge">46小时</span></li>
                 <li style="margin-right: 15px;">羽毛球 <span class="badge">21次</span><span class="badge">22小时</span></li>
                 <li style="margin-right: 15px;">篮球 <span class="badge">21次</span><span class="badge">24小时</span></li>
@@ -84,6 +87,18 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <c:forEach var="data" items="${pageBean.list}" varStatus="loop">
+                            <tr>
+                                <td>${loop.index}</td>
+                                <td>${data.memberName}</td>
+                                <td>${data.memberMobile}</td>
+                                <td>${data.signTime}</td>
+                                <td>${data.duration}小时</td>
+                                <td>${data.sportName}</td>
+                                <td>${data.operatorName}</td>
+                                <td>${data.opTime}</td>
+                            </tr>
+                        </c:forEach>
                         <tr>
                             <td>1</td>
                             <td>李洪旭</td>
@@ -186,13 +201,13 @@
                         </tr>
                         </tbody>
                     </table>
-                    <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >
+                    <nav class="pull-right" <c:if test="${pageBean.count <= pageBean.pageSize}">style="display: none;"</c:if> >
                         <p class="pull-left" style="margin: 12px 14px;">
-                            <span>${pageSize}条/页</span>
-                            <span>总${count}条</span>
+                            <span>${pageBean.pageSize}条/页</span>
+                            <span>总${pageBean.count}条</span>
                         </p>
                         <ul class="pagination pull-right">
-                            <c:if test="${currentPage == 1}">
+                            <c:if test="${pageBean.currentPage == 1}">
                                 <li class="disabled">
                                     <a href="javascript:;" data-index="1">
                                         <span>首页</span>
@@ -204,27 +219,27 @@
                                     </a>
                                 </li>
                             </c:if>
-                            <c:if test="${currentPage != 1}">
+                            <c:if test="${pageBean.currentPage != 1}">
                                 <li>
                                     <a class="page-first" href="javascript:;" data-index="1">
                                         <span>首页</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="page-prev" href="javascript:;" data-index="${currentPage - 1}">
+                                    <a class="page-prev" href="javascript:;" data-index="${pageBean.currentPage - 1}">
                                         <span>上一页</span>
                                     </a>
                                 </li>
                             </c:if>
-                            <c:forEach var="i" begin="1" end="${lastPage}">
-                                <c:if test="${i == currentPage}">
+                            <c:forEach var="i" begin="1" end="${pageBean.lastPage}">
+                                <c:if test="${i == pageBean.currentPage}">
                                     <li class="active"><a href="javascript:;" data-index="${i}">${i}</a></li>
                                 </c:if>
-                                <c:if test="${i != currentPage}">
+                                <c:if test="${i != pageBean.currentPage}">
                                     <li><a class="page-index" href="javascript:;" data-index="${i}">${i}</a></li>
                                 </c:if>
                             </c:forEach>
-                            <c:if test="${currentPage == lastPage}">
+                            <c:if test="${pageBean.currentPage == pageBean.lastPage}">
                                 <li class="disabled">
                                     <a href="javascript:;" data-index="1">
                                         <span>下一页</span>
@@ -236,14 +251,14 @@
                                     </a>
                                 </li>
                             </c:if>
-                            <c:if test="${currentPage != lastPage}">
+                            <c:if test="${pageBean.currentPage != pageBean.lastPage}">
                                 <li>
-                                    <a class="page-next" href="javascript:;" data-index="${currentPage + 1}">
+                                    <a class="page-next" href="javascript:;" data-index="${pageBean.currentPage + 1}">
                                         <span>下一页</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="page-last" href="javascript:;" data-index="${lastPage}">
+                                    <a class="page-last" href="javascript:;" data-index="${pageBean.lastPage}">
                                         <span>末页</span>
                                     </a>
                                 </li>

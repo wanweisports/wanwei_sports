@@ -221,9 +221,9 @@
                                         <p class="sc-submit-tips"></p>
                                         <div class="form-group">
                                             <div class="col-sm-12">
-                                                <button class="btn btn-primary pull-right reservations-pay" data-val="1">
+                                                <a href="javascript:;" class="btn btn-primary pull-right reservations-pay" data-val="1">
                                                     <span class="glyphicon glyphicon-arrow-right"></span> 去支付
-                                                </button>
+                                                </a>
                                             </div>
                                         </div>
                                     </form>
@@ -317,9 +317,9 @@
                                                     <!--<p class="bg-info">应收: 100元</p>-->
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <button class="btn btn-primary reservations-pay-confirm">
+                                                    <a href="javascript:;" class="btn btn-primary reservations-pay-confirm">
                                                         <span class="glyphicon glyphicon-ok"></span> 确 定
-                                                    </button>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
