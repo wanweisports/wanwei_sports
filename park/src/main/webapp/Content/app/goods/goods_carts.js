@@ -15,6 +15,7 @@
             this.bindPayEvents();
             $(".money-num").text(this.calculateMoney());
         },
+        // 估价
         calculateMoney: function () {
             var $list = $(".goods-cart-list");
             var $count = $list.find(".good-count");
@@ -29,118 +30,120 @@
 
             return (money / 100).toFixed(2);
         },
+        // 计价
+        calculateShoppingMoney: function (conditions) {
+            $.post('/good/calculateShoppingMoney', conditions, function (res) {
+                var data = res.data;
+
+                if (res.code == 1) {
+                    $("#goods_paid_sum").val(data.presentPrice || data.originalPrice);
+                } else {
+                    alert(res.message || '订单计价失败，请稍后重试');
+                }
+            });
+        },
         // 支付流程事件绑定
         bindPayEvents: function () {
             var content = this;
-
             var $uiGoodsSteps = $("#zhifuModal");
-            var $uiOverlay = $(".sc-ui-dialog-overlay");
-            var $uiUserForm = $("#venue_goods_pay_form");
-            var $uiPayForm = $("#venue_goods_paid_form");
-            var $btnBuy = $(".goods-buy-money");
-            var clickable = true;
 
             // 结算
-            $btnBuy.on("click", function () {
-                $uiUserForm.find("#pay_goods_amount").val(content.calculateMoney());
+            $(".goods-buy-money").on("click", function () {
+                var $list = $(".cart-list");
+                var shoppingIds = [];
+
+                $list.find(".cart-item").each(function (index, item) {
+                    shoppingIds.push($(item).attr("data-sid"));
+                });
+
+                $("#goods_user_shoppingIds").val(shoppingIds.join(","));
             });
 
-            $uiGoodsSteps.on("click", ".user-search", function (e) {
-                e.preventDefault();
+            // 检索会员
+            $("#goods_user_name").autosuggest({
+                url: '/member/searchMember',
+                method: 'post',
+                queryParamName: 'search',
+                dataCallback:function(res) {
+                    var data = res.data;
+                    var json = [];
 
-                var $dialog = $.dialog({
-                    content: "数据加载...",
-                    title: 'load',
-                    width: 'auto',
-                    height: 'auto',
-                    lock: true
-                });
-
-                $.getJSON('/users/Search', {
-                    name: $("#pay_goods_user_name").val().trim()
-                }, function (result) {
-                    var data = result.data;
-
-                    if (result.status == 200) {
-                        $('#pay_goods_user_class').val(data.memberlevel);
-                        $('#pay_goods_member_number').val(data.memberid);
-                        $('#pay_goods_member_name').val(data.membername);
-                        $('#pay_goods_user_mobile').val(data.phone);
+                    if (res.code == 1) {
+                        if (data && data.members && data.members.length > 0) {
+                            for (var i = 0; i < data.members.length; i++) {
+                                json.push({
+                                    id: data.members[i].memberMobile,
+                                    label: data.members[i].memberId,
+                                    value: data.members[i].memberName
+                                });
+                            }
+                            return json;
+                        } else {
+                            return [];
+                        }
                     } else {
-                        alert(result.message);
+                        alert('搜索会员失败, 请稍后重试');
+                        return [];
                     }
+                },
+                onSelect:function(elm) {
+                    var memberId = elm.data('label');
+                    var mobile = elm.data('id');
 
-                    $dialog.close();
-                });
+                    $('#goods_user_mobile').val(mobile);
+                    $('#goods_user_memberId').val(memberId);
+                    $('#goods_user_opType').val("1");
+                }
             });
 
             // 提交购买
-            $uiGoodsSteps.on("click", ".goods-pay", function (e) {
+            $("#goods_user_pay").on("click", function (e) {
                 e.preventDefault();
 
-                var conditions = $uiUserForm.serialize();
+                var $form = $("#goods_user_form");
+                var conditions = $form.serialize();
 
-                $uiUserForm.find(".sc-submit-tips").hide().removeClass("text-success,text-danger");
-                if (!clickable || !$uiUserForm.validate().form()) {
-                    return;
+                if ($form.attr("submitting") === "submitting" || !$form.valid()) {
+                    return false;
                 }
-                clickable = false;
+                $form.attr("submitting", "submitting");
 
-                $.post('/goods/BuyGoods', conditions, function (res) {
-                    if (res.status == 200) {
-                        $uiUserForm.find(".sc-submit-tips").show().html("提交成功!!").addClass("text-success");
+                $.post('/good/saveOrder', conditions, function (res) {
+                    var data = res.data;
+                    $form.attr("submitting", "");
+
+                    if (res.code == 1) {
                         $uiGoodsSteps.find(".goods-steps").steps("next", 1);
-                        $uiPayForm.find("#pay_goods_order_no").val(res.data.orderno);
-                        $uiPayForm.find("#pay_goods_real_money").val(res.data.paidamount);
+                        $("#goods_paid_order").val(data.orderId);
                     } else {
-                        $uiUserForm.find(".sc-submit-tips").show().html(res.message).addClass("text-danger");
+                        alert(res.message || '保存订单失败，请稍后重试');
                     }
-                    clickable = true;
-                }).fail(function (err) {
-                    console.log(err);
-                    $uiUserForm.find(".sc-submit-tips").show().html("网络异常, 提交预订失败!!")
-                        .addClass("text-danger");
-                    clickable = true;
                 });
+
+                content.calculateShoppingMoney(conditions);
             });
 
             // 确定支付
-            $uiGoodsSteps.on("click", ".goods-pay-confirm", function (e) {
+            $("#goods_paid_confirm").on("click", function (e) {
                 e.preventDefault();
 
-                var conditions = $uiPayForm.serialize();
+                var $form = $("#goods_paid_form");
+                var conditions = $form.serialize();
 
-                $uiPayForm.find(".sc-submit-tips").hide().removeClass("text-success,text-danger");
-                if (!clickable || !$uiPayForm.validate().form()) {
-                    return;
+                if ($form.attr("submitting") === "submitting" || !$form.valid()) {
+                    return false;
                 }
-                clickable = false;
+                $form.attr("submitting", "submitting");
 
-                $.post('/goods/submitGoodsConfirmBuy', conditions, function (res) {
-                    if (res.status == 200) {
-                        $uiPayForm.find(".sc-submit-tips").show().html("提交成功, 3秒后自动关闭!!").addClass("text-success");
-                        setTimeout(function () {
-                            $uiGoodsSteps.hide();
-                            $uiOverlay.hide();
-                        }, 3000);
+                $.post('/good/confirmOrder', conditions, function (res) {
+                    $form.attr("submitting", "");
+
+                    if (res.code == 1) {
+                        location.assign('/order/getOrderList?orderServiceTypes=2');
                     } else {
-                        $uiUserForm.find(".sc-submit-tips").show().html(res.message).addClass("text-danger");
+                        alert(res.message || '支付订单失败，请稍后重试');
                     }
-                    clickable = true;
-                }).fail(function (err) {
-                    console.log(err);
-                    $uiUserForm.find(".sc-submit-tips").show().html("网络异常, 提交预订失败!!")
-                        .addClass("text-danger");
-                    clickable = true;
-                });
-            });
-
-            // 关闭
-            $uiGoodsSteps.find(".goods-steps-close").on("click", function (e) {
-                e.preventDefault();
-
-                $uiGoodsSteps.hide();
-                $uiOverlay.hide();
+                })
             });
         },
         initEvents: function () {

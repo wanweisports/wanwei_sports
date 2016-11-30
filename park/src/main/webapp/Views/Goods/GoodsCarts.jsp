@@ -6,13 +6,17 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="/Content/lib/jquery/autosuggest/autosuggest.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
     <link href="/Content/lib/jquery/jquery-steps/jquery.steps.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
     <link href="/Content/style/goods/goods_carts.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/lib/jquery/autosuggest/autosuggest.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/holder/holder.min.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery-steps/jquery.steps.min.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
     <script src="/Content/app/goods/goods_carts.js?v=${static_resource_version}"></script>
 </layout:override>
 
@@ -26,12 +30,12 @@
             <div class="panel-heading">商品购物车</div>
             <div class="panel-body goods-cart-list">
                 <div class="alert alert-info" style="overflow: hidden">
-                    <p class="pull-left">商品预估总价: <span class="text-warning money-num">2000.00</span>元(<small>以实际支付金额为准</small>)</p>
-                    <a href="#zhifuModal" class="btn btn-primary pull-right" data-toggle="modal" data-backdrop="false">
-                        <span class="glyphicon glyphicon-usb"></span> 结算
+                    <p class="pull-left">商品预估总价： <span class="text-danger money-num">2000.00</span>元（<small>以实际支付金额为准</small>）</p>
+                    <a href="#zhifuModal" class="btn btn-primary pull-right goods-buy-money" data-toggle="modal" data-backdrop="false">
+                        <span class="glyphicon glyphicon-usd"></span> 结 算
                     </a>
                 </div>
-                <table class="table">
+                <table class="table cart-list">
                     <thead>
                     <tr>
                         <th>商品编号</th>
@@ -44,7 +48,7 @@
                     </thead>
                     <tbody>
                     <c:forEach var="good" items="${goods}">
-                        <tr>
+                        <tr class="cart-item" data-sid="${good.shoppingId}">
                             <td style="vertical-align: middle;">${good.goodNo}</td>
                             <td style="vertical-align: middle;">
                                 <img src="${good.goodPic}" data-src="holder.js/100x80?text=${good.goodName}&random=yes&auto=yes"
@@ -74,9 +78,9 @@
                     </tbody>
                 </table>
                 <div class="alert alert-info" style="overflow: hidden">
-                    <p class="pull-left">商品预估总价: <span class="text-warning money-num">2000.00</span>元(<small>以实际支付金额为准</small>)</p>
+                    <p class="pull-left">商品预估总价： <span class="text-danger money-num">2000.00</span>元（<small>以实际支付金额为准</small>）</p></p>
                     <a href="#zhifuModal" class="btn btn-primary pull-right goods-buy-money" data-toggle="modal" data-backdrop="false">
-                        <span class="glyphicon glyphicon-usb"></span> 结算
+                        <span class="glyphicon glyphicon-usd"></span> 结 算
                     </a>
                 </div>
             </div>
@@ -98,47 +102,35 @@
                         <div class="goods-steps-user">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <form id="venue_goods_pay_form" class="form-horizontal" action="" method="post"
-                                          novalidate onsubmit="return false;">
-                                        <input type="hidden" value="3" id="pay_goods_user_class" name="userclass">
-                                        <input type="hidden" value="1" name="schedulchannel">
-                                        <input type="hidden" value="" id="pay_goods_member_number" name="membernumber">
-                                        <input type="hidden" value="" id="pay_goods_list" name="list">
-                                        <input type="hidden" value="" id="pay_goods_member_name" name="membername">
+                                    <form id="goods_user_form" class="form-horizontal" novalidate onsubmit="return false;">
+                                        <input type="hidden" id="goods_user_shoppingIds" name="shoppingIds">
+                                        <input type="hidden" id="goods_user_memberId" name="memberId">
+                                        <input type="hidden" id="goods_user_opType" name="opType" value="2">
                                         <div class="form-group">
-                                            <label for="pay_goods_user_name" class="col-sm-3 control-label">姓名</label>
-                                            <div class="col-sm-6">
-                                                <input type="text" class="form-control" id="pay_goods_user_name" name="user_name"
+                                            <label for="goods_user_name" class="col-sm-3 control-label">
+                                                <span class="text-danger">*</span> 姓名
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="goods_user_name" name="name"
                                                        placeholder="姓名" value="散客" autocomplete="off">
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <a class="btn btn-primary user-search" href="javascript:void(0);">
-                                                    <span class="glyphicon glyphicon-search"></span>
-                                                </a>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="pay_goods_user_mobile" class="col-sm-3 control-label">手机号</label>
+                                            <label for="goods_user_mobile" class="col-sm-3 control-label">
+                                                <span class="text-danger">*</span> 手机号码
+                                            </label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="pay_goods_user_mobile" name="fitphone"
+                                                <input type="text" class="form-control" id="goods_user_mobile" name="moblie"
                                                        placeholder="手机号码" autocomplete="off"
                                                        data-val="true" data-val-required="手机号码不能为空"
                                                        data-val-regex-pattern="^1\d{10}$"
                                                        data-val-regex="手机号码格式错误">
-                                                <div data-valmsg-for="fitphone" data-valmsg-replace="true"></div>
+                                                <div data-valmsg-for="moblie" data-valmsg-replace="true"></div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="pay_goods_amount" class="col-sm-3 control-label">预计(元)</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="pay_goods_amount" name="amount"
-                                                       placeholder="预计价格" value="" autocomplete="off" readonly>
-                                            </div>
-                                        </div>
-                                        <p class="sc-submit-tips"></p>
                                         <div class="form-group">
                                             <div class="col-sm-12">
-                                                <button class="btn btn-primary pull-right goods-pay" data-val="1">
+                                                <button class="btn btn-primary pull-right" data-val="1" id="goods_user_pay">
                                                     <span class="glyphicon glyphicon-arrow-right"></span> 去支付
                                                 </button>
                                             </div>
@@ -151,100 +143,52 @@
                         <div class="goods-steps-pay">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <form id="venue_goods_paid_form" class="form-horizontal" novalidate onsubmit="return false;">
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label for="pay_goods_order_no" class="col-sm-2 control-label">订单号</label>
+                                    <form id="goods_paid_form" class="form-horizontal" novalidate onsubmit="return false;">
+                                        <input type="hidden" name="orderId" id="goods_paid_order">
+                                        <input type="hidden" name="subAmount" id="goods_paid_subAmount" value="0">
+                                        <input type="hidden" name="additionalPrice" id="goods_paid_additionalPrice" value="0">
+                                        <div class="form-group">
+                                            <label for="goods_paid_payType" class="col-sm-3 control-label">
+                                                <span class="text-danger">*</span> 支付方式
+                                            </label>
 
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="pay_goods_order_no"
-                                                           name="orderno" placeholder="订单号" value="" readonly>
-                                                </div>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" id="goods_paid_payType" name="payType"
+                                                        data-val="true" data-val-required="请选择支付方式">
+                                                    <option value="">请选择</option>
+                                                    <option value="1">现金</option>
+                                                    <option value="2">微信</option>
+                                                    <option value="3">支付宝</option>
+                                                </select>
+                                                <div data-valmsg-for="payType" data-valmsg-replace="true"></div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label for="pay_goods_ex_money" class="col-sm-4 control-label">附加费用(元)</label>
+                                        <div class="form-group">
+                                            <label for="goods_paid_remark" class="col-sm-3 control-label">备注</label>
 
-                                                <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="pay_goods_ex_money" name="addcharges"
-                                                           placeholder="附加费用" value="" autocomplete="off">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="pay_goods_ex_money_note" class="col-sm-4 control-label">附加费用说明</label>
-
-                                                <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="pay_goods_ex_money_note" name="addchargesexplain"
-                                                           placeholder="附加费用说明" value="" autocomplete="off">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="pay_goods_money_type" class="col-sm-4 control-label">付款方式</label>
-
-                                                <div class="col-sm-8">
-                                                    <select class="form-control" id="pay_goods_money_type" name="paymentmethod">
-                                                        <option value="0">现金</option>
-                                                        <option value="1">微信</option>
-                                                        <option value="2">支付宝</option>
-                                                        <option value="3">支票</option>
-                                                    </select>
-                                                </div>
+                                            <div class="col-sm-9">
+                                                    <textarea class="form-control" rows="3" id="goods_paid_remark"
+                                                              name="orderRemark" placeholder="备注" autocomplete="off"></textarea>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label for="pay_goods_se_money" class="col-sm-4 control-label">优惠金额(元)</label>
+                                        <div class="form-group">
+                                            <label for="goods_paid_sum" class="col-sm-3 control-label">
+                                                <span class="text-danger">*</span> 支付金额(元)
+                                            </label>
 
-                                                <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="pay_goods_se_money" name="preamount"
-                                                           placeholder="优惠金额" value="" autocomplete="off">
-                                                </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" id="goods_paid_sum" name="paySumPrice"
+                                                       placeholder="支付金额" autocomplete="off"
+                                                       data-val="true" data-val-required="支付金额不能为空"
+                                                       data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                                       data-val-regex="支付金额格式错误">
+                                                <div data-valmsg-for="paySumPrice" data-valmsg-replace="true"></div>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="pay_goods_se_money_note" class="col-sm-4 control-label">优惠金额说明</label>
-
-                                                <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="pay_goods_se_money_note" name="preamountexplain"
-                                                           placeholder="优惠金额说明" value="" autocomplete="off">
-                                                </div>
+                                            <div class="col-sm-3">
+                                                <button class="btn btn-primary col-sm-12" id="goods_paid_confirm">
+                                                    <span class="glyphicon glyphicon-ok"></span> 确 定
+                                                </button>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="pay_goods_money_no" class="col-sm-4 control-label">支票号</label>
-
-                                                <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="pay_goods_money_no" name="checknumber"
-                                                           placeholder="支票号" value="" autocomplete="off">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label for="pay_goods_pay_remark" class="col-sm-2 control-label">备注</label>
-
-                                                <div class="col-sm-10">
-                                                        <textarea class="form-control" rows="3" id="pay_goods_pay_remark"
-                                                                  name="remarks" placeholder="备注" autocomplete="off"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label for="pay_goods_real_money" class="col-sm-2 control-label">实收金额(元)</label>
-
-                                                <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="pay_goods_real_money" name="paidamount"
-                                                           placeholder="实收金额" value="" readonly>
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <button class="btn btn-primary goods-pay-confirm">
-                                                        <span class="glyphicon glyphicon-ok"></span> 确定
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <p class="sc-submit-tips"></p>
                                         </div>
                                     </form>
                                 </div>

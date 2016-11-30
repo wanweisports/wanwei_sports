@@ -28,7 +28,6 @@
                             <option value="">全部订单</option>
                             <option value="1">未支付</option>
                             <option value="2">已支付</option>
-                            <option value="3">已完成</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -39,254 +38,231 @@
                 </form>
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table class="table orders-list">
-                        <thead>
-                        <tr>
-                            <th>订单详情</th>
-                            <th>订单状态</th>
-                            <th>订单价格</th>
-                            <th>订单状态</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach var="order" items="${list}" varStatus="loop">
-                            <tr class="tr-th">
-                                <td colspan="5">
-                                    <span class="order-date-time">${order.createTime}</span>
-                                    <span class="order-number">订单号：<a href="">${order.orderNo}</a></span>
-                                    <span>订单类型: 商品订单</span>
+        <div class="panel-group" role="tablist">
+            <c:forEach var="order" items="${list}" varStatus="loop">
+                <div class="panel panel-default">
+                    <div class="panel-heading" id="order_header_${loop.index}">
+                        <h5 class="panel-title" style="font-size: 14px;">
+                            <a data-toggle="collapse" href="#order_body_${loop.index}" aria-expanded="true"
+                               aria-controls="#order_body_${loop.index}">
+                                订单号：<span class="text-primary">${order.orderNo}</span>
+                            </a>
 
-                                    <button class="btn btn-warning pull-right order-delete" data-id="${order.orderId}">
+                            <div class="pull-right">
+                                <small class="text-muted">${order.createTime} </small>
+                                <c:if test="${order.orderStatus == 1}">
+                                    <span class="text-success">已完成</span>
+                                </c:if>
+                                <c:if test="${order.orderStatus == 2}">
+                                    <c:if test="${order.payStatus == 1}">
+                                        <span class="text-success">已支付</span>
+                                    </c:if>
+                                    <c:if test="${order.payStatus == 2}">
+                                        <span class="text-danger">未支付</span>
+                                    </c:if>
+                                    <c:if test="${order.payStatus == 3}">
+                                        <span class="text-danger">部分支付</span>
+                                    </c:if>
+                                </c:if>
+                                <c:if test="${order.orderStatus == 3}">
+                                    <span class="text-muted">已取消</span>
+                                </c:if>
+                            </div>
+                        </h5>
+                    </div>
+                    <div id="#order_body_${loop.index}" class="panel-collapse collapse in" role="tabpanel"
+                         aria-labelledby="order_header_${loop.index}" aria-expanded="true">
+                        <div class="table-responsive" style="padding: 10px;">
+                            <table class="table orders-list">
+                                <thead>
+                                <tr>
+                                    <th>商品名称</th>
+                                    <th>商品价格</th>
+                                    <th>购买数量</th>
+                                    <th>预订状态</th>
+                                </tr>
+                                </thead>
+                                <c:forEach var="item" items="${order.orderDetailList}">
+                                    <tr>
+                                        <td>${item.itemName}</td>
+                                        <td>${item.itemPrice}元</td>
+                                        <td>${item.itemAmount}件</td>
+                                        <c:if test="${item.orderDetailStatus == 1}">
+                                            <td>已完成</td>
+                                        </c:if>
+                                        <c:if test="${item.orderDetailStatus == 2}">
+                                            <td class="text-danger">未完成</td>
+                                        </c:if>
+                                        <c:if test="${item.orderDetailStatus == 3}">
+                                            <td class="text-success">进行中</td>
+                                        </c:if>
+                                    </tr>
+                                </c:forEach>
+                            </table>
+                        </div>
+                        <div class="panel-footer">
+                            合计金额: <strong class="text-danger">${order.orderSumPrice}</strong> 元
+                            <div class="pull-right">
+                                <c:if test="${order.orderStatus == 1}">
+                                    <button class="btn btn-warning btn-sm order-delete" data-id="${order.orderId}">
                                         <span class="glyphicon glyphicon-trash"></span> 删除
                                     </button>
-                                </td>
-                            </tr>
-                            <c:forEach var="item" items="${order.orderDetailList}">
-                                <tr class="tr-bd">
-                                    <td>
-                                        <p>商品名称: ${item.itemName}</p>
-                                        <p>商品价格: ${item.itemPrice}</p>
-                                        <p>购买数量: ${item.itemAmount}</p>
-                                    </td>
-
-                                    <c:if test="${item.orderDetailStatus == 1}">
-                                        <td>已完成</td>
+                                </c:if>
+                                <c:if test="${order.orderStatus == 2}">
+                                    <c:if test="${order.payStatus == 1}">
+                                        <button class="btn btn-danger btn-sm order-cancel" data-id="${order.orderId}">
+                                            <span class="glyphicon glyphicon-remove"></span> 取消
+                                        </button>
                                     </c:if>
-                                    <c:if test="${item.orderDetailStatus == 2}">
-                                        <td class="text-danger">未完成</td>
-                                    </c:if>
-                                    <c:if test="${item.orderDetailStatus == 3}">
-                                        <td class="text-success">进行中</td>
-                                    </c:if>
-
-                                    <td>${order.orderSumPrice}</td>
-
-                                    <td>
-                                        <c:if test="${order.payStatus == 1}">
-                                            <p class="text-success">已支付</p>
-                                        </c:if>
-                                        <c:if test="${order.payStatus == 2}">
-                                            <p class="text-danger">未支付</p>
-                                        </c:if>
-                                        <c:if test="${order.payStatus == 3}">
-                                            <p class="text-danger">部分支付</p>
-                                        </c:if>
-
-                                        <c:if test="${order.orderStatus == 1}">
-                                            <p class="text-success">已完成</p>
-                                        </c:if>
-                                        <c:if test="${order.orderStatus == 2}">
-                                            <p class="text-danger">未完成</p>
-                                        </c:if>
-                                        <c:if test="${order.orderStatus == 3}">
-                                            <p>已取消</p>
-                                        </c:if>
-                                    </td>
-                                    <td>
-                                        <c:if test="${item.orderDetailStatus != 1}">
-                                            <button class="btn btn-danger order-cancel" data-id="${order.orderId}">
-                                                <span class="glyphicon glyphicon-remove"></span> 取消
-                                            </button>
-                                        </c:if>
-                                        <button class="btn btn-primary order-pay">
+                                    <c:if test="${order.payStatus == 2}">
+                                        <button class="btn btn-primary btn-sm order-pay" data-id="${order.orderId}">
                                             <span class="glyphicon glyphicon-usd"></span> 支付
                                         </button>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                    <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >
-                        <p class="pull-left" style="margin: 12px 14px;">
-                            <span>${pageSize}条/页</span>
-                            <span>总${count}条</span>
-                        </p>
-                        <ul class="pagination pull-right">
-                            <c:if test="${currentPage == 1}">
-                                <li class="disabled">
-                                    <a href="javascript:;" data-index="1">
-                                        <span>首页</span>
-                                    </a>
-                                </li>
-                                <li class="disabled">
-                                    <a href="javascript:;" data-index="1">
-                                        <span>上一页</span>
-                                    </a>
-                                </li>
-                            </c:if>
-                            <c:if test="${currentPage != 1}">
-                                <li>
-                                    <a class="page-first" href="javascript:;" data-index="1">
-                                        <span>首页</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="page-prev" href="javascript:;" data-index="${currentPage - 1}">
-                                        <span>上一页</span>
-                                    </a>
-                                </li>
-                            </c:if>
-                            <c:forEach var="i" begin="1" end="${lastPage}">
-                                <c:if test="${i == currentPage}">
-                                    <li class="active"><a href="javascript:;" data-index="${i}">${i}</a></li>
+                                        <button class="btn btn-danger btn-sm order-cancel" data-id="${order.orderId}">
+                                            <span class="glyphicon glyphicon-remove"></span> 取消
+                                        </button>
+                                    </c:if>
+                                    <c:if test="${order.payStatus == 3}">
+                                        <button class="btn btn-primary btn-sm order-pay" data-id="${order.orderId}">
+                                            <span class="glyphicon glyphicon-usd"></span> 支付
+                                        </button>
+                                        <button class="btn btn-danger order-cancel" data-id="${order.orderId}">
+                                            <span class="glyphicon glyphicon-remove"></span> 取消
+                                        </button>
+                                    </c:if>
                                 </c:if>
-                                <c:if test="${i != currentPage}">
-                                    <li><a class="page-index" href="javascript:;" data-index="${i}">${i}</a></li>
+                                <c:if test="${order.orderStatus == 3}">
+                                    <button class="btn btn-warning order-delete" data-id="${order.orderId}">
+                                        <span class="glyphicon glyphicon-trash"></span> 删除
+                                    </button>
                                 </c:if>
-                            </c:forEach>
-                            <c:if test="${currentPage == lastPage}">
-                                <li class="disabled">
-                                    <a href="javascript:;" data-index="1">
-                                        <span>下一页</span>
-                                    </a>
-                                </li>
-                                <li class="disabled">
-                                    <a href="javascript:;" data-index="1">
-                                        <span>末页</span>
-                                    </a>
-                                </li>
-                            </c:if>
-                            <c:if test="${currentPage != lastPage}">
-                                <li>
-                                    <a class="page-next" href="javascript:;" data-index="${currentPage + 1}">
-                                        <span>下一页</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="page-last" href="javascript:;" data-index="${lastPage}">
-                                        <span>末页</span>
-                                    </a>
-                                </li>
-                            </c:if>
-                        </ul>
-                    </nav>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </c:forEach>
+            <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >
+                <p class="pull-left" style="margin: 12px 14px;">
+                    <span>${pageSize}条/页</span>
+                    <span>总${count}条</span>
+                </p>
+                <ul class="pagination pull-right">
+                    <c:if test="${currentPage == 1}">
+                        <li class="disabled">
+                            <a href="javascript:;" data-index="1">
+                                <span>首页</span>
+                            </a>
+                        </li>
+                        <li class="disabled">
+                            <a href="javascript:;" data-index="1">
+                                <span>上一页</span>
+                            </a>
+                        </li>
+                    </c:if>
+                    <c:if test="${currentPage != 1}">
+                        <li>
+                            <a class="page-first" href="javascript:;" data-index="1">
+                                <span>首页</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="page-prev" href="javascript:;" data-index="${currentPage - 1}">
+                                <span>上一页</span>
+                            </a>
+                        </li>
+                    </c:if>
+                    <c:forEach var="i" begin="1" end="${lastPage}">
+                        <c:if test="${i == currentPage}">
+                            <li class="active"><a href="javascript:;" data-index="${i}">${i}</a></li>
+                        </c:if>
+                        <c:if test="${i != currentPage}">
+                            <li><a class="page-index" href="javascript:;" data-index="${i}">${i}</a></li>
+                        </c:if>
+                    </c:forEach>
+                    <c:if test="${currentPage == lastPage}">
+                        <li class="disabled">
+                            <a href="javascript:;" data-index="1">
+                                <span>下一页</span>
+                            </a>
+                        </li>
+                        <li class="disabled">
+                            <a href="javascript:;" data-index="1">
+                                <span>末页</span>
+                            </a>
+                        </li>
+                    </c:if>
+                    <c:if test="${currentPage != lastPage}">
+                        <li>
+                            <a class="page-next" href="javascript:;" data-index="${currentPage + 1}">
+                                <span>下一页</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="page-last" href="javascript:;" data-index="${lastPage}">
+                                <span>末页</span>
+                            </a>
+                        </li>
+                    </c:if>
+                </ul>
+            </nav>
         </div>
     </div>
 
     <div class="modal fade" id="zhifuModal" tabindex="-1" role="dialog" aria-labelledby="zhifuModalLabel">
-        <div class="modal-dialog" style="width: 640px;">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h5 class="modal-title" id="zhifuModalLabel">订单支付</h5>
+                    <h4 class="modal-title" id="zhifuModalLabel">支付订单</h4>
                 </div>
                 <div class="modal-body">
-                    <form id="reservations_paid_form" class="form-horizontal" novalidate onsubmit="return false;">
-                        <input type="hidden" id="reservations_order_id" name="orderId">
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="reservations_order_no" class="col-sm-2 control-label">订单号</label>
+                    <form id="goods_paid_form" class="form-horizontal" novalidate onsubmit="return false;">
+                        <input type="hidden" name="orderId" id="goods_paid_order">
+                        <input type="hidden" name="subAmount" id="goods_paid_subAmount" value="0">
+                        <input type="hidden" name="additionalPrice" id="goods_paid_additionalPrice" value="0">
+                        <div class="form-group">
+                            <label for="goods_paid_payType" class="col-sm-3 control-label">
+                                <span class="text-danger">*</span> 支付方式
+                            </label>
 
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="reservations_order_no"
-                                           name="orderno" placeholder="订单号" value="" readonly>
-                                </div>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="goods_paid_payType" name="payType"
+                                        data-val="true" data-val-required="请选择支付方式">
+                                    <option value="">请选择</option>
+                                    <option value="1">现金</option>
+                                    <option value="2">微信</option>
+                                    <option value="3">支付宝</option>
+                                </select>
+                                <div data-valmsg-for="payType" data-valmsg-replace="true"></div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="reservations_ex_money" class="col-sm-4 control-label">附加金额</label>
+                        <div class="form-group">
+                            <label for="goods_paid_remark" class="col-sm-3 control-label">备注</label>
 
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="reservations_ex_money" name="additionalPrice"
-                                           placeholder="附加金额(元)" autocomplete="off"
-                                           data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
-                                           data-val-regex="附加金额格式错误">
-                                    <div data-valmsg-for="additionalPrice" data-valmsg-replace="true"></div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="reservations_money_type" class="col-sm-4 control-label">支付方式</label>
-
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="reservations_money_type" name="payType"
-                                            data-val="true" data-val-required="请选择支付方式">
-                                        <option value="">请选择</option>
-                                        <option value="1">现金</option>
-                                        <option value="2">支付宝</option>
-                                        <option value="3">微信</option>
-                                    </select>
-                                    <div data-valmsg-for="payType" data-valmsg-replace="true"></div>
-                                </div>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" rows="3" id="goods_paid_remark"
+                                          name="orderRemark" placeholder="备注" autocomplete="off"></textarea>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="reservations_se_money" class="col-sm-4 control-label">优惠金额</label>
+                        <div class="form-group">
+                            <label for="goods_paid_sum" class="col-sm-3 control-label">
+                                <span class="text-danger">*</span> 支付金额(元)
+                            </label>
 
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="reservations_se_money" name="subAmount"
-                                           placeholder="优惠金额(元)" autocomplete="off"
-                                           data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
-                                           data-val-regex="优惠金额格式错误">
-                                    <div data-valmsg-for="subAmount" data-valmsg-replace="true"></div>
-                                </div>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="goods_paid_sum" name="paySumPrice"
+                                       placeholder="支付金额" autocomplete="off"
+                                       data-val="true" data-val-required="支付金额不能为空"
+                                       data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                       data-val-regex="支付金额格式错误">
+                                <div data-valmsg-for="paySumPrice" data-valmsg-replace="true"></div>
                             </div>
-                            <!--<div class="form-group">
-                                <label for="reservations_money_no" class="col-sm-4 control-label">支票号</label>
-
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="reservations_money_no" name="checkNo"
-                                           placeholder="支票号" value="" autocomplete="off">
-                                </div>
-                            </div>-->
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="reservations_pay_remark" class="col-sm-2 control-label">备注</label>
-
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" rows="3" id="reservations_pay_remark"
-                                              name="orderRemark" placeholder="备注"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="reservations_real_money" class="col-sm-2 control-label">实收金额</label>
-
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="reservations_real_money" name="paySumPrice"
-                                           placeholder="请输入实收金额(元)" autocomplete="off"
-                                           data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
-                                           data-val-regex="实收金额格式错误">
-                                    <div data-valmsg-for="paySumPrice" data-valmsg-replace="true"></div>
-                                    <!--<p class="bg-info">应收: 100元</p>-->
-                                </div>
-                                <div class="col-sm-2">
-                                    <button class="btn btn-primary reservations-pay-confirm">
-                                        <span class="glyphicon glyphicon-ok"></span> 确 定
-                                    </button>
-                                </div>
+                            <div class="col-sm-3">
+                                <button class="btn btn-primary col-sm-12" id="goods_paid_confirm">
+                                    <span class="glyphicon glyphicon-ok"></span> 确 定
+                                </button>
                             </div>
                         </div>
                     </form>
