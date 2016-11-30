@@ -494,7 +494,13 @@
                     var data = res.data;
 
                     if (res.code == 1) {
-                        $("#reservations_amount").val(data.originalPrice);
+                        $("#reservations_user_amount").val(data.originalPrice);
+
+                        $("#reservations_paid_orderSumCount").val(data.sumNums);
+                        $("#reservations_paid_orderSumPrice").val(data.originalPrice);
+                        $("#reservations_paid_payCount").val(data.sumNums);
+                        $("#reservations_paid_paySumPrice").val(data.originalPrice);
+                        $("#reservations_paid_money").val(data.originalPrice);
                     } else {
                         alert(res.message || "计算金额失败, 请稍后重试");
                     }
@@ -506,6 +512,8 @@
             // 换场
             $(".sequence-refresh").on("click", function (e) {
                 e.preventDefault();
+
+                return false;
 
                 var $this = $(this);
 
@@ -552,27 +560,32 @@
             });
 
             // 去支付
-            $(".reservations-pay").on("click", function (e) {
+            $("#reservations_user_pay").on("click", function (e) {
                 e.preventDefault();
 
-                $reservationsSteps.find(".reservations-steps").steps("next", 1);
+                var $form = $("#reservations_user_form");
+
+                if ($form.attr("submitting") === "submitting" || !$form.valid()) {
+                    return false;
+                }
+                $form.attr("submitting", "submitting");
 
                 var data = content.opts.data;
-                data.name = $("#reservations_name").val();
-                data.mobile = $("#reservations_mobile").val();
-                //data.memberId = "";
-                data.opType = "2";
+                data.name = $("#reservations_user_name").val();
+                data.mobile = $("#reservations_user_mobile").val();
+                data.memberId = $("#reservations_user_member").val() || "0";
+                data.opType = $("#reservations_user_opType").val();
                 data.reserveType = "1";
                 data.reserveModel = "1";
 
                 $.post('/site/saveReservationSite', {
                     siteOperationJson: JSON.stringify(data)
                 }, function (res) {
+                    $form.attr("submitting", "");
                     var data = res.data;
 
                     if (res.code == 1) {
-                        $("#reservations_order_id").val(data.orderId);
-                        $("#reservations_order_no").val(data.orderNo);
+                        $("#reservations_paid_order").val(data.orderId);
                         $reservationsSteps.find(".reservations-steps").steps("next", 1);
                     } else {
                         alert(res.message || "提交预订失败, 请稍后重试");
@@ -581,7 +594,7 @@
             });
 
             // 确认支付
-            $(".reservations-pay-confirm").on("click", function (e) {
+            $("#reservations_paid_confirm").on("click", function (e) {
                 e.preventDefault();
 
                 var $form = $("#reservations_paid_form");
@@ -598,7 +611,6 @@
                     if (res.code == 1) {
                         $reservationsSteps.modal("hide");
                         content.loadReservations();
-                        //location.reload();
                     } else {
                         alert(res.message || "确认订单失败, 请稍后重试");
                     }
@@ -606,7 +618,7 @@
             });
 
             // 检索会员
-            $("#reservations_name").autosuggest({
+            $("#reservations_user_name").autosuggest({
                 url: '/member/searchMember',
                 method: 'post',
                 queryParamName: 'search',
@@ -636,8 +648,9 @@
                     var memberId = elm.data('label');
                     var mobile = elm.data('id');
 
-                    $('#reservations_member').val(memberId);
-                    $('#reservations_mobile').val(mobile);
+                    $('#reservations_user_member').val(memberId);
+                    $('#reservations_user_mobile').val(mobile);
+                    $("#reservations_user_opType").val("1")
                 }
             });
         }
