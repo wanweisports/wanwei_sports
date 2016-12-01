@@ -1,7 +1,7 @@
 (function ($) {
     var Orders_List = {
         opts: {
-            URL: '/order/getOrderList?orderServiceTypes=1,3'
+            URL: '/order/getOrderList?orderServiceTypes=2'
         },
         init: function () {
             this.initEvents();

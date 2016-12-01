@@ -95,9 +95,10 @@
                                        data-backdrop="false" data-cardId="${member.cardId}" data-cardNo="${member.cardNo}">
                                         <span class="glyphicon glyphicon-refresh"></span> 补办
                                     </a>
-                                    <!--<a class="btn btn-danger" href="">
-                                        <span class="glyphicon glyphicon glyphicon-trash"></span> 删除
-                                    </a>-->
+                                    <a class="btn btn-danger teachers-delete" href="javascript:;"
+                                        data-id="${member.memberId}">
+                                        <span class="glyphicon glyphicon-trash"></span> 删除
+                                    </a>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -227,6 +228,28 @@
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-info" role="alert">教师卡补办成功!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="deleteModalLabel">提示框</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger" role="alert">删除后无法恢复！您确定要删除此会员吗？</div>
+                    <input type="hidden" id="delete_teacherId">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary confirm-delete">
+                        <span class="glyphicon glyphicon-ok"></span> 确 认
+                    </button>
                 </div>
             </div>
         </div>

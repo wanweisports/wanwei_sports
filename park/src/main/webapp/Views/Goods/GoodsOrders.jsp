@@ -10,7 +10,7 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="/Content/app/reservations/reservations_orders.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/goods/goods_orders.js?v=${static_resource_version}"></script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
@@ -88,13 +88,10 @@
                                         <td>${item.itemPrice}元</td>
                                         <td>${item.itemAmount}件</td>
                                         <c:if test="${item.orderDetailStatus == 1}">
-                                            <td>已完成</td>
+                                            <td>已支付</td>
                                         </c:if>
                                         <c:if test="${item.orderDetailStatus == 2}">
-                                            <td class="text-danger">未完成</td>
-                                        </c:if>
-                                        <c:if test="${item.orderDetailStatus == 3}">
-                                            <td class="text-success">进行中</td>
+                                            <td class="text-danger">未支付</td>
                                         </c:if>
                                     </tr>
                                 </c:forEach>
@@ -110,7 +107,7 @@
                                 </c:if>
                                 <c:if test="${order.orderStatus == 2}">
                                     <c:if test="${order.payStatus == 1}">
-                                        <button class="btn btn-danger btn-sm order-cancel" data-id="${order.orderId}">
+                                        <button class="btn btn-danger btn-sm order-cancel" data-id="${order.orderId}" style="display: none;">
                                             <span class="glyphicon glyphicon-remove"></span> 取消
                                         </button>
                                     </c:if>
@@ -119,14 +116,6 @@
                                             <span class="glyphicon glyphicon-usd"></span> 支付
                                         </button>
                                         <button class="btn btn-danger btn-sm order-cancel" data-id="${order.orderId}">
-                                            <span class="glyphicon glyphicon-remove"></span> 取消
-                                        </button>
-                                    </c:if>
-                                    <c:if test="${order.payStatus == 3}">
-                                        <button class="btn btn-primary btn-sm order-pay" data-id="${order.orderId}">
-                                            <span class="glyphicon glyphicon-usd"></span> 支付
-                                        </button>
-                                        <button class="btn btn-danger order-cancel" data-id="${order.orderId}">
                                             <span class="glyphicon glyphicon-remove"></span> 取消
                                         </button>
                                     </c:if>

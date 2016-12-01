@@ -555,5 +555,4 @@ public class MemberController extends BaseController {
     		return new ResponseBean(false);
 		}
     }
-
 }

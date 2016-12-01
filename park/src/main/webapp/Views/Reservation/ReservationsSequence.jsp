@@ -418,11 +418,7 @@
                     <h5 class="modal-title" id="tipsModalLabel">提示框</h5>
                 </div>
                 <div class="modal-body">
-                    <p class="text-danger text-message">您确定要锁定这些场地?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
-                    <button type="button" class="btn btn-primary">确 定</button>
+                    <p class="text-danger text-message">您已经成功锁定这些场地。</p>
                 </div>
             </div>
         </div>

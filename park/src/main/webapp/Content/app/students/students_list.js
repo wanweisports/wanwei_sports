@@ -88,6 +88,30 @@
                     }
                 });
             });
+
+            // 删除
+            $(".students-list").on("click", ".students-delete", function () {
+                var $this = $(this);
+
+                $("#delete_studentId").val($this.attr("data-id"));
+                $("#deleteModal").modal({backdrop: false, show: true});
+            });
+
+            // 删除
+            $(".confirm-delete").on("click", function (e) {
+                e.preventDefault();
+
+                var studentId = $("#delete_studentId").val();
+
+                $.post('/students/lockStudent', {studentId: studentId}, function (res) {
+                    if (res.code == 1) {
+                        location.reload();
+                    } else {
+                        console.log(res.message || "学生删除失败, 请稍后重试");
+                        alert(res.message || "学生删除失败, 请稍后重试");
+                    }
+                });
+            });
         }
     };
 

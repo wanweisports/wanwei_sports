@@ -155,6 +155,7 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 		if(StrUtil.isNotBlank(orderServiceTypes)){
 			whereSql.append(" AND orderServiceType IN (:orderServiceTypes)");
 		}
+		whereSql.append(" ORDER BY updateTime DESC");
 		
 		PageBean pageBean = super.getPageBean(headSql, bodySql, whereSql, orderInputView, SQLUtil.getInToSQL("orderServiceTypes", orderServiceTypes));
 		List<Map<String, Object>> list = pageBean.getList();

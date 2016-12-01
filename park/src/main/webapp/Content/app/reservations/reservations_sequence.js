@@ -422,7 +422,9 @@
                     lock: true
                 }, function (res) {
                     if (res.code == 1) {
-                        $(".tips-modal").modal({backdrop: false, show: true});
+                        $(".tips-modal").modal({backdrop: false, show: true})
+                            .find(".text-message").text("您已经成功锁定这些场地。");
+                        location.reload();
                     } else {
                         alert(res.message || "锁场失败, 请稍后重试");
                     }
@@ -458,7 +460,9 @@
                     lock: false
                 }, function (res) {
                     if (res.code == 1) {
-                        $(".tips-modal").modal({backdrop: false, show: true});
+                        $(".tips-modal").modal({backdrop: false, show: true})
+                            .find(".text-message").text("您已经成功解锁这些场地。");
+                        location.reload();
                     } else {
                         alert(res.message || "解锁失败, 请稍后重试");
                     }
