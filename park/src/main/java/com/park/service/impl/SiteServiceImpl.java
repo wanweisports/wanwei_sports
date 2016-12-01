@@ -335,7 +335,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 				orderDetail.setOrderDetailStatus(IDBConstant.LOGIC_STATUS_NO); //子订单：未完成
 				orderDetail.setItemAmount(1); //场地预定，数量为1
 				orderDetails.add(orderDetail);
-				hourNums = getHourNums(siteReserveTime);
+				hourNums += getHourNums(siteReserveTime);
 			}
 		}
 		orderInfo.setSumCount(weekNums * hourNums); //总次数（通过计算）
