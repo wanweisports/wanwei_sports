@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.park.common.bean.MemberSignInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.constant.IDBConstant;
-import com.park.common.constant.IPlatformConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.MemberCard;
 import com.park.common.po.MemberSiteSign;
