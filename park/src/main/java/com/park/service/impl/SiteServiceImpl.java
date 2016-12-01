@@ -210,6 +210,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 				Map<String, Object> reserveIntersectionMap = this.getReserveIntersection(StrUtil.objToInt(site.getSiteId()), siteDate, siteDate, StrUtil.objToStr(DateUtil.getWeek(DateUtil.stringToDate(siteDate, null))), startTime, endTime);
 				if(reserveIntersectionMap != null){
 					reserveInfo.setOperatorName(StrUtil.objToStr(reserveIntersectionMap.get("name")));
+					reserveInfo.setOperatorId(StrUtil.objToStr(reserveIntersectionMap.get("memberId")));
 					reserveInfo.setOperatorMobile(StrUtil.objToStr(reserveIntersectionMap.get("mobile")));
 					reserveInfo.setOpType(StrUtil.objToStr(reserveIntersectionMap.get("opType")));
 					reserveInfo.setReserveType(StrUtil.objToStr(reserveIntersectionMap.get("reserveType")));
