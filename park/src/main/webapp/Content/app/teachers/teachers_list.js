@@ -88,6 +88,30 @@
                     }
                 });
             });
+
+            // 删除
+            $(".teachers-list").on("click", ".teachers-delete", function () {
+                var $this = $(this);
+
+                $("#delete_teacherId").val($this.attr("data-id"));
+                $("#deleteModal").modal({backdrop: false, show: true});
+            });
+
+            // 删除
+            $(".confirm-delete").on("click", function (e) {
+                e.preventDefault();
+
+                var teacherId = $("#delete_teacherId").val();
+
+                $.post('/teachers/lockTeacher', {memberId: teacherId}, function (res) {
+                    if (res.code == 1) {
+                        location.reload();
+                    } else {
+                        console.log(res.message || "教师删除失败, 请稍后重试");
+                        alert(res.message || "教师删除失败, 请稍后重试");
+                    }
+                });
+            });
         }
     };
 

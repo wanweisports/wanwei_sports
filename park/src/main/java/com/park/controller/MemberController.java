@@ -266,6 +266,21 @@ public class MemberController extends BaseController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "memberDetail", method = RequestMethod.POST)
+    public ResponseBean getMemberDetail(Integer memberId) {
+        try {
+            Map<String, Object> userMemberAndCard = memberService.getUserMemberAndCard(memberId);
+            return new ResponseBean(userMemberAndCard);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
+    @ResponseBody
     @RequestMapping(value = "memberCardUpLevel", method = RequestMethod.POST)
     public ResponseBean memberCardUpLevel(MemberCardOpInputView memberCardOpInputView) {
         try {
@@ -540,5 +555,4 @@ public class MemberController extends BaseController {
     		return new ResponseBean(false);
 		}
     }
-
 }

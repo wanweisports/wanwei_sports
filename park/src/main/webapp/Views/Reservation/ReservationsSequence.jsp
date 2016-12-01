@@ -358,6 +358,56 @@
         </div>
     </div>
 
+    <div class="modal fade" id="attentionModal" tabindex="-1" role="dialog" aria-labelledby="attentionModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="attentionModalLabel">签到开场</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="attention_user_form" class="form-horizontal" novalidate onsubmit="return false;">
+                        <input type="hidden" id="attention_user_opType" name="opType" value="2">
+                        <input type="hidden" id="attention_user_card" name="signMemberCardNo">
+                        <div class="form-group">
+                            <label for="attention_user_name" class="col-sm-3 control-label">
+                                <span class="text-danger">*</span> 姓名
+                            </label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="attention_user_name"
+                                       name="signName" placeholder="姓名" value="散客" autocomplete="off"
+                                       data-val="true" data-val-required="姓名不能为空">
+                                <div data-valmsg-for="signName" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="attention_user_mobile" class="col-sm-3 control-label">
+                                <span class="text-danger">*</span> 手机号码
+                            </label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="attention_user_mobile" name="signMobile"
+                                       placeholder="手机号码" autocomplete="off"
+                                       data-val="true" data-val-required="手机号码不能为空"
+                                       data-val-regex-pattern="^1\d{10}$"
+                                       data-val-regex="手机号码格式错误">
+                                <div data-valmsg-for="signMobile" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button class="btn btn-primary pull-right" id="attention_user_confirm" >
+                                    <span class="glyphicon glyphicon-ok"></span> 确 定
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade tips-modal" tabindex="-1" role="dialog" aria-labelledby="tipsModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -368,11 +418,7 @@
                     <h5 class="modal-title" id="tipsModalLabel">提示框</h5>
                 </div>
                 <div class="modal-body">
-                    <p class="text-danger text-message">您确定要锁定这些场地?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
-                    <button type="button" class="btn btn-primary">确 定</button>
+                    <p class="text-danger text-message">您已经成功锁定这些场地。</p>
                 </div>
             </div>
         </div>
@@ -398,9 +444,12 @@
             <div class="court-display">已选择 <span class="number">0</span>场地<span class="append-msg">，再次单击取消</span></div>
             <div class="price-display" style="display: none;">共计<span class="number">0元</span></div>
 
-            <div style="clear: both; padding-top: 10px;">
-                <button type="button" class="btn btn-default sequence-refresh" data-click="no">
+            <div style="clear: both; padding-top: 10px; margin-bottom: 10px;">
+                <button type="button" class="btn btn-default sequence-refresh" data-click="no" style="display: none;">
                     <span class="glyphicon glyphicon-refresh"></span> 换 场
+                </button>
+                <button type="button" class="btn btn-warning sequence-attention" data-click="no">
+                    <span class="glyphicon glyphicon-flag"></span> 开 场
                 </button>
                 <button type="button" class="btn btn-default sequence-unlock" data-click="no" style="display: none;">
                     <span class="glyphicon glyphicon-lock"></span> 解 锁

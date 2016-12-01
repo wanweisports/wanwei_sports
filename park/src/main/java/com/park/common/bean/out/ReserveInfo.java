@@ -11,6 +11,7 @@ public class ReserveInfo{
 	private String opType;
 	private String operatorId;
 	private String reserveType;
+	private String isUse;
 	
 	
 	public Integer getReserveTimeId() {
@@ -67,5 +68,11 @@ public class ReserveInfo{
 	public void setReserveType(String reserveType) {
 		this.reserveType = reserveType;
 	}
+    public String getIsUse() {
+        return isUse;
+    }
+    public void setIsUse(String isUse) {
+        this.isUse = isUse;
+    }
 	
 }

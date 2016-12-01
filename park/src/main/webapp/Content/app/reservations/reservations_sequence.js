@@ -5,9 +5,12 @@
             ORDERED: 1,      // 预订
             LOCKED: 2,       // 锁场
             REFRESHED: 3,    // 换场
+            ATTENTION: 4,    // 开场
             Current_Date: $("#current_date").val(),
             Current_Sport: $("#current_sport").val(),
-            Reservation_Tpl: '<span>#USERNAME#</span><span>#USERMOBILE#</span>',
+            Reservation_Tpl: '<span class="name" data-id="#USERID#" data-name="#USERNAME#">#USERNAME1#</span>' +
+                '<span class="mobile" data-mobile="#USERMOBILE#">#USERMOBILE1#</span>' +
+                '<span class="angle"></span>',
             Reservation_Date_Tpl: '<li class="reservation-date-picker #DATEACTIVE#" data-value="#DATEVALUE#">' +
                 '<a href="javascript:;">#DATETEXT#</a></li>',
             Reservation_list: '<li class="court">#SITENAME# #STARTTIME#-#ENDTIME#</li>'
@@ -119,13 +122,13 @@
             var currentDate = moment();
 
             if (content.opts.Current_Date === currentDate.format("YYYY-MM-DD")) {
-                var currentTime = currentDate.format("HH:ss");
+                var currentTime = currentDate.format("HH:00");
 
                 $sequence.find("tr.timing-body").each(function (index, el) {
                     var startTime = $(el).attr("data-start");
 
                     // 不可使用
-                    if (currentTime >= startTime) {
+                    if (currentTime > startTime) {
                         $(el).find("td:not(.time)").removeClass().addClass("disabled").addClass("time-end").html("");
                     }
                 });
@@ -153,50 +156,46 @@
                                 '[data-start="' + reserveInfo.startTime + '"]' +
                                 '[data-end="' + reserveInfo.endTime + '"]');
 
+                            var html = '';
                             // 场地已预订
                             if (reserveInfo.siteReserveStatus == 1) {
+                                html = content.opts.Reservation_Tpl
+                                    .replace(/#USERID#/, reserveInfo.operatorId)
+                                    .replace(/#USERNAME#/, reserveInfo.operatorName)
+                                    .replace(/#USERNAME1#/, reserveInfo.operatorName.substr(0, 2) + "*")
+                                    .replace(/#USERMOBILE#/, reserveInfo.operatorMobile)
+                                    .replace(/#USERMOBILE1#/, "*" + reserveInfo.operatorMobile.substr(-4));
                                 if (reserveInfo.reserveType == 1) {  // PC预订
-                                    $site.removeClass().addClass('ordered computer')
-                                        .html(content.opts.Reservation_Tpl
-                                            .replace(/#USERNAME#/, reserveInfo.operatorName.substr(1) + "*")
-                                            .replace(/#USERMOBILE#/, "*" + reserveInfo.operatorMobile.substr(-4))
-                                        );
+                                    $site.removeClass().addClass('ordered computer').html(html);
                                 } else if (reserveInfo.reserveType == 2) {  // 微信预订
-                                    $site.removeClass().addClass('ordered mobile')
-                                        .html(content.opts.Reservation_Tpl
-                                            .replace(/#USERNAME#/, reserveInfo.operatorName.substr(1) + "*")
-                                            .replace(/#USERMOBILE#/, "*" + reserveInfo.operatorMobile.substr(-4))
-                                        );
+                                    $site.removeClass().addClass('ordered mobile').html(html);
                                 } else if (reserveInfo.reserveType == 3) {  // 电话预订
-                                    $site.removeClass().addClass('ordered phone')
-                                        .html(content.opts.Reservation_Tpl
-                                            .replace(/#USERNAME#/, reserveInfo.operatorName.substr(1) + "*")
-                                            .replace(/#USERMOBILE#/, "*" + reserveInfo.operatorMobile.substr(-4))
-                                        );
+                                    $site.removeClass().addClass('ordered phone').html(html);
                                 }
 
+                                if (reserveInfo.isUse == 1) {
+                                    $site.addClass("used");
+                                }
                             }
 
                             // 未支付
                             if (reserveInfo.siteReserveStatus == 2) {
+                                html = content.opts.Reservation_Tpl
+                                    .replace(/#USERID#/, reserveInfo.operatorId)
+                                    .replace(/#USERNAME#/, reserveInfo.operatorName)
+                                    .replace(/#USERNAME1#/, reserveInfo.operatorName.substr(0, 2) + "*")
+                                    .replace(/#USERMOBILE#/, reserveInfo.operatorMobile)
+                                    .replace(/#USERMOBILE1#/, "*" + reserveInfo.operatorMobile.substr(-4));
                                 if (reserveInfo.reserveType == 1) {
-                                    $site.removeClass().addClass('unpaid computer')
-                                        .html(content.opts.Reservation_Tpl
-                                            .replace(/#USERNAME#/, reserveInfo.operatorName.substr(0,2) + "*")
-                                            .replace(/#USERMOBILE#/, "*" + reserveInfo.operatorMobile.substr(-4))
-                                        );
+                                    $site.removeClass().addClass('unpaid computer').html(html);
                                 } else if (reserveInfo.reserveType == 2) {
-                                    $site.removeClass().addClass('unpaid mobile')
-                                        .html(content.opts.Reservation_Tpl
-                                            .replace(/#USERNAME#/, reserveInfo.operatorName.substr(0,2) + "*")
-                                            .replace(/#USERMOBILE#/, "*" + reserveInfo.operatorMobile.substr(-4))
-                                        );
+                                    $site.removeClass().addClass('unpaid mobile').html(html);
                                 } else if (reserveInfo.reserveType == 3) {
-                                    $site.removeClass().addClass('unpaid phone')
-                                        .html(content.opts.Reservation_Tpl
-                                            .replace(/#USERNAME#/, reserveInfo.operatorName.substr(0,2) + "*")
-                                            .replace(/#USERMOBILE#/, "*" + reserveInfo.operatorMobile.substr(-4))
-                                        );
+                                    $site.removeClass().addClass('unpaid phone').html(html);
+                                }
+
+                                if (reserveInfo.isUse == 1) {
+                                    $site.addClass("used");
                                 }
                             }
 
@@ -237,21 +236,24 @@
                 $(".sequence-order").attr("data-click", "yes").show();
                 $(".sequence-lock").attr("data-click", "yes").show();
                 $(".sequence-unlock").attr("data-click", "no").hide();
-                $(".sequence-refresh").attr("data-click", "no").show();
+                $(".sequence-refresh").attr("data-click", "no").hide();
+                $(".sequence-attention").attr("data-click", "no").hide();
             }
             if (status === content.opts.REFRESHED) {
                 $selected = $sequenceTable.find('td.sel');
-                $(".sequence-order").attr("data-click", "no").show();
-                $(".sequence-lock").attr("data-click", "no").show();
+                $(".sequence-order").attr("data-click", "no").hide();
+                $(".sequence-lock").attr("data-click", "no").hide();
                 $(".sequence-unlock").attr("data-click", "no").hide();
                 $(".sequence-refresh").attr("data-click", "yes").show();
+                $(".sequence-attention").attr("data-click", "yes").show();
             }
             if (status === content.opts.LOCKED) {
                 $selected = $sequenceTable.find('td.sel');
-                $(".sequence-order").attr("data-click", "no").show();
+                $(".sequence-order").attr("data-click", "no").hide();
                 $(".sequence-lock").attr("data-click", "no").hide();
                 $(".sequence-unlock").attr("data-click", "yes").show();
-                $(".sequence-refresh").attr("data-click", "no").show();
+                $(".sequence-refresh").attr("data-click", "no").hide();
+                $(".sequence-attention").attr("data-click", "no").hide();
             }
 
             $ordersListSelected.find(".court").remove();
@@ -318,7 +320,7 @@
                 content.addReservationsSelected(content.opts.ORDERED);
             });
 
-            // 换场选择
+            // 开场换场选择
             $sequenceTable.on("click", "td.ordered,td.unpaid", function (e) {
                 e.preventDefault();
 
@@ -420,7 +422,9 @@
                     lock: true
                 }, function (res) {
                     if (res.code == 1) {
-                        $(".tips-modal").modal({backdrop: false, show: true});
+                        $(".tips-modal").modal({backdrop: false, show: true})
+                            .find(".text-message").text("您已经成功锁定这些场地。");
+                        location.reload();
                     } else {
                         alert(res.message || "锁场失败, 请稍后重试");
                     }
@@ -456,7 +460,9 @@
                     lock: false
                 }, function (res) {
                     if (res.code == 1) {
-                        $(".tips-modal").modal({backdrop: false, show: true});
+                        $(".tips-modal").modal({backdrop: false, show: true})
+                            .find(".text-message").text("您已经成功解锁这些场地。");
+                        location.reload();
                     } else {
                         alert(res.message || "解锁失败, 请稍后重试");
                     }
@@ -515,7 +521,7 @@
 
                 return false;
 
-                var $this = $(this);
+                /*var $this = $(this);
 
                 if ($this.attr("data-click") === "no") {
                     return alert("当前不能调换场地");
@@ -543,6 +549,60 @@
                         $(".tips-modal").modal({backdrop: false, show: true});
                     } else {
                         alert(res.message || "锁场失败, 请稍后重试");
+                    }
+                });*/
+            });
+
+            // 开场
+            $(".sequence-attention").on("click", function (e) {
+                e.preventDefault();
+
+                $("#attention_user_name").val("散客");
+                $("#attention_user_mobile").val("15611119752");
+                $("#attention_user_opType").val("2");
+
+                $("#attentionModal").modal({backdrop: false, show: true});
+            });
+
+            // 开场
+            $("#attention_user_confirm").on("click", function (e) {
+                e.preventDefault();
+
+                var $this = $(this);
+
+                if ($this.attr("data-click") === "no") {
+                    return alert("当前不能开场");
+                }
+
+                var data = content.findReservationsSelected(content.opts.REFRESHED);
+
+                if (data.length === 0) {
+                    return alert("请先选择场地");
+                }
+
+                content.opts.data = {
+                    siteReserveDateList: [{
+                        reserveStartDate: content.opts.Current_Date,
+                        reserveEndDate: content.opts.Current_Date,
+                        reserveWeek: moment(content.opts.Current_Date).format("e"),
+                        siteReserveTimeList: data
+                    }]
+                };
+
+                //memberSign/memberSign?signType=1&signMobile=13111111111&signName=张三&signMemberCardNo=593089
+
+                $.post('/memberSign/memberSign', {
+                    signType: $("#attention_user_opType").val(),
+                    signMobile: $("#attention_user_mobile").val(),
+                    signName: $("#attention_user_name").val(),
+                    signMemberCardNo: ""
+                }, function (res) {
+                    if (res.code == 1) {
+                        $("#attentionModal").modal("hide");
+
+                        location.reload();
+                    } else {
+                        alert(res.message || "签到开场失败, 请稍后重试");
                     }
                 });
             });
@@ -641,6 +701,7 @@
                             $('#reservations_user_mobile').val("");
                             $('#reservations_user_opType').val("2");
                             $('#reservations_user_name').val("散客");
+                            content.queryMemberBalance(0);
                             return [];
                         }
                     } else {
@@ -657,6 +718,24 @@
                     $('#reservations_user_mobile').val(mobile);
                     $("#reservations_user_opType").val("1");
                     $('#reservations_user_name').val(memberName);
+
+                    content.queryMemberBalance(memberId);
+                }
+            });
+        },
+        queryMemberBalance: function (memberId) {
+            if (!memberId) {
+                $('#reservations_paid_balance').val("0.00");
+                return;
+            }
+
+            $.post('/member/memberDetail', {memberId: memberId}, function (res) {
+                var data = res.data;
+
+                if (res.code == 1) {
+                    $('#reservations_paid_balance').val(data.cardBalance);
+                } else {
+                    alert(res.message || "会员余额查询失败, 请稍后重试");
                 }
             });
         }

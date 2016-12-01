@@ -35,6 +35,30 @@
                     location.assign(content.opts.URL + '?page=' + pageIndex);
                 }
             });
+
+            // 删除
+            $(".members-list").on("click", ".members-delete", function () {
+                var $this = $(this);
+
+                $("#delete_memberId").val($this.attr("data-id"));
+                $("#deleteModal").modal({backdrop: false, show: true});
+            });
+
+            // 删除
+            $(".confirm-delete").on("click", function (e) {
+                e.preventDefault();
+
+                var memberId = $("#delete_memberId").val();
+
+                $.post('/teachers/lockTeacher', {memberId: memberId}, function (res) {
+                    if (res.code == 1) {
+                        location.reload();
+                    } else {
+                        console.log(res.message || "会员删除失败, 请稍后重试");
+                        alert(res.message || "会员删除失败, 请稍后重试");
+                    }
+                });
+            });
         }
     };
 

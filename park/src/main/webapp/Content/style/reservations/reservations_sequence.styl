@@ -57,10 +57,11 @@
             border-right 0
             border-bottom 0
             cursor pointer
+            position relative
             &.active
                 background-color #f9f9f9
             &.sel
-                border 1px solid #3187bf
+                border 1px solid #a94442
             &.time
                 width 114px
             &.phone
@@ -80,6 +81,8 @@
                 color #fff
             span
                 display block
+                &.angle
+                    display none
             &.selected
                 background url("/Content/images/icons/checked.png") no-repeat center
                 background-size 20px
@@ -89,6 +92,19 @@
             &.disabled
                 background #E8E8E8 url("/Content/images/icons/disabled.png") no-repeat center
                 background-size 20px
+            &.used
+                .angle
+                    display block
+                    position absolute
+                    width 0
+                    height 0
+                    top 0
+                    right 0
+                    border-left 10px solid transparent
+                    border-bottom 10px solid transparent
+                    border-right 10px solid #e6a200
+                    border-top 10px solid #e6a200
+                    color #fff
         tr
             &:nth-child(1)
                 background-color #f2f2f2
