@@ -37,17 +37,17 @@
             <div class="panel panel-default sc-booking-user">
                 <div class="panel-heading">定场预订</div>
                 <div class="panel-body">
-                    <input type="hidden" id="block_user_Id" name="memberId">
-                    <input type="hidden" id="block_op_type" name="opType" value="2"><!--1会员2散客-->
+                    <input type="hidden" id="reservations_fixed_opType" name="opType" value="2"><!--1会员2散客-->
+                    <input type="hidden" id="reservations_fixed_member" name="memberId">
                     <input type="hidden" name="reserveType" value="1"><!--1PC-->
                     <input type="hidden" name="reserveModel" value="1"><!--1普通2批量-->
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label for="block_user_name" class="col-sm-4 control-label">
+                            <label for="reservations_fixed_name" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 预订人
                             </label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="block_user_name" name="name"
+                                <input type="text" class="form-control" id="reservations_fixed_name" name="name"
                                        placeholder="预订人" autocomplete="off" value="散客"
                                        data-val="true" data-val-required="预订人不能为空"
                                        data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,9}$"
@@ -56,26 +56,26 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="block_user_degree" class="col-sm-4 control-label">
+                            <label for="reservations_fixed_site" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 场地类型
                             </label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="block_user_degree" name="siteclass"
+                                <select class="form-control" id="reservations_fixed_site" name="siteClass"
                                         data-val="true" data-val-required="请选择场地类型">
                                     <option value="">请选择</option>
                                     <c:forEach var="sport" items="${siteSportNames}">
                                         <option value="${sport.sportId}">${sport.sportName}</option>
                                     </c:forEach>
                                 </select>
-                                <div data-valmsg-for="siteclass" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="siteClass" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="block_time_start" class="col-sm-4 control-label">
+                            <label for="reservations_fixed_start" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 开始时间
                             </label>
                             <div class="col-sm-8">
-                                <input class="form-control" id="block_time_start" name="siteStartTime"
+                                <input class="form-control" id="reservations_fixed_start" name="siteStartTime"
                                        data-val="true" data-val-required="请选择开始时间">
                                 <div data-valmsg-for="siteStartTime" data-valmsg-replace="true"></div>
                             </div>
@@ -83,11 +83,11 @@
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label for="block_user_phone" class="col-sm-4 control-label">
+                            <label for="reservations_fixed_mobile" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 手机号码
                             </label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="block_user_phone" name="mobile"
+                                <input type="text" class="form-control" id="reservations_fixed_mobile" name="mobile"
                                        placeholder="手机号码" autocomplete="off"
                                        data-val="true" data-val-required="手机号码不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
@@ -96,12 +96,12 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="block_date" class="col-sm-4 control-label">
+                            <label for="reservations_fixed_date" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 预订日期
                             </label>
                             <div class="col-sm-8">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="block_date" name="reserveStartDate"
+                                    <input type="text" class="form-control" id="reservations_fixed_date" name="reserveStartDate"
                                            placeholder="预订日期" autocomplete="off"
                                            data-val="true" data-val-required="预订日期不能为空">
                                     <span class="input-group-addon start-date-select">
@@ -112,11 +112,11 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="block_time_end" class="col-sm-4 control-label">
+                            <label for="reservations_fixed_end" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 结束时间
                             </label>
                             <div class="col-sm-8">
-                                <input class="form-control" id="block_time_end" name="siteEndTime"
+                                <input class="form-control" id="reservations_fixed_end" name="siteEndTime"
                                        data-val="true" data-val-required="请选择结束时间">
                                 <div data-valmsg-for="siteEndTime" data-valmsg-replace="true"></div>
                             </div>
@@ -134,11 +134,11 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="block_venue_name" class="col-sm-4 control-label">
+                            <label for="reservations_fixed_siteId" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 场地编号
                             </label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="block_venue_name" name="siteId"
+                                <select class="form-control" id="reservations_fixed_siteId" name="siteId"
                                         data-val="true" data-val-required="请选择场地编号">
                                     <option value="">请选择</option>
                                 </select>
@@ -164,22 +164,20 @@
                         </div>
                     </div>
                     <div class="col-sm-3">
-                        <p class="sc-submit-tips text-center"></p>
+                        <div class="alert alert-info" role="alert">
+                            <p>总金额：<span class="text-danger reservations-fixed-totalMoney">0.00</span>元</p>
+                            <p>总场次：<span class="text-danger reservations-fixed-totalNum">0</span>时</p>
+                        </div>
                         <div class="form-group col-sm-12">
-                            <button type="button" class="btn btn-primary col-sm-12 booking-add">
+                            <button type="button" class="btn btn-primary col-sm-12" id="reservations_fixed_add">
                                 <span class="glyphicon glyphicon-plus"></span> 预订加场
                             </button>
                         </div>
                         <div class="form-group col-sm-12">
-                            <button type="submit" class="btn btn-primary col-sm-12 booking-pay">
+                            <button type="button" class="btn btn-primary col-sm-12" id="reservations_fixed_confirm">
                                 <span class="glyphicon glyphicon-usd"></span> 预订确认
                             </button>
                         </div>
-                        <!--<div class="form-group col-sm-12" style="display: none;">
-                            <button type="submit" class="btn btn-primary col-sm-12 booking-confirm">
-                                <span class="glyphicon glyphicon-ok"></span> 预订确认
-                            </button>
-                        </div>-->
                     </div>
                 </div>
             </div>
@@ -197,33 +195,72 @@
                 </div>
                 <div class="modal-body">
                     <form id="reservations_paid_form" class="form-horizontal" novalidate onsubmit="return false;">
-                        <input type="hidden" id="reservations_order_id" name="orderId">
-                        <div class="col-sm-12">
+                        <input type="hidden" id="reservations_paid_order" name="orderId">
+                        <input type="hidden" id="reservations_paid_subAmount" name="subAmount" value="0">
+                        <input type="hidden" id="reservations_paid_additionalPrice" name="additionalPrice" value="0">
+                        <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="reservations_order_no" class="col-sm-2 control-label">订单号</label>
+                                <label for="reservations_paid_orderSumCount" class="col-sm-6 control-label">
+                                    <span class="text-danger">*</span> 总场次(时)
+                                </label>
 
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="reservations_order_no"
-                                           name="orderno" placeholder="订单号" value="" readonly>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="reservations_paid_orderSumCount"
+                                           name="orderSumCount" autocomplete="off" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="reservations_paid_orderSumPrice" class="col-sm-6 control-label">
+                                    <span class="text-danger">*</span> 总金额(元)
+                                </label>
+
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="reservations_paid_orderSumPrice"
+                                           name="orderSumPrice" placeholder="总金额(元)" autocomplete="off"
+                                           data-val="true" data-val-required="总金额不能为空"
+                                           data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                           data-val-regex="总金额格式错误">
+                                    <div data-valmsg-for="orderSumPrice" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="reservations_ex_money" class="col-sm-4 control-label">附加金额</label>
+                                <label for="reservations_paid_payCount" class="col-sm-6 control-label">
+                                    <span class="text-danger">*</span> 支付场次(时)
+                                </label>
 
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="reservations_ex_money" name="additionalPrice"
-                                           placeholder="请输入附加金额(元)" autocomplete="off"
-                                           data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
-                                           data-val-regex="附加金额格式错误">
-                                    <div data-valmsg-for="additionalPrice" data-valmsg-replace="true"></div>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="reservations_paid_payCount" name="payCount"
+                                           placeholder="支付场次" autocomplete="off"
+                                           data-val="true" data-val-required="支付场次不能为空"
+                                           data-val-regex-pattern="^[1-9]\d*$"
+                                           data-val-regex="支付场次格式错误">
+                                    <div data-valmsg-for="payCount" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="reservations_money_type" class="col-sm-4 control-label">支付方式</label>
+                                <label for="reservations_paid_paySumPrice" class="col-sm-6 control-label">
+                                    <span class="text-danger">*</span> 支付金额(元)
+                                </label>
 
-                                <div class="col-sm-8">
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="reservations_paid_paySumPrice" name="paySumPrice"
+                                           placeholder="支付金额(元)" autocomplete="off"
+                                           data-val="true" data-val-required="支付金额不能为空"
+                                           data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                           data-val-regex="支付金额格式错误">
+                                    <div data-valmsg-for="paySumPrice" data-valmsg-replace="true"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="reservations_money_type" class="col-sm-3 control-label">
+                                    <span class="text-danger">*</span> 支付方式
+                                </label>
+
+                                <div class="col-sm-9">
                                     <select class="form-control" id="reservations_money_type" name="payType"
                                             data-val="true" data-val-required="请选择支付方式">
                                         <option value="">请选择</option>
@@ -234,51 +271,35 @@
                                     <div data-valmsg-for="payType" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="reservations_se_money" class="col-sm-4 control-label">优惠金额</label>
+                                <label for="reservations_paid_remark" class="col-sm-3 control-label">备注</label>
 
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="reservations_se_money" name="subAmount"
-                                           placeholder="请输入优惠金额(元)" autocomplete="off"
-                                           data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
-                                           data-val-regex="优惠金额格式错误">
-                                    <div data-valmsg-for="subAmount" data-valmsg-replace="true"></div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="reservations_money_no" class="col-sm-4 control-label">支票号</label>
-
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="reservations_money_no" name="checkNo"
-                                           placeholder="支票号" value="" autocomplete="off">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="reservations_pay_remark" class="col-sm-2 control-label">备注</label>
-
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" rows="3" id="reservations_pay_remark"
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" rows="3" id="reservations_paid_remark"
                                               name="orderRemark" placeholder="备注"></textarea>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="reservations_real_money" class="col-sm-2 control-label">实收金额</label>
+                                <label for="reservations_paid_balance" class="col-sm-3 control-label">
+                                    <span class="text-danger">*</span> 余额(元)
+                                </label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="reservations_real_money" name="paySumPrice"
-                                           placeholder="请输入实收金额(元)" autocomplete="off"
-                                           data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
-                                           data-val-regex="实收金额格式错误">
-                                    <div data-valmsg-for="paySumPrice" data-valmsg-replace="true"></div>
+                                    <input type="text" class="form-control" id="reservations_paid_balance"
+                                           name="balance" autocomplete="off" value="0.00" disabled>
                                 </div>
-                                <div class="col-sm-2">
-                                    <button class="btn btn-primary reservations-pay-confirm">
+                            </div>
+                            <div class="form-group">
+                                <label for="reservations_paid_money" class="col-sm-3 control-label">
+                                    <span class="text-danger">*</span> 实收金额(元)
+                                </label>
+
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="reservations_paid_money" name="paySumPrice"
+                                           placeholder="实收金额(元)" autocomplete="off" value="0.00" disabled>
+                                </div>
+                                <div class="col-sm-3">
+                                    <button class="btn btn-primary" id="reservations_paid_confirm">
                                         <span class="glyphicon glyphicon-ok"></span> 确 定
                                     </button>
                                 </div>
