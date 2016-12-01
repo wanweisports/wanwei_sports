@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.park.common.bean.DataInputView;
 import com.park.common.bean.PageBean;
+import com.park.common.constant.IDBConstant;
 import com.park.common.util.JsonUtils;
 import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
@@ -117,6 +118,74 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		resultMap.put("sportCountList", sportCountList);
 		
 		return resultMap;
+	}
+	
+	@Override
+	public Map<String, Object> getBusinessIncome(DataInputView dataInputView){
+		dataInputView.setBalanceStyle1(IDBConstant.BALANCE_STYLE_XJ);
+		dataInputView.setBalanceStyle2(IDBConstant.BALANCE_STYLE_ZFB);
+		dataInputView.setBalanceStyle3(IDBConstant.BALANCE_STYLE_WX);
+		dataInputView.setDictName(IDBConstant.BALANCE_SERVICE_TYPE);
+		
+		StringBuilder sql = new StringBuilder("SELECT ob.balanceId, mct.cardTypeName name,").append(countCardSql());
+		sql.append(" FROM other_balance ob, member_card mc, member_card_type mct");
+		sql.append(" WHERE ob.balanceServiceId = mc.cardId AND mc.cardTypeId = mct.cardTypeId AND ob.balanceServiceType >= :balanceServiceTypeMin AND ob.balanceServiceType <= :balanceServiceTypeMax");
+		sql.append(" GROUP BY mct.cardTypeId");
+		dataInputView.setBalanceServiceTypeMin(IDBConstant.BALANCE_SERVICE_TYPE_REG);
+		dataInputView.setBalanceServiceTypeMax(IDBConstant.BALANCE_SERVICE_TYPE_CARD_BUBAN_STUDENT);
+		List<Map<String, Object>> cardCounts = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
+		
+		sql.setLength(0);
+		sql.append("SELECT ob.balanceId, (SELECT dictValue FROM system_dict WHERE dictName=:dictName AND dictKey = oi.orderServiceType) name, ").append(countBalanceSql());
+		sql.append(" FROM other_balance ob, order_info oi");
+		sql.append(" WHERE ob.balanceServiceId = oi.orderId AND ob.balanceServiceType >= :balanceServiceTypeMin AND ob.balanceServiceType <= :balanceServiceTypeMax");
+		sql.append(" GROUP BY ob.balanceServiceType");
+		dataInputView.setBalanceServiceTypeMin(IDBConstant.BALANCE_SERVICE_TYPE_SITE);
+		dataInputView.setBalanceServiceTypeMax(IDBConstant.BALANCE_SERVICE_TYPE_SITE_RECEIVABLE);
+		List<Map<String, Object>> siteCounts = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
+		
+		dataInputView.setBalanceServiceTypeMin(IDBConstant.BALANCE_SERVICE_TYPE_GOODS);
+		dataInputView.setBalanceServiceTypeMax(IDBConstant.BALANCE_SERVICE_TYPE_GOODS);
+		List<Map<String, Object>> goodsCounts = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("cardCounts", countSum(cardCounts));
+		resultMap.put("siteCounts", countSum(siteCounts));
+		resultMap.put("goodsCounts", countSum(goodsCounts));
+		
+		return resultMap;
+	}
+	
+	private Map<String, Object> countSum(List<Map<String, Object>> countList){
+		double xianjinSumPrice = 0, zhifubaoSumPrice = 0, weixinSumPrice = 0, sumPrice = 0;
+		for(Map<String, Object> map : countList){
+			Double xianjin = StrUtil.objToDoubleDef0(map.get("xianjin"));
+			Double zhifubao = StrUtil.objToDoubleDef0(map.get("zhifubao"));
+			Double weixin = StrUtil.objToDoubleDef0(map.get("weixin"));
+			xianjinSumPrice += xianjin;
+			zhifubaoSumPrice += zhifubao;
+			weixinSumPrice += weixin;
+			sumPrice += xianjin;
+			sumPrice += zhifubao;
+			sumPrice += weixin;
+			map.put("sumPrice", xianjin+zhifubao+weixin);
+		}
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("countList", countList);
+		resultMap.put("xianjinSumPrice", xianjinSumPrice);
+		resultMap.put("zhifubaoSumPrice", zhifubaoSumPrice);
+		resultMap.put("weixinSumPrice", weixinSumPrice);
+		resultMap.put("sumPrice", sumPrice);
+		return resultMap; 
+		
+	}
+	
+	private String countBalanceSql(){
+		return "(SELECT SUM(realAmount) FROM other_balance WHERE balanceServiceType = ob.balanceServiceType AND balanceStyle = :balanceStyle1) xianjin, (SELECT SUM(realAmount) FROM other_balance WHERE balanceServiceType = ob.balanceServiceType AND balanceStyle = :balanceStyle2) zhifubao, (SELECT SUM(realAmount) FROM other_balance WHERE balanceServiceType = ob.balanceServiceType AND balanceStyle = :balanceStyle3) weixin";
+	}
+	
+	private String countCardSql(){
+		return "(SELECT SUM(realAmount) FROM other_balance ob, member_card mc1 WHERE ob.balanceServiceId = mc1.cardId AND mct.cardTypeId =mc1.cardTypeId AND balanceServiceType = ob.balanceServiceType AND balanceStyle = :balanceStyle1) xianjin, (SELECT SUM(realAmount) FROM other_balance ob, member_card mc1 WHERE ob.balanceServiceId = mc1.cardId AND mct.cardTypeId =mc1.cardTypeId AND balanceServiceType = ob.balanceServiceType AND balanceStyle = :balanceStyle2) zhifubao, (SELECT SUM(realAmount) FROM other_balance ob, member_card mc1 WHERE ob.balanceServiceId = mc1.cardId AND mct.cardTypeId =mc1.cardTypeId AND balanceServiceType = ob.balanceServiceType AND balanceStyle = :balanceStyle3) weixin";
 	}
 	
 }

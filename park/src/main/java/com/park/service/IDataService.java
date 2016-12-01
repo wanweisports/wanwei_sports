@@ -13,4 +13,6 @@ public interface IDataService {
 	
 	public Map<String, Object> getSitePercentage(DataInputView dataInputView);
 	
+	public Map<String, Object> getBusinessIncome(DataInputView dataInputView);
+	
 }

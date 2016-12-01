@@ -20,6 +20,7 @@ import com.park.common.constant.IPlatformConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.MemberCard;
 import com.park.common.po.MemberCardType;
+import com.park.common.po.OrderInfo;
 import com.park.common.po.OtherBalance;
 import com.park.common.po.OtherInvoice;
 import com.park.common.po.UserMember;
@@ -595,7 +596,8 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		return baseDao.getUniqueResult("SELECT 1 FROM member_card WHERE cardNo = ?", no) == null;
 	}
 	
-	private String getBalanceNo(){
+	@Override
+	public String getBalanceNo(){
 		return DateUtil.dateToString(new Date(), DateUtil.YYYYMMDD_HMS);
 	}
 	
@@ -724,6 +726,26 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		resultMap.put("pageBean", pageBean);
 		resultMap.put("itemCounts", typeCountList);
 		return resultMap;
+	}
+	
+	@Override
+	public Integer saveBalanceByOrderInfo(OrderInfo orderInfo){
+		String nowDate = DateUtil.getNowDate();
+		OtherBalance balance = new OtherBalance();
+		balance.setBalanceNo(getBalanceNo());
+		balance.setBalanceServiceId(orderInfo.getOrderId());
+		balance.setBalanceServiceType(orderInfo.getOrderServiceType());
+		balance.setBalanceStyle(orderInfo.getPayType());
+		balance.setOldAmount(orderInfo.getOrderSumPrice());
+		balance.setSubAmount(orderInfo.getSubAmount());
+		balance.setRealAmount(orderInfo.getPaySumPrice());
+		balance.setBalanceType(IDBConstant.BALANCE_TYPE_OTHER);
+		balance.setServiceDate(nowDate);
+		balance.setCreateTime(nowDate);
+		balance.setSalesId(orderInfo.getSalesId());
+		balance.setBalanceStatus(IDBConstant.BALANCE_STATUS_ALL);
+		baseDao.save(balance, null);
+		return balance.getBalanceId();
 	}
 	
 	private int getTypeIndex(List<Map<String, Object>> typeCountList, String sportName){

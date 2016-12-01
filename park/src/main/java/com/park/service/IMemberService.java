@@ -10,6 +10,7 @@ import com.park.common.bean.MemberInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.po.MemberCard;
 import com.park.common.po.MemberCardType;
+import com.park.common.po.OrderInfo;
 import com.park.common.po.OtherBalance;
 import com.park.common.po.OtherInvoice;
 import com.park.common.po.UserMember;
@@ -79,6 +80,8 @@ public interface IMemberService {
 	
 	public List<Map<String, Object>> searchMember(String search);
 	
+	public String getBalanceNo();
+	
 	public Map<String, Object> getMembersChildren(int memberId);
 	
 	public void deleteChildrenMember(int memberId);
@@ -94,5 +97,7 @@ public interface IMemberService {
 	public void updateLockTeacher(int memberId, int salesId);
 	
 	public Map<String, Object> countTeacher(MemberInputView memberInputView) throws Exception ;
+	
+	public Integer saveBalanceByOrderInfo(OrderInfo orderInfo);
 	
 }

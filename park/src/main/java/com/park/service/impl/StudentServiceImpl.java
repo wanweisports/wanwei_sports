@@ -12,6 +12,7 @@ import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.MemberCard;
 import com.park.common.po.MemberCardType;
+import com.park.common.po.OtherBalance;
 import com.park.common.po.UserStudent;
 import com.park.common.util.DateUtil;
 import com.park.common.util.JsonUtils;
@@ -28,7 +29,7 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 	
 	@Autowired
 	private IMemberService memberService;
-	
+		
 	@Override
 	public PageBean getStudents(StudentInputView studentInputView){
 		
@@ -96,6 +97,19 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 			student.setStudentStatus(IDBConstant.LOGIC_STATUS_YES);
 			baseDao.save(student, null);
 			
+			OtherBalance balance = new OtherBalance();
+			balance.setBalanceNo(memberService.getBalanceNo());
+			balance.setBalanceServiceId(memberCard.getCardId());
+			balance.setBalanceServiceType(IDBConstant.BALANCE_SERVICE_TYPE_REG);
+			balance.setBalanceStyle(IDBConstant.BALANCE_STYLE_XJ);
+			balance.setOldAmount(memberCarType.getCardDeposit());
+			balance.setRealAmount(memberCarType.getCardDeposit());
+			balance.setBalanceType(IDBConstant.BALANCE_TYPE_OTHER);
+			balance.setServiceDate(nowDate);
+			balance.setCreateTime(nowDate);
+			balance.setSalesId(student.getSalesId());
+			balance.setBalanceStatus(IDBConstant.BALANCE_STATUS_ALL);
+			baseDao.save(balance, null);
 			
 			return student.getStudentId();
 		}
@@ -111,6 +125,7 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 		studentDB.setStudentMobile(student.getStudentMobile());
 		studentDB.setUpdateTime(nowDate);
 		baseDao.save(studentDB, studentId);
+		
 		return studentId;
 	}
 	

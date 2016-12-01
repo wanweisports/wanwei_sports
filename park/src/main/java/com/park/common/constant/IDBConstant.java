@@ -41,6 +41,13 @@ public interface IDBConstant {
     public static final String BALANCE_SERVICE_TYPE_CARD_BUBAN_TEACHER = "20";//教师补办会员卡
     public static final String BALANCE_SERVICE_TYPE_CARD_BUBAN_STUDENT = "30";//学生补办会员卡
     
+    public static final String BALANCE_SERVICE_TYPE_SITE = "100";//场地预定
+    public static final String BALANCE_SERVICE_TYPE_BLOCK_SITE = "200";//包场预订
+    public static final String BALANCE_SERVICE_TYPE_SITE_RECEIVABLE = "220";//应收款
+    public static final String BALANCE_SERVICE_TYPE_GOODS = "300";//商品
+    
+    
+    
     public static final String BALANCE_STATUS = "BALANCE_STATUS";//流水状态
     public static final String BALANCE_STATUS_ALL = "1";//已收全款
     public static final String BALANCE_STATUS_NOT = "2";//未付款
@@ -57,9 +64,9 @@ public interface IDBConstant {
     public static final int ROLE_COMMON = 3;//普通用户
     
     public static final String ORDER_SERVICE_TYPE = "ORDER_SERVICE_TYPE";//订单业务类型
-    public static final String ORDER_SERVICE_TYPE_SITE = "1";//场地
-    public static final String ORDER_SERVICE_TYPE_GOODS = "2";//商品
-    public static final String ORDER_SERVICE_TYPE_BLOCK_SITE = "3";//包场
+    public static final String ORDER_SERVICE_TYPE_SITE = "100";//场地预定
+    public static final String ORDER_SERVICE_TYPE_BLOCK_SITE = "200";//包场预订
+    public static final String ORDER_SERVICE_TYPE_GOODS = "300";//商品消费
     
     public static final int ROLE_EMPLOYEE = 4;//员工角色最低主键值
 

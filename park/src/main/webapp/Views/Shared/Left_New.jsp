@@ -201,7 +201,7 @@
                         </tr>
                         <tr class="list-nav-item site ${(param.nav == "site" && param.subNav == "order") ? "active" : ""}">
                             <td>
-                                <span><a href="/order/getOrderList?orderServiceTypes=1,3">场地订单</a></span>
+                                <span><a href="/order/getOrderList?orderServiceTypes=100,200">场地订单</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item site ${(param.nav == "site" && param.subNav == "site") ? "active" : ""}">
@@ -250,7 +250,7 @@
                         </tr>
                         <tr class="list-nav-item good ${(param.nav == "good" && param.subNav == "order") ? "active" : ""}">
                             <td>
-                                <span><a href="/order/getOrderList?orderServiceTypes=2">商品订单</a></span>
+                                <span><a href="/order/getOrderList?orderServiceTypes=300">商品订单</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item good ${(param.nav == "good" && param.subNav == "detail") ? "active" : ""}">

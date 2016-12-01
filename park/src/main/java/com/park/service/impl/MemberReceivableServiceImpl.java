@@ -5,13 +5,16 @@ import org.springframework.stereotype.Service;
 
 import com.park.common.bean.MemberInputView;
 import com.park.common.bean.PageBean;
+import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.MemberReceivable;
 import com.park.common.po.OrderInfo;
+import com.park.common.po.OtherBalance;
 import com.park.common.util.DateUtil;
 import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
 import com.park.service.IMemberReceivableService;
+import com.park.service.IMemberService;
 import com.park.service.IOrderService;
 
 @Service
@@ -22,6 +25,9 @@ public class MemberReceivableServiceImpl extends BaseService implements IMemberR
 	
 	@Autowired
 	private IOrderService orderService;
+	
+	@Autowired
+	private IMemberService memberService;
 	
 	@Override
 	public Integer saveMemberReceivable(MemberReceivable memberReceivable, double payPrice, int payCount, String payType){
@@ -46,6 +52,20 @@ public class MemberReceivableServiceImpl extends BaseService implements IMemberR
 		if(orderInfo.getPayCount() >= orderInfo.getSumCount()){ //应付款结清，删除此应收款
 			baseDao.delete(memberReceivableDB);
 		}
+		
+		OtherBalance balance = new OtherBalance();
+		balance.setBalanceNo(memberService.getBalanceNo());
+		balance.setBalanceServiceId(memberReceivableDB.getOrderId());
+		balance.setBalanceServiceType(IDBConstant.BALANCE_SERVICE_TYPE_SITE_RECEIVABLE);
+		balance.setBalanceStyle(payType);
+		balance.setOldAmount(orderInfo.getOrderSumPrice());
+		balance.setRealAmount(payPrice);
+		balance.setBalanceType(IDBConstant.BALANCE_TYPE_OTHER);
+		balance.setServiceDate(nowDate);
+		balance.setCreateTime(nowDate);
+		balance.setSalesId(memberReceivable.getSalesId());
+		baseDao.save(balance, null);
+		
 		return receivableId;
 	}
 	

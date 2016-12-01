@@ -139,7 +139,7 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        location.assign('/order/getOrderList?orderServiceTypes=2');
+                        location.assign('/order/getOrderList?orderServiceTypes=300');
                     } else {
                         alert(res.message || '支付订单失败，请稍后重试');
                     }

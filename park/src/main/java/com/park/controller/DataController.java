@@ -40,7 +40,13 @@ public class DataController extends BaseController {
 
     // 营业收支
     @RequestMapping("getBusinessIncome")
-    public String getBusinessIncome() {
+    public String getBusinessIncome(DataInputView dataInputView, Model model) {
+    	try{
+    		model.addAllAttributes(dataService.getBusinessIncome(dataInputView));
+    		System.out.println(JsonUtils.toJson(dataService.getBusinessIncome(dataInputView)));
+    	}catch (Exception e) {
+			e.printStackTrace();
+		}
         return "Data/DataBusinessIncome";
     }
 
@@ -49,7 +55,6 @@ public class DataController extends BaseController {
     public String getVenuePercentage(DataInputView dataInputView, Model model) {
     	try {
 			model.addAllAttributes(dataService.getSitePercentage(dataInputView));
-			System.out.println(JsonUtils.toJson(dataService.getSitePercentage(dataInputView)));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

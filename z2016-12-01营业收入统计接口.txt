@@ -1,0 +1,63 @@
+营业收入统计接口：
+请求：/data/getBusinessIncome
+
+
+返回：
+{
+    "siteCounts": {                    //场地预定统计
+        "weixinSumPrice": 100,         //微信金额小计
+        "xianjinSumPrice": 0,          //现金金额小计
+        "zhifubaoSumPrice": 2200,      //支付宝金额小计
+        "countList": [                 //具体项统计【ps: 如果没有某种支付，则无字段，比如这里就没有现金支付的字段】
+            {
+                "weixin": 100,         //微信
+                "zhifubao": 1400,      //支付宝
+                "sumPrice": 1500,      //项目小计
+                "name": "场地预订"     //名称
+            },
+            {
+                "zhifubao": 800,
+                "sumPrice": 800,
+                "name": "包场预订"
+            }
+        ],
+        "sumPrice": 2300
+    },
+    "goodsCounts": {                 //商品统计
+        "weixinSumPrice": 0,
+        "xianjinSumPrice": 0,
+        "zhifubaoSumPrice": 400,
+        "countList": [
+            {
+                "zhifubao": 400,
+                "sumPrice": 400,
+                "name": "商品"
+            }
+        ],
+        "sumPrice": 400
+    },
+    "cardCounts": {                 //会员卡统计
+        "weixinSumPrice": 100,
+        "xianjinSumPrice": 1350,
+        "zhifubaoSumPrice": 0,
+        "countList": [
+            {
+                "xianjin": 0,
+                "sumPrice": 0,
+                "name": "教师卡"
+            },
+            {
+                "xianjin": 1300,
+                "weixin": 100,
+                "sumPrice": 1400,
+                "name": "团体会员卡"
+            },
+            {
+                "xianjin": 50,
+                "sumPrice": 50,
+                "name": "学生卡"
+            }
+        ],
+        "sumPrice": 1450
+    }
+}

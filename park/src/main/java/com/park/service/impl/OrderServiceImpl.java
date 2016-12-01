@@ -78,7 +78,7 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 		orderInfoDB.setPaySumPrice(paySumPrice); //新需求：剩余金额在应收款中收取
 		//会员付款--->应收款（散客无应收款）
 		Integer memberId = orderInfoDB.getMemberId();
-		if(memberId != null && memberId > 0){
+		if(memberId != null && memberId > 0 && (IDBConstant.ORDER_SERVICE_TYPE_SITE.equals(orderInfoDB.getOrderServiceType())||IDBConstant.ORDER_SERVICE_TYPE_BLOCK_SITE.equals(orderInfoDB.getOrderServiceType()))){
 			//之前的逻辑
 			/*//扣除订单orderSumPrice金额：先扣除用户支付输入的金额
 			//不够：再扣会员卡金额
@@ -132,6 +132,9 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 			orderInfoDB.setOrderStatus(orderInfo.getOrderStatus());
 		}
 		baseDao.save(orderInfoDB, orderId);
+		
+		memberService.saveBalanceByOrderInfo(orderInfoDB);
+		
 		return orderId;
 	}
 	
