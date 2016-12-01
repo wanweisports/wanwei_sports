@@ -483,7 +483,7 @@
                     siteReserveDateList: [{
                         reserveStartDate: content.opts.Current_Date,
                         reserveEndDate: content.opts.Current_Date,
-                        reserveWeek: (new Date(content.opts.Current_Date)).getDay() || 7,
+                        reserveWeek: moment(content.opts.Current_Date).format("e"),
                         siteReserveTimeList: data
                     }]
                 };
@@ -637,6 +637,10 @@
                             }
                             return json;
                         } else {
+                            $('#reservations_user_member').val("0");
+                            $('#reservations_user_mobile').val("");
+                            $('#reservations_user_opType').val("2");
+                            $('#reservations_user_name').val("散客");
                             return [];
                         }
                     } else {
@@ -647,10 +651,12 @@
                 onSelect:function(elm) {
                     var memberId = elm.data('label');
                     var mobile = elm.data('id');
+                    var memberName = elm.data('value');
 
                     $('#reservations_user_member').val(memberId);
                     $('#reservations_user_mobile').val(mobile);
-                    $("#reservations_user_opType").val("1")
+                    $("#reservations_user_opType").val("1");
+                    $('#reservations_user_name').val(memberName);
                 }
             });
         }

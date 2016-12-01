@@ -13,7 +13,7 @@
             data: {
                 name: "散客",
                 mobile: "",
-                //memberId: "",
+                memberId: "0",
                 opType: "2",
                 reserveType: "1",
                 reserveModel: "2",
@@ -24,7 +24,7 @@
             $.datetimepicker.setLocale('zh');
 
             // 表单时间控件设置
-            $('#block_start_date').datetimepicker({
+            $('#reservations_batch_startDate').datetimepicker({
                 timepicker: false,
                 lang: "zh",
                 format:'Y-m-d',
@@ -35,10 +35,10 @@
             $(".start-date-select").on("click", function (e) {
                 e.preventDefault();
 
-                $('#block_start_date').datetimepicker("show");
+                $('#reservations_batch_startDate').datetimepicker("show");
             });
 
-            $('#block_end_date').datetimepicker({
+            $('#reservations_batch_endDate').datetimepicker({
                 timepicker: false,
                 lang: "zh",
                 format:'Y-m-d',
@@ -49,29 +49,29 @@
             $(".end-date-select").on("click", function (e) {
                 e.preventDefault();
 
-                $('#block_end_date').datetimepicker("show");
+                $('#reservations_batch_endDate').datetimepicker("show");
             });
 
-            $('#block_time_start').datetimepicker({
+            $('#reservations_batch_start').datetimepicker({
                 datepicker: false,
                 format: 'H:i',
                 step: 60,
                 value: '06:00'
             });
 
-            $('#block_time_end').datetimepicker({
+            $('#reservations_batch_end').datetimepicker({
                 datepicker: false,
                 format: 'H:i',
                 step: 60,
                 value: '22:00'
             });
 
-            this.initEvents2();
+            this.initEvents();
             this.searchMembers();
         },
         // 查询会员
         searchMembers: function () {
-            $("#block_user_phone").autosuggest({
+            $("#reservations_batch_mobile").autosuggest({
                 url: '/member/searchMember',
                 method: 'post',
                 queryParamName: 'search',
@@ -90,9 +90,9 @@
                             }
                             return json;
                         } else {
-                            $('#block_user_Id').val("");
-                            $('#block_op_type').val("2");
-                            $('#block_user_name').val("散客");
+                            $('#reservations_batch_member').val("0");
+                            $('#reservations_batch_opType').val("2");
+                            $('#reservations_batch_name').val("散客");
                             return [];
                         }
                     } else {
@@ -105,45 +105,41 @@
                     var memberId = elm.data('id');
                     var memberName = elm.data('value');
 
-                    $('#block_user_phone').val(memberMobile);
-                    $('#block_user_Id').val(memberId);
-                    $('#block_op_type').val("1");
-                    $('#block_user_name').val(memberName.replace('(' + memberMobile + ')', ""));
+                    $('#reservations_batch_mobile').val(memberMobile);
+                    $('#reservations_batch_member').val(memberId);
+                    $('#reservations_batch_opType').val("1");
+                    $('#reservations_batch_name').val(memberName.replace('(' + memberMobile + ')', ""));
                 }
             });
+        },
+        // 计算
+        calculateSiteMoney: function () {
+            var content = this;
 
-            $(".user-search").on("click", function (e) {
-                e.preventDefault();
+            $.post('/site/calculateSiteMoney', {
+                siteOperationJson: JSON.stringify(content.opts.data)
+            }, function (res) {
+                var data = res.data;
 
-                var $keywords = $("#block_user_phone");
+                if (res.code == 1) {
+                    $(".reservations-batch-totalMoney").text(data.originalPrice);
+                    $(".reservations-batch-totalNum").text(data.sumNums);
 
-                $.post('member/searchMember', {
-                    search: $keywords.val().trim()
-                }, function (res) {
-                    var data = res.data;
-
-                    if (res.code == 1) {
-                        if (data && data.members && data.members.length > 0) {
-                            $('#block_user_phone').val(data.members[0].memberMobile);
-                            $('#block_user_Id').val(data.members[0].memberId);
-                            $('#block_op_type').val("1");
-                            $('#block_user_name').val(data.members[0].memberName);
-                        } else {
-                            $('#block_user_Id').val("");
-                            $('#block_op_type').val("2");
-                            $('#block_user_name').val("散客");
-                        }
-                    } else {
-                        alert('搜索会员失败, 请稍后重试');
-                    }
-                });
+                    $("#reservations_paid_orderSumCount").val(data.sumNums);
+                    $("#reservations_paid_orderSumPrice").val(data.originalPrice);
+                    $("#reservations_paid_payCount").val(data.sumNums);
+                    $("#reservations_paid_paySumPrice").val(data.originalPrice);
+                    $("#reservations_paid_money").val(data.originalPrice);
+                } else {
+                    alert(res.message || "计算金额失败, 请稍后重试");
+                }
             });
         },
-        initEvents2: function () {
+        initEvents: function () {
             var content = this;
 
             // 场地类型改变
-            $("#block_user_degree").on("change", function (e) {
+            $("#reservations_batch_site").on("change", function (e) {
                 e.preventDefault();
 
                 var $this = $(this);
@@ -161,7 +157,7 @@
                                 .replace('#SITEID#', data.siteNames[i].siteId);
                         }
 
-                        $("#block_venue_name").html(html);
+                        $("#reservations_batch_siteId").html(html);
                     } else {
                         console.log(res.message || "查询场地失败, 请稍后重试");
                         alert(res.message || "查询场地失败, 请稍后重试");
@@ -187,15 +183,17 @@
                     }
                 }
                 $list.remove();
+
+                content.calculateSiteMoney();
             });
 
             // 加场
-            $(".booking-add").on("click", function (e) {
+            $("#reservations_batch_add").on("click", function (e) {
                 e.preventDefault();
 
                 var $form = $("#reservations_batch_form");
                 var $list = $(".reservations-list");
-                var data = {};
+                var siteReserveDate = {};
 
                 if (!$form.valid()) {
                     return false;
@@ -213,28 +211,37 @@
                     return {value: value, text: text};
                 }
 
-                data.reserveStartDate = $("#block_start_date").val();
-                data.reserveEndDate = $("#block_end_date").val();
-                data.reserveWeek = __getCheckbox().value.join(",");
-                data.siteReserveTimeList = [{
-                    siteStartTime: $("#block_time_start").val(),
-                    siteEndTime: $("#block_time_end").val(),
-                    siteId: $("#block_venue_name").val()
+                var data = content.opts.data;
+
+                data.mobile = $("#reservations_fixed_mobile").val();
+                data.name = $("#reservations_fixed_name").val();
+                data.memberId = $("#reservations_fixed_member").val() || "0";
+                data.opType = $("#reservations_fixed_opType").val();
+
+                siteReserveDate.reserveStartDate = $("#reservations_batch_startDate").val();
+                siteReserveDate.reserveEndDate = $("#reservations_batch_endDate").val();
+                siteReserveDate.reserveWeek = __getCheckbox().value.join(",");
+                siteReserveDate.siteReserveTimeList = [{
+                    siteStartTime: $("#reservations_batch_start").val(),
+                    siteEndTime: $("#reservations_batch_end").val(),
+                    siteId: $("#reservations_batch_siteId").val()
                 }];
-                content.opts.data.siteReserveDateList.push(data);
+                data.siteReserveDateList.push(siteReserveDate);
 
                 $list.append(content.tpl.BlockBooking()
-                    .replace("#BOOKING_SPORT#", $("#block_user_degree").find("option:selected").text().trim())
-                    .replace("#BOOKING_START_DATE#", $("#block_start_date").val())
-                    .replace("#BOOKING_END_DATE#", $("#block_end_date").val())
-                    .replace("#BOOKING_START_TIME#", $("#block_time_start").val())
-                    .replace("#BOOKING_END_TIME#", $("#block_time_end").val())
-                    .replace("#BOOKING_AREA#", $("#block_venue_name").find("option:selected").text().trim())
+                    .replace("#BOOKING_SPORT#", $("#reservations_batch_site").find("option:selected").text().trim())
+                    .replace("#BOOKING_START_DATE#", $("#reservations_batch_startDate").val())
+                    .replace("#BOOKING_END_DATE#", $("#reservations_batch_endDate").val())
+                    .replace("#BOOKING_START_TIME#", $("#reservations_batch_start").val())
+                    .replace("#BOOKING_END_TIME#", $("#reservations_batch_end").val())
+                    .replace("#BOOKING_AREA#", $("#reservations_batch_siteId").find("option:selected").text().trim())
                     .replace("#BOOKING_WEEK#", "(" + __getCheckbox().text + ")"));
+
+                content.calculateSiteMoney();
             });
 
             // 预订
-            $(".booking-pay").on("click", function (e) {
+            $("#reservations_batch_confirm").on("click", function (e) {
                 e.preventDefault();
 
                 var $list = $(".reservations-list");
@@ -244,10 +251,10 @@
                 }
 
                 var data = content.opts.data;
-                data.mobile = $("#block_user_phone").val();
-                data.name = $("#block_user_name").val();
-                data.memberId = $("#block_user_Id").val();
-                data.opType = $("#block_op_type").val();
+                /*data.mobile = $("#reservations_batch_mobile").val();
+                data.name = $("#reservations_batch_name").val();
+                data.memberId = $("#reservations_batch_member").val() || "0";
+                data.opType = $("#reservations_batch_opType").val();*/
 
                 $.post('site/saveReservationSite', {
                     siteOperationJson: JSON.stringify(content.opts.data)
@@ -255,8 +262,7 @@
                     var data = res.data;
 
                     if (res.code == 1) {
-                        $("#reservations_order_id").val(data.orderId);
-                        $("#reservations_order_no").val(data.orderNo);
+                        $("#reservations_paid_order").val(data.orderId);
                         $("#zhifuModal").modal({backdrop: false, show: true});
                     } else {
                         alert(res.message || "提交预订失败, 请稍后重试");
@@ -265,7 +271,7 @@
             });
 
             // 确认支付
-            $(".reservations-pay-confirm").on("click", function (e) {
+            $("#reservations_paid_confirm").on("click", function (e) {
                 e.preventDefault();
 
                 var $form = $("#reservations_paid_form");
@@ -280,292 +286,11 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $("#zhifuModal").modal({backdrop: false, show: false});
+                        $("#zhifuModal").modal("hide");
                         alert("预订支付成功");
                     } else {
                         alert(res.message || "确认订单失败, 请稍后重试");
                     }
-                });
-            });
-        },
-
-
-
-
-
-
-        initEvents: function () {
-            var content = this;
-
-            //this.queryMembers();
-            //this.querySportsArea();
-            //this.bookingVenue();
-
-            /*var $txtStartTime = $("#block_time_start");
-            var $txtEndTime = $("#block_time_end");
-            //var $txtBookingWeek = $("#block_booking_week");
-
-            // 起始时间改变
-            $txtStartTime.on("change", function (e) {
-                e.preventDefault();
-
-                //var week = $txtBookingWeek.val();
-                //var mayTime = $txtBookingWeek.find('option[value=' + week + ']').attr("data-time");
-                var endTime = $txtEndTime.val();
-                var startTime = $txtStartTime.val();
-
-                var tmp = parseInt(startTime.replace(/^(\d+):00$/, "$1"));
-                tmp++;
-                tmp = (tmp > 9 ? "" + tmp : "0" + tmp) + ":00";
-
-                if (startTime >= endTime) {
-                    $txtEndTime.val(tmp);
-                }
-            });
-
-            // 终止时间改变
-            $txtEndTime.on("change", function (e) {
-                e.preventDefault();
-
-                //var week = $txtBookingWeek.val();
-                //var mayTime = $txtBookingWeek.find('option[value=' + week + ']').attr("data-time");
-                var endTime = $txtEndTime.val();
-                var startTime = $txtStartTime.val();
-
-                var tmp = parseInt(endTime.replace(/^(\d+):00$/, "$1"));
-                tmp--;
-                tmp = (tmp > 9 ? "" + tmp : "0" + tmp) + ":00";
-
-                if (startTime >= endTime) {
-                    alert("结束时间大于起始时间!!");
-                    $txtStartTime.val(tmp);
-                }
-            });
-
-            var $txtStartDate = $("#block_start_date");
-            var $txtEndDate = $("#block_end_date");
-
-            // 起始日期改变
-            $txtStartDate.on("change", function (e) {
-                e.preventDefault();
-
-                var endDate = $txtEndDate.val();
-                var startDate = $txtStartDate.val();
-
-                if (startDate > endDate) {
-                    $txtEndDate.val($(this).val());
-                }
-            });
-
-            // 终止日期改变
-            $txtEndDate.on("change", function (e) {
-                e.preventDefault();
-
-                var endDate = $txtEndDate.val();
-                var startDate = $txtStartDate.val();
-
-                if (startDate > endDate) {
-                    alert("终止日期不能小于起始日期!!");
-                    $txtStartDate.val($(this).val());
-                }
-            });*/
-
-            var $uiBookingVenue = $(".sc-booking-venue");
-            var $txtPayType = $("#block_pay_type");
-
-            // 付款方式改变
-            if ($txtPayType.val() == 1) {
-                $uiBookingVenue.find(".booking-pay").parents(".form-group").show();
-                $uiBookingVenue.find(".booking-confirm").parents(".form-group").hide();
-            } else {
-                $uiBookingVenue.find(".booking-pay").parents(".form-group").hide();
-                $uiBookingVenue.find(".booking-confirm").parents(".form-group").show();
-            }
-            $txtPayType.on("change", function (e) {
-                e.preventDefault();
-
-                if ($txtPayType.val() == 1) {
-                    $uiBookingVenue.find(".booking-pay").parents(".form-group").show();
-                    $uiBookingVenue.find(".booking-confirm").parents(".form-group").hide();
-                } else {
-                    $uiBookingVenue.find(".booking-pay").parents(".form-group").hide();
-                    $uiBookingVenue.find(".booking-confirm").parents(".form-group").show();
-                }
-            });
-
-            var clickable = true;
-            // 删除加场的场次
-            $uiBookingVenue.on("click", ".booking-cancel", function (e) {
-                e.preventDefault();
-
-                var $this = $(this);
-                var conditions = {
-                    fieldnumber: $this.parents("tr").attr("data-id")
-                };
-
-                if (!clickable) {
-                    return;
-                }
-                clickable = false;
-
-                $.post('/venue/CancelVenueBookingsAdd', conditions, function (res) {
-                    if (res.status == 200) {
-                        $this.parents("tr").remove();
-                    } else {
-                        console.log(res);
-                    }
-                    clickable = true;
-                }).fail(function (err) {
-                    console.log(err);
-                    clickable = true;
-                });
-            });
-
-            var $bookingVenueForm = $("#user_venue_info_form");
-            // 加场
-            $uiBookingVenue.on("click", ".booking-add", function (e) {
-                e.preventDefault();
-
-                var $listVenues = $uiBookingVenue.find(".sc-booking-venues");
-                var conditions = $bookingVenueForm.serialize();
-
-                if (!clickable || !$bookingVenueForm.validate().form()) {
-                    return;
-                }
-                clickable = false;
-
-                $.post('/venue/AddVenueBookings', conditions, function (res) {
-                    var data = res.data;
-
-                    if (res.status == 200) {
-                        $("#batch_number").val(data.batchnumber);
-                        $listVenues.append(content.tpl.BlockBooking()
-                            .replace("#BOOKING_ID#", data.fieldnumber)
-                            .replace("#BOOKING_SPORT#", $("#block_user_degree").find("option:selected").text().trim())
-                            .replace("#BOOKING_START_DATE#", $("#block_start_date").val())
-                            .replace("#BOOKING_END_DATE#", $("#block_end_date").val())
-                            .replace("#BOOKING_START_TIME#", $("#block_time_start").find("option:selected").text().trim())
-                            .replace("#BOOKING_END_TIME#", $("#block_time_end").find("option:selected").text().trim())
-                            .replace("#BOOKING_AREA#", $("#block_venue_name").find("option:selected").text().trim())
-                            .replace("#BOOKING_WEEK#", "(" + $("#block_booking_week").find("option:selected").text().trim() + ")"));
-                    } else {
-                        $bookingVenueForm.find(".sc-submit-tips").show().html(res.message).addClass("text-danger");
-                    }
-                    clickable = true;
-                }).fail(function (err) {
-                    console.log(err);
-                    $bookingVenueForm.find(".sc-submit-tips").show().html("网络异常, 提交预订失败!!")
-                        .addClass("text-danger");
-                    clickable = true;
-                });
-            });
-        },
-        // 查询会员[未完成]
-        queryMembers: function () {
-            $(".user-search").on("click", function (e) {
-                e.preventDefault();
-
-                var $keywords = $("#block_user_phone");
-
-                $.getJSON('/users/Search', {
-                    name: $keywords.val().trim()
-                }, function (result) {
-                    var data = result.data;
-
-                    if (result.status == 200) {
-                        $('[name="name"]').val(data.name);
-                        $('[name="fitphone"]').val(data.phone);
-                    } else {
-                        alert(result.message);
-                    }
-                });
-            });
-        },
-        // 场地列表
-        querySportsArea: function () {
-            $.getJSON('/venue/getVenueSportsArea', {
-                sport: 1
-            }, function (result) {
-                var data = result.data;
-                var html = "";
-
-                if (result.status == 200) {
-                    for (var i = 0; i < data.length; i++) {
-                        html += '<option value="' + data[i].sitenumber + '">' + data[i].sitename + '</option>';
-                    }
-
-                    $("#block_venue_name").html(html);
-                } else {
-                    alert(result.message);
-                }
-            });
-        },
-        // 场地预订和付款
-        bookingVenue: function () {
-            var $bookingVenue = $(".sc-booking-venue");
-            var $bookingVenueForm = $("#user_venue_info_form");
-            var clickable = true;
-
-            // 预订不付款
-            $bookingVenue.on("click", ".booking-confirm", function (e) {
-                e.preventDefault();
-
-                $bookingVenueForm.find(".sc-submit-tips").hide().removeClass("text-success,text-danger");
-                if (!clickable) {
-                    return;
-                }
-                clickable = false;
-
-                $.post('/venue/SubmitVenueBookingsBlock', {"batchnumber": $("#batch_number").val()}, function (res) {
-                    var data = res.data;
-
-                    if (res.status == 200) {
-                        $bookingVenueForm.find(".sc-submit-tips").show().html("提交预订成功!!").addClass("text-success");
-                        setTimeout(function () {
-                            location.reload();
-                        }, 3000);
-                        $.Web_Print.printBookingSheet(data);
-                    } else {
-                        $bookingVenueForm.find(".sc-submit-tips").show().html(res.message).addClass("text-danger");
-                    }
-                    clickable = true;
-                }).fail(function (err) {
-                    console.log(err);
-                    $bookingVenueForm.find(".sc-submit-tips").show().html("网络异常, 提交预订失败!!")
-                        .addClass("text-danger");
-                    clickable = true;
-                });
-            });
-
-            // 预订付款
-            $bookingVenue.on("click", ".booking-pay", function (e) {
-                e.preventDefault();
-
-                $bookingVenueForm.find(".sc-submit-tips").hide().removeClass("text-success,text-danger");
-                if (!clickable) {
-                    return;
-                }
-                clickable = false;
-
-                $.post('/venue/SubmitVenueBookingsBlock', {"batchnumber": $("#batch_number").val()}, function (res) {
-                    var data = res.data;
-
-                    if (res.status == 200) {
-                        $bookingVenueForm.find(".sc-submit-tips").show().html("提交预订成功!!").addClass("text-success");
-
-                        setTimeout(function () {
-                            location.reload();
-                        }, 3000);
-                        $.Web_Print.printBookingSheet(data);
-                    } else {
-                        $bookingVenueForm.find(".sc-submit-tips").show().html(res.message).addClass("text-danger");
-                    }
-                    clickable = true;
-                }).fail(function (err) {
-                    console.log(err);
-                    $bookingVenueForm.find(".sc-submit-tips").show().html("网络异常, 提交预订失败!!")
-                        .addClass("text-danger");
-                    clickable = true;
                 });
             });
         }
