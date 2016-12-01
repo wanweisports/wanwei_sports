@@ -56,9 +56,9 @@ public interface ISiteService {
 	
 	public SiteReserveBasic getSiteReserveBasicAllByOrderId(int orderId);
 	
-	public Map<String, Object> getSiteReserveBasicByMobile(String mobile);
+	public List<Map<String, Object>> getSiteReserveBasicByMobile(String mobile);
 	
-	public Map<String, Object> getNextSiteReserveBasicByMobile(String mobile);
+	public Map<String, Object> getNextSiteReserveBasic(String reserveTimeId);
 	
 	public SiteReserveTime getSiteReserveTime(int reserveTimeId);
 	

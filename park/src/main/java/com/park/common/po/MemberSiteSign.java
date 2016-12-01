@@ -3,6 +3,8 @@ package com.park.common.po;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Transient;
+
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -26,6 +28,9 @@ public class MemberSiteSign implements java.io.Serializable {
 	private String createTime;
 	private String updateTime;
 	private Integer salesId;
+	
+	@Transient
+	private String reserveTimeIds;
 
 	// Constructors
 
@@ -142,4 +147,14 @@ public class MemberSiteSign implements java.io.Serializable {
 		this.salesId = salesId;
 	}
 
+	@Transient
+	public String getReserveTimeIds() {
+		return reserveTimeIds;
+	}
+
+	@Transient
+	public void setReserveTimeIds(String reserveTimeIds) {
+		this.reserveTimeIds = reserveTimeIds;
+	}
+	
 }

@@ -1,0 +1,34 @@
+获取签到场地：【小于当前时间20分钟的场地都能查询出来，根据业务来判断能不能签到】
+
+请求：/memberSign/getSignSites?signType=1&signMemberCardNo=593089&mobile=13111111111
+
+
+返回：
+{
+    "code": "1",
+    "message": "操作成功",
+    "data": {
+        "signSites": [
+            {
+                "startTime": "2016-12-01 20:00",   //场地开始时间
+		"reserveTimeId": 37,               //预定时间id
+                "isUse": "2",                      //是否签到（1：是  2：否）
+                "name": "陈老师",                  //预定人姓名
+                "sportName": "篮球场",             //场地类型名称
+                "endTime": "2016-12-01 21:00",     //场地结束时间
+                "siteName": "万维场地",            //场地名称
+                "mobile": "13111111111"            //预定人手机号
+            },
+            {
+                "startTime": "2016-12-01 22:00",
+                "reserveTimeId": 37,
+                "isUse": "2",
+                "name": "陈老师",
+                "sportName": "篮球场",
+                "endTime": "2016-12-01 23:00",
+                "siteName": "万维场地",
+                "mobile": "13111111111"
+            }
+        ]
+    }
+}

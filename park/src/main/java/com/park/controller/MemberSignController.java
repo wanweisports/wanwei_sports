@@ -1,5 +1,8 @@
 package com.park.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +43,22 @@ public class MemberSignController extends BaseController {
 			memberSiteSign.setSalesId(super.getUserInfo().getId());
 			memberSignService.saveSign(memberSiteSign);
 			return new ResponseBean(true);
+		} catch (MessageException e) {
+			e.printStackTrace();
+			return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping("getSignSites")
+	public ResponseBean getSignSites(String signType, String signMemberCardNo, String mobile){
+		try {
+			Map<String, Object> data = new HashMap<String, Object>();
+			data.put("signSites", memberSignService.getSignSites(signType, signMemberCardNo, mobile));
+			return new ResponseBean(data);
 		} catch (MessageException e) {
 			e.printStackTrace();
 			return new ResponseBean(e.getMessage());

@@ -53,8 +53,39 @@ public class MemberSignServiceImpl extends BaseService implements IMemberSignSer
 	@Override
 	public void saveSign(MemberSiteSign memberSiteSign) throws ParseException{
 		String signType = memberSiteSign.getSignType();
+		String signMemberCardNo = memberSiteSign.getSignMemberCardNo();
 		
-		String mobile = memberSiteSign.getSignMobile();
+		if(getSignSites(signType, signMemberCardNo, memberSiteSign.getSignMobile()) == null) throw new MessageException("暂无预定");
+		
+		String[] reserveTimeIds = memberSiteSign.getReserveTimeIds().split(",");
+		
+		for(String reserveTimeId : reserveTimeIds){
+			Map<String, Object> siteReserveBasic = siteService.getNextSiteReserveBasic(reserveTimeId);
+			if(siteReserveBasic == null) throw new MessageException("手机号对应的订单不存在，或已超过签到时间");
+			
+			Integer reserveTimeIdInt = StrUtil.objToInt(reserveTimeId);
+			if(getMemberSiteSign(reserveTimeIdInt) != null) throw new MessageException("该场次已经签到过，请勿重复签到");
+			
+			Integer orderId = StrUtil.objToInt(siteReserveBasic.get("orderId"));
+			memberSiteSign.setReserveTimeId(reserveTimeIdInt);
+			memberSiteSign.setCreateTime(DateUtil.getNowDate());
+			memberSiteSign.setOrderId(orderId);
+			baseDao.save(memberSiteSign, null);
+			
+			OrderInfo orderInfo = orderService.getOrderInfo(orderId);
+			if(orderInfo == null) throw new MessageException("订单不存在");
+			orderInfo.setUseCount(orderInfo.getUseCount()+DateUtil.getTimeHourNums(StrUtil.objToStr(siteReserveBasic.get("siteStartTime")), StrUtil.objToStr(siteReserveBasic.get("siteEndTime")))); //计算场地时间有多少场
+			baseDao.save(orderInfo, orderId);
+			
+			//场次变为已使用状态
+			SiteReserveTime siteReserveTime = siteService.getSiteReserveTime(reserveTimeIdInt);
+			siteReserveTime.setIsUse(IDBConstant.LOGIC_STATUS_YES);
+			baseDao.save(siteReserveTime, reserveTimeId);
+		}
+	}
+	
+	@Override
+	public List<Map<String, Object>> getSignSites(String signType, String signMemberCardNo, String mobile){
 		if(IDBConstant.LOGIC_STATUS_YES.equals(signType)){ //会员
 			UserMember userMember = memberService.getUserMemberByChildMobile(mobile);
 			if(userMember.getParentMemberId() != null){ //如果是子会员，则查询主会员
@@ -63,33 +94,12 @@ public class MemberSignServiceImpl extends BaseService implements IMemberSignSer
 			mobile = userMember.getMemberMobile(); //父会员手机号
 			List<MemberCard> memberCards = memberService.getMemberCards(userMember.getMemberId());
 			if(memberCards.size() < 0) throw new MessageException("该会员没有会员卡信息");
-			if(!memberCards.get(0).getCardNo().equals(memberSiteSign.getSignMemberCardNo())) throw new MessageException("该手机号未与该会员卡有关，请重新输入");
+			if(!memberCards.get(0).getCardNo().equals(signMemberCardNo)) throw new MessageException("该手机号未与该会员卡有关，请重新输入");
 		}else if(IDBConstant.LOGIC_STATUS_NO.equals(signType)){ //散客
 			
 		}else throw new MessageException("操作错误");
 		
-		Map<String, Object> nextSiteReserveBasic = siteService.getNextSiteReserveBasicByMobile(mobile);
-		if(nextSiteReserveBasic == null) throw new MessageException("手机号对应的订单不存在，或已超过签到时间");
-		Map<String, Object> siteReserveBasic = siteService.getSiteReserveBasicByMobile(mobile);
-		if(siteReserveBasic == null) throw new MessageException("场地开场时间尚未开始，下一场开始时间为：" + nextSiteReserveBasic.get("startSiteDate") + "，您可以提前"+Math.abs(IPlatformConstant.SITE_ADVANCE_START_TIME)+"分钟或晚"+IPlatformConstant.SITE_LATE_START_TIME+"分钟签到");
-		Integer reserveTimeId = StrUtil.objToInt(siteReserveBasic.get("reserveTimeId"));
-		if(getMemberSiteSign(reserveTimeId) != null) throw new MessageException("该场次已经签到过，请勿重复签到");
-		
-		Integer orderId = StrUtil.objToInt(siteReserveBasic.get("orderId"));
-		memberSiteSign.setReserveTimeId(reserveTimeId);
-		memberSiteSign.setCreateTime(DateUtil.getNowDate());
-		memberSiteSign.setOrderId(orderId);
-		baseDao.save(memberSiteSign, null);
-		
-		OrderInfo orderInfo = orderService.getOrderInfo(orderId);
-		if(orderInfo == null) throw new MessageException("订单不存在");
-		orderInfo.setUseCount(orderInfo.getUseCount()+DateUtil.getTimeHourNums(StrUtil.objToStr(siteReserveBasic.get("siteStartTime")), StrUtil.objToStr(siteReserveBasic.get("siteEndTime")))); //计算场地时间有多少场
-		baseDao.save(orderInfo, orderId);
-		
-		//场次变为已使用状态
-		SiteReserveTime siteReserveTime = siteService.getSiteReserveTime(reserveTimeId);
-		siteReserveTime.setIsUse(IDBConstant.LOGIC_STATUS_YES);
-		baseDao.save(siteReserveTime, reserveTimeId);
+		return siteService.getSiteReserveBasicByMobile(mobile);
 	}
 	
 	private MemberSiteSign getMemberSiteSign(int reserveTimeId){

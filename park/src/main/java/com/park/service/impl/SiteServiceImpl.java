@@ -271,9 +271,10 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 			if(member == null || member.getParentMemberId() != null) throw new MessageException("会员不存在");
 			orderInfo.setMemberId(member.getMemberId());
 			siteReserveBasic.setMobile(member.getMemberMobile()); //如果预定是会员，预定为会员的手机号
-		}else{
+			siteReserveBasic.setName(member.getMemberName());
+		}else if(IDBConstant.LOGIC_STATUS_NO.equals(siteReserveBasic.getOpType())){
 			orderInfo.setMemberId(0); //散客
-		}
+		}else throw new MessageException("opType参数不正确");
 		
 		orderInfo.setOrderServiceType(IDBConstant.LOGIC_STATUS_YES.equals(siteReserveBasic.getReserveModel()) ? IDBConstant.ORDER_SERVICE_TYPE_SITE : IDBConstant.ORDER_SERVICE_TYPE_BLOCK_SITE);
 		orderInfo.setOrderStatus(IDBConstant.LOGIC_STATUS_NO); //未完成
@@ -514,20 +515,21 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	}
 	
 	@Override
-	public Map<String, Object> getSiteReserveBasicByMobile(String mobile){
-		StringBuilder sql = new StringBuilder("SELECT * FROM site_reserve_basic srb, site_reserve_date srd, site_reserve_time srt");
-		sql.append(" WHERE srb.mobile = ?");
-		sql.append(" AND CONCAT(srd.reserveStartDate,' ',srt.siteStartTime) >= DATE_ADD(NOW(),INTERVAL ? MINUTE)");
-		sql.append(" AND CONCAT(srd.reserveStartDate,' ',srt.siteStartTime) <= DATE_ADD(NOW(),INTERVAL ? MINUTE)");
-		return baseDao.queryBySqlFirst(sql.toString(), mobile, IPlatformConstant.SITE_ADVANCE_START_TIME, IPlatformConstant.SITE_LATE_START_TIME);
+	public List<Map<String, Object>> getSiteReserveBasicByMobile(String mobile){ 
+		StringBuilder sql = new StringBuilder("SELECT DISTINCT srt.reserveTimeId, siteName, sportName, srb.name, srb.mobile, CONCAT(srd.reserveStartDate,' ',srt.siteStartTime) startTime, CONCAT(srd.reserveStartDate,' ',srt.siteEndTime) endTime, srt.isUse FROM site_reserve_basic srb, site_reserve_date srd, site_reserve_time srt, site_info si, site_sport ss");
+		sql.append(" WHERE srb.mobile = ? AND srb.siteReserveId = srd.siteReserveId AND srd.reserveDateId = srt.reserveDateId AND srt.siteId = si.siteId AND si.siteType = ss.sportId");
+		sql.append(" AND CONCAT(srd.reserveStartDate,' ',srt.siteStartTime) >= DATE_ADD(NOW(),INTERVAL ? MINUTE) ORDER BY CONCAT(srd.reserveStartDate,' ',srt.siteStartTime)");
+		//sql.append(" AND CONCAT(srd.reserveStartDate,' ',srt.siteStartTime) <= DATE_ADD(NOW(),INTERVAL ? MINUTE)");
+		return baseDao.queryBySql(sql.toString(), mobile, IPlatformConstant.SITE_ADVANCE_START_TIME/*, IPlatformConstant.SITE_LATE_START_TIME*/);
 	}
 	
 	@Override
-	public Map<String, Object> getNextSiteReserveBasicByMobile(String mobile){
-		StringBuilder sql = new StringBuilder("SELECT CONCAT(srd.reserveStartDate,' ',srt.siteStartTime) startSiteDate, srb.* FROM site_reserve_basic srb, site_reserve_date srd, site_reserve_time srt");
-		sql.append(" WHERE srb.mobile = ?");
+	public Map<String, Object> getNextSiteReserveBasic(String reserveTimeId){
+		StringBuilder sql = new StringBuilder("SELECT DISTINCT siteName, sportName, srt.isUse, srb.* FROM site_reserve_basic srb, site_reserve_date srd, site_reserve_time srt, site_info si, site_sport ss");
+		sql.append(" WHERE srt.reserveTimeId = ? AND srb.siteReserveId = srd.siteReserveId AND srd.reserveDateId = srt.reserveDateId AND srt.siteId = si.siteId AND si.siteType = ss.sportId");
 		sql.append(" AND CONCAT(srd.reserveStartDate,' ',srt.siteStartTime) >= DATE_ADD(NOW(),INTERVAL ? MINUTE)");
-		return baseDao.queryBySqlFirst(sql.toString(), mobile, IPlatformConstant.SITE_ADVANCE_START_TIME);
+		sql.append(" AND CONCAT(srd.reserveStartDate,' ',srt.siteStartTime) <= DATE_ADD(NOW(),INTERVAL ? MINUTE)");
+		return baseDao.queryBySqlFirst(sql.toString(), reserveTimeId, IPlatformConstant.SITE_ADVANCE_START_TIME, IPlatformConstant.SITE_LATE_START_TIME);
 	}
 	
 	@Override
