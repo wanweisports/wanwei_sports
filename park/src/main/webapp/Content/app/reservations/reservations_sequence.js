@@ -9,7 +9,8 @@
             Current_Date: $("#current_date").val(),
             Current_Sport: $("#current_sport").val(),
             Reservation_Tpl: '<span class="name" data-id="#USERID#" data-name="#USERNAME#">#USERNAME1#</span>' +
-                '<span class="mobile" data-mobile="#USERMOBILE#">#USERMOBILE1#</span>',
+                '<span class="mobile" data-mobile="#USERMOBILE#">#USERMOBILE1#</span>' +
+                '<span class="angle"></span>',
             Reservation_Date_Tpl: '<li class="reservation-date-picker #DATEACTIVE#" data-value="#DATEVALUE#">' +
                 '<a href="javascript:;">#DATETEXT#</a></li>',
             Reservation_list: '<li class="court">#SITENAME# #STARTTIME#-#ENDTIME#</li>'
@@ -171,6 +172,10 @@
                                 } else if (reserveInfo.reserveType == 3) {  // 电话预订
                                     $site.removeClass().addClass('ordered phone').html(html);
                                 }
+
+                                if (reserveInfo.isUse == 1) {
+                                    $site.addClass("used");
+                                }
                             }
 
                             // 未支付
@@ -187,6 +192,10 @@
                                     $site.removeClass().addClass('unpaid mobile').html(html);
                                 } else if (reserveInfo.reserveType == 3) {
                                     $site.removeClass().addClass('unpaid phone').html(html);
+                                }
+
+                                if (reserveInfo.isUse == 1) {
+                                    $site.addClass("used");
                                 }
                             }
 
