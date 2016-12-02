@@ -543,16 +543,35 @@ public class MemberController extends BaseController {
     @ResponseBody
     @RequestMapping("searchMember")
     public ResponseBean searchMember(String search){
-    	try{
-    		Map<String, Object> data = new HashMap<String, Object>();
+        try{
+            Map<String, Object> data = new HashMap<String, Object>();
             data.put("members", memberService.searchMember(search));
             return new ResponseBean(data);
-    	} catch (MessageException e) {
-    		e.printStackTrace();
-    		return new ResponseBean(e.getMessage());
-		} catch (Exception e) {
-    		e.printStackTrace();
-    		return new ResponseBean(false);
-		}
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
+    /**
+     * 查询是个全文模糊查询  即我可能输入手机号，姓名，身份证号，会员卡号信息  来匹配会员
+     */
+    @ResponseBody
+    @RequestMapping("searchOpenMember")
+    public ResponseBean searchOpenMember(String search){
+        try{
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("members", memberService.searchOpenMember(search));
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
     }
 }

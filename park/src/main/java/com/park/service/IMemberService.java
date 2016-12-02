@@ -79,6 +79,8 @@ public interface IMemberService {
 	public String getCardNo();
 	
 	public List<Map<String, Object>> searchMember(String search);
+
+	public List<Map<String, Object>> searchOpenMember(String search);
 	
 	public String getBalanceNo();
 	

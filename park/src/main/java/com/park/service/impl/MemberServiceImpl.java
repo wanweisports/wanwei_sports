@@ -556,7 +556,8 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		sql.append(" AND memberStatus = ").append(IDBConstant.LOGIC_STATUS_YES);
 		return baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(memberInputView));
 	}
-	
+
+	// 搜索可预订会员
 	@Override
 	public List<Map<String, Object>> searchMember(String search){
 		if(StrUtil.isBlank(search)) throw new MessageException("请输入搜索条件");
@@ -567,6 +568,18 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		paramMap.put("search", search+"%");
 		return baseDao.queryBySql(sql.toString(), paramMap);
 	}
+
+    // 搜索可开场会员
+    @Override
+    public List<Map<String, Object>> searchOpenMember(String search){
+        if(StrUtil.isBlank(search)) throw new MessageException("请输入搜索条件");
+        StringBuilder sql = new StringBuilder("SELECT um.memberId, memberName, memberMobile, mc.cardNo FROM user_member um LEFT JOIN member_card mc");
+        sql.append(" ON um.memberId = mc.memberId WHERE 1=1");
+        sql.append(" AND (memberMobile LIKE :search OR memberName LIKE :search OR memberIdcard LIKE :search OR mc.cardNo LIKE :search)");
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("search", search+"%");
+        return baseDao.queryBySql(sql.toString(), paramMap);
+    }
 	
 	@Override
 	public double getMemberDiscount(Integer memberId, String opType){
