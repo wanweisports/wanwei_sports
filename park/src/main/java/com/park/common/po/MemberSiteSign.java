@@ -31,6 +31,9 @@ public class MemberSiteSign implements java.io.Serializable {
 	
 	@Transient
 	private String reserveTimeIds;
+	
+	@Transient
+	private Integer memberId;
 
 	// Constructors
 
@@ -156,5 +159,15 @@ public class MemberSiteSign implements java.io.Serializable {
 	public void setReserveTimeIds(String reserveTimeIds) {
 		this.reserveTimeIds = reserveTimeIds;
 	}
-	
+
+	@Transient
+	public Integer getMemberId() {
+		return memberId;
+	}
+
+	@Transient
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
+	}
+
 }

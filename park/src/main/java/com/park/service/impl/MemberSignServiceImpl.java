@@ -52,6 +52,14 @@ public class MemberSignServiceImpl extends BaseService implements IMemberSignSer
 	@Override
 	public void saveSign(MemberSiteSign memberSiteSign) throws ParseException{
 		String signType = memberSiteSign.getSignType();
+		Integer memberId = memberSiteSign.getMemberId();
+		
+		if(memberId != null){ //会员
+			UserMember member = memberService.getUserMember(memberId);
+			memberSiteSign.setSignMobile(member.getMemberMobile());
+			memberSiteSign.setSignName(member.getMemberName());
+		}
+		
 		String signMemberCardNo = memberSiteSign.getSignMemberCardNo();
 		
 		if(getSignSites(signType, signMemberCardNo, memberSiteSign.getSignMobile()) == null) throw new MessageException("暂无预定");
@@ -60,10 +68,11 @@ public class MemberSignServiceImpl extends BaseService implements IMemberSignSer
 		
 		for(String reserveTimeId : reserveTimeIds){
 			Map<String, Object> siteReserveBasic = siteService.getNextSiteReserveBasic(reserveTimeId);
-			if(siteReserveBasic == null) throw new MessageException("手机号对应的订单不存在，或已超过签到时间");
+			if(siteReserveBasic == null) throw new MessageException("对应的订单不存在，或已超过签到时间");
 			
 			Integer reserveTimeIdInt = StrUtil.objToInt(reserveTimeId);
-			if(getMemberSiteSign(reserveTimeIdInt) != null) throw new MessageException("该场次已经签到过，请勿重复签到");
+			//【新，不限制签到】
+			//if(getMemberSiteSign(reserveTimeIdInt) != null) throw new MessageException("该场次已经签到过，请勿重复签到");
 			
 			Integer orderId = StrUtil.objToInt(siteReserveBasic.get("orderId"));
 			memberSiteSign.setReserveTimeId(reserveTimeIdInt);
