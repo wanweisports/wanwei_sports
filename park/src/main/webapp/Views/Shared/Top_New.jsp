@@ -29,7 +29,7 @@
                         <td class="top-header-menu">
                             <div class="menu">
                                 <ul>
-                                    <li><a href="/passport/message"><span>我的消息</span><span class="label label-default">10</span></a></li>
+                                    <li><a href="/passport/message"><span>我的消息</span><span class="label label-danger">10</span></a></li>
                                     <li><a href="/passport/profile"><span>完善信息</span></a></li>
                                     <li><a href="/passport/modifyPassword"><span>密码重置</span></a></li>
                                     <li><a class="user-logout" href="/passport/logout"><span>安全退出</span></a></li>
@@ -46,7 +46,7 @@
         <tr>
             <td class="top-menu-left">
                 <div class="top-menu-user">
-                    <p>当前用户：管理员</p>
+                    <p>当前用户：<span class="top-menu-username">管理员</span></p>
                 </div>
             </td>
             <td class="top-menu-list">

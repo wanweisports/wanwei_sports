@@ -15,7 +15,6 @@
     <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/moment/moment.min.js?v=${static_resource_version}"></script>
     <script src="/Content/app/reservations/reservations_fixed.js?v=${static_resource_version}"></script>
     <script>
         $(document).ready(function () {

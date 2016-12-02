@@ -83,6 +83,7 @@
 
     <script src="/Content/lib/jquery/jquery-1.12.3.min.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/bootstrap/bootstrap.min.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/moment/moment.min.js?v=${static_resource_version}"></script>
     <script src="/Content/app/common/base_new.js?v=${static_resource_version}"></script>
 
     <layout:block name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>"/>

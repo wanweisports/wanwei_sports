@@ -19,6 +19,9 @@ import com.park.common.util.JsonUtils;
 import com.park.common.util.StrUtil;
 import com.park.service.IOperatorService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Controller
 public class UrlController extends BaseController {
 	
@@ -117,6 +120,23 @@ public class UrlController extends BaseController {
 			return new ResponseBean(false);
 		}
     }
+
+	@ResponseBody
+	@RequestMapping("/passport/getUserProfile")
+	public ResponseBean getUserProfile() {
+		try {
+			UserOperator operator = operatorService.getOperator(super.getUserInfo().getOperatorId());
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("user", operator);
+			return new ResponseBean(data);
+		} catch (MessageException e) {
+			e.printStackTrace();
+			return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
+	}
 
     // 修改密码
     @RequestMapping("/passport/modifyPassword")

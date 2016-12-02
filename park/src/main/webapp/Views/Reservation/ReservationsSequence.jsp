@@ -18,7 +18,6 @@
     <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery-steps/jquery.steps.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/moment/moment.min.js?v=${static_resource_version}"></script>
     <script src="/Content/app/reservations/reservations_sequence.js?v=${static_resource_version}"></script>
     <script>
         $(document).ready(function () {

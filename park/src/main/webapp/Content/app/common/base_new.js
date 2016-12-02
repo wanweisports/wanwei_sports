@@ -1,4 +1,4 @@
-(function ($) {
+(function ($, moment) {
     /* 全局事件 */
 
     // 退出登录
@@ -8,6 +8,22 @@
         //alert("成功登出");
         location.assign('/passport/login');
     });*/
+
+    // 初始化数据
+    function initialize() {
+        var weeks = ["", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"];
+        var date = moment();
+        $(".top-header-date").text(date.format("今天是YYYY年MM月DD日 ") + weeks[date.format("e")]);
+
+        $.post('/passport/getUserProfile', function (res) {
+            var data = res.data;
+
+            if (res.code == 1) {
+                $(".top-menu-username").text(data.operatorName);
+            }
+        });
+    }
+    initialize();
 
     // 导航切换
     $(".navigator-container").on("click", ".list-nav-header", function (e) {
@@ -136,4 +152,4 @@
     Number.prototype.divide = function (arg) {
         return accDivide(this, arg);
     };
-})(jQuery);
+})(jQuery, moment);
