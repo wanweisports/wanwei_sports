@@ -102,4 +102,8 @@ public interface IMemberService {
 	
 	public Integer saveBalanceByOrderInfo(OrderInfo orderInfo);
 	
+	public MemberCard getMemberCardNotThrow(int memberId);
+	
+	public UserMember getMemberByCardNo(String cardNo);
+	
 }

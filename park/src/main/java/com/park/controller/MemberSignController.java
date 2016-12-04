@@ -38,10 +38,10 @@ public class MemberSignController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping("memberSign")
-	public ResponseBean memberSign(MemberSiteSign memberSiteSign){
+	public ResponseBean memberSign(MemberSiteSign memberSiteSign, Integer memberId, String reserveTimeIds){
 		try {
 			memberSiteSign.setSalesId(super.getUserInfo().getId());
-			memberSignService.saveSign(memberSiteSign);
+			memberSignService.saveSign(memberSiteSign, memberId, reserveTimeIds);
 			return new ResponseBean(true);
 		} catch (MessageException e) {
 			e.printStackTrace();

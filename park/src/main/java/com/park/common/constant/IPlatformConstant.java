@@ -33,6 +33,10 @@ public interface IPlatformConstant {
     public final int SITE_ADVANCE_START_TIME = -20; //场地开场可以提前20分钟签到
     
     public final int SITE_LATE_START_TIME = 20; //场地开场可以晚20分钟签到
+    
+    public final String XIANJIN = "xianjin";
+    public final String ZHIFUBAO = "zhifubao";
+    public final String WEIXIN = "weixin";
 	
 	public static final String APP_ID = (String) CustomizedPropertyConfigurer.getContextProperty("app_id"); //appid
 	

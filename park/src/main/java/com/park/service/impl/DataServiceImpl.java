@@ -1,5 +1,10 @@
 package com.park.service.impl;
 
+import static com.park.common.constant.IPlatformConstant.WEIXIN;
+import static com.park.common.constant.IPlatformConstant.XIANJIN;
+import static com.park.common.constant.IPlatformConstant.ZHIFUBAO;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -122,70 +127,127 @@ public class DataServiceImpl extends BaseService implements IDataService {
 	
 	@Override
 	public Map<String, Object> getBusinessIncome(DataInputView dataInputView){
-		dataInputView.setBalanceStyle1(IDBConstant.BALANCE_STYLE_XJ);
-		dataInputView.setBalanceStyle2(IDBConstant.BALANCE_STYLE_ZFB);
-		dataInputView.setBalanceStyle3(IDBConstant.BALANCE_STYLE_WX);
-		dataInputView.setDictName(IDBConstant.BALANCE_SERVICE_TYPE);
-		
-		StringBuilder sql = new StringBuilder("SELECT ob.balanceId, mct.cardTypeName name,").append(countCardSql());
-		sql.append(" FROM other_balance ob, member_card mc, member_card_type mct");
-		sql.append(" WHERE ob.balanceServiceId = mc.cardId AND mc.cardTypeId = mct.cardTypeId AND ob.balanceServiceType >= :balanceServiceTypeMin AND ob.balanceServiceType <= :balanceServiceTypeMax");
-		sql.append(" GROUP BY mct.cardTypeId");
-		dataInputView.setBalanceServiceTypeMin(IDBConstant.BALANCE_SERVICE_TYPE_REG);
-		dataInputView.setBalanceServiceTypeMax(IDBConstant.BALANCE_SERVICE_TYPE_CARD_BUBAN_STUDENT);
-		List<Map<String, Object>> cardCounts = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
-		
-		sql.setLength(0);
-		sql.append("SELECT ob.balanceId, (SELECT dictValue FROM system_dict WHERE dictName=:dictName AND dictKey = oi.orderServiceType) name, ").append(countBalanceSql());
-		sql.append(" FROM other_balance ob, order_info oi");
-		sql.append(" WHERE ob.balanceServiceId = oi.orderId AND ob.balanceServiceType >= :balanceServiceTypeMin AND ob.balanceServiceType <= :balanceServiceTypeMax");
-		sql.append(" GROUP BY ob.balanceServiceType");
-		dataInputView.setBalanceServiceTypeMin(IDBConstant.BALANCE_SERVICE_TYPE_SITE);
-		dataInputView.setBalanceServiceTypeMax(IDBConstant.BALANCE_SERVICE_TYPE_SITE_RECEIVABLE);
-		List<Map<String, Object>> siteCounts = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
-		
-		dataInputView.setBalanceServiceTypeMin(IDBConstant.BALANCE_SERVICE_TYPE_GOODS);
-		dataInputView.setBalanceServiceTypeMax(IDBConstant.BALANCE_SERVICE_TYPE_GOODS);
-		List<Map<String, Object>> goodsCounts = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap.put("cardCounts", countSum(cardCounts));
-		resultMap.put("siteCounts", countSum(siteCounts));
-		resultMap.put("goodsCounts", countSum(goodsCounts));
+		StringBuilder sql = new StringBuilder("SELECT cardTypeName name, SUM(realAmount) price, ob.balanceStyle style, ob.balanceId");
+		sql.append(" FROM member_card_type mct");
+		sql.append(" LEFT JOIN member_card mc ON(mct.cardTypeId = mc.cardTypeId)");
+		sql.append(" LEFT JOIN other_balance ob ON(ob.balanceServiceId = mc.cardId AND '' = ? AND ob.balanceServiceType >= ? AND ob.balanceServiceType <= ?)");
+		sql.append(" GROUP BY mct.cardTypeId, ob.balanceStyle ORDER BY mct.cardTypeId");
+		resultMap.put("cardCounts", getCountMap(baseDao.queryBySql(sql.toString(), StrUtil.EMPTY, StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_REG), StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_CARD_BUBAN_STUDENT))));
+		
+		sql.setLength(0);
+		sql.append("SELECT dictValue name, SUM(realAmount) price, ob.balanceStyle style, ob.balanceId");
+		sql.append(" FROM system_dict sd");
+		sql.append(" LEFT JOIN other_balance ob ON(ob.balanceServiceType = sd.dictKey)");
+		sql.append(" LEFT JOIN order_info oi ON(ob.balanceServiceId = oi.orderId)");
+		sql.append(" WHERE dictName = ? AND dictKey >= ? AND dictKey <= ?");
+		sql.append(" GROUP BY dictKey, ob.balanceStyle ORDER BY dictKey");
+		resultMap.put("siteCounts", getCountMap(baseDao.queryBySql(sql.toString(), IDBConstant.BALANCE_SERVICE_TYPE, StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_SITE), StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_BLOCK_SITE))));
+		
+		sql.setLength(0);
+		sql.append("SELECT dictValue name, SUM(realAmount) price, ob.balanceStyle style, ob.balanceId");
+		sql.append(" FROM system_dict sd");
+		sql.append(" LEFT JOIN other_balance ob ON(ob.balanceServiceType = sd.dictKey)");
+		sql.append(" LEFT JOIN order_info oi ON(ob.balanceServiceId = oi.orderId)");
+		sql.append(" WHERE dictName = ? AND dictKey = ?");
+		sql.append(" GROUP BY dictKey, ob.balanceStyle ORDER BY dictKey");
+		resultMap.put("goodsCounts", getCountMap(baseDao.queryBySql(sql.toString(), IDBConstant.BALANCE_SERVICE_TYPE, StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_GOODS))));
 		
 		return resultMap;
 	}
 	
-	private Map<String, Object> countSum(List<Map<String, Object>> countList){
-		double xianjinSumPrice = 0, zhifubaoSumPrice = 0, weixinSumPrice = 0, sumPrice = 0;
+	private Map<String, Object> getCountMap(List<Map<String, Object>> countList){
+		countList = getCountItemPrice(countList);
+		Map map = new HashMap<>();
+		map.put("countList", countList);
+		map.putAll(getCountSumPrice(countList));
+		return map;
+	}
+	
+	private List<Map<String, Object>> getCountItemPrice(List<Map<String, Object>> countList){
+		List<Map<String, Object>> tempListMap = new  ArrayList<Map<String, Object>>();
+		double xianjin = 0, zhifubao = 0, weixin = 0;
 		for(Map<String, Object> map : countList){
-			Double xianjin = StrUtil.objToDoubleDef0(map.get("xianjin"));
-			Double zhifubao = StrUtil.objToDoubleDef0(map.get("zhifubao"));
-			Double weixin = StrUtil.objToDoubleDef0(map.get("weixin"));
-			xianjinSumPrice += xianjin;
-			zhifubaoSumPrice += zhifubao;
-			weixinSumPrice += weixin;
-			sumPrice += xianjin;
-			sumPrice += zhifubao;
-			sumPrice += weixin;
-			map.put("sumPrice", xianjin+zhifubao+weixin);
+			Object name = map.get("name");
+			String style = String.valueOf(map.get("style"));
+			Double price = StrUtil.objToDoubleDef0(map.get("price"));
+			Map tempMap = getTempMapByName(tempListMap, name, style);
+			switch (String.valueOf(map.get("style"))) {
+			case IDBConstant.BALANCE_STYLE_XJ:
+				System.out.println("style===>" + style + "，name===>" + name + "，price===>" + price + "/");
+				tempMap.put(XIANJIN, StrUtil.objToDoubleDef0(tempMap.get(XIANJIN))+price);
+				break;
+			case IDBConstant.BALANCE_STYLE_ZFB:
+				System.out.println("style===>" + style + "，name===>" + name + "，price===>" + price + "//");
+				tempMap.put(ZHIFUBAO, StrUtil.objToDoubleDef0(tempMap.get(ZHIFUBAO))+price);
+				break;
+			case IDBConstant.BALANCE_STYLE_WX:
+				System.out.println("style===>" + style + "，name===>" + name + "，price===>" + price + "///");
+				tempMap.put(WEIXIN, StrUtil.objToDoubleDef0(tempMap.get(WEIXIN))+price);
+				break;
+			default:
+				System.out.println("style===>" + style + "，name===>" + name + "，price===>" + price + "////");
+				tempMap.put(XIANJIN, StrUtil.objToDoubleDef0(tempMap.get(XIANJIN))+0);
+				tempMap.put(ZHIFUBAO, StrUtil.objToDoubleDef0(tempMap.get(ZHIFUBAO))+0);
+				tempMap.put(WEIXIN, StrUtil.objToDoubleDef0(tempMap.get(WEIXIN))+0);
+				break;
+			}
+			tempMap.put("sumPrice", StrUtil.objToDoubleDef0(tempMap.get(XIANJIN))+StrUtil.objToDoubleDef0(tempMap.get(ZHIFUBAO))+StrUtil.objToDoubleDef0(tempMap.get(WEIXIN)));
+			tempListMap.add(tempMap);
 		}
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap.put("countList", countList);
-		resultMap.put("xianjinSumPrice", xianjinSumPrice);
-		resultMap.put("zhifubaoSumPrice", zhifubaoSumPrice);
-		resultMap.put("weixinSumPrice", weixinSumPrice);
-		resultMap.put("sumPrice", sumPrice);
-		return resultMap; 
 		
+		return delRepeat(tempListMap);
+	}
+
+	private Map getTempMapByName(List<Map<String, Object>> tempListMap, Object name, Object style){
+		for(Map<String, Object> map : tempListMap){
+			if(name != null && name.equals(map.get("name")) && style != null && style.equals(map.get("style"))){
+				return map;
+			}else if(name != null && name.equals(map.get("name"))){
+				return map;
+			}
+		}
+		Map map = new HashMap();
+		map.put("name", name);
+		return map;
 	}
 	
-	private String countBalanceSql(){
-		return "(SELECT SUM(realAmount) FROM other_balance WHERE balanceServiceType = ob.balanceServiceType AND balanceStyle = :balanceStyle1) xianjin, (SELECT SUM(realAmount) FROM other_balance WHERE balanceServiceType = ob.balanceServiceType AND balanceStyle = :balanceStyle2) zhifubao, (SELECT SUM(realAmount) FROM other_balance WHERE balanceServiceType = ob.balanceServiceType AND balanceStyle = :balanceStyle3) weixin";
+	private List<Map<String, Object>> delRepeat(List<Map<String, Object>> tempListMap) {
+		String name = null;
+		for (int i = 0; i < tempListMap.size(); i++) {
+			Map<String, Object> map = tempListMap.get(i);
+			if(map.get("name").equals(name)){
+				tempListMap.remove(map);
+				i--;
+				continue;
+			}
+			name = countFill(map).get("name").toString();
+		}
+		return tempListMap;
+	}
+
+	private Map<String, Object> countFill(Map<String, Object> map) {
+		if(map.get(XIANJIN) == null) map.put(XIANJIN, 0);
+		if(map.get(ZHIFUBAO) == null) map.put(ZHIFUBAO, 0);
+		if(map.get(WEIXIN) == null) map.put(WEIXIN, 0);
+		return map;
 	}
 	
-	private String countCardSql(){
-		return "(SELECT SUM(realAmount) FROM other_balance ob, member_card mc1 WHERE ob.balanceServiceId = mc1.cardId AND mct.cardTypeId =mc1.cardTypeId AND balanceServiceType = ob.balanceServiceType AND balanceStyle = :balanceStyle1) xianjin, (SELECT SUM(realAmount) FROM other_balance ob, member_card mc1 WHERE ob.balanceServiceId = mc1.cardId AND mct.cardTypeId =mc1.cardTypeId AND balanceServiceType = ob.balanceServiceType AND balanceStyle = :balanceStyle2) zhifubao, (SELECT SUM(realAmount) FROM other_balance ob, member_card mc1 WHERE ob.balanceServiceId = mc1.cardId AND mct.cardTypeId =mc1.cardTypeId AND balanceServiceType = ob.balanceServiceType AND balanceStyle = :balanceStyle3) weixin";
+	private Map<String, Object> getCountSumPrice(List<Map<String, Object>> countList){
+		double xianjinSum = 0, zhifubaoSum = 0, weixinSum = 0;
+		for(Map<String, Object> map : countList){
+			xianjinSum += StrUtil.objToDoubleDef0(map.get(XIANJIN));
+			zhifubaoSum += StrUtil.objToDoubleDef0(map.get(ZHIFUBAO));
+			weixinSum += StrUtil.objToDoubleDef0(map.get(WEIXIN));
+			
+		}
+		Map<String, Object> sumPriceMap = new HashMap<String, Object>();
+		sumPriceMap.put("xianjinSumPrice", xianjinSum);
+		sumPriceMap.put("zhifubaoSumPrice", zhifubaoSum);
+		sumPriceMap.put("weixinSumPrice", weixinSum);
+		sumPriceMap.put("sumPrice", xianjinSum+zhifubaoSum+weixinSum);
+		return sumPriceMap;
 	}
 	
 }

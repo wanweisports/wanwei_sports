@@ -56,9 +56,9 @@ public interface ISiteService {
 	
 	public SiteReserveBasic getSiteReserveBasicAllByOrderId(int orderId);
 	
-	public List<Map<String, Object>> getSiteReserveBasicByMobile(String mobile);
+	public List<Map<String, Object>> getSiteReserveBasicByMobile(String mobile) throws ParseException;
 	
-	public Map<String, Object> getNextSiteReserveBasic(String reserveTimeId);
+	public Map<String, Object> getNextSiteReserveBasic(String reserveTimeId, String date) throws ParseException;
 	
 	public SiteReserveTime getSiteReserveTime(int reserveTimeId);
 	

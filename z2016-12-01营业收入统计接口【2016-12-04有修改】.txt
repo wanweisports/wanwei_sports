@@ -1,0 +1,73 @@
+营业收入统计接口：
+请求：/data/getBusinessIncome
+
+
+返回：
+{
+    "siteCounts": {                    //场地预定统计
+        "weixinSumPrice": 200,         //微信金额小计
+        "xianjinSumPrice": 250,        //现金金额小计
+        "zhifubaoSumPrice": 200,       //支付宝金额小计
+        "countList": [                 //具体项统计
+            { 
+                "weixin": "0",         //微信
+                "name": "场地预定",    //名称
+                "xianjin": 250,        //现金
+                "zhifubao": "0",       //支付宝
+                "sumPrice": 250        //项目小计
+            }, 
+            {
+                "weixin": 200,
+                "name": "包场预订",
+                "xianjin": "0",
+                "zhifubao": 200,
+                "sumPrice": 400
+            }
+        ],
+        "sumPrice": 650               //项目小计金额小计
+    },
+    "goodsCounts": {                  //商品消费
+        "weixinSumPrice": 0,
+        "xianjinSumPrice": 0,
+        "zhifubaoSumPrice": 0,
+        "countList": [
+            {
+                "weixin": 0,
+                "name": "商品消费",
+                "xianjin": 0,
+                "zhifubao": 0,
+                "sumPrice": 0
+            }
+        ],
+        "sumPrice": 0
+    },
+    "cardCounts": {                    //会员卡统计
+        "weixinSumPrice": 0,
+        "xianjinSumPrice": 10801,
+        "zhifubaoSumPrice": 0,
+        "countList": [
+            {
+                "weixin": 0,
+                "name": "教师卡",
+                "xianjin": 0,
+                "zhifubao": 0,
+                "sumPrice": 0
+            },
+            {
+                "weixin": 0,
+                "name": "团体会员卡",
+                "xianjin": 10801,
+                "zhifubao": 0,
+                "sumPrice": 10801
+            },
+            {
+                "weixin": 0,
+                "name": "学生卡",
+                "xianjin": 0,
+                "zhifubao": 0,
+                "sumPrice": 0
+            }
+        ],
+        "sumPrice": 10801
+    }
+}

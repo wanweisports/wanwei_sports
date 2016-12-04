@@ -79,4 +79,8 @@ public interface IDBConstant {
     public static final String CARD_TEAM = "2";//团体会员卡
     public static final String CARD_STUDENT = "3"; //学生卡
     
+    public static final String SIGN_STATUS_IN = "1";//已签到
+    public static final String SIGN_STATUS_OVER = "2";//已过期
+    public static final String SIGN_STATUS_NORMAL = "3"; //未使用
+    
 }

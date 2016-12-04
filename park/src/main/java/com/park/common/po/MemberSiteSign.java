@@ -1,13 +1,11 @@
 package com.park.common.po;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 /**
  * MemberSiteSign entity. @author MyEclipse Persistence Tools
@@ -25,15 +23,10 @@ public class MemberSiteSign implements java.io.Serializable {
 	private Integer orderId;
 	private String signType;
 	private Integer reserveTimeId;
+	private String signDate;
 	private String createTime;
 	private String updateTime;
 	private Integer salesId;
-	
-	@Transient
-	private String reserveTimeIds;
-	
-	@Transient
-	private Integer memberId;
 
 	// Constructors
 
@@ -44,14 +37,15 @@ public class MemberSiteSign implements java.io.Serializable {
 	/** full constructor */
 	public MemberSiteSign(String signMemberCardNo, String signName,
 			String signMobile, Integer orderId, String signType,
-			Integer reserveTimeId, String createTime, String updateTime,
-			Integer salesId) {
+			Integer reserveTimeId, String signDate, String createTime,
+			String updateTime, Integer salesId) {
 		this.signMemberCardNo = signMemberCardNo;
 		this.signName = signName;
 		this.signMobile = signMobile;
 		this.orderId = orderId;
 		this.signType = signType;
 		this.reserveTimeId = reserveTimeId;
+		this.signDate = signDate;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
 		this.salesId = salesId;
@@ -123,6 +117,15 @@ public class MemberSiteSign implements java.io.Serializable {
 		this.reserveTimeId = reserveTimeId;
 	}
 
+	@Column(name = "signDate", length = 20)
+	public String getSignDate() {
+		return this.signDate;
+	}
+
+	public void setSignDate(String signDate) {
+		this.signDate = signDate;
+	}
+
 	@Column(name = "createTime", length = 20)
 	public String getCreateTime() {
 		return this.createTime;
@@ -148,26 +151,6 @@ public class MemberSiteSign implements java.io.Serializable {
 
 	public void setSalesId(Integer salesId) {
 		this.salesId = salesId;
-	}
-
-	@Transient
-	public String getReserveTimeIds() {
-		return reserveTimeIds;
-	}
-
-	@Transient
-	public void setReserveTimeIds(String reserveTimeIds) {
-		this.reserveTimeIds = reserveTimeIds;
-	}
-
-	@Transient
-	public Integer getMemberId() {
-		return memberId;
-	}
-
-	@Transient
-	public void setMemberId(Integer memberId) {
-		this.memberId = memberId;
 	}
 
 }

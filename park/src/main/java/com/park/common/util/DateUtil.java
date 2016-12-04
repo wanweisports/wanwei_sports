@@ -3,6 +3,7 @@ package com.park.common.util;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -139,21 +140,28 @@ public class DateUtil {
 	
 	//获取时间范围内指定星期的数量
 	public static int getDateScopeWeekNums(String startDateStr, String endDateStr, String weeks) throws ParseException{
+		return getDateScopeByWeek(startDateStr, endDateStr, weeks, null).size();
+	}
+	
+	public static List<String> getDateScopeByWeek(String startDateStr, String endDateStr, String weeks, String format) throws ParseException{
+		List<String> dataList = new ArrayList<String>();
 		List<String> weekList = Arrays.asList(weeks.split(","));
-		Date startDate = stringToDate(startDateStr, null);
-		Date endDate = stringToDate(endDateStr, null);
+		Date startDate = stringToDate(startDateStr, format);
+		Date endDate = stringToDate(endDateStr, format);
 		Calendar endCal = Calendar.getInstance();
 		endCal.setTime(endDate);
 		endCal.add(Calendar.DATE, 1); //为了循环到最后一天为止，故这里加一天
 		
 		Calendar startCal = Calendar.getInstance();
 		startCal.setTime(startDate);
-		int num = 0;
-		while (startCal.getTime().before(endCal.getTime())) {
-			if(weekList.contains(StrUtil.objToStr(getWeek(startCal.getTime())))) num++;
+		while (dateToDate(startCal.getTime()).before(dateToDate(endCal.getTime()))) {
+			Date date = startCal.getTime();
+			if(weekList.contains(StrUtil.objToStr(getWeek(date)))){
+				 dataList.add(dateToString(date, YYYYMMDDHHMM));
+			}
 			startCal.add(Calendar.DATE, 1);
 		}
-		return num;
+		return dataList;
 	}
 	
 	//获取两个时间之间小时数
@@ -169,6 +177,11 @@ public class DateUtil {
 		int week = c.get(Calendar.DAY_OF_WEEK);
 		if(week == 1) return 7; //周日
 		return week-1; //其他星期-1
+	}
+	
+	public static Date dateToDate(Date date) throws ParseException{
+		DateFormat format = new SimpleDateFormat(YYYYMMDD);
+		return format.parse(format.format(date));
 	}
 	
 	/**

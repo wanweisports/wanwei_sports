@@ -12,8 +12,10 @@ public interface IMemberSignService {
 
 	public PageBean getSigns(MemberSignInputView memberSignInputView);
 	
-	public void saveSign(MemberSiteSign memberSiteSign) throws ParseException;
+	public void saveSign(MemberSiteSign memberSiteSign, Integer memberId, String reserveTimeIds) throws ParseException;
 	
-	public List<Map<String, Object>> getSignSites(String signType, String signMemberCardNo, String mobile);
+	public List<Map<String, Object>> getSignSites(String signType, String signMemberCardNo, String mobile) throws ParseException;
+	
+	public MemberSiteSign getMemberSiteSign(int reserveTimeId, String date) throws ParseException;
 	
 }

@@ -761,6 +761,18 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		return balance.getBalanceId();
 	}
 	
+	@Override
+	public MemberCard getMemberCardNotThrow(int memberId){
+		List<MemberCard> memberCards = getMemberCards(memberId);
+		if(memberCards.size() == 0) throw new MessageException("该会员没有会员卡信息");
+		return memberCards.get(0);
+	}
+	
+	@Override
+	public UserMember getMemberByCardNo(String cardNo){
+		return baseDao.queryByHqlFirst("SELECT um FROM UserMember um, MemberCard mc WHERE um.memberId = mc.memberId AND mc.cardNo = ?", cardNo);
+	}
+	
 	private int getTypeIndex(List<Map<String, Object>> typeCountList, String sportName){
 		int index = 0;
 		for(Map<String, Object> map : typeCountList){

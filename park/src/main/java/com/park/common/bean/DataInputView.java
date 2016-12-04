@@ -5,9 +5,9 @@ public class DataInputView extends BaseInputView {
 	private Integer countNum;
 	private String createTimeStart;
 	private String createTimeEnd;
-	private String balanceServiceType;
-	private String balanceServiceTypeMin;
-	private String balanceServiceTypeMax;
+	private Integer balanceServiceType;
+	private Integer balanceServiceTypeMin;
+	private Integer balanceServiceTypeMax;
 	private String balanceStyle1;
 	private String balanceStyle2;
 	private String balanceStyle3;
@@ -36,28 +36,28 @@ public class DataInputView extends BaseInputView {
 	public void setCreateTimeEnd(String createTimeEnd) {
 		this.createTimeEnd = createTimeEnd;
 	}
-
-	public String getBalanceServiceType() {
+	
+	public Integer getBalanceServiceType() {
 		return balanceServiceType;
 	}
 
-	public void setBalanceServiceType(String balanceServiceType) {
+	public void setBalanceServiceType(Integer balanceServiceType) {
 		this.balanceServiceType = balanceServiceType;
 	}
 
-	public String getBalanceServiceTypeMin() {
+	public Integer getBalanceServiceTypeMin() {
 		return balanceServiceTypeMin;
 	}
 
-	public void setBalanceServiceTypeMin(String balanceServiceTypeMin) {
+	public void setBalanceServiceTypeMin(Integer balanceServiceTypeMin) {
 		this.balanceServiceTypeMin = balanceServiceTypeMin;
 	}
 
-	public String getBalanceServiceTypeMax() {
+	public Integer getBalanceServiceTypeMax() {
 		return balanceServiceTypeMax;
 	}
 
-	public void setBalanceServiceTypeMax(String balanceServiceTypeMax) {
+	public void setBalanceServiceTypeMax(Integer balanceServiceTypeMax) {
 		this.balanceServiceTypeMax = balanceServiceTypeMax;
 	}
 

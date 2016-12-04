@@ -18,6 +18,8 @@ import com.park.common.bean.out.SiteReserveOutputView;
 import com.park.common.constant.IDBConstant;
 import com.park.common.constant.IPlatformConstant;
 import com.park.common.exception.MessageException;
+import com.park.common.po.MemberCard;
+import com.park.common.po.MemberSiteSign;
 import com.park.common.po.OrderDetail;
 import com.park.common.po.OrderInfo;
 import com.park.common.po.ParkBusiness;
@@ -32,6 +34,7 @@ import com.park.common.util.JsonUtils;
 import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
 import com.park.service.IMemberService;
+import com.park.service.IMemberSignService;
 import com.park.service.IOrderService;
 import com.park.service.IParkService;
 import com.park.service.ISiteService;
@@ -50,6 +53,9 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	
 	@Autowired
 	private IOrderService orderService;
+	
+	@Autowired
+	private IMemberSignService memberSignService;
 	
 	@Override
 	public Integer saveSiteSport(SiteSport siteSport) {
@@ -216,7 +222,11 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 					reserveInfo.setReserveType(StrUtil.objToStr(reserveIntersectionMap.get("reserveType")));
 					reserveInfo.setSiteReserveStatus(StrUtil.objToStr(reserveIntersectionMap.get("siteReserveStatus")));
 					reserveInfo.setReserveTimeId(StrUtil.objToInt(reserveIntersectionMap.get("reserveTimeId"))); //根据时间id，来解锁
-                    reserveInfo.setIsUse(StrUtil.objToStr(reserveIntersectionMap.get("isUse")));
+                    reserveInfo.setIsUse(getReservationSiteStatus(siteDate, StrUtil.objToInt(reserveIntersectionMap.get("reserveTimeId"))));
+					if(IDBConstant.LOGIC_STATUS_YES.equals(reserveInfo.getOpType())){
+						List<MemberCard> memberCards = memberService.getMemberCards(reserveInfo.getMemberId());
+						if(memberCards.size() > 0) reserveInfo.setCardNo(memberCards.get(0).getCardNo());
+					}
 				}else{  //每个开始-结束数据段在 场地类型时间 之内
 					if(siteStartTime.getTime() <= DateUtil.getHHMM(startTime).getTime() && siteEndTime.getTime() >= DateUtil.getHHMM(endTime).getTime()){
 						reserveInfo.setSiteReserveStatus("5");
@@ -233,6 +243,14 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		}
 		siteReserveOutputView.setSiteInfos(siteInfos);
 		return siteReserveOutputView;
+	}
+	
+	private String getReservationSiteStatus(String date, int reserveTimeId) throws ParseException{
+		MemberSiteSign memberSiteSign = memberSignService.getMemberSiteSign(reserveTimeId, date);
+		if(memberSiteSign != null) return IDBConstant.SIGN_STATUS_IN;
+		SiteReserveTime siteReserveTime = getSiteReserveTime(reserveTimeId);
+		if(DateUtil.stringToDate(date+" "+siteReserveTime.getSiteEndTime(), DateUtil.YYYYMMDDHHMM).getTime() < new Date().getTime()) return IDBConstant.SIGN_STATUS_OVER;
+		return IDBConstant.SIGN_STATUS_NORMAL;
 	}
 	
 	@Override
@@ -515,21 +533,39 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	}
 	
 	@Override
-	public List<Map<String, Object>> getSiteReserveBasicByMobile(String mobile){ 
-		StringBuilder sql = new StringBuilder("SELECT DISTINCT srt.reserveTimeId, siteName, sportName, srb.name, srb.mobile, CONCAT(srd.reserveStartDate,' ',srt.siteStartTime) startTime, CONCAT(srd.reserveStartDate,' ',srt.siteEndTime) endTime, srt.isUse FROM site_reserve_basic srb, site_reserve_date srd, site_reserve_time srt, site_info si, site_sport ss");
+	public List<Map<String, Object>> getSiteReserveBasicByMobile(String mobile) throws ParseException{ 
+		StringBuilder sql = new StringBuilder("SELECT srt.reserveTimeId, srt.siteId, siteName, sportName, srb.name, srb.mobile, siteEndTime, CONCAT(srd.reserveStartDate,' ',srt.siteStartTime) startTime, CONCAT(srd.reserveEndDate,' ',srt.siteEndTime) endTime, reserveWeek FROM site_reserve_basic srb, site_reserve_date srd, site_reserve_time srt, site_info si, site_sport ss");
 		sql.append(" WHERE srb.mobile = ? AND srb.siteReserveId = srd.siteReserveId AND srd.reserveDateId = srt.reserveDateId AND srt.siteId = si.siteId AND si.siteType = ss.sportId");
-		sql.append(" AND CONCAT(srd.reserveStartDate,' ',srt.siteStartTime) >= DATE_ADD(NOW(),INTERVAL ? MINUTE) ORDER BY CONCAT(srd.reserveStartDate,' ',srt.siteStartTime)");
-		//sql.append(" AND CONCAT(srd.reserveStartDate,' ',srt.siteStartTime) <= DATE_ADD(NOW(),INTERVAL ? MINUTE)");
-		return baseDao.queryBySql(sql.toString(), mobile, IPlatformConstant.SITE_ADVANCE_START_TIME/*, IPlatformConstant.SITE_LATE_START_TIME*/);
+		sql.append(" AND srd.reserveStartDate <= CURDATE() AND srd.reserveEndDate >= CURDATE() AND siteEndTime >= DATE_FORMAT(NOW(), '%H:00')");
+		List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), mobile/*, IPlatformConstant.SITE_ADVANCE_START_TIME, IPlatformConstant.SITE_LATE_START_TIME*/);
+		Date nowDate = new Date();
+		List<Map<String, Object>> spList = new ArrayList<Map<String,Object>>();
+		for(Map<String, Object> map : list){
+			String startTime = StrUtil.objToStr(map.get("startTime"));
+			String endTime = StrUtil.objToStr(map.get("endTime"));
+			List<String> dateList = DateUtil.getDateScopeByWeek(startTime, endTime, StrUtil.objToStr(map.get("reserveWeek")), DateUtil.YYYYMMDDHHMM);
+			for(int i = 0; i < dateList.size(); i++){
+				String date = dateList.get(i);
+				if(DateUtil.dateToDate(nowDate).getTime() == DateUtil.stringToDate(date, null).getTime()){ //只取今天的预定场地
+					Map spDate = (Map)((HashMap)map).clone();
+					spDate.put("startTime", date);
+					spDate.put("endTime", DateUtil.dateToString(DateUtil.stringToDate(date, null), null) + " " +map.get("siteEndTime"));
+					spList.add(spDate);
+				}
+			}
+		}
+		return spList;
 	}
 	
 	@Override
-	public Map<String, Object> getNextSiteReserveBasic(String reserveTimeId){
-		StringBuilder sql = new StringBuilder("SELECT DISTINCT siteName, sportName, srt.isUse, srb.* FROM site_reserve_basic srb, site_reserve_date srd, site_reserve_time srt, site_info si, site_sport ss");
+	public Map<String, Object> getNextSiteReserveBasic(String reserveTimeId, String date) throws ParseException{
+		StringBuilder sql = new StringBuilder("SELECT orderId, siteStartTime, siteEndTime FROM site_reserve_basic srb, site_reserve_date srd, site_reserve_time srt, site_info si, site_sport ss");
 		sql.append(" WHERE srt.reserveTimeId = ? AND srb.siteReserveId = srd.siteReserveId AND srd.reserveDateId = srt.reserveDateId AND srt.siteId = si.siteId AND si.siteType = ss.sportId");
-		sql.append(" AND CONCAT(srd.reserveStartDate,' ',srt.siteStartTime) >= DATE_ADD(NOW(),INTERVAL ? MINUTE)");
-		sql.append(" AND CONCAT(srd.reserveStartDate,' ',srt.siteStartTime) <= DATE_ADD(NOW(),INTERVAL ? MINUTE)");
-		return baseDao.queryBySqlFirst(sql.toString(), reserveTimeId, IPlatformConstant.SITE_ADVANCE_START_TIME, IPlatformConstant.SITE_LATE_START_TIME);
+		sql.append(" AND DATE(srd.reserveEndDate) >= ? AND DATE(srd.reserveStartDate) <= ?");
+/*		sql.append(" AND CONCAT(srd.reserveStartDate,' ',srt.siteStartTime) >= DATE_ADD(NOW(),INTERVAL ? MINUTE)");
+		sql.append(" AND CONCAT(srd.reserveStartDate,' ',srt.siteStartTime) <= DATE_ADD(NOW(),INTERVAL ? MINUTE)");*/
+		Date d = DateUtil.stringToDate(date, null);
+		return baseDao.queryBySqlFirst(sql.toString(), reserveTimeId, d, d/*, IPlatformConstant.SITE_ADVANCE_START_TIME, IPlatformConstant.SITE_LATE_START_TIME*/);
 	}
 	
 	@Override
@@ -545,7 +581,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	private Map<String, Object> getReserveIntersection(int siteId, String startDate, String endDate, String weeks, String startTime, String endTime) throws ParseException{
 		startDate = DateUtil.getAddDay(startDate, -1);
 		
-		StringBuilder sql = new StringBuilder("SELECT * FROM site_reserve_basic srb, site_reserve_date srd, site_reserve_time srt WHERE srb.siteReserveId = srd.siteReserveId AND srd.reserveDateId = srt.reserveDateId");
+		StringBuilder sql = new StringBuilder("SELECT name, memberId, mobile, opType, reserveType, siteReserveStatus, reserveTimeId FROM site_reserve_basic srb, site_reserve_date srd, site_reserve_time srt WHERE srb.siteReserveId = srd.siteReserveId AND srd.reserveDateId = srt.reserveDateId");
 		sql.append(" AND siteId = ?");
 		sql.append(" AND NOT ((DATE(reserveEndDate) <= DATE(?)) OR (DATE(reserveStartDate) > DATE(?)))");
 		sql.append(" AND NOT ((TIME(siteEndTime) <= TIME(?)) OR (TIME(siteStartTime) >= TIME(?)))");

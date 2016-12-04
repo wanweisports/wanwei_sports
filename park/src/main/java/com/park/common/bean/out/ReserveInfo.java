@@ -12,6 +12,8 @@ public class ReserveInfo{
 	private String operatorId;
 	private String reserveType;
 	private String isUse;
+	private Integer memberId;
+	private String cardNo;
 	
 	
 	public Integer getReserveTimeId() {
@@ -74,5 +76,17 @@ public class ReserveInfo{
     public void setIsUse(String isUse) {
         this.isUse = isUse;
     }
+	public Integer getMemberId() {
+		return memberId;
+	}
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
+	}
+	public String getCardNo() {
+		return cardNo;
+	}
+	public void setCardNo(String cardNo) {
+		this.cardNo = cardNo;
+	}
 	
 }
