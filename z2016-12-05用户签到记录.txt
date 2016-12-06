@@ -1,0 +1,23 @@
+用户签到记录：
+请求：/data/getMembersAttendance
+
+返回：
+{
+    "list": [
+        {
+            "cardNo": "12345",
+            "memberName": "张三会员", 
+            "name": "张三",
+            "signDate": "2016-12-06",
+            "orderNo": "20161206111111",
+            "signName": "李四",
+            "signMobile": "13000000111",           
+            "siteName": "场地1",
+            "sportName": "篮球场"
+        }
+    ],
+    "count": "1",
+    "lastPage": "1",
+    "pageSize": "10"
+}
+

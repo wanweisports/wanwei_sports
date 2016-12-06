@@ -126,6 +126,22 @@ public class DataServiceImpl extends BaseService implements IDataService {
 	}
 	
 	@Override
+	public PageBean getDataMembersAttendance(DataInputView dataInputView){
+		StringBuilder headSql = new StringBuilder("SELECT mc.cardNo, um.memberName, srb.`name`, mss.signDate, oi.orderNo, mss.signName, mss.signMobile, si.siteName, ss.sportName");
+		StringBuilder bodySql = new StringBuilder(" FROM member_site_sign mss");
+		bodySql.append(" JOIN order_info oi ON(mss.orderId = oi.orderId)");
+		bodySql.append(" JOIN site_reserve_time srt ON(mss.reserveTimeId = srt.reserveTimeId)");
+		bodySql.append(" JOIN site_reserve_basic srb ON(oi.orderId = srb.orderId)");
+		bodySql.append(" JOIN site_info si ON(srt.siteId = si.siteId)");
+		bodySql.append(" JOIN site_sport ss ON(si.siteType = ss.sportId)");
+		bodySql.append(" LEFT JOIN user_member um ON(um.memberId = oi.memberId)");
+		bodySql.append(" LEFT JOIN member_card mc ON(mc.memberId = um.memberId)");
+		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
+		
+		return super.getPageBean(headSql, bodySql, whereSql, dataInputView);
+	}
+	
+	@Override
 	public Map<String, Object> getBusinessIncome(DataInputView dataInputView){
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -175,19 +191,15 @@ public class DataServiceImpl extends BaseService implements IDataService {
 			Map tempMap = getTempMapByName(tempListMap, name, style);
 			switch (String.valueOf(map.get("style"))) {
 			case IDBConstant.BALANCE_STYLE_XJ:
-				System.out.println("style===>" + style + "，name===>" + name + "，price===>" + price + "/");
 				tempMap.put(XIANJIN, StrUtil.objToDoubleDef0(tempMap.get(XIANJIN))+price);
 				break;
 			case IDBConstant.BALANCE_STYLE_ZFB:
-				System.out.println("style===>" + style + "，name===>" + name + "，price===>" + price + "//");
 				tempMap.put(ZHIFUBAO, StrUtil.objToDoubleDef0(tempMap.get(ZHIFUBAO))+price);
 				break;
 			case IDBConstant.BALANCE_STYLE_WX:
-				System.out.println("style===>" + style + "，name===>" + name + "，price===>" + price + "///");
 				tempMap.put(WEIXIN, StrUtil.objToDoubleDef0(tempMap.get(WEIXIN))+price);
 				break;
 			default:
-				System.out.println("style===>" + style + "，name===>" + name + "，price===>" + price + "////");
 				tempMap.put(XIANJIN, StrUtil.objToDoubleDef0(tempMap.get(XIANJIN))+0);
 				tempMap.put(ZHIFUBAO, StrUtil.objToDoubleDef0(tempMap.get(ZHIFUBAO))+0);
 				tempMap.put(WEIXIN, StrUtil.objToDoubleDef0(tempMap.get(WEIXIN))+0);

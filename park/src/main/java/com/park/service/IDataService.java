@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.park.common.bean.DataInputView;
+import com.park.common.bean.PageBean;
 
 public interface IDataService {
 
@@ -12,6 +13,8 @@ public interface IDataService {
 	public Map<String, Object> countMembersRegister(List<Map<String, Object>> dataList);
 	
 	public Map<String, Object> getSitePercentage(DataInputView dataInputView);
+	
+	public PageBean getDataMembersAttendance(DataInputView dataInputView);
 	
 	public Map<String, Object> getBusinessIncome(DataInputView dataInputView);
 	

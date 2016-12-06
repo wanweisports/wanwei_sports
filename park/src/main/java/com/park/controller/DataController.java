@@ -34,7 +34,13 @@ public class DataController extends BaseController {
 
     // 用户签到记录
     @RequestMapping("getMembersAttendance")
-    public String getMembersAttendance() {
+    public String getMembersAttendance(DataInputView dataInputView, Model model) {
+    	try {
+    		model.addAllAttributes(JsonUtils.fromJson(dataInputView));
+    		super.setPageInfo(model, dataService.getDataMembersAttendance(dataInputView));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         return "Data/DataMembersAttendance";
     }
 
@@ -43,7 +49,6 @@ public class DataController extends BaseController {
     public String getBusinessIncome(DataInputView dataInputView, Model model) {
     	try{
     		model.addAllAttributes(dataService.getBusinessIncome(dataInputView));
-    		System.out.println(JsonUtils.toJson(dataService.getBusinessIncome(dataInputView)));
     	}catch (Exception e) {
 			e.printStackTrace();
 		}
