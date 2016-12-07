@@ -16,14 +16,21 @@
             <div class="panel-body">
                 <form id="notification_filter_form" class="form-inline" novalidate onsubmit="return false;">
                     <div class="form-group">
-                        <select class="form-control" name="noteStatus" id="noteStatus" style="width: 200px;">
-                            <option value="">全部状态</option>
-                            <option value="1">已读</option>
-                            <option value="2">未读</option>
-                        </select>
+                        <a href="javascript:;" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-envelope"></span> 收件箱
+                        </a>
+                        <a href="javascript:;" class="btn btn-default">
+                            <span class="glyphicon glyphicon-folder-close"></span> 收件箱(未读)
+                        </a>
+                        <a href="javascript:;" class="btn btn-default">
+                            <span class="glyphicon glyphicon-folder-open"></span> 收件箱(已读)
+                        </a>
+                        <a href="javascript:;" class="btn btn-default">
+                            <span class="glyphicon glyphicon-trash"></span> 垃圾箱
+                        </a>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="noteTitle" placeholder="通知标题" value="${noteTitle}">
+                        <input type="text" class="form-control" name="keywords" placeholder="全文检索..." value="${keywords}">
                     </div>
                     <div class="form-group">
                         <a href="javascript:;" class="btn btn-primary notification-filter">

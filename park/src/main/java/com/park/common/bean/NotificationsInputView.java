@@ -17,7 +17,9 @@ public class NotificationsInputView extends BaseInputView {
 
     private String noteAttachments;
 
-    private String noteStatus;
+    private String noteSenderStatus;
+
+    private String noteReceiverStatus;
 
     private String noteCreateTime;
 
@@ -73,12 +75,16 @@ public class NotificationsInputView extends BaseInputView {
         this.noteAttachments = noteAttachments;
     }
 
-    public String getNoteStatus() {
-        return noteStatus;
+    public String getNoteSenderStatus() {return noteSenderStatus;}
+
+    public void setNoteSenderStatus(String noteSenderStatus) {
+        this.noteSenderStatus = noteSenderStatus;
     }
 
-    public void setNoteStatus(String noteStatus) {
-        this.noteStatus = noteStatus;
+    public String getNoteReceiverStatus() {return noteReceiverStatus;}
+
+    public void setNoteReceiverStatus(String noteReceiverStatus) {
+        this.noteReceiverStatus = noteReceiverStatus;
     }
 
     public String getNoteCreateTime() {

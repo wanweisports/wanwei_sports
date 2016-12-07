@@ -224,7 +224,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 					reserveInfo.setReserveTimeId(StrUtil.objToInt(reserveIntersectionMap.get("reserveTimeId"))); //根据时间id，来解锁
                     reserveInfo.setIsUse(getReservationSiteStatus(siteDate, StrUtil.objToInt(reserveIntersectionMap.get("reserveTimeId"))));
 					if(IDBConstant.LOGIC_STATUS_YES.equals(reserveInfo.getOpType())){
-						List<MemberCard> memberCards = memberService.getMemberCards(reserveInfo.getMemberId());
+						List<MemberCard> memberCards = memberService.getMemberCards(StrUtil.objToInt(reserveIntersectionMap.get("memberId")));
 						if(memberCards.size() > 0) reserveInfo.setCardNo(memberCards.get(0).getCardNo());
 					}
 				}else{  //每个开始-结束数据段在 场地类型时间 之内

@@ -9,8 +9,8 @@
             Current_Date: $("#current_date").val(),
             Current_Sport: $("#current_sport").val(),
             Reservation_Tpl: '<span class="name" data-id="#USERID#" data-name="#USERNAME#">#USERNAME1#</span>' +
-                '<span class="mobile" data-mobile="#USERMOBILE#">#USERMOBILE1#</span>' +
-                '<span class="angle"></span>',
+                '<span class="mobile" data-mobile="#USERMOBILE#" data-card="#CARDNO#">#USERMOBILE1#</span>' +
+                '<span class="angle" data-reserve="#RESERVETIMEID#"></span>',
             Reservation_Date_Tpl: '<li class="reservation-date-picker #DATEACTIVE#" data-value="#DATEVALUE#">' +
                 '<a href="javascript:;">#DATETEXT#</a></li>',
             Reservation_list: '<li class="court">#SITENAME# #STARTTIME#-#ENDTIME#</li>'
@@ -160,6 +160,8 @@
                             // 场地已预订
                             if (reserveInfo.siteReserveStatus == 1) {
                                 html = content.opts.Reservation_Tpl
+                                    .replace(/#RESERVETIMEID#/, reserveInfo.reserveTimeId || "")
+                                    .replace(/#CARDNO#/, reserveInfo.cardNo || "")
                                     .replace(/#USERID#/, reserveInfo.operatorId)
                                     .replace(/#USERNAME#/, reserveInfo.operatorName)
                                     .replace(/#USERNAME1#/, reserveInfo.operatorName.substr(0, 2) + "*")
@@ -174,6 +176,9 @@
                                 }
 
                                 if (reserveInfo.isUse == 1) {
+                                    $site.addClass("signed");
+                                }
+                                if (reserveInfo.isUse == 2) {
                                     $site.addClass("used");
                                 }
                             }
@@ -181,6 +186,8 @@
                             // 未支付
                             if (reserveInfo.siteReserveStatus == 2) {
                                 html = content.opts.Reservation_Tpl
+                                    .replace(/#RESERVETIMEID#/, reserveInfo.reserveTimeId || "")
+                                    .replace(/#CARDNO#/, reserveInfo.cardNo || "")
                                     .replace(/#USERID#/, reserveInfo.operatorId)
                                     .replace(/#USERNAME#/, reserveInfo.operatorName)
                                     .replace(/#USERNAME1#/, reserveInfo.operatorName.substr(0, 2) + "*")
@@ -195,6 +202,9 @@
                                 }
 
                                 if (reserveInfo.isUse == 1) {
+                                    $site.addClass("signed");
+                                }
+                                if (reserveInfo.isUse == 2) {
                                     $site.addClass("used");
                                 }
                             }
@@ -244,7 +254,7 @@
                 $(".sequence-order").attr("data-click", "no").hide();
                 $(".sequence-lock").attr("data-click", "no").hide();
                 $(".sequence-unlock").attr("data-click", "no").hide();
-                $(".sequence-refresh").attr("data-click", "yes").show();
+                $(".sequence-refresh").attr("data-click", "no").hide();
                 $(".sequence-attention").attr("data-click", "yes").show();
             }
             if (status === content.opts.LOCKED) {
@@ -263,16 +273,9 @@
                 return;
             }
 
-            var $sel = null, col = 0, rows = {};
+            var $sel = null;
             for (var i = 0; i < $selected.size(); i++) {
                 $sel = $selected.eq(i);
-                col = $selected.eq(i).attr("data-col");
-
-                if (rows["cols" + col]) {
-                    rows["cols" + col].push($selected.eq(i).attr("data-startTime"));
-                } else {
-                    rows["cols" + col] = [];
-                }
 
                 html += content.opts.Reservation_list.replace("#SITENAME#", $sel.attr("data-name"))
                     .replace("#STARTTIME#", $sel.attr("data-start"))
@@ -326,7 +329,25 @@
 
                 var $this = $(this);
 
+                $sequenceTable.find("td.selected").addClass("null").removeClass("selected").html("");
                 $this.addClass("sel");
+
+                var $sel = null, mobile;
+                var $selected = $sequenceTable.find('td.sel');
+                for (var i = 0; i < $selected.size(); i++) {
+                    $sel = $selected.eq(i);
+
+                    if (!mobile) {
+                        mobile = $sel.find("span.mobile").attr("data-mobile");
+                    }
+
+                    if ($sel.find("span.mobile").attr("data-mobile") !== mobile) {
+                        alert("请选择相同人的预订场地");
+                        $this.addClass("sel").removeClass("sel");
+                        return;
+                    }
+                }
+
                 content.addReservationsSelected(content.opts.REFRESHED);
             });
 
@@ -336,6 +357,7 @@
 
                 var $this = $(this);
 
+                $sequenceTable.find("td.selected").addClass("null").removeClass("selected").html("");
                 $this.addClass("sel");
                 content.addReservationsSelected(content.opts.LOCKED);
             });
@@ -382,7 +404,12 @@
                 data.push({
                     siteStartTime: $sel.attr("data-start"),
                     siteEndTime: $sel.attr("data-end"),
-                    siteId: $sel.attr("data-id")
+                    siteId: $sel.attr("data-id"),
+                    mobile: $sel.find("span.mobile").attr("data-mobile"),
+                    name: $sel.find("span.name").attr("data-name"),
+                    member: $sel.find("span.name").attr("data-id"),
+                    card: $sel.find("span.mobile").attr("data-card"),
+                    timeId: $sel.find("span.angle").attr("data-reserve")
                 });
             }
 
@@ -557,9 +584,16 @@
             $(".sequence-attention").on("click", function (e) {
                 e.preventDefault();
 
-                $("#attention_user_name").val("散客");
-                $("#attention_user_mobile").val("15611119752");
-                $("#attention_user_opType").val("2");
+                var data = content.findReservationsSelected(content.opts.REFRESHED);
+                if (data.length === 0) {
+                    return alert("请先选择场地");
+                }
+
+                $("#attention_user_name").val(data[0].name);
+                $("#attention_user_mobile").val(data[0].mobile);
+                $("#attention_user_opType").val(data[0].member > 0 ? "1" : "2");
+                $("#attention_user_id").val(data[0].member);
+                $("#attention_user_card").val(data[0].card);
 
                 $("#attentionModal").modal({backdrop: false, show: true});
             });
@@ -575,27 +609,24 @@
                 }
 
                 var data = content.findReservationsSelected(content.opts.REFRESHED);
+                var ids = [];
 
                 if (data.length === 0) {
                     return alert("请先选择场地");
                 }
 
-                content.opts.data = {
-                    siteReserveDateList: [{
-                        reserveStartDate: content.opts.Current_Date,
-                        reserveEndDate: content.opts.Current_Date,
-                        reserveWeek: moment(content.opts.Current_Date).format("e"),
-                        siteReserveTimeList: data
-                    }]
-                };
-
-                //memberSign/memberSign?signType=1&signMobile=13111111111&signName=张三&signMemberCardNo=593089
+                for (var i = 0; i < data.length; i++) {
+                    ids.push(data[i].timeId);
+                }
 
                 $.post('/memberSign/memberSign', {
                     signType: $("#attention_user_opType").val(),
                     signMobile: $("#attention_user_mobile").val(),
                     signName: $("#attention_user_name").val(),
-                    signMemberCardNo: ""
+                    signMemberCardNo: $("#attention_user_card").val(),
+                    reserveTimeIds: ids.join(","),
+                    signDate: content.opts.Current_Date,
+                    memberId: $("#attention_user_id").val()
                 }, function (res) {
                     if (res.code == 1) {
                         $("#attentionModal").modal("hide");
@@ -731,9 +762,15 @@
 
             $.post('/member/memberDetail', {memberId: memberId}, function (res) {
                 var data = res.data;
+                var originalPrice = $("#reservations_paid_money").val();
 
                 if (res.code == 1) {
                     $('#reservations_paid_balance').val(data.cardBalance);
+                    if (data.cardBalance >= originalPrice) {
+                        $("#reservations_paid_money").val("0.00");
+                    } else {
+                        $("#reservations_paid_money").val(originalPrice - data.cardBalance);
+                    }
                 } else {
                     alert(res.message || "会员余额查询失败, 请稍后重试");
                 }

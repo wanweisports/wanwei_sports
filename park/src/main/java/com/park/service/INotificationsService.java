@@ -3,6 +3,9 @@ package com.park.service;
 import com.park.common.bean.NotificationsInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.po.NotificationsInfo;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import java.io.IOException;
 
 public interface INotificationsService {
 
@@ -12,7 +15,7 @@ public interface INotificationsService {
 
     public NotificationsInfo getNotificationInfo(int noteId);
 	
-	public Integer setNotification(NotificationsInfo notificationInfo);
+	public Integer setNotification(NotificationsInfo notificationInfo, MultipartHttpServletRequest multipartRequest) throws IOException;
 
     public Integer sendNotification(int noteId);
 

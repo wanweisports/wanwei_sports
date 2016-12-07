@@ -23,7 +23,8 @@ public class NotificationsInfo implements java.io.Serializable {
 	private Integer noteSender;
 	private Integer noteReceiver;
 	private String noteAttachments;
-	private String noteStatus;
+	private String noteSenderStatus;
+	private String noteReceiverStatus;
 	private String noteCreateTime;
 	private String noteReadTime;
     private String noteUpdateTime;
@@ -35,23 +36,26 @@ public class NotificationsInfo implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public NotificationsInfo(String noteTitle, String noteContent, String noteStatus, String noteCreateTime) {
+	public NotificationsInfo(String noteTitle, String noteContent, String noteSenderStatus, String noteReceiverStatus,
+							 String noteCreateTime) {
 		this.noteTitle = noteTitle;
 		this.noteContent = noteContent;
-		this.noteStatus = noteStatus;
+		this.noteSenderStatus = noteSenderStatus;
+		this.noteReceiverStatus = noteReceiverStatus;
         this.noteCreateTime = noteCreateTime;
 	}
 
 	/** full constructor */
 	public NotificationsInfo(String noteTitle, String noteContent, Integer noteSender, Integer noteReceiver,
-                             String noteAttachments, String noteStatus, String noteCreateTime, String noteReadTime,
-                             String noteUpdateTime) {
+                             String noteAttachments, String noteSenderStatus, String noteReceiverStatus,
+							 String noteCreateTime, String noteReadTime, String noteUpdateTime) {
         this.noteTitle = noteTitle;
         this.noteContent = noteContent;
         this.noteSender = noteSender;
         this.noteReceiver = noteReceiver;
         this.noteAttachments = noteAttachments;
-        this.noteStatus = noteStatus;
+		this.noteSenderStatus = noteSenderStatus;
+        this.noteReceiverStatus = noteReceiverStatus;
         this.noteCreateTime = noteCreateTime;
         this.noteReadTime = noteReadTime;
         this.noteUpdateTime = noteUpdateTime;
@@ -114,14 +118,23 @@ public class NotificationsInfo implements java.io.Serializable {
 		this.noteAttachments = noteAttachments;
 	}
 
-	@Column(name = "noteStatus", nullable = false, length = 1)
-	public String getNoteStatus() {
-		return this.noteStatus;
+	@Column(name = "noteReceiverStatus", nullable = false, length = 1)
+	public String getNoteReceiverStatus() {
+		return this.noteReceiverStatus;
 	}
 
-	public void setNoteStatus(String noteStatus) {
-		this.noteStatus = noteStatus;
+	public void setNoteReceiverStatus(String noteReceiverStatus) {
+		this.noteReceiverStatus = noteReceiverStatus;
 	}
+
+    @Column(name = "noteSenderStatus", nullable = false, length = 1)
+    public String getNoteSenderStatus() {
+        return this.noteSenderStatus;
+    }
+
+    public void setNoteSenderStatus(String noteSenderStatus) {
+        this.noteSenderStatus = noteSenderStatus;
+    }
 
 	@Column(name = "noteCreateTime", length = 20)
 	public String getNoteCreateTime() {

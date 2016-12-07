@@ -32,15 +32,18 @@
             <div class="panel-body">
                 <form id="notification_filter_form" class="form-inline" novalidate onsubmit="return false;">
                     <div class="form-group">
-                        <select class="form-control" name="noteStatus" id="noteStatus" style="width: 200px;">
-                            <option value="">全部状态</option>
-                            <option value="1">对方已读</option>
-                            <option value="2">对方未读</option>
-                            <option value="3">发送草稿</option>
-                        </select>
+                        <a href="javascript:;" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-send"></span> 发件箱
+                        </a>
+                        <a href="javascript:;" class="btn btn-default">
+                            <span class="glyphicon glyphicon-edit"></span> 草稿箱
+                        </a>
+                        <a href="javascript:;" class="btn btn-default">
+                            <span class="glyphicon glyphicon-trash"></span> 垃圾箱
+                        </a>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="noteTitle" placeholder="通知标题" value="${noteTitle}">
+                        <input type="text" class="form-control" name="keywords" placeholder="全文检索..." value="${keywords}">
                     </div>
                     <div class="form-group">
                         <a href="javascript:;" class="btn btn-primary notification-filter">
@@ -66,9 +69,9 @@
                             <th>发送标题</th>
                             <th>发送内容</th>
                             <th>有无附件</th>
+                            <th>创建时间</th>
                             <th>发送时间</th>
                             <th>收件人</th>
-                            <th>通知状态</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -78,41 +81,29 @@
                                 <td>${note.noteTitle}</td>
                                 <td>${note.noteContent.substring(0, 28)}...</td>
 
-                                <c:if test="${note.noteAttachments}">
-                                    <td>${note.noteAttachments}</td>
-                                </c:if>
-                                <c:if test="${!note.noteAttachments}">
-                                    <td>无</td>
-                                </c:if>
+                                <td>${note.noteAttachments}</td>
 
                                 <td>${note.noteCreateTime}</td>
+                                <td>${note.noteUpdateTime}</td>
                                 <td>${note.operatorName}</td>
 
-                                <c:if test="${note.noteStatus == 1}">
-                                    <td class="text-success">已读</td>
-                                </c:if>
-                                <c:if test="${note.noteStatus == 2}">
-                                    <td class="text-danger">未读</td>
-                                </c:if>
-                                <c:if test="${note.noteStatus == 3}">
-                                    <td class="text-warning">草稿</td>
-                                </c:if>
-
                                 <td>
-                                    <c:if test="${note.noteStatus == 3}">
+                                    <c:if test="${note.noteSenderStatus == 3}">
                                         <a href="#fasongModal" class="btn btn-primary notifications-view" data-toggle="modal"
                                            data-backdrop="false" data-id="${note.noteId}" data-edit="1">
                                             <span class="glyphicon glyphicon-share-alt"></span> 查看
                                         </a>
+                                        <a href="javascript:;" class="btn btn-danger">
+                                            <span class="glyphicon glyphicon-remove"></span> 删除
+                                        </a>
                                     </c:if>
-                                    <c:if test="${note.noteStatus == 1 || note.noteStatus == 2}">
+                                    <c:if test="${note.noteSenderStatus == 1 || note.noteSenderStatus == 2}">
                                         <a href="#senderModal" class="btn btn-primary notifications-view" data-toggle="modal"
                                            data-backdrop="false" data-id="${note.noteId}" data-edit="2">
                                             <span class="glyphicon glyphicon-share-alt"></span> 查看
                                         </a>
-                                        <a href="#fasongModal" class="btn btn-warning notifications-resend" data-toggle="modal"
-                                           data-backdrop="false" data-id="${note.noteId}" data-edit="1">
-                                            <span class="glyphicon glyphicon-send"></span> 转发
+                                        <a href="javascript:;" class="btn btn-danger">
+                                            <span class="glyphicon glyphicon-remove"></span> 删除
                                         </a>
                                     </c:if>
                                 </td>
@@ -229,7 +220,7 @@
                     <p><a href="" class="btn btn-link">2016年度场馆建设意.jpg</a></p>-->
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <button type="button" class="btn btn-default">
                         <span class="glyphicon glyphicon-remove"></span> 关 闭
                     </button>
                 </div>
@@ -247,44 +238,54 @@
                     <h5 class="modal-title" id="fasongModalLabel">发送通知</h5>
                 </div>
                 <div class="modal-body">
-                    <form id="notification_form" role="form" onsubmit="return false;">
+                    <form id="notification_form" class="form-horizontal" role="form" onsubmit="return false;">
                         <input type="hidden" id="note_id" name="noteId">
                         <div class="form-group">
-                            <select class="form-control" id="note_receiver" name="noteReceiver">
-                                <option value="">请选择</option>
-                                <c:forEach var="operator" items="${operators}">
-                                    <option value="${operator.id}">${operator.operatorName}(${operator.roleName})</option>
-                                </c:forEach>
-                            </select>
+                            <label for="note_receiver" class="col-sm-2 control-label">收件人</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="note_receiver" name="noteReceiver"
+                                        data-val="true" data-val-required="请选择收件人">
+                                    <option value="">请选择</option>
+                                    <c:forEach var="operator" items="${operators}">
+                                        <option value="${operator.id}">${operator.operatorName}(${operator.roleName})</option>
+                                    </c:forEach>
+                                </select>
+                                <div data-valmsg-for="noteReceiver" data-valmsg-replace="true"></div>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="note_title" name="noteTitle"
-                                   placeholder="消息标题" autocomplete="off"
-                                   data-val="true" data-val-required="消息标题不能为空">
-                            <div data-valmsg-for="noteTitle" data-valmsg-replace="true"></div>
+                            <label for="note_title" class="col-sm-2 control-label">通知标题</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="note_title" name="noteTitle"
+                                       placeholder="通知标题" autocomplete="off"
+                                       data-val="true" data-val-required="通知标题不能为空">
+                                <div data-valmsg-for="noteTitle" data-valmsg-replace="true"></div>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <textarea class="form-control" rows="3" id="note_content" name="noteContent"
-                                      placeholder="消息内容" autocomplete="off"
-                                      data-val="true" data-val-required="消息内容不能为空"></textarea>
-                            <div data-valmsg-for="noteContent" data-valmsg-replace="true"></div>
+                            <label for="note_title" class="col-sm-2 control-label">通知内容</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" rows="3" id="note_content" name="noteContent"
+                                          placeholder="通知内容" autocomplete="off"
+                                          data-val="true" data-val-required="通知内容不能为空"></textarea>
+                                <div data-valmsg-for="noteContent" data-valmsg-replace="true"></div>
+                            </div>
                         </div>
-                        <!--<div class="form-group">
-                            <input type="file" id="note_attachments" name="noteAttachments" placeholder="请上传附件"
-                                   autocomplete="off">
-                        </div>-->
+                        <div class="form-group">
+                            <label for="note_attachments" class="col-sm-2 control-label">上传附件</label>
+                            <div class="col-sm-10">
+                                <input type="file" id="note_attachments" name="noteAttachments" placeholder="请上传附件"
+                                       autocomplete="off">
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        <span class="glyphicon glyphicon-remove"></span> 关 闭
-                    </button>
-
-                    <button type="button" class="btn btn-primary save-notification" style="display:none;">
+                    <button type="button" class="btn btn-primary save-notification">
                         <span class="glyphicon glyphicon-save"></span> 保 存
                     </button>
 
-                    <button type="button" class="btn btn-warning send-notification" style="display:none;">
+                    <button type="button" class="btn btn-warning send-notification">
                         <span class="glyphicon glyphicon-send"></span> 发 送
                     </button>
                 </div>
@@ -305,7 +306,7 @@
                     <p class="text-danger">您确定要删除此通知消息吗?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <button type="button" class="btn btn-primary">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>

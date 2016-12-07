@@ -70,10 +70,13 @@ public interface IDBConstant {
     
     public static final int ROLE_EMPLOYEE = 4;//员工角色最低主键值
 
-    public static final String NOTIFICATIONS_STATE_YES = "1";//已读
-    public static final String NOTIFICATIONS_STATE_NO = "2";//未读
-    public static final String NOTIFICATIONS_STATE_UNSEND = "3";//未发送
-    public static final String NOTIFICATIONS_STATE_DEL = "4";//已删除
+    public static final String NOTIFICATIONS_SENDER_YES = "1";//已读
+    public static final String NOTIFICATIONS_SENDER_NO = "2";//未读
+    public static final String NOTIFICATIONS_SENDER_EDIT = "3";//草稿
+    public static final String NOTIFICATIONS_SENDER_DEL = "4";//已删除
+    public static final String NOTIFICATIONS_RECEIVER_YES = "1";//已读
+    public static final String NOTIFICATIONS_RECEIVER_NO = "2";//未读
+    public static final String NOTIFICATIONS_RECEIVER_DEL = "4";//已删除
     
     public static final String CARD_TEACHERS = "1";//教师卡
     public static final String CARD_TEAM = "2";//团体会员卡

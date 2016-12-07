@@ -370,6 +370,8 @@
                     <form id="attention_user_form" class="form-horizontal" novalidate onsubmit="return false;">
                         <input type="hidden" id="attention_user_opType" name="opType" value="2">
                         <input type="hidden" id="attention_user_card" name="signMemberCardNo">
+                        <input type="hidden" id="attention_user_id" name="memberId">
+                        <input type="hidden" id="attention_user_reserve" name="reserveTimeIds">
                         <div class="form-group">
                             <label for="attention_user_name" class="col-sm-3 control-label">
                                 <span class="text-danger">*</span> 姓名

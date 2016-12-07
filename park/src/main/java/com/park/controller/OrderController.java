@@ -40,7 +40,7 @@ public class OrderController extends BaseController {
             e.printStackTrace();
         }
 
-        if (orderInputView.getOrderServiceTypes().equals("2")) {
+        if (orderInputView.getOrderServiceTypes().equals(IDBConstant.ORDER_SERVICE_TYPE_GOODS)) {
             return "Goods/GoodsOrders";
         } else {
             return "Reservation/ReservationsOrders";

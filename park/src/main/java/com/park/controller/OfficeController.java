@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -79,14 +80,12 @@ public class OfficeController extends BaseController {
     // 通知管理保存
     @ResponseBody
     @RequestMapping(value = "saveNotifications", method = RequestMethod.POST)
-    public ResponseBean saveNotifications(NotificationsInfo notificationsInfo) {
+    public ResponseBean saveNotifications(NotificationsInfo notificationsInfo, MultipartHttpServletRequest multipartRequest) {
         try {
             UserOperator userInfo = super.getUserInfo();
             notificationsInfo.setNoteSender(userInfo.getId());
 
-            System.out.println(JsonUtils.fromJson(notificationsInfo));
-
-            Integer noteId = notificationsService.setNotification(notificationsInfo);
+            Integer noteId = notificationsService.setNotification(notificationsInfo, multipartRequest);
             Map<String, Object> data = new HashMap<String, Object>();
             data.put("noteId", noteId);
             return new ResponseBean(data);

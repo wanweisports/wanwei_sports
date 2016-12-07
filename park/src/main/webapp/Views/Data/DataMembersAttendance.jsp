@@ -67,35 +67,25 @@
                             <th>会员姓名</th>
                             <th>签到时间</th>
                             <th>对应订单</th>
+                            <th>场地类型</th>
+                            <th>场地编号</th>
                             <th>签到人</th>
                             <th>手机号</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>234545243</td>
-                            <td>李洪旭</td>
-                            <td>2016-10-20 10:00</td>
-                            <td>order_23435543</td>
-                            <td>李洪旭</td>
-                            <td>110****3242</td>
-                        </tr>
-                        <tr>
-                            <td>234545243</td>
-                            <td>煤炭公司</td>
-                            <td>2016-10-20 10:00</td>
-                            <td>order_23435543</td>
-                            <td>张三</td>
-                            <td>110****3242</td>
-                        </tr>
-                        <tr>
-                            <td>234545243</td>
-                            <td>北体高科</td>
-                            <td>2016-10-20 10:00</td>
-                            <td>order_23435543</td>
-                            <td>栾宝石</td>
-                            <td>110****3242</td>
-                        </tr>
+                        <c:forEach var="data" items="${list}">
+                            <tr>
+                                <td>${data.cardNo ? data.cardNo : "--"}</td>
+                                <td>${data.memberName ? data.memberName : "--"}</td>
+                                <td>${data.signDate}</td>
+                                <td>${data.orderNo}</td>
+                                <td>${data.sportName}</td>
+                                <td>${data.siteName}</td>
+                                <td>${data.signName}</td>
+                                <td>${data.signMobile}</td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
 

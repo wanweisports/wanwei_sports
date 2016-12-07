@@ -69,95 +69,74 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>金卡</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                        </tr>
-                        <tr>
-                            <td>银卡</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                        </tr>
-                        <tr>
-                            <td>普卡</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                        </tr>
-                        <tr>
-                            <td>补卡</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                        </tr>
+                        <c:forEach var="card" items="${cardCounts.countList}">
+                            <tr>
+                                <td>${card.name}</td>
+                                <td>${card.xianjin > 0 ? card.xianjin : "--"}</td>
+                                <td>--</td>
+                                <td>${card.zhifubao > 0 ? card.zhifubao : "--"}</td>
+                                <td>${card.weixin > 0 ? card.weixin : "--"}</td>
+                                <td>--</td>
+                                <td>${card.sumPrice > 0 ? card.sumPrice : "--"}</td>
+                            </tr>
+                        </c:forEach>
                         <tr class="info">
                             <th>金额小计</th>
-                            <th>0.00</th>
-                            <th>0.00</th>
-                            <th>0.00</th>
-                            <th>0.00</th>
-                            <th>0.00</th>
-                            <th>0.00</th>
+                            <th>${cardCounts.xianjinSumPrice}</th>
+                            <th>--</th>
+                            <th>${cardCounts.zhifubaoSumPrice}</th>
+                            <th>${cardCounts.weixinSumPrice}</th>
+                            <th>--</th>
+                            <th>${cardCounts.sumPrice}</th>
                         </tr>
-                        <tr>
-                            <td>场地预订</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                        </tr>
-                        <tr>
-                            <td>包场预订</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                        </tr>
+                        <c:forEach var="site" items="${siteCounts.countList}">
+                            <tr>
+                                <td>${site.name}</td>
+                                <td>${site.xianjin > 0 ? site.xianjin : "--"}</td>
+                                <td>--</td>
+                                <td>${site.zhifubao > 0 ? site.zhifubao : "--"}</td>
+                                <td>${site.weixin > 0 ? site.weixin : "--"}</td>
+                                <td>--</td>
+                                <td>${site.sumPrice > 0 ? site.sumPrice : "--"}</td>
+                            </tr>
+                        </c:forEach>
                         <tr class="info">
                             <th>金额小计</th>
-                            <th>0.00</th>
-                            <th>0.00</th>
-                            <th>0.00</th>
-                            <th>0.00</th>
-                            <th>0.00</th>
-                            <th>0.00</th>
+                            <th>${siteCounts.xianjinSumPrice}</th>
+                            <th>--</th>
+                            <th>${siteCounts.zhifubaoSumPrice}</th>
+                            <th>${siteCounts.weixinSumPrice}</th>
+                            <th>--</th>
+                            <th>${siteCounts.sumPrice}</th>
                         </tr>
-                        <tr>
-                            <td>商品消费</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
+                        <c:forEach var="good" items="${goodsCounts.countList}">
+                            <tr>
+                                <td>${good.name}</td>
+                                <td>${good.xianjin > 0 ? good.xianjin : "--"}</td>
+                                <td>--</td>
+                                <td>${good.zhifubao > 0 ? good.zhifubao : "--"}</td>
+                                <td>${good.weixin > 0 ? good.weixin : "--"}</td>
+                                <td>--</td>
+                                <td>${good.sumPrice > 0 ? good.sumPrice : "--"}</td>
+                            </tr>
+                        </c:forEach>
+                        <tr class="info">
+                            <th>金额小计</th>
+                            <th>${goodsCounts.xianjinSumPrice}</th>
+                            <th>--</th>
+                            <th>${goodsCounts.zhifubaoSumPrice}</th>
+                            <th>${goodsCounts.weixinSumPrice}</th>
+                            <th>--</th>
+                            <th>${goodsCounts.sumPrice}</th>
                         </tr>
                         <tr class="info">
                             <th>金额总计</th>
-                            <th>0.00</th>
-                            <th>0.00</th>
-                            <th>0.00</th>
-                            <th>0.00</th>
-                            <th>0.00</th>
-                            <th>0.00</th>
+                            <th>--</th>
+                            <th>--</th>
+                            <th>--</th>
+                            <th>--</th>
+                            <th>--</th>
+                            <th>--</th>
                         </tr>
                         </tbody>
                     </table>
