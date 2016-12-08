@@ -137,7 +137,7 @@
                     // 打印收款单 [未完成] 连接小票机
 
                     location.assign(content.opts.ToURL);
-                    $("#confirmModal").modal({backdrop: false, show: false});
+                    $("#confirmModal").modal("hide");
                     return false;
                 }
 
@@ -156,9 +156,9 @@
                         // 打印收款单 [未完成] 连接小票机
 
                         location.assign(content.opts.ToURL);
-                        $("#confirmModal").modal({backdrop: false, show: false});
+                        $("#confirmModal").modal("hide");
                     } else {
-                        alert(res.message || "打印流水单失败, 请稍后重试");
+                        alert(res.message || "发票登记失败, 请稍后重试");
                     }
                 });
             });

@@ -12,6 +12,10 @@
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
     <script src="/Content/app/data/data_members_register.js?v=${static_resource_version}"></script>
+    <script>
+        $(".member-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
+        $(".member-date[data-count='${countNum}']").addClass("btn-primary").removeClass("btn-default");
+    </script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
@@ -25,12 +29,13 @@
             <div class="panel-body">
                 <form id="data_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
-                        <select class="form-control" style="width: 160px;" name="countNum">
-                            <option value="1" <c:if test='${countNum==1}'>selected</c:if>>今日数据</option>
-                            <option value="2" <c:if test='${countNum==2}'>selected</c:if>>昨日数据</option>
-                            <option value="3" <c:if test='${countNum==3}'>selected</c:if>>本周数据</option>
-                            <option value="4" <c:if test='${countNum==4}'>selected</c:if>>本月数据</option>
-                        </select>
+                        <div class="btn-group">
+                            <a href="/data/getMembersRegister?countNum=10" data-count="10" class="btn btn-primary member-date">全部</a>
+                            <a href="/data/getMembersRegister?countNum=1" data-count="1" class="btn btn-default member-date">今日</a>
+                            <a href="/data/getMembersRegister?countNum=2" data-count="2" class="btn btn-default member-date">昨日</a>
+                            <a href="/data/getMembersRegister?countNum=3" data-count="3" class="btn btn-default member-date">本周</a>
+                            <a href="/data/getMembersRegister?countNum=4" data-count="4" class="btn btn-default member-date">本月</a>
+                        </div>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="createTimeStart" name="createTimeStart"
@@ -59,11 +64,11 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>编号</th>
+                            <th>序号</th>
                             <th>会员类型</th>
-                            <th>单价(元)</th>
-                            <th>销售数量(个)</th>
-                            <th>销售金额(元)</th>
+                            <th>单价</th>
+                            <th>销售数量</th>
+                            <th>销售金额</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -71,45 +76,17 @@
                             <tr>
                                 <td>${loop.index + 1}</td>
                                 <td>${member.cardTypeName}</td>
-                                <td>${member.cardTypeMoney}</td>
-                                <td>${member.count}</td>
-                                <td>${member.countMoney}</td>
+                                <td>${member.cardTypeMoney}元</td>
+                                <td>${member.count}个</td>
+                                <td>${member.countMoney}元</td>
                             </tr>
                         </c:forEach>
-                        <!-- <tr>
-                            <td>1</td>
-                            <td>金卡会员</td>
-                            <td>1000.00</td>
-                            <td>12</td>
-                            <td>12000.00</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>银卡会员</td>
-                            <td>100.00</td>
-                            <td>23</td>
-                            <td>2300.00</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>普通卡会员</td>
-                            <td>10.00</td>
-                            <td>134</td>
-                            <td>1340.00</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>临时卡会员</td>
-                            <td>0.00</td>
-                            <td>210</td>
-                            <td>0.00</td>
-                        </tr> -->
                         <tr class="info">
                             <th></th>
                             <th></th>
                             <th>合计</th>
-                            <th>${data.sumCount}</th>
-                            <th>${data.sumCountMoney}</th>
+                            <th>${data.sumCount}个</th>
+                            <th>${data.sumCountMoney}元</th>
                         </tr>
                         </tbody>
                     </table>

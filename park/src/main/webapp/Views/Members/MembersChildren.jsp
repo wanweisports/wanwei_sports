@@ -58,16 +58,14 @@
                         <table class="table member-children-list">
                             <thead>
                             <tr>
-                                <th>序号</th>
                                 <th>会员姓名</th>
                                 <th>手机号码</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="user" items="${childrenMembers}" varStatus="loop">
+                            <c:forEach var="user" items="${childrenMembers}">
                                 <tr>
-                                    <td>${loop.index + 1}</td>
                                     <td>${user.memberName}</td>
                                     <td>${user.memberMobile}</td>
                                     <td>

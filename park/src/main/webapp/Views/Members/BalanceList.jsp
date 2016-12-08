@@ -26,14 +26,6 @@
                 <form class="form-inline" id="balance_filter_form" onsubmit="return false;">
                     <input type="hidden" name="cardId" value="${cardId}">
                     <div class="form-group">
-                        <select class="form-control" name="balanceServiceType" style="width: 160px;">
-                            <option value="">全部类型</option>
-                            <option value="10" <c:if test="${balanceServiceType == 10}">selected</c:if>>注册会员</option>
-                            <option value="11" <c:if test="${balanceServiceType == 11}">selected</c:if>>会员充值</option>
-                            <option value="13" <c:if test="${balanceServiceType == 13}">selected</c:if>>会员补办</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <input type="text" class="form-control" id="createTimeStart" name="createTimeStart" placeholder="开始时间"
                                value="${createTimeStart}">
                     </div>
@@ -42,17 +34,8 @@
                                value="${createTimeEnd}">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="手机号" name="memberMobile"
-                               value="${memberMobile}">
-                    </div>
-                    <div class="form-group">
                         <a href="javascript:;" class="btn btn-primary balance-filter">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
-                        </a>
-                    </div>
-                    <div class="form-group pull-right" style="display: none;">
-                        <a href="/member/getConsumes?cardId=${cardId}" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-th-list"></span> 消费明细
                         </a>
                     </div>
                 </form>
@@ -72,7 +55,6 @@
                             <th>支付金额(元)</th>
                             <th>赠送金额(元)</th>
                             <th>当前余额(元)</th>
-                            <th>订单状态</th>
                             <th>操作人</th>
                             <th>操作时间</th>
                         </tr>
@@ -86,13 +68,8 @@
                                 <td>${balance.balanceServiceTypeName}</td>
                                 <td>${balance.balanceStyleName}</td>
                                 <td>${balance.realAmount}</td>
-                                <td>${balance.givingAmount}</td>
-                                <td>${balance.cardBalance}</td>
-                                <c:choose>
-                                    <c:when test="${balance.balanceStatus == 1}"><td class="text-success">已支付</td></c:when>
-                                    <c:when test="${balance.balanceStatus == 2}"><td class="text-danger">未支付</td></c:when>
-                                    <c:otherwise><td>--</td></c:otherwise>
-                                </c:choose>
+                                <td class="text-success">${balance.givingAmount}</td>
+                                <td class="text-danger">${balance.cardBalance}</td>
                                 <td>${balance.operatorName}</td>
                                 <td>${balance.createTime}</td>
                             </tr>

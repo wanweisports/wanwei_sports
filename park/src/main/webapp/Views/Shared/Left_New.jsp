@@ -274,7 +274,7 @@
                     <table style="width: 100%;">
                         <tr class="list-nav-item data ${(param.nav == "data" && param.subNav == "register") ? "active" : ""}">
                             <td>
-                                <span><a href="/data/getMembersRegister">会员办理统计</a></span>
+                                <span><a href="/data/getMembersRegister?countNum=10">会员办理统计</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item data ${(param.nav == "data" && param.subNav == "business") ? "active" : ""}">
@@ -348,6 +348,11 @@
                         <tr class="list-nav-item setting ${(param.nav == "setting" && param.subNav == "role") ? "active" : ""}">
                             <td>
                                 <span><a href="/settings/getRoles">员工权限设置</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item setting ${(param.nav == "setting" && param.subNav == "print") ? "active" : ""}">
+                            <td>
+                                <span><a href="/settings/printTemplate">小票模板设置</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item setting ${(param.nav == "setting" && param.subNav == "database") ? "active" : ""}">

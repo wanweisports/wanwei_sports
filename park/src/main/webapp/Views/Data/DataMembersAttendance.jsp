@@ -63,10 +63,10 @@
                     <table class="table">
                         <thead>
                         <tr>
+                            <th>订单编号</th>
                             <th>会员卡号</th>
-                            <th>会员姓名</th>
+                            <th>预订人</th>
                             <th>签到时间</th>
-                            <th>对应订单</th>
                             <th>场地类型</th>
                             <th>场地编号</th>
                             <th>签到人</th>
@@ -76,10 +76,10 @@
                         <tbody>
                         <c:forEach var="data" items="${list}">
                             <tr>
-                                <td>${data.cardNo ? data.cardNo : "--"}</td>
-                                <td>${data.memberName ? data.memberName : "--"}</td>
-                                <td>${data.signDate}</td>
                                 <td>${data.orderNo}</td>
+                                <td>${data.cardNo}</td>
+                                <td>${data.memberName}</td>
+                                <td>${data.signDate}</td>
                                 <td>${data.sportName}</td>
                                 <td>${data.siteName}</td>
                                 <td>${data.signName}</td>

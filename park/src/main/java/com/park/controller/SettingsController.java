@@ -184,6 +184,12 @@ public class SettingsController extends BaseController {
     public String systemLogs() {
         return "Settings/SettingsSystemLogs";
     }
+
+	// 数据库操作
+	@RequestMapping("printTemplate")
+	public String printTemplate() {
+		return "Settings/SettingsPrintTemplate";
+	}
     
     @ResponseBody
     @RequestMapping("getBusinessTime")
