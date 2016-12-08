@@ -7,6 +7,7 @@ import com.park.common.bean.OperatorInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.bean.out.ReserveInfo;
 import com.park.common.po.UserOperator;
+import com.park.common.po.UserScheduling;
 
 public interface IOperatorService {
 
@@ -35,5 +36,11 @@ public interface IOperatorService {
 	public void saveLastLoginTime(int id);
 	
 	public void updatePassword(String oldPwd, String newPwd, String operatorId);
+	
+	public List<Map<String, Object>> getUserSchedulings();
+	
+	public Integer saveUserScheduling(UserScheduling userScheduling);
+	
+	public UserScheduling getUserScheduling(int schedulingId);
 	
 }

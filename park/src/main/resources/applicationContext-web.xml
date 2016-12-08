@@ -78,12 +78,12 @@
 	
 	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
 	    <tx:attributes>
-			<tx:method name="save*" rollback-for="Exception"/> 
-			<tx:method name="add*" rollback-for="Exception"/> 
-			<tx:method name="update*" rollback-for="Exception"/>
-			<tx:method name="remove*" rollback-for="Exception"/>
-			<tx:method name="delete*" rollback-for="Exception"/>		 
-			<tx:method name="*" read-only="true" rollback-for="Exception"/> 			
+			<tx:method name="save*" propagation="REQUIRED" rollback-for="Exception"/> 
+			<tx:method name="add*" propagation="REQUIRED" rollback-for="Exception"/> 
+			<tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="remove*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception"/>		 
+			<tx:method name="*" read-only="true" propagation="SUPPORTS"/> 			
 		</tx:attributes>
 	</tx:advice>
 	

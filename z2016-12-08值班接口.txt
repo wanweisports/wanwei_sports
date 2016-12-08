@@ -1,0 +1,30 @@
+获取值班：/dashboard/rota
+请求：
+
+返回：
+{
+    "rotas": [
+        {
+            "startTime": "06:00",
+            "createTime": "2016-12-07 15:00:09",
+            "operatorName": "东东",
+            "operatorId": "244140",
+            "schedulingId": "1",
+            "endTime": "17:00",
+            "date": "2016-12-08",
+            "schedulingJob": "打扫卫生"
+        }
+    ]
+}
+===================================================================================================
+保存值班信息：【Ajax】
+请求：/dashboard/saveRota?operatorId=244140&date=2016-12-08&startTime=06:00&endTime=17:00&schedulingJob=打扫卫生&schedulingId=1
+
+返回：
+{
+    "code": "1",
+    "message": "操作成功",
+    "data": {
+	  "schedulingId": 1
+	}
+}

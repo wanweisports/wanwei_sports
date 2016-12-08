@@ -16,6 +16,7 @@ import com.park.common.po.SystemRole;
 import com.park.common.po.SystemRoleOperator;
 import com.park.common.po.SystemRoleOperatorId;
 import com.park.common.po.UserOperator;
+import com.park.common.po.UserScheduling;
 import com.park.common.util.DateUtil;
 import com.park.common.util.JsonUtils;
 import com.park.common.util.StrUtil;
@@ -119,7 +120,7 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 	@Override
 	public Map<String, Object> getEmployee(String operatorId){
 		UserOperator operator = getOperator(operatorId);
-		if(operator == null) throw new MessageException("用户不存在");
+		if(operator == null) throw new MessageException("员工不存在");
 		SystemRoleOperator operatorRole = roleService.getOperatorRole(operatorId);
 		Integer roleId = operatorRole.getId().getRoleId();
 		if(roleId < IDBConstant.ROLE_EMPLOYEE) throw new MessageException("操作错误");
@@ -195,6 +196,38 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 		if(!oldPwd.equals(operator.getOperatorPwd())) throw new MessageException("原密码错误");
 		operator.setOperatorPwd(newPwd);
 		baseDao.save(operator, operator.getId());
+	}
+	
+	@Override
+	public List<Map<String, Object>> getUserSchedulings(){
+		return baseDao.queryBySql("SELECT us.*, uo1.operatorName FROM user_scheduling us, user_operator uo1 WHERE us.operatorId = uo1.operatorId");
+	}
+	
+	@Override
+	public Integer saveUserScheduling(UserScheduling userScheduling){
+		Integer schedulingId = userScheduling.getSchedulingId();
+		String nowDate = DateUtil.getNowDate();
+		if(getEmployee(userScheduling.getOperatorId()) == null) throw new MessageException("值班员工不存在");
+		if(schedulingId == null){
+			userScheduling.setCreateTime(nowDate);
+			baseDao.save(userScheduling, null);
+			return userScheduling.getSchedulingId();
+		}
+		UserScheduling userSchedulingDB = getUserScheduling(schedulingId);
+		userSchedulingDB.setUpdateTime(nowDate);
+		userSchedulingDB.setDate(userScheduling.getDate());
+		userSchedulingDB.setOperatorId(userScheduling.getOperatorId());
+		userSchedulingDB.setSchedulingJob(userScheduling.getSchedulingJob());
+		userSchedulingDB.setStartTime(userScheduling.getStartTime());
+		userSchedulingDB.setEndTime(userScheduling.getEndTime());
+		userSchedulingDB.setSalesId(userScheduling.getSalesId());
+		baseDao.save(userSchedulingDB, schedulingId);
+		return schedulingId;
+	}
+	
+	@Override
+	public UserScheduling getUserScheduling(int schedulingId){
+		return baseDao.getToEvict(UserScheduling.class, schedulingId);
 	}
 	
 	private int getEmployeeCount(){
