@@ -4,6 +4,7 @@ import com.park.common.bean.*;
 import com.park.common.exception.MessageException;
 import com.park.common.po.NotificationsInfo;
 import com.park.common.po.UserOperator;
+import com.park.common.po.UserScheduling;
 import com.park.common.util.JsonUtils;
 import com.park.service.INotificationsService;
 import com.park.service.IOperatorService;
@@ -134,8 +135,30 @@ public class OfficeController extends BaseController {
 
     // 排班管理
     @RequestMapping("schedule")
-    public String schedule() {
+    public String schedule(Model model) {
+    	try{
+    		model.addAttribute("schedules", operatorService.getUserSchedulings());
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
         return "Office/OfficeSchedule";
+    }
+    
+    @ResponseBody
+    @RequestMapping("saveSchedule")
+    public ResponseBean saveSchedule(UserScheduling userScheduling){
+    	try{
+    		userScheduling.setSalesId(getUserInfo().getId());
+    		Map<String, Object> data = new HashMap<String, Object>();
+    		data.put("schedulingId", operatorService.saveUserScheduling(userScheduling));
+    		return new ResponseBean(data);
+    	} catch(MessageException e){
+    		e.printStackTrace();
+    		return new ResponseBean(e.getMessage());
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		return new ResponseBean(false);
+    	}
     }
 
     // 培训报名

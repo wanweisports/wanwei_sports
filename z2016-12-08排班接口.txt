@@ -1,4 +1,4 @@
-获取值班：/dashboard/rota
+获取排班：/office/schedule
 请求：
 
 返回：
@@ -17,8 +17,8 @@
     ]
 }
 ===================================================================================================
-保存值班信息：【Ajax】
-请求：/dashboard/saveRota?operatorId=244140&date=2016-12-08&startTime=06:00&endTime=17:00&schedulingJob=打扫卫生&schedulingId=1
+保存排班信息：【Ajax】
+请求：/office/saveSchedule?operatorId=244140&date=2016-12-08&startTime=06:00&endTime=17:00&schedulingJob=打扫卫生&schedulingId=1
 
 返回：
 {
