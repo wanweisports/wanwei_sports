@@ -141,13 +141,13 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			//订单状态（暂定，现金直接已支付，如果是微信应该是回调）
 			otherBalance.setBalanceStatus(IDBConstant.BALANCE_STATUS_ALL);
 			baseDao.save(otherBalance, null);
-			OtherInvoice invoice = new OtherInvoice();
+			/*OtherInvoice invoice = new OtherInvoice();
 			invoice.setInvoiceNo(otherBalance.getBalanceNo());
 			invoice.setSalesId(memberCard.getSalesId());
 			invoice.setInvoiceServiceType(IDBConstant.BALANCE_SERVICE_TYPE_REG);
 			invoice.setInvoiceServiceId(userMember.getMemberId());
 			//保存发票信息
-			data.put("invoiceId", saveInvoice(invoice));
+			data.put("invoiceId", saveInvoice(invoice));*/
 		}else{
 			memberCard = getMemberCards(memberCard.getMemberId()).get(0);
 			otherBalance = getOtherBalance(IDBConstant.BALANCE_SERVICE_TYPE_REG, memberCard.getCardId());
@@ -245,7 +245,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			baseDao.save(invoiceDB, invoiceDB.getInvoiceId());
 		}else{ //新建
 			invoice.setCreateTime(DateUtil.getNowDate());
-			invoice.setInvoiceState(IDBConstant.LOGIC_STATUS_NO); //默认未打印，改变状态需要结合打印机状态
+			invoice.setInvoiceState(IDBConstant.LOGIC_STATUS_NO); //默认未打印(领取)，改变状态需要结合打印机状态
 			//invoice.setInvoiceNo(getInvoiceNo()); //发票的流水号和订单的流水号是一个不是两个
 			baseDao.save(invoice, invoice.getInvoiceId());
 		}
