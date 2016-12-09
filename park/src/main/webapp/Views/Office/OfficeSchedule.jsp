@@ -33,6 +33,9 @@
         .progress {
             margin-bottom: 0;
         }
+        .edit-schedule {
+            cursor: pointer;
+        }
     </style>
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
@@ -59,19 +62,401 @@
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>
+                    <div class="form-group pull-right">
+                        <a href="#schedule_modal" class="btn btn-primary add-schedule" data-toggle="modal"
+                           data-backdrop="false">
+                            <span class="glyphicon glyphicon-plus"></span> 添加值班
+                        </a>
+                    </div>
                 </form>
             </div>
         </div>
-        <div class="col-sm-4">
-            <div class="panel panel-default">
-                <div class="panel-body">
+        <div class="panel panel-default">
+            <div class="panel-heading">周一（2016-12-05）</div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>06:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>10:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>14:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>18:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>22:00</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td colspan="21">
+                                <div class="progress edit-schedule" data-target="#schedule_modal" data-toggle="modal"
+                                     data-backdrop="false" data-id="1">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                            <td colspan="12"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="19"></td>
+                            <td colspan="8">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                            <td colspan="6"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="27"></td>
+                            <td colspan="6">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">周二（2016-12-06）</div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>06:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>10:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>14:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>18:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>22:00</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td colspan="10">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                            <td colspan="23"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="10"></td>
+                            <td colspan="8">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                            <td colspan="16"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="18"></td>
+                            <td colspan="6">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                            <td colspan="9"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="24"></td>
+                            <td colspan="9">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">周三（2016-12-07）</div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>06:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>10:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>14:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>18:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>22:00</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td colspan="21">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                            <td colspan="12"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="19"></td>
+                            <td colspan="8">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                            <td colspan="6"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="27"></td>
+                            <td colspan="6">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">周四（2016-12-08）</div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>06:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>10:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>14:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>18:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>22:00</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td colspan="10">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                            <td colspan="23"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="10"></td>
+                            <td colspan="8">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                            <td colspan="16"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="18"></td>
+                            <td colspan="6">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                            <td colspan="9"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="24"></td>
+                            <td colspan="9">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">周五（2016-12-09）</div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>06:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>10:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>14:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>18:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>22:00</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td colspan="21">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                            <td colspan="12"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="19"></td>
+                            <td colspan="8">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                            <td colspan="6"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="27"></td>
+                            <td colspan="6">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">周六（2016-12-10）</div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>06:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>10:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>14:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>18:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>22:00</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td colspan="10">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                            <td colspan="23"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="10"></td>
+                            <td colspan="8">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                            <td colspan="16"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="18"></td>
+                            <td colspan="6">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                            <td colspan="9"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="24"></td>
+                            <td colspan="9">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">周日（2016-12-11）</div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>06:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>10:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>14:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>18:00</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>22:00</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td colspan="21">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                            <td colspan="12"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="19"></td>
+                            <td colspan="8">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                            <td colspan="6"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="27"></td>
+                            <td colspan="6">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="schedule_modal" tabindex="-1" role="dialog" aria-labelledby="schedule_modal_label">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="schedule_modal_label">值班安排</h5>
+                </div>
+                <div class="modal-body">
                     <form id="user_schedule_form" class="form-horizontal" onsubmit="return false;">
                         <input type="hidden" id="user_schedule_id" name="schedulingId">
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">
+                            <label class="col-sm-2 control-label">
                                 <span class="text-danger">*</span> 选择日期
                             </label>
-                            <div class="col-sm-8">
+                            <div class="col-sm-10">
                                 <input type="text" class="form-control" id="user_schedule_date" name="date"
                                        placeholder="选择日期" autocomplete="off"
                                        data-val="true" data-val-required="选择日期不能为空"
@@ -81,10 +466,10 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">
+                            <label class="col-sm-2 control-label">
                                 <span class="text-danger">*</span> 起止时间
                             </label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-5">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="user_schedule_start" name="startTime"
                                            placeholder="开始时间" autocomplete="off"
@@ -92,8 +477,7 @@
                                 </div>
                                 <div data-valmsg-for="startTime" data-valmsg-replace="true"></div>
                             </div>
-
-                            <div class="col-sm-4">
+                            <div class="col-sm-5">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="user_schedule_end" name="endTime"
                                            placeholder="结束时间" autocomplete="off"
@@ -103,198 +487,33 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">
+                            <label class="col-sm-2 control-label">
                                 <span class="text-danger">*</span> 值班老师
                             </label>
-                            <div class="col-sm-8">
-                                <select class="form-control" id="user_schedule_operator" name="operatorId">
+                            <div class="col-sm-10">
+                                <select class="form-control" id="user_schedule_operator" name="operatorId"
+                                        data-val="true" data-val-required="请选择值班老师">
                                     <option value="">请选择</option>
                                     <c:forEach var="operator" items="${operators}">
                                         <option value="${operator.id}">${operator.operatorName}(${operator.roleName})</option>
                                     </c:forEach>
                                 </select>
+                                <div data-valmsg-for="operatorId" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 工作内容
-                            </label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-2 control-label">工作内容</label>
+                            <div class="col-sm-10">
                                 <textarea class="form-control" rows="5" id="user_schedule_job" name="schedulingJob"
                                           placeholder="工作内容" autocomplete="off"></textarea>
-                                <div data-valmsg-for="schedulingJob" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-4">
-                                <button type="button" class="btn btn-primary" id="user_schedule_submit">
-                                    <span class="glyphicon glyphicon-ok"></span>  保 存
-                                </button>
                             </div>
                         </div>
                     </form>
                 </div>
-            </div>
-        </div>
-        <div class="col-sm-8">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>06:00</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>10:00</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>14:00</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>18:00</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>22:00</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td colspan="21">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
-                                             aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
-                                    </div>
-                                </td>
-                                <td colspan="12"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="19"></td>
-                                <td colspan="8">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="100"
-                                             aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
-                                    </div>
-                                </td>
-                                <td colspan="6"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="27"></td>
-                                <td colspan="6">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100"
-                                             aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>06:00</th>
-                                <th>&nbsp;</th>
-                                <th>07:00</th>
-                                <th>&nbsp;</th>
-                                <th>08:00</th>
-                                <th>&nbsp;</th>
-                                <th>09:00</th>
-                                <th>&nbsp;</th>
-                                <th>10:00</th>
-                                <th>&nbsp;</th>
-                                <th>11:00</th>
-                                <th>&nbsp;</th>
-                                <th>12:00</th>
-                                <th>&nbsp;</th>
-                                <th>13:00</th>
-                                <th>&nbsp;</th>
-                                <th>14:00</th>
-                                <th>&nbsp;</th>
-                                <th>15:00</th>
-                                <th>&nbsp;</th>
-                                <th>16:00</th>
-                                <th>&nbsp;</th>
-                                <th>17:00</th>
-                                <th>&nbsp;</th>
-                                <th>18:00</th>
-                                <th>&nbsp;</th>
-                                <th>19:00</th>
-                                <th>&nbsp;</th>
-                                <th>20:00</th>
-                                <th>&nbsp;</th>
-                                <th>21:00</th>
-                                <th>&nbsp;</th>
-                                <th>22:00</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td colspan="10">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
-                                             aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
-                                    </div>
-                                </td>
-                                <td colspan="23"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="10"></td>
-                                <td colspan="8">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="100"
-                                             aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
-                                    </div>
-                                </td>
-                                <td colspan="16"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="18"></td>
-                                <td colspan="6">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100"
-                                             aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
-                                    </div>
-                                </td>
-                                <td colspan="9"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="24"></td>
-                                <td colspan="9">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100"
-                                             aria-valuemin="0" aria-valuemax="100" style="width: 100%;">张老师（13:00 - 15:30）</div>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="user_schedule_submit">
+                        <span class="glyphicon glyphicon-ok"></span> 保 存
+                    </button>
                 </div>
             </div>
         </div>

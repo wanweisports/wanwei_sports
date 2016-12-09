@@ -145,6 +145,21 @@ public class OfficeController extends BaseController {
     	}
         return "Office/OfficeSchedule";
     }
+
+    // 排班信息
+    @ResponseBody
+    @RequestMapping("scheduleInfo")
+    public ResponseBean scheduleInfo(int schedulingId) {
+        try {
+            return new ResponseBean(JsonUtils.fromJson(operatorService.getUserScheduling(schedulingId)));
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
     
     @ResponseBody
     @RequestMapping("saveSchedule")

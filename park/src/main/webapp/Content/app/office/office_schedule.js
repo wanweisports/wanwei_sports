@@ -45,6 +45,41 @@
                 location.assign(content.opts.URL + '?' + conditions);
             });
 
+
+            function setScheduleInfo(data) {
+                $("#schedule_modal").find("#user_schedule_id").val(data.schedulingId || '');
+                $("#schedule_modal").find("#user_schedule_date").val(data.date || '');
+                $("#schedule_modal").find("#user_schedule_start").val(data.startTime || '');
+                $("#schedule_modal").find("#user_schedule_end").val(data.endTime || '');
+                $("#schedule_modal").find("#user_schedule_operator").val(data.operatorId || '');
+                $("#schedule_modal").find("#user_schedule_job").val(data.schedulingJob || '');
+            }
+
+            // 增加
+            $(".add-schedule").on("click", function (e) {
+                e.preventDefault();
+
+                setScheduleInfo({});
+            });
+
+            // 查询
+            $(".edit-schedule").on("click", function (e) {
+                e.preventDefault();
+
+                var schedulingId = $(this).attr("data-id");
+
+                $.post('office/scheduleInfo', {schedulingId: schedulingId}, function (res) {
+                    var data = res.data;
+
+                    if (res.code == 1) {
+                        setScheduleInfo(data);
+                    } else {
+                        console.log(res.message || "查询值班详情失败, 请稍后重试");
+                        alert(res.message || "查询值班详情失败, 请稍后重试");
+                    }
+                });
+            });
+
             // 提交
             $("#user_schedule_submit").on("click", function (e) {
                 e.preventDefault();
