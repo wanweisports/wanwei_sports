@@ -1,5 +1,7 @@
 package com.park.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -200,7 +202,35 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 	
 	@Override
 	public List<Map<String, Object>> getUserSchedulings(){
-		return baseDao.queryBySql("SELECT us.*, uo1.operatorName FROM user_scheduling us, user_operator uo1 WHERE us.operatorId = uo1.operatorId");
+		List<Map<String, Object>> list = baseDao.queryBySql("SELECT us.*, uo1.operatorName FROM user_scheduling us, user_operator uo1 WHERE us.operatorId = uo1.id ORDER BY date, startTime");
+		String datePre = null;
+		List<Map<String, Object>> listGroup = new ArrayList<Map<String, Object>>();	
+		for(Map<String, Object> map : list){
+			String date = StrUtil.objToStr(map.get("date"));
+			if(!date.equals(datePre)){
+				Map<String, Object> mapGroup = new HashMap<String, Object>();
+				mapGroup.put("date", date);
+				List timeList = new ArrayList();
+				timeList.add(((HashMap)map).clone());
+				mapGroup.put("schedule", timeList);
+				listGroup.add(mapGroup);
+				datePre = date;
+			}else{
+				Map<String, Object> mapGroup = getGroupMap(listGroup, date);
+				List timeList = (List)mapGroup.get("schedule");
+				timeList.add(((HashMap)map).clone());
+			}
+		}
+		return listGroup;
+	}
+	
+	private Map getGroupMap(List<Map<String, Object>> listGroup, String date){
+		for(Map<String, Object> map : listGroup){
+			if(date.equals(map.get("date"))){
+				return map;
+			}
+		}
+		return null;
 	}
 	
 	@Override
