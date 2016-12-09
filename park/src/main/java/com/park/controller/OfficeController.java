@@ -137,6 +137,8 @@ public class OfficeController extends BaseController {
     @RequestMapping("schedule")
     public String schedule(Model model) {
     	try{
+            OperatorInputView operatorInputView = new OperatorInputView();
+            model.addAttribute("operators", operatorService.getOperatorsName(operatorInputView));
     		model.addAttribute("schedules", operatorService.getUserSchedulings());
     	}catch(Exception e){
     		e.printStackTrace();
