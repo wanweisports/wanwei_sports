@@ -120,9 +120,9 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		sportCountList.add(0, allSportCountMap);
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap.put("pageBean", pageBean);
+		resultMap.put("pageBean", JsonUtils.fromJson(pageBean));
 		resultMap.put("sportCountList", sportCountList);
-		
+
 		return resultMap;
 	}
 	
