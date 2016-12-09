@@ -1,7 +1,7 @@
 (function ($) {
     var Orders_List = {
         opts: {
-            URL: '/order/getOrderList?orderServiceTypes=1,3'
+            URL: '/order/getOrderList?orderServiceTypes=100,200'
         },
         init: function () {
             this.initEvents();
@@ -10,10 +10,10 @@
             var content = this;
 
             // 筛选
-            $(".order-filter").on("click", function (e) {
+            $(".orders-filter").on("click", function (e) {
                 e.preventDefault();
 
-                var conditions = $("#order_filter_form").serialize();
+                var conditions = $("#orders_filter_form").serialize();
 
                 location.assign(content.opts.URL + '&' + conditions);
             });
