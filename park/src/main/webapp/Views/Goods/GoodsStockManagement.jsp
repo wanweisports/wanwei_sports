@@ -201,7 +201,7 @@
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <input type="text" class="form-control" id="good_count" name="goodCount"
-                                       placeholder="请输入增加的库存量"
+                                       placeholder="请输入增加的库存量" autocomplete="off"
                                        data-val="true" data-val-required="库存量不能为空"
                                        data-val-regex-pattern="^[1-9]\d*$"
                                        data-val-regex="初始库存量格式错误">

@@ -13,8 +13,7 @@
                     var res = JSON.parse(element.innerText.trim());
 
                     if (res.code == 1) {
-                        $("#tips_success_modal").modal({show: true, backdrop: false})
-                            .find(".text-content").text(res.message || "商品类别设置保存成功");
+                        $("#tips_success_modal").modal({show: true, backdrop: false});
                         setTimeout(function () {
                             $("#tips_success_modal").modal("hide");
                             location.assign('/good/getGoods');

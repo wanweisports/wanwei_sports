@@ -41,7 +41,6 @@
                             <th>序号</th>
                             <th>商品类别</th>
                             <th>类别描述</th>
-                            <th>操作人</th>
                             <th>操作时间</th>
                             <th>操作</th>
                         </tr>
@@ -52,7 +51,6 @@
                                 <td>${loop.index + 1}</td>
                                 <td>${type.goodTypeName}</td>
                                 <td>${type.goodTypeDescribe}</td>
-                                <td>${type.operatorName}</td>
                                 <td>${type.createTime}</td>
                                 <td>
                                     <a class="btn btn-primary type-item" href="#addModal" data-toggle="modal"
@@ -124,23 +122,7 @@
                     <h5 class="modal-title" id="tips_success_modal_label">提示框</h5>
                 </div>
                 <div class="modal-body">
-                    <p class="text-success text-content">商品类别设置保存成功!</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="tips_error_modal" tabindex="-1" role="dialog" aria-labelledby="tips_error_modal_label">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="tips_error_modal_label">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <p class="text-danger text-content">商品类别设置保存失败!</p>
+                    <div class="alert alert-success" role="alert">商品类别设置保存成功!</div>
                 </div>
             </div>
         </div>

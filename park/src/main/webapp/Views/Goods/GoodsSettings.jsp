@@ -182,7 +182,7 @@
                     <h5 class="modal-title" id="tips_success_modal_label">提示框</h5>
                 </div>
                 <div class="modal-body">
-                    <p class="text-success text-content">商品设置提交成功!</p>
+                    <div class="alert alert-success" role="alert">商品设置提交成功!</div>
                 </div>
             </div>
         </div>

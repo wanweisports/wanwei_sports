@@ -24,7 +24,7 @@
             <div class="panel-body">
                 <form id="orders_filter_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
-                        <select class="form-control" id="user_role" name="roleId" style="width:160px;">
+                        <select class="form-control" name="payStatus" style="width:160px;">
                             <option value="">全部订单</option>
                             <option value="1">未支付</option>
                             <option value="2">已支付</option>
