@@ -136,12 +136,12 @@
                         </tr>
                         <tr class="info">
                             <th>金额总计</th>
+                            <th>${xianjinSumPrice}</th>
                             <th>--</th>
+                            <th>${zhifubaoSumPrice}</th>
+                            <th>${weixinSumPrice}</th>
                             <th>--</th>
-                            <th>--</th>
-                            <th>--</th>
-                            <th>--</th>
-                            <th>--</th>
+                            <th>${sumPrice}</th>
                         </tr>
                         </tbody>
                     </table>

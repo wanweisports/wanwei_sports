@@ -4,6 +4,9 @@
 
 返回：
 {
+    "zhifubaoSumPrice": 2600,  //【新】金额总计-现金金额
+    "xianjinSumPrice": 1351,   //【新】金额总计-支付宝金额
+    "sumPrice": 4151,          //【新】金额总计-微信金额
     "siteCounts": {                    //场地预定统计
         "weixinSumPrice": 200,         //微信金额小计
         "xianjinSumPrice": 250,        //现金金额小计

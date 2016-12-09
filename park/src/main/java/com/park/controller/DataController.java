@@ -49,6 +49,7 @@ public class DataController extends BaseController {
     public String getBusinessIncome(DataInputView dataInputView, Model model) {
     	try{
     		model.addAllAttributes(dataService.getBusinessIncome(dataInputView));
+    		System.out.println(JsonUtils.toJson(dataService.getBusinessIncome(dataInputView)));
     	}catch (Exception e) {
 			e.printStackTrace();
 		}

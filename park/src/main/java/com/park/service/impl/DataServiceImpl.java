@@ -78,7 +78,6 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		}
 	}
 	
-	//场地使用率 = 预订场次数 / 总场次数
 	@Override
 	public Map<String, Object> getSitePercentage(DataInputView dataInputView){
 		
@@ -153,7 +152,8 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		sql.append(" LEFT JOIN member_card mc ON(mct.cardTypeId = mc.cardTypeId)");
 		sql.append(" LEFT JOIN other_balance ob ON(ob.balanceServiceId = mc.cardId AND '' = ? AND ob.balanceServiceType >= ? AND ob.balanceServiceType <= ?)");
 		sql.append(" GROUP BY mct.cardTypeId, ob.balanceStyle ORDER BY mct.cardTypeId");
-		resultMap.put("cardCounts", getCountMap(baseDao.queryBySql(sql.toString(), StrUtil.EMPTY, StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_REG), StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_CARD_BUBAN_STUDENT))));
+		List<Map<String, Object>> cardCountsList = baseDao.queryBySql(sql.toString(), StrUtil.EMPTY, StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_REG), StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_CARD_BUBAN_STUDENT));
+		resultMap.put("cardCounts", getCountMap(cardCountsList));
 		
 		sql.setLength(0);
 		sql.append("SELECT dictValue name, SUM(realAmount) price, ob.balanceStyle style, ob.balanceId");
@@ -162,7 +162,8 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		sql.append(" LEFT JOIN order_info oi ON(ob.balanceServiceId = oi.orderId)");
 		sql.append(" WHERE dictName = ? AND dictKey >= ? AND dictKey <= ?");
 		sql.append(" GROUP BY dictKey, ob.balanceStyle ORDER BY dictKey");
-		resultMap.put("siteCounts", getCountMap(baseDao.queryBySql(sql.toString(), IDBConstant.BALANCE_SERVICE_TYPE, StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_SITE), StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_BLOCK_SITE))));
+		List<Map<String, Object>> siteCountsList = baseDao.queryBySql(sql.toString(), IDBConstant.BALANCE_SERVICE_TYPE, StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_SITE), StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_BLOCK_SITE));
+		resultMap.put("siteCounts", getCountMap(siteCountsList));
 		
 		sql.setLength(0);
 		sql.append("SELECT dictValue name, SUM(realAmount) price, ob.balanceStyle style, ob.balanceId");
@@ -171,8 +172,14 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		sql.append(" LEFT JOIN order_info oi ON(ob.balanceServiceId = oi.orderId)");
 		sql.append(" WHERE dictName = ? AND dictKey = ?");
 		sql.append(" GROUP BY dictKey, ob.balanceStyle ORDER BY dictKey");
-		resultMap.put("goodsCounts", getCountMap(baseDao.queryBySql(sql.toString(), IDBConstant.BALANCE_SERVICE_TYPE, StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_GOODS))));
+		List<Map<String, Object>> goodsCountsList = baseDao.queryBySql(sql.toString(), IDBConstant.BALANCE_SERVICE_TYPE, StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_GOODS));
+		resultMap.put("goodsCounts", getCountMap(goodsCountsList));
 		
+		List sumlist = new ArrayList();
+		sumlist.addAll(cardCountsList);
+		sumlist.addAll(siteCountsList);
+		sumlist.addAll(goodsCountsList);
+		resultMap.putAll(getCountMap(sumlist));
 		return resultMap;
 	}
 	
