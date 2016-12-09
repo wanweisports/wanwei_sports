@@ -12,6 +12,10 @@
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
     <script src="/Content/app/data/data_members_attendance.js?v=${static_resource_version}"></script>
+    <script>
+        $(".member-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
+        $(".member-date[data-count='${countNum}']").addClass("btn-primary").removeClass("btn-default");
+    </script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
@@ -26,10 +30,11 @@
                 <form id="data_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="javascript:;" class="btn btn-primary">今天</a>
-                            <a href="javascript:;" class="btn btn-default">昨天</a>
-                            <a href="javascript:;" class="btn btn-default">本周</a>
-                            <a href="javascript:;" class="btn btn-default">本月</a>
+                            <a href="/data/getMembersAttendance?countNum=10" data-count="10" class="btn btn-primary member-date">全部</a>
+                            <a href="/data/getMembersAttendance?countNum=1" data-count="1" class="btn btn-default member-date">今日</a>
+                            <a href="/data/getMembersAttendance?countNum=2" data-count="2" class="btn btn-default member-date">昨日</a>
+                            <a href="/data/getMembersAttendance?countNum=3" data-count="3" class="btn btn-default member-date">本周</a>
+                            <a href="/data/getMembersAttendance?countNum=4" data-count="4" class="btn btn-default member-date">本月</a>
                         </div>
                     </div>
                     <div class="form-group">

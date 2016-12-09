@@ -52,7 +52,7 @@
                     </div>
                     <div class="form-group pull-right">
                         <a href="javascript:;" class="btn btn-primary goods-filter">
-                            <span class="glyphicon glyphicon-export"></span> 导出数据
+                            <span class="glyphicon glyphicon-danger"></span> 导出数据
                         </a>
                     </div>
                 </form>

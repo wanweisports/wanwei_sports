@@ -12,6 +12,10 @@
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
     <script src="/Content/app/data/data_business_income.js?v=${static_resource_version}"></script>
+    <script>
+        $(".member-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
+        $(".member-date[data-count='${countNum}']").addClass("btn-primary").removeClass("btn-default");
+    </script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
@@ -25,12 +29,13 @@
             <div class="panel-body">
                 <form id="data_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
-                        <select class="form-control" style="width: 160px;">
-                            <option value="0">今日数据</option>
-                            <option value="1">昨日数据</option>
-                            <option value="2">本周数据</option>
-                            <option value="3">本月数据</option>
-                        </select>
+                        <div class="btn-group">
+                            <a href="/data/getBusinessIncome?countNum=10" data-count="10" class="btn btn-primary member-date">全部</a>
+                            <a href="/data/getBusinessIncome?countNum=1" data-count="1" class="btn btn-default member-date">今日</a>
+                            <a href="/data/getBusinessIncome?countNum=2" data-count="2" class="btn btn-default member-date">昨日</a>
+                            <a href="/data/getBusinessIncome?countNum=3" data-count="3" class="btn btn-default member-date">本周</a>
+                            <a href="/data/getBusinessIncome?countNum=4" data-count="4" class="btn btn-default member-date">本月</a>
+                        </div>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="createTimeStart" name="createTimeStart"
@@ -46,7 +51,7 @@
                         </a>
                     </div>
                     <div class="form-group pull-right">
-                        <a href="javascript:;" class="btn btn-primary goods-filter">
+                        <a href="javascript:;" class="btn btn-danger goods-filter">
                             <span class="glyphicon glyphicon-export"></span> 导出数据
                         </a>
                     </div>
@@ -140,10 +145,6 @@
                         </tr>
                         </tbody>
                     </table>
-                </div>
-                <div class="panel-body">
-                    <div class="col-sm-6">值班经理签字: <span class="text-success">李洪旭</span></div>
-                    <div class="col-sm-6">财务经理签字: <span class="text-success">李洪旭</span></div>
                 </div>
             </div>
         </div>
