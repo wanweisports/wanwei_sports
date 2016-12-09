@@ -78,6 +78,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		}
 	}
 	
+	//场地使用率 = 预订场次数 / 总场次数
 	@Override
 	public Map<String, Object> getSitePercentage(DataInputView dataInputView){
 		
@@ -100,6 +101,8 @@ public class DataServiceImpl extends BaseService implements IDataService {
 			Double sumCount = StrUtil.objToDoubleDef0(map.get("sumCount"));
 			Double useCount = StrUtil.objToDoubleDef0(map.get("useCount"));
 			map.put("percentage", StrUtil.roundKeepTwo(useCount/sumCount));
+			map.put("sumCount", StrUtil.objToInt(map.get("sumCount")));
+			map.put("useCount", StrUtil.objToInt(map.get("useCount")));
 		}
 		PageBean pageBean = new PageBean(siteCountList, page, pageSize, siteCountList.size());
 		pageBean.pagedList().init();
@@ -110,7 +113,6 @@ public class DataServiceImpl extends BaseService implements IDataService {
 			Double sumCount = StrUtil.objToDoubleDef0(map.get("sumCount"));
 			Double useCount = StrUtil.objToDoubleDef0(map.get("useCount"));
 			double percentage = StrUtil.roundKeepTwo(useCount/sumCount);
-			map.put("percentage", percentage);
 			sumSportUsePercentage += percentage;
 			sportCount++;
 		}
