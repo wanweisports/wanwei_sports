@@ -49,6 +49,10 @@ public interface IGoodService {
 	
 	public Integer saveOrder(GoodInputView goodInputView);
 	
-	public void updateConfirmOrder(OrderInfo orderInfo);
+	public void updateConfirmOrder(OrderInfo orderInfo) throws Exception;
+	
+	public PageBean getGoodsStockDetails(GoodInputView goodInputView);
+	
+	public List<Map<String, Object>> getGoodOutInfo(GoodInputView goodInputView);
 	
 }

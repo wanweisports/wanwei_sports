@@ -34,6 +34,7 @@ public class OrderInfo implements java.io.Serializable {
 	private Integer sumCount;
 	private Integer payCount;
 	private Integer useCount;
+	private Integer orderSumCount;
 	private Integer orderDiscount;
 	private String createTime;
 	private String updateTime;
@@ -51,8 +52,9 @@ public class OrderInfo implements java.io.Serializable {
 			String payType, String payTime, Double orderSumPrice,
 			Double paySumPrice, Double subAmount, Double additionalPrice,
 			String checkNo, String orderRemark, Integer sumCount,
-			Integer payCount, Integer useCount, Integer orderDiscount,
-			String createTime, String updateTime, Integer salesId) {
+			Integer payCount, Integer useCount, Integer orderSumCount,
+			Integer orderDiscount, String createTime, String updateTime,
+			Integer salesId) {
 		this.orderNo = orderNo;
 		this.operatorId = operatorId;
 		this.memberId = memberId;
@@ -70,6 +72,7 @@ public class OrderInfo implements java.io.Serializable {
 		this.sumCount = sumCount;
 		this.payCount = payCount;
 		this.useCount = useCount;
+		this.orderSumCount = orderSumCount;
 		this.orderDiscount = orderDiscount;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
@@ -239,6 +242,15 @@ public class OrderInfo implements java.io.Serializable {
 
 	public void setUseCount(Integer useCount) {
 		this.useCount = useCount;
+	}
+
+	@Column(name = "orderSumCount")
+	public Integer getOrderSumCount() {
+		return this.orderSumCount;
+	}
+
+	public void setOrderSumCount(Integer orderSumCount) {
+		this.orderSumCount = orderSumCount;
 	}
 
 	@Column(name = "orderDiscount")

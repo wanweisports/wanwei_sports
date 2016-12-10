@@ -48,6 +48,7 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 		orderInfo.setCreateTime(nowDate);
 		orderInfo.setOrderNo(getOrderNo());
 		Double sumPrice = 0.0;
+		Integer sumCount = 0;
 		baseDao.save(orderInfo, null);
 		
 		if(orderDetails != null && orderDetails.size() > 0){
@@ -55,12 +56,16 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 				if(orderDetail.getItemPrice() != null){
 					sumPrice += orderDetail.getItemPrice();
 				}
+				if(orderDetail.getItemAmount() != null){
+					sumCount += orderDetail.getItemAmount();
+				}
 			}
 			orderInfo.setOrderSumPrice(sumPrice);
 			for(OrderDetail orderDetail : orderDetails){
 				orderDetail.setOrderId(orderInfo.getOrderId());
 				baseDao.save(orderDetail, null);
 			}
+			orderInfo.setOrderSumCount(sumCount);
 			baseDao.save(orderInfo, orderInfo.getOrderId());
 		}
 		return orderInfo.getOrderId();
@@ -148,12 +153,20 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 		
 		String operatorId = orderInputView.getOperatorId();
 		String orderServiceTypes = orderInputView.getOrderServiceTypes();
+		String payStatus = orderInputView.getPayStatus();
+		String orderNo = orderInputView.getOrderNo();
 		
 		StringBuilder headSql = new StringBuilder("SELECT *");
 		StringBuilder bodySql = new StringBuilder(" FROM order_info");
 		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
 		if(!super.isAdmin(orderInputView)){
 			whereSql.append(" AND salesId = :salesId");
+		}
+		if(StrUtil.isNotBlank(payStatus)){
+			whereSql.append(" AND payStatus = :payStatus");
+		}
+		if(StrUtil.isNotBlank(orderNo)){
+			whereSql.append(" AND orderNo = :orderNo");
 		}
 		if(StrUtil.isNotBlank(orderServiceTypes)){
 			whereSql.append(" AND orderServiceType IN (:orderServiceTypes)");

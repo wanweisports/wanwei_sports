@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="student_name" name="student_name"
+                        <input type="text" class="form-control" id="memberName" name="memberName" value="${memberName}"
                                placeholder="会员姓名">
                     </div>
                     <div class="form-group">
@@ -84,7 +84,7 @@
                                 <td>${data.orderNo}</td>
                                 <td>${data.cardNo}</td>
                                 <td>${data.memberName}</td>
-                                <td>${data.signDate}</td>
+                                <td>${data.createTime}</td>
                                 <td>${data.sportName}</td>
                                 <td>${data.siteName}</td>
                                 <td>${data.signName}</td>

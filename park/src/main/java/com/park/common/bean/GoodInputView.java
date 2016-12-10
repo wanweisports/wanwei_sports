@@ -13,6 +13,11 @@ public class GoodInputView extends BaseInputView {
 	private String mobile;
 	private String opType;
 	private OrderInfo orderInfo;
+	private String goodNo;
+	
+	private Integer countNum;
+	private String createTimeStart;
+	private String createTimeEnd;
 	
 	public String getGoodName() {
 		return goodName;
@@ -67,6 +72,30 @@ public class GoodInputView extends BaseInputView {
 	}
 	public void setOrderInfo(OrderInfo orderInfo) {
 		this.orderInfo = orderInfo;
+	}
+	public Integer getCountNum() {
+		return countNum;
+	}
+	public void setCountNum(Integer countNum) {
+		this.countNum = countNum;
+	}
+	public String getCreateTimeStart() {
+		return createTimeStart;
+	}
+	public void setCreateTimeStart(String createTimeStart) {
+		this.createTimeStart = createTimeStart;
+	}
+	public String getCreateTimeEnd() {
+		return createTimeEnd;
+	}
+	public void setCreateTimeEnd(String createTimeEnd) {
+		this.createTimeEnd = createTimeEnd;
+	}
+	public String getGoodNo() {
+		return goodNo;
+	}
+	public void setGoodNo(String goodNo) {
+		this.goodNo = goodNo;
 	}
 	
 }

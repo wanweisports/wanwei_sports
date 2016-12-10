@@ -37,6 +37,8 @@ public interface IPlatformConstant {
     public final String XIANJIN = "xianjin";
     public final String ZHIFUBAO = "zhifubao";
     public final String WEIXIN = "weixin";
+    public final String YINLIAN = "yinlian";
+    public final String ZHIPIAO = "zhipiao";
 	
 	public static final String APP_ID = (String) CustomizedPropertyConfigurer.getContextProperty("app_id"); //appid
 	
