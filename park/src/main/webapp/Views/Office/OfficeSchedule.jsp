@@ -7,6 +7,7 @@
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
     <link href="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="/Content/style/office/office_schedule.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
@@ -35,6 +36,9 @@
         }
         .edit-schedule {
             cursor: pointer;
+        }
+        .table th {
+            width: 6%;
         }
     </style>
     <div class="container-fluid" style="text-align: left">
@@ -71,6 +75,67 @@
                 </form>
             </div>
         </div>
+        <c:forEach var="data" items="${schedules}">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">${data.week}（${data.date}）</div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th colspan="2">06:00</th><th colspan="2">07:00</th><th colspan="2">08:00</th><th colspan="2">09:00</th>
+                                    <th colspan="2">10:00</th><th colspan="2">11:00</th><th colspan="2">12:00</th><th colspan="2">13:00</th>
+                                    <th colspan="2">14:00</th><th colspan="2">15:00</th><th colspan="2">16:00</th><th colspan="2">17:00</th>
+                                    <th colspan="2">18:00</th><th colspan="2">19:00</th><th colspan="2">20:00</th><th colspan="2">21:00</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach var="schedule" items="${data.schedule}" varStatus="loop">
+                                    <c:choose>
+                                        <c:when test="${loop.index % 5 == 0}">
+                                            <c:set var="bgColor" value="bg-primary" />
+                                        </c:when>
+                                        <c:when test="${loop.index % 5 == 1}">
+                                            <c:set var="bgColor" value="bg-success" />
+                                        </c:when>
+                                        <c:when test="${loop.index % 5 == 2}">
+                                            <c:set var="bgColor" value="bg-info" />
+                                        </c:when>
+                                        <c:when test="${loop.index % 5 == 3}">
+                                            <c:set var="bgColor" value="bg-warning" />
+                                        </c:when>
+                                        <c:when test="${loop.index % 5 == 4}">
+                                            <c:set var="bgColor" value="bg-danger" />
+                                        </c:when>
+                                    </c:choose>
+                                    <tr>
+                                        <td class="${bgColor} edit-schedule" data-target="#schedule_modal"
+                                            data-toggle="modal" data-backdrop="false"
+                                            data-id="${schedule.schedulingId}" title="${schedule.schedulingJob}">
+                                            ${schedule.operatorName}
+                                        </td>
+                                        <c:if test="${schedule.startCount > 0}">
+                                            <td colspan="${schedule.startCount}"></td>
+                                        </c:if>
+                                        <td colspan="${schedule.compareCount}" class="${bgColor} text-center edit-schedule"
+                                            data-target="#schedule_modal" data-toggle="modal" data-backdrop="false"
+                                            data-id="${schedule.schedulingId}" title="${schedule.schedulingJob}">
+                                                ${schedule.startTime} - ${schedule.endTime}
+                                        </td>
+                                        <c:if test="${32 - schedule.compareCount - schedule.startCount > 0}">
+                                            <td colspan="${32 - schedule.compareCount - schedule.startCount}"></td>
+                                        </c:if>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
         <div class="col-sm-6">
             <div class="panel panel-default">
                 <div class="panel-heading">周一（2016-12-05）</div>
@@ -509,7 +574,7 @@
                                         data-val="true" data-val-required="请选择值班老师">
                                     <option value="">请选择</option>
                                     <c:forEach var="operator" items="${operators}">
-                                        <option value="${operator.id}">${operator.operatorName}(${operator.roleName})</option>
+                                        <option value="${operator.operatorId}">${operator.operatorName}(${operator.roleName})</option>
                                     </c:forEach>
                                 </select>
                                 <div data-valmsg-for="operatorId" data-valmsg-replace="true"></div>

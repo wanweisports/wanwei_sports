@@ -3,6 +3,7 @@ package com.park.controller;
 import com.park.common.bean.NotificationsInputView;
 import com.park.common.bean.PageBean;
 import com.park.service.INotificationsService;
+import com.park.service.IParkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,9 @@ import java.util.Map;
 
 @Controller
 public class UrlController extends BaseController {
+
+    @Autowired
+    private IParkService parkService;
 	
 	@Autowired
 	private IOperatorService operatorService;
@@ -58,6 +62,7 @@ public class UrlController extends BaseController {
 	@NotProtected
 	@RequestMapping("/passport/login")
 	public String passportLogin(String returnUrl, Model model) {
+        model.addAttribute("business", parkService.getParkBusiness());
 		model.addAttribute("returnUrl", StrUtil.isBlank(returnUrl) ? "/loginWelCome" : returnUrl);
 		return "Passport/PassportLogin";
 	}

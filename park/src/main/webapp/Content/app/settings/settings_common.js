@@ -44,10 +44,11 @@
                         $("#tips_success_modal").modal({show: true, backdrop: false});
                         setTimeout(function () {
                             $("#tips_success_modal").modal("hide");
+                            location.reload();
                         }, 3000);
                     } else {
-                        $("#tips_error_modal").modal({show: true, backdrop: false});
                         console.log(res.message || "场馆基础信息设置失败, 请稍后重试");
+                        alert(res.message || "场馆基础信息设置失败, 请稍后重试");
                     }
                 });
             });

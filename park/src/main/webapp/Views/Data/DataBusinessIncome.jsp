@@ -134,7 +134,7 @@
                             <th>--</th>
                             <th>${goodsCounts.sumPrice}</th>
                         </tr>
-                        <tr class="info">
+                        <tr class="warning">
                             <th>金额总计</th>
                             <th>${xianjinSumPrice}</th>
                             <th>--</th>

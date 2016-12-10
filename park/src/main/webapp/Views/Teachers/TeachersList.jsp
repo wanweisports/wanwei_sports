@@ -227,7 +227,7 @@
                     <h5 class="modal-title" id="refreshModalLabel">提示框</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-info" role="alert">教师卡补办成功!</div>
+                    <div class="alert alert-success" role="alert">教师卡补办成功!</div>
                 </div>
             </div>
         </div>

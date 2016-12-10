@@ -213,10 +213,10 @@
 
                 var data = content.opts.data;
 
-                data.mobile = $("#reservations_fixed_mobile").val();
-                data.name = $("#reservations_fixed_name").val();
-                data.memberId = $("#reservations_fixed_member").val() || "0";
-                data.opType = $("#reservations_fixed_opType").val();
+                data.mobile = $("#reservations_batch_mobile").val();
+                data.name = $("#reservations_batch_name").val();
+                data.memberId = $("#reservations_batch_member").val() || "0";
+                data.opType = $("#reservations_batch_opType").val();
 
                 siteReserveDate.reserveStartDate = $("#reservations_batch_startDate").val();
                 siteReserveDate.reserveEndDate = $("#reservations_batch_endDate").val();
@@ -229,13 +229,13 @@
                 data.siteReserveDateList.push(siteReserveDate);
 
                 $list.append(content.tpl.BlockBooking()
-                    .replace("#BOOKING_SPORT#", $("#reservations_batch_site").find("option:selected").text().trim())
-                    .replace("#BOOKING_START_DATE#", $("#reservations_batch_startDate").val())
-                    .replace("#BOOKING_END_DATE#", $("#reservations_batch_endDate").val())
-                    .replace("#BOOKING_START_TIME#", $("#reservations_batch_start").val())
-                    .replace("#BOOKING_END_TIME#", $("#reservations_batch_end").val())
-                    .replace("#BOOKING_AREA#", $("#reservations_batch_siteId").find("option:selected").text().trim())
-                    .replace("#BOOKING_WEEK#", "(" + __getCheckbox().text + ")"));
+                    .replace(/#BOOKING_SPORT#/g, $("#reservations_batch_site").find("option:selected").text().trim())
+                    .replace(/#BOOKING_START_DATE#/g, $("#reservations_batch_startDate").val())
+                    .replace(/#BOOKING_END_DATE#/g, $("#reservations_batch_endDate").val())
+                    .replace(/#BOOKING_START_TIME#/g, $("#reservations_batch_start").val())
+                    .replace(/#BOOKING_END_TIME#/g, $("#reservations_batch_end").val())
+                    .replace(/#BOOKING_AREA#/g, $("#reservations_batch_siteId").find("option:selected").text().trim())
+                    .replace(/#BOOKING_WEEK#/g, "(" + __getCheckbox().text + ")"));
 
                 content.calculateSiteMoney();
             });

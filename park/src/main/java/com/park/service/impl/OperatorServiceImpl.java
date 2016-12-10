@@ -202,14 +202,29 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 	
 	@Override
 	public List<Map<String, Object>> getUserSchedulings(){
-		List<Map<String, Object>> list = baseDao.queryBySql("SELECT us.*, uo1.operatorName FROM user_scheduling us, user_operator uo1 WHERE us.operatorId = uo1.id ORDER BY date, startTime");
+		List<Map<String, Object>> list = baseDao.queryBySql("SELECT us.*, DATE_FORMAT(us.date, '%w') as 'operatorWeek', uo1.operatorName FROM user_scheduling us, user_operator uo1 WHERE us.operatorId = uo1.operatorId ORDER BY date, startTime");
 		String datePre = null;
 		List<Map<String, Object>> listGroup = new ArrayList<Map<String, Object>>();	
 		for(Map<String, Object> map : list){
 			String date = StrUtil.objToStr(map.get("date"));
+
+			int week = StrUtil.objToInt(map.get("operatorWeek"));
+			String[] weeks = new String[]{"周日","周一","周二","周三","周四","周五","周六"};
+
+			String startTime = StrUtil.objToStr(map.get("startTime"));
+            int startCount = (StrUtil.objToInt(startTime.substring(0,2)) - 6) * 2 + StrUtil.objToInt(startTime.substring(3,5)) / 30;
+            String endTime = StrUtil.objToStr(map.get("endTime"));
+            int endCount = (StrUtil.objToInt(endTime.substring(0,2)) - 6) * 2 + StrUtil.objToInt(endTime.substring(3,5)) / 30;
+            int compareCount = endCount - startCount;
+
+            map.put("startCount", startCount);
+            map.put("endCount", endCount);
+            map.put("compareCount", compareCount);
+
 			if(!date.equals(datePre)){
 				Map<String, Object> mapGroup = new HashMap<String, Object>();
 				mapGroup.put("date", date);
+				mapGroup.put("week", weeks[week]);
 				List timeList = new ArrayList();
 				timeList.add(((HashMap)map).clone());
 				mapGroup.put("schedule", timeList);

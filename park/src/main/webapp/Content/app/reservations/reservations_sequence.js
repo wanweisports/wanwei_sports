@@ -66,10 +66,6 @@
 
                 if (date.format('e') == weekday) {
                     week = '今天';
-                } else if (date.format('e') == (weekday + 1)) {
-                    week = '明天';
-                } else if (date.format('e') == (weekday - 1)) {
-                    week = '昨天';
                 } else {
                     week = Weeks[date.format('e')];
                 }
@@ -723,7 +719,7 @@
                                 json.push({
                                     id: data.members[i].memberMobile,
                                     label: data.members[i].memberId,
-                                    value: data.members[i].memberName
+                                    value: data.members[i].memberName + "(" + data.members[i].cardTypeName + ")"
                                 });
                             }
                             return json;
@@ -748,7 +744,7 @@
                     $('#reservations_user_member').val(memberId);
                     $('#reservations_user_mobile').val(mobile);
                     $("#reservations_user_opType").val("1");
-                    $('#reservations_user_name').val(memberName);
+                    $('#reservations_user_name').val(memberName.replace(/\(.+\)/, ""));
 
                     content.queryMemberBalance(memberId);
                 }

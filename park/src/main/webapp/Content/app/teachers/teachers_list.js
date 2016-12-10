@@ -48,7 +48,7 @@
                     var data = res.data;
 
                     if (res.code == 1) {
-                        $("#refresh_newNo").val(data.newCardNo).attr("readonly", "readonly");
+                        $("#refresh_newNo").val(data.newCardNo);
                     } else {
                         console.log(res.message || "新会员卡号生成失败, 请稍后重试");
                         alert(res.message || "新会员卡号生成失败, 请稍后重试");

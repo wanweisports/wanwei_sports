@@ -54,9 +54,9 @@
                 <c:forEach var="item" items="${sportCountList}">
                     <li style="margin-right: 15px;">${item.sportName} <span class="badge">${item.percentage * 100}%</span></li>
                 </c:forEach>
-                <li style="margin-right: 15px;">全部类型 <span class="badge">30%</span></li>
+                <!--<li style="margin-right: 15px;">全部类型 <span class="badge">30%</span></li>
                 <li style="margin-right: 15px;">羽毛球 <span class="badge">20%</span></li>
-                <li style="margin-right: 15px;">篮球 <span class="badge">42%</span></li>
+                <li style="margin-right: 15px;">篮球 <span class="badge">42%</span></li>-->
             </ul>
             <div class="pull-right">
                 <a href="javascript:;" class="btn btn-danger">
@@ -90,41 +90,13 @@
                                 <td>${data.percentage * 100}%</td>
                             </tr>
                         </c:forEach>
-                        <tr>
+                        <!--<tr>
                             <td>羽毛球</td>
                             <td>场地1</td>
                             <td>42</td>
                             <td>21</td>
                             <td>50%</td>
-                        </tr>
-                        <tr>
-                            <td>羽毛球</td>
-                            <td>场地1</td>
-                            <td>42</td>
-                            <td>21</td>
-                            <td>50%</td>
-                        </tr>
-                        <tr>
-                            <td>羽毛球</td>
-                            <td>场地1</td>
-                            <td>42</td>
-                            <td>21</td>
-                            <td>50%</td>
-                        </tr>
-                        <tr>
-                            <td>羽毛球</td>
-                            <td>场地1</td>
-                            <td>42</td>
-                            <td>21</td>
-                            <td>50%</td>
-                        </tr>
-                        <tr>
-                            <td>羽毛球</td>
-                            <td>场地1</td>
-                            <td>42</td>
-                            <td>21</td>
-                            <td>50%</td>
-                        </tr>
+                        </tr>-->
                         </tbody>
                     </table>
                     <nav class="pull-right" <c:if test="${pageBean.count <= pageBean.pageSize}">style="display: none;"</c:if> >

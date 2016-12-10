@@ -50,14 +50,14 @@
             </div>
         </div>
         <div class="login">
-            <div class="alert alert-info" role="alert">
-                1. 公告公告公告公告公告公告公告公告公告公告
+            <div class="alert alert-warning" role="alert">
+                联系地址：${business.businessAddress}
             </div>
-            <div class="alert alert-info" role="alert">
-                2. 公告公告公告公告公告公告公告公告公告
+            <div class="alert alert-warning" role="alert">
+                联系方式：${business.businessContact} - ${business.businessPhone}
             </div>
-            <div class="alert alert-info" role="alert">
-                3. 公告公告公告公告公告公告公告公告公告公告公告公告
+            <div class="alert alert-warning" role="alert">
+                营业时间：${business.businessStartTime} - ${business.businessEndTime}
             </div>
         </div>
     </div>

@@ -51,11 +51,12 @@
                     <table class="table">
                         <thead>
                         <tr>
+                            <th>学生卡号</th>
                             <th>学生姓名</th>
                             <th>所在班级</th>
-                            <th>学生卡号</th>
                             <th>截止日期</th>
                             <th>用场次数</th>
+                            <th>联系手机</th>
                             <th>状态</th>
                             <th>操作人</th>
                             <th>办卡时间</th>
@@ -65,9 +66,9 @@
                         <tbody>
                         <c:forEach var="student" items="${list}">
                             <tr>
+                                <td>${student.cardNo}</td>
                                 <td>${student.studentName}</td>
                                 <td>${student.studentGrade}级${student.studentClass}班</td>
-                                <td>${student.cardNo}</td>
                                 <td>
                                     <c:choose>
                                         <c:when test="${student.cardDeadline == 0}">不限制</c:when>
@@ -75,6 +76,7 @@
                                     </c:choose>
                                 </td>
                                 <td>${student.siteCount}次</td>
+                                <td>${student.studentMobile}</td>
                                 <c:if test="${student.studentStatus == 1}">
                                     <td class="text-success">有效</td>
                                 </c:if>
@@ -87,8 +89,8 @@
                                     <a class="btn btn-primary" href="/students/view?studentId=${student.studentId}">
                                         <span class="glyphicon glyphicon-share-alt"></span> 查看
                                     </a>
-                                    <a class="btn btn-warning students-refresh" href="javascript:;"
-                                       data-cardId="${student.cardId}" data-cardNo="${student.cardNo}">
+                                    <a class="btn btn-warning students-refresh" href="#refresh_modal" data-toggle="modal"
+                                       data-backdrop="false" data-cardId="${student.cardId}" data-cardNo="${student.cardNo}">
                                         <span class="glyphicon glyphicon-refresh"></span> 补办
                                     </a>
                                     <a class="btn btn-danger students-delete" href="javascript:;"
@@ -181,6 +183,10 @@
                 <div class="modal-body" style="clear: both;">
                     <form id="refresh_form" class="form-horizontal" onsubmit="return false;">
                         <input type="hidden" id="refresh_cardId" name="cardId">
+                        <input type="hidden" name="buBanMoney" value="0">
+                        <input type="hidden" name="balanceStyle" value="1">
+                        <input type="hidden" name="givingAmount" value="0">
+                        <input type="hidden" name="remark" value="学生卡补办">
                         <div class="form-group">
                             <label for="refresh_cardNo" class="col-sm-2 control-label">旧的卡号</label>
 
