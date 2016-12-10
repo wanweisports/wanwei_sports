@@ -12,6 +12,7 @@ public class DataInputView extends BaseInputView {
 	private String balanceStyle2;
 	private String balanceStyle3;
 	private String dictName;
+	private String memberName;
 
 	public Integer getCountNum() {
 		return countNum;
@@ -91,6 +92,14 @@ public class DataInputView extends BaseInputView {
 
 	public void setDictName(String dictName) {
 		this.dictName = dictName;
+	}
+
+	public String getMemberName() {
+		return memberName;
+	}
+
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
 	}
 	
 }

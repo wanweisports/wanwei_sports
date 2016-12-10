@@ -18,4 +18,6 @@ public interface IDataService {
 	
 	public Map<String, Object> getBusinessIncome(DataInputView dataInputView);
 	
+	public String getCountSql(Integer countNum, String field);
+	
 }

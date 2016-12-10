@@ -34,7 +34,6 @@ public class OrderController extends BaseController {
             orderInputView.setOperatorId(userInfo.getOperatorId());
             orderInputView.setSalesId(userInfo.getId());
             PageBean pageBean = orderService.getOrderList(orderInputView);
-            System.out.println(JsonUtils.toJson(pageBean));
             super.setPageInfo(model, pageBean);
         } catch (Exception e) {
             e.printStackTrace();

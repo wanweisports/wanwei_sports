@@ -5,6 +5,8 @@ public class OrderInputView extends BaseInputView {
 	private Integer orderId;
 	private String status;
 	private String orderServiceTypes;
+	private String payStatus;
+	private String orderNo;
 	
 	public Integer getOrderId() {
 		return orderId;
@@ -28,6 +30,22 @@ public class OrderInputView extends BaseInputView {
 
 	public void setOrderServiceTypes(String orderServiceTypes) {
 		this.orderServiceTypes = orderServiceTypes;
+	}
+
+	public String getPayStatus() {
+		return payStatus;
+	}
+
+	public void setPayStatus(String payStatus) {
+		this.payStatus = payStatus;
+	}
+
+	public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
 	}
 	
 }

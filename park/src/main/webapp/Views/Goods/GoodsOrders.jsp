@@ -26,8 +26,8 @@
                     <div class="form-group">
                         <select class="form-control" name="payStatus" style="width:160px;">
                             <option value="">全部订单</option>
-                            <option value="1">未支付</option>
-                            <option value="2">已支付</option>
+                            <option value="2" <c:if test='${payStatus==2}'>selected</c:if>>未支付</option>
+                            <option value="1" <c:if test='${payStatus==1}'>selected</c:if>>已支付</option>
                         </select>
                     </div>
                     <div class="form-group">

@@ -20,6 +20,7 @@ import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.OrderInfo;
 import com.park.common.po.SiteInfo;
+import com.park.common.po.SiteMealInfo;
 import com.park.common.po.SiteSport;
 import com.park.common.po.UserOperator;
 import com.park.common.util.DateUtil;
@@ -285,6 +286,66 @@ public class SiteController extends BaseController {
     public ResponseBean getSiteSportTime(int sportId){
     	try {
     		return new ResponseBean(siteService.getSiteSportTime(sportId));
+		} catch (MessageException e) {
+			e.printStackTrace();
+			return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
+    }
+	
+	//点餐列表
+	@RequestMapping("getMeals")
+	public String getMeals(SiteInputView siteInputView, Model model){
+		try {
+			model.addAllAttributes(JsonUtils.fromJsonDF(siteInputView));
+			PageBean pageBean = siteService.getSiteInfos(siteInputView);
+			super.setPageInfo(model, pageBean);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+	
+	//点餐详情
+	@RequestMapping("getMeal")
+	public String getMeal(Integer mealId, Model model){
+		try {
+			if(mealId != null){
+				model.addAllAttributes(JsonUtils.fromJson(siteService.getMealInfo(mealId)));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+	
+	//点餐
+	@ResponseBody
+    @RequestMapping("saveMeal")
+    public ResponseBean saveMeal(SiteMealInfo siteMealInfo){
+    	try {
+    		siteMealInfo.setSalesId(getUserInfo().getId());
+    		Map<String, Object> data = new HashMap<String, Object>();
+    		data.put("mealId", siteService.saveMeal(siteMealInfo));
+    		return new ResponseBean(data);
+		} catch (MessageException e) {
+			e.printStackTrace();
+			return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
+    }
+	
+	//删除点餐
+	@ResponseBody
+    @RequestMapping("deleteMeal")
+    public ResponseBean deleteMeal(int mealId){
+    	try {
+    		siteService.deleteMeal(mealId);
+    		return new ResponseBean(true);
 		} catch (MessageException e) {
 			e.printStackTrace();
 			return new ResponseBean(e.getMessage());

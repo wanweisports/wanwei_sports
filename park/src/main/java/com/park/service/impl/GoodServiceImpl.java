@@ -16,6 +16,7 @@ import com.park.common.bean.PageBean;
 import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.GoodInfo;
+import com.park.common.po.GoodInventoryLog;
 import com.park.common.po.GoodShopping;
 import com.park.common.po.GoodType;
 import com.park.common.po.OrderDetail;
@@ -27,6 +28,7 @@ import com.park.common.util.JsonUtils;
 import com.park.common.util.SQLUtil;
 import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
+import com.park.service.IDataService;
 import com.park.service.IGoodService;
 import com.park.service.IMemberService;
 import com.park.service.IOrderService;
@@ -43,6 +45,9 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 	@Autowired
 	private IOrderService orderService;
 	
+	@Autowired
+	private IDataService dataService;
+	
 	@Override
 	public Integer saveGood(GoodInfo goodInfo, MultipartHttpServletRequest multipartRequest) throws IOException {
 		Integer goodId = goodInfo.getGoodId();
@@ -58,6 +63,17 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 			goodInfo.setCreateTime(nowDate);
 			baseDao.save(goodInfo, null);
 			goodId = goodInfo.getGoodId();
+			
+			//新建商品-库存日志
+			GoodInventoryLog inventoryLog = new GoodInventoryLog();
+			inventoryLog.setCountChange(goodInfo.getGoodCount());
+			inventoryLog.setGoodId(goodId);
+			inventoryLog.setOpType(IDBConstant.INVENTORY_OP_TYPE_ADD);
+			inventoryLog.setRemark("新商品初始化库存" + goodInfo.getGoodCount());
+			inventoryLog.setSalesId(goodInfo.getSalesId());
+			inventoryLog.setCreateTime(nowDate);
+			baseDao.save(inventoryLog, null);
+			
 		}else{ //修改
 			GoodInfo goodInfoDB = getGoodInfo(goodId);
 			if(goodInfoDB == null) throw new MessageException("商品信息不存在！");
@@ -115,6 +131,16 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 		//有库存：在售
 		//if(IDBConstant.GOOD_STATE_BOOKING.equals(goodInfoDB.getGoodStatus()) && goodInfoDB.getGoodCount() > 0) goodInfoDB.setGoodStatus(IDBConstant.GOOD_STATE_ING);
 		baseDao.save(goodInfoDB, goodInfoDB.getGoodId());
+		
+		//入库商品-库存日志
+		GoodInventoryLog inventoryLog = new GoodInventoryLog();
+		inventoryLog.setCountChange(goodInfo.getGoodCount());
+		inventoryLog.setGoodId(goodInfo.getGoodId());
+		inventoryLog.setOpType(IDBConstant.INVENTORY_OP_TYPE_IN);
+		inventoryLog.setRemark(goodInfo.getGoodRemark());
+		inventoryLog.setSalesId(goodInfo.getSalesId());
+		inventoryLog.setCreateTime(DateUtil.getNowDate());
+		baseDao.save(inventoryLog, null);
 	}
 	
 	@Override
@@ -312,11 +338,91 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 	}
 	
 	@Override
-	public void updateConfirmOrder(OrderInfo orderInfo){
+	public void updateConfirmOrder(OrderInfo orderInfo) throws Exception{
 		if(orderInfo.getOrderId() == null) throw new MessageException("订单id为空");
 		orderInfo.setOrderStatus(IDBConstant.LOGIC_STATUS_YES); //商品支付后，直接已完成
 		Integer orderId = orderService.updateConfirmOrder(orderInfo);
 		baseDao.updateBySql("UPDATE order_detail SET orderDetailStatus = ? WHERE orderId = ?", IDBConstant.LOGIC_STATUS_YES, orderId);
+		
+		List<OrderDetail> orderDetails = orderService.getOrderDetails(orderId);
+		if(orderDetails != null && orderDetails.size() > 0){
+			for(OrderDetail orderDetail : orderDetails){
+				GoodInfo goodInfo = getGoodInfo(orderDetail.getItemId());
+				//入库商品-库存日志
+				GoodInventoryLog inventoryLog = new GoodInventoryLog();
+				inventoryLog.setCountChange(orderDetail.getItemAmount());
+				inventoryLog.setGoodId(goodInfo.getGoodId());
+				inventoryLog.setOpType(IDBConstant.INVENTORY_OP_TYPE_OUT);
+				inventoryLog.setSalesId(goodInfo.getSalesId());
+				inventoryLog.setCreateTime(DateUtil.getNowDate());
+				baseDao.save(inventoryLog, null);
+			}
+		}
+	}
+	
+	@Override
+	public PageBean getGoodsStockDetails(GoodInputView goodInputView){
+		
+		Integer countNum = goodInputView.getCountNum();
+		String createTimeStart = goodInputView.getCreateTimeStart();
+		String createTimeEnd = goodInputView.getCreateTimeEnd();
+		String goodNo = goodInputView.getGoodNo();
+		
+		StringBuilder headSql = new StringBuilder("SELECT gi.goodNo, gi.goodName, log.opType, log.countChange, log.remark, uo.operatorName, log.createTime");
+		StringBuilder bodySql = new StringBuilder(" FROM good_inventory_log log, good_info gi, user_operator uo");
+		StringBuilder whereSql = new StringBuilder(" WHERE log.goodId = gi.goodId AND log.salesId = uo.id");
+
+		if(StrUtil.isNotBlank(goodNo)){
+			whereSql.append(" AND gi.goodNo = :goodNo");
+		}
+		if(StrUtil.isNotBlank(createTimeStart)){
+			whereSql.append(" AND DATE(log.createTime) >= :createTimeStart");
+		}
+		if(StrUtil.isNotBlank(createTimeEnd)){
+			whereSql.append(" AND DATE(log.createTime) <= :createTimeEnd");
+		}
+
+		dataService.getCountSql(countNum, "log.createTime");
+		
+		
+		return super.getPageBean(headSql, bodySql, whereSql, goodInputView);
+	}
+	
+	@Override
+	public List<Map<String, Object>> getGoodOutInfo(GoodInputView goodInputView){
+		
+		Integer countNum = goodInputView.getCountNum();
+		String createTimeStart = goodInputView.getCreateTimeStart();
+		String createTimeEnd = goodInputView.getCreateTimeEnd();
+		String goodNo = goodInputView.getGoodNo();
+		
+		StringBuilder sql = new StringBuilder("SELECT gt.goodTypeName, SUM(log.countChange) count FROM good_type gt");
+		sql.append(" LEFT JOIN good_info gi ON(gi.goodTypeId = gt.goodTypeId)");
+		sql.append(" LEFT JOIN good_inventory_log log ON(log.goodId = gi.goodId AND log.opType = ").append(IDBConstant.INVENTORY_OP_TYPE_OUT);
+		
+		if(StrUtil.isNotBlank(createTimeStart)){
+			sql.append(" AND DATE(log.createTime) >= :createTimeStart");
+		}
+		if(StrUtil.isNotBlank(createTimeEnd)){
+			sql.append(" AND DATE(log.createTime) <= :createTimeEnd");
+		}
+
+		dataService.getCountSql(countNum, "log.createTime");
+		sql.append(") WHERE 1=1");
+		if(StrUtil.isNotBlank(goodNo)){
+			sql.append(" AND gi.goodNo = :goodNo");
+		}
+		sql.append(" GROUP BY gt.goodTypeId");
+		List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(goodInputView));
+		int sumCount = 0;
+		for(Map<String, Object> map : list){
+			sumCount += StrUtil.objToInt(map.get("count"));
+		}
+		Map sumMap = new HashMap();
+		sumMap.put("goodTypeName", "全部");
+		sumMap.put("count", sumCount);
+		list.add(0, sumMap);
+		return list;
 	}
 	
 }

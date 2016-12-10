@@ -24,6 +24,7 @@ import com.park.common.po.OrderDetail;
 import com.park.common.po.OrderInfo;
 import com.park.common.po.ParkBusiness;
 import com.park.common.po.SiteInfo;
+import com.park.common.po.SiteMealInfo;
 import com.park.common.po.SiteReserveBasic;
 import com.park.common.po.SiteReserveDate;
 import com.park.common.po.SiteReserveTime;
@@ -576,6 +577,49 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	@Override
 	public Map<String, Object> getSiteSportTime(int sportId){
 		return baseDao.queryBySqlFirst("SELECT sportId, startTime, endTime FROM site_sport WHERE sportId = ?", sportId);
+	}
+	
+	@Override
+	public PageBean getMeals(SiteInputView siteInputView){
+		StringBuilder headSql = new StringBuilder("SELECT *");
+		StringBuilder bodySql = new StringBuilder(" FROM site_meal_info smi");
+		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
+		
+		return super.getPageBean(headSql, bodySql, whereSql, siteInputView);
+	}
+	
+	@Override
+	public SiteMealInfo getMealInfo(Integer mealId){
+		return baseDao.getToEvict(SiteMealInfo.class, mealId);
+	}
+	
+	@Override
+	public Integer saveMeal(SiteMealInfo mealInfo){
+		Integer mealId = mealInfo.getMealId();
+		String nowDate = DateUtil.getNowDate();
+		mealInfo.setMealDate(nowDate);
+		if(mealId == null){
+			mealInfo.setCreateTime(nowDate);
+			baseDao.save(mealInfo, null);
+			return  mealInfo.getMealId();
+		}
+		SiteMealInfo mealInfoDB = getMealInfo(mealId);
+		mealInfoDB.setUpdateTime(nowDate);
+		mealInfoDB.setOrderId(mealInfo.getOrderId());
+		mealInfoDB.setMealDate(mealInfo.getMealDate());
+		//判断是否能点餐--->判断订单memberId必须与点餐人memberId相同？
+		List<Map<String, Object>> siteSeserveDates = baseDao.queryBySql("SELECT * FROM site_reserve_basic srb, site_reserve_date srd WHERE srb.siteReserveId = srd.siteReserveId AND srb.orderId = ? AND srd.reserveStartDate >= ? AND srd.reserveEndDate <= ?", siteMealInfo.getOrderId(), nowDate);
+		if(siteSeserveDates == null) throw new MessageException("没有查询到今天的场地预定信息，您不能点餐");
+		baseDao.save(mealInfoDB, mealId);
+		return mealId;
+	}
+	
+	@Override
+	public void deleteMeal(int mealId){
+		SiteMealInfo mealInfo = getMealInfo(mealId);
+		if(mealInfo != null){
+			baseDao.delete(mealInfo);
+		}
 	}
 	
 	private Map<String, Object> getReserveIntersection(int siteId, String startDate, String endDate, String weeks, String startTime, String endTime) throws ParseException{

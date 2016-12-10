@@ -40,7 +40,6 @@ public class GoodController extends BaseController {
         try {
             model.addAllAttributes(JsonUtils.fromJsonDF(goodInputView));
             PageBean pageBean = goodService.getGoodTypes(goodInputView);
-            System.out.println(JsonUtils.toJson(pageBean.getList()));
             super.setPageInfo(model, pageBean);
         } catch (Exception e) {
             e.printStackTrace();
@@ -302,7 +301,15 @@ public class GoodController extends BaseController {
      * @return
      */
     @RequestMapping(value = "getGoodsStockDetails")
-    public String getGoodsStockDetails() {
+    public String getGoodsStockDetails(GoodInputView goodInputView, Model model) {
+    	try {
+            model.addAllAttributes(JsonUtils.fromJsonDF(goodInputView));
+            PageBean pageBean = goodService.getGoodsStockDetails(goodInputView);
+            super.setPageInfo(model, pageBean);
+            model.addAttribute("allCount", goodService.getGoodOutInfo(goodInputView));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "Goods/GoodStockDetails";
     }
     

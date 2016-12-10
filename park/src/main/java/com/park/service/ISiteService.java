@@ -9,6 +9,7 @@ import com.park.common.bean.SiteInputView;
 import com.park.common.bean.out.SiteReserveOutputView;
 import com.park.common.po.OrderInfo;
 import com.park.common.po.SiteInfo;
+import com.park.common.po.SiteMealInfo;
 import com.park.common.po.SiteReserveBasic;
 import com.park.common.po.SiteReserveDate;
 import com.park.common.po.SiteReserveTime;
@@ -65,5 +66,13 @@ public interface ISiteService {
 	public List<SiteReserveTime> getSiteReserveTimeByDateId(int reserveDateId);
 	
 	public Map<String, Object> getSiteSportTime(int sportId);
+	
+	public PageBean getMeals(SiteInputView siteInputView);
+	
+	public SiteMealInfo getMealInfo(Integer mealId);
+	
+	public Integer saveMeal(SiteMealInfo siteMealInfo);
+	
+	public void deleteMeal(int mealId);
 	
 }
