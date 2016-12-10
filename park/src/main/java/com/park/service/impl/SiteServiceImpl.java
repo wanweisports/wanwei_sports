@@ -608,7 +608,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		mealInfoDB.setOrderId(mealInfo.getOrderId());
 		mealInfoDB.setMealDate(mealInfo.getMealDate());
 		//判断是否能点餐--->判断订单memberId必须与点餐人memberId相同？
-		List<Map<String, Object>> siteSeserveDates = baseDao.queryBySql("SELECT * FROM site_reserve_basic srb, site_reserve_date srd WHERE srb.siteReserveId = srd.siteReserveId AND srb.orderId = ? AND srd.reserveStartDate >= ? AND srd.reserveEndDate <= ?", siteMealInfo.getOrderId(), nowDate);
+		List<Map<String, Object>> siteSeserveDates = baseDao.queryBySql("SELECT * FROM site_reserve_basic srb, site_reserve_date srd WHERE srb.siteReserveId = srd.siteReserveId AND srb.orderId = ? AND srd.reserveStartDate >= ? AND srd.reserveEndDate <= ?", mealInfo.getOrderId(), nowDate);
 		if(siteSeserveDates == null) throw new MessageException("没有查询到今天的场地预定信息，您不能点餐");
 		baseDao.save(mealInfoDB, mealId);
 		return mealId;
