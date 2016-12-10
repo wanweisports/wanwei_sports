@@ -1,4 +1,4 @@
-/*
+﻿/*
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
@@ -38,7 +38,7 @@ CREATE TABLE `order_info` (
   `sumCount` int(11) DEFAULT NULL COMMENT '总次数',
   `payCount` int(11) DEFAULT NULL COMMENT '支付次数',
   `useCount` int(11) DEFAULT NULL COMMENT '已使用次数',
-  `orderSumCount` int(11) DEFAULT NULL COMMENT '子订单商品数量的合计数量',
+  `orderSumCount` int(11) DEFAULT NULL COMMENT '子订单商品数量的合计数量', //【新】
   `orderDiscount` int(11) DEFAULT NULL COMMENT '当时的商品折扣（0-100）',
   `createTime` varchar(20) DEFAULT NULL COMMENT '创建时间',
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',

@@ -1,4 +1,4 @@
-/*
+﻿/*
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
@@ -34,7 +34,7 @@ CREATE TABLE `other_balance` (
   `divBalance` decimal(10,2) DEFAULT '0.00' COMMENT '剩余未付金额',
   `balanceStatus` varchar(1) DEFAULT NULL COMMENT '订单状态 (充值)1：已收全款  2：未付款  3：部分收款  (消费)1：已支付  2：未支付',
   `serviceDate` varchar(20) DEFAULT NULL COMMENT '业务日期',
-  `changeAmount` decimal(10,0) DEFAULT NULL COMMENT '金额变化',
+  `changeAmount` decimal(10,0) DEFAULT NULL COMMENT '金额变化', //【新】
   `createTime` varchar(20) DEFAULT NULL COMMENT '创建时间',
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
   `salesId` int(11) DEFAULT NULL COMMENT '销售员ID',
