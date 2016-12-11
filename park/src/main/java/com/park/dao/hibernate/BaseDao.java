@@ -485,7 +485,7 @@ public class BaseDao extends HibernateDaoSupport implements IBaseDao {
                             query.setParameterList(entry.getKey(), (Collection<?>)value);
                         }else if(value instanceof Object[]){
                             query.setParameterList(entry.getKey(), (Object[])value);
-                        }else if(isInt((String)value)){
+                        }else if(isInt(StrUtil.objToStr(value))){
                             query.setInteger(entry.getKey(), StrUtil.objToInt(value));
                         }else{
                         	query.setParameter(entry.getKey(), value);
