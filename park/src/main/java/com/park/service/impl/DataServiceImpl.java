@@ -199,7 +199,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		sql.append(getCountSql(countNum, "ob.createTime"));
 		
 		sql.append(") LEFT JOIN order_info oi ON(ob.balanceServiceId = oi.orderId)");
-		sql.append(" WHERE dictName = :dictName AND dictKey >= :balanceServiceTypeMin AND dictKey <= :balanceServiceTypeMax");
+		sql.append(" WHERE dictName = :dictName AND CAST(dictKey AS signed INTEGER) >= :balanceServiceTypeMin AND CAST(dictKey AS signed INTEGER) <= :balanceServiceTypeMax");
 		sql.append(" GROUP BY dictKey, ob.balanceStyle ORDER BY dictKey");
 		
 		dataInputView.setDictName(IDBConstant.BALANCE_SERVICE_TYPE);
@@ -223,7 +223,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		sql.append(getCountSql(countNum, "ob.createTime"));
 		
 		sql.append(") LEFT JOIN order_info oi ON(ob.balanceServiceId = oi.orderId)");
-		sql.append(" WHERE dictName = :dictName AND dictKey = :balanceServiceType");
+		sql.append(" WHERE dictName = :dictName AND CAST(dictKey AS signed INTEGER) = :balanceServiceType");
 		sql.append(" GROUP BY dictKey, ob.balanceStyle ORDER BY dictKey");
 		
 		dataInputView.setDictName(IDBConstant.BALANCE_SERVICE_TYPE);
