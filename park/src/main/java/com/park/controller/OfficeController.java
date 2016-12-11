@@ -86,7 +86,7 @@ public class OfficeController extends BaseController {
             UserOperator userInfo = super.getUserInfo();
             notificationsInfo.setNoteSender(userInfo.getId());
 
-            Integer noteId = notificationsService.setNotification(notificationsInfo, multipartRequest);
+            Integer noteId = notificationsService.saveSetNotification(notificationsInfo, multipartRequest);
             Map<String, Object> data = new HashMap<String, Object>();
             data.put("noteId", noteId);
             return new ResponseBean(data);
