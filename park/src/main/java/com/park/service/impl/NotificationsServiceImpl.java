@@ -108,7 +108,7 @@ public class NotificationsServiceImpl extends BaseService implements INotificati
 	}
 
     @Override
-    public Integer sendNotification(int noteId) {
+    public Integer saveSendNotification(int noteId) {
         String nowDate = DateUtil.getNowDate();
         NotificationsInfo notificationInfoDB = getNotificationInfo(noteId);
 
@@ -123,7 +123,7 @@ public class NotificationsServiceImpl extends BaseService implements INotificati
     }
 	
 	@Override
-	public void markNotificationRead(int noteId){
+	public void saveMarkNotificationRead(int noteId){
         String nowDate = DateUtil.getNowDate();
 
         NotificationsInfo notificationInfo = getNotificationInfo(noteId);

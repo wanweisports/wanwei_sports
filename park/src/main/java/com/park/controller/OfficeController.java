@@ -104,7 +104,7 @@ public class OfficeController extends BaseController {
     @RequestMapping(value = "sendNotifications", method = RequestMethod.POST)
     public ResponseBean sendNotifications(int noteId) {
         try {
-            Integer notificationId = notificationsService.sendNotification(noteId);
+            Integer notificationId = notificationsService.saveSendNotification(noteId);
             Map<String, Object> data = new HashMap<String, Object>();
             data.put("noteId", notificationId);
             return new ResponseBean(data);
@@ -122,7 +122,7 @@ public class OfficeController extends BaseController {
     @RequestMapping(value = "markNotificationRead", method = RequestMethod.POST)
     public ResponseBean markNotificationRead(int noteId) {
         try {
-            notificationsService.markNotificationRead(noteId);
+            notificationsService.saveMarkNotificationRead(noteId);
             return new ResponseBean(true);
         } catch (MessageException e) {
             e.printStackTrace();
