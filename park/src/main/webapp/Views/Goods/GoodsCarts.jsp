@@ -157,8 +157,8 @@
                                                         data-val="true" data-val-required="请选择支付方式">
                                                     <option value="">请选择</option>
                                                     <option value="1">现金</option>
-                                                    <option value="2">微信</option>
-                                                    <option value="3">支付宝</option>
+                                                    <option value="2">支付宝</option>
+                                                    <option value="3">微信</option>
                                                 </select>
                                                 <div data-valmsg-for="payType" data-valmsg-replace="true"></div>
                                             </div>
