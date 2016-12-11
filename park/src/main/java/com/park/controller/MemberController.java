@@ -539,6 +539,7 @@ public class MemberController extends BaseController {
     
     /**
      * 查询是个全文模糊查询  即我可能输入手机号，姓名，身份证号，会员卡号信息  来匹配会员
+     * 可预订会员
      */
     @ResponseBody
     @RequestMapping("searchMember")
@@ -558,6 +559,7 @@ public class MemberController extends BaseController {
 
     /**
      * 查询是个全文模糊查询  即我可能输入手机号，姓名，身份证号，会员卡号信息  来匹配会员
+     * 可签到会员
      */
     @ResponseBody
     @RequestMapping("searchOpenMember")

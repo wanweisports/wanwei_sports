@@ -138,7 +138,7 @@
                         </tr>
                         <tr class="list-nav-item teacher ${(param.nav == "teacher" && param.subNav == "meals") ? "active" : ""}">
                             <td>
-                                <span><a href="/teachers/orderMeal">教师订餐统计</a></span>
+                                <span><a href="/site/getMeals">教师订餐统计</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item teacher last-nav-item">

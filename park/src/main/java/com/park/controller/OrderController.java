@@ -16,6 +16,10 @@ import com.park.common.po.UserOperator;
 import com.park.common.util.JsonUtils;
 import com.park.service.IOrderService;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Controller
 @RequestMapping("order")
 public class OrderController extends BaseController {
@@ -92,5 +96,23 @@ public class OrderController extends BaseController {
             return new ResponseBean(false);
         }
     }
-	
+
+    /**
+     * 查询今天的订单信息，为订餐使用，根据会员ID
+     */
+    @ResponseBody
+    @RequestMapping("getMealsOrderToday")
+    public ResponseBean getMealsOrderToday(int memberId){
+        try {
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("orders", orderService.getMealsOrderToday(memberId));
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
 }

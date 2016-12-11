@@ -581,8 +581,8 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	
 	@Override
 	public PageBean getMeals(SiteInputView siteInputView){
-		StringBuilder headSql = new StringBuilder("SELECT *");
-		StringBuilder bodySql = new StringBuilder(" FROM site_meal_info smi");
+		StringBuilder headSql = new StringBuilder("SELECT smi.*, oi.orderNo");
+		StringBuilder bodySql = new StringBuilder(" FROM site_meal_info smi INNER JOIN order_info oi ON smi.orderId = oi.orderId");
 		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
 		
 		return super.getPageBean(headSql, bodySql, whereSql, siteInputView);

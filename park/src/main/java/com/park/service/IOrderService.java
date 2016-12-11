@@ -1,6 +1,7 @@
 package com.park.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.park.common.bean.OrderInputView;
 import com.park.common.bean.PageBean;
@@ -22,5 +23,7 @@ public interface IOrderService {
 	public void deleteOrder(OrderInputView orderInputView);
 	
 	public void updateOrderStatus(OrderInputView orderInputView);
+
+	public List<Map<String, Object>> getMealsOrderToday(int memberId) throws Exception;
 	
 }

@@ -79,10 +79,6 @@ public class TeachersController extends BaseController {
 		}
     	return "Teachers/TeachersVenueData";
     }
-
-    // 教师订单统计
-    @RequestMapping("orderMeal")
-    public String teachersOrderMeal() {return "Teachers/TeachersMealData";}
     
     @ResponseBody
     @RequestMapping("lockTeacher")

@@ -727,7 +727,6 @@
                             $('#reservations_user_member').val("0");
                             $('#reservations_user_mobile').val("");
                             $('#reservations_user_opType').val("2");
-                            $('#reservations_user_name').val("散客");
                             content.queryMemberBalance(0);
                             return [];
                         }

@@ -81,102 +81,31 @@
                             <th>商品名称</th>
                             <th>操作名称</th>
                             <th>操作数量</th>
-                            <th>备注</th>
                             <th>操作人</th>
                             <th>操作时间</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>0102</td>
-                            <td>矿泉水</td>
-                            <td>销售</td>
-                            <td>-10</td>
-                            <td>无</td>
-                            <td>系统管理员</td>
-                            <td>2016-10-07 14:39:35</td>
-                        </tr>
-                        <tr>
-                            <td>0102</td>
-                            <td>矿泉水</td>
-                            <td>入库</td>
-                            <td>10</td>
-                            <td>无</td>
-                            <td>系统管理员</td>
-                            <td>2016-10-07 14:36:46</td>
-                        </tr>
-                        <tr>
-                            <td>09898</td>
-                            <td>泳镜</td>
-                            <td>入库</td>
-                            <td>100</td>
-                            <td>无</td>
-                            <td>系统管理员</td>
-                            <td>2016-08-07 18:13:45</td>
-                        </tr>
-                        <tr>
-                            <td>556677</td>
-                            <td>脉动</td>
-                            <td>销售</td>
-                            <td>-1</td>
-                            <td></td>
-                            <td>系统管理员</td>
-                            <td>2016-08-06 11:22:30</td>
-                        </tr>
-                        <tr>
-                            <td>0102</td>
-                            <td>矿泉水</td>
-                            <td>销售</td>
-                            <td>-1</td>
-                            <td></td>
-                            <td>系统管理员</td>
-                            <td>2016-08-06 11:22:30</td>
-                        </tr>
-                        <tr>
-                            <td>556677</td>
-                            <td>脉动</td>
-                            <td>销售</td>
-                            <td>-1</td>
-                            <td></td>
-                            <td>系统管理员</td>
-                            <td>2016-08-05 12:55:39</td>
-                        </tr>
-                        <tr>
-                            <td>0102</td>
-                            <td>矿泉水</td>
-                            <td>销售</td>
-                            <td>-1</td>
-                            <td></td>
-                            <td>系统管理员</td>
-                            <td>2016-08-05 12:55:39</td>
-                        </tr>
-                        <tr>
-                            <td>0102</td>
-                            <td>矿泉水</td>
-                            <td>销售</td>
-                            <td>-5</td>
-                            <td></td>
-                            <td>系统管理员</td>
-                            <td>2016-08-03 15:53:28</td>
-                        </tr>
-                        <tr>
-                            <td>0102</td>
-                            <td>矿泉水</td>
-                            <td>销售</td>
-                            <td>-3</td>
-                            <td></td>
-                            <td>系统管理员</td>
-                            <td>2016-08-03 01:19:12</td>
-                        </tr>
-                        <tr>
-                            <td>0102</td>
-                            <td>矿泉水</td>
-                            <td>入库</td>
-                            <td>200</td>
-                            <td>无</td>
-                            <td>系统管理员</td>
-                            <td>2016-08-03 00:49:10</td>
-                        </tr>
+                        <c:forEach var="data" items="${list}">
+                            <tr>
+                                <td>${data.goodNo}</td>
+                                <td>${data.goodName}</td>
+                                <c:if test="${data.opType == 1}">
+                                    <td class="text-success">商品增加</td>
+                                    <td class="text-success">${data.countChange}</td>
+                                </c:if>
+                                <c:if test="${data.opType == 2}">
+                                    <td class="text-success">商品入库</td>
+                                    <td class="text-success">${data.countChange}</td>
+                                </c:if>
+                                <c:if test="${data.opType == 3}">
+                                    <td class="text-danger">商品销售</td>
+                                    <td class="text-danger">${data.countChange}</td>
+                                </c:if>
+                                <td>${data.operatorName}</td>
+                                <td>${data.createTime}</td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                     <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >

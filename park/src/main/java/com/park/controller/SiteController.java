@@ -300,12 +300,12 @@ public class SiteController extends BaseController {
 	public String getMeals(SiteInputView siteInputView, Model model){
 		try {
 			model.addAllAttributes(JsonUtils.fromJsonDF(siteInputView));
-			PageBean pageBean = siteService.getSiteInfos(siteInputView);
+			PageBean pageBean = siteService.getMeals(siteInputView);
 			super.setPageInfo(model, pageBean);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "";
+		return "Teachers/TeachersMealData";
 	}
 	
 	//点餐详情

@@ -257,4 +257,15 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 		return DateUtil.dateToString(new Date(), DateUtil.YYYYMMDD_HMS);
 	}
 
+	@Override
+	public List<Map<String, Object>> getMealsOrderToday(int memberId) throws Exception{
+        StringBuilder sql = new StringBuilder("SELECT oi.orderId, oi.memberId, oi.orderNo, od.itemStartTime, od.itemEndTime");
+        sql.append(" FROM order_info oi INNER JOIN order_detail od ON oi.orderId = od.orderId");
+        sql.append(" WHERE oi.memberId > 0");
+        sql.append(" AND oi.orderServiceType != ? AND memberId = ?");
+        sql.append(" AND od.itemStartTime >= DATE_FORMAT(CURDATE(), '%Y-%m-%d 00:00')");
+        sql.append(" AND od.itemEndTime <= DATE_FORMAT(CURDATE(), '%Y-%m-%d 23:59')");
+
+        return baseDao.queryBySql(sql.toString(), IDBConstant.ORDER_SERVICE_TYPE_GOODS, memberId);
+	}
 }
