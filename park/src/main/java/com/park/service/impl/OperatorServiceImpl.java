@@ -202,7 +202,7 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 	
 	@Override
 	public List<Map<String, Object>> getUserSchedulings(){
-		List<Map<String, Object>> list = baseDao.queryBySql("SELECT us.*, uo1.operatorName FROM user_scheduling us, user_operator uo1 WHERE us.operatorId = uo1.id ORDER BY date, startTime");
+		List<Map<String, Object>> list = baseDao.queryBySql("SELECT us.*, uo1.operatorName FROM user_scheduling us, user_operator uo1 WHERE us.operatorId = uo1.operatorId ORDER BY date, startTime");
 		String datePre = null;
 		List<Map<String, Object>> listGroup = new ArrayList<Map<String, Object>>();	
 		for(Map<String, Object> map : list){
