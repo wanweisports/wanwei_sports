@@ -25,6 +25,9 @@ public class SystemMenu implements java.io.Serializable {
 	private String menuName;
 	private String menuCode;
 	private String menuUrl;
+	private String menuStatus;
+	private Integer menuSort;
+    private String isQuick;
 
 	@Transient
 	private List<SystemMenu> menuList;
@@ -42,11 +45,14 @@ public class SystemMenu implements java.io.Serializable {
 
 	/** full constructor */
 	public SystemMenu(Integer parentMenuId, String menuName, String menuCode,
-			String menuUrl) {
+			String menuUrl, String menuStatus, Integer menuSort, String isQuick) {
 		this.parentMenuId = parentMenuId;
 		this.menuName = menuName;
 		this.menuCode = menuCode;
 		this.menuUrl = menuUrl;
+        this.menuStatus = menuStatus;
+        this.menuSort = menuSort;
+        this.isQuick = isQuick;
 	}
 
 	// Property accessors
@@ -96,6 +102,33 @@ public class SystemMenu implements java.io.Serializable {
 	public void setMenuUrl(String menuUrl) {
 		this.menuUrl = menuUrl;
 	}
+
+    @Column(name = "menuStatus", length = 1)
+    public String getMenuStatus() {
+        return this.menuStatus;
+    }
+
+    public void setMenuStatus(String menuStatus) {
+        this.menuStatus = menuStatus;
+    }
+
+    @Column(name = "menuSort", length = 11)
+    public Integer getMenuSort() {
+        return this.menuSort;
+    }
+
+    public void setMenuSort(Integer menuSort) {
+        this.menuSort = menuSort;
+    }
+
+    @Column(name = "isQuick", length = 1)
+    public String getIsQuick() {
+        return this.isQuick;
+    }
+
+    public void setIsQuick(String isQuick) {
+        this.isQuick = isQuick;
+    }
 
 	@Transient
 	public List<SystemMenu> getMenuList() {

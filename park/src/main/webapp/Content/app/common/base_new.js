@@ -19,7 +19,7 @@
             var data = res.data;
 
             if (res.code == 1) {
-                $(".top-menu-username").text(data.operatorName);
+                $(".top-menu-username").text(data.user.operatorName);
             }
         });
     }

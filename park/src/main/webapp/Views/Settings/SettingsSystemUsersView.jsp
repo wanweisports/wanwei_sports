@@ -190,7 +190,7 @@
                     <h5 class="modal-title" id="tipsModalLabel">提示框</h5>
                 </div>
                 <div class="modal-body">
-                    <p class="text-success">员工信息保存成功!</p>
+                    <div class="alert alert-success" role="alert">员工信息保存成功!</div>
                 </div>
             </div>
         </div>

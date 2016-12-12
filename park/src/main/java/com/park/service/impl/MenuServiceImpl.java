@@ -36,7 +36,7 @@ public class MenuServiceImpl extends BaseService implements IMenuService {
 	
 	@Override
 	public List<SystemMenu> getMenusByParentId(int parentId){ //查询子菜单
-		return baseDao.queryByHql("FROM SystemMenu WHERE parentMenuId = ?", parentId);
+		return baseDao.queryByHql("FROM SystemMenu WHERE parentMenuId = ? AND menuStatus = 0 ORDER BY menuSort", parentId);
 	}
 	
 	@Override
