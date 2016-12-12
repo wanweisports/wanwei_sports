@@ -22,6 +22,7 @@
             this.initSequenceEvents();
             this.initMenuButtons();
             this.initReservationsSteps();
+            this.changePaidMoney();
         },
         // 初始化时间选择控件
         initDatePicker: function () {
@@ -49,6 +50,11 @@
 
                 $('#other_date').datetimepicker("show");
             });
+        },
+        formatWeek: function(date) {
+            var week = moment(date).format("e");
+
+            return week != "0" ? week : 7;
         },
         // 初始化菜单日期
         initMenuDate: function () {
@@ -436,7 +442,7 @@
                     siteReserveDateList: [{
                         reserveStartDate: content.opts.Current_Date,
                         reserveEndDate: content.opts.Current_Date,
-                        reserveWeek: (new Date(content.opts.Current_Date)).getDay() || 7,
+                        reserveWeek: content.formatWeek(content.opts.Current_Date),
                         siteReserveTimeList: data
                     }]
                 };
@@ -474,7 +480,7 @@
                     siteReserveDateList: [{
                         reserveStartDate: content.opts.Current_Date,
                         reserveEndDate: content.opts.Current_Date,
-                        reserveWeek: (new Date(content.opts.Current_Date)).getDay() || 7,
+                        reserveWeek: content.formatWeek(content.opts.Current_Date),
                         siteReserveTimeList: data
                     }]
                 };
@@ -508,11 +514,12 @@
                     return alert("请先选择场地");
                 }
 
+                console.log(moment(content.opts.Current_Date).format("e"));
                 content.opts.data = {
                     siteReserveDateList: [{
                         reserveStartDate: content.opts.Current_Date,
                         reserveEndDate: content.opts.Current_Date,
-                        reserveWeek: moment(content.opts.Current_Date).format("e"),
+                        reserveWeek: content.formatWeek(content.opts.Current_Date),
                         siteReserveTimeList: data
                     }]
                 };
@@ -560,7 +567,7 @@
                     siteReserveDateList: [{
                         reserveStartDate: content.opts.Current_Date,
                         reserveEndDate: content.opts.Current_Date,
-                        reserveWeek: (new Date(content.opts.Current_Date)).getDay() || 7,
+                        reserveWeek: content.formatWeek(content.opts.Current_Date),
                         siteReserveTimeList: data
                     }]
                 };
@@ -768,6 +775,23 @@
                     }
                 } else {
                     alert(res.message || "会员余额查询失败, 请稍后重试");
+                }
+            });
+        },
+        changePaidMoney: function () {
+            $("#reservations_paid_paySumPrice").on("change", function (e) {
+                e.preventDefault();
+
+                var balance = $("#reservations_paid_balance").val();
+                var paidPrice = $(this).val();
+
+                balance = parseFloat(balance).toFixed(2);
+                paidPrice = parseFloat(paidPrice).toFixed(2);
+
+                if (balance >= paidPrice) {
+                    $("#reservations_paid_money").val("0.00");
+                } else {
+                    $("#reservations_paid_money").val(paidPrice - balance);
                 }
             });
         }

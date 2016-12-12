@@ -69,6 +69,11 @@
             this.initEvents();
             this.searchMembers();
         },
+        formatWeek: function(date) {
+            var week = moment(date).format("e");
+
+            return week != "0" ? week : 7;
+        },
         // 查询会员
         searchMembers: function () {
             $("#reservations_batch_mobile").autosuggest({
@@ -83,16 +88,17 @@
                         if (data && data.members && data.members.length > 0) {
                             for (var i = 0; i < data.members.length; i++) {
                                 json.push({
-                                    id: data.members[i].memberId,
-                                    label: data.members[i].memberMobile,
-                                    value: data.members[i].memberName + '(' + data.members[i].memberMobile + ')'
+                                    id: data.members[i].memberMobile,
+                                    label: data.members[i].memberId,
+                                    value: data.members[i].memberName + "(" + data.members[i].cardTypeName + ")"
                                 });
                             }
                             return json;
                         } else {
                             $('#reservations_batch_member').val("0");
-                            $('#reservations_batch_opType').val("2");
                             $('#reservations_batch_name').val("散客");
+                            $('#reservations_batch_opType').val("2");
+                            content.queryMemberBalance(0);
                             return [];
                         }
                     } else {
@@ -101,14 +107,38 @@
                     }
                 },
                 onSelect:function(elm) {
-                    var memberMobile = elm.data('label');
-                    var memberId = elm.data('id');
+                    var memberId = elm.data('label');
+                    var mobile = elm.data('id');
                     var memberName = elm.data('value');
 
-                    $('#reservations_batch_mobile').val(memberMobile);
                     $('#reservations_batch_member').val(memberId);
-                    $('#reservations_batch_opType').val("1");
-                    $('#reservations_batch_name').val(memberName.replace('(' + memberMobile + ')', ""));
+                    $('#reservations_batch_mobile').val(mobile);
+                    $("#reservations_batch_opType").val("1");
+                    $('#reservations_batch_name').val(memberName.replace(/\(.+\)/, ""));
+
+                    content.queryMemberBalance(memberId);
+                }
+            });
+        },
+        queryMemberBalance: function (memberId) {
+            if (!memberId) {
+                $('#reservations_paid_balance').val("0.00");
+                return;
+            }
+
+            $.post('/member/memberDetail', {memberId: memberId}, function (res) {
+                var data = res.data;
+                var originalPrice = $("#reservations_paid_money").val();
+
+                if (res.code == 1) {
+                    $('#reservations_paid_balance').val(data.cardBalance);
+                    if (data.cardBalance >= originalPrice) {
+                        $("#reservations_paid_money").val("0.00");
+                    } else {
+                        $("#reservations_paid_money").val(originalPrice - data.cardBalance);
+                    }
+                } else {
+                    alert(res.message || "会员余额查询失败, 请稍后重试");
                 }
             });
         },

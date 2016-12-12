@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -485,8 +484,6 @@ public class BaseDao extends HibernateDaoSupport implements IBaseDao {
                             query.setParameterList(entry.getKey(), (Collection<?>)value);
                         }else if(value instanceof Object[]){
                             query.setParameterList(entry.getKey(), (Object[])value);
-                        }else if(isInt(StrUtil.objToStr(value))){
-                            query.setInteger(entry.getKey(), StrUtil.objToInt(value));
                         }else{
                         	query.setParameter(entry.getKey(), value);
                         }
@@ -495,11 +492,6 @@ public class BaseDao extends HibernateDaoSupport implements IBaseDao {
             }
         }
     }
-    
-    public static boolean isInt(String str){  
-        Pattern pattern = Pattern.compile("[0-9]{1,9}");
-        return pattern.matcher(str).matches();     
-    }  
 
     private Query getHqlQuery(Session s, String hql, Object ...params) {
         Query query = s.createQuery(hql);

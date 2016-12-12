@@ -170,7 +170,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		StringBuilder sql = new StringBuilder("SELECT cardTypeName name, SUM(realAmount) price, ob.balanceStyle style, ob.balanceId");
 		sql.append(" FROM member_card_type mct");
 		sql.append(" LEFT JOIN member_card mc ON(mct.cardTypeId = mc.cardTypeId)");
-		sql.append(" LEFT JOIN other_balance ob ON(ob.balanceServiceId = mc.cardId AND ob.balanceServiceType >= :balanceServiceTypeMin AND ob.balanceServiceType <= :balanceServiceTypeMax");
+		sql.append(" LEFT JOIN other_balance ob ON(ob.balanceServiceId = mc.cardId AND CAST(ob.balanceServiceType AS signed INTEGER) >= :balanceServiceTypeMin AND CAST(ob.balanceServiceType AS signed INTEGER) <= :balanceServiceTypeMax");
 		if(StrUtil.isNotBlank(createTimeStart)){
 			sql.append(" AND DATE(ob.createTime) >= :createTimeStart");
 		}
@@ -199,7 +199,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		sql.append(getCountSql(countNum, "ob.createTime"));
 		
 		sql.append(") LEFT JOIN order_info oi ON(ob.balanceServiceId = oi.orderId)");
-		sql.append(" WHERE dictName = :dictName AND dictKey >= :balanceServiceTypeMin AND dictKey <= :balanceServiceTypeMax");
+		sql.append(" WHERE dictName = :dictName AND CAST(dictKey AS signed INTEGER) >= :balanceServiceTypeMin AND CAST(dictKey AS signed INTEGER) <= :balanceServiceTypeMax");
 		sql.append(" GROUP BY dictKey, ob.balanceStyle ORDER BY dictKey");
 		
 		dataInputView.setDictName(IDBConstant.BALANCE_SERVICE_TYPE);
@@ -223,7 +223,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		sql.append(getCountSql(countNum, "ob.createTime"));
 		
 		sql.append(") LEFT JOIN order_info oi ON(ob.balanceServiceId = oi.orderId)");
-		sql.append(" WHERE dictName = :dictName AND dictKey = :balanceServiceType");
+		sql.append(" WHERE dictName = :dictName AND CAST(dictKey AS signed INTEGER) = :balanceServiceType");
 		sql.append(" GROUP BY dictKey, ob.balanceStyle ORDER BY dictKey");
 		
 		dataInputView.setDictName(IDBConstant.BALANCE_SERVICE_TYPE);
