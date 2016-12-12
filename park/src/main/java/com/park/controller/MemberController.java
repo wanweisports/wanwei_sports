@@ -361,6 +361,21 @@ public class MemberController extends BaseController {
         }
         return "Members/InvoiceList";
     }
+    
+    @ResponseBody
+    @RequestMapping(value = "updateOpenInvoices", method = RequestMethod.POST)
+    public ResponseBean updateOpenInvoices(String invoiceIds) {
+        try {
+            memberService.updateOpenInvoices(invoiceIds);
+            return new ResponseBean(true);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
 
     @ResponseBody
     @RequestMapping(value = "updateGetInvoices", method = RequestMethod.POST)

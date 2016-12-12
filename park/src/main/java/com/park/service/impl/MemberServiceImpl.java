@@ -245,6 +245,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			baseDao.save(invoiceDB, invoiceDB.getInvoiceId());
 		}else{ //新建
 			invoice.setCreateTime(DateUtil.getNowDate());
+			invoice.setInvoiceOpenState(IDBConstant.LOGIC_STATUS_NO); //默认未开
 			invoice.setInvoiceState(IDBConstant.LOGIC_STATUS_NO); //默认未打印(领取)，改变状态需要结合打印机状态
 			//invoice.setInvoiceNo(getInvoiceNo()); //发票的流水号和订单的流水号是一个不是两个
 			baseDao.save(invoice, invoice.getInvoiceId());
@@ -515,6 +516,15 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		}
 		whereSql.append(" ORDER BY oi.createTime DESC");
 		return super.getPageBean(headSql, bodySql, whereSql, invoiceInputView);
+	}
+	
+	@Override
+	public void updateOpenInvoices(String invoiceIds) {
+		String[] invoiceIdArr = invoiceIds.split(",");
+		if(ArrayUtils.isEmpty(invoiceIdArr)) throw new MessageException("请选择发票进行操作！");
+		Map params = SQLUtil.getInToSQL("invoiceIdArr", invoiceIdArr);
+		params.put("invoiceOpenState", IDBConstant.LOGIC_STATUS_YES);
+		baseDao.updateBySql("UPDATE other_invoice o SET invoiceOpenState=:invoiceOpenState, openTime=NOW() WHERE o.invoiceId IN(:invoiceIdArr)", params);
 	}
 	
 	@Override

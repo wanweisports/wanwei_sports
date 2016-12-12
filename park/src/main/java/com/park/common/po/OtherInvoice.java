@@ -24,9 +24,11 @@ public class OtherInvoice implements java.io.Serializable {
 	private String invoiceContent;
 	private Double invoiceMoney;
 	private String invoiceRemark;
+	private String invoiceOpenState;
+	private String openTime;
 	private String invoiceState;
-	private String createTime;
 	private String printTime;
+	private String createTime;
 	private Integer salesId;
 
 	// Constructors
@@ -45,8 +47,8 @@ public class OtherInvoice implements java.io.Serializable {
 	public OtherInvoice(String invoiceNo, String invoiceServiceType,
 			Integer invoiceServiceId, String invoiceHeader,
 			String invoiceContent, Double invoiceMoney, String invoiceRemark,
-			String invoiceState, String createTime, String printTime,
-			Integer salesId) {
+			String invoiceOpenState, String openTime, String invoiceState,
+			String printTime, String createTime, Integer salesId) {
 		this.invoiceNo = invoiceNo;
 		this.invoiceServiceType = invoiceServiceType;
 		this.invoiceServiceId = invoiceServiceId;
@@ -54,9 +56,11 @@ public class OtherInvoice implements java.io.Serializable {
 		this.invoiceContent = invoiceContent;
 		this.invoiceMoney = invoiceMoney;
 		this.invoiceRemark = invoiceRemark;
+		this.invoiceOpenState = invoiceOpenState;
+		this.openTime = openTime;
 		this.invoiceState = invoiceState;
-		this.createTime = createTime;
 		this.printTime = printTime;
+		this.createTime = createTime;
 		this.salesId = salesId;
 	}
 
@@ -135,6 +139,24 @@ public class OtherInvoice implements java.io.Serializable {
 		this.invoiceRemark = invoiceRemark;
 	}
 
+	@Column(name = "invoiceOpenState", length = 1)
+	public String getInvoiceOpenState() {
+		return this.invoiceOpenState;
+	}
+
+	public void setInvoiceOpenState(String invoiceOpenState) {
+		this.invoiceOpenState = invoiceOpenState;
+	}
+
+	@Column(name = "openTime", length = 20)
+	public String getOpenTime() {
+		return this.openTime;
+	}
+
+	public void setOpenTime(String openTime) {
+		this.openTime = openTime;
+	}
+
 	@Column(name = "invoiceState", length = 1)
 	public String getInvoiceState() {
 		return this.invoiceState;
@@ -144,15 +166,6 @@ public class OtherInvoice implements java.io.Serializable {
 		this.invoiceState = invoiceState;
 	}
 
-	@Column(name = "createTime", length = 20)
-	public String getCreateTime() {
-		return this.createTime;
-	}
-
-	public void setCreateTime(String createTime) {
-		this.createTime = createTime;
-	}
-
 	@Column(name = "printTime", length = 20)
 	public String getPrintTime() {
 		return this.printTime;
@@ -160,6 +173,15 @@ public class OtherInvoice implements java.io.Serializable {
 
 	public void setPrintTime(String printTime) {
 		this.printTime = printTime;
+	}
+
+	@Column(name = "createTime", length = 20)
+	public String getCreateTime() {
+		return this.createTime;
+	}
+
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
 	}
 
 	@Column(name = "salesId")

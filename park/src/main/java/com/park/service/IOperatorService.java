@@ -3,6 +3,7 @@ package com.park.service;
 import java.util.List;
 import java.util.Map;
 
+import com.park.common.bean.DataInputView;
 import com.park.common.bean.OperatorInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.bean.out.ReserveInfo;
@@ -37,7 +38,7 @@ public interface IOperatorService {
 	
 	public void updatePassword(String oldPwd, String newPwd, String operatorId);
 	
-	public List<Map<String, Object>> getUserSchedulings();
+	public List<Map<String, Object>> getUserSchedulings(DataInputView dataInputView);
 	
 	public Integer saveUserScheduling(UserScheduling userScheduling);
 	

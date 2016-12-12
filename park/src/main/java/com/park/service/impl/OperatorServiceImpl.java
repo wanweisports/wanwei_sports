@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.park.common.bean.DataInputView;
 import com.park.common.bean.OperatorInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.bean.out.ReserveInfo;
@@ -23,6 +24,7 @@ import com.park.common.util.DateUtil;
 import com.park.common.util.JsonUtils;
 import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
+import com.park.service.IDataService;
 import com.park.service.IOperatorService;
 import com.park.service.IParkService;
 import com.park.service.IRoleService;
@@ -38,6 +40,9 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 	
 	@Autowired
 	private IParkService parkService;
+	
+	@Autowired
+	private IDataService dataService;
 	
 	@Override
 	public String saveOperator(UserOperator userOperator, int roleId){
@@ -201,8 +206,26 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 	}
 	
 	@Override
-	public List<Map<String, Object>> getUserSchedulings(){
-		List<Map<String, Object>> list = baseDao.queryBySql("SELECT us.*, DATE_FORMAT(us.date, '%w') as 'operatorWeek', uo1.operatorName FROM user_scheduling us, user_operator uo1 WHERE us.operatorId = uo1.operatorId ORDER BY date, startTime");
+	public List<Map<String, Object>> getUserSchedulings(DataInputView dataInputView){
+		
+		Integer countNum = dataInputView.getCountNum();
+		String createTimeStart = dataInputView.getCreateTimeStart();
+		String createTimeEnd = dataInputView.getCreateTimeEnd();
+		
+		StringBuilder sql = new StringBuilder("SELECT us.*, DATE_FORMAT(us.date, '%w') as 'operatorWeek', uo1.operatorName");
+		sql.append(" FROM user_scheduling us, user_operator uo1");
+		sql.append(" WHERE us.operatorId = uo1.operatorId");
+		if(StrUtil.isNotBlank(createTimeStart)){
+			sql.append(" AND DATE(us.createTime) >= :createTimeStart");
+		}
+		if(StrUtil.isNotBlank(createTimeEnd)){
+			sql.append(" AND DATE(us.createTime) <= :createTimeEnd");
+		}
+		sql.append(dataService.getCountSql(countNum, "us.createTime"));
+		
+		sql.append(" ORDER BY date, startTime");
+		
+		List<Map<String, Object>> list = baseDao.queryBySql(sql.toString());
 		String datePre = null;
 		List<Map<String, Object>> listGroup = new ArrayList<Map<String, Object>>();	
 		for(Map<String, Object> map : list){

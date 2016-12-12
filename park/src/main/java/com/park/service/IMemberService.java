@@ -64,6 +64,8 @@ public interface IMemberService {
 	
 	public PageBean getInvoices(InvoiceInputView invoiceInputView);
 	
+	public void updateOpenInvoices(String invoiceIds);
+	
 	public void updateGetInvoices(String invoiceIds);
 	
 	public Map<String, Object> getRegMember(int memberId);

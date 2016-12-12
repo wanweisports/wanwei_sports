@@ -135,11 +135,11 @@ public class OfficeController extends BaseController {
 
     // 排班管理
     @RequestMapping("schedule")
-    public String schedule(Model model) {
+    public String schedule(DataInputView dataInputView, Model model) {
     	try{
             OperatorInputView operatorInputView = new OperatorInputView();
             model.addAttribute("operators", operatorService.getOperatorsName(operatorInputView));
-    		model.addAttribute("schedules", operatorService.getUserSchedulings());
+    		model.addAttribute("schedules", operatorService.getUserSchedulings(dataInputView));
     	}catch(Exception e){
     		e.printStackTrace();
     	}

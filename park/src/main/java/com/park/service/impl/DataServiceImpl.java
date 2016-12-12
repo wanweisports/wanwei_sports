@@ -178,6 +178,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 			sql.append(" AND DATE(ob.createTime) <= :createTimeEnd");
 		}
 		sql.append(getCountSql(countNum, "ob.createTime"));
+		
 		sql.append(") GROUP BY mct.cardTypeId, ob.balanceStyle");
 		
 		dataInputView.setBalanceServiceTypeMin(StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_REG));
