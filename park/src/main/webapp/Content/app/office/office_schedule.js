@@ -45,7 +45,6 @@
                 location.assign(content.opts.URL + '?' + conditions);
             });
 
-
             function setScheduleInfo(data) {
                 $("#schedule_modal").find("#user_schedule_id").val(data.schedulingId || '');
                 $("#schedule_modal").find("#user_schedule_date").val(data.date || '');
@@ -53,6 +52,12 @@
                 $("#schedule_modal").find("#user_schedule_end").val(data.endTime || '');
                 $("#schedule_modal").find("#user_schedule_operator").val(data.operatorId || '');
                 $("#schedule_modal").find("#user_schedule_job").val(data.schedulingJob || '');
+
+                if (data.schedulingId) {
+                    $("#user_schedule_delete").show();
+                } else {
+                    $("#user_schedule_delete").hide();
+                }
             }
 
             // 增加
@@ -103,6 +108,19 @@
                         }, 3000);
                     } else {
                         alert(res.message || "值班信息保存失败, 请稍后重试");
+                    }
+                });
+            });
+
+            // 删除
+            $("#user_schedule_delete").on("click", function (e) {
+                e.preventDefault();
+
+                $.post('office/deleteSchedule', {schedulingId: $("#user_schedule_id").val()}, function (res) {
+                    if (res.code == 1) {
+                        location.reload();
+                    } else {
+                        alert(res.message || "值班信息删除失败, 请稍后重试");
                     }
                 });
             });

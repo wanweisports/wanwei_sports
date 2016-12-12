@@ -74,11 +74,15 @@
                                 json.push({
                                     id: data.members[i].memberMobile,
                                     label: data.members[i].memberId,
-                                    value: data.members[i].memberName
+                                    value: data.members[i].memberName + "(" + data.members[i].cardTypeName + ")"
                                 });
                             }
                             return json;
                         } else {
+                            $('#goods_user_memberId').val("0");
+                            $('#goods_user_mobile').val("");
+                            $('#goods_user_opType').val("2");
+                            $('#goods_user_name').val("散客");
                             return [];
                         }
                     } else {
@@ -89,10 +93,12 @@
                 onSelect:function(elm) {
                     var memberId = elm.data('label');
                     var mobile = elm.data('id');
+                    var memberName = elm.data('value');
 
-                    $('#goods_user_mobile').val(mobile);
                     $('#goods_user_memberId').val(memberId);
-                    $('#goods_user_opType').val("1");
+                    $('#goods_user_mobile').val(mobile);
+                    $("#goods_user_opType").val("1");
+                    $('#goods_user_name').val(memberName.replace(/\(.+\)/, ""));
                 }
             });
 

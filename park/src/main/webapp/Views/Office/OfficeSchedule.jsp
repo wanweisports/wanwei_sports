@@ -117,8 +117,11 @@
                                     </c:if>
                                     <td colspan="${schedule.compareCount}" class="${bgColor} text-center edit-schedule"
                                         data-target="#schedule_modal" data-toggle="modal" data-backdrop="false"
-                                        data-id="${schedule.schedulingId}" title="${schedule.schedulingJob}">
-                                            ${schedule.startTime} - ${schedule.endTime}
+                                        data-id="${schedule.schedulingId}">
+                                        <c:if test="${schedule.schedulingJob != ''}">
+                                            <span class="glyphicon glyphicon-info-sign" title="${schedule.schedulingJob}"></span>
+                                        </c:if>
+                                        <span>${schedule.startTime} - ${schedule.endTime}</span>
                                     </td>
                                     <c:if test="${32 - schedule.compareCount - schedule.startCount > 0}">
                                         <td colspan="${32 - schedule.compareCount - schedule.startCount}"></td>
@@ -204,8 +207,11 @@
                     </form>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="user_schedule_delete">
+                        <span class="glyphicon glyphicon-remove"></span> 删除值班
+                    </button>
                     <button type="button" class="btn btn-primary" id="user_schedule_submit">
-                        <span class="glyphicon glyphicon-ok"></span> 保 存
+                        <span class="glyphicon glyphicon-ok"></span> 保存值班
                     </button>
                 </div>
             </div>

@@ -26,6 +26,16 @@
         initEvents: function () {
             var content = this;
 
+            // 身份证号改变，回填生日和性别
+            $("#member_idcard").on("change", function (e) {
+                e.preventDefault();
+
+                var card = $(this).val();
+
+                $("#member_birthday").val(card.replace(/\d{6}(\d{4})(\d{2})(\d{2})\d{4}/, "$1-$2-$3"));
+                $("[name='memberSex'][value='" + card.replace(/\d{16}(\d{1})\d{1}/, "$1") + "']").prop("checked", true);
+            });
+
             // 注册用户提交
             $(".register-member").on("click", function (e) {
                 e.preventDefault();

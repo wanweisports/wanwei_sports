@@ -187,6 +187,114 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="invoice_confirm_modal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="confirmModalLabel">发票登记</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-success">会员卡已经办理成功，需要登记领取发票？</div>
+                    <div class="panel panel-default">
+                        <form id="member_card_ticket_form" class="form-horizontal" novalidate onsubmit="return false;">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">流水单号</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="balanceNo" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">订单状态</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="balanceStatusName" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">订单类型</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="balanceServiceTypeName" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">创建时间</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="createTime" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row is-show-ticket" style="display: none;">
+                                    <input type="hidden" name="invoiceId" value="${invoiceId}">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="ticket_header" class="col-sm-4 control-label">发票抬头</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="ticket_header"
+                                                       name="invoiceHeader" placeholder="发票抬头" autocomplete="off">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="ticket_money" class="col-sm-4 control-label">发票金额</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="ticket_money"
+                                                       name="invoiceMoney" placeholder="发票金额" autocomplete="off"
+                                                       data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                                       data-val-regex="发票金额格式错误">
+                                                <div data-valmsg-for="invoiceMoney" data-valmsg-replace="true"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="ticket_content" class="col-sm-2 control-label">发票内容</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="ticket_content"
+                                                       name="invoiceContent" placeholder="发票内容" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ticket_remark" class="col-sm-2 control-label">备注</label>
+
+                                            <div class="col-sm-10">
+                                            <textarea class="form-control" id="ticket_remark" name="invoiceRemark"
+                                                      rows="3" placeholder="备注"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <label class="text-danger pull-left">
+                        <input type="checkbox" value="1" name="is_print_ticket" id="is_print_ticket"> 开具发票吗?
+                    </label>
+                    <button type="button" class="btn btn-primary print-ticket">
+                        <span class="glyphicon glyphicon-print"></span> 打印收款单
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </layout:override>
 
 <c:import url="../Shared/Layout_New.jsp">

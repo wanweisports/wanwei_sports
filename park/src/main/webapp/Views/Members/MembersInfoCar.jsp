@@ -203,7 +203,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h5 class="modal-title" id="confirmModalLabel">订单流水单</h5>
+                    <h5 class="modal-title" id="confirmModalLabel">发票登记</h5>
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-success">会员卡已经办理成功，需要登记领取发票？</div>
