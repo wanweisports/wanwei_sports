@@ -453,7 +453,11 @@
                     if (res.code == 1) {
                         $(".tips-modal").modal({backdrop: false, show: true})
                             .find(".text-message").text("您已经成功锁定这些场地。");
-                        location.reload();
+
+                        setTimeout(function () {
+                            $(".tips-modal").modal("hide");
+                            content.loadReservations();
+                        }, 3000);
                     } else {
                         alert(res.message || "锁场失败, 请稍后重试");
                     }
@@ -491,7 +495,10 @@
                     if (res.code == 1) {
                         $(".tips-modal").modal({backdrop: false, show: true})
                             .find(".text-message").text("您已经成功解锁这些场地。");
-                        location.reload();
+                        setTimeout(function () {
+                            $(".tips-modal").modal("hide");
+                            content.loadReservations();
+                        }, 3000);
                     } else {
                         alert(res.message || "解锁失败, 请稍后重试");
                     }

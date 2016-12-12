@@ -419,7 +419,7 @@
                     <h5 class="modal-title" id="tipsModalLabel">提示框</h5>
                 </div>
                 <div class="modal-body">
-                    <p class="text-danger text-message">您已经成功锁定这些场地。</p>
+                    <div class="alert alert-danger text-message" role="alert">您已经成功锁定这些场地!</div>
                 </div>
             </div>
         </div>

@@ -2,7 +2,7 @@
     var Venue_Bookings = {
         tpl: {
             BlockBooking: function () {
-                return '<tr data-start="#BOOKING_START_DATE#" data-end="#BOOKING_END_DATE#" data-site="#BOOKING_SITE#">' +
+                return '<tr class="reservations-list-item" data-start="#BOOKING_START_DATE#" data-end="#BOOKING_END_DATE#" data-site="#BOOKING_SITE#">' +
                     '<td>#BOOKING_SPORT#</td><td>#BOOKING_START_DATE# ~ #BOOKING_END_DATE#</td>' +
                     '<td>#BOOKING_WEEK#</td><td>#BOOKING_START_TIME# ~ #BOOKING_END_TIME#</td><td>#BOOKING_AREA#</td>' +
                     '<td><a href="javascript:;" class="btn btn-danger reservations-delete"><span class="glyphicon glyphicon-trash"></span></a></td>' +
@@ -68,6 +68,7 @@
 
             this.initEvents();
             this.searchMembers();
+            this.changePaidMoney();
         },
         formatWeek: function(date) {
             var week = moment(date).format("e");
@@ -76,6 +77,8 @@
         },
         // 查询会员
         searchMembers: function () {
+            var content = this;
+
             $("#reservations_batch_mobile").autosuggest({
                 url: '/member/searchMember',
                 method: 'post',
@@ -131,6 +134,7 @@
                 var originalPrice = $("#reservations_paid_money").val();
 
                 if (res.code == 1) {
+                    $(".reservations-batch-cardMoney").text(data.cardBalance);
                     $('#reservations_paid_balance').val(data.cardBalance);
                     if (data.cardBalance >= originalPrice) {
                         $("#reservations_paid_money").val("0.00");
@@ -139,6 +143,23 @@
                     }
                 } else {
                     alert(res.message || "会员余额查询失败, 请稍后重试");
+                }
+            });
+        },
+        changePaidMoney: function () {
+            $("#reservations_paid_paySumPrice").on("change", function (e) {
+                e.preventDefault();
+
+                var balance = $("#reservations_paid_balance").val();
+                var paidPrice = $(this).val();
+
+                balance = parseFloat(balance).toFixed(2);
+                paidPrice = parseFloat(paidPrice).toFixed(2);
+
+                if (balance >= paidPrice) {
+                    $("#reservations_paid_money").val("0.00");
+                } else {
+                    $("#reservations_paid_money").val(paidPrice - balance);
                 }
             });
         },
@@ -199,7 +220,7 @@
             $(".reservations-list").on("click", ".reservations-delete", function (e) {
                 e.preventDefault();
 
-                var $list = $(this).parents("tr");
+                var $list = $(this).parents("tr.reservations-list-item");
                 var start = $list.attr("data-start");
                 var end = $list.attr("data-end");
                 var site = $list.attr("data-site");
@@ -317,7 +338,12 @@
 
                     if (res.code == 1) {
                         $("#zhifuModal").modal("hide");
-                        alert("预订支付成功");
+
+                        $("#tips_success_modal").modal({show: true, backdrop: false});
+                        setTimeout(function () {
+                            $("#tips_success_modal").modal("hide");
+                            location.reload();
+                        }, 3000);
                     } else {
                         alert(res.message || "确认订单失败, 请稍后重试");
                     }

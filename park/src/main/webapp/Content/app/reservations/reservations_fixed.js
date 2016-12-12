@@ -2,7 +2,7 @@
     var Venue_Bookings = {
         tpl: {
             BlockBooking: function () {
-                return '<tr data-date="#BOOKING_START_DATE#" data-site="#BOOKING_SITE#">' +
+                return '<tr class="reservations-list-item" data-date="#BOOKING_START_DATE#" data-site="#BOOKING_SITE#">' +
                     '<td>#BOOKING_SPORT#</td><td>#BOOKING_START_DATE#</td>' +
                     '<td>#BOOKING_START_TIME# ~ #BOOKING_END_TIME#</td><td>#BOOKING_AREA#</td>' +
                     '<td><a href="javascript:;" class="btn btn-danger reservations-delete">' +
@@ -63,6 +63,8 @@
         },
         // 查询会员
         searchMembers: function () {
+            var content = this;
+
             $("#reservations_fixed_mobile").autosuggest({
                 url: '/member/searchMember',
                 method: 'post',
@@ -118,6 +120,7 @@
                 var originalPrice = $("#reservations_paid_money").val();
 
                 if (res.code == 1) {
+                    $(".reservations-fixed-cardMoney").text(data.cardBalance);
                     $('#reservations_paid_balance').val(data.cardBalance);
                     if (data.cardBalance >= originalPrice) {
                         $("#reservations_paid_money").val("0.00");
@@ -186,7 +189,7 @@
             $(".reservations-list").on("click", ".reservations-delete", function (e) {
                 e.preventDefault();
 
-                var $list = $(this).parents("tr");
+                var $list = $(this).parents("tr.reservations-list-item");
                 var date = $list.attr("data-date");
                 var site = $list.attr("data-site");
                 var list = content.opts.data.siteReserveDateList;
@@ -289,7 +292,12 @@
 
                     if (res.code == 1) {
                         $("#zhifuModal").modal("hide");
-                        alert("预订支付成功");
+
+                        $("#tips_success_modal").modal({show: true, backdrop: false});
+                        setTimeout(function () {
+                            $("#tips_success_modal").modal("hide");
+                            location.reload();
+                        }, 3000);
                     } else {
                         alert(res.message || "确认订单失败, 请稍后重试");
                     }
