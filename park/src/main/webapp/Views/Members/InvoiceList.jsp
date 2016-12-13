@@ -6,10 +6,12 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="/Content/dist/members/members_invoice_list.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/members/members_invoice_list.js?v=${static_resource_version}"></script>
     <script>
         (function ($) {
-            $("#status").val('${status}');
+            $(".invoice-status.btn-primary").addClass("btn-default").removeClass("btn-primary");
+            $(".invoice-status[data-open='${invoiceOpenState}'][data-state='${invoiceState}']")
+                .addClass("btn-primary").removeClass("btn-default");
         })(jQuery);
     </script>
 </layout:override>
@@ -25,11 +27,14 @@
             <div class="panel-body">
                 <form class="form-inline col-sm-8" id="ticket_filter_form" onsubmit="return false;">
                     <div class="form-group">
-                        <select class="form-control" style="width:160px;" name="status" id="status">
-                            <option value="">全部状态</option>
-                            <option value="1">已领取</option>
-                            <option value="2">未领取</option>
-                        </select>
+                        <div class="btn-group">
+                            <a href="/member/getInvoices?invoiceOpenState=2&invoiceState=2" data-open="2" data-state="2"
+                               class="btn btn-default invoice-status">已登记</a>
+                            <a href="/member/getInvoices?invoiceOpenState=1&invoiceState=2" data-open="2" data-state="1"
+                               class="btn btn-default invoice-status">已开票</a>
+                            <a href="/member/getInvoices?invoiceOpenState=1&invoiceState=1" data-open="1" data-state="1"
+                               class="btn btn-default invoice-status">已领取</a>
+                        </div>
                     </div>
                     <div class="form-group">
                         <input class="form-control" type="text" name="invoiceHeader"
@@ -42,15 +47,22 @@
                     </div>
                 </form>
                 <div class="col-sm-4 text-right">
-                    <button type="button" class="btn btn-warning ticket-print">
-                        <span class="glyphicon glyphicon-tags"></span> 领取发票
-                    </button>
+                    <c:if test="${invoiceOpenState == 2 && invoiceState == 2}">
+                        <button type="button" class="btn btn-warning ticket-open">
+                            <span class="glyphicon glyphicon-thumbs-up"></span> 确认开票
+                        </button>
+                    </c:if>
+                    <c:if test="${invoiceOpenState == 1 && invoiceState == 2}">
+                        <button type="button" class="btn btn-primary ticket-print">
+                            <span class="glyphicon glyphicon-ok"></span> 确认领票
+                        </button>
+                    </c:if>
                 </div>
             </div>
         </div>
         <div class="panel panel-default">
             <div class="panel-body">
-                <div class="table-responsive">
+                <div class="table-responsive invoice-list">
                     <table class="table">
                         <thead>
                         <tr>
@@ -61,9 +73,8 @@
                             <th>发票内容</th>
                             <th>备注</th>
                             <th>状态</th>
-                            <th>领取时间</th>
-                            <th>操作人</th>
-                            <th>登记时间</th>
+                            <th>操作时间</th>
+                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -96,17 +107,38 @@
                                         <c:otherwise> -- </c:otherwise>
                                     </c:choose>
                                 </td>
-                                <c:if test="${invoice.invoiceState == 1}">
-                                    <td class="text-success">已领取</td>
-                                    <td class="text-success">${invoice.printTime }</td>
+
+                                <c:if test="${invoice.invoiceOpenState == 2 && invoice.invoiceState == 2}">
+                                    <td class="text-danger">已登记</td>
+                                    <td class="text-danger">${invoice.createTime}</td>
                                 </c:if>
-                                <c:if test="${invoice.invoiceState == 2}">
-                                    <td class="text-danger">未领取</td>
-                                    <td class="text-danger">--</td>
+                                <c:if test="${invoice.invoiceOpenState == 1 && invoice.invoiceState == 2}">
+                                    <td class="text-primary">已开具</td>
+                                    <td class="text-primary">${invoice.openTime}</td>
+                                </c:if>
+                                <c:if test="${invoice.invoiceOpenState == 1 && invoice.invoiceState == 1}">
+                                    <td class="text-success">已领取</td>
+                                    <td class="text-success">${invoice.printTime}</td>
                                 </c:if>
 
-                                <td>${invoice.operatorName}</td>
-                                <td>${invoice.createTime}</td>
+                                <td>
+                                    <c:if test="${invoice.invoiceOpenState == 2 && invoice.invoiceState == 2}">
+                                        <button type="button" class="btn btn-warning invoice-open-confirm" data-id="${invoice.invoiceId}">
+                                            <span class="glyphicon glyphicon-thumbs-up"></span> 开票
+                                        </button>
+                                    </c:if>
+                                    <c:if test="${invoice.invoiceOpenState == 1 && invoice.invoiceState == 2}">
+                                        <button type="button" class="btn btn-primary invoice-get-confirm" data-id="${invoice.invoiceId}">
+                                            <span class="glyphicon glyphicon-ok"></span> 领票
+                                        </button>
+                                    </c:if>
+                                    <c:if test="${invoice.invoiceOpenState == 1 && invoice.invoiceState == 1}">
+                                        <button type="button" class="btn btn-danger invoice-delete-confirm" data-id="${invoice.invoiceId}"
+                                            style="display: none;">
+                                            <span class="glyphicon glyphicon-trash"></span> 删除
+                                        </button>
+                                    </c:if>
+                                </td>
                             </tr>
                         </c:forEach>
 
@@ -181,17 +213,17 @@
         </div>
     </div>
 
-    <div class="modal fade" id="loanModal" tabindex="-1" role="dialog" aria-labelledby="loanModalLabel">
+    <div class="modal fade" id="tips_message_modal" tabindex="-1" role="dialog" aria-labelledby="tips_message_modal_label">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h5 class="modal-title" id="loanModalLabel">提示框</h5>
+                    <h5 class="modal-title" id="tips_message_modal_label">提示框</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-success" role="alert">发票领取成功!</div>
+                    <div class="alert alert-success text-message" role="alert">发票领取成功!</div>
                 </div>
             </div>
         </div>

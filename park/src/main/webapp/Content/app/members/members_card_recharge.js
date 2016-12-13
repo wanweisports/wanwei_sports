@@ -108,11 +108,65 @@
                         $("#rechargeModal").modal({backdrop: false, show: true});
                         setTimeout(function () {
                             $("#rechargeModal").modal("hide");
-                            location.reload();
+
+                            $("#invoice_confirm_modal").modal({backdrop: false, show: true});
+                            $.each(res.data, function(key, item){
+                                $("#member_card_ticket_form").find("input[name='" + key + "']").val(item);
+                            });
+                            $("#member_card_ticket_form").find("#ticket_header").val($("#member_name").val());
+                            $("#member_card_ticket_form").find("#ticket_money").val($("#recharge_money").val());
+                            $("#member_card_ticket_form").find("#ticket_content").val("会员卡充值");
                         }, 3000);
                     } else {
                         console.log(res.message || "会员充值失败, 请稍后重试");
                         alert(res.message || "会员充值失败, 请稍后重试");
+                    }
+                });
+            });
+
+            // 选择打印发票
+            $("#is_print_ticket").on("change", function (e) {
+                e.preventDefault();
+
+                var checked = $(this).prop("checked");
+
+                if (checked) {
+                    $(".is-show-ticket").show();
+                } else {
+                    $(".is-show-ticket").hide();
+                }
+            });
+
+            // 打印小票
+            $(".print-ticket").on("click", function (e) {
+                e.preventDefault();
+
+                if (!$("#is_print_ticket").prop("checked")) {
+                    // 打印收款单 [未完成] 连接小票机
+
+                    location.reload();
+                    $("#invoice_confirm_modal").modal("hide");
+                    return false;
+                }
+
+                var $form = $("#member_card_ticket_form");
+                var conditions = $form.serialize();
+
+                if ($form.attr("submitting") == "submitting" || !$form.valid()) {
+                    return false;
+                }
+                $form.attr("submitting", "submitting");
+
+                $.post('/member/saveInvoice', conditions, function (res) {
+                    $form.attr("submitting", "");
+
+                    if (res.code == 1) {
+                        // 打印收款单 [未完成] 连接小票机
+
+                        location.reload();
+                        $("#invoice_confirm_modal").modal("hide");
+                    } else {
+                        alert(res.message || "发票登记失败, 请稍后重试");
                     }
                 });
             });

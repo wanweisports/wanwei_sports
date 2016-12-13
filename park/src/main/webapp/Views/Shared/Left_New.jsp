@@ -99,7 +99,7 @@
                         </tr>
                         <tr class="list-nav-item member ${(param.nav == "member" && param.subNav == "invoice") ? "active" : ""}">
                             <td>
-                                <span><a href="/member/getInvoices">发票登记查询</a></span>
+                                <span><a href="/member/getInvoices?invoiceOpenState=2&invoiceState=2">发票登记查询</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item member ${(param.nav == "member" && param.subNav == "setting") ? "active" : ""}">
@@ -255,7 +255,7 @@
                         </tr>
                         <tr class="list-nav-item good ${(param.nav == "good" && param.subNav == "detail") ? "active" : ""}">
                             <td>
-                                <span><a href="/good/getGoodsStockDetails">库存明细日志</a></span>
+                                <span><a href="/good/getGoodsStockDetails?countNum=1">库存明细日志</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item good last-nav-item">
@@ -279,7 +279,12 @@
                         </tr>
                         <tr class="list-nav-item data ${(param.nav == "data" && param.subNav == "business") ? "active" : ""}">
                             <td>
-                                <span><a href="/data/getBusinessIncome">营业收支统计</a></span>
+                                <span><a href="/data/getBusinessIncomeLog?countNum=1">营业流水日志</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item data ${(param.nav == "data" && param.subNav == "business") ? "active" : ""}">
+                            <td>
+                                <span><a href="/data/getBusinessIncome?countNum=1">营业收支统计</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item data ${(param.nav == "data" && param.subNav == "percent") ? "active" : ""}">
@@ -313,7 +318,7 @@
                         </tr>
                         <tr class="list-nav-item office ${(param.nav == "office" && param.subNav == "schedule") ? "active" : ""}">
                             <td>
-                                <span><a href="/office/schedule">排班管理</a></span>
+                                <span><a href="/office/schedule?countNum=3">排班管理</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item office ${(param.nav == "office" && param.subNav == "trains") ? "active" : ""}">

@@ -60,7 +60,7 @@
             });
 
             // 检索会员
-            $("#goods_user_name").autosuggest({
+            $("#goods_user_mobile").autosuggest({
                 url: '/member/searchMember',
                 method: 'post',
                 queryParamName: 'search',

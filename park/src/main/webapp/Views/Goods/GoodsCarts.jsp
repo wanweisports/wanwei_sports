@@ -107,15 +107,6 @@
                                         <input type="hidden" id="goods_user_memberId" name="memberId">
                                         <input type="hidden" id="goods_user_opType" name="opType" value="2">
                                         <div class="form-group">
-                                            <label for="goods_user_name" class="col-sm-3 control-label">
-                                                <span class="text-danger">*</span> 姓名
-                                            </label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="goods_user_name" name="name"
-                                                       placeholder="姓名" value="散客" autocomplete="off">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
                                             <label for="goods_user_mobile" class="col-sm-3 control-label">
                                                 <span class="text-danger">*</span> 手机号码
                                             </label>
@@ -126,6 +117,15 @@
                                                        data-val-regex-pattern="^1\d{10}$"
                                                        data-val-regex="手机号码格式错误">
                                                 <div data-valmsg-for="moblie" data-valmsg-replace="true"></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="goods_user_name" class="col-sm-3 control-label">
+                                                <span class="text-danger">*</span> 姓名
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="goods_user_name" name="name"
+                                                       placeholder="姓名" value="散客" autocomplete="off">
                                             </div>
                                         </div>
                                         <div class="form-group">

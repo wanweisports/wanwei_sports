@@ -137,7 +137,7 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 		inventoryLog.setCountChange(goodInfo.getGoodCount());
 		inventoryLog.setGoodId(goodInfo.getGoodId());
 		inventoryLog.setOpType(IDBConstant.INVENTORY_OP_TYPE_IN);
-		inventoryLog.setRemark(goodInfo.getGoodRemark());
+		inventoryLog.setRemark("商品增加库存" + goodInfo.getGoodCount());
 		inventoryLog.setSalesId(goodInfo.getSalesId());
 		inventoryLog.setCreateTime(DateUtil.getNowDate());
 		baseDao.save(inventoryLog, null);
@@ -419,10 +419,12 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 		for(Map<String, Object> map : list){
 			if(map.get("count") != null){
 				sumCount += StrUtil.objToInt(map.get("count"));
+			} else {
+				map.put("count", 0);
 			}
 		}
 		Map sumMap = new HashMap();
-		sumMap.put("goodTypeName", "全部");
+		sumMap.put("goodTypeName", "全部类别");
 		sumMap.put("count", sumCount);
 		list.add(0, sumMap);
 		return list;

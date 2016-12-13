@@ -43,7 +43,7 @@
 
                             <div class="col-sm-6">
                                 <input type="text" class="form-control" id="keywords" name="search" value="${cardNo}"
-                                       placeholder="会员姓名, 手机号, 会员卡号" autocomplete="off"
+                                       placeholder="手机号, 会员卡号" autocomplete="off"
                                        data-val="true" data-val-required="请输入搜索关键字">
                                 <div data-valmsg-for="search" data-valmsg-replace="true"></div>
                             </div>
@@ -75,7 +75,14 @@
                             <label class="col-sm-4 control-label">当前余额(元)</label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" value="<c:if test='${cardBalance!=null}'>${cardBalance}元</c:if>" disabled>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" value="<c:if test='${cardBalance!=null}'>${cardBalance}元</c:if>" disabled>
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-primary" href="/member/getBalances?cardId=${cardId}&memberId=${memberId}">
+                                            <i class="glyphicon glyphicon-th-list"></i> 明细
+                                        </a>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -107,8 +114,8 @@
                                 <span class="text-danger">*</span> 充值金额(元)
                             </label>
 
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="recharge_money" name="czMoney"
+                            <div class="col-sm-8 input-parent-magnifier">
+                                <input type="text" class="form-control input-element-magnifier" id="recharge_money" name="czMoney"
                                        placeholder="请输入充值金额(元)" autocomplete="off"
                                        data-val="true" data-val-required="充值金额不能为空"
                                        data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
@@ -137,8 +144,8 @@
                         <div class="form-group">
                             <label for="recharge_send" class="col-sm-4 control-label">赠送金额(元)</label>
 
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="recharge_send" name="givingAmount"
+                            <div class="col-sm-8 input-parent-magnifier">
+                                <input type="text" class="form-control input-element-magnifier" id="recharge_send" name="givingAmount"
                                        placeholder="请输入赠送金额(元)" autocomplete="off"
                                        data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                        data-val-regex="赠送金额格式错误">
@@ -198,7 +205,7 @@
                     <h5 class="modal-title" id="confirmModalLabel">发票登记</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-success">会员卡已经办理成功，需要登记领取发票？</div>
+                    <div class="alert alert-success">会员卡已经充值成功，需要登记领取发票？</div>
                     <div class="panel panel-default">
                         <form id="member_card_ticket_form" class="form-horizontal" novalidate onsubmit="return false;">
                             <div class="panel-body">
@@ -208,14 +215,14 @@
                                             <label class="col-sm-4 control-label">流水单号</label>
 
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="balanceNo" disabled>
+                                                <input type="text" class="form-control" name="balanceNo" readonly="readonly">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-4 control-label">订单状态</label>
 
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="balanceStatusName" disabled>
+                                                <input type="text" class="form-control" name="balanceStatusName"  readonly="readonly">
                                             </div>
                                         </div>
                                     </div>
@@ -224,20 +231,21 @@
                                             <label class="col-sm-4 control-label">订单类型</label>
 
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="balanceServiceTypeName" disabled>
+                                                <input type="text" class="form-control" name="balanceServiceTypeName" readonly="readonly">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-4 control-label">创建时间</label>
 
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="createTime" disabled>
+                                                <input type="text" class="form-control" name="createTime" readonly="readonly">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row is-show-ticket" style="display: none;">
-                                    <input type="hidden" name="invoiceId" value="${invoiceId}">
+                                    <input type="hidden" name="invoiceServiceId" value="${memberId}">
+                                    <input type="hidden" name="invoiceServiceType" value="11">
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="ticket_header" class="col-sm-4 control-label">发票抬头</label>

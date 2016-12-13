@@ -75,7 +75,14 @@
                             <label class="col-sm-4 control-label">当前余额(元)</label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" value="<c:if test='${cardBalance!=null}'>${cardBalance}元</c:if>" disabled>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" value="<c:if test='${cardBalance!=null}'>${cardBalance}元</c:if>" disabled>
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-primary" href="/member/getBalances?cardId=${cardId}&memberId=${memberId}">
+                                            <i class="glyphicon glyphicon-th-list"></i> 明细
+                                        </a>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -107,8 +114,8 @@
                                 <span class="text-danger">*</span> 补办金额(元)
                             </label>
 
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="refresh_money" name="buBanMoney"
+                            <div class="col-sm-8 input-parent-magnifier">
+                                <input type="text" class="form-control input-element-magnifier" id="refresh_money" name="buBanMoney"
                                        placeholder="请输入补办价格(元)" autocomplete="off"
                                        data-val="true" data-val-required="补办价格不能为空"
                                        data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
@@ -137,8 +144,8 @@
                         <div class="form-group">
                             <label for="refresh_send" class="col-sm-4 control-label">赠送金额(元)</label>
 
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="refresh_send" name="givingAmount"
+                            <div class="col-sm-8 input-parent-magnifier">
+                                <input type="text" class="form-control input-element-magnifier" id="refresh_send" name="givingAmount"
                                        placeholder="请输入赠送金额(元)" autocomplete="off"
                                        data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                        data-val-regex="赠送金额格式错误">

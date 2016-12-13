@@ -8,6 +8,10 @@ public class InvoiceInputView extends BaseInputView {
 	
 	private String invoiceHeader;
 
+	private String invoiceOpenState;
+
+    private String invoiceState;
+
 	public String getStatus() {
 		return status;
 	}
@@ -15,6 +19,22 @@ public class InvoiceInputView extends BaseInputView {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+    public String getInvoiceOpenState() {
+        return invoiceOpenState;
+    }
+
+    public void setInvoiceOpenState(String invoiceOpenState) {
+        this.invoiceOpenState = invoiceOpenState;
+    }
+
+    public String getInvoiceState() {
+        return invoiceState;
+    }
+
+    public void setInvoiceState(String invoiceState) {
+        this.invoiceState = invoiceState;
+    }
 
 	public String getInvoiceIds() {
 		return invoiceIds;

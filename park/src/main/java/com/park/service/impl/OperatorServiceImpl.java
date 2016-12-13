@@ -212,7 +212,7 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 		String createTimeStart = dataInputView.getCreateTimeStart();
 		String createTimeEnd = dataInputView.getCreateTimeEnd();
 		
-		StringBuilder sql = new StringBuilder("SELECT us.*, DATE_FORMAT(us.date, '%w') as 'operatorWeek', uo1.operatorName");
+		StringBuilder sql = new StringBuilder("SELECT us.*, DATE_FORMAT(us.date, '%w') as 'operatorWeek', uo1.operatorName, DATE_FORMAT(NOW(), '%Y-%m-%d') as 'today'");
 		sql.append(" FROM user_scheduling us, user_operator uo1");
 		sql.append(" WHERE us.operatorId = uo1.operatorId");
 		if(StrUtil.isNotBlank(createTimeStart)){
@@ -230,6 +230,9 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 		List<Map<String, Object>> listGroup = new ArrayList<Map<String, Object>>();	
 		for(Map<String, Object> map : list){
 			String date = StrUtil.objToStr(map.get("date"));
+			String today = StrUtil.objToStr(map.get("today"));
+
+			map.put("today", today);
 
 			int week = StrUtil.objToInt(map.get("operatorWeek"));
 			String[] weeks = new String[]{"周日","周一","周二","周三","周四","周五","周六"};
@@ -247,6 +250,7 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 			if(!date.equals(datePre)){
 				Map<String, Object> mapGroup = new HashMap<String, Object>();
 				mapGroup.put("date", date);
+                mapGroup.put("today", today);
 				mapGroup.put("week", weeks[week]);
 				List timeList = new ArrayList();
 				timeList.add(((HashMap)map).clone());

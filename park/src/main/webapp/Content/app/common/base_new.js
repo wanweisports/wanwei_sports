@@ -25,6 +25,8 @@
     }
     initialize();
 
+    new $.TextMagnifier();
+
     // 导航切换
     $(".navigator-container").on("click", ".list-nav-header", function (e) {
         e.preventDefault();

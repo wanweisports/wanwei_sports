@@ -56,6 +56,12 @@ public class DataController extends BaseController {
         return "Data/DataBusinessIncome";
     }
 
+	// 营业收支日志
+	@RequestMapping("getBusinessIncomeLog")
+	public String getBusinessIncomeLog(DataInputView dataInputView, Model model) {
+		return "Data/DataBusinessIncomeLog";
+	}
+
     // 场地使用率
     @RequestMapping("getVenuePercentage")
     public String getVenuePercentage(DataInputView dataInputView, Model model) {

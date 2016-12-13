@@ -503,16 +503,20 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	
 	@Override
 	public PageBean getInvoices(InvoiceInputView invoiceInputView){
-		String status = invoiceInputView.getStatus();
 		String invoiceHeader = invoiceInputView.getInvoiceHeader();
+		String invoiceState = invoiceInputView.getInvoiceState();
+        String invoiceOpenState = invoiceInputView.getInvoiceOpenState();
 		
 		StringBuilder headSql = new StringBuilder("SELECT oi.*, uo.operatorName");
 		StringBuilder bodySql = new StringBuilder(" FROM other_invoice oi, user_operator uo");
 		StringBuilder whereSql = new StringBuilder(" WHERE oi.salesId = uo.id");
 		
-		if(StrUtil.isNotBlank(status)){
-			whereSql.append(" AND invoiceState = :status");
+		if(StrUtil.isNotBlank(invoiceState)){
+			whereSql.append(" AND invoiceState = :invoiceState");
 		}
+        if(StrUtil.isNotBlank(invoiceOpenState)){
+            whereSql.append(" AND invoiceOpenState = :invoiceOpenState");
+        }
 		if(StrUtil.isNotBlank(invoiceHeader)){
 			whereSql.append(" AND invoiceHeader = :invoiceHeader");
 		}
@@ -535,7 +539,8 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		if(ArrayUtils.isEmpty(invoiceIdArr)) throw new MessageException("请选择发票进行操作！");
 		Map params = SQLUtil.getInToSQL("invoiceIdArr", invoiceIdArr);
 		params.put("invoiceState", IDBConstant.LOGIC_STATUS_YES);
-		baseDao.updateBySql("UPDATE other_invoice o SET invoiceState=:invoiceState, printTime=NOW() WHERE o.invoiceId IN(:invoiceIdArr)", params);
+        params.put("invoiceOpenState", IDBConstant.LOGIC_STATUS_YES);
+		baseDao.updateBySql("UPDATE other_invoice o SET invoiceState=:invoiceState, invoiceOpenState=:invoiceOpenState, printTime=NOW() WHERE o.invoiceId IN(:invoiceIdArr)", params);
 	}
 	
 	@Override

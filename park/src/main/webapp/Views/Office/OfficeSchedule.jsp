@@ -21,6 +21,8 @@
             $('#user_schedule_form').validate({
                 ignore: ":hidden"
             });
+            $(".schedule-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
+            $(".schedule-date[data-date='${countNum}']").addClass("btn-primary").removeClass("btn-default");
         });
     </script>
 </layout:override>
@@ -45,9 +47,9 @@
                 <form id="data_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="/office/schedule?countNum=100" data-date="1" class="btn btn-default schedule-date">上周</a>
-                            <a href="/office/schedule?countNum=3" data-date="1" class="btn btn-primary schedule-date">本周</a>
-                            <a href="/office/schedule?countNum=200" data-date="1" class="btn btn-default schedule-date">下周</a>
+                            <a href="/office/schedule?countNum=100" data-date="100" class="btn btn-default schedule-date">上周</a>
+                            <a href="/office/schedule?countNum=3" data-date="3" class="btn btn-primary schedule-date">本周</a>
+                            <a href="/office/schedule?countNum=200" data-date="200" class="btn btn-default schedule-date">下周</a>
                         </div>
                     </div>
                     <div class="form-group">
@@ -73,9 +75,23 @@
             </div>
         </div>
         <c:forEach var="data" items="${schedules}">
-            <div class="panel panel-default">
+            <c:if test="${data.date < data.today}">
+                <div class="panel panel-default schedule-day">
+            </c:if>
+            <c:if test="${data.date == data.today}">
+                <div class="panel panel-primary schedule-day">
+            </c:if>
+            <c:if test="${data.date > data.today}">
+                <div class="panel panel-danger schedule-day">
+            </c:if>
                 <div class="panel-heading">${data.week}（${data.date}）</div>
-                <div class="panel-body">
+
+            <c:if test="${data.date < data.today}">
+                <div class="panel-body schedule-list" style="display: none;">
+            </c:if>
+            <c:if test="${data.date >= data.today}">
+                <div class="panel-body schedule-list">
+            </c:if>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>

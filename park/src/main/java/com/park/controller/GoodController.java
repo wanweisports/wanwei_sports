@@ -184,6 +184,8 @@ public class GoodController extends BaseController {
     @RequestMapping("addGoodCount")
     public ResponseBean addGoodCount(GoodInfo goodInfo){
         try {
+            UserOperator userOperator = super.getUserInfo();
+            goodInfo.setSalesId(userOperator.getId());
             goodService.addGoodCount(goodInfo);
             return new ResponseBean(true);
         } catch (MessageException e) {

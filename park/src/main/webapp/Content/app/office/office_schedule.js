@@ -124,6 +124,20 @@
                     }
                 });
             });
+
+            // 收缩伸展
+            $(".schedule-day").on("click", ".panel-heading", function (e) {
+                e.preventDefault();
+
+                var $this = $(this);
+                var $schedule = $this.parents(".schedule-day");
+
+                if ($schedule.find(".schedule-list").is(":hidden")) {
+                    $schedule.find(".schedule-list").show();
+                } else {
+                    $schedule.find(".schedule-list").hide();
+                }
+            });
         }
     };
 

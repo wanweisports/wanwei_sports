@@ -119,7 +119,7 @@
                         $("#refreshModal").modal({backdrop: false, show: true});
                         setTimeout(function () {
                             $("#refreshModal").modal("hide");
-                            location.reload();
+                            location.assign('/member/getMembersCardRefresh?cardNo=' + $("#newCardNo").val());
                         }, 3000);
                     } else {
                         console.log(res.message || "会员补办失败, 请稍后重试");
