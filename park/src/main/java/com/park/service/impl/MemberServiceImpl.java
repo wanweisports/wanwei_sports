@@ -467,30 +467,32 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		String cardId = balanceInputView.getCardId();
 		String balanceServiceType = balanceInputView.getBalanceServiceType();
 		
-		StringBuilder headSql = new StringBuilder("SELECT balanceId, balanceNo, memberName, balanceServiceType, balanceStyle, balanceServiceName, mc.cardNo, oldAmount, realAmount, givingAmount, mc.cardBalance, balanceStatus, ob.salesId, uo.operatorName, DATE_FORMAT(ob.createTime,'%Y-%m-%d') createTime");
-		StringBuilder bodySql = new StringBuilder(" FROM other_balance ob, member_card mc, user_member um, user_operator uo");
-		StringBuilder whereSql = new StringBuilder(" WHERE ob.balanceServiceId = mc.cardId AND mc.memberId = um.memberId AND ob.salesId = uo.id");
+		StringBuilder headSql = new StringBuilder("SELECT * ");
+		StringBuilder bodySql = new StringBuilder(" FROM(SELECT balanceId,balanceType,memberMobile,cardId, balanceNo, memberName, balanceServiceType, balanceStyle, balanceServiceName, mc.cardNo, oldAmount, realAmount,givingAmount,mc.cardBalance,balanceStatus,ob.salesId,uo.operatorName,DATE_FORMAT(ob.createTime, '%Y-%m-%d') createTime FROM other_balance ob, member_card mc, user_member um, user_operator uo WHERE ob.balanceServiceId = mc.cardId AND CAST(ob.balanceServiceType AS signed INTEGER) >= ${one} AND CAST(ob.balanceServiceType AS signed INTEGER) <= ${two} AND mc.memberId = um.memberId AND ob.salesId = uo.id AND mc.memberId = :memberId UNION ALL SELECT balanceId,balanceType,memberMobile,cardId, balanceNo, memberName, balanceServiceType, balanceStyle, balanceServiceName, mc.cardNo, oldAmount, realAmount, givingAmount, mc.cardBalance, balanceStatus, ob.salesId, uo.operatorName, DATE_FORMAT(ob.createTime, '%Y-%m-%d') createTime FROM other_balance ob, order_info oi, member_card mc, user_member um, user_operator uo WHERE ob.balanceServiceId = oi.orderId AND oi.memberId = um.memberId AND CAST(ob.balanceServiceType AS signed INTEGER) >= ${three} AND CAST(ob.balanceServiceType AS signed INTEGER) <= ${four} AND mc.memberId = um.memberId AND ob.salesId = uo.id AND mc.memberId = :memberId) t ");
+		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
 		if(StrUtil.isNotBlank(balanceType)){
-			whereSql.append(" AND ob.balanceType IN(:balanceTypeArr)");
+			whereSql.append(" AND balanceType IN(:balanceTypeArr)");
 		}
 		if(StrUtil.isNotBlank(createTimeStart)){
-			whereSql.append(" AND ob.createTime >= :createTimeStart");
+			whereSql.append(" AND createTime >= :createTimeStart");
 		}
 		if(StrUtil.isNotBlank(createTimeEnd)){
-			whereSql.append(" AND ob.createTime <= :createTimeEnd");
-			balanceInputView.setCreateTimeEnd(createTimeEnd + IPlatformConstant.time24);
+			whereSql.append(" AND createTime <= :createTimeEnd");
 		}
 		if(StrUtil.isNotBlank(memberMobile)){
-			whereSql.append(" AND um.memberMobile = :memberMobile");
+			whereSql.append(" AND memberMobile = :memberMobile");
 		}
 		if(StrUtil.isNotBlank(cardId)){
-			whereSql.append(" AND mc.cardId = :cardId");
+			whereSql.append(" AND cardId = :cardId");
 		}
 		if(StrUtil.isNotBlank(balanceServiceType)){
-			whereSql.append(" AND ob.balanceServiceType = :balanceServiceType");
+			whereSql.append(" AND balanceServiceType = :balanceServiceType");
 		}
-		whereSql.append(" ORDER BY ob.createTime DESC");
-		PageBean pageBean = super.getPageBean(headSql, bodySql, whereSql, balanceInputView, SQLUtil.getInToSQL("balanceTypeArr", balanceType));
+		whereSql.append(" ORDER BY createTime DESC");
+		
+		StringBuilder bodySql2 = new StringBuilder(bodySql.toString().replace("${one}", IDBConstant.BALANCE_SERVICE_TYPE_REG).replace("${two}", IDBConstant.BALANCE_SERVICE_TYPE_CARD_BUBAN_STUDENT).replace("${three}", IDBConstant.BALANCE_SERVICE_TYPE_SITE).replace("${four}", IDBConstant.BALANCE_SERVICE_TYPE_GOODS));
+		
+		PageBean pageBean = super.getPageBean(headSql, bodySql2, whereSql, balanceInputView, SQLUtil.getInToSQL("balanceTypeArr", balanceType));
 		List<Map<String, Object>> list = pageBean.getList();
 		for(Map<String, Object> map : list){ 
 			map.put("balanceServiceTypeName", dictService.getDictValueByNameKey(IDBConstant.BALANCE_SERVICE_TYPE, StrUtil.objToStr(map.get("balanceServiceType"))));
@@ -596,9 +598,9 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		if(IDBConstant.LOGIC_STATUS_YES.equals(opType) && memberId != null){ //会员打折
 			//获取会员的会员卡，（如果后期有多张会员卡，则需要在前端用户选择哪张卡，把会员卡id传到后台查询折扣）
 			List<MemberCard> memberCards = getMemberCards(memberId);
-			if(memberCards.size() > 0){ //memberCards.size()==0：没有会员卡按不打折计算   throw new MessageException("该用户没有绑定会员卡");
+			if(memberCards != null && memberCards.size() > 0){ //memberCards.size()==0：没有会员卡按不打折计算   throw new MessageException("该用户没有绑定会员卡");
 				MemberCardType memberCardType = getMemberCardType(memberCards.get(0).getCardTypeId());
-				return memberCardType.getCardTypeDiscount();
+				return memberCardType.getCardTypeDiscount() != null ? memberCardType.getCardTypeDiscount() : 100;
 			}
 		}
 		return 100;

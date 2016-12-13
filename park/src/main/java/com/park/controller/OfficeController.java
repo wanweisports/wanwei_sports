@@ -137,6 +137,7 @@ public class OfficeController extends BaseController {
     @RequestMapping("schedule")
     public String schedule(DataInputView dataInputView, Model model) {
     	try{
+    		model.addAllAttributes(JsonUtils.fromJson(dataInputView));
             OperatorInputView operatorInputView = new OperatorInputView();
             model.addAttribute("operators", operatorService.getOperatorsName(operatorInputView));
     		model.addAttribute("schedules", operatorService.getUserSchedulings(dataInputView));

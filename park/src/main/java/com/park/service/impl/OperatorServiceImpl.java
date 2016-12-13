@@ -216,16 +216,16 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 		sql.append(" FROM user_scheduling us, user_operator uo1");
 		sql.append(" WHERE us.operatorId = uo1.operatorId");
 		if(StrUtil.isNotBlank(createTimeStart)){
-			sql.append(" AND DATE(us.createTime) >= :createTimeStart");
+			sql.append(" AND DATE(us.date) >= :createTimeStart");
 		}
 		if(StrUtil.isNotBlank(createTimeEnd)){
-			sql.append(" AND DATE(us.createTime) <= :createTimeEnd");
+			sql.append(" AND DATE(us.date) <= :createTimeEnd");
 		}
-		sql.append(dataService.getCountSql(countNum, "us.createTime"));
+		sql.append(dataService.getCountSql(countNum, "us.date"));
 		
 		sql.append(" ORDER BY date, startTime");
 		
-		List<Map<String, Object>> list = baseDao.queryBySql(sql.toString());
+		List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
 		String datePre = null;
 		List<Map<String, Object>> listGroup = new ArrayList<Map<String, Object>>();	
 		for(Map<String, Object> map : list){

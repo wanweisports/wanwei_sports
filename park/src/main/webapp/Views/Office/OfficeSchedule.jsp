@@ -45,9 +45,9 @@
                 <form id="data_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="/office/schedule?date=1" data-date="1" class="btn btn-default schedule-date">上周</a>
-                            <a href="/office/schedule?date=1" data-date="1" class="btn btn-primary schedule-date">本周</a>
-                            <a href="/office/schedule?date=1" data-date="1" class="btn btn-default schedule-date">下周</a>
+                            <a href="/office/schedule?countNum=100" data-date="1" class="btn btn-default schedule-date">上周</a>
+                            <a href="/office/schedule?countNum=3" data-date="1" class="btn btn-primary schedule-date">本周</a>
+                            <a href="/office/schedule?countNum=200" data-date="1" class="btn btn-default schedule-date">下周</a>
                         </div>
                     </div>
                     <div class="form-group">

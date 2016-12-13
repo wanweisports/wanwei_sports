@@ -26,10 +26,10 @@
                 <form class="form-inline" id="goods_filter_form" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="javascript:;" class="btn btn-primary">今天</a>
-                            <a href="javascript:;" class="btn btn-default">昨天</a>
-                            <a href="javascript:;" class="btn btn-default">本周</a>
-                            <a href="javascript:;" class="btn btn-default">本月</a>
+                            <a href="/good/getGoodsStockDetails?countNum=1" class="btn btn-primary">今天</a>
+                            <a href="/good/getGoodsStockDetails?countNum=2" class="btn btn-default">昨天</a>
+                            <a href="/good/getGoodsStockDetails?countNum=3" class="btn btn-default">本周</a>
+                            <a href="/good/getGoodsStockDetails?countNum=4" class="btn btn-default">本月</a>
                         </div>
                     </div>
                     <div class="form-group">

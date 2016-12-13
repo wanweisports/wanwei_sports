@@ -382,7 +382,7 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 			whereSql.append(" AND DATE(log.createTime) <= :createTimeEnd");
 		}
 
-		dataService.getCountSql(countNum, "log.createTime");
+		whereSql.append(dataService.getCountSql(countNum, "log.createTime"));
 		
 		
 		return super.getPageBean(headSql, bodySql, whereSql, goodInputView);
@@ -407,7 +407,8 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 			sql.append(" AND DATE(log.createTime) <= :createTimeEnd");
 		}
 
-		dataService.getCountSql(countNum, "log.createTime");
+		sql.append(dataService.getCountSql(countNum, "log.createTime"));
+		
 		sql.append(") WHERE 1=1");
 		if(StrUtil.isNotBlank(goodNo)){
 			sql.append(" AND gi.goodNo = :goodNo");
@@ -416,7 +417,9 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 		List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(goodInputView));
 		int sumCount = 0;
 		for(Map<String, Object> map : list){
-			sumCount += StrUtil.objToInt(map.get("count"));
+			if(map.get("count") != null){
+				sumCount += StrUtil.objToInt(map.get("count"));
+			}
 		}
 		Map sumMap = new HashMap();
 		sumMap.put("goodTypeName", "全部");

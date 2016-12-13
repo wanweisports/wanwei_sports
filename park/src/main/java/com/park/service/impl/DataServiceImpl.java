@@ -72,6 +72,10 @@ public class DataServiceImpl extends BaseService implements IDataService {
 			return " AND DATE_FORMAT("+field+", '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')";
 		case 1: //今日
 			return " AND DATE_FORMAT("+field+", '%Y-%m-%d') = CURDATE()";
+		case 100: //上周
+			return " AND YEARWEEK("+field+") = YEARWEEK(CURDATE())-1";
+		case 200: //下周
+			return " AND YEARWEEK("+field+") = YEARWEEK(CURDATE())+1";
 		default:
 			return " ";
 		}
