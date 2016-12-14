@@ -40,7 +40,7 @@
         </div>
         <div class="panel-group" role="tablist">
             <c:forEach var="order" items="${list}" varStatus="loop">
-                <div class="panel panel-default">
+                <div class="panel panel-info">
                     <div class="panel-heading" id="order_header_${loop.index}">
                         <h5 class="panel-title" style="font-size: 14px;">
                             <a data-toggle="collapse" href="#order_body_${loop.index}" aria-expanded="true"

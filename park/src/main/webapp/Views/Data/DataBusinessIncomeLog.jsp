@@ -210,5 +210,5 @@
 
 <c:import url="../Shared/Layout_New.jsp">
     <c:param name="nav" value="data"/>
-    <c:param name="subNav" value="business"/>
+    <c:param name="subNav" value="businessLog"/>
 </c:import>

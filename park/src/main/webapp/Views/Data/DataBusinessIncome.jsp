@@ -88,7 +88,7 @@
                             </tr>
                         </c:forEach>
                         <tr class="info">
-                            <th>金额小计</th>
+                            <th>会员收入小计</th>
                             <th>${cardCounts.xianjinSumPrice}</th>
                             <th>${cardCounts.yinlianSumPrice}</th>
                             <th>${cardCounts.zhifubaoSumPrice}</th>
@@ -108,7 +108,7 @@
                             </tr>
                         </c:forEach>
                         <tr class="info">
-                            <th>金额小计</th>
+                            <th>场地收入小计</th>
                             <th>${siteCounts.xianjinSumPrice}</th>
                             <th>${siteCounts.yinlianSumPrice}</th>
                             <th>${siteCounts.zhifubaoSumPrice}</th>
@@ -128,7 +128,7 @@
                             </tr>
                         </c:forEach>
                         <tr class="info">
-                            <th>金额小计</th>
+                            <th>商品收入小计</th>
                             <th>${goodsCounts.xianjinSumPrice}</th>
                             <th>${goodsCounts.yinlianSumPrice}</th>
                             <th>${goodsCounts.zhifubaoSumPrice}</th>

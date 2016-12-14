@@ -277,7 +277,7 @@
                                 <span><a href="/data/getMembersRegister?countNum=10">会员办理统计</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item data ${(param.nav == "data" && param.subNav == "business") ? "active" : ""}">
+                        <tr class="list-nav-item data ${(param.nav == "data" && param.subNav == "businessLog") ? "active" : ""}">
                             <td>
                                 <span><a href="/data/getBusinessIncomeLog?countNum=1">营业流水日志</a></span>
                             </td>

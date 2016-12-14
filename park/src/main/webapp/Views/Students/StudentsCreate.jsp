@@ -38,7 +38,7 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <!--<div class="input-group">
+                                <div class="input-group">
                                     <input type="text" class="form-control" id="card_no" name="tempCardNo"
                                            placeholder="学生卡号" value="${cardNo}"
                                            data-val="true" data-val-required="学生卡号不能为空">
@@ -47,10 +47,10 @@
                                             <i class="glyphicon glyphicon-transfer"></i> 读取
                                         </button>
                                     </span>
-                                </div>-->
-                                <input type="text" class="form-control" id="card_no" name="cardNo"
+                                </div>
+                                <!--<input type="text" class="form-control" id="card_no" name="cardNo"
                                        placeholder="学生卡号" value="${cardNo}" autocomplete="off"
-                                       data-val="true" data-val-required="学生卡号不能为空">
+                                       data-val="true" data-val-required="学生卡号不能为空">-->
                                 <div data-valmsg-for="cardNo" data-valmsg-replace="true"></div>
                             </div>
                         </div>

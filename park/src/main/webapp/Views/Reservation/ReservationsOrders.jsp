@@ -44,7 +44,7 @@
         </div>
         <div class="panel-group" role="tablist">
             <c:forEach var="order" items="${list}" varStatus="loop">
-            <div class="panel panel-default">
+            <div class="panel panel-info">
                 <div class="panel-heading" id="order_header_${loop.index}">
                     <h5 class="panel-title" style="font-size: 14px;">
                         <a data-toggle="collapse" href="#order_body_${loop.index}" aria-expanded="true"
@@ -99,7 +99,7 @@
                                     <td>已完成</td>
                                 </c:if>
                                 <c:if test="${item.orderDetailStatus == 2}">
-                                    <td class="text-danger">未完成</td>
+                                    <td class="text-danger">未开场</td>
                                 </c:if>
                                 <c:if test="${item.orderDetailStatus == 3}">
                                     <td class="text-success">进行中</td>
