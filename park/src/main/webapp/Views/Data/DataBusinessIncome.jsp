@@ -13,8 +13,10 @@
     <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
     <script src="/Content/app/data/data_business_income.js?v=${static_resource_version}"></script>
     <script>
-        $(".member-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
-        $(".member-date[data-count='${countNum}']").addClass("btn-primary").removeClass("btn-default");
+        $(document).ready(function () {
+            $(".member-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
+            $(".member-date[data-count='${countNum}']").addClass("btn-primary").removeClass("btn-default");
+        });
     </script>
 </layout:override>
 
