@@ -112,27 +112,32 @@
                         合计金额: <strong class="text-danger">${order.orderSumPrice}</strong> 元
                         <div class="pull-right">
                             <c:if test="${order.orderStatus == 1}">
-                                <button class="btn btn-warning btn-sm order-delete" data-id="${order.orderId}">
+                                <button class="btn btn-warning btn-sm order-delete" data-id="${order.orderId}"
+                                        data-member="${order.memberId}">
                                     <span class="glyphicon glyphicon-trash"></span> 删除
                                 </button>
                             </c:if>
                             <c:if test="${order.orderStatus == 2}">
                                 <c:if test="${order.payStatus == 1}">
-                                    <button class="btn btn-danger btn-sm order-cancel" data-id="${order.orderId}" style="display: none;">
+                                    <button class="btn btn-danger btn-sm order-cancel" data-id="${order.orderId}"
+                                            data-member="${order.memberId}" style="display: none;">
                                         <span class="glyphicon glyphicon-remove"></span> 取消
                                     </button>
                                 </c:if>
                                 <c:if test="${order.payStatus == 2}">
-                                    <button class="btn btn-primary btn-sm order-pay" data-id="${order.orderId}">
+                                    <button class="btn btn-primary btn-sm order-pay" data-id="${order.orderId}"
+                                            data-member="${order.memberId}">
                                         <span class="glyphicon glyphicon-usd"></span> 支付
                                     </button>
-                                    <button class="btn btn-danger btn-sm order-cancel" data-id="${order.orderId}">
+                                    <button class="btn btn-danger btn-sm order-cancel" data-id="${order.orderId}"
+                                            data-member="${order.memberId}">
                                         <span class="glyphicon glyphicon-remove"></span> 取消
                                     </button>
                                 </c:if>
                             </c:if>
                             <c:if test="${order.orderStatus == 3}">
-                                <button class="btn btn-warning order-delete" data-id="${order.orderId}">
+                                <button class="btn btn-warning order-delete" data-id="${order.orderId}"
+                                        data-member="${order.memberId}">
                                     <span class="glyphicon glyphicon-trash"></span> 删除
                                 </button>
                             </c:if>
