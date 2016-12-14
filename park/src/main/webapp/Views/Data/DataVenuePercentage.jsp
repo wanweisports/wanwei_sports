@@ -11,6 +11,12 @@
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
+    <script>
+        $(document).ready(function () {
+            $(".venue-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
+            $(".venue-date[data-count='${countNum}']").addClass("btn-primary").removeClass("btn-default");
+        });
+    </script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
@@ -25,11 +31,17 @@
                 <form class="form-inline" id="data_filter_form" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="javascript:;" class="btn btn-primary">今天</a>
-                            <a href="javascript:;" class="btn btn-default">昨天</a>
-                            <a href="javascript:;" class="btn btn-default">本周</a>
-                            <a href="javascript:;" class="btn btn-default">本月</a>
+                            <a href="/data/getVenuePercentage?countNum=10" data-count="10" class="btn btn-primary member-date">全部</a>
+                            <a href="/data/getVenuePercentage?countNum=1" data-count="1" class="btn btn-default member-date">今日</a>
+                            <a href="/data/getVenuePercentage?countNum=3" data-count="3" class="btn btn-default member-date">本周</a>
+                            <a href="/data/getVenuePercentage?countNum=4" data-count="4" class="btn btn-default member-date">本月</a>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" name="sportName">
+                            <option>场地类型</option>
+                            <option>羽毛球</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="createTimeStart" name="createTimeStart" placeholder="开始日期"
@@ -50,6 +62,10 @@
 
         <div class="alert alert-info clearfix">
             <ul class="nav nav-pills pull-left">
+                <li style="margin-right: 15px;">场地预订率总计:</li>
+                <c:forEach var="item" items="${sportCountList}">
+                    <li style="margin-right: 15px;">${item.sportName} <span class="badge">${item.percentage * 100}%</span></li>
+                </c:forEach>
                 <li style="margin-right: 15px;">场地使用率总计:</li>
                 <c:forEach var="item" items="${sportCountList}">
                     <li style="margin-right: 15px;">${item.sportName} <span class="badge">${item.percentage * 100}%</span></li>
