@@ -47,6 +47,8 @@ public interface ISiteService {
 	
 	public Map<String, Object> calculateSiteMoney(SiteInputView siteInputView) throws ParseException;
 	
+	public Map<String, Object> getPrice(List<SiteReserveDate> siteReserveDateList, Integer memberId, String opType) throws ParseException;
+	
 	public Integer updateConfirmOrder(OrderInfo orderInfo) throws ParseException;
 	
 	public SiteReserveBasic getSiteReserveBasicByOrderId(int orderId);

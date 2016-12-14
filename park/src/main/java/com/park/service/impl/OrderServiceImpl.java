@@ -1,6 +1,8 @@
 package com.park.service.impl;
 
+import java.text.ParseException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -155,6 +157,8 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 		String orderServiceTypes = orderInputView.getOrderServiceTypes();
 		String payStatus = orderInputView.getPayStatus();
 		String orderNo = orderInputView.getOrderNo();
+		String name = orderInputView.getName();
+		String mobile = orderInputView.getMobile();
 		
 		StringBuilder headSql = new StringBuilder("SELECT *");
 		StringBuilder bodySql = new StringBuilder(" FROM order_info");
@@ -167,6 +171,13 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 		}
 		if(StrUtil.isNotBlank(orderNo)){
 			whereSql.append(" AND orderNo = :orderNo");
+		}
+		if(StrUtil.isNotBlank(name)){
+			whereSql.append(" AND name LIKE :name");
+			orderInputView.setName(name + "%");
+		}
+		if(StrUtil.isNotBlank(mobile)){
+			whereSql.append(" AND mobile = :mobile");
 		}
 		if(StrUtil.isNotBlank(orderServiceTypes)){
 			whereSql.append(" AND orderServiceType IN (:orderServiceTypes)");
@@ -262,10 +273,31 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
         StringBuilder sql = new StringBuilder("SELECT oi.orderId, oi.memberId, oi.orderNo, od.itemStartTime, od.itemEndTime");
         sql.append(" FROM order_info oi INNER JOIN order_detail od ON oi.orderId = od.orderId");
         sql.append(" WHERE oi.memberId > 0");
-        sql.append(" AND oi.orderServiceType != ? AND memberId = ?");
+        sql.append(" AND oi.orderServiceType IN(?, ?) AND memberId = ?");
         sql.append(" AND od.itemStartTime >= DATE_FORMAT(CURDATE(), '%Y-%m-%d 00:00')");
         sql.append(" AND od.itemEndTime <= DATE_FORMAT(CURDATE(), '%Y-%m-%d 23:59')");
 
-        return baseDao.queryBySql(sql.toString(), IDBConstant.ORDER_SERVICE_TYPE_GOODS, memberId);
+        return baseDao.queryBySql(sql.toString(), IDBConstant.ORDER_SERVICE_TYPE_SITE, IDBConstant.ORDER_SERVICE_TYPE_BLOCK_SITE, memberId);
 	}
+	
+	//为了能够在订单列表中加入支付功能，需要一个订单查询接口，查询此订单的编号，预订场次数，预估支付金额，预订人信息等等
+	@Override
+	public Map<String, Object> getOrderToPay(int orderId) throws ParseException{
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		OrderInfo orderInfo = getOrderInfo(orderId);
+		if(orderInfo == null) throw new MessageException("该订单号不存在");
+		String orderServiceType = orderInfo.getOrderServiceType();
+		if(IDBConstant.ORDER_SERVICE_TYPE_GOODS.equals(orderServiceType)){
+			resultMap.put("originalPrice", orderInfo.getOrderSumPrice());
+		}else if(IDBConstant.ORDER_SERVICE_TYPE_SITE.equals(orderServiceType) || IDBConstant.ORDER_SERVICE_TYPE_BLOCK_SITE.equals(orderServiceType)){
+			resultMap.putAll(siteService.getPrice(siteService.getSiteReserveBasicAllByOrderId(orderId).getSiteReserveDateList(), null, null));
+			resultMap.put("sumNums", orderInfo.getSumCount());
+		}
+		resultMap.put("orderId", orderId);
+		resultMap.put("orderNo", orderInfo.getOrderNo());
+		resultMap.put("name", orderInfo.getName());
+		resultMap.put("mobile", orderInfo.getMobile());
+		return resultMap;
+	}
+	
 }

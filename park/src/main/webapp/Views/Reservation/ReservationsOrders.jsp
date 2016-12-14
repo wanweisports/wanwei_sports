@@ -81,6 +81,8 @@
                             <thead>
                             <tr>
                                 <th>预订项</th>
+                                <th>预订人</th>
+                                <th>预订人手机</th>
                                 <th>开始时间</th>
                                 <th>结束时间</th>
                                 <th>预订状态</th>
@@ -89,6 +91,8 @@
                             <c:forEach var="item" items="${order.orderDetailList}">
                             <tr>
                                 <td>${item.itemName}</td>
+                                <td>${order.name}</td>
+                                <td>${order.mobile}</td>
                                 <td>${item.itemStartTime}</td>
                                 <td>${item.itemEndTime}</td>
                                 <c:if test="${item.orderDetailStatus == 1}">

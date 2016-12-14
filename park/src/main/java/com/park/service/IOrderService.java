@@ -1,5 +1,6 @@
 package com.park.service;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -25,5 +26,7 @@ public interface IOrderService {
 	public void updateOrderStatus(OrderInputView orderInputView);
 
 	public List<Map<String, Object>> getMealsOrderToday(int memberId) throws Exception;
+	
+	public Map<String, Object> getOrderToPay(int orderId) throws ParseException;
 	
 }

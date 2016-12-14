@@ -1,0 +1,17 @@
+请求：/order/getOrderToPay?orderId=22
+
+
+返回：
+{
+    "code": "1",
+    "message": "操作成功",
+    "data": {
+        "orderNo": "20161213104731",
+        "originalPrice": 80,
+        "sumNums": 2,
+        "name": "王三",
+        "sumCount": 2,
+        "orderId": 22,
+        "mobile": "15110275787"
+    }
+}
