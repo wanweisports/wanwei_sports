@@ -305,10 +305,7 @@ public class MemberController extends BaseController {
         try {
             UserOperator userOperator = super.getUserInfo();
             memberCardOpInputView.setSalesId(userOperator.getId());
-            Integer cardId = memberService.updateMemberCardCZ(memberCardOpInputView);
-            Map<String, Object> data = new HashMap<String, Object>();
-            data.put("cardId", cardId);
-            return new ResponseBean(data);
+            return new ResponseBean(memberService.updateMemberCardCZ(memberCardOpInputView));
         } catch (MessageException e) {
             e.printStackTrace();
             return new ResponseBean(e.getMessage());

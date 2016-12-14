@@ -63,21 +63,22 @@ moblie:18612615213
 例如：会员充值  现金  1000元  操作人 操作时间
 筛选条件：营业类型，支付类型
 
-2，场地使用率
+2，场地使用率 //【未复现，之后在看】
 -- 如果没数据，全部使用率是NaN%，错误显示
 
 ****************************** 预订管理 **************************
 
 1，场地预订
 -- 解锁接口
-java.lang.NullPointerException
+java.lang.NullPointerException //【加上reserveTimeId字段】
 at com.park.service.impl.SiteServiceImpl.updateLockSite(SiteServiceImpl.java:403)
 at com.park.service.impl.SiteServiceImpl$$FastClassBySpringCGLIB$$59c9ccb0.invoke(<generated>)
 at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
 at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:708)
 
-2，订单接口
+2，订单接口 //【已加上】
 -- 返回数据中加上预订人信息，例如会员信息和散客信息
 -- 筛选条件：加上预订人筛选
 
+//【已加上】
 为了能够在订单列表中加入支付功能，需要一个订单查询接口，查询此订单的编号，预订场次数，预估支付金额，预订人信息等等

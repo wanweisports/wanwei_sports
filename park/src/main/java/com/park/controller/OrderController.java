@@ -1,5 +1,8 @@
 package com.park.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,17 +11,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.park.common.bean.OrderInputView;
 import com.park.common.bean.PageBean;
-
 import com.park.common.bean.ResponseBean;
 import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.UserOperator;
 import com.park.common.util.JsonUtils;
 import com.park.service.IOrderService;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("order")
@@ -115,4 +113,19 @@ public class OrderController extends BaseController {
             return new ResponseBean(false);
         }
     }
+    
+    @ResponseBody
+    @RequestMapping("getOrderToPay")
+    public ResponseBean getOrderToPay(int orderId){
+        try {
+            return new ResponseBean(orderService.getOrderToPay(orderId));
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    } 
+    
 }

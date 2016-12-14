@@ -77,6 +77,8 @@
                                 <thead>
                                 <tr>
                                     <th>商品名称</th>
+                                    <th>预订人</th>
+                                	<th>预订人手机</th>
                                     <th>商品价格</th>
                                     <th>购买数量</th>
                                     <th>预订状态</th>
@@ -85,6 +87,8 @@
                                 <c:forEach var="item" items="${order.orderDetailList}">
                                     <tr>
                                         <td>${item.itemName}</td>
+                                        <td>${order.name}</td>
+                                		<td>${order.mobile}</td>
                                         <td>${item.itemPrice}元</td>
                                         <td>${item.itemAmount}件</td>
                                         <c:if test="${item.orderDetailStatus == 1}">

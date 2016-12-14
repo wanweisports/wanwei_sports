@@ -71,7 +71,7 @@
                                 <td class="text-success">${balance.givingAmount}</td>
                                 <td class="text-danger">${balance.cardBalance}</td>
                                 <td>${balance.operatorName}</td>
-                                <td>${balance.createTime}</td>
+                                <td>${balance.opCreateTime}</td>
                             </tr>
                         </c:forEach>
                         </tbody>

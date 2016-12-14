@@ -293,6 +293,8 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 			siteReserveBasic.setName(member.getMemberName());
 		}else if(IDBConstant.LOGIC_STATUS_NO.equals(siteReserveBasic.getOpType())){
 			orderInfo.setMemberId(0); //散客
+			orderInfo.setName(siteReserveBasic.getName());
+			orderInfo.setMobile(siteReserveBasic.getMobile());
 		}else throw new MessageException("opType参数不正确");
 		
 		orderInfo.setOrderServiceType(IDBConstant.LOGIC_STATUS_YES.equals(siteReserveBasic.getReserveModel()) ? IDBConstant.ORDER_SERVICE_TYPE_SITE : IDBConstant.ORDER_SERVICE_TYPE_BLOCK_SITE);
@@ -438,7 +440,8 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		return resultMap;
 	}
 	
-	private Map<String, Object> getPrice(List<SiteReserveDate> siteReserveDateList, Integer memberId, String opType) throws ParseException {
+	@Override
+	public Map<String, Object> getPrice(List<SiteReserveDate> siteReserveDateList, Integer memberId, String opType) throws ParseException {
 		//double memberDiscount = memberService.getMemberDiscount(memberId, opType); //会员折扣
 		
 		Double originalPriceSum = 0.0; //原价

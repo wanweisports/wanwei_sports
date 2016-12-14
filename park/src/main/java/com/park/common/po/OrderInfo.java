@@ -31,14 +31,16 @@ public class OrderInfo implements java.io.Serializable {
 	private Double additionalPrice;
 	private String checkNo;
 	private String orderRemark;
-	private Integer sumCount;
-	private Integer payCount;
-	private Integer useCount;
 	private Integer orderSumCount;
 	private Integer orderDiscount;
 	private String createTime;
 	private String updateTime;
 	private Integer salesId;
+	private Integer sumCount;
+	private Integer payCount;
+	private Integer useCount;
+	private String name;
+	private String mobile;
 
 	// Constructors
 
@@ -51,10 +53,10 @@ public class OrderInfo implements java.io.Serializable {
 			String orderServiceType, String orderStatus, String payStatus,
 			String payType, String payTime, Double orderSumPrice,
 			Double paySumPrice, Double subAmount, Double additionalPrice,
-			String checkNo, String orderRemark, Integer sumCount,
-			Integer payCount, Integer useCount, Integer orderSumCount,
+			String checkNo, String orderRemark, Integer orderSumCount,
 			Integer orderDiscount, String createTime, String updateTime,
-			Integer salesId) {
+			Integer salesId, Integer sumCount, Integer payCount,
+			Integer useCount, String name, String mobile) {
 		this.orderNo = orderNo;
 		this.operatorId = operatorId;
 		this.memberId = memberId;
@@ -69,14 +71,16 @@ public class OrderInfo implements java.io.Serializable {
 		this.additionalPrice = additionalPrice;
 		this.checkNo = checkNo;
 		this.orderRemark = orderRemark;
-		this.sumCount = sumCount;
-		this.payCount = payCount;
-		this.useCount = useCount;
 		this.orderSumCount = orderSumCount;
 		this.orderDiscount = orderDiscount;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
 		this.salesId = salesId;
+		this.sumCount = sumCount;
+		this.payCount = payCount;
+		this.useCount = useCount;
+		this.name = name;
+		this.mobile = mobile;
 	}
 
 	// Property accessors
@@ -217,33 +221,6 @@ public class OrderInfo implements java.io.Serializable {
 		this.orderRemark = orderRemark;
 	}
 
-	@Column(name = "sumCount")
-	public Integer getSumCount() {
-		return this.sumCount;
-	}
-
-	public void setSumCount(Integer sumCount) {
-		this.sumCount = sumCount;
-	}
-
-	@Column(name = "payCount")
-	public Integer getPayCount() {
-		return this.payCount;
-	}
-
-	public void setPayCount(Integer payCount) {
-		this.payCount = payCount;
-	}
-
-	@Column(name = "useCount")
-	public Integer getUseCount() {
-		return this.useCount;
-	}
-
-	public void setUseCount(Integer useCount) {
-		this.useCount = useCount;
-	}
-
 	@Column(name = "orderSumCount")
 	public Integer getOrderSumCount() {
 		return this.orderSumCount;
@@ -287,6 +264,51 @@ public class OrderInfo implements java.io.Serializable {
 
 	public void setSalesId(Integer salesId) {
 		this.salesId = salesId;
+	}
+
+	@Column(name = "sumCount")
+	public Integer getSumCount() {
+		return this.sumCount;
+	}
+
+	public void setSumCount(Integer sumCount) {
+		this.sumCount = sumCount;
+	}
+
+	@Column(name = "payCount")
+	public Integer getPayCount() {
+		return this.payCount;
+	}
+
+	public void setPayCount(Integer payCount) {
+		this.payCount = payCount;
+	}
+
+	@Column(name = "useCount")
+	public Integer getUseCount() {
+		return this.useCount;
+	}
+
+	public void setUseCount(Integer useCount) {
+		this.useCount = useCount;
+	}
+
+	@Column(name = "name", length = 32)
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Column(name = "mobile", length = 20)
+	public String getMobile() {
+		return this.mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 
 }

@@ -56,7 +56,7 @@ public interface IMemberService {
 
 	public Integer updateMemberCardUpLevel(MemberCardOpInputView memberCardOpInputView);
 	
-	public Integer updateMemberCardCZ(MemberCardOpInputView memberCardOpInputView);
+	public Map<String, Object> updateMemberCardCZ(MemberCardOpInputView memberCardOpInputView);
 	
 	public Integer updateMemberCardBuBan(MemberCardOpInputView memberCardOpInputView);
 	

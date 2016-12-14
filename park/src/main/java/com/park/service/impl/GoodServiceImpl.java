@@ -311,6 +311,8 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 			orderInfo.setMemberId(member.getMemberId());
 		}else{
 			orderInfo.setMemberId(0); //散客
+			orderInfo.setName(goodInputView.getName());
+			orderInfo.setMobile(goodInputView.getMobile());
 		}
 		Map<String, Object> priceMap = calculateShoppingMoney(goodInputView); //计算价格
 		orderInfo.setOrderSumPrice(StrUtil.objToDouble(priceMap.get("originalPrice")));
@@ -320,16 +322,23 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 		
 		for(GoodShopping goodShopping : shoppingList){
 			GoodInfo goodInfo = getGoodInfo(goodShopping.getGoodId());
+			//查看库存是否够
+			Integer shoppingGoodAmount = goodShopping.getShoppingGoodAmount();
+			Integer goodCount = goodInfo.getGoodCount();
+			if(shoppingGoodAmount > goodCount) throw new MessageException(goodInfo.getGoodName()+"库存不够，目前库存"+goodCount+"，购买数量"+shoppingGoodAmount);
 			OrderDetail orderDetail = new OrderDetail();
 			orderDetail.setItemId(goodInfo.getGoodId());
-			orderDetail.setItemPrice(goodInfo.getGoodPrice()*goodShopping.getShoppingGoodAmount());
+			orderDetail.setItemPrice(goodInfo.getGoodPrice()*shoppingGoodAmount);
 			orderDetail.setItemMoneyType(goodInfo.getGoodMoneyType());
 			orderDetail.setItemName(goodInfo.getGoodName());
-			orderDetail.setItemAmount(goodShopping.getShoppingGoodAmount());
+			orderDetail.setItemAmount(shoppingGoodAmount);
 			orderDetail.setOrderDetailStatus(IDBConstant.LOGIC_STATUS_NO);
 			orderDetails.add(orderDetail);
 			//购买后，删除购物车的商品
 			baseDao.delete(goodShopping);
+			//购买后，库存减少
+			goodInfo.setGoodCount(goodCount - shoppingGoodAmount);
+			baseDao.save(goodInfo, goodInfo.getGoodId());
 		}
 		
 		Integer orderId = orderService.saveOrderInfo(orderInfo, orderDetails);

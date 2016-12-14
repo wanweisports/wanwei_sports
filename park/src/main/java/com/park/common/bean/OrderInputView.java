@@ -7,6 +7,8 @@ public class OrderInputView extends BaseInputView {
 	private String orderServiceTypes;
 	private String payStatus;
 	private String orderNo;
+	private String name;
+	private String mobile;
 	
 	public Integer getOrderId() {
 		return orderId;
@@ -46,6 +48,22 @@ public class OrderInputView extends BaseInputView {
 
 	public void setOrderNo(String orderNo) {
 		this.orderNo = orderNo;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 	
 }
