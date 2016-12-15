@@ -39,6 +39,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 			sql.append(" AND DATE(mc.createTime) <= :createTimeEnd");
 		}
 		sql.append(getCountSql(countNum, "mc.createTime"));
+		
 		sql.append(") GROUP BY mct.cardTypeId");
 		return baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
 	}
@@ -86,11 +87,35 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		
 		int page = dataInputView.getPage();
 		int pageSize = dataInputView.getPageSize();
+		String sportId = dataInputView.getSportId();
+		Integer countNum = dataInputView.getCountNum();
+		String createTimeStart = dataInputView.getCreateTimeStart();
+		String createTimeEnd = dataInputView.getCreateTimeEnd();
 		
-		StringBuilder sql = new StringBuilder("SELECT ss.sportName, si.siteName, SUM(LEFT(TIMEDIFF(siteEndTime, siteStartTime),2)) sumCount");
-		sql.append(",SUM(CASE srt.isUse WHEN 2 THEN LEFT(TIMEDIFF(siteEndTime, siteStartTime),2) ELSE 0 END) useCount");
-		sql.append(" FROM site_info si, site_sport ss, site_reserve_time srt");
-		sql.append(" WHERE si.siteType = ss.sportId AND srt.siteId = si.siteId");
+		/**
+		 *    — 计算数据：场地预订率 = 预订场次数 / 总场次数
+			  — 计算数据：场地使用率 = 签到场次数 / 预订场次数
+			  — 检索条件：全部，今天，本周，本年，自定义的起止日期，场地类型
+		 */
+		StringBuilder sql = new StringBuilder("SELECT ss.sportName, si.siteName, SUM(oi.sumCount) siteSumCount, SUM(oi.useCount) siteUseCount, SUM(oi.useCount)/SUM(oi.sumCount) siteUsePercentage");
+		sql.append(" FROM site_info si");
+		sql.append(" INNER JOIN site_sport ss ON(si.siteType = ss.sportId)");
+		sql.append(" LEFT JOIN site_reserve_time srt ON(srt.siteId = si.siteId)");
+		sql.append(" LEFT JOIN member_site_sign mss ON(mss.reserveTimeId = srt.reserveTimeId");
+		
+		if(StrUtil.isNotBlank(createTimeStart)){
+			sql.append(" AND DATE(mss.createTime) >= :createTimeStart");
+		}
+		if(StrUtil.isNotBlank(createTimeEnd)){
+			sql.append(" AND DATE(mss.createTime) <= :createTimeEnd");
+		}
+		sql.append(getCountSql(countNum, "mss.createTime"));
+		
+		sql.append(") LEFT JOIN order_info oi ON(mss.orderId = oi.orderId)");
+		sql.append(" WHERE 1=1");
+		if(StrUtil.isNotBlank(sportId)){
+			sql.append(" AND ss.sportId = :sportId");
+		}
 		
 		String siteGroup = " GROUP BY si.siteId";
 		sql.append(siteGroup);
@@ -99,12 +124,17 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		String sportGroup = " GROUP BY ss.sportId";
 		List<Map<String, Object>> sportCountList = baseDao.queryBySql(sql.toString().replace(siteGroup, sportGroup), JsonUtils.fromJson(dataInputView));
 		
+		Double sumCountAll = 0.0;
 		for(Map<String, Object> map : siteCountList){
-			Double sumCount = StrUtil.objToDoubleDef0(map.get("sumCount"));
-			Double useCount = StrUtil.objToDoubleDef0(map.get("useCount"));
-			map.put("percentage", StrUtil.roundKeepTwo(useCount/sumCount));
-			map.put("sumCount", StrUtil.objToInt(map.get("sumCount")));
-			map.put("useCount", StrUtil.objToInt(map.get("useCount")));
+			sumCountAll += StrUtil.objToDoubleDef0(map.get("siteSumCount"));
+		}
+		for(Map<String, Object> map : siteCountList){
+			Double siteSumCount = StrUtil.objToDoubleDef0(map.get("siteSumCount"));
+			Double siteUseCount = StrUtil.objToDoubleDef0(map.get("siteUseCount"));
+			map.put("siteSumCount", siteSumCount.intValue());
+			map.put("siteUseCount", siteUseCount.intValue());
+			map.put("siteSumPercentage", sumCountAll > 0 ? StrUtil.roundKeepTwo(siteSumCount / sumCountAll) : 0); //场地预订率
+			map.put("siteUsePercentage", StrUtil.roundKeepTwo(StrUtil.objToDoubleDef0(map.get("siteUsePercentage")))); //场地使用率
 		}
 		PageBean pageBean = new PageBean(siteCountList, page, pageSize, siteCountList.size());
 		pageBean.pagedList().init();
@@ -112,15 +142,14 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		double sumSportUsePercentage = 0;
 		int sportCount = 0;
 		for(Map<String, Object> map : sportCountList){
-			Double sumCount = StrUtil.objToDoubleDef0(map.get("sumCount"));
-			Double useCount = StrUtil.objToDoubleDef0(map.get("useCount"));
-			double percentage = StrUtil.roundKeepTwo(useCount/sumCount);
-			sumSportUsePercentage += percentage;
+			double siteUsePercentage = StrUtil.roundKeepTwo(StrUtil.objToDoubleDef0(map.get("siteUsePercentage")));
+			map.put("siteUsePercentage", StrUtil.roundKeepTwo(siteUsePercentage));
+			sumSportUsePercentage += siteUsePercentage;
 			sportCount++;
 		}
 		Map<String, Object> allSportCountMap = new HashMap<String, Object>();
 		allSportCountMap.put("sportName", "全部");
-		allSportCountMap.put("percentage", sumSportUsePercentage/sportCount);
+		allSportCountMap.put("siteUsePercentage", StrUtil.roundKeepTwo(sumSportUsePercentage/sportCount));
 		sportCountList.add(0, allSportCountMap);
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -159,6 +188,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 			dataInputView.setMemberName(memberName + "%");
 		}
 		whereSql.append(getCountSql(countNum, "mss.createTime"));
+		whereSql.append(" ORDER BY mss.createTime DESC");
 		
 		return super.getPageBean(headSql, bodySql, whereSql, dataInputView);
 	}

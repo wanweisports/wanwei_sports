@@ -62,13 +62,9 @@
 
         <div class="alert alert-info clearfix">
             <ul class="nav nav-pills pull-left">
-                <li style="margin-right: 15px;">场地预订率总计:</li>
-                <c:forEach var="item" items="${sportCountList}">
-                    <li style="margin-right: 15px;">${item.sportName} <span class="badge">${item.percentage * 100}%</span></li>
-                </c:forEach>
                 <li style="margin-right: 15px;">场地使用率总计:</li>
                 <c:forEach var="item" items="${sportCountList}">
-                    <li style="margin-right: 15px;">${item.sportName} <span class="badge">${item.percentage * 100}%</span></li>
+                    <li style="margin-right: 15px;">${item.sportName} <span class="badge">${item.siteUsePercentage * 100}%</span></li>
                 </c:forEach>
                 <!--<li style="margin-right: 15px;">全部类型 <span class="badge">30%</span></li>
                 <li style="margin-right: 15px;">羽毛球 <span class="badge">20%</span></li>
@@ -93,6 +89,7 @@
                             <th>场地编号</th>
                             <th>总场次数</th>
                             <th>使用场次数</th>
+                            <th>预定率</th>
                             <th>使用率</th>
                         </tr>
                         </thead>
@@ -101,9 +98,10 @@
                             <tr>
                                 <td>${data.sportName}</td>
                                 <td>${data.siteName}</td>
-                                <td>${data.useCount}次</td>
-                                <td>${data.sumCount}次</td>
-                                <td>${data.percentage * 100}%</td>
+                                <td>${data.siteSumCount}次</td>
+                                <td>${data.siteUseCount}次</td>
+                                <td>${data.siteSumPercentage * 100}%</td>
+                                <td>${data.siteUsePercentage * 100}%</td>
                             </tr>
                         </c:forEach>
                         <!--<tr>
