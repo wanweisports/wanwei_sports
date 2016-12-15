@@ -114,7 +114,7 @@ public class OtherInvoice implements java.io.Serializable {
 		this.invoiceHeader = invoiceHeader;
 	}
 
-	@Column(name = "invoiceContent", length = 65535)
+	@Column(name = "invoiceContent", length = 50)
 	public String getInvoiceContent() {
 		return this.invoiceContent;
 	}

@@ -51,7 +51,7 @@ public class TrainsCourse implements java.io.Serializable {
         return this.id;
     }
 
-    public void setNoteId(Integer id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -64,14 +64,14 @@ public class TrainsCourse implements java.io.Serializable {
         this.courseName = courseName;
     }
 
-    @Column(name = "courseNo", nullable = false, length = 500)
+    @Column(name = "courseNo", length = 20)
     public String getCourseNo() { return this.courseNo; }
 
     public void setCourseNo(String courseNo) {
         this.courseNo = courseNo;
     }
 
-    @Column(name = "courseRemark")
+    @Column(name = "courseRemark", length = 500)
     public String getCourseRemark() {
         return this.courseRemark;
     }
@@ -89,7 +89,7 @@ public class TrainsCourse implements java.io.Serializable {
         this.saleId = saleId;
     }
 
-    @Column(name = "createTime")
+    @Column(name = "createTime", length = 20)
     public String getCreateTime() {
         return this.createTime;
     }
@@ -98,7 +98,7 @@ public class TrainsCourse implements java.io.Serializable {
         this.createTime = createTime;
     }
 
-    @Column(name = "updateTime")
+    @Column(name = "updateTime", length = 20)
     public String getUpdateTime() {
         return this.updateTime;
     }
