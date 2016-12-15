@@ -212,7 +212,9 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	@Override
 	public Map<String, Object> getMemberCardTypeMap(int cardTypeId) {
 		Map<String, Object> memberCardType = baseDao.queryBySqlFirst("SELECT cardTypeId, cardTypeName, cardTypeMonth, cardTypeAhead, cardTypeCredit, cardType, cardTypeMoney, cardTypeDiscount, cardTypeWeek, cardTypeTimeStart, cardTypeTimeEnd, cardTypeStatus, cardDeposit FROM member_card_type WHERE cardTypeId = ?", cardTypeId);
-		memberCardType.put("cardDeadline", DateUtil.getAddMonth(StrUtil.objToStr(memberCardType.get("cardTypeMonth"))));
+
+		String cardTypeMonth = StrUtil.objToStr(memberCardType.get("cardTypeMonth"));
+        memberCardType.put("cardDeadline", DateUtil.getAddMonth(cardTypeMonth));
 		return memberCardType;
 	}
 	
@@ -240,6 +242,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			invoiceDB.setInvoiceContent(invoice.getInvoiceContent());
 			invoiceDB.setInvoiceMoney(invoice.getInvoiceMoney());
 			invoiceDB.setInvoiceRemark(invoice.getInvoiceRemark());
+            invoiceDB.setInvoiceType(invoice.getInvoiceType());
 			invoiceDB.setInvoiceState(invoice.getInvoiceState()!=null?invoice.getInvoiceState():IDBConstant.LOGIC_STATUS_NO);
 			invoiceDB.setPrintTime(invoice.getPrintTime());
 			baseDao.save(invoiceDB, invoiceDB.getInvoiceId());
@@ -247,6 +250,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			invoice.setCreateTime(DateUtil.getNowDate());
 			invoice.setInvoiceOpenState(IDBConstant.LOGIC_STATUS_NO); //默认未开
 			invoice.setInvoiceState(IDBConstant.LOGIC_STATUS_NO); //默认未打印(领取)，改变状态需要结合打印机状态
+            invoice.setInvoiceType(IDBConstant.INVOICE_TYPE_GENERAL);
 			//invoice.setInvoiceNo(getInvoiceNo()); //发票的流水号和订单的流水号是一个不是两个
 			baseDao.save(invoice, null);
 		}

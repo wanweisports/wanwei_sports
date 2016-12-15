@@ -106,9 +106,9 @@
                         $.each(res.data, function(key, item){
                             $("#member_card_ticket_form").find("input[name='" + key + "']").val(item);
                         });
-                        $("#member_card_ticket_form").find("#ticket_header").val($("#member_name").val());
-                        $("#member_card_ticket_form").find("#ticket_money").val($("#recharge_money").val());
-                        $("#member_card_ticket_form").find("#ticket_content").val("会员卡办理");
+                        $("#member_card_ticket_form").find("#ticket_header").val('');
+                        $("#member_card_ticket_form").find("#ticket_money").val('');
+                        $("#member_card_ticket_form").find("#ticket_content").val('');
                     } else {
                         console.log(res.message || "会员卡充值失败, 请稍后重试");
                         alert(res.message || "会员卡充值失败, 请稍后重试");

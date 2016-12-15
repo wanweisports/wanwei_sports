@@ -67,7 +67,7 @@
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
-                        <tr>
+                        <tr class="bg-info">
                             <th>订单编号</th>
                             <th>会员卡号</th>
                             <th>预订人</th>

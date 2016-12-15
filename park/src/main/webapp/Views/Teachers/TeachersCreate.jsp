@@ -42,7 +42,7 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <!--<div class="input-group">
+                                <div class="input-group">
                                     <input type="text" class="form-control" id="member_card_no" name="tempCardNo"
                                            placeholder="教师卡号" value="${cardNo}"
                                            data-val="true" data-val-required="教师卡号不能为空">
@@ -51,10 +51,10 @@
                                             <i class="glyphicon glyphicon-transfer"></i> 读取
                                         </button>
                                     </span>
-                                </div>-->
-                                <input type="text" class="form-control" id="member_card_no" name="tempCardNo"
+                                </div>
+                                <!--<input type="text" class="form-control" id="member_card_no" name="tempCardNo"
                                        placeholder="教师卡号" value="${cardNo}"
-                                       data-val="true" data-val-required="教师卡号不能为空">
+                                       data-val="true" data-val-required="教师卡号不能为空">-->
                                 <div data-valmsg-for="tempCardNo" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -111,7 +111,7 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <!--<div class="input-group">
+                                <div class="input-group">
                                     <input type="text" class="form-control" id="member_idcard" name="memberIdcard"
                                            placeholder="请输入18位身份证号" autocomplete="off"
                                            data-val="true" data-val-required="身份证号不能为空"
@@ -122,12 +122,12 @@
                                             <i class="glyphicon glyphicon-transfer"></i> 读取
                                         </button>
                                     </span>
-                                </div>-->
-                                <input type="text" class="form-control" id="member_idcard" name="memberIdcard"
+                                </div>
+                                <!--<input type="text" class="form-control" id="member_idcard" name="memberIdcard"
                                        placeholder="请输入18位身份证号" autocomplete="off"
                                        data-val="true" data-val-required="身份证号不能为空"
                                        data-val-regex-pattern="^\d{17}(\d|X|x)$"
-                                       data-val-regex="身份证号格式错误">
+                                       data-val-regex="身份证号格式错误">-->
                                 <div data-valmsg-for="memberIdcard" data-valmsg-replace="true"></div>
                             </div>
                         </div>

@@ -30,6 +30,7 @@ public class OtherInvoice implements java.io.Serializable {
 	private String printTime;
 	private String createTime;
 	private Integer salesId;
+	private String invoiceType;
 
 	// Constructors
 
@@ -48,7 +49,7 @@ public class OtherInvoice implements java.io.Serializable {
 			Integer invoiceServiceId, String invoiceHeader,
 			String invoiceContent, Double invoiceMoney, String invoiceRemark,
 			String invoiceOpenState, String openTime, String invoiceState,
-			String printTime, String createTime, Integer salesId) {
+			String printTime, String createTime, Integer salesId, String invoiceType) {
 		this.invoiceNo = invoiceNo;
 		this.invoiceServiceType = invoiceServiceType;
 		this.invoiceServiceId = invoiceServiceId;
@@ -62,6 +63,7 @@ public class OtherInvoice implements java.io.Serializable {
 		this.printTime = printTime;
 		this.createTime = createTime;
 		this.salesId = salesId;
+        this.invoiceType = invoiceType;
 	}
 
 	// Property accessors
@@ -112,7 +114,7 @@ public class OtherInvoice implements java.io.Serializable {
 		this.invoiceHeader = invoiceHeader;
 	}
 
-	@Column(name = "invoiceContent", length = 65535)
+	@Column(name = "invoiceContent", length = 50)
 	public String getInvoiceContent() {
 		return this.invoiceContent;
 	}
@@ -193,4 +195,12 @@ public class OtherInvoice implements java.io.Serializable {
 		this.salesId = salesId;
 	}
 
+    @Column(name = "invoiceType", length = 1)
+    public String getInvoiceType() {
+        return this.invoiceType;
+    }
+
+    public void setInvoiceType(String invoiceType) {
+        this.invoiceType = invoiceType;
+    }
 }

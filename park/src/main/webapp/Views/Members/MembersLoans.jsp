@@ -67,6 +67,36 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <tr>
+                            <td>20161214123212</td>
+                            <td>小王</td>
+                            <td>12345678901</td>
+                            <td>100场</td>
+                            <td class="text-success">50场(2000元)</td>
+                            <td>51场</td>
+                            <td>50场(<span class="text-danger">1场欠款</span>)</td>
+                            <td>
+                                    <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
+                                            data-target="#receiptModal" data-backdrop="false">
+                                        <span class="glyphicon glyphicon-usd"></span> 收款
+                                    </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>20161214123212</td>
+                            <td>小王</td>
+                            <td>12345678901</td>
+                            <td>100场</td>
+                            <td class="text-success">50场(2000元)</td>
+                            <td>49场</td>
+                            <td>50场</td>
+                            <td>
+                                <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
+                                        data-target="#receiptModal" data-backdrop="false">
+                                    <span class="glyphicon glyphicon-usd"></span> 收款
+                                </button>
+                            </td>
+                        </tr>
                         <c:forEach var="loan" items="${list}">
                             <tr>
                                 <td>${loan.orderNo}</td>

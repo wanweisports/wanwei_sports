@@ -5,6 +5,7 @@
         },
         init: function () {
             this.initEvents();
+            this.changePaidMoney();
         },
         initEvents: function () {
             var content = this;
@@ -88,7 +89,34 @@
             $(".order-pay").on("click", function (e) {
                 e.preventDefault();
 
-                $("#zhifuModal").modal({backdrop: false, show: true});
+                var conditions = {
+                    orderId: $(this).attr("data-id"),
+                    memberId: $(this).attr("data-member")
+                };
+
+                if ($(this).attr("working") == "working") {
+                    return false;
+                }
+                $(this).attr("working", "working");
+
+                $.post('/order/getOrderToPay', conditions, function (res) {
+                    $(this).attr("working", "");
+
+                    var data = res.data;
+                    if (res.code == 1) {
+                        $("#zhifuModal").modal({backdrop: false, show: true});
+
+                        $("#reservations_paid_orderSumCount").val(data.sumNums);
+                        $("#reservations_paid_orderSumPrice").val(data.originalPrice);
+                        $("#reservations_paid_payCount").val(data.sumNums);
+                        $("#reservations_paid_paySumPrice").val(data.originalPrice);
+                        $("#reservations_paid_money").val(data.originalPrice);
+
+                        content.queryMemberBalance(conditions.memberId);
+                    } else {
+                        alert(res.message || "查询订单支付失败, 请稍后重试");
+                    }
+                });
             });
 
             // 确认支付
@@ -97,6 +125,45 @@
 
                 $("#zhifuModal").modal("hide");
                 location.reload();
+            });
+        },
+        queryMemberBalance: function (memberId) {
+            if (!memberId) {
+                $('#reservations_paid_balance').val("0.00");
+                return;
+            }
+
+            $.post('/member/memberDetail', {memberId: memberId}, function (res) {
+                var data = res.data;
+                var originalPrice = $("#reservations_paid_money").val();
+
+                if (res.code == 1) {
+                    $('#reservations_paid_balance').val(data.cardBalance);
+                    if (data.cardBalance >= originalPrice) {
+                        $("#reservations_paid_money").val("0.00");
+                    } else {
+                        $("#reservations_paid_money").val(originalPrice - data.cardBalance);
+                    }
+                } else {
+                    alert(res.message || "会员余额查询失败, 请稍后重试");
+                }
+            });
+        },
+        changePaidMoney: function () {
+            $("#reservations_paid_paySumPrice").on("change", function (e) {
+                e.preventDefault();
+
+                var balance = $("#reservations_paid_balance").val();
+                var paidPrice = $(this).val();
+
+                balance = parseFloat(balance).toFixed(2);
+                paidPrice = parseFloat(paidPrice).toFixed(2);
+
+                if (balance >= paidPrice) {
+                    $("#reservations_paid_money").val("0.00");
+                } else {
+                    $("#reservations_paid_money").val(paidPrice - balance);
+                }
             });
         }
     };

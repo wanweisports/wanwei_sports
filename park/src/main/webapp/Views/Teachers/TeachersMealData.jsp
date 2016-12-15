@@ -74,7 +74,7 @@
         <div class="alert alert-info clearfix">
             <ul class="nav nav-pills pull-left">
                 <li style="margin-right: 15px;">订餐总计:</li>
-                <li style="margin-right: 15px;">普通餐 <span class="badge">42份</span></li>
+                <li style="margin-right: 15px;">普通餐 <span class="badge">6份</span></li>
             </ul>
             <div class="pull-right">
                 <a href="javascript:;" class="btn btn-danger">
@@ -102,6 +102,34 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>20161214111123</td>
+                            <td>李老师</td>
+                            <td>11012345678</td>
+                            <td>普通餐</td>
+                            <td>2份</td>
+                            <td>2016-12-14</td>
+                            <td>
+                                <a class="btn btn-danger teachers-delete" href="javascript:;">
+                                    <span class="glyphicon glyphicon-trash"></span> 删除
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>20161214111123</td>
+                            <td>李老师</td>
+                            <td>11012345678</td>
+                            <td>普通餐</td>
+                            <td>4份</td>
+                            <td>2016-12-14</td>
+                            <td>
+                                <a class="btn btn-danger teachers-delete" href="javascript:;">
+                                    <span class="glyphicon glyphicon-trash"></span> 删除
+                                </a>
+                            </td>
+                        </tr>
                         <c:forEach var="data" items="${list}" varStatus="loop">
                             <tr>
                                 <td>${loop.index + 1}</td>
