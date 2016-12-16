@@ -9,7 +9,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 @Entity
 @Table(name = "trains_class", catalog = "park")
-public class TrainsClass implements java.io.Serializable {
+public class TrainsClassInfo implements java.io.Serializable {
     // Fields
     private Integer id;
     private Integer courseId;
@@ -24,15 +24,16 @@ public class TrainsClass implements java.io.Serializable {
     private Integer saleId;
     private String createTime;
     private String updateTime;
+    private Double classPrice;
 
     // Constructors
 
     /** default constructor */
-    public TrainsClass() {
+    public TrainsClassInfo() {
     }
 
     /** minimal constructor */
-    public TrainsClass(String className, String classRemark, String startTime, String endTime) {
+    public TrainsClassInfo(String className, String classRemark, String startTime, String endTime) {
         this.className = className;
         this.classRemark = classRemark;
         this.startTime = startTime;
@@ -40,9 +41,9 @@ public class TrainsClass implements java.io.Serializable {
     }
 
     /** full constructor */
-    public TrainsClass(Integer courseId, String className, String classRemark, String startTime, String endTime,
-                       String leaderName, String leaderPhone, String leaderMobile, String address, Integer saleId,
-                       String createTime, String updateTime) {
+    public TrainsClassInfo(Integer courseId, String className, String classRemark, String startTime, String endTime,
+                           String leaderName, String leaderPhone, String leaderMobile, String address, Integer saleId,
+                           String createTime, String updateTime, Double classPrice) {
         this.courseId = courseId;
         this.className = className;
         this.classRemark = classRemark;
@@ -55,13 +56,14 @@ public class TrainsClass implements java.io.Serializable {
         this.saleId = saleId;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.classPrice = classPrice;
     }
 
     // Property accessors
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
-    public Integer getid() {
+    public Integer getId() {
         return this.id;
     }
 
@@ -175,6 +177,15 @@ public class TrainsClass implements java.io.Serializable {
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Column(name = "classPrice")
+    public Double getClassPrice() {
+        return this.classPrice;
+    }
+
+    public void setClassPrice(Double classPrice) {
+        this.classPrice = classPrice;
     }
 
 }

@@ -2,12 +2,9 @@ package com.park.controller;
 
 import com.park.common.bean.*;
 import com.park.common.exception.MessageException;
-import com.park.common.po.NotificationsInfo;
-import com.park.common.po.UserOperator;
-import com.park.common.po.UserScheduling;
+import com.park.common.po.*;
 import com.park.common.util.JsonUtils;
-import com.park.service.INotificationsService;
-import com.park.service.IOperatorService;
+import com.park.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +25,15 @@ public class OfficeController extends BaseController {
 
     @Autowired
     private INotificationsService notificationsService;
+
+    @Autowired
+    private ITrainsCourseService trainsCourseService;
+
+    @Autowired
+    private ITrainsClassService trainsClassService;
+
+    @Autowired
+    private ITrainsClassStudentsService trainsClassStudentsService;
 
     @Autowired
     private IOperatorService operatorService;
@@ -179,14 +185,205 @@ public class OfficeController extends BaseController {
     	}
     }
 
-    // 培训报名
-    @RequestMapping("trains")
-    public String trains() {
-        return "Office/OfficeTrains";
+    // 培训课程管理
+    @RequestMapping("getTrainsCourseList")
+    public String getTrainsCourseList(TrainsCourseInputView trainsCourseInputView, Model model) {
+        try {
+            UserOperator userInfo = super.getUserInfo();
+            trainsCourseInputView.setSaleId(userInfo.getId());
+            model.addAllAttributes(JsonUtils.fromJsonDF(trainsCourseInputView));
+            PageBean pageBean = trainsCourseService.getTrainsCourseList(trainsCourseInputView);
+            super.setPageInfo(model, pageBean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "Office/OfficeTrainsCourseList";
     }
+
+    // 培训课程详情
+    @ResponseBody
+    @RequestMapping(value = "viewTrainsCourseInfo", method = RequestMethod.POST)
+    public ResponseBean viewTrainsCourseInfo(int courseId) {
+        try {
+            return new ResponseBean(JsonUtils.fromJson(trainsCourseService.getTrainsCourseInfo(courseId)));
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
+    // 培训课程删除
+    @ResponseBody
+    @RequestMapping(value = "deleteTrainsCourseInfo", method = RequestMethod.POST)
+    public ResponseBean deleteTrainsCourseInfo(int courseId) {
+        try {
+            trainsCourseService.deleteTrainsCourseInfo(courseId);
+            return new ResponseBean(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
+    // 培训课程保存
+    @ResponseBody
+    @RequestMapping(value = "saveTrainsCourseInfo", method = RequestMethod.POST)
+    public ResponseBean saveTrainsCourseInfo(TrainsCourseInfo trainsCourseInfo) {
+        try {
+            UserOperator userInfo = super.getUserInfo();
+            trainsCourseInfo.setSaleId(userInfo.getId());
+
+            Integer courseId = trainsCourseService.saveTrainsCourseInfo(trainsCourseInfo);
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("courseId", courseId);
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
+    // 培训班级管理
+    @RequestMapping("getTrainsClassList")
+    public String getTrainsClassList(TrainsClassInputView trainsClassInputView, Model model) {
+        try {
+            UserOperator userInfo = super.getUserInfo();
+            trainsClassInputView.setSaleId(userInfo.getId());
+            model.addAllAttributes(JsonUtils.fromJsonDF(trainsClassInputView));
+            model.addAttribute("courseNames", trainsCourseService.getTrainsCourseNames());
+            PageBean pageBean = trainsClassService.getTrainsClassList(trainsClassInputView);
+            super.setPageInfo(model, pageBean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "Office/OfficeTrainsClassList";
+    }
+
+    // 培训班级详情
+    @ResponseBody
+    @RequestMapping(value = "viewTrainsClassInfo", method = RequestMethod.POST)
+    public ResponseBean viewTrainsClassInfo(int classId) {
+        try {
+            return new ResponseBean(JsonUtils.fromJson(trainsClassService.getTrainsClassInfo(classId)));
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
+    // 培训班级删除
+    @ResponseBody
+    @RequestMapping(value = "deleteTrainsClassInfo", method = RequestMethod.POST)
+    public ResponseBean deleteTrainsClassInfo(int classId) {
+        try {
+            trainsClassService.deleteTrainsClassInfo(classId);
+            return new ResponseBean(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
+    // 培训班级保存
+    @ResponseBody
+    @RequestMapping(value = "saveTrainsClassInfo", method = RequestMethod.POST)
+    public ResponseBean saveTrainsClassInfo(TrainsClassInfo trainsClassInfo) {
+        try {
+            UserOperator userInfo = super.getUserInfo();
+            trainsClassInfo.setSaleId(userInfo.getId());
+
+            Integer classId = trainsClassService.saveTrainsClassInfo(trainsClassInfo);
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("classId", classId);
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
     // 培训报名学生
-    @RequestMapping("trainsStudents")
-    public String trainsStuednts() {
+    @RequestMapping("getTrainsStudents")
+    public String getTrainsStudents(TrainsClassStudentsInputView trainsClassStudentsInputView, Model model) {
+        try {
+            UserOperator userInfo = super.getUserInfo();
+            trainsClassStudentsInputView.setSaleId(userInfo.getId());
+            model.addAllAttributes(JsonUtils.fromJsonDF(trainsClassStudentsInputView));
+            PageBean pageBean = trainsClassStudentsService.getTrainsClassStudentsList(trainsClassStudentsInputView);
+            super.setPageInfo(model, pageBean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return "Office/OfficeTrainsStudents";
+    }
+
+    // 培训学生报名
+    @ResponseBody
+    @RequestMapping(value = "signTrainsStudents", method = RequestMethod.POST)
+    public ResponseBean signTrainsStudents(TrainsClassStudents trainsClassStudents) {
+        try {
+            UserOperator userInfo = super.getUserInfo();
+            trainsClassStudents.setSaleId(userInfo.getId());
+
+            Integer signId = trainsClassStudentsService.saveTrainsClassStudentsSign(trainsClassStudents);
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("signId", signId);
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
+    // 培训学生删除
+    @ResponseBody
+    @RequestMapping(value = "deleteTrainsStudents", method = RequestMethod.POST)
+    public ResponseBean deleteTrainsStudents(int signId) {
+        try {
+            trainsClassStudentsService.deleteTrainsClassStudentsSign(signId);
+            return new ResponseBean(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
+    // 培训学生支付
+    @ResponseBody
+    @RequestMapping(value = "payTrainsStudents", method = RequestMethod.POST)
+    public ResponseBean payTrainsStudents(TrainsClassStudents trainsClassStudents) {
+        try {
+            UserOperator userInfo = super.getUserInfo();
+            trainsClassStudents.setSaleId(userInfo.getId());
+
+            Integer signId = trainsClassStudentsService.confirmTrainsClassStudentsPay(trainsClassStudents);
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("signId", signId);
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
     }
 }

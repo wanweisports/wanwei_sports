@@ -9,12 +9,13 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 @Entity
 @Table(name = "trains_course", catalog = "park")
-public class TrainsCourse implements java.io.Serializable {
+public class TrainsCourseInfo implements java.io.Serializable {
     // Fields
     private Integer id;
     private String courseName;
     private String courseNo;
     private String courseRemark;
+    private String courseTag;
     private Integer saleId;
     private String createTime;
     private String updateTime;
@@ -22,22 +23,23 @@ public class TrainsCourse implements java.io.Serializable {
     // Constructors
 
     /** default constructor */
-    public TrainsCourse() {
+    public TrainsCourseInfo() {
     }
 
     /** minimal constructor */
-    public TrainsCourse(String courseName, String courseNo, String courseRemark) {
+    public TrainsCourseInfo(String courseName, String courseNo, String courseRemark) {
         this.courseName = courseName;
         this.courseNo = courseNo;
         this.courseRemark = courseRemark;
     }
 
     /** full constructor */
-    public TrainsCourse(String courseName, String courseNo, String courseRemark, Integer saleId, String createTime,
-                        String updateTime) {
+    public TrainsCourseInfo(String courseName, String courseNo, String courseRemark, Integer saleId, String createTime,
+                            String updateTime, String courseTag) {
         this.courseName = courseName;
         this.courseNo = courseNo;
         this.courseRemark = courseRemark;
+        this.courseTag = courseTag;
         this.saleId = saleId;
         this.createTime = createTime;
         this.updateTime = updateTime;
@@ -47,7 +49,7 @@ public class TrainsCourse implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
-    public Integer getid() {
+    public Integer getId() {
         return this.id;
     }
 
@@ -78,6 +80,13 @@ public class TrainsCourse implements java.io.Serializable {
 
     public void setCourseRemark(String courseRemark) {
         this.courseRemark = courseRemark;
+    }
+
+    @Column(name = "courseTag", length = 20)
+    public String getCourseTag() { return this.courseTag; }
+
+    public void setCourseTag(String courseTag) {
+        this.courseTag = courseTag;
     }
 
     @Column(name = "saleId")

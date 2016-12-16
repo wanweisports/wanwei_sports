@@ -1,16 +1,9 @@
-package com.park.common.po;
-
-import javax.persistence.*;
-
-import static javax.persistence.GenerationType.IDENTITY;
+package com.park.common.bean;
 
 /**
  * Created by wangjun on 16/12/14.
  */
-@Entity
-@Table(name = "trains_class_students", catalog = "park")
-public class TrainsClassStudents implements java.io.Serializable {
-    // Fields
+public class TrainsClassStudentsInputView extends BaseInputView {
     private Integer id;
     private String studentName;
     private String studentMobile;
@@ -23,38 +16,8 @@ public class TrainsClassStudents implements java.io.Serializable {
     private Double payPrice;
     private String updateTime;
 
-    // Constructors
 
-    /** default constructor */
-    public TrainsClassStudents() {
-    }
-
-    /** minimal constructor */
-    public TrainsClassStudents(String studentName, String studentMobile) {
-        this.studentMobile = studentMobile;
-        this.studentMobile = studentMobile;
-    }
-
-    /** full constructor */
-    public TrainsClassStudents(String studentName, String studentMobile, String remark, Integer saleId, String createTime,
-                               String signTime, Integer classId, String payStatus, Double payPrice, String updateTime) {
-        this.studentName = studentName;
-        this.studentMobile = studentMobile;
-        this.signTime = signTime;
-        this.remark = remark;
-        this.classId = classId;
-        this.saleId = saleId;
-        this.createTime = createTime;
-        this.payStatus = payStatus;
-        this.payPrice = payPrice;
-        this.updateTime = updateTime;
-    }
-
-    // Property accessors
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    public Integer getId() {
+    public Integer getid() {
         return this.id;
     }
 
@@ -62,7 +25,6 @@ public class TrainsClassStudents implements java.io.Serializable {
         this.id = id;
     }
 
-    @Column(name = "studentName", nullable = false, length = 20)
     public String getStudentName() {
         return this.studentName;
     }
@@ -71,14 +33,12 @@ public class TrainsClassStudents implements java.io.Serializable {
         this.studentName = studentName;
     }
 
-    @Column(name = "studentMobile", nullable = false, length = 20)
     public String getStudentMobile() { return this.studentMobile; }
 
     public void setStudentMobile(String studentMobile) {
         this.studentMobile = studentMobile;
     }
 
-    @Column(name = "remark", length = 500)
     public String getRemark() {
         return this.remark;
     }
@@ -87,7 +47,6 @@ public class TrainsClassStudents implements java.io.Serializable {
         this.remark = remark;
     }
 
-    @Column(name = "classId")
     public Integer getClassId() {
         return this.classId;
     }
@@ -96,7 +55,6 @@ public class TrainsClassStudents implements java.io.Serializable {
         this.classId = classId;
     }
 
-    @Column(name = "saleId")
     public Integer getSaleId() {
         return this.saleId;
     }
@@ -105,7 +63,6 @@ public class TrainsClassStudents implements java.io.Serializable {
         this.saleId = saleId;
     }
 
-    @Column(name = "createTime", length = 20)
     public String getCreateTime() {
         return this.createTime;
     }
@@ -114,7 +71,6 @@ public class TrainsClassStudents implements java.io.Serializable {
         this.createTime = createTime;
     }
 
-    @Column(name = "signTime", length = 20)
     public String getSignTime() {
         return this.signTime;
     }
@@ -123,7 +79,6 @@ public class TrainsClassStudents implements java.io.Serializable {
         this.signTime = signTime;
     }
 
-    @Column(name = "payStatus", length = 1)
     public String getPayStatus() {
         return this.payStatus;
     }
@@ -132,7 +87,6 @@ public class TrainsClassStudents implements java.io.Serializable {
         this.payStatus = payStatus;
     }
 
-    @Column(name = "payPrice")
     public Double getPayPrice() {
         return this.payPrice;
     }
@@ -141,7 +95,6 @@ public class TrainsClassStudents implements java.io.Serializable {
         this.payPrice = payPrice;
     }
 
-    @Column(name = "updateTime", length = 20)
     public String getUpdateTime() {
         return this.updateTime;
     }

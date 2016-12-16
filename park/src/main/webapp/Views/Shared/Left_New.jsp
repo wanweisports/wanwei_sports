@@ -321,9 +321,14 @@
                                 <span><a href="/office/schedule?countNum=3">排班管理</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item office ${(param.nav == "office" && param.subNav == "trains") ? "active" : ""}">
+                        <tr class="list-nav-item office ${(param.nav == "office" && param.subNav == "course") ? "active" : ""}">
                             <td>
-                                <span><a href="/office/trains">培训报名</a></span>
+                                <span><a href="/office/getTrainsCourseList">培训课程管理</a></span>
+                            </td>
+                        </tr>
+                        <tr class="list-nav-item office ${(param.nav == "office" && param.subNav == "class") ? "active" : ""}">
+                            <td>
+                                <span><a href="/office/getTrainsClassList">培训班级管理</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item office last-nav-item">

@@ -5,18 +5,33 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="/Content/app/settings/settings_notification.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/office/office_trains_class_list.js?v=${static_resource_version}"></script>
+    <script>
+        $(document).ready(function () {
+            // 配置表单校验
+            $('#class_form').validate({
+                ignore: ":hidden"
+            });
+        });
+    </script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>办公系统</span> &gt;&gt; <span>培训报名</span>
+    当前位置: <span>办公系统</span> &gt;&gt; <span>培训班级管理</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
-            <div class="panel-heading">培训报名</div>
+            <div class="panel-heading">培训班级管理</div>
             <div class="panel-body">
                 <form id="trains_filter_form" class="form-inline col-sm-8" onsubmit="return false;">
                     <div class="form-group">
@@ -28,94 +43,70 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <select class="form-control" style="width: 160px;" name="type">
-                            <option value="">课程类别</option>
-                            <option value="1">篮球</option>
-                            <option value="2">羽毛球</option>
-                            <option value="3">乒乓球</option>
+                        <select class="form-control" style="width: 160px;" name="courseId">
+                            <option value="">全部课程</option>
+                            <c:forEach var="course" items="${courseNames}">
+                                <option value="${course.id}">${course.courseName}</option>
+                            </c:forEach>
                         </select>
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary card-type-filter">
+                        <a href="javascript:;" class="btn btn-primary trains-filter">
                             <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
                         </a>
                     </div>
                 </form>
                 <div class="col-sm-4 text-right">
                     <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#addModal" data-backdrop="false">
-                        <span class="glyphicon glyphicon-plus"></span> 增加课程
+                            data-target="#add_class_modal" data-backdrop="false">
+                        <span class="glyphicon glyphicon-plus"></span> 添加班级
                     </button>
                 </div>
             </div>
         </div>
         <div class="panel panel-default">
             <div class="panel-body">
-                <div class="table-responsive">
+                <div class="table-responsive class-list">
                     <table class="table">
                         <thead>
                         <tr>
+                            <th>班级名称</th>
+                            <th>班级描述</th>
                             <th>课程名称</th>
-                            <th>课程类别</th>
-                            <th>课程描述</th>
                             <th>起止日期</th>
                             <th>报名人数</th>
-                            <th>课程状态</th>
+                            <th>报名状态</th>
                             <th>责任老师</th>
-                            <th>联系人</th>
+                            <th>手机号码</th>
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th>兴趣班</th>
-                            <td>篮球</td>
-                            <td>培养孩子的篮球兴趣; ....</td>
-                            <td>2016-11-11 ~ 2016-12-23</td>
-                            <td><a href="/office/trainsStudents">15</a></td>
-                            <td class="text-danger">报名中</td>
-                            <td>张老师</td>
-                            <td>110****5678</td>
-                            <td>
-                                <button type="button" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </button>
-                                <button type="button" class="btn btn-warning" data-toggle="modal"
-                                        data-target="#signModal" data-backdrop="false">
-                                    <span class="glyphicon glyphicon-user"></span> 报名
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>提高班</th>
-                            <td>篮球</td>
-                            <td>培养孩子的篮球兴趣; ....</td>
-                            <td>2016-11-11 ~ 2016-12-23</td>
-                            <td><a href="/office/trainsStudents">15</a></td>
-                            <td class="text-muted">已结束</td>
-                            <td>张老师</td>
-                            <td>110****5678</td>
-                            <td>
-                                <button type="button" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>兴趣班</th>
-                            <td>羽毛球</td>
-                            <td>培养孩子的篮球兴趣; ....</td>
-                            <td>2016-11-11 ~ 2016-12-23</td>
-                            <td><a href="/office/trainsStudents">15</a></td>
-                            <td class="text-primary">未开始</td>
-                            <td>张老师</td>
-                            <td>110****5678</td>
-                            <td>
-                                <button type="button" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </button>
-                            </td>
-                        </tr>
+                        <c:forEach var="class" items="${list}">
+                            <tr>
+                                <th>${class.className}</th>
+                                <th>${class.classRemark}</th>
+                                <th>${class.courseName}</th>
+                                <th>${class.startTime} 至 {class.endTime}</th>
+                                <td>${class.studentsCount}</td>
+                                <td class="text-danger">报名中</td>
+                                <td>${class.leaderName}</td>
+                                <td>${class.leaderMobile}</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary class-view" data-toggle="modal"
+                                            data-target="#add_class_modal" data-backdrop="false" data-id="${class.id}">
+                                        <span class="glyphicon glyphicon-share-alt"></span> 查看
+                                    </button>
+                                    <button type="button" class="btn btn-warning" data-toggle="modal"
+                                            data-target="#signModal" data-backdrop="false" data-id="${class.id}">
+                                        <span class="glyphicon glyphicon-user"></span> 报名
+                                    </button>
+                                    <button type="button" class="btn btn-danger" data-id="${class.id}">
+                                        <span class="glyphicon glyphicon-remove"></span> 删除
+                                    </button>
+                                </td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                     <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >
@@ -187,52 +178,54 @@
         </div>
     </div>
 
-    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel">
+    <div class="modal fade" id="add_class_modal" tabindex="-1" role="dialog" aria-labelledby="add_class_modal_label">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h5 class="modal-title" id="addModalLabel">课程编辑</h5>
+                    <h5 class="modal-title" id="add_class_modal_label">班级编辑</h5>
                 </div>
                 <div class="modal-body" style="overflow: hidden;">
-                    <form class="form-horizontal" onsubmit="return false;">
+                    <form id="class_form" class="form-horizontal" onsubmit="return false;">
+                        <input type="hidden" id="class_id" name="id">
                         <div class="form-group">
-                            <label for="trains_name" class="col-sm-4 control-label">
+                            <label for="class_name" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 班级名称
+                            </label>
+
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="class_name" name="className"
+                                       placeholder="例如, 兴趣班, 乔丹班" autocomplete="off"
+                                       data-val="true" data-val-required="班级名称不能为空"
+                                       data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,5}$"
+                                       data-val-regex="班级名称长度只能2~6个字符">
+                                <div data-valmsg-for="className" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="course_name" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 课程名称
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="trains_name" name="trainsName"
-                                       placeholder="例如, 兴趣班, 乔丹班" autocomplete="off"
-                                       data-val="true" data-val-required="课程名称不能为空"
-                                       data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,5}$"
-                                       data-val-regex="课程名称长度只能2~6个字符">
-                                <div data-valmsg-for="trainsName" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="trains_type" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 课程类别
-                            </label>
-
-                            <div class="col-sm-8">
-                                <select class="form-control" id="trains_type" name="trainsType">
-                                    <option value="1">篮球</option>
-                                    <option value="2">羽毛球</option>
-                                    <option value="3">乒乓球</option>
+                                <select class="form-control" id="course_name" name="courseId"
+                                        data-val="true" data-val-required="请选择课程名称">
+                                    <option value="">请选择</option>
+                                    <c:forEach var="course" items="${courseNames}">
+                                        <option value="${course.id}">${course.courseName}</option>
+                                    </c:forEach>
                                 </select>
+                                <div data-valmsg-for="courseId" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="trains_desc" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 课程描述
-                            </label>
+                            <label for="class_desc" class="col-sm-4 control-label">班级描述</label>
 
                             <div class="col-sm-8">
-                                        <textarea class="form-control" id="trains_desc" name="trainsDesc" rows="3"
-                                                  placeholder="课程描述"></textarea>
+                                <textarea class="form-control" id="class_desc" name="classRemark" rows="3"
+                                          placeholder="课程描述"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -242,13 +235,14 @@
 
                             <div class="col-sm-8">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="start_date" name="startDate"
-                                           placeholder="开始日期">
-                                            <span class="input-group-addon member-birthday-select">
-                                                <i class="glyphicon glyphicon-calendar"></i>
-                                            </span>
+                                    <input type="text" class="form-control" id="start_date" name="startTime"
+                                           placeholder="开始日期" autocomplete="off"
+                                           data-val="true" data-val-required="开始日期不能为空">
+                                    <span class="input-group-addon class-start-select">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
                                 </div>
-                                <div data-valmsg-for="startDate" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="startTime" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -258,46 +252,47 @@
 
                             <div class="col-sm-8">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="end_date" name="endDate"
-                                           placeholder="结束日期">
-                                            <span class="input-group-addon member-birthday-select">
-                                                <i class="glyphicon glyphicon-calendar"></i>
-                                            </span>
+                                    <input type="text" class="form-control" id="end_date" name="endTime"
+                                           placeholder="结束日期" autocomplete="off"
+                                           data-val="true" data-val-required="结束日期不能为空">
+                                    <span class="input-group-addon class-end-select">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
                                 </div>
-                                <div data-valmsg-for="startDate" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="endTime" data-valmsg-replace="true"></div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="trains_teacher" class="col-sm-4 control-label">
+                            <label for="leader_teacher" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 责任老师
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="trains_teacher" name="trainsTeacher"
+                                <input type="text" class="form-control" id="leader_teacher" name="leaderName"
                                        placeholder="责任老师" autocomplete="off"
                                        data-val="true" data-val-required="责任老师不能为空">
-                                <div data-valmsg-for="trainsTeacher" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="leaderName" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="contact_phone" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 联系电话
+                                <span class="text-danger">*</span> 联系手机
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="contact_phone" name="contactPhone"
-                                       placeholder="联系电话" autocomplete="off"
+                                <input type="text" class="form-control" id="contact_phone" name="leaderMobile"
+                                       placeholder="联系手机" autocomplete="off"
                                        data-val="true" data-val-required="手机号码不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
                                        data-val-regex="手机号码格式错误">
-                                <div data-valmsg-for="contactPhone" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="leaderMobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">
+                    <button type="button" class="btn btn-primary class-confirm">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>
@@ -305,24 +300,24 @@
         </div>
     </div>
 
-    <div class="modal fade" id="signModal" tabindex="-1" role="dialog" aria-labelledby="signModalLabel">
+    <div class="modal fade" id="add_sign_modal" tabindex="-1" role="dialog" aria-labelledby="add_sign_modal_label">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h5 class="modal-title" id="signModalLabel">我要报名</h5>
+                    <h5 class="modal-title" id="add_sign_modal_label">我要报名</h5>
                 </div>
                 <div class="modal-body" style="overflow: hidden;">
-                    <form class="form-horizontal" onsubmit="return false;">
+                    <form id="sign_form" class="form-horizontal" onsubmit="return false;">
                         <div class="form-group">
-                            <label for="trains_sign_name" class="col-sm-4 control-label">
+                            <label for="sign_name" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 姓名
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="trains_sign_name" name="trainsName"
+                                <input type="text" class="form-control" id="sign_name" name="trainsName"
                                        placeholder="姓名" autocomplete="off"
                                        data-val="true" data-val-required="姓名不能为空"
                                        data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,5}$"
@@ -366,5 +361,5 @@
 
 <c:import url="../Shared/Layout_New.jsp">
     <c:param name="nav" value="office"/>
-    <c:param name="subNav" value="trains"/>
+    <c:param name="subNav" value="class"/>
 </c:import>
