@@ -45,7 +45,7 @@
                     <div class="form-group">
                         <select class="form-control" style="width: 160px;" name="courseId">
                             <option value="">全部课程</option>
-                            <c:forEach var="course" items="${courseNames}">
+                            <c:forEach var="course" items="${courseNames.courseNames}">
                                 <option value="${course.id}">${course.courseName}</option>
                             </c:forEach>
                         </select>
@@ -73,6 +73,7 @@
                             <th>班级名称</th>
                             <th>班级描述</th>
                             <th>课程名称</th>
+                            <th>价格</th>
                             <th>起止日期</th>
                             <th>报名人数</th>
                             <th>报名状态</th>
@@ -82,26 +83,28 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="class" items="${list}">
+                        <c:forEach var="item" items="${list}">
                             <tr>
-                                <th>${class.className}</th>
-                                <th>${class.classRemark}</th>
-                                <th>${class.courseName}</th>
-                                <th>${class.startTime} 至 {class.endTime}</th>
-                                <td>${class.studentsCount}</td>
+                                <td>${item.className}</td>
+                                <c:if test="${fn:length(item.classRemark) > 10}">
+                                    <td>${fn:substring(item.classRemark, 0, 10)}...</td>
+                                </c:if>
+                                <c:if test="${fn:length(item.classRemark) <= 10}">
+                                    <td>${item.courseRemark}</td>
+                                </c:if>
+                                <td>${item.classPrice}元</td>
+                                <td>${item.courseName}</td>
+                                <td>${item.startTime} 至 ${item.endTime}</td>
+                                <td>0</td>
                                 <td class="text-danger">报名中</td>
-                                <td>${class.leaderName}</td>
-                                <td>${class.leaderMobile}</td>
+                                <td>${item.leaderName}</td>
+                                <td>${item.leaderMobile}</td>
                                 <td>
                                     <button type="button" class="btn btn-primary class-view" data-toggle="modal"
-                                            data-target="#add_class_modal" data-backdrop="false" data-id="${class.id}">
+                                            data-target="#add_class_modal" data-backdrop="false" data-id="${item.id}">
                                         <span class="glyphicon glyphicon-share-alt"></span> 查看
                                     </button>
-                                    <button type="button" class="btn btn-warning" data-toggle="modal"
-                                            data-target="#signModal" data-backdrop="false" data-id="${class.id}">
-                                        <span class="glyphicon glyphicon-user"></span> 报名
-                                    </button>
-                                    <button type="button" class="btn btn-danger" data-id="${class.id}">
+                                    <button type="button" class="btn btn-danger" data-id="${item.id}">
                                         <span class="glyphicon glyphicon-remove"></span> 删除
                                     </button>
                                 </td>
@@ -191,11 +194,11 @@
                     <form id="class_form" class="form-horizontal" onsubmit="return false;">
                         <input type="hidden" id="class_id" name="id">
                         <div class="form-group">
-                            <label for="class_name" class="col-sm-4 control-label">
+                            <label for="class_name" class="col-sm-3 control-label">
                                 <span class="text-danger">*</span> 班级名称
                             </label>
 
-                            <div class="col-sm-8">
+                            <div class="col-sm-9">
                                 <input type="text" class="form-control" id="class_name" name="className"
                                        placeholder="例如, 兴趣班, 乔丹班" autocomplete="off"
                                        data-val="true" data-val-required="班级名称不能为空"
@@ -205,15 +208,15 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="course_name" class="col-sm-4 control-label">
+                            <label for="course_name" class="col-sm-3 control-label">
                                 <span class="text-danger">*</span> 课程名称
                             </label>
 
-                            <div class="col-sm-8">
+                            <div class="col-sm-9">
                                 <select class="form-control" id="course_name" name="courseId"
                                         data-val="true" data-val-required="请选择课程名称">
                                     <option value="">请选择</option>
-                                    <c:forEach var="course" items="${courseNames}">
+                                    <c:forEach var="course" items="${courseNames.courseNames}">
                                         <option value="${course.id}">${course.courseName}</option>
                                     </c:forEach>
                                 </select>
@@ -221,19 +224,19 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="class_desc" class="col-sm-4 control-label">班级描述</label>
+                            <label for="class_desc" class="col-sm-3 control-label">班级描述</label>
 
-                            <div class="col-sm-8">
+                            <div class="col-sm-9">
                                 <textarea class="form-control" id="class_desc" name="classRemark" rows="3"
                                           placeholder="课程描述"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="start_date" class="col-sm-4 control-label">
+                            <label for="start_date" class="col-sm-3 control-label">
                                 <span class="text-danger">*</span> 开始日期
                             </label>
 
-                            <div class="col-sm-8">
+                            <div class="col-sm-9">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="start_date" name="startTime"
                                            placeholder="开始日期" autocomplete="off"
@@ -246,11 +249,11 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="end_date" class="col-sm-4 control-label">
+                            <label for="end_date" class="col-sm-3 control-label">
                                 <span class="text-danger">*</span> 结束日期
                             </label>
 
-                            <div class="col-sm-8">
+                            <div class="col-sm-9">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="end_date" name="endTime"
                                            placeholder="结束日期" autocomplete="off"
@@ -264,11 +267,11 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="leader_teacher" class="col-sm-4 control-label">
+                            <label for="leader_teacher" class="col-sm-3 control-label">
                                 <span class="text-danger">*</span> 责任老师
                             </label>
 
-                            <div class="col-sm-8">
+                            <div class="col-sm-9">
                                 <input type="text" class="form-control" id="leader_teacher" name="leaderName"
                                        placeholder="责任老师" autocomplete="off"
                                        data-val="true" data-val-required="责任老师不能为空">
@@ -276,17 +279,29 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="contact_phone" class="col-sm-4 control-label">
+                            <label for="contact_phone" class="col-sm-3 control-label">
                                 <span class="text-danger">*</span> 联系手机
                             </label>
 
-                            <div class="col-sm-8">
+                            <div class="col-sm-9">
                                 <input type="text" class="form-control" id="contact_phone" name="leaderMobile"
                                        placeholder="联系手机" autocomplete="off"
                                        data-val="true" data-val-required="手机号码不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
                                        data-val-regex="手机号码格式错误">
                                 <div data-valmsg-for="leaderMobile" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="class_price" class="col-sm-3 control-label">
+                                <span class="text-danger">*</span> 班级价格
+                            </label>
+
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="class_price" name="classPrice"
+                                       placeholder="联系手机" autocomplete="off"
+                                       data-val="true" data-val-required="班级价格不能为空">
+                                <div data-valmsg-for="classPrice" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </form>

@@ -19,6 +19,7 @@ public class TrainsCourseInfo implements java.io.Serializable {
     private Integer saleId;
     private String createTime;
     private String updateTime;
+    private String courseStatus;
 
     // Constructors
 
@@ -35,7 +36,7 @@ public class TrainsCourseInfo implements java.io.Serializable {
 
     /** full constructor */
     public TrainsCourseInfo(String courseName, String courseNo, String courseRemark, Integer saleId, String createTime,
-                            String updateTime, String courseTag) {
+                            String updateTime, String courseTag, String courseStatus) {
         this.courseName = courseName;
         this.courseNo = courseNo;
         this.courseRemark = courseRemark;
@@ -43,6 +44,7 @@ public class TrainsCourseInfo implements java.io.Serializable {
         this.saleId = saleId;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.courseStatus = courseStatus;
     }
 
     // Property accessors
@@ -114,6 +116,15 @@ public class TrainsCourseInfo implements java.io.Serializable {
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Column(name = "courseStatus", length = 1)
+    public String getCourseStatus() {
+        return this.courseStatus;
+    }
+
+    public void setCourseStatus(String courseStatus) {
+        this.courseStatus = courseStatus;
     }
 
 }

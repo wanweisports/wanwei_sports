@@ -12,6 +12,7 @@ public class TrainsCourseInputView extends BaseInputView {
     private Integer saleId;
     private String createTime;
     private String updateTime;
+    private String courseStatus;
 
     public Integer getId() {
         return this.id;
@@ -74,4 +75,13 @@ public class TrainsCourseInputView extends BaseInputView {
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
+
+    public String getCourseStatus() {
+        return this.courseStatus;
+    }
+
+    public void setCourseStatus(String courseStatus) {
+        this.courseStatus = courseStatus;
+    }
+
 }

@@ -41,15 +41,20 @@
                 $("#add_course_modal").find("#course_no").val(data.courseNo || moment().format('YYYYMMDDHHmmss'));
                 $("#add_course_modal").find("#course_name").val(data.courseName || '');
                 $("#add_course_modal").find("#course_remark").val(data.courseRemark || '');
+                if (data.courseStatus == 2) {
+                    $("#add_course_modal").find("#course_status2").prop("checked", true);
+                } else {
+                    $("#add_course_modal").find("#course_status1").prop("checked", true);
+                }
             }
 
             // 查询
             $(".course-list").on("click", ".course-view", function (e) {
                 e.preventDefault();
 
-                var noteId = $(this).attr("data-id");
+                var courseId = $(this).attr("data-id");
 
-                $.post('office/viewTrainsCourseInfo', {noteId: noteId}, function (res) {
+                $.post('office/viewTrainsCourseInfo', {courseId: courseId}, function (res) {
                     var data = res.data;
 
                     if (res.code == 1) {
@@ -65,9 +70,9 @@
             $(".course-list").on("click", ".course-delete", function (e) {
                 e.preventDefault();
 
-                var noteId = $(this).attr("data-id");
+                var courseId = $(this).attr("data-id");
 
-                $.post('office/deleteTrainsCourseInfo', {noteId: noteId}, function (res) {
+                $.post('office/deleteTrainsCourseInfo', {courseId: courseId}, function (res) {
                     var data = res.data;
 
                     if (res.code == 1) {

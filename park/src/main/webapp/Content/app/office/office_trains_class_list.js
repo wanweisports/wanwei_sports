@@ -5,6 +5,37 @@
         },
         init: function () {
             this.initEvents();
+
+            $.datetimepicker.setLocale('zh');
+
+            // 表单时间控件设置
+            $('#start_date').datetimepicker({
+                timepicker: false,
+                lang: "zh",
+                format:'Y-m-d',
+                defaultDate: new Date(),
+                minDate: 0
+            });
+
+            $(".class-start-select").on("click", function (e) {
+                e.preventDefault();
+
+                $('#start_date').datetimepicker("show");
+            });
+
+            $('#end_date').datetimepicker({
+                timepicker: false,
+                lang: "zh",
+                format:'Y-m-d',
+                defaultDate: new Date(),
+                minDate: 0
+            });
+
+            $(".class-end-select").on("click", function (e) {
+                e.preventDefault();
+
+                $('#end_date').datetimepicker("show");
+            });
         },
         initEvents: function () {
             var content = this;
@@ -51,9 +82,9 @@
             $(".class-list").on("click", ".class-view", function (e) {
                 e.preventDefault();
 
-                var noteId = $(this).attr("data-id");
+                var classId = $(this).attr("data-id");
 
-                $.post('office/viewTrainsClassInfo', {noteId: noteId}, function (res) {
+                $.post('office/viewTrainsClassInfo', {classId: classId}, function (res) {
                     var data = res.data;
 
                     if (res.code == 1) {
@@ -69,9 +100,9 @@
             $(".class-list").on("click", ".class-delete", function (e) {
                 e.preventDefault();
 
-                var noteId = $(this).attr("data-id");
+                var classId = $(this).attr("data-id");
 
-                $.post('office/deleteTrainsClassInfo', {noteId: noteId}, function (res) {
+                $.post('office/deleteTrainsClassInfo', {classId: classId}, function (res) {
                     if (res.code == 1) {
                         location.reload();
                     } else {

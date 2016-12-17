@@ -21,17 +21,22 @@ public class TrainsClassServiceImpl extends BaseService implements ITrainsClassS
 	@Override
 	public PageBean getTrainsClassList(TrainsClassInputView trainsClassInputView){
 		String className = trainsClassInputView.getClassName();
-        Integer courseId = trainsClassInputView.getCourseId();
+        //Integer courseId = trainsClassInputView.getCourseId();
 		
-		StringBuilder headSql = new StringBuilder("SELECT tc.*, uo.operatorName");
-		StringBuilder bodySql = new StringBuilder(" FROM trains_course tc left join user_operator uo on tc.saleId=uo.id");
+		StringBuilder headSql = new StringBuilder("SELECT trc.*, uo.operatorName, tc.courseName");
+		StringBuilder bodySql = new StringBuilder(" FROM trains_class trc LEFT JOIN user_operator uo ON trc.saleId=uo.id");
+        bodySql.append(" LEFT JOIN trains_course tc ON tc.id=trc.id");
+        bodySql.append(" LEFT JOIN trains_class_students tcs ON tcs.classId=trc.id");
 		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
+
 		if(StrUtil.isNotBlank(className)){
 			whereSql.append(" AND className = :className");
 		}
-		if(courseId == null){
+		/*if(courseId == null){
 			whereSql.append(" AND courseId = :courseId");
-		}
+		}*/
+        whereSql.append(" ORDER BY trc.updateTime DESC");
+
 		return super.getPageBean(headSql, bodySql, whereSql, trainsClassInputView);
 	}
 	
@@ -59,8 +64,8 @@ public class TrainsClassServiceImpl extends BaseService implements ITrainsClassS
 		} else {
             TrainsClassInfo trainsClassInfoDB = getTrainsClassInfo(classId);
 			if(trainsClassInfoDB == null) throw new MessageException("该班级已经不存在");
-            trainsClassInfoDB.setClassName(trainsClassInfoDB.getClassName());
-            trainsClassInfoDB.setClassRemark(trainsClassInfoDB.getClassRemark());
+            trainsClassInfoDB.setClassName(trainsClassInfo.getClassName());
+            trainsClassInfoDB.setClassRemark(trainsClassInfo.getClassRemark());
             trainsClassInfoDB.setUpdateTime(nowDate);
 			baseDao.save(trainsClassInfoDB, classId);
 		}

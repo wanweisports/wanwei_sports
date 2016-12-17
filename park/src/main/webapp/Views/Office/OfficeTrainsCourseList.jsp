@@ -30,7 +30,8 @@
             <div class="panel-body">
                 <form id="course_filter_form" class="form-inline col-sm-8" onsubmit="return false;">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="keywords" placeholder="课程搜索" value="${keywords}">
+                        <input type="text" class="form-control" name="courseName" placeholder="课程名称"
+                               value="${courseName}" autocomplete="off">
                     </div>
                     <div class="form-group">
                         <a href="javascript:;" class="btn btn-primary course-filter">
@@ -55,6 +56,7 @@
                             <th>课程编号</th>
                             <th>课程名称</th>
                             <th>课程描述</th>
+                            <th>课程状态</th>
                             <th>操作人</th>
                             <th>操作时间</th>
                             <th>操作</th>
@@ -63,11 +65,22 @@
                         <tbody>
                         <c:forEach var="course" items="${list}">
                             <tr>
-                                <th>${course.courseNo}</th>
-                                <th>${course.courseName}</th>
-                                <th>${course.courseRemark}</th>
-                                <th>${course.operatorName}</th>
-                                <td>${course.createTime}</td>
+                                <td>${course.courseNo}</td>
+                                <td>${course.courseName}</td>
+                                <c:if test="${fn:length(course.courseRemark) > 30}">
+                                    <td>${fn:substring(course.courseRemark, 0, 30)}...</td>
+                                </c:if>
+                                <c:if test="${fn:length(course.courseRemark) <= 30}">
+                                    <td>${course.courseRemark}</td>
+                                </c:if>
+                                <c:if test="${course.courseStatus == 1}">
+                                    <td class="text-success">开放</td>
+                                </c:if>
+                                <c:if test="${course.courseStatus == 2}">
+                                    <td class="text-danger">关闭</td>
+                                </c:if>
+                                <td>${course.operatorName}</td>
+                                <td>${course.updateTime}</td>
                                 <td>
                                     <a href="#add_course_modal" class="btn btn-primary course-view" data-toggle="modal"
                                        data-backdrop="false" data-id="${course.id}">
@@ -164,11 +177,11 @@
                         <input type="hidden" id="course_id" name="id">
                         <input type="hidden" id="course_no" name="courseNo">
                         <div class="form-group">
-                            <label for="course_name" class="col-sm-4 control-label">
+                            <label for="course_name" class="col-sm-3 control-label">
                                 <span class="text-danger">*</span> 课程名称
                             </label>
 
-                            <div class="col-sm-8">
+                            <div class="col-sm-9">
                                 <input type="text" class="form-control" id="course_name" name="courseName"
                                        placeholder="课程名称" autocomplete="off"
                                        data-val="true" data-val-required="课程名称不能为空"
@@ -178,15 +191,29 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="course_remark" class="col-sm-4 control-label">
+                            <label for="course_remark" class="col-sm-3 control-label">
                                 <span class="text-danger">*</span> 课程描述
                             </label>
 
-                            <div class="col-sm-8">
+                            <div class="col-sm-9">
                                 <textarea class="form-control" id="course_remark" name="courseRemark" rows="3"
                                           placeholder="课程描述"
                                           data-val="true" data-val-required="课程描述不能为空"></textarea>
                                 <div data-valmsg-for="courseRemark" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="course_status1" class="col-sm-3 control-label">
+                                <span class="text-danger">*</span> 课程状态
+                            </label>
+
+                            <div class="col-sm-9 text-left">
+                                <label class="radio-inline">
+                                    <input type="radio" name="courseStatus" id="course_status1" value="1" checked> 开放
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="courseStatus" id="course_status2" value="2"> 关闭
+                                </label>
                             </div>
                         </div>
                     </form>

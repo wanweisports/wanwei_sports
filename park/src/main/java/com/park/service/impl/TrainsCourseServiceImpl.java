@@ -24,17 +24,15 @@ public class TrainsCourseServiceImpl extends BaseService implements ITrainsCours
 	@Override
 	public PageBean getTrainsCourseList(TrainsCourseInputView trainsCourseInputView){
 		String courseName = trainsCourseInputView.getCourseName();
-        String courseNo = trainsCourseInputView.getCourseNo();
 		
 		StringBuilder headSql = new StringBuilder("SELECT tc.*, uo.operatorName");
 		StringBuilder bodySql = new StringBuilder(" FROM trains_course tc left join user_operator uo on tc.saleId=uo.id");
 		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
 		if(StrUtil.isNotBlank(courseName)){
-			whereSql.append(" AND courseName = :courseName");
+			whereSql.append(" AND tc.courseName = :courseName");
 		}
-		if(StrUtil.isNotBlank(courseNo)){
-			whereSql.append(" AND courseNo = :courseNo");
-		}
+        whereSql.append(" ORDER BY tc.updateTime DESC");
+
 		return super.getPageBean(headSql, bodySql, whereSql, trainsCourseInputView);
 	}
 	
@@ -57,14 +55,15 @@ public class TrainsCourseServiceImpl extends BaseService implements ITrainsCours
 
 		if (courseId == null) {
 			trainsCourseInfo.setCreateTime(nowDate);
+            trainsCourseInfo.setUpdateTime(nowDate);
 			baseDao.save(trainsCourseInfo, null);
 			courseId = trainsCourseInfo.getId();
 		} else {
 			TrainsCourseInfo trainsCourseInfoDB = getTrainsCourseInfo(courseId);
 			if(trainsCourseInfoDB == null) throw new MessageException("该课程已经不存在");
-			trainsCourseInfoDB.setCourseName(trainsCourseInfoDB.getCourseName());
-			trainsCourseInfoDB.setCourseNo(trainsCourseInfoDB.getCourseNo());
-			trainsCourseInfoDB.setCourseRemark(trainsCourseInfoDB.getCourseRemark());
+			trainsCourseInfoDB.setCourseName(trainsCourseInfo.getCourseName());
+			trainsCourseInfoDB.setCourseRemark(trainsCourseInfo.getCourseRemark());
+            trainsCourseInfoDB.setCourseStatus(trainsCourseInfo.getCourseStatus());
 			trainsCourseInfoDB.setUpdateTime(nowDate);
 			baseDao.save(trainsCourseInfoDB, courseId);
 		}
@@ -74,7 +73,7 @@ public class TrainsCourseServiceImpl extends BaseService implements ITrainsCours
 
 	@Override
 	public Map<String, Object> getTrainsCourseNames(){
-        List<Map<String, Object>> courseNames = baseDao.queryBySql("SELECT * FROM trains_course WHERE 1=1 ORDER BY createTime DESC");
+        List<Map<String, Object>> courseNames = baseDao.queryBySql("SELECT id, courseName FROM trains_course WHERE courseStatus='1' ORDER BY createTime ASC");
 
         Map<String, Object> resultMap = new HashMap<String, Object>();
         resultMap.put("courseNames", courseNames);
