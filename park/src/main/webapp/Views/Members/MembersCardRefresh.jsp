@@ -158,7 +158,17 @@
                             <label class="col-sm-2 control-label">新的卡号</label>
 
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="newCardNo" name="newCardNo" readonly>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="newCardNo" name="newCardNo"
+                                           placeholder="新会员卡号" autocomplete="off"
+                                           data-val="true" data-val-required="新会员卡号不能为空">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-warning">
+                                            <i class="glyphicon glyphicon-transfer"></i> 读取
+                                        </button>
+                                    </span>
+                                </div>
+                                <div data-valmsg-for="newCardNo" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">

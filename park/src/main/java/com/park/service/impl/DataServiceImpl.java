@@ -43,6 +43,26 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		sql.append(") GROUP BY mct.cardTypeId");
 		return baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
 	}
+
+    @Override
+    public List<Map<String, Object>> getMembersRegisterGroupDate(DataInputView dataInputView){
+        Integer countNum = dataInputView.getCountNum();
+        String createTimeStart = dataInputView.getCreateTimeStart();
+        String createTimeEnd = dataInputView.getCreateTimeEnd();
+
+        StringBuffer sql = new StringBuffer("SELECT mct.cardTypeName, mct.cardTypeMoney, COUNT(mc.cardId) count, COUNT(mc.cardId)*mct.cardTypeMoney countMoney, DATE_FORMAT(mc.createTime, '%Y-%m-%d') createDate FROM member_card_type mct");
+        sql.append(" LEFT JOIN member_card mc ON(mc.cardTypeId = mct.cardTypeId");
+        if(StrUtil.isNotBlank(createTimeStart)){
+            sql.append(" AND DATE(mc.createTime) >= :createTimeStart");
+        }
+        if(StrUtil.isNotBlank(createTimeEnd)){
+            sql.append(" AND DATE(mc.createTime) <= :createTimeEnd");
+        }
+        sql.append(getCountSql(countNum, "mc.createTime"));
+
+        sql.append(") GROUP BY mct.cardTypeId, DATE_FORMAT(mc.createTime, '%Y-%m-%d') ORDER BY mc.createTime");
+        return baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
+    }
 	
 	@Override
 	public Map<String, Object> countMembersRegister(List<Map<String, Object>> dataList){

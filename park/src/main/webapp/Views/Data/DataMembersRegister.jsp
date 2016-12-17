@@ -11,6 +11,7 @@
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/echarts/echarts.min.js?v=${static_resource_version}"></script>
     <script src="/Content/app/data/data_members_register.js?v=${static_resource_version}"></script>
     <script>
         $(".member-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
@@ -51,11 +52,20 @@
                         </a>
                     </div>
                     <div class="form-group pull-right">
-                        <a href="javascript:;" class="btn btn-primary goods-filter">
-                            <span class="glyphicon glyphicon-danger"></span> 导出数据
+                        <a href="javascript:;" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-export"></span> 导出数据
+                        </a>
+                        <a href="javascript:;" class="btn btn-primary data-chart">
+                            <span class="glyphicon glyphicon-stats"></span> 图表显示
                         </a>
                     </div>
                 </form>
+            </div>
+        </div>
+        <div class="panel panel-default chart-show">
+            <div class="panel-body">
+                <div id="chart_show" style="width: 100%;height:400px;"></div>
+                <input type="hidden" value="${charts}" id="data_charts">
             </div>
         </div>
         <div class="panel panel-default">

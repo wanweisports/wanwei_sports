@@ -26,6 +26,7 @@ public class DataController extends BaseController {
     	try {
     		model.addAllAttributes(JsonUtils.fromJson(dataInputView));
 			model.addAttribute("data", dataService.countMembersRegister(dataService.getMembersRegister(dataInputView)));
+            model.addAttribute("charts", JsonUtils.toJson(dataService.getMembersRegisterGroupDate(dataInputView)));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
