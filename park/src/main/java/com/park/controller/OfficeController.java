@@ -323,6 +323,7 @@ public class OfficeController extends BaseController {
             UserOperator userInfo = super.getUserInfo();
             trainsClassStudentsInputView.setSaleId(userInfo.getId());
             model.addAllAttributes(JsonUtils.fromJsonDF(trainsClassStudentsInputView));
+            model.addAttribute("classInfo", trainsClassService.getTrainsClassInfo(trainsClassStudentsInputView.getClassId()));
             PageBean pageBean = trainsClassStudentsService.getTrainsClassStudentsList(trainsClassStudentsInputView);
             super.setPageInfo(model, pageBean);
         } catch (Exception e) {
@@ -330,6 +331,21 @@ public class OfficeController extends BaseController {
         }
 
         return "Office/OfficeTrainsStudents";
+    }
+
+    // 培训报名详情
+    @ResponseBody
+    @RequestMapping(value = "getTrainsClassStudentsSign", method = RequestMethod.POST)
+    public ResponseBean getTrainsClassStudentsSign(int signId) {
+        try {
+            return new ResponseBean(JsonUtils.fromJson(trainsClassStudentsService.getTrainsClassStudentsSign(signId)));
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
     }
 
     // 培训学生报名

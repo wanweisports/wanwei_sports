@@ -20,9 +20,11 @@ public class TrainsClassStudentsServiceImpl extends BaseService implements ITrai
 
 	@Override
 	public PageBean getTrainsClassStudentsList(TrainsClassStudentsInputView trainsClassStudentsInputView){
-		StringBuilder headSql = new StringBuilder("SELECT tc.*, uo.operatorName");
-		StringBuilder bodySql = new StringBuilder(" FROM trains_course tc left join user_operator uo on tc.saleId=uo.id");
-		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
+	    Integer classId = trainsClassStudentsInputView.getClassId();
+
+		StringBuilder headSql = new StringBuilder("SELECT tcs.*, uo.operatorName");
+		StringBuilder bodySql = new StringBuilder("  FROM trains_class_students tcs LEFT JOIN user_operator uo ON tcs.saleId = uo.id");
+		StringBuilder whereSql = new StringBuilder("  WHERE tcs.classId = :classId ORDER BY tcs.signTime DESC");
 
 		return super.getPageBean(headSql, bodySql, whereSql, trainsClassStudentsInputView);
 	}
@@ -46,13 +48,20 @@ public class TrainsClassStudentsServiceImpl extends BaseService implements ITrai
 
 		if (signId == null) {
 			trainsClassStudents.setCreateTime(nowDate);
+            trainsClassStudents.setSignTime(nowDate);
+            trainsClassStudents.setUpdateTime(nowDate);
 			baseDao.save(trainsClassStudents, null);
 			signId = trainsClassStudents.getId();
 		} else {
 			TrainsClassStudents trainsClassStudentsDB = getTrainsClassStudentsSign(signId);
-			if(trainsClassStudentsDB == null) throw new MessageException("该班级已经不存在");
+			if(trainsClassStudentsDB == null) throw new MessageException("该报名已经不存在");
 			trainsClassStudentsDB.setClassId(trainsClassStudentsDB.getClassId());
 			trainsClassStudentsDB.setStudentName(trainsClassStudentsDB.getStudentName());
+            trainsClassStudentsDB.setStudentMobile(trainsClassStudentsDB.getStudentMobile());
+            trainsClassStudentsDB.setPayStatus(trainsClassStudentsDB.getPayStatus());
+            trainsClassStudentsDB.setPayPrice(trainsClassStudentsDB.getPayPrice());
+            trainsClassStudentsDB.setRemark(trainsClassStudentsDB.getRemark());
+            trainsClassStudentsDB.setUpdateTime(nowDate);
 			baseDao.save(trainsClassStudentsDB, signId);
 		}
 
@@ -61,13 +70,13 @@ public class TrainsClassStudentsServiceImpl extends BaseService implements ITrai
 
 	@Override
 	public Integer confirmTrainsClassStudentsPay(TrainsClassStudents trainsClassStudents){
-        String nowDate = DateUtil.getNowDate();
         Integer signId = trainsClassStudents.getId();
 
         TrainsClassStudents trainsClassStudentsDB = getTrainsClassStudentsSign(signId);
-        if(trainsClassStudentsDB == null) throw new MessageException("该班级已经不存在");
-        trainsClassStudentsDB.setClassId(trainsClassStudentsDB.getClassId());
-        trainsClassStudentsDB.setStudentName(trainsClassStudentsDB.getStudentName());
+        if(trainsClassStudentsDB == null) throw new MessageException("该报名已经不存在");
+        trainsClassStudentsDB.setPayStatus(trainsClassStudents.getPayStatus());
+        trainsClassStudentsDB.setPayPrice(trainsClassStudents.getPayPrice());
+        trainsClassStudentsDB.setRemark(trainsClassStudents.getRemark());
         baseDao.save(trainsClassStudentsDB, signId);
 
         return signId;

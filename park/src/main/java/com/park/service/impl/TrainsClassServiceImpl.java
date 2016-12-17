@@ -21,9 +21,12 @@ public class TrainsClassServiceImpl extends BaseService implements ITrainsClassS
 	@Override
 	public PageBean getTrainsClassList(TrainsClassInputView trainsClassInputView){
 		String className = trainsClassInputView.getClassName();
-        //Integer courseId = trainsClassInputView.getCourseId();
+        Integer courseId = trainsClassInputView.getCourseId();
 		
-		StringBuilder headSql = new StringBuilder("SELECT trc.*, uo.operatorName, tc.courseName");
+		StringBuilder headSql = new StringBuilder("SELECT trc.*, uo.operatorName, tc.courseName, COUNT(tcs.id) studentsCount,");
+        headSql.append(" (CURDATE() >= trc.startTime AND  CURDATE() <= trc.endTime) signClass,");
+        headSql.append(" (CURDATE() < trc.startTime) unSignClass,");
+        headSql.append(" (CURDATE() > trc.endTime) signedClass");
 		StringBuilder bodySql = new StringBuilder(" FROM trains_class trc LEFT JOIN user_operator uo ON trc.saleId=uo.id");
         bodySql.append(" LEFT JOIN trains_course tc ON tc.id=trc.id");
         bodySql.append(" LEFT JOIN trains_class_students tcs ON tcs.classId=trc.id");
@@ -32,12 +35,12 @@ public class TrainsClassServiceImpl extends BaseService implements ITrainsClassS
 		if(StrUtil.isNotBlank(className)){
 			whereSql.append(" AND className = :className");
 		}
-		/*if(courseId == null){
+		if(courseId != null){
 			whereSql.append(" AND courseId = :courseId");
-		}*/
-        whereSql.append(" ORDER BY trc.updateTime DESC");
+		}
+        whereSql.append(" GROUP BY trc.id ORDER BY trc.updateTime DESC");
 
-		return super.getPageBean(headSql, bodySql, whereSql, trainsClassInputView);
+		return super.getPageBean(headSql, bodySql, whereSql, trainsClassInputView, true);
 	}
 	
 	@Override
@@ -59,6 +62,7 @@ public class TrainsClassServiceImpl extends BaseService implements ITrainsClassS
 
 		if (classId == null) {
             trainsClassInfo.setCreateTime(nowDate);
+            trainsClassInfo.setUpdateTime(nowDate);
 			baseDao.save(trainsClassInfo, null);
             classId = trainsClassInfo.getId();
 		} else {
@@ -66,6 +70,12 @@ public class TrainsClassServiceImpl extends BaseService implements ITrainsClassS
 			if(trainsClassInfoDB == null) throw new MessageException("该班级已经不存在");
             trainsClassInfoDB.setClassName(trainsClassInfo.getClassName());
             trainsClassInfoDB.setClassRemark(trainsClassInfo.getClassRemark());
+            trainsClassInfoDB.setStartTime(trainsClassInfo.getStartTime());
+            trainsClassInfoDB.setEndTime(trainsClassInfo.getEndTime());
+            trainsClassInfoDB.setLeaderName(trainsClassInfo.getLeaderName());
+            trainsClassInfoDB.setLeaderMobile(trainsClassInfo.getLeaderMobile());
+            trainsClassInfoDB.setClassPrice(trainsClassInfo.getClassPrice());
+            trainsClassInfoDB.setCourseId(trainsClassInfo.getCourseId());
             trainsClassInfoDB.setUpdateTime(nowDate);
 			baseDao.save(trainsClassInfoDB, classId);
 		}

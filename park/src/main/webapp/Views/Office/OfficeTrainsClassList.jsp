@@ -20,6 +20,8 @@
             $('#class_form').validate({
                 ignore: ":hidden"
             });
+
+            $("#trains_filter_course").val('${courseId}');
         });
     </script>
 </layout:override>
@@ -35,15 +37,7 @@
             <div class="panel-body">
                 <form id="trains_filter_form" class="form-inline col-sm-8" onsubmit="return false;">
                     <div class="form-group">
-                        <select class="form-control" style="width: 160px;" name="status">
-                            <option value="">全部状态</option>
-                            <option value="1">未开始</option>
-                            <option value="2">报名中</option>
-                            <option value="3">已结束</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select class="form-control" style="width: 160px;" name="courseId">
+                        <select class="form-control" style="width: 160px;" name="courseId" id="trains_filter_course">
                             <option value="">全部课程</option>
                             <c:forEach var="course" items="${courseNames.courseNames}">
                                 <option value="${course.id}">${course.courseName}</option>
@@ -92,11 +86,27 @@
                                 <c:if test="${fn:length(item.classRemark) <= 10}">
                                     <td>${item.courseRemark}</td>
                                 </c:if>
-                                <td>${item.classPrice}元</td>
                                 <td>${item.courseName}</td>
-                                <td>${item.startTime} 至 ${item.endTime}</td>
-                                <td>0</td>
-                                <td class="text-danger">报名中</td>
+                                <td>${item.classPrice}元</td>
+                                <c:if test="${item.unSignClass == 1}">
+                                    <td class="text-danger">${item.startTime} 至 ${item.endTime}</td>
+                                    <td class="text-danger">0名</td>
+                                    <td class="text-danger">未开始</td>
+                                </c:if>
+                                <c:if test="${item.signClass == 1}">
+                                    <td class="text-success">${item.startTime} 至 ${item.endTime}</td>
+                                    <td class="text-success">
+                                        <a href="/office/getTrainsStudents?classId=${item.id}">${item.studentsCount}名</a>
+                                    </td>
+                                    <td class="text-success">报名中</td>
+                                </c:if>
+                                <c:if test="${item.signedClass == 1}">
+                                    <td class="text-muted">${item.startTime} 至 ${item.endTime}</td>
+                                    <td class="text-muted">
+                                        <a href="/office/getTrainsStudents?classId=${item.id}">${item.studentsCount}名</a>
+                                    </td>
+                                    <td class="text-muted">已结束</td>
+                                </c:if>
                                 <td>${item.leaderName}</td>
                                 <td>${item.leaderMobile}</td>
                                 <td>
@@ -299,7 +309,7 @@
 
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="class_price" name="classPrice"
-                                       placeholder="联系手机" autocomplete="off"
+                                       placeholder="班级价格" autocomplete="off"
                                        data-val="true" data-val-required="班级价格不能为空">
                                 <div data-valmsg-for="classPrice" data-valmsg-replace="true"></div>
                             </div>
@@ -308,64 +318,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary class-confirm">
-                        <span class="glyphicon glyphicon-ok"></span> 确 定
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="add_sign_modal" tabindex="-1" role="dialog" aria-labelledby="add_sign_modal_label">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="add_sign_modal_label">我要报名</h5>
-                </div>
-                <div class="modal-body" style="overflow: hidden;">
-                    <form id="sign_form" class="form-horizontal" onsubmit="return false;">
-                        <div class="form-group">
-                            <label for="sign_name" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 姓名
-                            </label>
-
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="sign_name" name="trainsName"
-                                       placeholder="姓名" autocomplete="off"
-                                       data-val="true" data-val-required="姓名不能为空"
-                                       data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,5}$"
-                                       data-val-regex="姓名长度只能2~6个字符">
-                                <div data-valmsg-for="trainsName" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="trains_contact_phone" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 联系电话
-                            </label>
-
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="trains_contact_phone" name="contactPhone"
-                                       placeholder="联系电话" autocomplete="off"
-                                       data-val="true" data-val-required="手机号码不能为空"
-                                       data-val-regex-pattern="^1\d{10}$"
-                                       data-val-regex="手机号码格式错误">
-                                <div data-valmsg-for="contactPhone" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="trains_sign_desc" class="col-sm-4 control-label">备注</label>
-
-                            <div class="col-sm-8">
-                                        <textarea class="form-control" id="trains_sign_desc" name="trainsDesc" rows="3"
-                                                  placeholder="备注"></textarea>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>

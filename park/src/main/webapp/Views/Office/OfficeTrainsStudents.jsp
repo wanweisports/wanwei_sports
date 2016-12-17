@@ -6,71 +6,74 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="/Content/app/settings/settings_notification.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/office/office_trains_students.js?v=${static_resource_version}"></script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>办公系统</span> &gt;&gt; <span>培训报名</span> &gt;&gt; <span>报名学生</span>
+    当前位置: <span>办公系统</span> &gt;&gt; <span>培训班级管理</span> &gt;&gt; <span>学生报名</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
-            <div class="panel-heading">报名学生</div>
+            <div class="panel-heading">学生报名</div>
             <div class="panel-body">
-                <button type="button" class="btn btn-warning" data-toggle="modal"
-                        data-target="#signModal" data-backdrop="false">
-                    <span class="glyphicon glyphicon-user"></span> 我要报名
-                </button>
+                <h3>${classInfo.className}</h3>
+                <p>${classInfo.classRemark}</p>
+                <p>
+                    <button type="button" class="btn btn-warning add-sign" data-toggle="modal"
+                            data-target="#student_sign_modal" data-backdrop="false">
+                        <span class="glyphicon glyphicon-user"></span> 我要报名
+                    </button>
+                </p>
             </div>
         </div>
         <div class="panel panel-default">
             <div class="panel-body">
-                <div class="table-responsive">
+                <div class="table-responsive sign-list">
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>序号</th>
-                            <th>姓名</th>
+                            <th>学生姓名</th>
                             <th>联系电话</th>
+                            <th>支付状态</th>
+                            <th>支付价格</th>
+                            <th>报名时间</th>
                             <th>备注</th>
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th>1</th>
-                            <td>张三三</td>
-                            <td>110****4363</td>
-                            <td></td>
-                            <td>
-                                <button type="button" class="btn btn-danger">
-                                    <span class="glyphicon glyphicon-trash"></span> 移除
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>2</th>
-                            <td>张三三</td>
-                            <td>110****4363</td>
-                            <td></td>
-                            <td>
-                                <button type="button" class="btn btn-danger">
-                                    <span class="glyphicon glyphicon-trash"></span> 移除
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>3</th>
-                            <td>张三三</td>
-                            <td>110****4363</td>
-                            <td></td>
-                            <td>
-                                <button type="button" class="btn btn-danger">
-                                    <span class="glyphicon glyphicon-trash"></span> 移除
-                                </button>
-                            </td>
-                        </tr>
+                        <c:forEach var="student" items="${list}">
+                            <tr>
+                                <td>${student.studentName}</td>
+                                <td>${student.studentMobile}</td>
+                                <c:if test="${student.payStatus == 1}">
+                                    <td class="text-success">已支付</td>
+                                    <td class="text-success">${student.payPrice}</td>
+                                </c:if>
+                                <c:if test="${student.payStatus == 2}">
+                                    <td class="text-danger">未支付</td>
+                                    <td class="text-danger">${student.payPrice}</td>
+                                </c:if>
+                                <td>${student.signTime}</td>
+                                <td>${student.remark}</td>
+                                <td>
+                                    <c:if test="${student.payStatus == 2}">
+                                        <button type="button" class="btn btn-warning sign-pay" data-id="${student.id}"
+                                                data-toggle="modal" data-target="#student_pay_modal" data-backdrop="false"
+                                                data-price="${classInfo.classPrice}">
+                                            <span class="glyphicon glyphicon-usd"></span> 支付
+                                        </button>
+                                    </c:if>
+                                    <button type="button" class="btn btn-danger sign-delete" data-id="${student.id}">
+                                        <span class="glyphicon glyphicon-trash"></span> 移除
+                                    </button>
+                                </td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                     <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >
@@ -142,57 +145,151 @@
         </div>
     </div>
 
-    <div class="modal fade" id="signModal" tabindex="-1" role="dialog" aria-labelledby="signModalLabel">
+    <div class="modal fade" id="student_sign_modal" tabindex="-1" role="dialog" aria-labelledby="student_sign_modal_label">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h5 class="modal-title" id="signModalLabel">我要报名</h5>
+                    <h5 class="modal-title" id="student_sign_modal_label">我要报名</h5>
                 </div>
                 <div class="modal-body" style="overflow: hidden;">
-                    <form class="form-horizontal" onsubmit="return false;">
+                    <form id="students_form" class="form-horizontal" onsubmit="return false;">
+                        <input type="hidden" name="classId" id="students_class_id" value="${classInfo.id}">
                         <div class="form-group">
-                            <label for="trains_sign_name" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 姓名
+                            <label for="students_sign_name" class="col-sm-3 control-label">
+                                <span class="text-danger">*</span> 学生姓名
                             </label>
 
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="trains_sign_name" name="trainsName"
-                                       placeholder="姓名" autocomplete="off"
-                                       data-val="true" data-val-required="姓名不能为空"
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="students_sign_name" name="studentName"
+                                       placeholder="学生姓名" autocomplete="off"
+                                       data-val="true" data-val-required="学生姓名不能为空"
                                        data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,5}$"
                                        data-val-regex="姓名长度只能2~6个字符">
-                                <div data-valmsg-for="trainsName" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="studentName" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="trains_contact_phone" class="col-sm-4 control-label">
+                            <label for="students_contact_phone" class="col-sm-3 control-label">
                                 <span class="text-danger">*</span> 联系电话
                             </label>
 
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="trains_contact_phone" name="contactPhone"
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="students_contact_phone" name="studentMobile"
                                        placeholder="联系电话" autocomplete="off"
                                        data-val="true" data-val-required="手机号码不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
                                        data-val-regex="手机号码格式错误">
-                                <div data-valmsg-for="contactPhone" data-valmsg-replace="true"></div>
+                                <div data-valmsg-for="studentMobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="trains_sign_desc" class="col-sm-4 control-label">备注</label>
+                            <label for="students_pay_status1" class="col-sm-3 control-label">
+                                <span class="text-danger">*</span> 支付状态
+                            </label>
 
-                            <div class="col-sm-8">
-                                        <textarea class="form-control" id="trains_sign_desc" name="trainsDesc" rows="3"
-                                                  placeholder="备注"></textarea>
+                            <div class="col-sm-9 text-left">
+                                <label class="radio-inline">
+                                    <input type="radio" name="payStatus" id="students_pay_status1" value="1"> 已支付
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="payStatus" id="students_pay_status2" value="2" checked> 未支付
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="students_class_price" class="col-sm-3 control-label">
+                                <span class="text-danger">*</span> 支付价格
+                            </label>
+
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="students_class_price" name="payPrice"
+                                       placeholder="支付价格" autocomplete="off" value="${classInfo.classPrice}"
+                                       data-val="true" data-val-required="支付价格不能为空">
+                                <div data-valmsg-for="payPrice" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="trains_sign_desc" class="col-sm-3 control-label">备注</label>
+
+                            <div class="col-sm-9">
+                                <textarea class="form-control" id="trains_sign_desc" name="remark" rows="3"
+                                          placeholder="备注"></textarea>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">
+                    <button type="button" class="btn btn-primary sign-confirm">
+                        <span class="glyphicon glyphicon-ok"></span> 确 定
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="student_pay_modal" tabindex="-1" role="dialog" aria-labelledby="student_pay_modal_label">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="student_pay_modal_label">我要支付</h5>
+                </div>
+                <div class="modal-body" style="overflow: hidden;">
+                    <form id="students_pay_form" class="form-horizontal" onsubmit="return false;">
+                        <input type="hidden" name="id" id="students_id">
+                        <div class="form-group">
+                            <label for="students_status1" class="col-sm-3 control-label">
+                                <span class="text-danger">*</span> 支付状态
+                            </label>
+
+                            <div class="col-sm-9 text-left">
+                                <label class="radio-inline">
+                                    <input type="radio" name="payStatus" id="students_status1" value="1"> 已支付
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="payStatus" id="students_status2" value="2" checked> 未支付
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="students_paid_price" class="col-sm-3 control-label">
+                                <span class="text-danger">*</span> 已支付
+                            </label>
+
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="students_paid_price" name="paidPrice" disabled
+                                       placeholder="已支付价格" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="students_pay_price" class="col-sm-3 control-label">
+                                <span class="text-danger">*</span> 总支付
+                            </label>
+
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="students_pay_price" name="payPrice"
+                                       placeholder="输入总支付金额" autocomplete="off" value="${classInfo.classPrice}"
+                                       data-val="true" data-val-required="输入总支付金额不能为空">
+                                <div data-valmsg-for="payPrice" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="trains_pay_remark" class="col-sm-3 control-label">备注</label>
+
+                            <div class="col-sm-9">
+                                <textarea class="form-control" id="trains_pay_remark" name="remark" rows="3"
+                                          placeholder="备注"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary pay-confirm">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>
@@ -203,5 +300,5 @@
 
 <c:import url="../Shared/Layout_New.jsp">
     <c:param name="nav" value="office"/>
-    <c:param name="subNav" value="trains"/>
+    <c:param name="subNav" value="class"/>
 </c:import>

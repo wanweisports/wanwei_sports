@@ -76,6 +76,7 @@
                 $("#add_class_modal").find("#end_date").val(data.endTime || '');
                 $("#add_class_modal").find("#leader_teacher").val(data.leaderName || '');
                 $("#add_class_modal").find("#contact_phone").val(data.leaderMobile || '');
+                $("#add_class_modal").find("#class_price").val(data.classPrice || '0');
             }
 
             // 查询
