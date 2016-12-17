@@ -26,11 +26,22 @@ public class DataController extends BaseController {
     	try {
     		model.addAllAttributes(JsonUtils.fromJson(dataInputView));
 			model.addAttribute("data", dataService.countMembersRegister(dataService.getMembersRegister(dataInputView)));
-            model.addAttribute("charts", JsonUtils.toJson(dataService.getMembersRegisterGroupDate(dataInputView)));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
         return "Data/DataMembersRegister";
+    }
+
+    // 会员注册统计按照注册日期
+    @RequestMapping("getMembersRegisterGroupDate")
+    public String getMembersRegisterGroupDate(DataInputView dataInputView, Model model) {
+        try {
+            model.addAllAttributes(JsonUtils.fromJson(dataInputView));
+            model.addAttribute("data", dataService.getMembersRegisterGroupDate(dataInputView));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Data/DataMembersRegisterGroupDate";
     }
 
     // 用户签到记录

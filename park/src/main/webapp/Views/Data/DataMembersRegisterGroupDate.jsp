@@ -12,7 +12,7 @@
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/echarts/echarts.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/app/data/data_members_register.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/data/data_members_register_charts.js?v=${static_resource_version}"></script>
     <script>
         $(".member-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
         $(".member-date[data-count='${countNum}']").addClass("btn-primary").removeClass("btn-default");
@@ -20,13 +20,13 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>数据统计</span> &gt;&gt; <span>会员办理统计</span>
+    当前位置: <span>数据统计</span> &gt;&gt; <span>会员办理统计</span> &gt;&gt; <span>图表统计</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
-            <div class="panel-heading">会员办理统计</div>
+            <div class="panel-heading">图表统计</div>
             <div class="panel-body">
                 <form id="data_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
@@ -53,48 +53,16 @@
                     </div>
                     <div class="form-group pull-right">
                         <a href="javascript:;" class="btn btn-danger">
-                            <span class="glyphicon glyphicon-export"></span> 导出数据
-                        </a>
-                        <a href="/data/getMembersRegisterGroupDate" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-stats"></span> 图表显示
+                            <span class="glyphicon glyphicon-download"></span> 下载图片
                         </a>
                     </div>
                 </form>
             </div>
         </div>
-        <div class="panel panel-default">
+        <div class="panel panel-default chart-show">
             <div class="panel-body">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>序号</th>
-                            <th>会员类型</th>
-                            <th>单价</th>
-                            <th>销售数量</th>
-                            <th>销售金额</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach var="member" items="${data.list}" varStatus="loop">
-                            <tr>
-                                <td>${loop.index + 1}</td>
-                                <td>${member.cardTypeName}</td>
-                                <td>${member.cardTypeMoney}元</td>
-                                <td>${member.count}个</td>
-                                <td>${member.countMoney}元</td>
-                            </tr>
-                        </c:forEach>
-                        <tr class="info">
-                            <th></th>
-                            <th></th>
-                            <th>合计</th>
-                            <th>${data.sumCount}个</th>
-                            <th>${data.sumCountMoney}元</th>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <div id="chart_show" style="width: 100%;height:600px;"></div>
+                <input type="hidden" value="${charts}" id="data_charts">
             </div>
         </div>
     </div>
