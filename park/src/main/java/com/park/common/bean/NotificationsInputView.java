@@ -27,6 +27,8 @@ public class NotificationsInputView extends BaseInputView {
 
     private String noteUpdateTime;
 
+    private String noteSendTime;
+
     public Integer getNoteId() {
         return noteId;
     }
@@ -110,4 +112,13 @@ public class NotificationsInputView extends BaseInputView {
     public void setNoteUpdateTime(String noteUpdateTime) {
         this.noteUpdateTime = noteUpdateTime;
     }
+
+    public String getNoteSendTime() {
+        return noteSendTime;
+    }
+
+    public void setNoteSendTime(String noteSendTime) {
+        this.noteSendTime = noteSendTime;
+    }
+
 }

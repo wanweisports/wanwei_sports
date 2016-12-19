@@ -54,73 +54,43 @@
                         <thead>
                         <tr>
                             <th>选择</th>
-                            <th>发送标题</th>
-                            <th>发送内容</th>
-                            <th>有无附件</th>
+                            <th>消息标题</th>
+                            <th>消息内容</th>
                             <th>发送时间</th>
                             <th>发件人</th>
                             <th>通知状态</th>
+                            <th>阅读时间</th>
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>
-                                <label>
-                                    <input type="checkbox" name="noteId" value="1">
-                                </label>
-                            </td>
-                            <td>关于2016年场馆建设意见</td>
-                            <td>关于2016年场馆建设意见, 关于2016年场馆建设意见....</td>
-                            <td>无</td>
-                            <td>2016-12-11 10:11</td>
-                            <td>李洪旭</td>
-                            <td class="text-danger">未读</td>
-                            <td>
-                                <a href="#fasongModal" class="btn btn-primary notifications-view" data-toggle="modal"
-                                   data-backdrop="false" data-id="${note.noteId}">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>关于2016年场馆建设意见</td>
-                            <td>关于2016年场馆建设意见, 关于2016年场馆建设意见....</td>
-                            <td>2个文件</td>
-                            <td>2016-12-11 10:11</td>
-                            <td>李洪旭</td>
-                            <td class="text-success">已读</td>
-                            <td>
-                                <a href="#fasongModal" class="btn btn-primary notifications-view" data-toggle="modal"
-                                   data-backdrop="false" data-id="${note.noteId}">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </a>
-                                <a href="#deleteModal" class="btn btn-danger notifications-del" data-toggle="modal"
-                                   data-backdrop="false" data-id="${note.noteId}">
-                                    <span class="glyphicon glyphicon-trash"></span> 删除
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>关于2016年场馆建设意见</td>
-                            <td>关于2016年场馆建设意见, 关于2016年场馆建设意见....</td>
-                            <td>5个文件</td>
-                            <td>2016-12-11 10:11</td>
-                            <td>李洪旭</td>
-                            <td class="text-success">已读</td>
-                            <td>
-                                <a href="#fasongModal" class="btn btn-primary notifications-view" data-toggle="modal"
-                                   data-backdrop="false" data-id="${note.noteId}">
-                                    <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                </a>
-                                <a href="#deleteModal" class="btn btn-danger notifications-del" data-toggle="modal"
-                                   data-backdrop="false" data-id="${note.noteId}">
-                                    <span class="glyphicon glyphicon-trash"></span> 删除
-                                </a>
-                            </td>
-                        </tr>
+                        <c:forEach var="note" items="${list}">
+                            <tr>
+                                <td>${note.noteTitle}</td>
+                                <td>${note.noteContent.substring(0, 28)}...</td>
+
+                                <td>${note.noteSendTime}</td>
+                                <td>${note.operatorName}</td>
+
+                                <c:if test="${note.noteReceiverStatus == 1}">
+                                    <td class="text-success">已读</td>
+                                </c:if>
+                                <c:if test="${note.noteReceiverStatus == 2}">
+                                    <td class="text-danger">未读</td>
+                                </c:if>
+                                <td>${note.noteReadTime}</td>
+
+                                <td>
+                                    <a href="#fasongModal" class="btn btn-primary notifications-view" data-toggle="modal"
+                                       data-backdrop="false" data-id="${note.noteId}">
+                                        <span class="glyphicon glyphicon-share-alt"></span> 查看
+                                    </a>
+                                    <a href="javascript:;" class="btn btn-danger">
+                                        <span class="glyphicon glyphicon-remove"></span> 删除
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                     <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >

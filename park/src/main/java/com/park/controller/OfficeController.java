@@ -38,7 +38,7 @@ public class OfficeController extends BaseController {
     @Autowired
     private IOperatorService operatorService;
 
-    // 通知管理
+    // 获取发件人的通知管理
     @RequestMapping("notifications")
     public String notifications(NotificationsInputView notificationsInputView, Model model) {
         try {
@@ -86,33 +86,15 @@ public class OfficeController extends BaseController {
 
     // 通知管理保存
     @ResponseBody
-    @RequestMapping(value = "saveNotifications", method = RequestMethod.POST)
-    public ResponseBean saveNotifications(NotificationsInfo notificationsInfo, MultipartHttpServletRequest multipartRequest) {
+    @RequestMapping(value = "sendNotifications", method = RequestMethod.POST)
+    public ResponseBean saveNotifications(NotificationsInfo notificationsInfo) {
         try {
             UserOperator userInfo = super.getUserInfo();
             notificationsInfo.setNoteSender(userInfo.getId());
 
-            Integer noteId = notificationsService.saveSetNotification(notificationsInfo, multipartRequest);
+            Integer noteId = notificationsService.saveSetNotification(notificationsInfo);
             Map<String, Object> data = new HashMap<String, Object>();
             data.put("noteId", noteId);
-            return new ResponseBean(data);
-        } catch (MessageException e) {
-            e.printStackTrace();
-            return new ResponseBean(e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseBean(false);
-        }
-    }
-
-    // 通知管理保存
-    @ResponseBody
-    @RequestMapping(value = "sendNotifications", method = RequestMethod.POST)
-    public ResponseBean sendNotifications(int noteId) {
-        try {
-            Integer notificationId = notificationsService.saveSendNotification(noteId);
-            Map<String, Object> data = new HashMap<String, Object>();
-            data.put("noteId", notificationId);
             return new ResponseBean(data);
         } catch (MessageException e) {
             e.printStackTrace();

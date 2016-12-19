@@ -28,6 +28,7 @@ public class NotificationsInfo implements java.io.Serializable {
 	private String noteCreateTime;
 	private String noteReadTime;
     private String noteUpdateTime;
+	private String noteSendTime;
 
 	// Constructors
 
@@ -48,7 +49,7 @@ public class NotificationsInfo implements java.io.Serializable {
 	/** full constructor */
 	public NotificationsInfo(String noteTitle, String noteContent, Integer noteSender, Integer noteReceiver,
                              String noteAttachments, String noteSenderStatus, String noteReceiverStatus,
-							 String noteCreateTime, String noteReadTime, String noteUpdateTime) {
+							 String noteCreateTime, String noteReadTime, String noteUpdateTime, String noteSendTime) {
         this.noteTitle = noteTitle;
         this.noteContent = noteContent;
         this.noteSender = noteSender;
@@ -59,6 +60,7 @@ public class NotificationsInfo implements java.io.Serializable {
         this.noteCreateTime = noteCreateTime;
         this.noteReadTime = noteReadTime;
         this.noteUpdateTime = noteUpdateTime;
+		this.noteSendTime = noteSendTime;
 	}
 
 	// Property accessors
@@ -162,4 +164,14 @@ public class NotificationsInfo implements java.io.Serializable {
     public void setNoteUpdateTime(String noteUpdateTime) {
         this.noteUpdateTime = noteUpdateTime;
     }
+
+    @Column(name = "noteSendTime", length = 20)
+    public String getNoteSendTime() {
+        return this.noteSendTime;
+    }
+
+    public void setNoteSendTime(String noteSendTime) {
+        this.noteSendTime = noteSendTime;
+    }
+
 }

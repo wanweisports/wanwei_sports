@@ -29,7 +29,7 @@ public class NotificationsServiceImpl extends BaseService implements INotificati
         String noteSenderStatus = notificationsInputView.getNoteSenderStatus();
         Integer noteSender = notificationsInputView.getNoteSender();
 		
-		StringBuilder headSql = new StringBuilder("SELECT noteId, noteTitle, noteContent, noteReceiver, noteAttachments, noteCreateTime, noteReadTime, noteSenderStatus, uo.operatorName");
+		StringBuilder headSql = new StringBuilder("SELECT un.*, uo.operatorName");
 		StringBuilder bodySql = new StringBuilder(" FROM user_notifications un left join user_operator uo on un.noteReceiver=uo.id");
 		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
         whereSql.append(" AND noteSender = :noteSender");
@@ -39,6 +39,7 @@ public class NotificationsServiceImpl extends BaseService implements INotificati
 		if(StrUtil.isNotBlank(noteSenderStatus)){
 			whereSql.append(" AND noteSenderStatus = :noteSenderStatus");
 		}
+        whereSql.append(" ORDER BY noteSendTime DESC");
 		return super.getPageBean(headSql, bodySql, whereSql, notificationsInputView);
 	}
 
@@ -48,7 +49,7 @@ public class NotificationsServiceImpl extends BaseService implements INotificati
 		String noteReceiverStatus = notificationsInputView.getNoteReceiverStatus();
         Integer noteReceiver = notificationsInputView.getNoteReceiver();
 
-		StringBuilder headSql = new StringBuilder("SELECT noteId, noteTitle, noteContent, noteReceiver, noteAttachments, noteCreateTime, noteReadTime, noteReceiverStatus, uo.operatorName");
+		StringBuilder headSql = new StringBuilder("SELECT un.*, uo.operatorName");
 		StringBuilder bodySql = new StringBuilder(" FROM user_notifications un left join user_operator uo on un.noteReceiver=uo.id");
 		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
         whereSql.append(" AND noteReceiver = :noteReceiver");
@@ -58,6 +59,7 @@ public class NotificationsServiceImpl extends BaseService implements INotificati
 		if(StrUtil.isNotBlank(noteReceiverStatus)){
 			whereSql.append(" AND noteReceiverStatus = :noteReceiverStatus");
 		}
+        whereSql.append(" ORDER BY noteSendTime DESC");
 		return super.getPageBean(headSql, bodySql, whereSql, notificationsInputView);
 	}
 	
@@ -74,34 +76,29 @@ public class NotificationsServiceImpl extends BaseService implements INotificati
 	}
 	
 	@Override
-	public Integer saveSetNotification(NotificationsInfo notificationInfo, MultipartHttpServletRequest multipartRequest) throws IOException {
+	public Integer saveSetNotification(NotificationsInfo notificationInfo) throws IOException {
 		String nowDate = DateUtil.getNowDate();
         Integer noteId = notificationInfo.getNoteId();
 
 		if (noteId == null) {
             notificationInfo.setNoteCreateTime(nowDate);
-            notificationInfo.setNoteSenderStatus(IDBConstant.NOTIFICATIONS_SENDER_EDIT);
+			notificationInfo.setNoteUpdateTime(nowDate);
+            notificationInfo.setNoteSenderStatus(IDBConstant.NOTIFICATIONS_SENDER_NO);
+			notificationInfo.setNoteSendTime(nowDate);
+			notificationInfo.setNoteReceiverStatus(IDBConstant.NOTIFICATIONS_RECEIVER_NO);
             notificationInfo.setNoteAttachments("");
-            notificationInfo.setNoteReceiver(0);
 			baseDao.save(notificationInfo, null);
 			noteId = notificationInfo.getNoteId();
 		} else {
             NotificationsInfo notificationInfoDB = getNotificationInfo(noteId);
 			if(notificationInfoDB == null) throw new MessageException("该通知消息不存在");
-            notificationInfoDB.setNoteTitle(notificationInfoDB.getNoteTitle());
-            notificationInfoDB.setNoteContent(notificationInfoDB.getNoteContent());
-            notificationInfoDB.setNoteAttachments(notificationInfoDB.getNoteAttachments());
-            notificationInfoDB.setNoteReceiver(notificationInfoDB.getNoteReceiver());
-            notificationInfo.setNoteReceiverStatus(IDBConstant.NOTIFICATIONS_SENDER_EDIT);
-            notificationInfoDB.setNoteUpdateTime(nowDate);
+            notificationInfoDB.setNoteTitle(notificationInfo.getNoteTitle());
+            notificationInfoDB.setNoteContent(notificationInfo.getNoteContent());
+            notificationInfoDB.setNoteReceiver(notificationInfo.getNoteReceiver());
+            notificationInfo.setNoteSenderStatus(IDBConstant.NOTIFICATIONS_SENDER_YES);
+            notificationInfo.setNoteReceiverStatus(IDBConstant.NOTIFICATIONS_RECEIVER_YES);
+            notificationInfo.setNoteReadTime(nowDate);
 			baseDao.save(notificationInfoDB, noteId);
-		}
-
-		List<MultipartFile> multipartFiles = FileUtil.getMultipartFiles(multipartRequest);
-		if(multipartFiles.size() > 0){
-			NotificationsInfo notificationInfoDB = getNotificationInfo(noteId);
-            notificationInfoDB.setNoteAttachments(FileUtil.saveFile(multipartFiles.get(0), multipartRequest).toString());
-			baseDao.save(notificationInfoDB, notificationInfoDB.getNoteId());
 		}
 
 		return noteId;
@@ -129,9 +126,10 @@ public class NotificationsServiceImpl extends BaseService implements INotificati
         NotificationsInfo notificationInfo = getNotificationInfo(noteId);
         notificationInfo.setNoteSenderStatus(IDBConstant.NOTIFICATIONS_SENDER_YES);
         notificationInfo.setNoteReceiverStatus(IDBConstant.NOTIFICATIONS_RECEIVER_YES);
+        notificationInfo.setNoteReadTime(nowDate);
         notificationInfo.setNoteUpdateTime(nowDate);
-		baseDao.updateBySql("UPDATE user_notifications SET noteReceiverStatus = ?, noteRSenderStatus = ? WHERE noteId = ?",
-                IDBConstant.NOTIFICATIONS_RECEIVER_YES, IDBConstant.NOTIFICATIONS_SENDER_YES, noteId);
+
+        baseDao.save(notificationInfo, noteId);
 	}
 }
 

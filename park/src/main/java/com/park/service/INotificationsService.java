@@ -15,7 +15,7 @@ public interface INotificationsService {
 
     public NotificationsInfo getNotificationInfo(int noteId);
 	
-	public Integer saveSetNotification(NotificationsInfo notificationInfo, MultipartHttpServletRequest multipartRequest) throws IOException;
+	public Integer saveSetNotification(NotificationsInfo notificationInfo) throws IOException;
 
     public Integer saveSendNotification(int noteId);
 

@@ -36,9 +36,6 @@
                             <span class="glyphicon glyphicon-send"></span> 发件箱
                         </a>
                         <a href="javascript:;" class="btn btn-default">
-                            <span class="glyphicon glyphicon-edit"></span> 草稿箱
-                        </a>
-                        <a href="javascript:;" class="btn btn-default">
                             <span class="glyphicon glyphicon-trash"></span> 垃圾箱
                         </a>
                     </div>
@@ -66,12 +63,12 @@
                     <table class="table notifications-list">
                         <thead>
                         <tr>
-                            <th>发送标题</th>
-                            <th>发送内容</th>
-                            <th>有无附件</th>
-                            <th>创建时间</th>
+                            <th>通知标题</th>
+                            <th>通知内容</th>
                             <th>发送时间</th>
                             <th>收件人</th>
+                            <th>通知状态</th>
+                            <th>阅读时间</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -81,31 +78,25 @@
                                 <td>${note.noteTitle}</td>
                                 <td>${note.noteContent.substring(0, 28)}...</td>
 
-                                <td>${note.noteAttachments}</td>
-
-                                <td>${note.noteCreateTime}</td>
-                                <td>${note.noteUpdateTime}</td>
+                                <td>${note.noteSendTime}</td>
                                 <td>${note.operatorName}</td>
 
+                                <c:if test="${note.noteReceiverStatus == 1}">
+                                    <td class="text-success">已读</td>
+                                </c:if>
+                                <c:if test="${note.noteReceiverStatus == 2}">
+                                    <td class="text-danger">未读</td>
+                                </c:if>
+                                <td>${note.noteReadTime}</td>
+
                                 <td>
-                                    <c:if test="${note.noteSenderStatus == 3}">
-                                        <a href="#fasongModal" class="btn btn-primary notifications-view" data-toggle="modal"
-                                           data-backdrop="false" data-id="${note.noteId}" data-edit="1">
-                                            <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                        </a>
-                                        <a href="javascript:;" class="btn btn-danger">
-                                            <span class="glyphicon glyphicon-remove"></span> 删除
-                                        </a>
-                                    </c:if>
-                                    <c:if test="${note.noteSenderStatus == 1 || note.noteSenderStatus == 2}">
-                                        <a href="#senderModal" class="btn btn-primary notifications-view" data-toggle="modal"
-                                           data-backdrop="false" data-id="${note.noteId}" data-edit="2">
-                                            <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                        </a>
-                                        <a href="javascript:;" class="btn btn-danger">
-                                            <span class="glyphicon glyphicon-remove"></span> 删除
-                                        </a>
-                                    </c:if>
+                                    <a href="#fasongModal" class="btn btn-primary notifications-view" data-toggle="modal"
+                                       data-backdrop="false" data-id="${note.noteId}">
+                                        <span class="glyphicon glyphicon-share-alt"></span> 查看
+                                    </a>
+                                    <a href="javascript:;" class="btn btn-danger">
+                                        <span class="glyphicon glyphicon-remove"></span> 删除
+                                    </a>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -180,54 +171,6 @@
         </div>
     </div>
 
-    <div class="modal fade" id="senderModal" tabindex="-1" role="dialog" aria-labelledby="senderModalLabel">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="senderModalLabel">消息通知</h5>
-                </div>
-                <div class="modal-body" style="text-align: left;">
-                    <form class="form-horizontal" onsubmit="return false;">
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">收件人</label>
-                            <div class="col-sm-10">
-                                <select class="form-control" id="note_receiver1" name="noteReceiver">
-                                    <c:forEach var="operator" items="${operators}">
-                                        <option value="${operator.id}">${operator.operatorName}(${operator.roleName})</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">通知标题</label>
-                            <div class="col-sm-10">
-                                <p class="note-title"></p>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">通知内容</label>
-                            <div class="col-sm-10">
-                                <p class="note-content"></p>
-                            </div>
-                        </div>
-                    </form>
-                    <!--<p>通知附件:</p>
-                    <p><a href="" class="btn btn-link">2016年度场馆建设意见草稿.doc</a></p>
-                    <p><a href="" class="btn btn-link">2016年度场馆建设.xls</a></p>
-                    <p><a href="" class="btn btn-link">2016年度场馆建设意.jpg</a></p>-->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default">
-                        <span class="glyphicon glyphicon-remove"></span> 关 闭
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="modal fade" id="fasongModal" tabindex="-1" role="dialog" aria-labelledby="fasongModalLabel">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -239,23 +182,30 @@
                 </div>
                 <div class="modal-body">
                     <form id="notification_form" class="form-horizontal" role="form" onsubmit="return false;">
-                        <input type="hidden" id="note_id" name="noteId">
+                        <input type="hidden" id="note_id" name="noteId" value="0">
                         <div class="form-group">
-                            <label for="note_receiver" class="col-sm-2 control-label">收件人</label>
-                            <div class="col-sm-10">
-                                <select class="form-control" id="note_receiver" name="noteReceiver"
-                                        data-val="true" data-val-required="请选择收件人">
+                            <div class="col-sm-offset-3 col-sm-9 note-receivers">
+                                <input type="hidden" id="note_receivers" name="noteReceivers">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="note_receiver" class="col-sm-3 control-label">
+                                <span class="text-danger">*</span> 收件人
+                            </label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="note_receiver" name="noteReceiver">
                                     <option value="">请选择</option>
                                     <c:forEach var="operator" items="${operators}">
                                         <option value="${operator.id}">${operator.operatorName}(${operator.roleName})</option>
                                     </c:forEach>
                                 </select>
-                                <div data-valmsg-for="noteReceiver" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="note_title" class="col-sm-2 control-label">通知标题</label>
-                            <div class="col-sm-10">
+                            <label for="note_title" class="col-sm-3 control-label">
+                                <span class="text-danger">*</span> 通知标题
+                            </label>
+                            <div class="col-sm-9">
                                 <input type="text" class="form-control" id="note_title" name="noteTitle"
                                        placeholder="通知标题" autocomplete="off"
                                        data-val="true" data-val-required="通知标题不能为空">
@@ -263,30 +213,25 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="note_title" class="col-sm-2 control-label">通知内容</label>
-                            <div class="col-sm-10">
+                            <label for="note_title" class="col-sm-3 control-label">
+                                <span class="text-danger">*</span> 通知内容
+                            </label>
+                            <div class="col-sm-9">
                                 <textarea class="form-control" rows="3" id="note_content" name="noteContent"
                                           placeholder="通知内容" autocomplete="off"
                                           data-val="true" data-val-required="通知内容不能为空"></textarea>
                                 <div data-valmsg-for="noteContent" data-valmsg-replace="true"></div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="note_attachments" class="col-sm-2 control-label">上传附件</label>
-                            <div class="col-sm-10">
-                                <input type="file" id="note_attachments" name="noteAttachments" placeholder="请上传附件"
-                                       autocomplete="off">
-                            </div>
-                        </div>
+                        <input type="hidden" name="noteSender" value="0" style="display: none;">
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary save-notification">
-                        <span class="glyphicon glyphicon-save"></span> 保 存
-                    </button>
-
                     <button type="button" class="btn btn-warning send-notification">
-                        <span class="glyphicon glyphicon-send"></span> 发 送
+                        <span class="glyphicon glyphicon-send"></span> 立即发送
+                    </button>
+                    <button type="button" class="btn btn-primary resend-notification">
+                        <span class="glyphicon glyphicon-send"></span> 我要转发
                     </button>
                 </div>
             </div>

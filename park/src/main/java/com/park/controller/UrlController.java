@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.park.common.annotation.NotProtected;
@@ -181,7 +182,6 @@ public class UrlController extends BaseController {
             UserOperator userInfo = super.getUserInfo();
             notificationsInputView.setNoteReceiver(userInfo.getId());
             model.addAllAttributes(JsonUtils.fromJsonDF(notificationsInputView));
-            //model.addAttribute("noteStatus", notificationsService.getGoodTypeNames());
             PageBean pageBean = notificationsService.getNotificationsReceiver(notificationsInputView);
             super.setPageInfo(model, pageBean);
         } catch (Exception e) {
