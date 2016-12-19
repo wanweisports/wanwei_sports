@@ -9,159 +9,41 @@
     <link href="/Content/style/business/schedule/office_schedule.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">\
+    <script src="/Content/app/business/schedule/office_schedule.js?v=${static_resource_version}"></script>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div id="main" class="container">
-        <div class="weui-cells">
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>周一(2016-11-21)</p>
+        <c:forEach var="data" items="${schedules}">
+            <div class="weui-cells">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <p>${data.week}（${data.date}）</p>
+                    </div>
                 </div>
             </div>
-            <div class="weui-grids">
-                <a href="javascript:;" class="weui-grid">
-                    <p class="weui-grid__label">上午</p>
-                    <p class="weui-grid__label">张老师</p>
+            <div class="weui-cells">
+                <c:forEach var="schedule" items="${data.schedule}">
+                <a class="weui-cell weui-cell_access schedule-job" href="javascript:;" data-id="${schedule.schedulingId}"
+                   data-job="${schedule.schedulingJob}">
+                    <div class="weui-cell__bd">
+                        <p>${schedule.operatorName}</p>
+                    </div>
+                    <div class="weui-cell__ft">${schedule.startTime} - ${schedule.endTime}</div>
                 </a>
-                <a href="javascript:;" class="weui-grid">
-                    <p class="weui-grid__label">下午</p>
-                    <p class="weui-grid__label">张老师</p>
-                </a>
-                <a href="javascript:;" class="weui-grid">
-                    <p class="weui-grid__label">晚上</p>
-                    <p class="weui-grid__label">张老师</p>
-                </a>
+                </c:forEach>
             </div>
-        </div>
+        </c:forEach>
+    </div>
 
-        <div class="weui-cells">
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>周二(2016-11-22)</p>
-                </div>
-            </div>
-            <div class="weui-grids">
-                <a href="javascript:;" class="weui-grid">
-                    <p class="weui-grid__label">上午</p>
-                    <p class="weui-grid__label">张老师</p>
-                </a>
-                <a href="javascript:;" class="weui-grid">
-                    <p class="weui-grid__label">下午</p>
-                    <p class="weui-grid__label">张老师</p>
-                </a>
-                <a href="javascript:;" class="weui-grid">
-                    <p class="weui-grid__label">晚上</p>
-                    <p class="weui-grid__label">张老师</p>
-                </a>
-            </div>
-        </div>
-
-        <div class="weui-cells">
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>周三(2016-11-23)</p>
-                </div>
-            </div>
-            <div class="weui-grids">
-                <a href="javascript:;" class="weui-grid">
-                    <p class="weui-grid__label">上午</p>
-                    <p class="weui-grid__label">张老师</p>
-                </a>
-                <a href="javascript:;" class="weui-grid">
-                    <p class="weui-grid__label">下午</p>
-                    <p class="weui-grid__label">张老师</p>
-                </a>
-                <a href="javascript:;" class="weui-grid">
-                    <p class="weui-grid__label">晚上</p>
-                    <p class="weui-grid__label">张老师</p>
-                </a>
-            </div>
-        </div>
-
-        <div class="weui-cells">
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>周四(2016-11-24)</p>
-                </div>
-            </div>
-            <div class="weui-grids">
-                <a href="javascript:;" class="weui-grid">
-                    <p class="weui-grid__label">上午</p>
-                    <p class="weui-grid__label">张老师</p>
-                </a>
-                <a href="javascript:;" class="weui-grid">
-                    <p class="weui-grid__label">下午</p>
-                    <p class="weui-grid__label">张老师</p>
-                </a>
-                <a href="javascript:;" class="weui-grid">
-                    <p class="weui-grid__label">晚上</p>
-                    <p class="weui-grid__label">张老师</p>
-                </a>
-            </div>
-        </div>
-
-        <div class="weui-cells">
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>周五(2016-11-25)</p>
-                </div>
-            </div>
-            <div class="weui-grids">
-                <a href="javascript:;" class="weui-grid">
-                    <p class="weui-grid__label">上午</p>
-                    <p class="weui-grid__label">张老师</p>
-                </a>
-                <a href="javascript:;" class="weui-grid">
-                    <p class="weui-grid__label">下午</p>
-                    <p class="weui-grid__label">张老师</p>
-                </a>
-                <a href="javascript:;" class="weui-grid">
-                    <p class="weui-grid__label">晚上</p>
-                    <p class="weui-grid__label">张老师</p>
-                </a>
-            </div>
-        </div>
-
-        <div class="weui-cells">
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>周六(2016-11-26)</p>
-                </div>
-            </div>
-            <div class="weui-grids">
-                <a href="javascript:;" class="weui-grid">
-                    <p class="weui-grid__label">上午</p>
-                    <p class="weui-grid__label">张老师</p>
-                </a>
-                <a href="javascript:;" class="weui-grid">
-                    <p class="weui-grid__label">下午</p>
-                    <p class="weui-grid__label">张老师</p>
-                </a>
-                <a href="javascript:;" class="weui-grid">
-                    <p class="weui-grid__label">晚上</p>
-                    <p class="weui-grid__label">张老师</p>
-                </a>
-            </div>
-        </div>
-
-        <div class="weui-cells">
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>周日(2016-11-27)</p>
-                </div>
-            </div>
-            <div class="weui-grids">
-                <a href="javascript:;" class="weui-grid">
-                    <p class="weui-grid__label">上午</p>
-                    <p class="weui-grid__label">张老师</p>
-                </a>
-                <a href="javascript:;" class="weui-grid">
-                    <p class="weui-grid__label">下午</p>
-                    <p class="weui-grid__label">张老师</p>
-                </a>
-                <a href="javascript:;" class="weui-grid">
-                    <p class="weui-grid__label">晚上</p>
-                    <p class="weui-grid__label">张老师</p>
-                </a>
+    <div id="tips_alert" style="display: none;">
+        <div class="weui-mask"></div>
+        <div class="weui-dialog">
+            <div class="weui-dialog__hd"><strong class="weui-dialog__title">工作内容</strong></div>
+            <div class="weui-dialog__bd tips-content"></div>
+            <div class="weui-dialog__ft">
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary tips-ok">我知道了</a>
             </div>
         </div>
     </div>

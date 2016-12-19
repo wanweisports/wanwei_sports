@@ -11,66 +11,21 @@
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div id="main" class="container">
-        <div class="weui-btn-area">
-            <a class="weui-btn weui-btn_primary" href="/mobile/training/signup">我要报名</a>
-        </div>
-
         <div class="weui-cells__title">已经报名的学生</div>
         <div class="weui-cells">
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>张文阁</p>
+            <c:forEach var="student" items="${list}">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <c:if test="${student.payStatus == 1}">
+                            <p>${student.studentName}</p>
+                        </c:if>
+                        <c:if test="${student.payStatus == 2}">
+                            <p style="color: #F43530;">${student.studentName}(未支付)</p>
+                        </c:if>
+                    </div>
+                    <div class="weui-cell__ft">${student.studentMobile}</div>
                 </div>
-                <div class="weui-cell__ft">158****3167</div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>张文阁</p>
-                </div>
-                <div class="weui-cell__ft">158****3167</div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>张文阁</p>
-                </div>
-                <div class="weui-cell__ft">158****3167</div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>张文阁</p>
-                </div>
-                <div class="weui-cell__ft">158****3167</div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>张文阁</p>
-                </div>
-                <div class="weui-cell__ft">158****3167</div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>张文阁</p>
-                </div>
-                <div class="weui-cell__ft">158****3167</div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>张文阁</p>
-                </div>
-                <div class="weui-cell__ft">158****3167</div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>张文阁</p>
-                </div>
-                <div class="weui-cell__ft">158****3167</div>
-            </div>
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <p>张文阁</p>
-                </div>
-                <div class="weui-cell__ft">158****3167</div>
-            </div>
+            </c:forEach>
         </div>
     </div>
 </layout:override>

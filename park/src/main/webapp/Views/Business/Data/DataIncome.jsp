@@ -53,7 +53,7 @@
                         position: 'inside'
                     }
                 },
-                data: [2200.00, 1000.00, 100.00, 1100.00, 0.00]
+                data: [${sumPrice}, ${siteCounts.sumPrice}, ${goodsCounts.sumPrice}, ${cardCounts.sumPrice}, 0.00]
             }]
         };
 
@@ -66,23 +66,23 @@
         <div class="weui-flex field-block">
             <div class="weui-flex__item field-block__item">
                 <div class="title">总金额(元)</div>
-                <div class="money">2200.00</div>
+                <div class="money">${sumPrice}</div>
             </div>
         </div>
         <div class="weui-flex field-block">
             <div class="weui-flex__item field-block__item">
                 <div class="title">场地预订(元)</div>
-                <div class="money">1000.00</div>
+                <div class="money">${siteCounts.sumPrice}</div>
             </div>
             <div class="weui-flex__item field-block__item">
                 <div class="title">商品销售(元)</div>
-                <div class="money">100.00</div>
+                <div class="money">${goodsCounts.sumPrice}</div>
             </div>
         </div>
         <div class="weui-flex field-block">
             <div class="weui-flex__item field-block__item">
                 <div class="title">会员储值(元)</div>
-                <div class="money">1100.00</div>
+                <div class="money">${cardCounts.sumPrice}</div>
             </div>
             <div class="weui-flex__item field-block__item">
                 <div class="title">其他收入(元)</div>

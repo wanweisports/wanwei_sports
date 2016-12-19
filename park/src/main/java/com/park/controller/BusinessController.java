@@ -1,13 +1,14 @@
 package com.park.controller;
 
 import com.park.common.annotation.NotProtected;
-import com.park.common.bean.ResponseBean;
+import com.park.common.bean.*;
 import com.park.common.constant.IDBConstant;
 import com.park.common.constant.IPlatformConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.UserOperator;
+import com.park.common.util.JsonUtils;
 import com.park.common.util.StrUtil;
-import com.park.service.IOperatorService;
+import com.park.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,18 @@ public class BusinessController extends BaseController {
 
     @Autowired
     private IOperatorService operatorService;
+
+    @Autowired
+    private ITrainsCourseService trainsCourseService;
+
+    @Autowired
+    private ITrainsClassService trainsClassService;
+
+    @Autowired
+    private ITrainsClassStudentsService trainsClassStudentsService;
+
+    @Autowired
+    private IDataService dataService;
 
     // 用户登录
     @NotProtected
@@ -98,7 +111,14 @@ public class BusinessController extends BaseController {
 
     // 收入统计
     @RequestMapping("data/income")
-    public String income() {
+    public String income(DataInputView dataInputView, Model model) {
+        try{
+            model.addAllAttributes(JsonUtils.fromJson(dataInputView));
+            model.addAllAttributes(dataService.getBusinessIncome(dataInputView));
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return "Business/Data/DataIncome";
     }
 
@@ -108,22 +128,56 @@ public class BusinessController extends BaseController {
         return "Business/Data/DataVenuePercentage";
     }
 
-    // 值班安排
+
+    // 排班管理
     @RequestMapping("office/schedule")
-    public String schedule() {
+    public String schedule(DataInputView dataInputView, Model model) {
+        try{
+            model.addAllAttributes(JsonUtils.fromJson(dataInputView));
+            OperatorInputView operatorInputView = new OperatorInputView();
+            model.addAttribute("operators", operatorService.getOperatorsName(operatorInputView));
+            model.addAttribute("schedules", operatorService.getUserSchedulings(dataInputView));
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
         return "Business/Schedule/OfficeSchedule";
     }
 
     // 培训
 
-    // 报名课程列表
+    // 培训课程管理
     @RequestMapping("training/list")
-    public String renderTrainingList() {
+    public String renderTrainsClassList(TrainsClassInputView trainsClassInputView, Model model) {
+        try {
+            UserOperator userInfo = super.getUserInfo();
+            trainsClassInputView.setSaleId(userInfo.getId());
+            model.addAllAttributes(JsonUtils.fromJsonDF(trainsClassInputView));
+            model.addAttribute("courseNames", trainsCourseService.getTrainsCourseNames());
+            PageBean pageBean = trainsClassService.getTrainsClassList(trainsClassInputView);
+            super.setPageInfo(model, pageBean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return "Business/Training/TrainingList";
     }
+
+
     // 报名人数列表
     @RequestMapping("training/students")
-    public String renderTrainingStudents() {
+    public String renderTrainingStudents(TrainsClassStudentsInputView trainsClassStudentsInputView, Model model) {
+        try {
+            UserOperator userInfo = super.getUserInfo();
+            trainsClassStudentsInputView.setSaleId(userInfo.getId());
+            model.addAllAttributes(JsonUtils.fromJsonDF(trainsClassStudentsInputView));
+            model.addAttribute("classInfo", trainsClassService.getTrainsClassInfo(trainsClassStudentsInputView.getClassId()));
+            PageBean pageBean = trainsClassStudentsService.getTrainsClassStudentsList(trainsClassStudentsInputView);
+            super.setPageInfo(model, pageBean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return "Business/Training/TrainingStudents";
     }
     // 课程创建
