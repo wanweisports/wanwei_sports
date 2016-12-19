@@ -11,6 +11,7 @@
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/data/data_venue_percentage.js?v=${static_resource_version}"></script>
     <script>
         $(document).ready(function () {
             $(".venue-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
@@ -28,13 +29,13 @@
         <div class="panel panel-default">
             <div class="panel-heading">场地使用率</div>
             <div class="panel-body">
-                <form class="form-inline" id="data_filter_form" onsubmit="return false;">
+                <form class="form-inline" id="data_form" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="/data/getVenuePercentage?countNum=10" data-count="10" class="btn btn-primary member-date">全部</a>
-                            <a href="/data/getVenuePercentage?countNum=1" data-count="1" class="btn btn-default member-date">今日</a>
-                            <a href="/data/getVenuePercentage?countNum=3" data-count="3" class="btn btn-default member-date">本周</a>
-                            <a href="/data/getVenuePercentage?countNum=4" data-count="4" class="btn btn-default member-date">本月</a>
+                            <a href="/data/getVenuePercentage?countNum=10" data-count="10" class="btn btn-primary venue-date">全部</a>
+                            <a href="/data/getVenuePercentage?countNum=1" data-count="1" class="btn btn-default venue-date">今日</a>
+                            <a href="/data/getVenuePercentage?countNum=3" data-count="3" class="btn btn-default venue-date">本周</a>
+                            <a href="/data/getVenuePercentage?countNum=4" data-count="4" class="btn btn-default venue-date">本月</a>
                         </div>
                     </div>
                     <div class="form-group">
@@ -52,7 +53,7 @@
                                value="${createTimeEnd}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary">
+                        <a href="javascript:;" class="btn btn-primary data-filter">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>
@@ -88,8 +89,9 @@
                             <th>场地类型</th>
                             <th>场地编号</th>
                             <th>总场次数</th>
-                            <th>使用场次数</th>
+                            <th>预订场次数</th>
                             <th>预定率</th>
+                            <th>使用场次数</th>
                             <th>使用率</th>
                         </tr>
                         </thead>
@@ -98,6 +100,7 @@
                             <tr>
                                 <td>${data.sportName}</td>
                                 <td>${data.siteName}</td>
+                                <td>${data.siteBusinessCount}</td>
                                 <td>${data.siteSumCount}次</td>
                                 <td>${data.siteUseCount}次</td>
                                 <td>${data.siteSumPercentage * 100}%</td>

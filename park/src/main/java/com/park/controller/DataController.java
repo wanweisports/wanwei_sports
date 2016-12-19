@@ -78,6 +78,7 @@ public class DataController extends BaseController {
     @RequestMapping("getVenuePercentage")
     public String getVenuePercentage(DataInputView dataInputView, Model model) {
     	try {
+            model.addAllAttributes(JsonUtils.fromJson(dataInputView));
 			model.addAllAttributes(dataService.getSitePercentage(dataInputView));
 		} catch (Exception e) {
 			e.printStackTrace();

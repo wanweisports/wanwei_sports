@@ -118,6 +118,22 @@ public class DataServiceImpl extends BaseService implements IDataService {
 			  — 检索条件：全部，今天，本周，本年，自定义的起止日期，场地类型
 		 */
 		StringBuilder sql = new StringBuilder("SELECT ss.sportName, si.siteName, SUM(oi.sumCount) siteSumCount, SUM(oi.useCount) siteUseCount, SUM(oi.useCount)/SUM(oi.sumCount) siteUsePercentage");
+		if(StrUtil.isNotBlank(createTimeStart) && StrUtil.isNotBlank(createTimeEnd)){
+			sql.append(" ,DATEDIFF(':createTimeStart',':createTimeEnd') * (ss.`endTime`-ss.`startTime`) AS siteBusinessCount");
+		}
+
+		if (countNum != null) {
+            if (countNum == 2 || countNum == 1) {
+                sql.append(" ,(ss.`endTime`-ss.`startTime`) AS siteBusinessCount");
+            }
+            if (countNum == 3 || countNum == 100 || countNum == 200) {
+                sql.append(" ,7*(ss.`endTime`-ss.`startTime`) AS siteBusinessCount");
+            }
+            if (countNum == 4) {
+                sql.append(" ,30*(ss.`endTime`-ss.`startTime`) AS siteBusinessCount");
+            }
+        }
+
 		sql.append(" FROM site_info si");
 		sql.append(" INNER JOIN site_sport ss ON(si.siteType = ss.sportId)");
 		sql.append(" LEFT JOIN site_reserve_time srt ON(srt.siteId = si.siteId)");
