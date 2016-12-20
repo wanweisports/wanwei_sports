@@ -9,7 +9,7 @@
                     var data = res.data;
 
                     $('[name="cardTypeMoney"]').val(data.cardTypeMoney || "0.00");
-                    $('[name="cardDeadline"]').val(data.cardDeadline);
+                    $('[name="cardDeadline"]').val(data.cardTypeMonth > 0 ? data.cardDeadline : "无限制");
                     $('[name="cardDeposit"]').val(data.cardDeposit || "0.00");
                 } else {
                     alert(res.message || "会员类别详情查询失败, 请稍后重试");
@@ -79,6 +79,19 @@
                     }
                 });
             });*/
+
+            // 支付方式改变
+            $("#recharge_type").on("change", function (e) {
+                e.preventDefault();
+
+                var $this = $(this);
+
+                if ($this.val() == 5) {
+                    $(".recharge-check-no").show();
+                } else {
+                    $(".recharge-check-no").hide();
+                }
+            });
 
             // 充值金额,赠送金额改变
             $("#recharge_money, #recharge_send").on("change", function (e) {

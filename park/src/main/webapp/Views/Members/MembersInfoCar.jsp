@@ -152,6 +152,8 @@
                                         <option value="1">现金</option>
                                         <option value="2">支付宝</option>
                                         <option value="3">微信</option>
+                                        <option value="4">银联</option>
+                                        <option value="5">支票</option>
                                     </select>
                                     <div data-valmsg-for="balanceStyle" data-valmsg-replace="true"></div>
                                 </div>
@@ -167,6 +169,18 @@
                                            data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                            data-val-regex="赠送金额格式错误">
                                     <div data-valmsg-for="givingAmount" data-valmsg-replace="true"></div>
+                                </div>
+                            </div>
+                            <div class="form-group recharge-check-no" style="display: none;">
+                                <label for="recharge_check_no" class="col-sm-4 control-label">
+                                    <span class="text-danger">*</span> 支票号
+                                </label>
+
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="recharge_check_no" name="checkNo"
+                                           placeholder="请输入支票号" autocomplete="off"
+                                           data-val="true" data-val-required="支票号不能为空">
+                                    <div data-valmsg-for="checkNo" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
                         </div>
