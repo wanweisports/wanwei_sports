@@ -116,12 +116,15 @@
                     $form.attr("submitting", "");
                     if (res.code == 1) {
                         $("#confirm_modal").modal({backdrop: false, show: true});
+
                         $.each(res.data, function(key, item){
                             $("#member_card_ticket_form").find("input[name='" + key + "']").val(item);
                         });
+
                         $("#member_card_ticket_form").find("#ticket_header").val('');
                         $("#member_card_ticket_form").find("#ticket_money").val('');
                         $("#member_card_ticket_form").find("#ticket_content").val('');
+                        $("#member_card_ticket_form").find("#invoice_no").val(res.data.balanceNo);
                     } else {
                         console.log(res.message || "会员卡充值失败, 请稍后重试");
                         alert(res.message || "会员卡充值失败, 请稍后重试");

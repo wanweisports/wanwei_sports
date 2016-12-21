@@ -261,6 +261,7 @@
                                 <div class="row is-show-ticket" style="display: none;">
                                     <input type="hidden" name="invoiceServiceId" value="${memberId}">
                                     <input type="hidden" name="invoiceServiceType" value="10">
+                                    <input type="hidden" name="invoiceNo" id="invoice_no">
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label for="ticket_header" class="col-sm-2 control-label">
@@ -340,10 +341,10 @@
                 </div>
                 <div class="modal-footer">
                     <label class="text-danger pull-left">
-                        <input type="checkbox" value="1" name="is_print_ticket" id="is_print_ticket"> 开具发票吗?
+                        <input type="checkbox" value="1" name="is_print_ticket" id="is_print_ticket"> 登记发票吗?
                     </label>
                     <button type="button" class="btn btn-primary print-ticket">
-                        <span class="glyphicon glyphicon-print"></span> 打印收款单
+                        <span class="glyphicon glyphicon-print"></span> 打印小票
                     </button>
                 </div>
             </div>
