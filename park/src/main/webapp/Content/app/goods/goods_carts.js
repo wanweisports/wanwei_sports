@@ -80,7 +80,6 @@
                             return json;
                         } else {
                             $('#goods_user_memberId').val("0");
-                            $('#goods_user_mobile').val("");
                             $('#goods_user_opType').val("2");
                             $('#goods_user_name').val("散客");
                             return [];

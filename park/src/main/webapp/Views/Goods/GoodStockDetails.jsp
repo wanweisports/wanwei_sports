@@ -32,8 +32,8 @@
                 <form class="form-inline" id="goods_filter_form" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="/good/getGoodsStockDetails?countNum=1" data-count="1" class="btn btn-default stock-date">今天</a>
-                            <a href="/good/getGoodsStockDetails?countNum=2" data-count="2" class="btn btn-default stock-date">昨天</a>
+                            <a href="/good/getGoodsStockDetails?countNum=2" data-count="2" class="btn btn-default stock-date">昨日</a>
+                            <a href="/good/getGoodsStockDetails?countNum=1" data-count="1" class="btn btn-default stock-date">今日</a>
                             <a href="/good/getGoodsStockDetails?countNum=3" data-count="3" class="btn btn-default stock-date">本周</a>
                             <a href="/good/getGoodsStockDetails?countNum=4" data-count="4" class="btn btn-default stock-date">本月</a>
                         </div>
@@ -55,24 +55,12 @@
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>
+                    <div class="form-group pull-right">
+                        <a href="javascript:;" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-export"></span> 导出数据
+                        </a>
+                    </div>
                 </form>
-            </div>
-        </div>
-
-        <div class="alert alert-info clearfix">
-            <ul class="nav nav-pills pull-left">
-                <li style="margin-right: 15px;">商品销售总计:</li>
-                <c:forEach var="item" items="${allCount}">
-                    <li style="margin-right: 15px;">${item.goodTypeName} <span class="badge">${item.count}件</span></li>
-                </c:forEach>
-            </ul>
-            <div class="pull-right">
-                <a href="javascript:;" class="btn btn-danger">
-                    <span class="glyphicon glyphicon-export"></span> 导出数据
-                </a>
-                <a href="javascript:;" class="btn btn-primary" style="display: none;">
-                    <span class="glyphicon glyphicon-stats"></span> 图表显示
-                </a>
             </div>
         </div>
 
@@ -84,8 +72,9 @@
                         <tr>
                             <th>商品编号</th>
                             <th>商品名称</th>
-                            <th>操作名称</th>
-                            <th>操作数量</th>
+                            <th>变化原因</th>
+                            <th>变化数量</th>
+                            <th>备注</th>
                             <th>操作人</th>
                             <th>操作时间</th>
                         </tr>
@@ -96,17 +85,22 @@
                                 <td>${data.goodNo}</td>
                                 <td>${data.goodName}</td>
                                 <c:if test="${data.opType == 1}">
-                                    <td class="text-success">新商品</td>
-                                    <td class="text-success">${data.countChange}</td>
+                                    <td class="text-success">增加商品</td>
+                                    <td class="text-success">${data.countChange}件</td>
                                 </c:if>
                                 <c:if test="${data.opType == 2}">
                                     <td class="text-success">商品入库</td>
-                                    <td class="text-success">${data.countChange}</td>
+                                    <td class="text-success">${data.countChange}件</td>
                                 </c:if>
                                 <c:if test="${data.opType == 3}">
                                     <td class="text-danger">商品销售</td>
-                                    <td class="text-danger">${data.countChange}</td>
+                                    <td class="text-danger">${data.countChange}件</td>
                                 </c:if>
+                                <c:if test="${data.opType == 4}">
+                                    <td class="text-danger">商品损耗</td>
+                                    <td class="text-danger">${data.countChange}件</td>
+                                </c:if>
+                                <td>${data.remark}</td>
                                 <td>${data.operatorName}</td>
                                 <td>${data.createTime}</td>
                             </tr>

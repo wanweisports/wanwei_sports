@@ -69,6 +69,19 @@
                     }
                 });
             });
+
+            // 支付方式改变
+            $("#card_pay_type").on("change", function (e) {
+                e.preventDefault();
+
+                var $this = $(this);
+
+                if ($this.val() == 5) {
+                    $(".loan-check-no").show();
+                } else {
+                    $(".loan-check-no").hide();
+                }
+            });
         }
     };
 

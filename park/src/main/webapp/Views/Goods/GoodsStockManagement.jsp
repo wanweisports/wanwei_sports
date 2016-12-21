@@ -20,41 +20,32 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>商品管理</span> &gt;&gt; <span>商品进销存管理</span>
+    当前位置: <span>商品管理</span> &gt;&gt; <span>商品进销存</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
-            <div class="panel-heading">商品进销存管理</div>
+            <div class="panel-heading">商品进销存</div>
             <div class="panel-body">
                 <form class="form-inline" id="goods_filter_form" onsubmit="return false;">
                     <div class="form-group">
-                        <label for="good_name">商品名称</label>
+                        <input type="text" class="form-control" id="good_no" name="goodNo"
+                               placeholder="商品编号" value="${goodNo}">
+                    </div>
+                    <div class="form-group">
                         <input type="text" class="form-control" id="good_name" name="goodName"
-                               placeholder="请输入商品名称" value="${goodName}">
-                    </div>
-                    <div class="form-group">
-                        <label for="good_name">商品类别</label>
-                        <select class="form-control" id="good_type" name="goodType" style="width: 160px;">
-                            <option value="">全部类别</option>
-                            <c:forEach var="type" items="${goodTypeNames}">
-                                <option value="${type.goodTypeId}" <c:if test='${type.goodTypeId == goodType}'>selected</c:if>>${type.goodTypeName}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="good_state">&nbsp;商品状态</label>
-                        <select class="form-control" id="good_state" name="goodStatus" style="width: 160px;">
-                            <option value="">全部状态</option>
-                            <option value="1" <c:if test="${goodStatus == 1}">selected</c:if> >在售</option>
-                            <option value="2" <c:if test="${goodStatus == 2}">selected</c:if> >预售</option>
-                        </select>
+                               placeholder="商品名称" value="${goodName}">
                     </div>
                     <div class="form-group">
                         <label>&nbsp;</label>
                         <a href="javascript:;" class="btn btn-primary goods-filter">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
+                        </a>
+                    </div>
+                    <div class="form-group pull-right">
+                        <a href="javascript:;" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-export"></span> 导出数据
                         </a>
                     </div>
                 </form>
@@ -68,52 +59,65 @@
                         <tr>
                             <th>商品编号</th>
                             <th>商品名称</th>
-                            <th>库存数量</th>
                             <th>价格(元)</th>
-                            <th>状态</th>
-                            <th>操作人</th>
-                            <th>操作时间</th>
-                            <th>操作</th>
+                            <th>商品增加</th>
+                            <th>商品入库</th>
+                            <th>商品销售</th>
+                            <th>商品损耗</th>
+                            <th>库存剩余</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="good" items="${list}">
+                        <c:forEach var="data" items="${list}">
                             <tr>
-                                <td>${good.goodNo}</td>
-                                <td>${good.goodName}</td>
-                                <td>${good.goodCount}</td>
-                                <td>${good.goodPrice}</td>
-                                <c:if test="${good.goodStatus == 1}">
-                                    <td class="text-success">在售</td>
-                                </c:if>
-                                <c:if test="${good.goodStatus == 2}">
-                                    <td class="text-danger">预售</td>
-                                </c:if>
-                                <td>${good.operatorName}</td>
-                                <td>${good.createTime}</td>
-                                <td>
-                                    <c:if test="${good.goodStatus == 2}">
-                                        <a href="javascript:;" class="btn btn-primary goods-enter"
-                                           data-id="${good.goodId}">
-                                            <span class="glyphicon glyphicon-arrow-up"></span> 上架
-                                        </a>
-                                    </c:if>
-                                    <c:if test="${good.goodStatus == 1}">
-                                        <a href="javascript:;" class="btn btn-warning goods-outer"
-                                           data-id="${good.goodId}">
-                                            <span class="glyphicon glyphicon-arrow-down"></span> 下架
-                                        </a>
-                                    </c:if>
-                                    <a href="#kucunModal" class="btn btn-primary goods-count" data-toggle="modal"
-                                       data-id="${good.goodId}" data-count="${good.goodCount}" data-backdrop="false">
-                                        <span class="glyphicon glyphicon-hdd"></span> 增加库存
-                                    </a>
-                                    <a href="/good/viewGood?goodId=${good.goodId}" class="btn btn-primary">
-                                        <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                    </a>
-                                </td>
+                                <td>${data.goodNo}</td>
+                                <td>${data.goodName}</td>
+                                <td>${data.goodPrice}</td>
+                                <c:choose>
+                                    <c:when test="${data.opType == 1}">
+                                        <td class="text-success">${data.countGoods}件</td>
+                                        <td>--</td>
+                                        <td>--</td>
+                                        <td>--</td>
+                                    </c:when>
+                                    <c:when test="${data.opType == 2}">
+                                        <td>--</td>
+                                        <td class="text-success">${data.countGoods}件</td>
+                                        <td>--</td>
+                                        <td>--</td>
+                                    </c:when>
+                                    <c:when test="${data.opType == 3}">
+                                        <td>--</td>
+                                        <td>--</td>
+                                        <td class="text-danger">${data.countGoods}件</td>
+                                        <td>--</td>
+                                    </c:when>
+                                    <c:when test="${data.opType == 4}">
+                                        <td>--</td>
+                                        <td>--</td>
+                                        <td>--</td>
+                                        <td class="text-danger">${data.countGoods}件</td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td>--</td>
+                                        <td>--</td>
+                                        <td>--</td>
+                                        <td>--</td>
+                                    </c:otherwise>
+                                </c:choose>
+                                <td>${data.goodCount}</td>
                             </tr>
                         </c:forEach>
+                        <tr>
+                            <td>G0001</td>
+                            <td>斯伯丁NBA篮球	</td>
+                            <td>139.00</td>
+                            <td class="text-success">+ 60件</td>
+                            <td class="text-success">+ 10件</td>
+                            <td class="text-danger">- 3件</td>
+                            <td class="text-danger">- 4件</td>
+                            <td>63件</td>
+                        </tr>
                         </tbody>
                     </table>
                     <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >
@@ -180,40 +184,6 @@
                             </c:if>
                         </ul>
                     </nav>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="kucunModal" tabindex="-1" role="dialog" aria-labelledby="kucunModalLabel">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="kucunModalLabel">增加库存</h5>
-                </div>
-                <div class="modal-body" style="clear: both;">
-                    <div class="alert alert-info" role="alert">当前库存: <span id="nowGoodCount"></span>件</div>
-                    <form id="good_kucun_form" class="form-horizontal" onsubmit="return false;">
-                        <input type="hidden" name="goodId">
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control" id="good_count" name="goodCount"
-                                       placeholder="请输入增加的库存量" autocomplete="off"
-                                       data-val="true" data-val-required="库存量不能为空"
-                                       data-val-regex-pattern="^[1-9]\d*$"
-                                       data-val-regex="初始库存量格式错误">
-                                <div data-valmsg-for="goodCount" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary confirm-count" data-dismiss="modal">
-                        <span class="glyphicon glyphicon-ok"></span> 确 认
-                    </button>
                 </div>
             </div>
         </div>

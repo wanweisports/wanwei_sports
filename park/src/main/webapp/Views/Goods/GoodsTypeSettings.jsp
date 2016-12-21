@@ -37,7 +37,7 @@
                 <div class="table-responsive good-type-list">
                     <table class="table">
                         <thead>
-                        <tr>
+                        <tr class="bg-info">
                             <th>序号</th>
                             <th>商品类别</th>
                             <th>类别描述</th>

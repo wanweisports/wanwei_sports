@@ -81,6 +81,44 @@
         </table>
     </div>
 
+    <div class="modal fade" id="tips_failure_modal" tabindex="-1" role="dialog" aria-labelledby="tips_failure_modal_label">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="tips_failure_modal_label">警告提示</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger tips-content" role="alert"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">我知道了</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="tips_success_modal" tabindex="-1" role="dialog" aria-labelledby="tips_success_modal_label">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="tips_success_modal_label">成功提示</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger tips-content" role="alert"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">我知道了</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="/Content/lib/jquery/jquery-1.12.3.min.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/bootstrap/bootstrap.min.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/moment/moment.min.js?v=${static_resource_version}"></script>

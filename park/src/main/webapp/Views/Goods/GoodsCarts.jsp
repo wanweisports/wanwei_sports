@@ -111,7 +111,7 @@
                                                 <span class="text-danger">*</span> 手机号码
                                             </label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="goods_user_mobile" name="moblie"
+                                                <input type="text" class="form-control" id="goods_user_mobile" name="mobile"
                                                        placeholder="手机号码" autocomplete="off"
                                                        data-val="true" data-val-required="手机号码不能为空"
                                                        data-val-regex-pattern="^1\d{10}$"

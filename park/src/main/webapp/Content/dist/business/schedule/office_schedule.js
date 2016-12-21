@@ -1,0 +1,1 @@
+!function(t){t(".schedule-job").on("click",function(e){e.preventDefault();var o=t(this),n=o.attr("data-job")||"无工作内容。";console.log(o.attr("data-job")),t("#tips_alert").show().find(".tips-content").text(n)}),t("#tips_alert .tips-ok").on("click",function(e){e.preventDefault(),t("#tips_alert").hide()})}(Zepto);

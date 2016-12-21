@@ -115,6 +115,7 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 		if(StrUtil.isNotBlank(goodTypeId)){
 			whereSql.append(" AND goodTypeId = :goodType");
 		}
+        whereSql.append(" ORDER BY gi.createTime DESC");
 		return super.getPageBean(headSql, bodySql, whereSql, goodInputView);
 	}
 	
@@ -138,6 +139,26 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 		inventoryLog.setGoodId(goodInfo.getGoodId());
 		inventoryLog.setOpType(IDBConstant.INVENTORY_OP_TYPE_IN);
 		inventoryLog.setRemark("商品增加库存" + goodInfo.getGoodCount());
+		inventoryLog.setSalesId(goodInfo.getSalesId());
+		inventoryLog.setCreateTime(DateUtil.getNowDate());
+		baseDao.save(inventoryLog, null);
+	}
+
+	@Override
+	public void minusGoodCount(GoodInfo goodInfo){
+		GoodInfo goodInfoDB = this.getGoodInfo(goodInfo.getGoodId());
+		if(goodInfoDB == null) throw new MessageException("商品信息不存在！");
+		goodInfoDB.setGoodCount(goodInfoDB.getGoodCount() - goodInfo.getGoodCount());
+		//有库存：在售
+		//if(IDBConstant.GOOD_STATE_BOOKING.equals(goodInfoDB.getGoodStatus()) && goodInfoDB.getGoodCount() > 0) goodInfoDB.setGoodStatus(IDBConstant.GOOD_STATE_ING);
+		baseDao.save(goodInfoDB, goodInfoDB.getGoodId());
+
+		//入库商品-库存日志
+		GoodInventoryLog inventoryLog = new GoodInventoryLog();
+		inventoryLog.setCountChange(0 - goodInfo.getGoodCount());
+		inventoryLog.setGoodId(goodInfo.getGoodId());
+		inventoryLog.setOpType(IDBConstant.INVENTORY_OP_TYPE_MINUS);
+		inventoryLog.setRemark("商品损耗库存" + goodInfo.getGoodCount());
 		inventoryLog.setSalesId(goodInfo.getSalesId());
 		inventoryLog.setCreateTime(DateUtil.getNowDate());
 		baseDao.save(inventoryLog, null);
@@ -359,10 +380,11 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 				GoodInfo goodInfo = getGoodInfo(orderDetail.getItemId());
 				//入库商品-库存日志
 				GoodInventoryLog inventoryLog = new GoodInventoryLog();
-				inventoryLog.setCountChange(orderDetail.getItemAmount());
+				inventoryLog.setCountChange(0 - orderDetail.getItemAmount());
 				inventoryLog.setGoodId(goodInfo.getGoodId());
 				inventoryLog.setOpType(IDBConstant.INVENTORY_OP_TYPE_OUT);
 				inventoryLog.setSalesId(goodInfo.getSalesId());
+				inventoryLog.setRemark("商品销售库存" + goodInfo.getGoodCount());
 				inventoryLog.setCreateTime(DateUtil.getNowDate());
 				baseDao.save(inventoryLog, null);
 			}
@@ -438,6 +460,25 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 		list.add(0, sumMap);
 		return list;
 	}
+
+    @Override
+    public PageBean countGoodsStock(GoodInputView goodInputView){
+        String goodNo = goodInputView.getGoodNo();
+        String goodName = goodInputView.getGoodName();
+
+        StringBuilder headSql = new StringBuilder("SELECT gi.goodId, goodNo, goodName, goodCount, goodPrice, operatorName, gi.createTime, SUM(log.countChange) countGoods, log.opType");
+        StringBuilder bodySql = new StringBuilder(" FROM good_info gi INNER JOIN user_operator uo ON gi.salesId = uo.id");
+        bodySql.append(" LEFT JOIN good_inventory_log log ON log.goodId = gi.goodId");
+        StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
+        if(StrUtil.isNotBlank(goodNo)){
+            whereSql.append(" AND goodNo = :goodNo");
+        }
+        if(StrUtil.isNotBlank(goodName)){
+            whereSql.append(" AND goodName = :goodName");
+        }
+        whereSql.append("  GROUP BY gi.goodId, log.opType ORDER BY gi.createTime DESC");
+        return super.getPageBean(headSql, bodySql, whereSql, goodInputView);
+    }
 	
 }
 

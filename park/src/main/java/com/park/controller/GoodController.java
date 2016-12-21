@@ -172,7 +172,7 @@ public class GoodController extends BaseController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "Goods/GoodsStockManagement";
+        return "Goods/GoodsList";
     }
 
     /**
@@ -187,6 +187,28 @@ public class GoodController extends BaseController {
             UserOperator userOperator = super.getUserInfo();
             goodInfo.setSalesId(userOperator.getId());
             goodService.addGoodCount(goodInfo);
+            return new ResponseBean(true);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
+    /**
+     * 损耗商品的库存
+     * @param goodInfo
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("minusGoodCount")
+    public ResponseBean minusGoodCount(GoodInfo goodInfo){
+        try {
+            UserOperator userOperator = super.getUserInfo();
+            goodInfo.setSalesId(userOperator.getId());
+            goodService.minusGoodCount(goodInfo);
             return new ResponseBean(true);
         } catch (MessageException e) {
             e.printStackTrace();
@@ -308,7 +330,7 @@ public class GoodController extends BaseController {
             model.addAllAttributes(JsonUtils.fromJsonDF(goodInputView));
             PageBean pageBean = goodService.getGoodsStockDetails(goodInputView);
             super.setPageInfo(model, pageBean);
-            model.addAttribute("allCount", goodService.getGoodOutInfo(goodInputView));
+            //model.addAttribute("allCount", goodService.getGoodOutInfo(goodInputView));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -361,6 +383,18 @@ public class GoodController extends BaseController {
             e.printStackTrace();
             return new ResponseBean(false);
         }
+    }
+
+    @RequestMapping(value = "getGoodsStock")
+    public String getGoodsStock(GoodInputView goodInputView, Model model) {
+        try {
+            model.addAllAttributes(JsonUtils.fromJsonDF(goodInputView));
+            PageBean pageBean = goodService.countGoodsStock(goodInputView);
+            super.setPageInfo(model, pageBean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Goods/GoodsStockManagement";
     }
     
 }

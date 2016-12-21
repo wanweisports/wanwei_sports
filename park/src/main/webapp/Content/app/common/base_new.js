@@ -27,6 +27,24 @@
 
     new $.TextMagnifier();
 
+    $.tipsWarningAlert = function (message) {
+        $("#tips_failure_modal").modal({show: true, backdrop: false}).find(".tips-content").text(message);
+
+        var timeout = setTimeout(function () {
+            $("#tips_failure_modal").modal("hide");
+            clearTimeout(timeout);
+        }, 3000);
+    };
+
+    $.tipsSuccessAlert = function (message) {
+        $("#tips_success_modal").modal({show: true, backdrop: false}).find(".tips-content").text(message);
+
+        var timeout = setTimeout(function () {
+            $("#tips_success_modal").modal("hide");
+            clearTimeout(timeout);
+        }, 3000);
+    };
+
     // 导航切换
     $(".navigator-container").on("click", ".list-nav-header", function (e) {
         e.preventDefault();

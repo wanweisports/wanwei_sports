@@ -8,11 +8,11 @@
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
-    <script src="/Content/app/goods/goods_stock_management.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/goods/goods_list.js?v=${static_resource_version}"></script>
     <script>
         // 配置表单校验
         $(document).ready(function () {
-            $('#good_kucun_form').validate({
+            $('#plus_count_form, #minus_count_form').validate({
                 ignore: ":hidden"
             });
         });
@@ -65,11 +65,11 @@
                 <div class="table-responsive">
                     <table class="table goods-list">
                         <thead>
-                        <tr>
+                        <tr class="bg-info">
                             <th>商品编号</th>
                             <th>商品名称</th>
-                            <th>库存数量</th>
-                            <th>价格(元)</th>
+                            <th>当前库存</th>
+                            <th>商品单价(元)</th>
                             <th>状态</th>
                             <th>操作人</th>
                             <th>操作时间</th>
@@ -104,13 +104,13 @@
                                             <span class="glyphicon glyphicon-arrow-down"></span> 下架
                                         </a>
                                     </c:if>
-                                    <a href="#kucunModal" class="btn btn-primary goods-count" data-toggle="modal"
+                                    <a href="#plus_count_modal" class="btn btn-primary goods-count" data-toggle="modal"
                                        data-id="${good.goodId}" data-count="${good.goodCount}" data-backdrop="false">
                                         <span class="glyphicon glyphicon-plus"></span> 增加库存
                                     </a>
-                                    <a href="#kucunModal" class="btn btn-primary goods-count" data-toggle="modal"
+                                    <a href="#minus_count_modal" class="btn btn-danger goods-minus-count" data-toggle="modal"
                                        data-id="${good.goodId}" data-count="${good.goodCount}" data-backdrop="false">
-                                        <span class="glyphicon glyphicon-minus"></span> 损耗
+                                        <span class="glyphicon glyphicon-adjust"></span> 损耗
                                     </a>
                                     <a href="/good/viewGood?goodId=${good.goodId}" class="btn btn-primary">
                                         <span class="glyphicon glyphicon-share-alt"></span> 查看
@@ -189,33 +189,67 @@
         </div>
     </div>
 
-    <div class="modal fade" id="kucunModal" tabindex="-1" role="dialog" aria-labelledby="kucunModalLabel">
+    <div class="modal fade" id="plus_count_modal" tabindex="-1" role="dialog" aria-labelledby="plus_count_modal_label">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h5 class="modal-title" id="kucunModalLabel">增加库存</h5>
+                    <h5 class="modal-title" id="plus_count_modal_label">增加库存</h5>
                 </div>
                 <div class="modal-body" style="clear: both;">
-                    <div class="alert alert-info" role="alert">当前库存: <span id="nowGoodCount"></span>件</div>
-                    <form id="good_kucun_form" class="form-horizontal" onsubmit="return false;">
-                        <input type="hidden" name="goodId">
+                    <div class="alert alert-info" role="alert">当前库存: <span id="plus_current_good_count"></span>件</div>
+                    <form id="plus_count_form" class="form-horizontal" onsubmit="return false;">
+                        <input type="hidden" name="goodId" id="plus_good_id">
                         <div class="form-group">
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control" id="good_count" name="goodCount"
+                            <div class="col-sm-12 input-parent-magnifier">
+                                <input type="text" class="form-control input-element-magnifier" id="plus_good_count" name="goodCount"
                                        placeholder="请输入增加的库存量" autocomplete="off"
-                                       data-val="true" data-val-required="库存量不能为空"
+                                       data-val="true" data-val-required="增加的库存量不能为空"
                                        data-val-regex-pattern="^[1-9]\d*$"
-                                       data-val-regex="初始库存量格式错误">
+                                       data-val-regex="增加的库存量格式错误">
                                 <div data-valmsg-for="goodCount" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary confirm-count" data-dismiss="modal">
+                    <button type="button" class="btn btn-primary confirm-plus-count" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-ok"></span> 确 认
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="minus_count_modal" tabindex="-1" role="dialog" aria-labelledby="minus_count_modal_label">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="minus_count_modal_label">库存损耗</h5>
+                </div>
+                <div class="modal-body" style="clear: both;">
+                    <div class="alert alert-danger" role="alert">当前库存量: <span id="minus_current_good_count"></span>件</div>
+                    <form id="minus_count_form" class="form-horizontal" onsubmit="return false;">
+                        <input type="hidden" name="goodId" id="minus_good_id">
+                        <div class="form-group">
+                            <div class="col-sm-12 input-parent-magnifier">
+                                <input type="text" class="form-control input-element-magnifier" id="minus_good_count" name="goodCount"
+                                       placeholder="请输入损耗的库存量" autocomplete="off"
+                                       data-val="true" data-val-required="损耗的库存量不能为空"
+                                       data-val-regex-pattern="^[1-9]\d*$"
+                                       data-val-regex="损耗的库存量格式错误">
+                                <div data-valmsg-for="goodCount" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary confirm-minus-count" data-dismiss="modal">
                         <span class="glyphicon glyphicon-ok"></span> 确 认
                     </button>
                 </div>
@@ -226,5 +260,5 @@
 
 <c:import url="../Shared/Layout_New.jsp">
     <c:param name="nav" value="good"/>
-    <c:param name="subNav" value="stock"/>
+    <c:param name="subNav" value="list"/>
 </c:import>

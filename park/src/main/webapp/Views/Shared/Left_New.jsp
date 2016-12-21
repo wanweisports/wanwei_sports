@@ -238,9 +238,9 @@
                                 <span><a href="/good/settingGood">商品设置</a></span>
                             </td>
                         </tr>
-                        <tr class="list-nav-item good ${(param.nav == "good" && param.subNav == "stock") ? "active" : ""}">
+                        <tr class="list-nav-item good ${(param.nav == "good" && param.subNav == "list") ? "active" : ""}">
                             <td>
-                                <span><a href="/good/getGoods">进销存管理</a></span>
+                                <span><a href="/good/getGoods">商品查询</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item good ${(param.nav == "good" && param.subNav == "market") ? "active" : ""}">
@@ -253,9 +253,14 @@
                                 <span><a href="/order/getOrderList?orderServiceTypes=300">商品订单</a></span>
                             </td>
                         </tr>
+                        <tr class="list-nav-item good ${(param.nav == "good" && param.subNav == "stock") ? "active" : ""}">
+                            <td>
+                                <span><a href="/good/getGoodsStock">商品进销存</a></span>
+                            </td>
+                        </tr>
                         <tr class="list-nav-item good ${(param.nav == "good" && param.subNav == "detail") ? "active" : ""}">
                             <td>
-                                <span><a href="/good/getGoodsStockDetails?countNum=1">库存明细日志</a></span>
+                                <span><a href="/good/getGoodsStockDetails?countNum=1">商品操作明细</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item good last-nav-item">

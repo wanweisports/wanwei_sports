@@ -91,6 +91,7 @@ public interface IDBConstant {
     public static final String INVENTORY_OP_TYPE_ADD = "1";//添加
     public static final String INVENTORY_OP_TYPE_IN = "2";//入库
     public static final String INVENTORY_OP_TYPE_OUT = "3"; //销售
+    public static final String INVENTORY_OP_TYPE_MINUS = "4"; //损耗
 
     public static final String INVOICE_TYPE_SPECIAL = "1";// 专票
     public static final String INVOICE_TYPE_GENERAL = "2"; //普票

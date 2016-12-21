@@ -1,4 +1,4 @@
-(function ($) {
+(function ($, moment) {
     var Goods_Stock_Detail = {
         opts: {
             URL: '/good/getGoodsStockDetails'
@@ -31,6 +31,12 @@
                 e.preventDefault();
 
                 var conditions = $("#goods_filter_form").serialize();
+                var startDate = $('#createTimeStart').val() || moment().format("YYYY-MM-DD");
+                var endDate = $('#createTimeEnd').val() || moment().format("YYYY-MM-DD");
+
+                if (endDate < startDate) {
+                    return $.tipsWarningAlert("开始日期不能大于结束日期");
+                }
 
                 location.assign(content.opts.URL + '?' + conditions);
             });
@@ -56,4 +62,4 @@
     };
 
     Goods_Stock_Detail.init();
-})(jQuery);
+})(jQuery, moment);

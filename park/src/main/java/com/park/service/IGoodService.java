@@ -22,6 +22,8 @@ public interface IGoodService {
 	public PageBean getGoods(GoodInputView goodInputView);
 	
 	public void addGoodCount(GoodInfo goodInfo);
+
+	public void minusGoodCount(GoodInfo goodInfo);
 	
 	public void updateGoodInOrOut(int goodId, boolean up);
 	
@@ -54,5 +56,6 @@ public interface IGoodService {
 	public PageBean getGoodsStockDetails(GoodInputView goodInputView);
 	
 	public List<Map<String, Object>> getGoodOutInfo(GoodInputView goodInputView);
-	
+
+    public PageBean countGoodsStock(GoodInputView goodInputView);
 }
