@@ -80,11 +80,11 @@
                     <form id="good_type_form" class="form-horizontal" onsubmit="return false;">
                         <input type="hidden" name="goodTypeId" id="good_type_id">
                         <div class="form-group">
-                            <label for="good_type_name" class="col-sm-4 control-label">
+                            <label for="good_type_name" class="col-sm-3 control-label">
                                 <span class="text-danger">*</span> 类别名称
                             </label>
 
-                            <div class="col-sm-8">
+                            <div class="col-sm-9">
                                 <input type="text" class="form-control" id="good_type_name" name="goodTypeName"
                                        placeholder="例如:饮食类,器械类" autocomplete="off"
                                        data-val="true" data-val-required="类别名称不能为空"
@@ -94,9 +94,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="good_type_remark" class="col-sm-4 control-label">类别描述</label>
+                            <label for="good_type_remark" class="col-sm-3 control-label">类别描述</label>
 
-                            <div class="col-sm-8">
+                            <div class="col-sm-9">
                                 <textarea class="form-control" id="good_type_remark" name="goodTypeDescribe" rows="3"
                                           placeholder="类别描述"></textarea>
                             </div>

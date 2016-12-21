@@ -90,7 +90,7 @@
                 <div class="table-responsive teachers-meals-list">
                     <table class="table">
                         <thead>
-                        <tr>
+                        <tr class="bg-info">
                             <th>序号</th>
                             <th>订单号</th>
                             <th>订餐人</th>

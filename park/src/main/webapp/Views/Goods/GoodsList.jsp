@@ -30,23 +30,20 @@
             <div class="panel-body">
                 <form class="form-inline" id="goods_filter_form" onsubmit="return false;">
                     <div class="form-group">
-                        <label for="good_name">商品名称</label>
                         <input type="text" class="form-control" id="good_name" name="goodName"
-                               placeholder="请输入商品名称" value="${goodName}">
+                               placeholder="商品名称" value="${goodName}">
                     </div>
                     <div class="form-group">
-                        <label for="good_name">商品类别</label>
                         <select class="form-control" id="good_type" name="goodType" style="width: 160px;">
-                            <option value="">全部类别</option>
+                            <option value="">商品类别</option>
                             <c:forEach var="type" items="${goodTypeNames}">
                                 <option value="${type.goodTypeId}" <c:if test='${type.goodTypeId == goodType}'>selected</c:if>>${type.goodTypeName}</option>
                             </c:forEach>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="good_state">&nbsp;商品状态</label>
                         <select class="form-control" id="good_state" name="goodStatus" style="width: 160px;">
-                            <option value="">全部状态</option>
+                            <option value="">商品状态</option>
                             <option value="1" <c:if test="${goodStatus == 1}">selected</c:if> >在售</option>
                             <option value="2" <c:if test="${goodStatus == 2}">selected</c:if> >预售</option>
                         </select>

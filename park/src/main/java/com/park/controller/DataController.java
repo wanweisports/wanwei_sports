@@ -68,6 +68,18 @@ public class DataController extends BaseController {
         return "Data/DataBusinessIncome";
     }
 
+    // 营业收支按照注册日期
+    @RequestMapping("getBusinessIncomeGroupDate")
+    public String getBusinessIncomeGroupDate(DataInputView dataInputView, Model model) {
+        try {
+            model.addAllAttributes(JsonUtils.fromJson(dataInputView));
+            model.addAttribute("data", dataService.getBusinessIncome(dataInputView));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Data/DataBusinessIncomeGroupDate";
+    }
+
 	// 营业收支日志
 	@RequestMapping("getBusinessIncomeLog")
 	public String getBusinessIncomeLog(DataInputView dataInputView, Model model) {

@@ -72,7 +72,7 @@
                 <div class="table-responsive card-type-list">
                     <table class="table">
                         <thead>
-                        <tr>
+                        <tr class="bg-info">
                             <th>序号</th>
                             <th>教师姓名</th>
                             <th>手机号</th>

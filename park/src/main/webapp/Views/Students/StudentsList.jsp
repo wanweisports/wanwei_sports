@@ -50,7 +50,7 @@
                 <div class="table-responsive students-list">
                     <table class="table">
                         <thead>
-                        <tr>
+                        <tr class="bg-info">
                             <th>学生卡号</th>
                             <th>学生姓名</th>
                             <th>所在班级</th>

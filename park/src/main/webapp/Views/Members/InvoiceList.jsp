@@ -65,7 +65,7 @@
                 <div class="table-responsive invoice-list">
                     <table class="table">
                         <thead>
-                        <tr>
+                        <tr class="bg-info">
                             <th>选择</th>
                             <th>流水单号</th>
                             <th>发票抬头</th>

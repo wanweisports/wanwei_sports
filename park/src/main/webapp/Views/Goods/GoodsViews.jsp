@@ -173,5 +173,5 @@
 
 <c:import url="../Shared/Layout_New.jsp">
     <c:param name="nav" value="good"/>
-    <c:param name="subNav" value="stock"/>
+    <c:param name="subNav" value="list"/>
 </c:import>

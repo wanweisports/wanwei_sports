@@ -69,7 +69,7 @@
                 <div class="table-responsive">
                     <table class="table goods-list">
                         <thead>
-                        <tr>
+                        <tr class="bg-info">
                             <th>商品编号</th>
                             <th>商品名称</th>
                             <th>变化原因</th>

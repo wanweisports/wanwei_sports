@@ -58,7 +58,7 @@
                         <li><a href="/site/getSiteReservationInfo"><span>场地预订</span></a></li>
                         <li><a href="/site/getSiteReservationBatch"><span>批量预订</span></a></li>
                         <li><a href="/good/getGoodsMarket"><span>商品销售</span></a></li>
-                        <li><a href="/data/getBusinessIncome"><span>营业收支记录</span></a></li>
+                        <li><a href="/data/getBusinessIncome?countNum=1"><span>营业收支统计</span></a></li>
                         <li><a href="/settings/database"><span>数据备份</span></a></li>
                     </ul>
                 </div>

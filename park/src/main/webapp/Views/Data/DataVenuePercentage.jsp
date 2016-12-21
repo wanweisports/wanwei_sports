@@ -85,7 +85,7 @@
                 <div class="table-responsive card-type-list">
                     <table class="table">
                         <thead>
-                        <tr>
+                        <tr class="bg-info">
                             <th>场地类型</th>
                             <th>场地编号</th>
                             <th>总场次数</th>

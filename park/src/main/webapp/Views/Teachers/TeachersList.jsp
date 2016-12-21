@@ -54,7 +54,7 @@
                 <div class="table-responsive">
                     <table class="table teachers-list">
                         <thead>
-                        <tr>
+                        <tr class="bg-info">
                             <th>教师姓名</th>
                             <th>手机号码</th>
                             <th>教师卡号</th>

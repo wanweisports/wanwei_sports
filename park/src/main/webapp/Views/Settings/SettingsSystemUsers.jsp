@@ -58,7 +58,7 @@
                 <div class="table-responsive card-type-list">
                     <table class="table">
                         <thead>
-                        <tr>
+                        <tr class="bg-info">
                             <th>员工编号</th>
                             <th>登录账号</th>
                             <th>员工姓名</th>

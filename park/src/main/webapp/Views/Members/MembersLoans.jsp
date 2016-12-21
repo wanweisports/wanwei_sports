@@ -55,7 +55,7 @@
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
-                        <tr>
+                        <tr class="bg-info">
                             <th>订单号</th>
                             <th>会员姓名</th>
                             <th>手机号码</th>

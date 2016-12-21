@@ -49,7 +49,7 @@
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
-                        <tr>
+                        <tr class="bg-info">
                             <th>序号</th>
                             <th>权限名称</th>
                             <th>权限说明</th>

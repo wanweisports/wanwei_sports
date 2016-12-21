@@ -45,7 +45,7 @@
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
-                        <tr>
+                        <tr class="bg-info">
                             <th>场地类型</th>
                             <th>单价(元)</th>
                             <th>预订押金(元)</th>

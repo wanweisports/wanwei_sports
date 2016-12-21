@@ -49,7 +49,7 @@
                 <div class="table-responsive members-list">
                     <table class="table">
                         <thead>
-                        <tr>
+                        <tr class="bg-info">
                             <th>姓名</th>
                             <th>手机号码</th>
                             <th>会员卡号</th>

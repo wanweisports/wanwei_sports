@@ -56,6 +56,9 @@
                         <a href="javascript:;" class="btn btn-danger goods-filter">
                             <span class="glyphicon glyphicon-export"></span> 导出数据
                         </a>
+                        <a href="/data/getBusinessIncomeGroupDate" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-stats"></span> 图表显示
+                        </a>
                     </div>
                 </form>
             </div>

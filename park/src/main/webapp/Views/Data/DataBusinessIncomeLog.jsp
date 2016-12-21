@@ -84,7 +84,7 @@
                 <div class="table-responsive card-type-list">
                     <table class="table">
                         <thead>
-                        <tr>
+                        <tr class="bg-info">
                             <th>交易流水号</th>
                             <th>会员卡号</th>
                             <th>会员姓名</th>
