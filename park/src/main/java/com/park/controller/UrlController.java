@@ -1,6 +1,7 @@
 package com.park.controller;
 
 import com.park.common.bean.NotificationsInputView;
+import com.park.common.bean.NotificationsUsersInputView;
 import com.park.common.bean.PageBean;
 import com.park.service.INotificationsService;
 import com.park.service.IParkService;
@@ -177,12 +178,12 @@ public class UrlController extends BaseController {
 
 	// 我的消息
 	@RequestMapping("/passport/message")
-    public String notificationsReceiver(NotificationsInputView notificationsInputView, Model model) {
+    public String notificationsReceiver(NotificationsInputView notificationsInputView,
+										NotificationsUsersInputView notificationsUsersInputView, Model model) {
         try {
             UserOperator userInfo = super.getUserInfo();
-            notificationsInputView.setNoteReceiver(userInfo.getId());
             model.addAllAttributes(JsonUtils.fromJsonDF(notificationsInputView));
-            PageBean pageBean = notificationsService.getNotificationsReceiver(notificationsInputView);
+            PageBean pageBean = notificationsService.getNotificationsByReceiver(notificationsInputView, notificationsUsersInputView);
             super.setPageInfo(model, pageBean);
         } catch (Exception e) {
             e.printStackTrace();

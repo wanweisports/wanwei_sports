@@ -40,14 +40,14 @@ public class OfficeController extends BaseController {
 
     // 获取发件人的通知管理
     @RequestMapping("notifications")
-    public String notifications(NotificationsInputView notificationsInputView, Model model) {
+    public String notifications(NotificationsInputView notificationsInputView,
+                                NotificationsUsersInputView notificationsUsersInputView, Model model) {
         try {
             OperatorInputView operatorInputView = new OperatorInputView();
             UserOperator userInfo = super.getUserInfo();
-            notificationsInputView.setNoteSender(userInfo.getId());
             model.addAllAttributes(JsonUtils.fromJsonDF(notificationsInputView));
             model.addAttribute("operators", operatorService.getOperatorsName(operatorInputView));
-            PageBean pageBean = notificationsService.getNotifications(notificationsInputView);
+            PageBean pageBean = notificationsService.getNotificationsBySender(notificationsInputView, notificationsUsersInputView);
             super.setPageInfo(model, pageBean);
         } catch (Exception e) {
             e.printStackTrace();
@@ -87,12 +87,11 @@ public class OfficeController extends BaseController {
     // 通知管理保存
     @ResponseBody
     @RequestMapping(value = "sendNotifications", method = RequestMethod.POST)
-    public ResponseBean saveNotifications(NotificationsInfo notificationsInfo) {
+    public ResponseBean saveNotifications(NotificationsInfo notificationsInfo, NotificationsUsers notificationsUsers) {
         try {
             UserOperator userInfo = super.getUserInfo();
-            notificationsInfo.setNoteSender(userInfo.getId());
 
-            Integer noteId = notificationsService.saveSetNotification(notificationsInfo);
+            Integer noteId = notificationsService.saveSetNotification(notificationsInfo, notificationsUsers);
             Map<String, Object> data = new HashMap<String, Object>();
             data.put("noteId", noteId);
             return new ResponseBean(data);
