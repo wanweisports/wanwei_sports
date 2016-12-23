@@ -3,21 +3,27 @@ package com.park.common.bean;
 /**
  * Created by wangjun on 16/11/21.
  */
-public class NotificationsUsersInputView extends BaseInputView {
+public class NotificationsReceiversInputView extends BaseInputView {
 
     private Integer id;
 
     private Integer noteId;
 
-    private Integer senderId;
-
     private Integer receiverId;
 
-    private String status;
-
-    private String sendTime;
-
     private String readTime;
+
+    private String receiverStatus;
+
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public Integer getId() {
         return this.id;
@@ -35,14 +41,6 @@ public class NotificationsUsersInputView extends BaseInputView {
         this.noteId = noteId;
     }
 
-    public Integer getSenderId() {
-        return this.senderId;
-    }
-
-    public void setSenderId(Integer senderId) {
-        this.senderId = senderId;
-    }
-
     public Integer getReceiverId() {
         return this.receiverId;
     }
@@ -51,12 +49,12 @@ public class NotificationsUsersInputView extends BaseInputView {
         this.receiverId = receiverId;
     }
 
-    public String getStatus() {
-        return this.status;
+    public String getReceiverStatus() {
+        return this.receiverStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setReceiverStatus(String receiverStatus) {
+        this.receiverStatus = receiverStatus;
     }
 
     public String getReadTime() {
@@ -65,14 +63,6 @@ public class NotificationsUsersInputView extends BaseInputView {
 
     public void setReadTime(String readTime) {
         this.readTime = readTime;
-    }
-
-    public String getSendTime() {
-        return this.sendTime;
-    }
-
-    public void setSendTime(String sendTime) {
-        this.sendTime = sendTime;
     }
 
 }

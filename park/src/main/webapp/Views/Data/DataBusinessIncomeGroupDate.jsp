@@ -68,6 +68,16 @@
                 <input type="hidden" value="${charts}" id="data_charts">
             </div>
         </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div id="business_income_type_show" style="width: 100%;height:600px;"></div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div id="business_income_compare_show" style="width: 100%;height:600px;"></div>
+            </div>
+        </div>
     </div>
 </layout:override>
 

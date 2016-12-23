@@ -3,7 +3,7 @@ package com.park.common.bean;
 /**
  * Created by wangjun on 16/11/21.
  */
-public class NotificationsInputView extends BaseInputView {
+public class NotificationsSendersInputView extends BaseInputView {
 
     private Integer noteId;
 
@@ -14,6 +14,22 @@ public class NotificationsInputView extends BaseInputView {
     private String createTime;
 
     private String updateTime;
+
+    private Integer senderId;
+
+    private String sendTime;
+
+    private String sendStatus;
+
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public Integer getNoteId() {
         return noteId;
@@ -53,6 +69,30 @@ public class NotificationsInputView extends BaseInputView {
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(Integer senderId) {
+        this.senderId = senderId;
+    }
+
+    public String getSendTime() {
+        return sendTime;
+    }
+
+    public void setSendTime(String sendTime) {
+        this.sendTime = sendTime;
+    }
+
+    public String getSendStatus() {
+        return sendStatus;
+    }
+
+    public void setSendStatus(String sendStatus) {
+        this.sendStatus = sendStatus;
     }
 
 }

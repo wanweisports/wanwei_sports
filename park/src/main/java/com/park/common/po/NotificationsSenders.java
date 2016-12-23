@@ -11,27 +11,34 @@ import javax.persistence.Table;
  * GoodInfo entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "notifications_info", catalog = "park")
-public class NotificationsInfo implements java.io.Serializable {
+@Table(name = "notifications_senders", catalog = "park")
+public class NotificationsSenders implements java.io.Serializable {
 	// Fields
 	private Integer noteId;
 	private String noteTitle;
 	private String noteContent;
 	private String createTime;
     private String updateTime;
+	private Integer senderId;
+    private String sendTime;
+    private String sendStatus;
 
 	// Constructors
 
 	/** default constructor */
-	public NotificationsInfo() {
+	public NotificationsSenders() {
 	}
 
 	/** full constructor */
-	public NotificationsInfo(String noteTitle, String noteContent, String createTime, String updateTime) {
+	public NotificationsSenders(String noteTitle, String noteContent, String createTime, String updateTime,
+                                Integer senderId, String sendTime, String sendStatus) {
         this.noteTitle = noteTitle;
         this.noteContent = noteContent;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.senderId = senderId;
+        this.sendTime = sendTime;
+        this.sendStatus = sendStatus;
 	}
 
 	// Property accessors
@@ -80,6 +87,33 @@ public class NotificationsInfo implements java.io.Serializable {
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Column(name = "senderId")
+    public Integer getSenderId() {
+        return this.senderId;
+    }
+
+    public void setSenderId(Integer senderId) {
+        this.senderId = senderId;
+    }
+
+    @Column(name = "sendTime", length = 20)
+    public String getSendTime() {
+        return this.sendTime;
+    }
+
+    public void setSendTime(String sendTime) {
+        this.sendTime = sendTime;
+    }
+
+    @Column(name = "sendStatus", length = 1)
+    public String getSendStatus() {
+        return this.sendStatus;
+    }
+
+    public void setSendStatus(String sendStatus) {
+        this.sendStatus = sendStatus;
     }
 
 }

@@ -8,31 +8,26 @@ import static javax.persistence.GenerationType.IDENTITY;
  * GoodInfo entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "notifications_users", catalog = "park")
-public class NotificationsUsers implements java.io.Serializable {
+@Table(name = "notifications_receivers", catalog = "park")
+public class NotificationsReceivers implements java.io.Serializable {
 	// Fields
 	private Integer id;
 	private Integer noteId;
-	private Integer senderId;
 	private Integer receiverId;
-	private String status;
-	private String sendTime;
+    private String receiverStatus;
     private String readTime;
 
 	// Constructors
 
 	/** default constructor */
-	public NotificationsUsers() {
+	public NotificationsReceivers() {
 	}
 
 	/** full constructor */
-	public NotificationsUsers(Integer noteId, Integer senderId, Integer receiverId, String status, String sendTime,
-							  String readTIme) {
+	public NotificationsReceivers(Integer noteId, Integer receiverId, String readTime, String receiverStatus) {
         this.noteId = noteId;
-        this.senderId = senderId;
         this.receiverId = receiverId;
-		this.status = status;
-        this.sendTime = sendTime;
+        this.receiverStatus = receiverStatus;
 		this.readTime = readTime;
 	}
 
@@ -57,15 +52,6 @@ public class NotificationsUsers implements java.io.Serializable {
 		this.noteId = noteId;
 	}
 
-	@Column(name = "senderId", length = 11)
-	public Integer getSenderId() {
-		return this.senderId;
-	}
-
-	public void setSenderId(Integer senderId) {
-		this.senderId = senderId;
-	}
-
 	@Column(name = "receiverId", length = 11)
 	public Integer getReceiverId() {
 		return this.receiverId;
@@ -75,14 +61,14 @@ public class NotificationsUsers implements java.io.Serializable {
 		this.receiverId = receiverId;
 	}
 
-	@Column(name = "status", length = 1)
-	public String getStatus() {
-		return this.status;
-	}
+    @Column(name = "receiverStatus", length = 1)
+    public String getReceiverStatus() {
+        return this.receiverStatus;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public void setReceiverStatus(String receiverStatus) {
+        this.receiverStatus = receiverStatus;
+    }
 
 	@Column(name = "readTime", length = 20)
 	public String getReadTime() {
@@ -92,14 +78,5 @@ public class NotificationsUsers implements java.io.Serializable {
 	public void setReadTime(String readTime) {
 		this.readTime = readTime;
 	}
-
-    @Column(name = "sendTime", length = 20)
-    public String getSendTime() {
-        return this.sendTime;
-    }
-
-    public void setSendTime(String sendTime) {
-        this.sendTime = sendTime;
-    }
 
 }

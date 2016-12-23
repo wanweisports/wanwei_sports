@@ -1,6 +1,7 @@
 package com.park.controller;
 
 import com.park.common.bean.*;
+import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.*;
 import com.park.common.util.JsonUtils;
@@ -11,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,17 +38,32 @@ public class OfficeController extends BaseController {
     @Autowired
     private IOperatorService operatorService;
 
-    // 获取发件人的通知管理
-    @RequestMapping("notifications")
-    public String notifications(NotificationsInputView notificationsInputView,
-                                NotificationsUsersInputView notificationsUsersInputView, Model model) {
+    // 获取通知列表
+    @RequestMapping("getNotifications")
+    public String getNotifications(NotificationsSendersInputView notificationsSendersInputView, Model model) {
         try {
             OperatorInputView operatorInputView = new OperatorInputView();
             UserOperator userInfo = super.getUserInfo();
-            model.addAllAttributes(JsonUtils.fromJsonDF(notificationsInputView));
+            notificationsSendersInputView.setSenderId(userInfo.getId());
+            model.addAllAttributes(JsonUtils.fromJsonDF(notificationsSendersInputView));
             model.addAttribute("operators", operatorService.getOperatorsName(operatorInputView));
-            PageBean pageBean = notificationsService.getNotificationsBySender(notificationsInputView, notificationsUsersInputView);
-            super.setPageInfo(model, pageBean);
+
+            PageBean pageBean;
+            if (notificationsSendersInputView.getType().equals(IDBConstant.NOTIFICATIONS_TYPE_DRAFT)) {
+                notificationsSendersInputView.setSendStatus(IDBConstant.NOTIFICATIONS_SENDER_NO);
+                pageBean = notificationsService.getNotificationsDraft(notificationsSendersInputView);
+                super.setPageInfo(model, pageBean);
+            }
+            if (notificationsSendersInputView.getType().equals(IDBConstant.NOTIFICATIONS_TYPE_SEND)) {
+                notificationsSendersInputView.setSendStatus(IDBConstant.NOTIFICATIONS_SENDER_YES);
+                pageBean = notificationsService.getNotificationsBySender(notificationsSendersInputView);
+                super.setPageInfo(model, pageBean);
+            }
+            if (notificationsSendersInputView.getType().equals(IDBConstant.NOTIFICATIONS_TYPE_TRASH)) {
+                notificationsSendersInputView.setSendStatus(IDBConstant.NOTIFICATIONS_SENDER_DEL);
+                pageBean = notificationsService.getNotificationsBySender(notificationsSendersInputView);
+                super.setPageInfo(model, pageBean);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -71,6 +86,44 @@ public class OfficeController extends BaseController {
         }
     }
 
+    // 通知管理保存
+    @ResponseBody
+    @RequestMapping(value = "saveNotifications", method = RequestMethod.POST)
+    public ResponseBean saveNotifications(NotificationsSenders notificationsSenders) {
+        try {
+            UserOperator userInfo = super.getUserInfo();
+            notificationsSenders.setSenderId(userInfo.getId());
+            Integer noteId = notificationsService.saveSetNotification(notificationsSenders);
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("noteId", noteId);
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
+    // 通知管理发送
+    @ResponseBody
+    @RequestMapping(value = "sendNotifications", method = RequestMethod.POST)
+    public ResponseBean sendNotifications(NotificationsReceivers notificationsReceivers) {
+        try {
+            Integer sendId = notificationsService.saveSendNotification(notificationsReceivers);
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("sendId", sendId);
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
     // 通知管理删除
     @ResponseBody
     @RequestMapping(value = "deleteNotifications", method = RequestMethod.POST)
@@ -84,17 +137,51 @@ public class OfficeController extends BaseController {
         }
     }
 
-    // 通知管理保存
-    @ResponseBody
-    @RequestMapping(value = "sendNotifications", method = RequestMethod.POST)
-    public ResponseBean saveNotifications(NotificationsInfo notificationsInfo, NotificationsUsers notificationsUsers) {
+    // 获取消息列表
+    @RequestMapping("getMessage")
+    public String getMessage(NotificationsReceiversInputView notificationsReceiversInputView, Model model) {
         try {
+            OperatorInputView operatorInputView = new OperatorInputView();
             UserOperator userInfo = super.getUserInfo();
+            notificationsReceiversInputView.setReceiverId(userInfo.getId());
+            model.addAllAttributes(JsonUtils.fromJsonDF(notificationsReceiversInputView));
+            model.addAttribute("operators", operatorService.getOperatorsName(operatorInputView));
 
-            Integer noteId = notificationsService.saveSetNotification(notificationsInfo, notificationsUsers);
-            Map<String, Object> data = new HashMap<String, Object>();
-            data.put("noteId", noteId);
-            return new ResponseBean(data);
+            PageBean pageBean;
+            if (notificationsReceiversInputView.getType().equals(IDBConstant.NOTIFICATIONS_TYPE_RECEIVE)) {
+                notificationsReceiversInputView.setReceiverStatus(IDBConstant.NOTIFICATIONS_RECEIVER_ALL);
+                pageBean = notificationsService.getNotificationsByReceiver(notificationsReceiversInputView);
+                super.setPageInfo(model, pageBean);
+            }
+            if (notificationsReceiversInputView.getType().equals(IDBConstant.NOTIFICATIONS_TYPE_RECEIVE_READ)) {
+                notificationsReceiversInputView.setReceiverStatus(IDBConstant.NOTIFICATIONS_RECEIVER_YES);
+                pageBean = notificationsService.getNotificationsByReceiver(notificationsReceiversInputView);
+                super.setPageInfo(model, pageBean);
+            }
+            if (notificationsReceiversInputView.getType().equals(IDBConstant.NOTIFICATIONS_TYPE_RECEIVE_UNREAD)) {
+                notificationsReceiversInputView.setReceiverStatus(IDBConstant.NOTIFICATIONS_RECEIVER_NO);
+                pageBean = notificationsService.getNotificationsByReceiver(notificationsReceiversInputView);
+                super.setPageInfo(model, pageBean);
+            }
+            if (notificationsReceiversInputView.getType().equals(IDBConstant.NOTIFICATIONS_TYPE_TRASH)) {
+                notificationsReceiversInputView.setReceiverStatus(IDBConstant.NOTIFICATIONS_RECEIVER_DEL);
+                pageBean = notificationsService.getNotificationsByReceiver(notificationsReceiversInputView);
+                super.setPageInfo(model, pageBean);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "Office/OfficeMessage";
+    }
+
+    // 通知管理标记发送
+    @ResponseBody
+    @RequestMapping(value = "markNotificationRead", method = RequestMethod.POST)
+    public ResponseBean markNotificationRead(int id) {
+        try {
+            notificationsService.saveMarkNotificationRead(id);
+            return new ResponseBean(true);
         } catch (MessageException e) {
             e.printStackTrace();
             return new ResponseBean(e.getMessage());
@@ -104,16 +191,13 @@ public class OfficeController extends BaseController {
         }
     }
 
-    // 通知管理标记发送
+    // 通知管理删除
     @ResponseBody
-    @RequestMapping(value = "markNotificationRead", method = RequestMethod.POST)
-    public ResponseBean markNotificationRead(int noteId) {
+    @RequestMapping(value = "deleteMessage", method = RequestMethod.POST)
+    public ResponseBean deleteMessage(int id) {
         try {
-            notificationsService.saveMarkNotificationRead(noteId);
+            notificationsService.deleteNotificationReceiver(id);
             return new ResponseBean(true);
-        } catch (MessageException e) {
-            e.printStackTrace();
-            return new ResponseBean(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseBean(false);

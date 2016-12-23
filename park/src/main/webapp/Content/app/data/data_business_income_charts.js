@@ -6,6 +6,8 @@
         init: function () {
             this.initEvents();
             this.initChartsData();
+            this.renderBusinessIncomeTypes();
+            this.renderBusinessIncomeCompare();
 
             $.datetimepicker.setLocale('zh');
 
@@ -47,6 +49,219 @@
                 }
 
             });
+        },
+        renderBusinessIncomeCompare: function () {
+            var myChart = echarts.init(document.getElementById('business_income_compare_show'));
+
+            var option = {
+                color: ['#3e6591', '#eb7d22', '#d73f45'],
+                grid: {
+                    left: 250
+                },
+                xAxis: {
+                    axisLine: {
+                        lineStyle: {color: '#ccc'}
+                    },
+                    axisLabel: {
+                        textStyle: {color: '#777'}
+                    }
+                },
+                yAxis: [{
+                    inverse: true,
+                    splitLine: {
+                        show: true
+                    },
+                    axisTick: {
+                        length: 100,
+                        lineStyle: {color: '#ccc'}
+                    },
+                    axisLine: {
+                        lineStyle: {color: '#ccc'}
+                    },
+                    data: ['-', '-', '-', '-', '-']
+                }, {
+                    name: '                     所属行业',
+                    nameLocation: 'start',
+                    nameTextStyle: {
+                        fontWeight: 'bold'
+                    },
+                    position: 'left',
+                    offset: 130,
+                    axisLine: {
+                        onZero: false,
+                        show: false
+                    },
+                    axisTick: {
+                        length: 70,
+                        inside: true,
+                        lineStyle: {color: '#ccc'}
+                    },
+                    axisLabel: {
+                        inside: true
+                    },
+                    inverse: true,
+                    data: ['电商', '游戏', '金融', '旅游', '直播']
+                }, {
+                    name: '                产品名',
+                    nameLocation: 'start',
+                    nameTextStyle: {
+                        fontWeight: 'bold'
+                    },
+                    position: 'left',
+                    offset: 220,
+                    axisLine: {
+                        onZero: false,
+                        show: false
+                    },
+                    axisTick: {
+                        length: 100,
+                        inside: true,
+                        lineStyle: {color: '#ccc'}
+                    },
+                    axisLabel: {
+                        inside: true
+                    },
+                    inverse: true,
+                    data: ['APP数据分析', 'DMP', '企业版', '移动广告鉴别', '']
+                }],
+                series: [{
+                    type: 'bar',
+                    data: [220, 182, 191, 234, 290],
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'left',
+                            textStyle: {color: '#000'},
+                            formatter: '合同金额',
+                        }
+                    }
+                }, {
+                    type: 'bar',
+                    data: [210, 132, 91, 204, 220],
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'left',
+                            textStyle: {color: '#000'},
+                            formatter: '已收款',
+                        }
+                    }
+                }, {
+                    type: 'bar',
+                    data: [120, 132, 131, 254, 278],
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'left',
+                            textStyle: {color: '#000'},
+                            formatter: '应收款',
+                        }
+                    }
+                }, {
+                    type: 'bar',
+                    data: ['-', '-', '-', '-', '-'],
+                    yAxisIndex: 1
+                }, {
+                    type: 'bar',
+                    data: ['-', '-', '-', '-', '-'],
+                    yAxisIndex: 2
+                }]
+            };
+
+            myChart.setOption(option);
+        },
+        renderBusinessIncomeTypes: function () {
+            var myChart = echarts.init(document.getElementById('business_income_type_show'));
+
+            var data = [{
+                value: 3661,
+                name: '<10w'
+            }, {
+                value: 5713,
+                name: '10w-50w'
+            }, {
+                value: 9938,
+                name: '50w-100w'
+            }, {
+                value: 17623,
+                name: '100w-500w'
+            }, {
+                value: 3299,
+                name: '>500w'
+            }];
+            var option = {
+                backgroundColor: '#fff',
+                title: {
+                    text: '营业收入',
+                    subtext: '2016年',
+                    x: 'center',
+                    y: 'center',
+                    textStyle: {
+                        fontWeight: 'normal',
+                        fontSize: 16
+                    }
+                },
+                tooltip: {
+                    show: true,
+                    trigger: 'item',
+                    formatter: "{b}: {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'horizontal',
+                    bottom: '0%',
+                    data: ['<10w', '10w-50w', '50w-100w', '100w-500w', '>500w']
+                },
+                series: [{
+                    type: 'pie',
+                    selectedMode: 'single',
+                    radius: ['25%', '58%'],
+                    color: ['#86D560', '#AF89D6', '#59ADF3', '#FF999A', '#FFCC67'],
+
+                    label: {
+                        normal: {
+                            position: 'inner',
+                            formatter: '{d}%',
+
+                            textStyle: {
+                                color: '#fff',
+                                fontWeight: 'bold',
+                                fontSize: 14
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data: data
+                }, {
+                    type: 'pie',
+                    radius: ['58%', '83%'],
+                    itemStyle: {
+                        normal: {
+                            color: '#F2F2F2'
+                        },
+                        emphasis: {
+                            color: '#ADADAD'
+                        }
+                    },
+                    label: {
+                        normal: {
+                            position: 'inner',
+                            formatter: '{c}元',
+                            textStyle: {
+                                color: '#777777',
+                                fontWeight: 'bold',
+                                fontSize: 14
+                            }
+                        }
+                    },
+                    data: data
+                }]
+            };
+
+            myChart.setOption(option);
         },
         formatChart: function (data) {
             var xData = function() {

@@ -1,29 +1,32 @@
 package com.park.service;
 
-import com.park.common.bean.NotificationsInputView;
-import com.park.common.bean.NotificationsUsersInputView;
+import com.park.common.bean.NotificationsSendersInputView;
+import com.park.common.bean.NotificationsReceiversInputView;
 import com.park.common.bean.PageBean;
-import com.park.common.po.NotificationsInfo;
-import com.park.common.po.NotificationsUsers;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import com.park.common.po.NotificationsSenders;
+import com.park.common.po.NotificationsReceivers;
 
 import java.io.IOException;
 
 public interface INotificationsService {
 
-	public PageBean getNotificationsBySender(NotificationsInputView notificationsInputView,
-                                             NotificationsUsersInputView notificationsUsersInputView);
+    public PageBean getNotificationsDraft(NotificationsSendersInputView notificationsSendersInputView);
 
-    public PageBean getNotificationsByReceiver(NotificationsInputView notificationsInputView,
-                                               NotificationsUsersInputView notificationsUsersInputView);
+	public PageBean getNotificationsBySender(NotificationsSendersInputView notificationsSendersInputView);
 
-    public NotificationsInfo getNotificationInfo(int noteId);
+    public PageBean getNotificationsByReceiver(NotificationsReceiversInputView notificationsReceiversInputView);
+
+    public NotificationsSenders getNotificationInfo(int noteId);
+
+    public NotificationsReceivers getNotificationReceivers(int id);
 	
-	public Integer saveSetNotification(NotificationsInfo notificationInfo, NotificationsUsers notificationsUsers) throws IOException;
+	public Integer saveSetNotification(NotificationsSenders notificationInfo) throws IOException;
 
-    public Integer saveSendNotification(int noteId);
+    public Integer saveSendNotification(NotificationsReceivers notificationsReceivers);
 
-    public void saveMarkNotificationRead(int noteId);
+    public void saveMarkNotificationRead(int id);
 
     public void deleteNotification(int noteId);
+
+    public void deleteNotificationReceiver(int id);
 }

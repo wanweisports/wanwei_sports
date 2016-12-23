@@ -318,7 +318,7 @@
                     <table style="width: 100%;">
                         <tr class="list-nav-item office ${(param.nav == "office" && param.subNav == "notification") ? "active" : ""}">
                             <td>
-                                <span><a href="/office/notifications">通知管理</a></span>
+                                <span><a href="/office/getNotifications?type=2">通知管理</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item office ${(param.nav == "office" && param.subNav == "schedule") ? "active" : ""}">
@@ -406,7 +406,7 @@
                         </tr>
                         <tr class="list-nav-item passport ${(param.nav == "passport" && param.subNav == "message") ? "active" : ""}">
                             <td>
-                                <span><a href="/passport/message">我的消息</a></span>
+                                <span><a href="/office/getMessage?type=3">我的消息</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item passport last-nav-item">

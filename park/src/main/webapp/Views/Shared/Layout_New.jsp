@@ -94,7 +94,9 @@
                     <div class="alert alert-danger tips-content" role="alert"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">我知道了</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-ok"></span> 我知道了
+                    </button>
                 </div>
             </div>
         </div>
@@ -110,10 +112,33 @@
                     <h5 class="modal-title" id="tips_success_modal_label">成功提示</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-danger tips-content" role="alert"></div>
+                    <div class="alert alert-success tips-content" role="alert"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">我知道了</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-ok"></span> 我知道了
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="tips_confirm_modal" tabindex="-1" role="dialog" aria-labelledby="tips_confirm_modal_label" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="tips_confirm_modal_label">确认提示</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning tips-content" role="alert"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-ok"></span> 确 定
+                    </button>
                 </div>
             </div>
         </div>

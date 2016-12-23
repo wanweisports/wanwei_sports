@@ -1,7 +1,7 @@
 package com.park.controller;
 
-import com.park.common.bean.NotificationsInputView;
-import com.park.common.bean.NotificationsUsersInputView;
+import com.park.common.bean.NotificationsSendersInputView;
+import com.park.common.bean.NotificationsReceiversInputView;
 import com.park.common.bean.PageBean;
 import com.park.service.INotificationsService;
 import com.park.service.IParkService;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.park.common.annotation.NotProtected;
@@ -178,17 +177,7 @@ public class UrlController extends BaseController {
 
 	// 我的消息
 	@RequestMapping("/passport/message")
-    public String notificationsReceiver(NotificationsInputView notificationsInputView,
-										NotificationsUsersInputView notificationsUsersInputView, Model model) {
-        try {
-            UserOperator userInfo = super.getUserInfo();
-            model.addAllAttributes(JsonUtils.fromJsonDF(notificationsInputView));
-            PageBean pageBean = notificationsService.getNotificationsByReceiver(notificationsInputView, notificationsUsersInputView);
-            super.setPageInfo(model, pageBean);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+    public String notificationsReceiver( Model model) {
         return "Center/CenterNotification";
     }
 }
