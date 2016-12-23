@@ -59,6 +59,11 @@ public class OfficeController extends BaseController {
                 pageBean = notificationsService.getNotificationsBySender(notificationsSendersInputView);
                 super.setPageInfo(model, pageBean);
             }
+            if (notificationsSendersInputView.getType().equals(IDBConstant.NOTIFICATIONS_TYPE_TRASH)) {
+                notificationsSendersInputView.setSendStatus(IDBConstant.NOTIFICATIONS_SENDER_DEL);
+                pageBean = notificationsService.getNotificationsBySender(notificationsSendersInputView);
+                super.setPageInfo(model, pageBean);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -158,6 +163,11 @@ public class OfficeController extends BaseController {
                 pageBean = notificationsService.getNotificationsByReceiver(notificationsReceiversInputView);
                 super.setPageInfo(model, pageBean);
             }
+            if (notificationsReceiversInputView.getType().equals(IDBConstant.NOTIFICATIONS_TYPE_TRASH)) {
+                notificationsReceiversInputView.setReceiverStatus(IDBConstant.NOTIFICATIONS_RECEIVER_DEL);
+                pageBean = notificationsService.getNotificationsByReceiver(notificationsReceiversInputView);
+                super.setPageInfo(model, pageBean);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -175,6 +185,19 @@ public class OfficeController extends BaseController {
         } catch (MessageException e) {
             e.printStackTrace();
             return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
+    // 通知管理删除
+    @ResponseBody
+    @RequestMapping(value = "deleteMessage", method = RequestMethod.POST)
+    public ResponseBean deleteMessage(int id) {
+        try {
+            notificationsService.deleteNotificationReceiver(id);
+            return new ResponseBean(true);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseBean(false);

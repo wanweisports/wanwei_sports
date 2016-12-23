@@ -64,6 +64,25 @@
                     }
                 });
             });
+
+            // 删除
+            $(".message-list").on("click", ".message-delete", function (e) {
+                e.preventDefault();
+
+                var messageId = $(this).attr("data-id");
+
+                $.post('office/deleteMessage', {id: messageId}, function (res) {
+                    if (res.code == 1) {
+                        $.tipsWarningAlert("通知消息删除成功！");
+                        setTimeout(function () {
+                            location.reload();
+                        }, 2000);
+                    } else {
+                        $.logConsole("查询通知详情失败", res.message);
+                        $.tipsWarningAlert("通知详情查询失败");
+                    }
+                });
+            });
         }
     };
 

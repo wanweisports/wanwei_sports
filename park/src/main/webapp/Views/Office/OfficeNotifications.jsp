@@ -37,7 +37,7 @@
                             <span class="glyphicon glyphicon-pencil"></span> 草稿箱
                         </a>
                         <a href="office/getNotifications?type=2" data-type="2" class="btn btn-default note-type">
-                            <span class="glyphicon glyphicon-send" class="${send-icon}"></span> 发件箱
+                            <span class="glyphicon glyphicon-send"></span> 发件箱
                         </a>
                         <a href="office/getNotifications?type=4" data-type="4" class="btn btn-default note-type">
                             <span class="glyphicon glyphicon-trash"></span> 垃圾箱
@@ -63,6 +63,9 @@
 
         <div class="panel panel-default">
             <div class="panel-body">
+                <c:if test="${type==4}">
+                    <p class="text-danger">每条已删除的通知会自动保存30天，之后会清空超时的通知。</p>
+                </c:if>
                 <div class="table-responsive">
                     <table class="table notifications-list">
                         <thead>
@@ -113,21 +116,23 @@
                                        data-backdrop="false" data-id="${note.noteId}">
                                         <span class="glyphicon glyphicon-share-alt"></span> 查看
                                     </a>
-                                    <c:if test="${type==1}">
+                                    <c:if test="${note.sendStatus == 2}">
                                         <a href="#notifications_send_modal" class="btn btn-warning notifications-send" data-toggle="modal"
                                            data-backdrop="false" data-id="${note.noteId}">
                                             <span class="glyphicon glyphicon-send"></span> 发送
                                         </a>
                                     </c:if>
-                                    <c:if test="${type==2}">
+                                    <c:if test="${note.sendStatus == 1}">
                                         <a href="#notifications_send_modal" class="btn btn-warning notifications-send" data-toggle="modal"
                                            data-backdrop="false" data-id="${note.noteId}">
                                             <span class="glyphicon glyphicon-send"></span> 转发
                                         </a>
                                     </c:if>
-                                    <!--<a href="javascript:;" class="btn btn-danger notifications-delete">
-                                        <span class="glyphicon glyphicon-remove"></span> 删除
-                                    </a>-->
+                                    <c:if test="${note.sendStatus == 1 || note.sendStatus == 2}">
+                                        <a href="javascript:;" class="btn btn-danger notifications-delete" data-id="${note.noteId}">
+                                            <span class="glyphicon glyphicon-remove"></span> 删除
+                                        </a>
+                                    </c:if>
                                 </td>
                             </tr>
                         </c:forEach>

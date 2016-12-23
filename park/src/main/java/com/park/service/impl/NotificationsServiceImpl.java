@@ -89,7 +89,9 @@ public class NotificationsServiceImpl extends BaseService implements INotificati
 	public void deleteNotification(int noteId){
         NotificationsSenders notificationInfo = getNotificationInfo(noteId);
 		if(notificationInfo == null) throw new MessageException("该通知消息不存在");
-		baseDao.delete(notificationInfo);
+
+        notificationInfo.setSendStatus(IDBConstant.NOTIFICATIONS_SENDER_DEL);
+        baseDao.save(notificationInfo, noteId);
 	}
 	
 	@Override
@@ -135,6 +137,15 @@ public class NotificationsServiceImpl extends BaseService implements INotificati
     @Override
     public NotificationsReceivers getNotificationReceivers(int id) {
         return baseDao.getToEvict(NotificationsReceivers.class, id);
+    }
+
+    @Override
+    public void deleteNotificationReceiver(int id){
+        NotificationsReceivers notificationsReceivers = getNotificationReceivers(id);
+        if(notificationsReceivers == null) throw new MessageException("该通知消息不存在");
+
+        notificationsReceivers.setReceiverStatus(IDBConstant.NOTIFICATIONS_RECEIVER_DEL);
+        baseDao.save(notificationsReceivers, id);
     }
 	
 	@Override

@@ -27,4 +27,6 @@ public interface INotificationsService {
     public void saveMarkNotificationRead(int id);
 
     public void deleteNotification(int noteId);
+
+    public void deleteNotificationReceiver(int id);
 }

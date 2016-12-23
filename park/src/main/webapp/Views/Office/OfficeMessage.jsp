@@ -35,7 +35,7 @@
                         <a href="office/getMessage?type=32" data-type="32" class="btn btn-default note-type">
                             <span class="glyphicon glyphicon-trash"></span> 已读消息
                         </a>
-                        <a href="office/getMessage?type=4" class="btn btn-default">
+                        <a href="office/getMessage?type=4" data-type="4" class="btn btn-default note-type">
                             <span class="glyphicon glyphicon-trash"></span> 已删消息
                         </a>
                     </div>
@@ -59,6 +59,9 @@
 
         <div class="panel panel-default">
             <div class="panel-body">
+                <c:if test="${type==4}">
+                    <p class="text-danger">每条已删除的消息会自动保存30天，之后会清空超时的消息。</p>
+                </c:if>
                 <div class="table-responsive message-list">
                     <table class="table">
                         <thead>
@@ -94,9 +97,11 @@
                                        data-backdrop="false" data-note="${note.noteId}" data-id="${note.id}">
                                         <span class="glyphicon glyphicon-share-alt"></span> 查看
                                     </a>
-                                    <!--<a href="javascript:;" class="btn btn-danger">
-                                        <span class="glyphicon glyphicon-remove"></span> 删除
-                                    </a>-->
+                                    <c:if test="${note.receiverStatus == 1 || note.receiverStatus == 2}">
+                                        <a href="javascript:;" class="btn btn-danger message-delete" data-id="${note.id}">
+                                            <span class="glyphicon glyphicon-remove"></span> 删除
+                                        </a>
+                                    </c:if>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -241,28 +246,7 @@
                     <h5 class="modal-title" id="markModalLabel">确认框</h5>
                 </div>
                 <div class="modal-body">
-                    <p class="text-danger">您确定要标记为已读状态吗?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">
-                        <span class="glyphicon glyphicon-ok"></span> 确 定
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="deleteModalLabel">确认框</h5>
-                </div>
-                <div class="modal-body">
-                    <p class="text-danger">您确定要删除此通知消息吗?</p>
+                    <p class="text-danger">您确定要全部标记为已读状态吗?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">
