@@ -18,13 +18,13 @@ public interface INotificationsService {
 
     public NotificationsSenders getNotificationInfo(int noteId);
 
-    public NotificationsReceivers getNotificationReceivers(int messageId);
+    public NotificationsReceivers getNotificationReceivers(int id);
 	
 	public Integer saveSetNotification(NotificationsSenders notificationInfo) throws IOException;
 
     public Integer saveSendNotification(NotificationsReceivers notificationsReceivers);
 
-    public void saveMarkNotificationRead(int messageId);
+    public void saveMarkNotificationRead(int id);
 
     public void deleteNotification(int noteId);
 }

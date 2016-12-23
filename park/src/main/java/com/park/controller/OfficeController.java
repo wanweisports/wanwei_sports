@@ -168,9 +168,9 @@ public class OfficeController extends BaseController {
     // 通知管理标记发送
     @ResponseBody
     @RequestMapping(value = "markNotificationRead", method = RequestMethod.POST)
-    public ResponseBean markNotificationRead(int messageId) {
+    public ResponseBean markNotificationRead(int id) {
         try {
-            notificationsService.saveMarkNotificationRead(messageId);
+            notificationsService.saveMarkNotificationRead(id);
             return new ResponseBean(true);
         } catch (MessageException e) {
             e.printStackTrace();

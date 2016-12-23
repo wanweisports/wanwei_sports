@@ -133,20 +133,20 @@ public class NotificationsServiceImpl extends BaseService implements INotificati
     }
 
     @Override
-    public NotificationsReceivers getNotificationReceivers(int messageId) {
-        return baseDao.getToEvict(NotificationsReceivers.class, messageId);
+    public NotificationsReceivers getNotificationReceivers(int id) {
+        return baseDao.getToEvict(NotificationsReceivers.class, id);
     }
 	
 	@Override
-	public void saveMarkNotificationRead(int messageId){
+	public void saveMarkNotificationRead(int id){
         String nowDate = DateUtil.getNowDate();
 
-        NotificationsReceivers notificationsReceivers = getNotificationReceivers(messageId);
+        NotificationsReceivers notificationsReceivers = getNotificationReceivers(id);
         if(notificationsReceivers == null) throw new MessageException("该通知消息不存在");
         notificationsReceivers.setReceiverStatus(IDBConstant.NOTIFICATIONS_RECEIVER_YES);
         notificationsReceivers.setReadTime(nowDate);
 
-        baseDao.save(notificationsReceivers, messageId);
+        baseDao.save(notificationsReceivers, id);
 	}
 }
 

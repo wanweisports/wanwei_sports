@@ -48,7 +48,7 @@
 
                     if (res.code == 1) {
                         $("#message_content_modal").find("#notification_send_id").val(data.noteId);
-                        $("#message_content_modal").find("#notification_send_receiver").val(data.noteReceiver || '');
+                        $("#message_content_modal").find("#notification_send_receiver").val(data.senderId || '');
                         $("#message_content_modal").find("#notification_send_title").val(data.noteTitle || '');
                         $("#message_content_modal").find("#notification_send_content").val(data.noteContent || '');
 

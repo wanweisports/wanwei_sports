@@ -59,8 +59,8 @@
 
         <div class="panel panel-default">
             <div class="panel-body">
-                <div class="table-responsive">
-                    <table class="table" class="message-list">
+                <div class="table-responsive message-list">
+                    <table class="table">
                         <thead>
                         <tr class="bg-info">
                             <th>消息标题</th>
