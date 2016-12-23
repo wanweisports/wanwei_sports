@@ -1,7 +1,7 @@
 (function ($) {
     var Office_Notifications = {
         opts: {
-            URL: '/office/notifications',
+            URL: location.pathname,
             RECEIVER_TPL: '<button type="button" class="btn btn-info note-receiver" data-id="#RECEIVERID#" style="margin: 6px">' +
                 '#RECEIVERNAME# <span class="glyphicon glyphicon-remove text-danger remove"></span>' +
                 '</button>'
@@ -39,20 +39,17 @@
                 }
             });
 
-            function setNotificationInfo(data, isEdit) {
-                if (isEdit == 2) {
-                    $("#fasongModal").find("#note_receiver1").val(data.noteReceiver).attr("disabled", "disabled");
-                    $("#fasongModal").find(".note-title").text(data.noteTitle).attr("disabled", "disabled");
-                    $("#fasongModal").find(".note-content").text(data.noteContent).attr("disabled", "disabled");
-                    $("#fasongModal").find(".send-notification").hide();
-                    $("#fasongModal").find(".resend-notification").show();
+            function setNotificationInfo(data, isSend) {
+                if (isSend == 2) {
+                    $("#notifications_send_modal").find("#notification_send_id").val(data.noteId);
+                    $("#notifications_send_modal").find("#notification_send_receiver").val(data.noteReceiver || '');
+                    $("#notifications_send_modal").find("#notification_send_title").val(data.noteTitle || '');
+                    $("#notifications_send_modal").find("#notification_send_content").val(data.noteContent || '');
                 } else {
-                    $("#fasongModal").find("#note_id").val(data.noteId);
-                    $("#fasongModal").find("#note_receiver").val(data.noteReceiver);
-                    $("#fasongModal").find("#note_title").val(data.noteTitle);
-                    $("#fasongModal").find("#note_content").val(data.noteContent);
-                    $("#fasongModal").find(".send-notification").show();
-                    $("#fasongModal").find(".resend-notification").hide();
+                    $("#notifications_view_modal").find("#notification_view_id").val(data.noteId);
+                    $("#notifications_view_modal").find("#notification_view_receiver").val(data.noteReceiver || '');
+                    $("#notifications_view_modal").find("#notification_view_title").val(data.noteTitle || '');
+                    $("#notifications_view_modal").find("#notification_view_content").val(data.noteContent || '');
                 }
             }
 
@@ -64,25 +61,27 @@
             });
 
             // 收件人选项改变
-            /*$("#note_receiver").on("change", function (e) {
+            $("#notification_view_receiver").on("change", function (e) {
                 e.preventDefault();
 
+                return false;
+
                 var $this = $(this);
-                var reveiverId = $this.val();
+                var receiverId = $this.val();
                 var receiverName = $this.find("option:selected").text().trim();
 
-                var $receivers = $(".note-receivers");
+                var $receivers = $(".note-view-receivers");
 
-                if ($receivers.find('[data-id="' + reveiverId + '"]').size() === 0) {
+                if ($receivers.find('[data-id="' + receiverId + '"]').size() === 0) {
                     $receivers.append(
-                        content.opts.RECEIVER_TPL.replace(/#RECEIVERID#/g, reveiverId)
+                        content.opts.RECEIVER_TPL.replace(/#RECEIVERID#/g, receiverId)
                             .replace(/#RECEIVERNAME#/g, receiverName)
                     );
                 }
-            });*/
+            });
 
             // 收件人标签删除
-            $(".note-receivers").on("click", ".note-receiver .remove", function (e) {
+            $(".note-view-receivers").on("click", ".note-receiver .remove", function (e) {
                 e.preventDefault();
 
                 var $this = $(this);
@@ -91,14 +90,14 @@
             });
 
             function setReceivers() {
-                var $receivers = $(".note-receivers");
+                var $receivers = $(".note-view-receivers");
                 var receiverIds = [];
 
                 $receivers.find(".note-receiver").each(function (index, item) {
                     receiverIds.push($(item).attr("data-id"));
                 });
 
-                $("#note_receivers").val(receiverIds.join(","));
+                return receiverIds;
             }
 
             function sendNotifications(conditions) {
@@ -113,7 +112,7 @@
             $(".send-notification").on("click", function (e) {
                 e.preventDefault();
 
-                var $form = $("#notification_form");
+                var $form = $("#notification_send_form");
                 var conditions = $form.serializeObject();
 
                 if ($form.attr("submitting") === "submitting" || !$form.valid()) {
@@ -125,16 +124,59 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        location.reload();
+                        location.assign(content.opts.URL + '?type=2');
                     } else {
-                        console.log(res.message || "通知信息发送失败, 请稍后重试");
-                        alert(res.message || "通知信息发送失败, 请稍后重试");
+                        $.logConsole("通知信息发送失败", res.message);
+                        $.tipsWarningAlert("通知信息发送失败");
                     }
                 });
             });
 
-            // 查询
+            // 保存草稿
+            $(".save-notification").on("click", function (e) {
+                e.preventDefault();
+
+                var $form = $("#notification_view_form");
+                var conditions = $form.serializeObject();
+
+                if ($form.attr("submitting") === "submitting" || !$form.valid()) {
+                    return false;
+                }
+
+                $form.attr("submitting", "submitting");
+
+                $.post('office/saveNotifications', conditions, function (res) {
+                    $form.attr("submitting", "");
+
+                    if (res.code == 1) {
+                        location.reload();
+                    } else {
+                        $.logConsole("通知详情保存失败", res.message);
+                        $.tipsWarningAlert("通知详情保存失败");
+                    }
+                });
+            });
+
+            // 查询详情
             $(".notifications-list").on("click", ".notifications-view", function (e) {
+                e.preventDefault();
+
+                var noteId = $(this).attr("data-id");
+
+                $.post('office/viewNotifications', {noteId: noteId}, function (res) {
+                    var data = res.data;
+
+                    if (res.code == 1) {
+                        setNotificationInfo(data, 1);
+                    } else {
+                        $.logConsole("查询通知详情失败", res.message);
+                        $.tipsWarningAlert("通知详情查询失败");
+                    }
+                });
+            });
+
+            // 查询详情
+            $(".notifications-list").on("click", ".notifications-send", function (e) {
                 e.preventDefault();
 
                 var noteId = $(this).attr("data-id");
@@ -145,32 +187,8 @@
                     if (res.code == 1) {
                         setNotificationInfo(data, 2);
                     } else {
-                        console.log(res.message || "查询通知详情失败, 请稍后重试");
-                        alert(res.message || "查询通知详情失败, 请稍后重试");
-                    }
-                });
-            });
-
-            // 转发
-            $(".notifications-list").on("click", ".notifications-resend", function (e) {
-                e.preventDefault();
-
-                var noteId = $(this).attr("data-id");
-                var isEdit = $(this).attr("data-edit");
-
-                $.post('office/viewNotifications', {noteId: noteId}, function (res) {
-                    var data = res.data;
-
-                    if (res.code == 1) {
-                        setNotificationInfo(data, isEdit);
-
-                        if (isEdit == 1) {
-                            $("#fasongModal").find(".save-notification").hide();
-                            $("#fasongModal").find(".send-notification").send();
-                        }
-                    } else {
-                        console.log(res.message || "查询通知详情失败, 请稍后重试");
-                        alert(res.message || "查询通知详情失败, 请稍后重试");
+                        $.logConsole("查询通知详情失败", res.message);
+                        $.tipsWarningAlert("通知详情查询失败");
                     }
                 });
             });

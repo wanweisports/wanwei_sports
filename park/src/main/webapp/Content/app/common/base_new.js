@@ -27,6 +27,13 @@
 
     new $.TextMagnifier();
 
+    $.isDebug = true;
+    $.logConsole = function (tag, message) {
+        if ($.isDebug) {
+            console.log(moment().format("YYYYMMDDHHmmss -- ") + tag + "：" + message);
+        }
+    };
+
     $.tipsWarningAlert = function (message) {
         $("#tips_failure_modal").modal({show: true, backdrop: false}).find(".tips-content").text(message);
 
@@ -43,6 +50,10 @@
             $("#tips_success_modal").modal("hide");
             clearTimeout(timeout);
         }, 3000);
+    };
+
+    $.tipsSuccessConfirm = function (message) {
+        $("#tips_confirm_modal").modal({show: true, backdrop: false}).find(".tips-content").text(message);
     };
 
     // 导航切换
