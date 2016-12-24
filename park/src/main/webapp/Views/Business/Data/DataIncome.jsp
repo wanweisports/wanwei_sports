@@ -13,84 +13,252 @@
     <script src="/Content/lib/echarts/echarts.min.js?v=${static_resource_version}"></script>
     <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('data_echarts'));
+        var myChart = echarts.init(document.getElementById('data_echarts1'));
 
-        // 指定图表的配置项和数据
+        var data = [{
+            value: 3660,
+            name: '场地预订'
+        }, {
+            value: 1243,
+            name: '商品销售'
+        }, {
+            value: 9930,
+            name: '会员储值'
+        }];
         var option = {
-            color: ['#ff8a4a'],
-            backgroundColor: '#36A1DB',
+            backgroundColor: "#faf6f3",
             title: {
-                text: '营业收支',
-                show: false,
-                textAlign: 'center'
-            },
-            tooltip: {},
-            legend: {
-                data:['金额'],
-                show: false
-            },
-            xAxis: {
-                data: ["总金额","场地预订","商品销售","会员储值","其他收入"],
-                textStyle: "#ffffff"
-            },
-            yAxis: {
-                axisLine: {show: false},
-                axisLabel: {show: false},
-                axisTick: {show: false},
-                splitLine: {
-                    show: true,
-                    lineStyle: {
-                        type: "dashed"
-                    }
+                text: '营业收入',
+                subtext: '',
+                x: 'center',
+                y: 'center',
+                textStyle: {
+                    fontWeight: 'normal',
+                    fontSize: 16
                 }
             },
+            tooltip: {
+                show: false,
+                trigger: 'item',
+                formatter: "{b}: {c} ({d}%)"
+            },
+            legend: {
+                show: false,
+                orient: 'horizontal',
+                bottom: '0%',
+                data: ['场地预订', '商品销售', '会员储值']
+            },
             series: [{
-                name: '金额',
-                type: 'bar',
+                type: 'pie',
+                radius: ['25%', '60%'],
+                color: ['#59ADF3', '#AF89D6', '#EC7D31'],
                 label: {
                     normal: {
-                        show: true,
-                        position: 'inside'
+                        position: 'inner',
+                        formatter: '{d}%',
+
+                        textStyle: {
+                            color: '#fff',
+                            fontWeight: 'bold',
+                            fontSize: 14
+                        }
                     }
                 },
-                data: [${sumPrice}, ${siteCounts.sumPrice}, ${goodsCounts.sumPrice}, ${cardCounts.sumPrice}, 0.00]
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data: data
+            }, {
+                type: 'pie',
+                radius: ['60%', '90%'],
+                itemStyle: {
+                    normal: {
+                        color: '#EEEEEE'
+                    },
+                    emphasis: {
+                        color: '#ADADAD'
+                    }
+                },
+                label: {
+                    normal: {
+                        position: 'inner',
+                        formatter: '{c}元',
+                        textStyle: {
+                            color: '#333333',
+                            fontWeight: 'bold',
+                            fontSize: 14
+                        }
+                    }
+                },
+                data: data
             }]
         };
 
         myChart.setOption(option);
     </script>
+
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart2 = echarts.init(document.getElementById('data_echarts2'));
+
+        var data2 = [{
+            value: 3966,
+            name: '现金'
+        }, {
+            value: 1966,
+            name: '支付宝'
+        }, {
+            value: 966,
+            name: '微信'
+        }, {
+            value: 4966,
+            name: '银联'
+        }, {
+            value: 2966,
+            name: '支票'
+        }];
+        var option2 = {
+            backgroundColor: "#faf6f3",
+            title: {
+                text: '营业收入',
+                subtext: '',
+                x: 'center',
+                y: 'center',
+                textStyle: {
+                    fontWeight: 'normal',
+                    fontSize: 16
+                }
+            },
+            tooltip: {
+                show: false,
+                trigger: 'item',
+                formatter: "{b}: {c} ({d}%)"
+            },
+            legend: {
+                show: false,
+                orient: 'horizontal',
+                bottom: '0%',
+                data: ['现金', '支付宝', '微信', '银联', '支票']
+            },
+            series: [{
+                type: 'pie',
+                radius: ['25%', '60%'],
+                color: ['#86D560', '#AF89D6', '#59ADF3', '#FF999A', '#EC7D31'],
+                label: {
+                    normal: {
+                        position: 'inner',
+                        formatter: '{d}%',
+
+                        textStyle: {
+                            color: '#fff',
+                            fontWeight: 'bold',
+                            fontSize: 14
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data: data2
+            }, {
+                type: 'pie',
+                radius: ['60%', '90%'],
+                itemStyle: {
+                    normal: {
+                        color: '#EEEEEE'
+                    },
+                    emphasis: {
+                        color: '#ADADAD'
+                    }
+                },
+                label: {
+                    normal: {
+                        position: 'inner',
+                        formatter: '{c}元',
+                        textStyle: {
+                            color: '#333333',
+                            fontWeight: 'bold',
+                            fontSize: 14
+                        }
+                    }
+                },
+                data: data2
+            }]
+        };
+
+        myChart2.setOption(option2);
+    </script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div id="main" class="container">
-        <div class="weui-flex field-block">
-            <div class="weui-flex__item field-block__item">
-                <div class="title">总金额(元)</div>
-                <div class="money">${sumPrice}</div>
+        <div class="weui-form-preview">
+            <div class="weui-form-preview__bd">
+                <div class="weui-flex field-block">
+                    <div class="weui-flex__item field-block__item">
+                        <div class="title">总收入</div>
+                        <div class="money">￥14833元</div>
+                    </div>
+                    <div class="weui-flex__item field-block__item">
+                        <div class="title">财务核对(无误)</div>
+                        <div class="money">￥14833元</div>
+                    </div>
+                </div>
+                <div class="weui-flex field-block">
+                    <div class="weui-flex__item field-block__item" style="background: #59ADF3;">
+                        <div class="title">场地预订</div>
+                        <div class="money">￥3660元</div>
+                    </div>
+                    <div class="weui-flex__item field-block__item" style="background: #EC7D31;">
+                        <div class="title">会员储值</div>
+                        <div class="money">￥9930元</div>
+                    </div>
+                    <div class="weui-flex__item field-block__item" style="background: #AF89D6;">
+                        <div class="title">商品销售</div>
+                        <div class="money">￥1243元</div>
+                    </div>
+                </div>
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <div id="data_echarts1" style="width: 100%;height:360px;"></div>
+                    </div>
+                </div>
+                <div class="weui-flex field-block">
+                    <div class="weui-flex__item field-block__item" style="background: #86D560;">
+                        <div class="title">现金</div>
+                        <div class="money">￥3966元</div>
+                    </div>
+                    <div class="weui-flex__item field-block__item" style="background: #AF89D6;">
+                        <div class="title">支付宝</div>
+                        <div class="money">￥1966元</div>
+                    </div>
+                    <div class="weui-flex__item field-block__item" style="background: #59ADF3;">
+                        <div class="title">微信</div>
+                        <div class="money">￥966元</div>
+                    </div>
+                    <div class="weui-flex__item field-block__item" style="background: #FF999A;">
+                        <div class="title">银联</div>
+                        <div class="money">￥4966元</div>
+                    </div>
+                    <div class="weui-flex__item field-block__item" style="background: #EC7D31;">
+                        <div class="title">支票</div>
+                        <div class="money">￥2966元</div>
+                    </div>
+                </div>
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <div id="data_echarts2" style="width: 100%;height:360px;"></div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="weui-flex field-block">
-            <div class="weui-flex__item field-block__item">
-                <div class="title">场地预订(元)</div>
-                <div class="money">${siteCounts.sumPrice}</div>
+            <div class="weui-form-preview__ft">
+                <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:">今日营业数据</a>
+                <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="/business/data/incomeCompare">历史数据对比</a>
             </div>
-            <div class="weui-flex__item field-block__item">
-                <div class="title">商品销售(元)</div>
-                <div class="money">${goodsCounts.sumPrice}</div>
-            </div>
-        </div>
-        <div class="weui-flex field-block">
-            <div class="weui-flex__item field-block__item">
-                <div class="title">会员储值(元)</div>
-                <div class="money">${cardCounts.sumPrice}</div>
-            </div>
-            <div class="weui-flex__item field-block__item">
-                <div class="title">其他收入(元)</div>
-                <div class="money">0.00</div>
-            </div>
-        </div>
-        <div>
-            <div id="data_echarts" style="width: 100%;height:400px;"></div>
         </div>
     </div>
 </layout:override>

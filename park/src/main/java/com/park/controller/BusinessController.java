@@ -112,14 +112,20 @@ public class BusinessController extends BaseController {
     // 收入统计
     @RequestMapping("data/income")
     public String income(DataInputView dataInputView, Model model) {
-        try{
+        /*try{
             model.addAllAttributes(JsonUtils.fromJson(dataInputView));
             model.addAllAttributes(dataService.getBusinessIncome(dataInputView));
         }catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
         return "Business/Data/DataIncome";
+    }
+
+    // 收入统计对比
+    @RequestMapping("data/incomeCompare")
+    public String incomeCompare() {
+        return "Business/Data/DataIncomeCompare";
     }
 
     // 场地使用率
