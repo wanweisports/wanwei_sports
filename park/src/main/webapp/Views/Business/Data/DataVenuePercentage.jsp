@@ -40,9 +40,9 @@
                 formatter: "{b}: {c} ({d}%)"
             },
             legend: {
-                show: false,
+                show: true,
                 orient: 'horizontal',
-                bottom: '0%',
+                top: '0%',
                 data: ['实际使用', '未使用']
             },
             series: [{
@@ -109,7 +109,7 @@
                 }
             },
             legend: {
-                show: false,
+                show: true,
                 data:['教师', '学生']
             },
             grid: {
@@ -148,57 +148,44 @@
     <div id="main" class="container">
         <div class="weui-form-preview">
             <div class="weui-form-preview__bd">
-                <div class="weui-flex field-block">
-                    <div class="weui-flex__item field-block__item">
-                        <div class="title">营业时间</div>
-                        <div class="money">06:00-22:00</div>
-                    </div>
-                    <div class="weui-flex__item field-block__item">
-                        <div class="title">同比上周</div>
-                        <div class="money">增加10%</div>
-                    </div>
-                </div>
-                <div class="weui-flex field-block">
-                    <div class="weui-flex__item field-block__item" style="background: #59ADF3;">
-                        <div class="title">总场次</div>
-                        <div class="money">160场</div>
-                    </div>
-                    <div class="weui-flex__item field-block__item" style="background: #AF89D6;">
-                        <div class="title">空场次</div>
-                        <div class="money">4场</div>
-                    </div>
-                    <div class="weui-flex__item field-block__item" style="background: #EC7D31;">
-                        <div class="title">利用率</div>
-                        <div class="money">97.5%</div>
-                    </div>
-                </div>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>营业时间</th>
+                        <th>总场次</th>
+                        <th>空场次</th>
+                        <th>利用率</th>
+                        <th>同比上周</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>06:00-22:00</td>
+                        <td>160场</td>
+                        <td>4场</td>
+                        <td>97.5%</td>
+                        <td>增加10%</td>
+                    </tr>
+                    </tbody>
+                </table>
                 <div class="weui-flex">
                     <div class="weui-flex__item">
                         <div id="data_echarts1" style="width: 100%;height:360px;"></div>
                     </div>
                 </div>
-                <div class="weui-flex field-block">
-                    <div class="weui-flex__item field-block__item" style="background: #59ADF3;">
-                        <div class="title">教师</div>
-                    </div>
-                    <div class="weui-flex__item field-block__item" style="background: #59ADF3;">
-                        <div class="title">20人</div>
-                    </div>
-                    <div class="weui-flex__item field-block__item" style="background: #EC7D31;">
-                        <div class="title">同比减少10人</div>
-                    </div>
-                </div>
-                <div class="weui-flex field-block">
-                    <div class="weui-flex__item field-block__item" style="background: #AF89D6;">
-                        <div class="title">学生</div>
-                    </div>
-                    <div class="weui-flex__item field-block__item" style="background: #AF89D6;">
-                        <div class="title">30人</div>
-                    </div>
-                    <div class="weui-flex__item field-block__item" style="background: #EC7D31;">
-                        <div class="title">同比减少35人</div>
-                    </div>
-                </div>
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>教师</th>
+                        <td>20人</td>
+                        <td>同比减少10人</td>
+                    </tr>
+                    <tr>
+                        <th>学生</th>
+                        <td>30人</td>
+                        <td>同比减少35人</td>
+                    </tr>
+                    </tbody>
+                </table>
                 <div class="weui-flex">
                     <div class="weui-flex__item">
                         <div id="data_echarts2" style="width: 100%;height:360px;"></div>

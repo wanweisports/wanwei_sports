@@ -43,9 +43,9 @@
                 formatter: "{b}: {c} ({d}%)"
             },
             legend: {
-                show: false,
+                show: true,
                 orient: 'horizontal',
-                bottom: '0%',
+                top: '0%',
                 data: ['场地预订', '商品销售', '会员储值']
             },
             series: [{
@@ -137,9 +137,9 @@
                 formatter: "{b}: {c} ({d}%)"
             },
             legend: {
-                show: false,
+                show: true,
                 orient: 'horizontal',
-                bottom: '0%',
+                top: '0%',
                 data: ['现金', '支付宝', '微信', '银联', '支票']
             },
             series: [{
@@ -198,57 +198,49 @@
     <div id="main" class="container">
         <div class="weui-form-preview">
             <div class="weui-form-preview__bd">
-                <div class="weui-flex field-block">
-                    <div class="weui-flex__item field-block__item">
-                        <div class="title">总收入</div>
-                        <div class="money">￥14833元</div>
-                    </div>
-                    <div class="weui-flex__item field-block__item">
-                        <div class="title">财务核对(无误)</div>
-                        <div class="money">￥14833元</div>
-                    </div>
-                </div>
-                <div class="weui-flex field-block">
-                    <div class="weui-flex__item field-block__item" style="background: #59ADF3;">
-                        <div class="title">场地预订</div>
-                        <div class="money">￥3660元</div>
-                    </div>
-                    <div class="weui-flex__item field-block__item" style="background: #EC7D31;">
-                        <div class="title">会员储值</div>
-                        <div class="money">￥9930元</div>
-                    </div>
-                    <div class="weui-flex__item field-block__item" style="background: #AF89D6;">
-                        <div class="title">商品销售</div>
-                        <div class="money">￥1243元</div>
-                    </div>
-                </div>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>场地预订</th>
+                        <th>会员储值</th>
+                        <th>商品销售</th>
+                        <th>总收入</th>
+                        <th>财务核对</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>￥3660元</td>
+                        <td>￥9930元</td>
+                        <td>￥1243元</td>
+                        <td>￥14833元</td>
+                        <td>￥14833元</td>
+                    </tr>
+                    </tbody>
+                </table>
                 <div class="weui-flex">
                     <div class="weui-flex__item">
                         <div id="data_echarts1" style="width: 100%;height:360px;"></div>
                     </div>
                 </div>
-                <div class="weui-flex field-block">
-                    <div class="weui-flex__item field-block__item" style="background: #86D560;">
-                        <div class="title">现金</div>
-                        <div class="money">￥3966元</div>
-                    </div>
-                    <div class="weui-flex__item field-block__item" style="background: #AF89D6;">
-                        <div class="title">支付宝</div>
-                        <div class="money">￥1966元</div>
-                    </div>
-                    <div class="weui-flex__item field-block__item" style="background: #59ADF3;">
-                        <div class="title">微信</div>
-                        <div class="money">￥966元</div>
-                    </div>
-                    <div class="weui-flex__item field-block__item" style="background: #FF999A;">
-                        <div class="title">银联</div>
-                        <div class="money">￥4966元</div>
-                    </div>
-                    <div class="weui-flex__item field-block__item" style="background: #EC7D31;">
-                        <div class="title">支票</div>
-                        <div class="money">￥2966元</div>
-                    </div>
-                </div>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>现金</th>
+                        <th>支付宝</th>
+                        <th>微信</th>
+                        <th>银联</th>
+                        <th>支票</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>￥3966元</td>
+                        <td>￥1966元</td>
+                        <td>￥966元</td>
+                        <td>￥4966元</td>
+                        <td>￥2966元</td>
+                    </tr>
+                    </tbody>
+                </table>
                 <div class="weui-flex">
                     <div class="weui-flex__item">
                         <div id="data_echarts2" style="width: 100%;height:360px;"></div>

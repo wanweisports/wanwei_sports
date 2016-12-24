@@ -30,7 +30,9 @@
             },
             color: ['#59ADF3', '#EC7D31', '#AF89D6'],
             legend: {
-                show: false,
+                show: true,
+                top: 0,
+                right: 0,
                 data: ['上周六', '周五', '周六']
             },
             grid: {
@@ -87,60 +89,39 @@
     <div id="main" class="container">
         <div class="weui-form-preview">
             <div class="weui-form-preview__bd">
-                <div class="weui-flex field-block">
-                    <div class="weui-flex__item field-block__item" style="background: #59ADF3;">
-                        <div class="title">上周六</div>
-                        <div class="money">￥7833元</div>
-                    </div>
-                    <div class="weui-flex__item field-block__item" style="background: #59ADF3;">
-                        <div class="title">场地预订</div>
-                        <div class="money">￥3660元</div>
-                    </div>
-                    <div class="weui-flex__item field-block__item" style="background: #59ADF3;">
-                        <div class="title">会员储值</div>
-                        <div class="money">￥1930元</div>
-                    </div>
-                    <div class="weui-flex__item field-block__item" style="background: #59ADF3;">
-                        <div class="title">商品销售</div>
-                        <div class="money">￥2243元</div>
-                    </div>
-                </div>
-                <div class="weui-flex field-block">
-                    <div class="weui-flex__item field-block__item" style="background: #EC7D31;">
-                        <div class="title">周五</div>
-                        <div class="money">￥17833元</div>
-                    </div>
-                    <div class="weui-flex__item field-block__item" style="background: #EC7D31;">
-                        <div class="title">场地预订</div>
-                        <div class="money">￥6660元</div>
-                    </div>
-                    <div class="weui-flex__item field-block__item" style="background: #EC7D31;">
-                        <div class="title">会员储值</div>
-                        <div class="money">￥4930元</div>
-                    </div>
-                    <div class="weui-flex__item field-block__item" style="background: #EC7D31;">
-                        <div class="title">商品销售</div>
-                        <div class="money">￥6243元</div>
-                    </div>
-                </div>
-                <div class="weui-flex field-block">
-                    <div class="weui-flex__item field-block__item" style="background: #AF89D6;">
-                        <div class="title">周六</div>
-                        <div class="money">￥14833元</div>
-                    </div>
-                    <div class="weui-flex__item field-block__item" style="background: #AF89D6;">
-                        <div class="title">场地预订</div>
-                        <div class="money">￥3660元</div>
-                    </div>
-                    <div class="weui-flex__item field-block__item" style="background: #AF89D6;">
-                        <div class="title">会员储值</div>
-                        <div class="money">￥9930元</div>
-                    </div>
-                    <div class="weui-flex__item field-block__item" style="background: #AF89D6;">
-                        <div class="title">商品销售</div>
-                        <div class="money">￥1243元</div>
-                    </div>
-                </div>
+                <table>
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>场地预订</th>
+                        <th>会员储值</th>
+                        <th>商品销售</th>
+                        <th>总金额</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th>上周六</th>
+                        <td>￥3660元</td>
+                        <td>￥1930元</td>
+                        <td>￥2243元</td>
+                        <td>￥7833元</td>
+                    </tr>
+                    <tr>
+                        <th>周五</th>
+                        <td>￥6660元</td>
+                        <td>￥4930元</td>
+                        <td>￥6243元</td>
+                        <td>￥17833元</td>
+                    </tr>
+                    <tr>
+                        <th>周六</th>
+                        <td>￥3660元</td>
+                        <td>￥9930元</td>
+                        <td>￥1243元</td>
+                        <td>￥14833元</td>
+                    </tr>
+                    </tbody>
+                </table>
                 <div class="weui-flex">
                     <div class="weui-flex__item">
                         <div id="data_echarts1" style="width: 100%;height:360px;"></div>
