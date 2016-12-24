@@ -274,7 +274,9 @@ public class BusinessController extends BaseController {
     }
     // 课程创建
     @RequestMapping("training/create")
-    public String renderTrainingCreate() {
+    public String renderTrainingCreate(Model model) {
+        model.addAttribute("courseNames", trainsCourseService.getTrainsCourseNames());
+
         return "Business/Training/TrainingCreate";
     }
 }

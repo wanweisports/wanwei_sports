@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="weui-btn-area">
-            <a class="weui-btn weui-btn_primary" href="javascript:">我要报名</a>
+            <a class="weui-btn weui-btn_primary" href="javascript:">学生报名</a>
         </div>
     </div>
 </layout:override>

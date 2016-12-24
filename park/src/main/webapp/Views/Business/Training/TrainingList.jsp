@@ -31,9 +31,9 @@
                 </div>
             </div>
             <div class="weui-tab__panel">
-                <!--<div class="weui-btn-area">
-                    <a class="weui-btn weui-btn_primary" href="/business/training/create">我要创建班级</a>
-                </div>-->
+                <div class="weui-btn-area">
+                    <a class="weui-btn weui-btn_primary" href="/business/training/create">创建班级</a>
+                </div>
 
                 <c:forEach var="item" items="${list}">
                     <div class="weui-panel weui-panel_access">
