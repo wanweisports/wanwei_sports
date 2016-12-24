@@ -1,0 +1,7 @@
+[DEFAULT]
+BASEURL=http://oyksoft.com/
+[InternetShortcut]
+URL=http://oyksoft.com/
+IDList=
+IconFile=http://oyksoft.com/favicon.ico
+IconIndex=1
