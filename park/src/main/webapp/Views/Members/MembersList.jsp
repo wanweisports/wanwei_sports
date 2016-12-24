@@ -89,8 +89,11 @@
                                 </td>
                                 <td>
                                     <c:choose>
-                                        <c:when test="${member.tempCardNo == null}">
+                                        <c:when test="${member.tempCardNo == null && member.childrenCount > 0}">
                                             <a href="/member/getMembersChildren?memberId=${member.memberId}">${member.childrenCount}人</a>
+                                        </c:when>
+                                        <c:when test="${member.tempCardNo == null && member.childrenCount == 0}">
+                                            <a href="/member/getMembersChildren?memberId=${member.memberId}"> 无 </a>
                                         </c:when>
                                         <c:otherwise> -- </c:otherwise>
                                     </c:choose>

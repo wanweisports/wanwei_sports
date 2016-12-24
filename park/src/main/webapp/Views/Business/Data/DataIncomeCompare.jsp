@@ -53,7 +53,12 @@
             },
             yAxis: {
                 type: 'category',
-                data: ['会员\n储值', '商品\n销售', '场地\n预订', '营业\n收入']
+                data: ['会员\n储值', '商品\n销售', '场地\n预订', '营业\n收入'],
+                axisLabel: {
+                    textStyle: {
+                        fontSize: 16
+                    }
+                }
             },
             series: [
                 {

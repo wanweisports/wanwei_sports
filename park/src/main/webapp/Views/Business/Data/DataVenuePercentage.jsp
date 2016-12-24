@@ -57,7 +57,7 @@
                         textStyle: {
                             color: '#fff',
                             fontWeight: 'bold',
-                            fontSize: 14
+                            fontSize: 16
                         }
                     }
                 },
@@ -85,7 +85,7 @@
                         textStyle: {
                             color: '#333333',
                             fontWeight: 'bold',
-                            fontSize: 14
+                            fontSize: 16
                         }
                     }
                 },
@@ -94,6 +94,53 @@
         };
 
         myChart.setOption(option);
+    </script>
+    <script>
+        var myChart2 = echarts.init(document.getElementById('data_echarts2'));
+
+        var option2 = {
+            backgroundColor: "#faf6f3",
+            color: ['#59ADF3', '#AF89D6'],
+            tooltip : {
+                show: false,
+                trigger: 'axis',
+                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {
+                show: false,
+                data:['教师', '学生']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis : [{
+                type : 'category',
+                data : ['上周六', '本周六'],
+                axisLabel: {
+                    textStyle: {
+                        fontSize: 16
+                    }
+                }
+            }],
+            yAxis : [{
+                type : 'value'
+            }],
+            series : [{
+                name:'教师',
+                type:'bar',
+                data:[30, 20]
+            }, {
+                name:'学生',
+                type:'bar',
+                data:[65, 30]
+            }]
+        };
+        myChart2.setOption(option2);
     </script>
 </layout:override>
 
@@ -128,6 +175,33 @@
                 <div class="weui-flex">
                     <div class="weui-flex__item">
                         <div id="data_echarts1" style="width: 100%;height:360px;"></div>
+                    </div>
+                </div>
+                <div class="weui-flex field-block">
+                    <div class="weui-flex__item field-block__item" style="background: #59ADF3;">
+                        <div class="title">教师</div>
+                    </div>
+                    <div class="weui-flex__item field-block__item" style="background: #59ADF3;">
+                        <div class="title">20人</div>
+                    </div>
+                    <div class="weui-flex__item field-block__item" style="background: #EC7D31;">
+                        <div class="title">同比减少10人</div>
+                    </div>
+                </div>
+                <div class="weui-flex field-block">
+                    <div class="weui-flex__item field-block__item" style="background: #AF89D6;">
+                        <div class="title">学生</div>
+                    </div>
+                    <div class="weui-flex__item field-block__item" style="background: #AF89D6;">
+                        <div class="title">30人</div>
+                    </div>
+                    <div class="weui-flex__item field-block__item" style="background: #EC7D31;">
+                        <div class="title">同比减少35人</div>
+                    </div>
+                </div>
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <div id="data_echarts2" style="width: 100%;height:360px;"></div>
                     </div>
                 </div>
             </div>

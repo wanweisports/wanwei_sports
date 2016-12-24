@@ -35,9 +35,6 @@ public class BusinessController extends BaseController {
     private ITrainsClassStudentsService trainsClassStudentsService;
 
     @Autowired
-    private IDataService dataService;
-
-    @Autowired
     private INotificationsService notificationsService;
 
     // 用户登录
@@ -80,6 +77,21 @@ public class BusinessController extends BaseController {
     public String logout() {
         super.getRequest().getSession().invalidate();
         return redirect("/business/passport/login");
+    }
+
+    // 完善信息
+    @RequestMapping("/passport/profile")
+    public String passportProfile(Model model) {
+        UserOperator operator = operatorService.getOperator(super.getUserInfo().getOperatorId());
+        operator.setOperatorPwd(null);
+        model.addAllAttributes(JsonUtils.fromJsonDF(operator));
+        return "Business/Center/CenterProfile";
+    }
+
+    // 修改密码
+    @RequestMapping("/passport/modifyPassword")
+    public String modifyPassword() {
+        return "Business/Center/CenterPassword";
     }
 
     // 工作面板

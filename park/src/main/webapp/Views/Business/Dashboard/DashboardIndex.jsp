@@ -50,13 +50,13 @@
                 </div>
                 <p class="weui-grid__label">培训管理</p>
             </a>
-            <a href="/mobile/center/profile" class="weui-grid">
+            <a href="/business/passport/profile" class="weui-grid">
                 <div class="weui-grid__icon">
                     <img src="/Content/images/mobile/user.png?v=${static_resource_version}" alt="完善信息">
                 </div>
                 <p class="weui-grid__label">完善信息</p>
             </a>
-            <a href="/mobile/center/password" class="weui-grid">
+            <a href="/business/passport/modifyPassword" class="weui-grid">
                 <div class="weui-grid__icon">
                     <img src="/Content/images/mobile/key.png?v=${static_resource_version}" alt="重置密码">
                 </div>

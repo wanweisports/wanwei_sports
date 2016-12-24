@@ -60,7 +60,7 @@
                         textStyle: {
                             color: '#fff',
                             fontWeight: 'bold',
-                            fontSize: 14
+                            fontSize: 16
                         }
                     }
                 },
@@ -88,7 +88,7 @@
                         textStyle: {
                             color: '#333333',
                             fontWeight: 'bold',
-                            fontSize: 14
+                            fontSize: 16
                         }
                     }
                 },
@@ -154,7 +154,7 @@
                         textStyle: {
                             color: '#fff',
                             fontWeight: 'bold',
-                            fontSize: 14
+                            fontSize: 16
                         }
                     }
                 },
@@ -182,7 +182,7 @@
                         textStyle: {
                             color: '#333333',
                             fontWeight: 'bold',
-                            fontSize: 14
+                            fontSize: 16
                         }
                     }
                 },

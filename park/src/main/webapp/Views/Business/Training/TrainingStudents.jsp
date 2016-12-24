@@ -11,21 +11,37 @@
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div id="main" class="container">
-        <div class="weui-cells__title">已经报名的学生</div>
-        <div class="weui-cells">
-            <c:forEach var="student" items="${list}">
-                <div class="weui-cell">
-                    <div class="weui-cell__bd">
-                        <c:if test="${student.payStatus == 1}">
-                            <p>${student.studentName}</p>
-                        </c:if>
-                        <c:if test="${student.payStatus == 2}">
-                            <p style="color: #F43530;">${student.studentName}(未支付)</p>
-                        </c:if>
-                    </div>
-                    <div class="weui-cell__ft">${student.studentMobile}</div>
+        <div class="weui-panel">
+            <div class="weui-panel__hd" style="font-size: 16px;">班级信息</div>
+            <div class="weui-panel__bd">
+                <div class="weui-media-box weui-media-box_text">
+                    <h4 class="weui-media-box__title">${classInfo.className}</h4>
+                    <p class="weui-media-box__desc">${classInfo.classRemark}</p>
                 </div>
-            </c:forEach>
+            </div>
+        </div>
+        <div class="weui-panel">
+            <div class="weui-panel__hd" style="font-size: 16px;">报名学生</div>
+            <div class="weui-panel__bd">
+                <div class="weui-cells" style="margin-top: 0;">
+                    <c:forEach var="student" items="${list}">
+                        <div class="weui-cell">
+                            <div class="weui-cell__bd">
+                                <c:if test="${student.payStatus == 1}">
+                                    <p>${student.studentName}</p>
+                                </c:if>
+                                <c:if test="${student.payStatus == 2}">
+                                    <p style="color: #F43530;">${student.studentName}(未支付)</p>
+                                </c:if>
+                            </div>
+                            <div class="weui-cell__ft">${student.studentMobile}</div>
+                        </div>
+                    </c:forEach>
+                </div>
+            </div>
+        </div>
+        <div class="weui-btn-area">
+            <a class="weui-btn weui-btn_primary" href="javascript:">我要报名</a>
         </div>
     </div>
 </layout:override>

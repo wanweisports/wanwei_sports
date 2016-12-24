@@ -39,7 +39,7 @@
 
                             <div class="col-sm-8">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="card_no" name="tempCardNo"
+                                    <input type="text" class="form-control" id="card_no" name="cardNo"
                                            placeholder="学生卡号" value="${cardNo}"
                                            data-val="true" data-val-required="学生卡号不能为空">
                                     <span class="input-group-btn">
