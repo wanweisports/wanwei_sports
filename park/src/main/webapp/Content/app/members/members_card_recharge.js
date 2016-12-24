@@ -170,6 +170,19 @@
                     }
                 });
             });
+
+            // 支付方式改变
+            $("#recharge_type").on("change", function (e) {
+                e.preventDefault();
+
+                var $this = $(this);
+
+                if ($this.val() == 5) {
+                    $(".recharge-check-no").show();
+                } else {
+                    $(".recharge-check-no").hide();
+                }
+            });
         }
     };
 
