@@ -66,7 +66,7 @@
             var week;
             var weekday = date.weekday();
 
-            for (var i = 1 - weekday; i <= 7 - weekday; i++) {
+            for (var i = 0; i < 7; i++) {
                 date = moment(content.opts.Current_Date);
                 date.add(i, 'd');
 
@@ -521,7 +521,6 @@
                     return alert("请先选择场地");
                 }
 
-                console.log(moment(content.opts.Current_Date).format("e"));
                 content.opts.data = {
                     siteReserveDateList: [{
                         reserveStartDate: content.opts.Current_Date,
@@ -550,6 +549,9 @@
                 });
 
                 $reservationsSteps.modal({backdrop: false, show: true});
+                $reservationsSteps.find(".reservations-steps").steps("previous", 1);
+                $("#reservations_user_name").val("散客");
+                $("#reservations_user_mobile").val("");
             });
 
             // 换场

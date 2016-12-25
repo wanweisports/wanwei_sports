@@ -160,7 +160,7 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="recharge_check_no" name="checkNo"
+                                <input type="text" class="form-control" id="recharge_check_no" name="balanceCheckNo"
                                        placeholder="请输入支票号" autocomplete="off"
                                        data-val="true" data-val-required="支票号不能为空">
                                 <div data-valmsg-for="checkNo" data-valmsg-replace="true"></div>
@@ -189,22 +189,6 @@
                         </div>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="rechargeModal" tabindex="-1" role="dialog" aria-labelledby="rechargeModalLabel">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="rechargeModalLabel">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-success" role="alert">会员卡充值成功!</div>
-                </div>
             </div>
         </div>
     </div>

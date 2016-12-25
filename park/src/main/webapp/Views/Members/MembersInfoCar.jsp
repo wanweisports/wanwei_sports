@@ -177,10 +177,10 @@
                                 </label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="recharge_check_no" name="checkNo"
+                                    <input type="text" class="form-control" id="recharge_check_no" name="balanceCheckNo"
                                            placeholder="请输入支票号" autocomplete="off"
                                            data-val="true" data-val-required="支票号不能为空">
-                                    <div data-valmsg-for="checkNo" data-valmsg-replace="true"></div>
+                                    <div data-valmsg-for="balanceCheckNo" data-valmsg-replace="true"></div>
                                 </div>
                             </div>
                         </div>

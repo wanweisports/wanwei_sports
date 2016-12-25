@@ -250,7 +250,6 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			invoice.setCreateTime(DateUtil.getNowDate());
 			invoice.setInvoiceOpenState(IDBConstant.LOGIC_STATUS_NO); //默认未开
 			invoice.setInvoiceState(IDBConstant.LOGIC_STATUS_NO); //默认未打印(领取)，改变状态需要结合打印机状态
-            invoice.setInvoiceType(IDBConstant.INVOICE_TYPE_GENERAL);
 			//invoice.setInvoiceNo(getInvoiceNo()); //发票的流水号和订单的流水号是一个不是两个
 			baseDao.save(invoice, null);
 		}
@@ -391,6 +390,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		Double givingAmount = StrUtil.objToDoubleDef0(memberCardOpInputView.getGivingAmount());
 		String remark = memberCardOpInputView.getRemark();
 		Integer salesId = memberCardOpInputView.getSalesId();
+		String balanceCheckNo = memberCardOpInputView.getBalanceCheckNo();
 		
 		MemberCard memberCard = getMemberCard(StrUtil.objToInt(cardId));
 		if(memberCard == null) throw new MessageException("会员卡信息不存在！");
@@ -415,10 +415,12 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		balance.setCreateTime(nowDate);
 		balance.setRemark(remark);
 		balance.setSalesId(salesId);
+		balance.setBalanceCheckNo(balanceCheckNo);
+		balance.setBalanceStatus(IDBConstant.BALANCE_STATUS_ALL);
 		baseDao.save(balance, null);
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap.put("cardId", memberCard.getCardId());
+        resultMap.put("cardId", memberCard.getCardId());
 		resultMap.put("balanceNo", balance.getBalanceNo());
 		resultMap.put("balanceServiceType", balance.getBalanceServiceType());
 		resultMap.put("balanceServiceTypeName", dictService.getDictValueByNameKey(IDBConstant.BALANCE_SERVICE_TYPE, balance.getBalanceServiceType()));
@@ -481,7 +483,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		String balanceServiceType = balanceInputView.getBalanceServiceType();
 		
 		StringBuilder headSql = new StringBuilder("SELECT * ");
-		StringBuilder bodySql = new StringBuilder(" FROM(SELECT balanceId,balanceType,memberMobile,cardId, balanceNo, memberName, balanceServiceType, balanceStyle, balanceServiceName, mc.cardNo, oldAmount, realAmount,givingAmount,mc.cardBalance,balanceStatus,ob.salesId,uo.operatorName,DATE_FORMAT(ob.createTime, '%Y-%m-%d') createTime, ob.createTime opCreateTime FROM other_balance ob, member_card mc, user_member um, user_operator uo WHERE ob.balanceServiceId = mc.cardId AND CAST(ob.balanceServiceType AS signed INTEGER) >= ${one} AND CAST(ob.balanceServiceType AS signed INTEGER) <= ${two} AND mc.memberId = um.memberId AND ob.salesId = uo.id AND mc.memberId = :memberId UNION ALL SELECT balanceId,balanceType,memberMobile,cardId, balanceNo, memberName, balanceServiceType, balanceStyle, balanceServiceName, mc.cardNo, oldAmount, realAmount, givingAmount, mc.cardBalance, balanceStatus, ob.salesId, uo.operatorName, DATE_FORMAT(ob.createTime, '%Y-%m-%d') createTime, ob.createTime opCreateTime FROM other_balance ob, order_info oi, member_card mc, user_member um, user_operator uo WHERE ob.balanceServiceId = oi.orderId AND oi.memberId = um.memberId AND CAST(ob.balanceServiceType AS signed INTEGER) >= ${three} AND CAST(ob.balanceServiceType AS signed INTEGER) <= ${four} AND mc.memberId = um.memberId AND ob.salesId = uo.id AND mc.memberId = :memberId) t ");
+		StringBuilder bodySql = new StringBuilder(" FROM(SELECT balanceId,balanceType,balanceCheckNo,memberMobile,cardId, balanceNo, memberName, balanceServiceType, balanceStyle, balanceServiceName, mc.cardNo, oldAmount, realAmount,givingAmount,mc.cardBalance,balanceStatus,ob.salesId,uo.operatorName,DATE_FORMAT(ob.createTime, '%Y-%m-%d') createTime, ob.createTime opCreateTime FROM other_balance ob, member_card mc, user_member um, user_operator uo WHERE ob.balanceServiceId = mc.cardId AND CAST(ob.balanceServiceType AS signed INTEGER) >= ${one} AND CAST(ob.balanceServiceType AS signed INTEGER) <= ${two} AND mc.memberId = um.memberId AND ob.salesId = uo.id AND mc.memberId = :memberId UNION ALL SELECT balanceId,balanceType,balanceCheckNo,memberMobile,cardId, balanceNo, memberName, balanceServiceType, balanceStyle, balanceServiceName, mc.cardNo, oldAmount, realAmount, givingAmount, mc.cardBalance, balanceStatus, ob.salesId, uo.operatorName, DATE_FORMAT(ob.createTime, '%Y-%m-%d') createTime, ob.createTime opCreateTime FROM other_balance ob, order_info oi, member_card mc, user_member um, user_operator uo WHERE ob.balanceServiceId = oi.orderId AND oi.memberId = um.memberId AND CAST(ob.balanceServiceType AS signed INTEGER) >= ${three} AND CAST(ob.balanceServiceType AS signed INTEGER) <= ${four} AND mc.memberId = um.memberId AND ob.salesId = uo.id AND mc.memberId = :memberId) t ");
 		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
 		if(StrUtil.isNotBlank(balanceType)){
 			whereSql.append(" AND balanceType IN(:balanceTypeArr)");

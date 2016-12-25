@@ -71,6 +71,7 @@
                             <th>发票抬头</th>
                             <th>发票金额</th>
                             <th>发票内容</th>
+                            <th>发票类型</th>
                             <th>备注</th>
                             <th>状态</th>
                             <th>操作时间</th>
@@ -100,6 +101,10 @@
                                         <c:when test="${invoice.invoiceContent != ''}">${invoice.invoiceContent}</c:when>
                                         <c:otherwise> -- </c:otherwise>
                                     </c:choose>
+                                </td>
+                                <td>
+                                    <c:if test="${invoice.invoiceType == 1}">增值税专票</c:if>
+                                    <c:if test="${invoice.invoiceType == 2}">增值税普票</c:if>
                                 </td>
                                 <td>
                                     <c:choose>

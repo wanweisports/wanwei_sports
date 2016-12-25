@@ -35,7 +35,7 @@ public class BusinessController extends BaseController {
     private ITrainsClassStudentsService trainsClassStudentsService;
 
     @Autowired
-    private IDataService dataService;
+    private INotificationsService notificationsService;
 
     // 用户登录
     @NotProtected
@@ -79,6 +79,21 @@ public class BusinessController extends BaseController {
         return redirect("/business/passport/login");
     }
 
+    // 完善信息
+    @RequestMapping("/passport/profile")
+    public String passportProfile(Model model) {
+        UserOperator operator = operatorService.getOperator(super.getUserInfo().getOperatorId());
+        operator.setOperatorPwd(null);
+        model.addAllAttributes(JsonUtils.fromJsonDF(operator));
+        return "Business/Center/CenterProfile";
+    }
+
+    // 修改密码
+    @RequestMapping("/passport/modifyPassword")
+    public String modifyPassword() {
+        return "Business/Center/CenterPassword";
+    }
+
     // 工作面板
     @RequestMapping("dashboard")
     public String dashboard() {
@@ -86,15 +101,86 @@ public class BusinessController extends BaseController {
     }
 
     // 通知消息列表
-    @RequestMapping("oa/notifications")
-    public String notifications() {
+    @RequestMapping("oa/getNotifications")
+    public String getNotifications(NotificationsSendersInputView notificationsSendersInputView, Model model) {
+        try {
+            OperatorInputView operatorInputView = new OperatorInputView();
+            UserOperator userInfo = super.getUserInfo();
+            notificationsSendersInputView.setSenderId(userInfo.getId());
+            model.addAllAttributes(JsonUtils.fromJsonDF(notificationsSendersInputView));
+            model.addAttribute("operators", operatorService.getOperatorsName(operatorInputView));
+
+            PageBean pageBean;
+            if (notificationsSendersInputView.getType().equals(IDBConstant.NOTIFICATIONS_TYPE_DRAFT)) {
+                notificationsSendersInputView.setSendStatus(IDBConstant.NOTIFICATIONS_SENDER_NO);
+                pageBean = notificationsService.getNotificationsDraft(notificationsSendersInputView);
+                super.setPageInfo(model, pageBean);
+            }
+            if (notificationsSendersInputView.getType().equals(IDBConstant.NOTIFICATIONS_TYPE_SEND)) {
+                notificationsSendersInputView.setSendStatus(IDBConstant.NOTIFICATIONS_SENDER_YES);
+                pageBean = notificationsService.getNotificationsBySender(notificationsSendersInputView);
+                super.setPageInfo(model, pageBean);
+            }
+            if (notificationsSendersInputView.getType().equals(IDBConstant.NOTIFICATIONS_TYPE_TRASH)) {
+                notificationsSendersInputView.setSendStatus(IDBConstant.NOTIFICATIONS_SENDER_DEL);
+                pageBean = notificationsService.getNotificationsBySender(notificationsSendersInputView);
+                super.setPageInfo(model, pageBean);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return "Business/OA/OANotifications";
     }
 
     // 通知消息详情
     @RequestMapping("oa/notificationsDetail")
-    public String notificationsDetail() {
+    public String notificationsDetail(int noteId, Model model) {
+        try {
+            model.addAllAttributes(JsonUtils.fromJsonDF(notificationsService.getNotificationInfo(noteId)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return "Business/OA/OANotificationsDetail";
+    }
+
+    // 获取消息列表
+    @RequestMapping("oa/getMessage")
+    public String getMessage(NotificationsReceiversInputView notificationsReceiversInputView, Model model) {
+        try {
+            OperatorInputView operatorInputView = new OperatorInputView();
+            UserOperator userInfo = super.getUserInfo();
+            notificationsReceiversInputView.setReceiverId(userInfo.getId());
+            model.addAllAttributes(JsonUtils.fromJsonDF(notificationsReceiversInputView));
+            model.addAttribute("operators", operatorService.getOperatorsName(operatorInputView));
+
+            PageBean pageBean;
+            if (notificationsReceiversInputView.getType().equals(IDBConstant.NOTIFICATIONS_TYPE_RECEIVE)) {
+                notificationsReceiversInputView.setReceiverStatus(IDBConstant.NOTIFICATIONS_RECEIVER_ALL);
+                pageBean = notificationsService.getNotificationsByReceiver(notificationsReceiversInputView);
+                super.setPageInfo(model, pageBean);
+            }
+            if (notificationsReceiversInputView.getType().equals(IDBConstant.NOTIFICATIONS_TYPE_RECEIVE_READ)) {
+                notificationsReceiversInputView.setReceiverStatus(IDBConstant.NOTIFICATIONS_RECEIVER_YES);
+                pageBean = notificationsService.getNotificationsByReceiver(notificationsReceiversInputView);
+                super.setPageInfo(model, pageBean);
+            }
+            if (notificationsReceiversInputView.getType().equals(IDBConstant.NOTIFICATIONS_TYPE_RECEIVE_UNREAD)) {
+                notificationsReceiversInputView.setReceiverStatus(IDBConstant.NOTIFICATIONS_RECEIVER_NO);
+                pageBean = notificationsService.getNotificationsByReceiver(notificationsReceiversInputView);
+                super.setPageInfo(model, pageBean);
+            }
+            if (notificationsReceiversInputView.getType().equals(IDBConstant.NOTIFICATIONS_TYPE_TRASH)) {
+                notificationsReceiversInputView.setReceiverStatus(IDBConstant.NOTIFICATIONS_RECEIVER_DEL);
+                pageBean = notificationsService.getNotificationsByReceiver(notificationsReceiversInputView);
+                super.setPageInfo(model, pageBean);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "Business/OA/OAMessage";
     }
 
     // 通知消息创建
@@ -112,14 +198,20 @@ public class BusinessController extends BaseController {
     // 收入统计
     @RequestMapping("data/income")
     public String income(DataInputView dataInputView, Model model) {
-        try{
+        /*try{
             model.addAllAttributes(JsonUtils.fromJson(dataInputView));
             model.addAllAttributes(dataService.getBusinessIncome(dataInputView));
         }catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
         return "Business/Data/DataIncome";
+    }
+
+    // 收入统计对比
+    @RequestMapping("data/incomeCompare")
+    public String incomeCompare() {
+        return "Business/Data/DataIncomeCompare";
     }
 
     // 场地使用率
@@ -182,7 +274,9 @@ public class BusinessController extends BaseController {
     }
     // 课程创建
     @RequestMapping("training/create")
-    public String renderTrainingCreate() {
+    public String renderTrainingCreate(Model model) {
+        model.addAttribute("courseNames", trainsCourseService.getTrainsCourseNames());
+
         return "Business/Training/TrainingCreate";
     }
 }

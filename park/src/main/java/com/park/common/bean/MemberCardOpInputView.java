@@ -22,9 +22,20 @@ public class MemberCardOpInputView extends BaseInputView {
 	
 	private String newCardNo;
 	
+	private String balanceCheckNo;
+
 	private String balanceServiceType;
 
-	public String getNewCardNo() {
+    public String getBalanceCheckNo() {
+        return this.balanceCheckNo;
+    }
+
+    public void setBalanceCheckNo(String balanceCheckNo) {
+        this.balanceCheckNo = balanceCheckNo;
+    }
+
+
+    public String getNewCardNo() {
 		return newCardNo;
 	}
 
