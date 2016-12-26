@@ -32,7 +32,7 @@
                 </div>
                 <p class="weui-grid__label">场地数据</p>
             </a>
-            <a href="/business/oa/notifications" class="weui-grid">
+            <a href="/business/oa/getNotifications?type=2" class="weui-grid">
                 <div class="weui-grid__icon">
                     <img src="/Content/images/mobile/email.png?v=${static_resource_version}" alt="消息通知">
                 </div>
@@ -50,19 +50,19 @@
                 </div>
                 <p class="weui-grid__label">培训管理</p>
             </a>
-            <a href="/mobile/center/profile" class="weui-grid">
+            <a href="/business/passport/profile" class="weui-grid">
                 <div class="weui-grid__icon">
                     <img src="/Content/images/mobile/user.png?v=${static_resource_version}" alt="完善信息">
                 </div>
                 <p class="weui-grid__label">完善信息</p>
             </a>
-            <a href="/mobile/center/password" class="weui-grid">
+            <a href="/business/passport/modifyPassword" class="weui-grid">
                 <div class="weui-grid__icon">
                     <img src="/Content/images/mobile/key.png?v=${static_resource_version}" alt="重置密码">
                 </div>
                 <p class="weui-grid__label">重置密码</p>
             </a>
-            <a href="/mobile/center/password" class="weui-grid">
+            <a href="/business/oa/getMessage?type=3" class="weui-grid">
                 <div class="weui-grid__icon">
                     <img src="/Content/images/mobile/message.png?v=${static_resource_version}" alt="我的消息">
                 </div>

@@ -13,123 +13,190 @@
     <script src="/Content/lib/echarts/echarts.min.js?v=${static_resource_version}"></script>
     <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('data_echarts'));
+        var myChart = echarts.init(document.getElementById('data_echarts1'));
 
-        // 指定图表的配置项和数据
+        var data = [{
+            value: 16 * 10 - 4,
+            name: '实际使用'
+        }, {
+            value: 4,
+            name: '未使用'
+        }];
         var option = {
-            color: ['#ff8a4a'],
-            backgroundColor: '#36A1DB',
+            backgroundColor: "#faf6f3",
             title: {
                 text: '场地使用率',
+                subtext: '',
+                x: 'center',
+                y: 'center',
+                textStyle: {
+                    fontWeight: 'normal',
+                    fontSize: 16
+                }
+            },
+            tooltip: {
                 show: false,
-                textAlign: 'center'
+                trigger: 'item',
+                formatter: "{b}: {c} ({d}%)"
             },
-            tooltip: {},
             legend: {
-                data:['小时', '概率'],
-                show: false
+                show: true,
+                orient: 'horizontal',
+                top: '0%',
+                data: ['实际使用', '未使用']
             },
-            xAxis: [{
-                data: ["场地1","场地2","场地3","场地4","场地5","场地6","场地7","场地8","场地9"]
-            }],
-            yAxis: [{
-                type: 'value',
-                name: '小时',
-                axisLabel: {
-                    formatter: '{value}'
-                }
-            }, {
-                type: 'value',
-                name: '概率',
-                axisLabel: {
-                    formatter: '{value}%'
-                }
-            }],
             series: [{
-                name: '小时',
-                type: 'bar',
+                type: 'pie',
+                radius: ['25%', '60%'],
+                color: ['#59ADF3', '#AF89D6'],
                 label: {
                     normal: {
-                        show: true,
-                        position: 'inside'
+                        position: 'inner',
+                        formatter: '{d}%',
+
+                        textStyle: {
+                            color: '#fff',
+                            fontWeight: 'bold',
+                            fontSize: 16
+                        }
                     }
                 },
-                data: [100, 120, 300, 400, 900, 120, 300, 400, 900]
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data: data
             }, {
-                name: '概率',
-                type: 'line',
-                yAxisIndex: 1,
-                data: [10, 12, 30, 40, 90, 12, 30, 40, 90]
+                type: 'pie',
+                radius: ['60%', '90%'],
+                itemStyle: {
+                    normal: {
+                        color: '#EEEEEE'
+                    },
+                    emphasis: {
+                        color: '#ADADAD'
+                    }
+                },
+                label: {
+                    normal: {
+                        position: 'inner',
+                        formatter: '{c}场',
+                        textStyle: {
+                            color: '#333333',
+                            fontWeight: 'bold',
+                            fontSize: 16
+                        }
+                    }
+                },
+                data: data
             }]
         };
 
-        // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
+    </script>
+    <script>
+        var myChart2 = echarts.init(document.getElementById('data_echarts2'));
+
+        var option2 = {
+            backgroundColor: "#faf6f3",
+            color: ['#59ADF3', '#AF89D6'],
+            tooltip : {
+                show: false,
+                trigger: 'axis',
+                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {
+                show: true,
+                data:['教师', '学生']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis : [{
+                type : 'category',
+                data : ['上周六', '本周六'],
+                axisLabel: {
+                    textStyle: {
+                        fontSize: 16
+                    }
+                }
+            }],
+            yAxis : [{
+                type : 'value'
+            }],
+            series : [{
+                name:'教师',
+                type:'bar',
+                data:[30, 20]
+            }, {
+                name:'学生',
+                type:'bar',
+                data:[65, 30]
+            }]
+        };
+        myChart2.setOption(option2);
     </script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div id="main" class="container">
-        <div class="weui-flex field-block">
-            <div class="weui-flex__item field-block__item">
-                <div class="title">场地使用率</div>
-                <div class="money">40%</div>
-                <div class="money">1200时</div>
+        <div class="weui-form-preview">
+            <div class="weui-form-preview__bd">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>营业时间</th>
+                        <th>总场次</th>
+                        <th>空场次</th>
+                        <th>利用率</th>
+                        <th>同比上周</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>06:00-22:00</td>
+                        <td>160场</td>
+                        <td>4场</td>
+                        <td>97.5%</td>
+                        <td>增加10%</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <div id="data_echarts1" style="width: 100%;height:360px;"></div>
+                    </div>
+                </div>
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>教师</th>
+                        <td>20人</td>
+                        <td>同比减少10人</td>
+                    </tr>
+                    <tr>
+                        <th>学生</th>
+                        <td>30人</td>
+                        <td>同比减少35人</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <div id="data_echarts2" style="width: 100%;height:360px;"></div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="weui-flex field-block">
-            <div class="weui-flex__item field-block__item">
-                <div class="title">场地1</div>
-                <div class="money">10%</div>
-                <div class="money">100时</div>
+            <div class="weui-form-preview__ft">
+                <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:">羽毛球</a>
+                <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">篮球</a>
+                <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">乒乓球</a>
             </div>
-            <div class="weui-flex__item field-block__item">
-                <div class="title">场地2</div>
-                <div class="money">10%</div>
-                <div class="money">100时</div>
-            </div>
-            <div class="weui-flex__item field-block__item">
-                <div class="title">场地3</div>
-                <div class="money">10%</div>
-                <div class="money">100时</div>
-            </div>
-        </div>
-        <div class="weui-flex field-block">
-            <div class="weui-flex__item field-block__item">
-                <div class="title">场地4</div>
-                <div class="money">10%</div>
-                <div class="money">100时</div>
-            </div>
-            <div class="weui-flex__item field-block__item">
-                <div class="title">场地5</div>
-                <div class="money">10%</div>
-                <div class="money">100时</div>
-            </div>
-            <div class="weui-flex__item field-block__item">
-                <div class="title">场地6</div>
-                <div class="money">10%</div>
-                <div class="money">100时</div>
-            </div>
-        </div>
-        <div class="weui-flex field-block">
-            <div class="weui-flex__item field-block__item">
-                <div class="title">场地7</div>
-                <div class="money">10%</div>
-                <div class="money">100时</div>
-            </div>
-            <div class="weui-flex__item field-block__item">
-                <div class="title">场地8</div>
-                <div class="money">10%</div>
-                <div class="money">100时</div>
-            </div>
-            <div class="weui-flex__item field-block__item">
-                <div class="title">场地9</div>
-                <div class="money">10%</div>
-                <div class="money">100时</div>
-            </div>
-        </div>
-        <div>
-            <div id="data_echarts" style="width: 100%;height:400px;"></div>
         </div>
     </div>
 </layout:override>

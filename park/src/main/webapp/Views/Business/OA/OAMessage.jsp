@@ -22,9 +22,10 @@
     <div id="main" class="container">
         <div class="weui-tab">
             <div class="weui-navbar">
-                <a href="/business/oa/getNotifications?type=2" data-type="2" class="weui-navbar__item note-type weui-bar__item_on">发件箱</a>
-                <a href="/business/oa/getNotifications?type=1" data-type="1" class="weui-navbar__item note-type">草稿箱</a>
-                <a href="/business/oa/getNotifications?type=4" data-type="4" class="weui-navbar__item note-type">垃圾箱</a>
+                <a href="/business/oa/getMessage?type=3" data-type="3" class="weui-navbar__item note-type weui-bar__item_on">全部</a>
+                <a href="/business/oa/getMessage?type=31" data-type="31" class="weui-navbar__item note-type">未读</a>
+                <a href="/business/oa/getMessage?type=32" data-type="32" class="weui-navbar__item note-type">已读</a>
+                <a href="/business/oa/getMessage?type=4" data-type="4" class="weui-navbar__item note-type">已删</a>
             </div>
             <div class="weui-tab__panel">
                 <c:forEach var="note" items="${list}">
@@ -32,7 +33,12 @@
                         <div class="weui-form-preview__hd">
                             <div class="weui-form-preview__item">
                                 <label class="weui-form-preview__label">${note.sendTime}</label>
-                                <em class="weui-form-preview__value warning-color">已发送</em>
+                                <c:if test="${note.receiverStatus == 1}">
+                                    <em class="weui-form-preview__value">已读</em>
+                                </c:if>
+                                <c:if test="${note.receiverStatus == 2}">
+                                    <em class="weui-form-preview__value warning-color">未读</em>
+                                </c:if>
                             </div>
                         </div>
                         <div class="weui-form-preview__bd">
@@ -45,15 +51,15 @@
                                 <span class="weui-form-preview__value">${note.noteContent.substring(0, 18)}...</span>
                             </div>
                             <div class="weui-form-preview__item">
-                                <label class="weui-form-preview__label">收件人</label>
+                                <label class="weui-form-preview__label">发件人</label>
                                 <span class="weui-form-preview__value">${note.operatorName}</span>
                             </div>
                         </div>
                         <div class="weui-form-preview__ft">
-                            <a class="weui-form-preview__btn weui-form-preview__btn_default" data-id="${note.noteId}"
+                            <a class="weui-form-preview__btn weui-form-preview__btn_default" data-id="${note.id}"
                                href="javascript:;">删 除</a>
-                            <a class="weui-form-preview__btn weui-form-preview__btn_primary" data-id="${note.noteId}"
-                               href="/business/oa/notificationsDetail?noteId=${note.noteId}">查看消息</a>
+                            <a class="weui-form-preview__btn weui-form-preview__btn_primary" data-note="${note.noteId}"
+                               data-id="${note.id}" href="/business/oa/notificationsDetail?noteId=${note.noteId}">查看消息</a>
                         </div>
                     </div>
                 </c:forEach>

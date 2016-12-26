@@ -7,33 +7,33 @@
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
     <link href="/Content/style/mobile/center/center_profile.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <style>
+        .weui-media-box__desc {
+            -webkit-line-clamp: inherit;
+        }
+    </style>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div id="main" class="container">
-        <article class="weui-article">
-            <h1>通知消息标题</h1>
-            <section>
-                <p>通知消息内容通知消息内容通知消息内容通知消息内容, 通知消息内容通知消息内容通知消息内容通知消息内容, 通知消息内容通知消息内容通知消息内容通知消息内容,
-                    通知消息内容通知消息内容通知消息内容通知消息内容, 通知消息内容通知消息内容通知消息内容通知消息内容.</p>
-            </section>
-        </article>
-
-        <div class="weui-cells__title">附件</div>
-        <div class="weui-cells">
-            <a class="weui-cell weui-cell_access" href="javascript:;">
-                <div class="weui-cell__bd">
-                    <p>员工业绩表</p>
+        <div class="weui-panel">
+            <div class="weui-panel__hd">通知详情</div>
+            <div class="weui-panel__bd">
+                <div class="weui-media-box weui-media-box_text">
+                    <h4 class="weui-media-box__title">${noteTitle}</h4>
+                    <p class="weui-media-box__desc">${noteContent}</p>
+                    <ul class="weui-media-box__info">
+                        <li class="weui-media-box__info__meta">发送时间</li>
+                        <li class="weui-media-box__info__meta">${sendTime}</li>
+                    </ul>
                 </div>
-                <div class="weui-cell__ft">2016-11-21</div>
-            </a>
-            <a class="weui-cell weui-cell_access" href="javascript:;">
-                <div class="weui-cell__bd">
-                    <p>身份证照片</p>
-                </div>
-                <div class="weui-cell__ft">张三</div>
-            </a>
-
+            </div>
+        </div>
+        <div class="weui-form-preview">
+            <div class="weui-form-preview__ft">
+                <a class="weui-form-preview__btn weui-form-preview__btn_default" data-id="${note.noteId}"
+                   href="javascript:;">删 除</a>
+            </div>
         </div>
     </div>
 </layout:override>

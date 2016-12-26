@@ -23,6 +23,7 @@ public class OtherBalance implements java.io.Serializable {
 	private Integer balanceServiceId;
 	private String balanceServiceName;
 	private String balanceType;
+	private String balanceCheckNo;
 	private String balanceStyle;
 	private Double oldAmount;
 	private Double realAmount;
@@ -52,7 +53,7 @@ public class OtherBalance implements java.io.Serializable {
 
 	/** full constructor */
 	public OtherBalance(String balanceNo, String balanceServiceType,
-			Integer balanceServiceId, String balanceServiceName,
+			Integer balanceServiceId, String balanceServiceName, String balanceCheckNo,
 			String balanceType, String balanceStyle, Double oldAmount,
 			Double realAmount, Double subAmount, Double divBalance,
 			Double givingAmount, String balanceStatus, String serviceDate,
@@ -61,6 +62,7 @@ public class OtherBalance implements java.io.Serializable {
 		this.balanceServiceType = balanceServiceType;
 		this.balanceServiceId = balanceServiceId;
 		this.balanceServiceName = balanceServiceName;
+		this.balanceCheckNo = balanceCheckNo;
 		this.balanceType = balanceType;
 		this.balanceStyle = balanceStyle;
 		this.oldAmount = oldAmount;
@@ -123,6 +125,15 @@ public class OtherBalance implements java.io.Serializable {
 	public void setBalanceServiceName(String balanceServiceName) {
 		this.balanceServiceName = balanceServiceName;
 	}
+
+    @Column(name = "balanceCheckNo", length = 100)
+    public String getBalanceCheckNo() {
+        return this.balanceCheckNo;
+    }
+
+    public void setBalanceCheckNo(String balanceCheckNo) {
+        this.balanceCheckNo = balanceCheckNo;
+    }
 
 	@Column(name = "balanceType", length = 1)
 	public String getBalanceType() {

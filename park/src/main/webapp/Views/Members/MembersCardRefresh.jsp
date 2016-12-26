@@ -152,12 +152,10 @@
                                 <div data-valmsg-for="givingAmount" data-valmsg-replace="true"></div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-12">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">新的卡号</label>
+                            <label class="col-sm-4 control-label">新的卡号</label>
 
-                            <div class="col-sm-10">
+                            <div class="col-sm-8">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="newCardNo" name="newCardNo"
                                            placeholder="新会员卡号" autocomplete="off"
@@ -171,6 +169,8 @@
                                 <div data-valmsg-for="newCardNo" data-valmsg-replace="true"></div>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-sm-12">
                         <div class="form-group">
                             <label for="refresh_remark" class="col-sm-2 control-label">备注</label>
 

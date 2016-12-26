@@ -66,7 +66,10 @@
                                 <td>${balance.cardNo}</td>
                                 <td>${balance.memberName}</td>
                                 <td>${balance.balanceServiceTypeName}</td>
-                                <td>${balance.balanceStyleName}</td>
+                                <td>
+                                    ${balance.balanceStyleName}
+                                    <span class="text-info">${balance.balanceCheckNo}</span>
+                                </td>
                                 <td>${balance.realAmount}</td>
                                 <td class="text-success">${balance.givingAmount}</td>
                                 <td class="text-danger">${balance.cardBalance}</td>

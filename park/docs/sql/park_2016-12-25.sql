@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.13)
 # Database: park
-# Generation Time: 2016-12-21 20:27:52 +0000
+# Generation Time: 2016-12-24 16:51:23 +0000
 # ************************************************************
 
 
@@ -163,7 +163,23 @@ LOCK TABLES `member_card` WRITE;
 
 INSERT INTO `member_card` (`cardId`, `memberId`, `cardNo`, `cardBalance`, `cardDeadline`, `cardStatus`, `cardTypeId`, `createTime`, `updateTime`, `cardRemark`, `salesId`, `cardDeposit`)
 VALUES
-	(30,47,'576311',10100.00,'0','1',2,'2016-12-20 06:26:26',NULL,'支票支付',13,0.00);
+	(30,47,'576311',10100.00,'0','1',2,'2016-12-20 06:26:26',NULL,'支票支付',13,0.00),
+	(31,52,'160150',10000.00,'0','1',2,'2016-12-24 09:04:45',NULL,'',13,0.00),
+	(32,53,'521978',2000.00,'0','1',2,'2016-12-24 13:32:35',NULL,'',13,0.00),
+	(33,54,'443187',3050.00,'0','1',2,'2016-12-24 13:39:10',NULL,'',13,0.00),
+	(34,55,'529753',1300.00,'0','1',2,'2016-12-24 20:32:18',NULL,'',14,0.00),
+	(35,56,'937609',2940.00,'0','1',2,'2016-12-24 20:33:34',NULL,'',14,0.00),
+	(36,57,'675031',16300.00,'0','1',2,'2016-12-24 20:34:58','2016-12-24 21:05:58','',14,0.00),
+	(37,58,'576961',0.00,'0','1',2,'2016-12-24 20:36:45',NULL,'',14,0.00),
+	(38,59,'324104',2140.00,'0','1',2,'2016-12-24 20:44:35',NULL,'',14,0.00),
+	(39,60,'111743',920.00,'0','1',2,'2016-12-24 20:45:36',NULL,'',14,0.00),
+	(40,61,'279794',5300.00,'0','1',2,'2016-12-24 20:46:32','2016-12-24 21:34:10','',14,0.00),
+	(41,68,'855397',0.00,'0','1',1,'2016-12-24 21:39:34',NULL,'教师卡免费',13,0.00),
+	(42,69,'964613',0.00,'0','1',1,'2016-12-24 21:40:16',NULL,'教师卡免费',13,0.00),
+	(43,70,'355274',0.00,'0','1',1,'2016-12-24 21:40:55',NULL,'教师卡免费',13,0.00),
+	(44,NULL,'355275',NULL,'0','1',3,'2016-12-24 21:41:54',NULL,NULL,13,50.00),
+	(45,NULL,'799979',NULL,'0','1',3,'2016-12-24 21:51:53',NULL,NULL,13,50.00),
+	(46,NULL,'168600',NULL,'0','1',3,'2016-12-24 21:52:27',NULL,NULL,13,50.00);
 
 /*!40000 ALTER TABLE `member_card` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -222,6 +238,15 @@ CREATE TABLE `member_receivable` (
   PRIMARY KEY (`receivableId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='应收款表';
 
+LOCK TABLES `member_receivable` WRITE;
+/*!40000 ALTER TABLE `member_receivable` DISABLE KEYS */;
+
+INSERT INTO `member_receivable` (`receivableId`, `memberId`, `orderId`, `createTime`, `updateTime`, `salesId`)
+VALUES
+	(1,58,9,'2016-12-25 00:50:02',NULL,13);
+
+/*!40000 ALTER TABLE `member_receivable` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table member_site_sign
@@ -244,24 +269,17 @@ CREATE TABLE `member_site_sign` (
   PRIMARY KEY (`signId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会员场地签到表';
 
+LOCK TABLES `member_site_sign` WRITE;
+/*!40000 ALTER TABLE `member_site_sign` DISABLE KEYS */;
 
+INSERT INTO `member_site_sign` (`signId`, `signMemberCardNo`, `signName`, `signMobile`, `orderId`, `signType`, `reserveTimeId`, `createTime`, `updateTime`, `salesId`, `signDate`)
+VALUES
+	(1,'','散客','12345678912',2,'2',4,'2016-12-23 12:30:55',NULL,13,'2016-12-23'),
+	(2,'','散客','12345678912',2,'2',3,'2016-12-23 12:31:22',NULL,13,'2016-12-23'),
+	(3,'','散客','12345678912',3,'2',6,'2016-12-23 16:17:19',NULL,13,'2016-12-23');
 
-# Dump of table notificaitons_users
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `notificaitons_users`;
-
-CREATE TABLE `notificaitons_users` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `senderId` int(11) DEFAULT NULL COMMENT '发件人ID',
-  `noteId` int(11) DEFAULT NULL COMMENT '通知ID',
-  `receiverId` int(11) DEFAULT NULL COMMENT '收件人ID',
-  `status` varchar(1) DEFAULT NULL COMMENT '状态：1，已读 2，未读 3，删除',
-  `sendTime` varchar(20) DEFAULT NULL COMMENT '发送时间',
-  `readTime` varchar(20) DEFAULT NULL COMMENT '阅读时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+/*!40000 ALTER TABLE `member_site_sign` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table notifications_files
@@ -278,20 +296,59 @@ CREATE TABLE `notifications_files` (
 
 
 
-# Dump of table notifications_info
+# Dump of table notifications_receivers
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `notifications_info`;
+DROP TABLE IF EXISTS `notifications_receivers`;
 
-CREATE TABLE `notifications_info` (
+CREATE TABLE `notifications_receivers` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `noteId` int(11) DEFAULT NULL COMMENT '通知ID',
+  `receiverId` int(11) DEFAULT NULL COMMENT '收件人ID',
+  `readTime` varchar(20) DEFAULT NULL COMMENT '阅读时间',
+  `receiverStatus` varchar(1) DEFAULT NULL COMMENT '接收状态：1，已读 2，未读 3，删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `notifications_receivers` WRITE;
+/*!40000 ALTER TABLE `notifications_receivers` DISABLE KEYS */;
+
+INSERT INTO `notifications_receivers` (`id`, `noteId`, `receiverId`, `readTime`, `receiverStatus`)
+VALUES
+	(1,1,14,'2016-12-23 11:10:12','1');
+
+/*!40000 ALTER TABLE `notifications_receivers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table notifications_senders
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `notifications_senders`;
+
+CREATE TABLE `notifications_senders` (
   `noteId` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '通知ID',
   `noteTitle` varchar(100) DEFAULT NULL COMMENT '通知标题',
   `noteContent` text COMMENT '通知内容',
   `createTime` varchar(20) DEFAULT NULL COMMENT '创建时间',
   `updateTime` varchar(20) DEFAULT NULL COMMENT '更新时间',
+  `senderId` int(11) DEFAULT NULL COMMENT '发送人',
+  `sendTime` varchar(20) DEFAULT NULL COMMENT '发送时间',
+  `sendStatus` varchar(1) DEFAULT NULL COMMENT '发送状态：1，已发送 2，未发送 3，已删除',
   PRIMARY KEY (`noteId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `notifications_senders` WRITE;
+/*!40000 ALTER TABLE `notifications_senders` DISABLE KEYS */;
+
+INSERT INTO `notifications_senders` (`noteId`, `noteTitle`, `noteContent`, `createTime`, `updateTime`, `senderId`, `sendTime`, `sendStatus`)
+VALUES
+	(1,'测试标题','测试标题测试标题测试标题测试标题测试标题，测试标题测试标题测试标题测试标题测试标题测试标题；测试标题测试标题测试标题测试标题测试标题测试标题。','2016-12-22 22:24:23','2016-12-22 22:24:23',13,'2016-12-23 06:28:26','1'),
+	(2,'2016年工作年度报告','工作年度报告，工作年度报告工作年度报告工作年度报告工作年度报告工作年度报告；工作年度报告工作年度报告工作年度报告工作年度报告工作年度报告工作年度报告工作年度报告。工作年度报告工作年度报告工作年度报告工作年度报告，工作年度报告工作年度报告工作年度报告工作年度报告。','2016-12-24 21:54:39','2016-12-24 21:54:39',13,NULL,'2'),
+	(3,'2016员工绩效自我评测','员工绩效自我评测反馈员工绩效自我评测反馈员工绩效自我评测反馈员工绩效自我评测反馈；员工绩效自我评测反馈员工绩效自我评测反馈员工绩效自我评测反馈员工绩效自我评测反馈。','2016-12-24 21:55:38','2016-12-24 21:55:38',13,NULL,'2');
+
+/*!40000 ALTER TABLE `notifications_senders` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table order_detail
@@ -320,7 +377,33 @@ LOCK TABLES `order_detail` WRITE;
 
 INSERT INTO `order_detail` (`orderDetailId`, `orderId`, `itemId`, `itemName`, `itemPrice`, `itemStartTime`, `itemEndTime`, `itemAmount`, `itemRemark`, `itemMoneyType`, `itemDiscount`, `orderDetailStatus`)
 VALUES
-	(1,1,14,'斯伯丁NBA篮球',556.00,NULL,NULL,4,NULL,'1',NULL,'1');
+	(1,1,14,'斯伯丁NBA篮球',556.00,NULL,NULL,4,NULL,'1',NULL,'1'),
+	(2,2,1,'【羽毛球】',NULL,'2016-12-23 14:00','2016-12-23 15:00',1,NULL,'2',NULL,'2'),
+	(3,2,2,'【羽毛球】',NULL,'2016-12-23 14:00','2016-12-23 15:00',1,NULL,'2',NULL,'2'),
+	(4,2,3,'【羽毛球】',NULL,'2016-12-23 15:00','2016-12-23 16:00',1,NULL,'2',NULL,'2'),
+	(5,2,4,'【羽毛球】',NULL,'2016-12-23 16:00','2016-12-23 17:00',1,NULL,'2',NULL,'2'),
+	(6,3,6,'【羽毛球】',NULL,'2016-12-23 17:00','2016-12-23 18:00',1,NULL,'2',NULL,'2'),
+	(7,4,11,'【羽毛球】',NULL,'2016-12-25 10:00','2016-12-25 11:00',1,NULL,'2',NULL,'2'),
+	(8,4,12,'【羽毛球】',NULL,'2016-12-25 11:00','2016-12-25 12:00',1,NULL,'2',NULL,'2'),
+	(9,4,13,'【羽毛球】',NULL,'2016-12-25 12:00','2016-12-25 13:00',1,NULL,'2',NULL,'2'),
+	(10,4,14,'【羽毛球】',NULL,'2016-12-25 13:00','2016-12-25 14:00',1,NULL,'2',NULL,'2'),
+	(11,5,15,'【羽毛球】',NULL,'2016-12-25 10:00','2016-12-25 11:00',1,NULL,'2',NULL,'2'),
+	(12,5,16,'【羽毛球】',NULL,'2016-12-25 11:00','2016-12-25 12:00',1,NULL,'2',NULL,'2'),
+	(13,5,17,'【羽毛球】',NULL,'2016-12-25 12:00','2016-12-25 13:00',1,NULL,'2',NULL,'2'),
+	(14,5,18,'【羽毛球】',NULL,'2016-12-25 13:00','2016-12-25 14:00',1,NULL,'2',NULL,'2'),
+	(15,6,19,'【羽毛球】',NULL,'2016-12-25 10:00','2016-12-25 11:00',1,NULL,'2',NULL,'2'),
+	(16,6,20,'【羽毛球】',NULL,'2016-12-25 11:00','2016-12-25 12:00',1,NULL,'2',NULL,'2'),
+	(17,6,21,'【羽毛球】',NULL,'2016-12-25 14:00','2016-12-25 15:00',1,NULL,'2',NULL,'2'),
+	(18,6,22,'【羽毛球】',NULL,'2016-12-25 15:00','2016-12-25 16:00',1,NULL,'2',NULL,'2'),
+	(19,7,23,'【羽毛球】',NULL,'2016-12-25 12:00','2016-12-25 13:00',1,NULL,'2',NULL,'2'),
+	(20,7,24,'【羽毛球】',NULL,'2016-12-25 13:00','2016-12-25 14:00',1,NULL,'2',NULL,'2'),
+	(21,8,25,'【羽毛球】',NULL,'2016-12-25 17:00','2016-12-25 18:00',1,NULL,'2',NULL,'2'),
+	(22,8,26,'【羽毛球】',NULL,'2016-12-25 17:00','2016-12-25 18:00',1,NULL,'2',NULL,'2'),
+	(23,8,27,'【羽毛球】',NULL,'2016-12-25 18:00','2016-12-25 19:00',1,NULL,'2',NULL,'2'),
+	(24,8,28,'【羽毛球】',NULL,'2016-12-25 18:00','2016-12-25 19:00',1,NULL,'2',NULL,'2'),
+	(25,9,29,'【羽毛球】',NULL,'2017-01-01 09:00','2017-01-31 11:00',1,NULL,'2',NULL,'2'),
+	(26,9,30,'【羽毛球】',NULL,'2017-01-01 09:00','2017-01-31 11:00',1,NULL,'2',NULL,'2'),
+	(27,9,31,'【羽毛球】',NULL,'2017-01-01 09:00','2017-01-31 11:00',1,NULL,'2',NULL,'2');
 
 /*!40000 ALTER TABLE `order_detail` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -365,7 +448,15 @@ LOCK TABLES `order_info` WRITE;
 
 INSERT INTO `order_info` (`orderId`, `orderNo`, `operatorId`, `memberId`, `orderServiceType`, `orderStatus`, `payStatus`, `payType`, `payTime`, `orderSumPrice`, `paySumPrice`, `subAmount`, `additionalPrice`, `checkNo`, `orderRemark`, `orderSumCount`, `orderDiscount`, `createTime`, `updateTime`, `salesId`, `sumCount`, `payCount`, `useCount`, `name`, `mobile`)
 VALUES
-	(1,'20161222020546',NULL,47,'300','1','1','1','2016-12-22 02:05:55',556.00,556.00,0.00,0.00,NULL,'',4,100,'2016-12-22 02:05:46','2016-12-22 02:05:55',13,NULL,NULL,NULL,'尚福乐','11012345678');
+	(1,'20161222020546',NULL,47,'300','1','1','1','2016-12-22 02:05:55',556.00,556.00,0.00,0.00,NULL,'',4,100,'2016-12-22 02:05:46','2016-12-22 02:05:55',13,NULL,NULL,NULL,'尚福乐','11012345678'),
+	(2,'20161223122915',NULL,0,'100','2','1','1','2016-12-23 12:29:23',160.00,160.00,0.00,0.00,NULL,'',4,NULL,'2016-12-23 12:29:15','2016-12-23 12:29:23',13,4,4,2,'散客','12345678912'),
+	(3,'20161223161655',NULL,0,'100','2','1','2','2016-12-23 16:17:03',40.00,40.00,0.00,0.00,NULL,'',1,NULL,'2016-12-23 16:16:55','2016-12-23 16:17:03',13,1,1,1,'散客','12345678912'),
+	(4,'20161225003802',NULL,59,'100','2','1','1','2016-12-25 00:38:08',160.00,160.00,0.00,0.00,NULL,'',4,NULL,'2016-12-25 00:38:02','2016-12-25 00:38:08',13,4,4,0,NULL,NULL),
+	(5,'20161225003830',NULL,54,'100','2','1','2','2016-12-25 00:38:35',160.00,160.00,0.00,0.00,NULL,'',4,NULL,'2016-12-25 00:38:30','2016-12-25 00:38:35',13,4,4,0,NULL,NULL),
+	(6,'20161225004459',NULL,0,'100','2','1','2','2016-12-25 00:45:05',160.00,160.00,0.00,0.00,NULL,'',4,NULL,'2016-12-25 00:44:59','2016-12-25 00:45:05',13,4,4,0,'散客','13011117539'),
+	(7,'20161225004538',NULL,0,'100','2','1','3','2016-12-25 00:45:42',80.00,80.00,0.00,0.00,NULL,'',2,NULL,'2016-12-25 00:45:38','2016-12-25 00:45:42',13,2,2,0,'散客','13011117538'),
+	(8,'20161225004809',NULL,56,'100','2','1','2','2016-12-25 00:48:13',160.00,160.00,0.00,0.00,NULL,'',4,NULL,'2016-12-25 00:48:09','2016-12-25 00:48:13',13,4,4,0,NULL,NULL),
+	(9,'20161225004927',NULL,58,'200','2','1','1','2016-12-25 00:50:02',2400.00,1000.00,0.00,0.00,NULL,'',3,NULL,'2016-12-25 00:49:27','2016-12-25 00:50:02',13,180,80,0,NULL,NULL);
 
 /*!40000 ALTER TABLE `order_info` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -383,7 +474,8 @@ CREATE TABLE `other_balance` (
   `balanceServiceId` int(11) NOT NULL COMMENT '业务标识',
   `balanceServiceName` varchar(100) DEFAULT NULL COMMENT '业务项名称',
   `balanceType` varchar(1) DEFAULT NULL COMMENT '类型 1：充值  2：消费  3：其他',
-  `balanceStyle` varchar(1) DEFAULT NULL COMMENT '支付方式 1：现金  2：支付宝  3：微信',
+  `balanceStyle` varchar(1) DEFAULT NULL COMMENT '支付方式 1：现金  2：支付宝  3：微信 4：银联 5：支票',
+  `balanceCheckNo` varchar(100) DEFAULT NULL COMMENT '支票号',
   `oldAmount` decimal(10,2) DEFAULT NULL COMMENT '原始金额（充值金额|升级金额|补办金额）',
   `realAmount` decimal(10,2) DEFAULT NULL COMMENT '实际价格（最终支付金额）',
   `subAmount` decimal(10,2) DEFAULT NULL COMMENT '优惠金额',
@@ -403,10 +495,36 @@ CREATE TABLE `other_balance` (
 LOCK TABLES `other_balance` WRITE;
 /*!40000 ALTER TABLE `other_balance` DISABLE KEYS */;
 
-INSERT INTO `other_balance` (`balanceId`, `balanceNo`, `balanceServiceType`, `balanceServiceId`, `balanceServiceName`, `balanceType`, `balanceStyle`, `oldAmount`, `realAmount`, `subAmount`, `givingAmount`, `divBalance`, `balanceStatus`, `serviceDate`, `changeAmount`, `createTime`, `updateTime`, `salesId`, `remark`)
+INSERT INTO `other_balance` (`balanceId`, `balanceNo`, `balanceServiceType`, `balanceServiceId`, `balanceServiceName`, `balanceType`, `balanceStyle`, `balanceCheckNo`, `oldAmount`, `realAmount`, `subAmount`, `givingAmount`, `divBalance`, `balanceStatus`, `serviceDate`, `changeAmount`, `createTime`, `updateTime`, `salesId`, `remark`)
 VALUES
-	(74,'20161220062626','10',30,NULL,'3','5',10000.00,10000.00,NULL,100.00,NULL,'1','2016-12-20 06:26:26',NULL,'2016-12-20 06:26:26',NULL,13,NULL),
-	(75,'20161222020555','300',1,NULL,'3','1',556.00,556.00,0.00,NULL,NULL,'1','2016-12-22 02:05:55',NULL,'2016-12-22 02:05:55',NULL,13,NULL);
+	(74,'20161220062626','10',30,NULL,'3','5','xx00165432',10000.00,10000.00,NULL,100.00,NULL,'1','2016-12-20 06:26:26',NULL,'2016-12-20 06:26:26',NULL,13,NULL),
+	(75,'20161222020555','300',1,NULL,'3','1',NULL,556.00,556.00,0.00,NULL,NULL,'1','2016-12-22 02:05:55',NULL,'2016-12-22 02:05:55',NULL,13,NULL),
+	(76,'20161223122923','100',2,NULL,'3','1',NULL,160.00,160.00,0.00,NULL,NULL,'1','2016-12-23 12:29:23',NULL,'2016-12-23 12:29:23',NULL,13,NULL),
+	(77,'20161223161703','100',3,NULL,'3','2',NULL,40.00,40.00,0.00,NULL,NULL,'1','2016-12-23 16:17:03',NULL,'2016-12-23 16:17:03',NULL,13,NULL),
+	(78,'20161224090445','10',31,NULL,'3','5','xx00165343',10000.00,10000.00,NULL,NULL,NULL,'1','2016-12-24 09:04:45',NULL,'2016-12-24 09:04:45',NULL,13,NULL),
+	(79,'20161224133235','10',32,NULL,'3','4',NULL,2000.00,2000.00,NULL,NULL,NULL,'1','2016-12-24 13:32:35',NULL,'2016-12-24 13:32:35',NULL,13,NULL),
+	(80,'20161224133910','10',33,NULL,'3','5','xx87341509',3200.00,3200.00,NULL,10.00,NULL,'1','2016-12-24 13:39:10',NULL,'2016-12-24 13:39:10',NULL,13,NULL),
+	(81,'20161224203218','10',34,NULL,'3','4','',1300.00,1300.00,NULL,NULL,NULL,'1','2016-12-24 20:32:18',NULL,'2016-12-24 20:32:18',NULL,14,NULL),
+	(82,'20161224203334','10',35,NULL,'3','3','',3000.00,3000.00,NULL,100.00,NULL,'1','2016-12-24 20:33:34',NULL,'2016-12-24 20:33:34',NULL,14,NULL),
+	(83,'20161224203458','10',36,NULL,'3','2','',5300.00,5300.00,NULL,NULL,NULL,'1','2016-12-24 20:34:58',NULL,'2016-12-24 20:34:58',NULL,14,NULL),
+	(84,'20161224203645','10',37,NULL,'3','1','',1000.00,1000.00,NULL,NULL,NULL,'1','2016-12-24 20:36:45',NULL,'2016-12-24 20:36:45',NULL,14,NULL),
+	(85,'20161224204435','10',38,NULL,'3','2','',2300.00,2300.00,NULL,NULL,NULL,'1','2016-12-24 20:44:35',NULL,'2016-12-24 20:44:35',NULL,14,NULL),
+	(86,'20161224204536','10',39,NULL,'3','1','',920.00,920.00,NULL,NULL,NULL,'1','2016-12-24 20:45:36',NULL,'2016-12-24 20:45:36',NULL,14,NULL),
+	(87,'20161224204632','10',40,NULL,'3','4','',4300.00,4300.00,NULL,NULL,NULL,'1','2016-12-24 20:46:32',NULL,'2016-12-24 20:46:32',NULL,14,NULL),
+	(88,'20161224210558','11',36,NULL,'1','5','xx5433369871',10000.00,10000.00,0.00,1000.00,NULL,NULL,'2016-12-24 21:05:58',NULL,'2016-12-24 21:05:58',NULL,13,''),
+	(89,'20161224213410','11',40,NULL,'1','1','',1000.00,1000.00,0.00,0.00,NULL,'1','2016-12-24 21:34:10',NULL,'2016-12-24 21:34:10',NULL,13,''),
+	(90,'20161224213934','10',41,NULL,'3','1',NULL,0.00,0.00,NULL,0.00,NULL,'1','2016-12-24 21:39:34',NULL,'2016-12-24 21:39:34',NULL,13,NULL),
+	(91,'20161224214016','10',42,NULL,'3','1',NULL,0.00,0.00,NULL,0.00,NULL,'1','2016-12-24 21:40:16',NULL,'2016-12-24 21:40:16',NULL,13,NULL),
+	(92,'20161224214055','10',43,NULL,'3','1',NULL,0.00,0.00,NULL,0.00,NULL,'1','2016-12-24 21:40:55',NULL,'2016-12-24 21:40:55',NULL,13,NULL),
+	(93,'20161224214154','10',44,NULL,'3','1',NULL,50.00,50.00,NULL,NULL,NULL,'1','2016-12-24 21:41:54',NULL,'2016-12-24 21:41:54',NULL,13,NULL),
+	(94,'20161224215153','10',45,NULL,'3','1',NULL,50.00,50.00,NULL,NULL,NULL,'1','2016-12-24 21:51:53',NULL,'2016-12-24 21:51:53',NULL,13,NULL),
+	(95,'20161224215227','10',46,NULL,'3','1',NULL,50.00,50.00,NULL,NULL,NULL,'1','2016-12-24 21:52:27',NULL,'2016-12-24 21:52:27',NULL,13,NULL),
+	(96,'20161225003808','100',4,NULL,'3','1',NULL,160.00,160.00,0.00,NULL,NULL,'1','2016-12-25 00:38:08',NULL,'2016-12-25 00:38:08',NULL,13,NULL),
+	(97,'20161225003835','100',5,NULL,'3','2',NULL,160.00,160.00,0.00,NULL,NULL,'1','2016-12-25 00:38:35',NULL,'2016-12-25 00:38:35',NULL,13,NULL),
+	(98,'20161225004505','100',6,NULL,'3','2',NULL,160.00,160.00,0.00,NULL,NULL,'1','2016-12-25 00:45:05',NULL,'2016-12-25 00:45:05',NULL,13,NULL),
+	(99,'20161225004542','100',7,NULL,'3','3',NULL,80.00,80.00,0.00,NULL,NULL,'1','2016-12-25 00:45:42',NULL,'2016-12-25 00:45:42',NULL,13,NULL),
+	(100,'20161225004813','100',8,NULL,'3','2',NULL,160.00,160.00,0.00,NULL,NULL,'1','2016-12-25 00:48:13',NULL,'2016-12-25 00:48:13',NULL,13,NULL),
+	(101,'20161225005002','200',9,NULL,'3','1',NULL,2400.00,1000.00,0.00,NULL,NULL,'1','2016-12-25 00:50:02',NULL,'2016-12-25 00:50:02',NULL,13,NULL);
 
 /*!40000 ALTER TABLE `other_balance` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -436,6 +554,18 @@ CREATE TABLE `other_invoice` (
   PRIMARY KEY (`invoiceId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='发票登记表';
 
+LOCK TABLES `other_invoice` WRITE;
+/*!40000 ALTER TABLE `other_invoice` DISABLE KEYS */;
+
+INSERT INTO `other_invoice` (`invoiceId`, `invoiceNo`, `invoiceServiceType`, `invoiceServiceId`, `invoiceHeader`, `invoiceContent`, `invoiceMoney`, `invoiceRemark`, `invoiceState`, `createTime`, `printTime`, `salesId`, `invoiceOpenState`, `openTime`, `invoiceType`)
+VALUES
+	(1,'20161224090445','10',52,'个人发票','场地费',10000.00,'个人增值税','2','2016-12-24 09:05:16',NULL,13,'2',NULL,'2'),
+	(2,'20161224133910','10',54,'个人专票','培训费',3200.00,'','2','2016-12-24 13:39:38',NULL,13,'2',NULL,'1'),
+	(3,'20161224203458','10',57,'北体高科有限公司','场地费',5200.00,'','2','2016-12-24 20:35:21',NULL,14,'2',NULL,'1'),
+	(4,'20161224210558','11',57,'北体高科有限公司','场地费',10000.00,'','2','2016-12-24 21:13:38',NULL,13,'2',NULL,'1');
+
+/*!40000 ALTER TABLE `other_invoice` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table other_resource
@@ -611,6 +741,24 @@ CREATE TABLE `site_reserve_basic` (
   PRIMARY KEY (`siteReserveId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='场地序列图表';
 
+LOCK TABLES `site_reserve_basic` WRITE;
+/*!40000 ALTER TABLE `site_reserve_basic` DISABLE KEYS */;
+
+INSERT INTO `site_reserve_basic` (`siteReserveId`, `name`, `mobile`, `opType`, `siteReserveStatus`, `reserveType`, `reserveModel`, `createTime`, `updateTime`, `salesId`, `memberId`, `orderId`)
+VALUES
+	(1,'散客','12345678912','2','1','1','1','2016-12-23 12:29:15',NULL,13,0,2),
+	(2,NULL,NULL,NULL,'3',NULL,NULL,'2016-12-23 12:31:33',NULL,13,NULL,NULL),
+	(3,'散客','12345678912','2','1','1','1','2016-12-23 16:16:55',NULL,13,0,3),
+	(4,NULL,NULL,NULL,'3',NULL,NULL,'2016-12-23 16:18:33',NULL,13,NULL,NULL),
+	(5,'王贺','13011117186','1','1','1','1','2016-12-25 00:38:02',NULL,13,59,4),
+	(6,'孙韦迦','18701271870','1','1','1','1','2016-12-25 00:38:30',NULL,13,54,5),
+	(7,'散客','13011117539','2','1','1','1','2016-12-25 00:44:59',NULL,13,0,6),
+	(8,'散客','13011117538','2','1','1','1','2016-12-25 00:45:38',NULL,13,0,7),
+	(9,'俞博文','18612615331','1','1','1','1','2016-12-25 00:48:09',NULL,13,56,8),
+	(10,'欧阳琼格','18612703538','1','1','1','2','2016-12-25 00:49:27',NULL,13,58,9);
+
+/*!40000 ALTER TABLE `site_reserve_basic` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table site_reserve_date
@@ -627,6 +775,26 @@ CREATE TABLE `site_reserve_date` (
   PRIMARY KEY (`reserveDateId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='场地预定日期表';
 
+LOCK TABLES `site_reserve_date` WRITE;
+/*!40000 ALTER TABLE `site_reserve_date` DISABLE KEYS */;
+
+INSERT INTO `site_reserve_date` (`reserveDateId`, `siteReserveId`, `reserveStartDate`, `reserveEndDate`, `reserveWeek`)
+VALUES
+	(1,1,'2016-12-23','2016-12-23','5'),
+	(2,2,'2016-12-23','2016-12-23','5'),
+	(3,3,'2016-12-23','2016-12-23','5'),
+	(4,4,'2016-12-23','2016-12-23','5'),
+	(5,5,'2016-12-25','2016-12-25','7'),
+	(6,6,'2016-12-25','2016-12-25','7'),
+	(7,7,'2016-12-25','2016-12-25','7'),
+	(8,8,'2016-12-25','2016-12-25','7'),
+	(9,9,'2016-12-25','2016-12-25','7'),
+	(10,10,'2017-01-01','2017-01-31','1,2'),
+	(11,10,'2017-01-01','2017-01-31','1,2'),
+	(12,10,'2017-01-01','2017-01-31','1,2');
+
+/*!40000 ALTER TABLE `site_reserve_date` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table site_reserve_time
@@ -644,6 +812,45 @@ CREATE TABLE `site_reserve_time` (
   PRIMARY KEY (`reserveTimeId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='场地预定时间表';
 
+LOCK TABLES `site_reserve_time` WRITE;
+/*!40000 ALTER TABLE `site_reserve_time` DISABLE KEYS */;
+
+INSERT INTO `site_reserve_time` (`reserveTimeId`, `reserveDateId`, `siteId`, `siteStartTime`, `siteEndTime`, `isUse`)
+VALUES
+	(1,1,4,'14:00','15:00','2'),
+	(2,1,9,'14:00','15:00','2'),
+	(3,1,7,'15:00','16:00','2'),
+	(4,1,5,'16:00','17:00','2'),
+	(5,2,5,'13:00','14:00',NULL),
+	(6,3,7,'17:00','18:00','2'),
+	(7,4,3,'16:00','17:00',NULL),
+	(8,4,4,'16:00','17:00',NULL),
+	(9,4,3,'17:00','18:00',NULL),
+	(10,4,4,'17:00','18:00',NULL),
+	(11,5,1,'10:00','11:00','2'),
+	(12,5,1,'11:00','12:00','2'),
+	(13,5,1,'12:00','13:00','2'),
+	(14,5,1,'13:00','14:00','2'),
+	(15,6,3,'10:00','11:00','2'),
+	(16,6,3,'11:00','12:00','2'),
+	(17,6,3,'12:00','13:00','2'),
+	(18,6,3,'13:00','14:00','2'),
+	(19,7,4,'10:00','11:00','2'),
+	(20,7,4,'11:00','12:00','2'),
+	(21,7,4,'14:00','15:00','2'),
+	(22,7,4,'15:00','16:00','2'),
+	(23,8,5,'12:00','13:00','2'),
+	(24,8,5,'13:00','14:00','2'),
+	(25,9,3,'17:00','18:00','2'),
+	(26,9,4,'17:00','18:00','2'),
+	(27,9,3,'18:00','19:00','2'),
+	(28,9,4,'18:00','19:00','2'),
+	(29,10,2,'09:00','11:00','2'),
+	(30,11,3,'09:00','11:00','2'),
+	(31,12,4,'09:00','11:00','2');
+
+/*!40000 ALTER TABLE `site_reserve_time` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table site_sport
@@ -1052,7 +1259,20 @@ LOCK TABLES `system_role_operator` WRITE;
 INSERT INTO `system_role_operator` (`roleId`, `operatorId`)
 VALUES
 	(1,'admin'),
+	(2,'111743'),
+	(2,'160150'),
+	(2,'279794'),
+	(2,'324104'),
+	(2,'355274'),
+	(2,'443187'),
+	(2,'521978'),
+	(2,'529753'),
 	(2,'576311'),
+	(2,'576961'),
+	(2,'675031'),
+	(2,'855397'),
+	(2,'937609'),
+	(2,'964613'),
 	(4,'lihongxu'),
 	(5,'luanbaoshi'),
 	(6,'liushaochuan');
@@ -1089,7 +1309,8 @@ LOCK TABLES `trains_class` WRITE;
 
 INSERT INTO `trains_class` (`id`, `courseId`, `className`, `classRemark`, `saleId`, `createTime`, `updateTime`, `startTime`, `endTime`, `leaderName`, `leaderPhone`, `leaderMobile`, `address`, `classPrice`)
 VALUES
-	(1,1,'青少年兴趣班','旨在培养青少年对于羽毛球的兴趣爱好；免费的社会服务班级。',13,'2016-12-22 04:24:32','2016-12-22 04:26:34','2016-12-22','2017-01-31','李老师',NULL,'11054343465',NULL,0.00);
+	(1,1,'青少年兴趣班','旨在培养青少年对于羽毛球的兴趣爱好；免费的社会服务班级。',13,'2016-12-22 04:24:32','2016-12-23 12:21:10','2016-12-22','2017-01-31','李老师',NULL,'11054343465',NULL,0.00),
+	(2,2,'高考突击班','为了迎接半年后的体育高考，特此开设突击班，来为学生打捞基础，提高技能。',13,'2016-12-24 21:59:00','2016-12-24 21:59:00','2016-12-25','2016-12-31','周老师',NULL,'15600901111',NULL,999.00);
 
 /*!40000 ALTER TABLE `trains_class` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1120,7 +1341,17 @@ LOCK TABLES `trains_class_students` WRITE;
 
 INSERT INTO `trains_class_students` (`id`, `studentName`, `studentMobile`, `signTime`, `classId`, `remark`, `saleId`, `createTime`, `payStatus`, `payPrice`, `updateTime`)
 VALUES
-	(1,'王晓峰','11087654343','2016-12-22 04:25:04',1,'',13,'2016-12-22 04:25:04','1',0.00,'2016-12-22 04:25:04');
+	(1,'王晓峰','11087654343','2016-12-22 04:25:04',1,'',13,'2016-12-22 04:25:04','1',0.00,'2016-12-22 04:25:04'),
+	(2,'赵涛','15726663822','2016-12-24 22:00:05',1,'',13,'2016-12-24 22:00:05','1',0.00,'2016-12-24 22:00:05'),
+	(3,'张丽红','15611119762','2016-12-24 22:04:16',1,'',13,'2016-12-24 22:04:16','1',0.00,'2016-12-24 22:04:16'),
+	(4,'周子琪','13552830000','2016-12-24 22:04:35',1,'',13,'2016-12-24 22:04:35','1',0.00,'2016-12-24 22:04:35'),
+	(5,'钟维晓','15011113723','2016-12-24 22:05:04',1,'',13,'2016-12-24 22:05:04','1',0.00,'2016-12-24 22:05:04'),
+	(6,'郭玉萍','18801188002','2016-12-24 22:05:51',1,'',13,'2016-12-24 22:05:51','1',0.00,'2016-12-24 22:05:51'),
+	(7,'张婕','18801188011','2016-12-24 22:06:29',1,'',13,'2016-12-24 22:06:29','1',0.00,'2016-12-24 22:06:29'),
+	(8,'古月','13901188882','2016-12-24 22:06:54',1,'',13,'2016-12-24 22:06:54','1',0.00,'2016-12-24 22:06:54'),
+	(9,'步曙光','13901153127','2016-12-24 22:07:09',1,'',13,'2016-12-24 22:07:09','1',0.00,'2016-12-24 22:07:09'),
+	(10,'沙云','15801510835','2016-12-24 22:07:37',1,'',13,'2016-12-24 22:07:37','1',0.00,'2016-12-24 22:07:37'),
+	(11,'单怡怡','15810007302','2016-12-24 22:08:13',1,'',13,'2016-12-24 22:08:13','1',0.00,'2016-12-24 22:08:13');
 
 /*!40000 ALTER TABLE `trains_class_students` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1151,7 +1382,7 @@ INSERT INTO `trains_course` (`id`, `courseName`, `courseNo`, `courseRemark`, `sa
 VALUES
 	(1,'羽毛球','20161217000026','羽毛球是一项隔着球网，使用长柄网状球拍击打平口端扎有一圈羽毛的半球状软木的室内运动。',13,'2016-12-17 00:02:04','2016-12-17 00:46:11',NULL,'1'),
 	(2,'篮球','20161217002238','篮球，是奥运会核心比赛项目，是以手为中心的对抗性体育运动 。',13,'2016-12-17 00:23:27','2016-12-17 11:13:18',NULL,'1'),
-	(3,'乒乓球','20161222042223','乒乓球，中国国球，是一种世界流行的球类体育项目，包括进攻、对抗和防守。',13,'2016-12-22 04:23:03','2016-12-22 04:23:19',NULL,'1');
+	(3,'乒乓球','20161222042223','乒乓球，中国国球，是一种世界流行的球类体育项目，包括进攻、对抗和防守。',13,'2016-12-22 04:23:03','2016-12-23 12:20:56',NULL,'1');
 
 /*!40000 ALTER TABLE `trains_course` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1189,49 +1420,33 @@ LOCK TABLES `user_member` WRITE;
 
 INSERT INTO `user_member` (`memberId`, `operationId`, `memberName`, `memberType`, `memberMobile`, `memberMobile2`, `memberSex`, `memberIdcard`, `memberBirthday`, `memberPayPassword`, `memberStatus`, `memberAddress`, `memberRemark`, `createTime`, `updateTime`, `salesId`, `tempCardNo`, `parentMemberId`)
 VALUES
-	(47,'576311','尚福乐','1','11012345678',NULL,'1','211322198509260317','1985-09-26',NULL,'1','','','2016-12-20 06:12:39',NULL,13,NULL,NULL);
+	(47,'576311','尚福乐','1','13511007182',NULL,'1','211322198509260317','1985-09-26',NULL,'1','','','2016-12-20 06:12:39','2016-12-24 08:58:59',13,NULL,NULL),
+	(48,NULL,'王梓睿',NULL,'13511006317',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2016-12-24 08:59:37','2016-12-24 08:59:37',NULL,NULL,47),
+	(49,NULL,'桂纶镁',NULL,'13511006152',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2016-12-24 09:01:18','2016-12-24 09:01:18',NULL,NULL,47),
+	(50,NULL,'刘德华',NULL,'13511006072',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2016-12-24 09:01:41','2016-12-24 09:01:41',NULL,NULL,47),
+	(51,NULL,'张学友',NULL,'13511005762',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2016-12-24 09:01:53','2016-12-24 09:01:53',NULL,NULL,47),
+	(52,'160150','张丹娜','1','13811513905',NULL,'2','611022198806031527','1988-06-03',NULL,'1','','','2016-12-24 09:03:18',NULL,13,NULL,NULL),
+	(53,'521978','诗诗','1','18710275906',NULL,'2','370126198206248888','1982-06-24',NULL,'1','','','2016-12-24 13:32:11',NULL,13,NULL,NULL),
+	(54,'443187','孙韦迦','1','18701271870',NULL,'2','140224199205219481','1992-05-21',NULL,'1','','','2016-12-24 13:38:33',NULL,13,NULL,NULL),
+	(55,'529753','杨文军','1','18612615130',NULL,'1','330224196702265835','2019-01-24',NULL,'1','','','2016-12-24 20:32:00',NULL,14,NULL,NULL),
+	(56,'937609','俞博文','1','18612615331',NULL,'1','511424198705243134','2020-02-24',NULL,'1','','','2016-12-24 20:33:14',NULL,14,NULL,NULL),
+	(57,'675031','北体高科有限公司','1','18612615370',NULL,'1','511526198106104173','1981-06-10',NULL,'1','','','2016-12-24 20:34:42',NULL,14,NULL,NULL),
+	(58,'576961','欧阳琼格','1','18612703538',NULL,'1','150923197202268311','1972-02-26',NULL,'1','','','2016-12-24 20:36:31',NULL,14,NULL,NULL),
+	(59,'324104','王贺','1','13011117186',NULL,'1','231181197606154944','1976-06-15',NULL,'1','','','2016-12-24 20:44:23',NULL,14,NULL,NULL),
+	(60,'111743','张兰兰','1','13011117369',NULL,'2','150923197202268311','1972-02-26',NULL,'1','','','2016-12-24 20:45:20',NULL,14,NULL,NULL),
+	(61,'279794','李明洋','1','15611118979',NULL,'1','421002197409212003','1974-09-21',NULL,'1','','','2016-12-24 20:46:17',NULL,14,NULL,NULL),
+	(62,NULL,'张晓兰',NULL,'15321567300',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2016-12-24 20:47:26','2016-12-24 20:47:26',NULL,NULL,57),
+	(63,NULL,'王乐乐',NULL,'18010079979',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2016-12-24 20:47:51','2016-12-24 20:47:51',NULL,NULL,57),
+	(64,NULL,'李莉莉',NULL,'13381111132',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2016-12-24 20:48:15','2016-12-24 20:48:15',NULL,NULL,57),
+	(65,NULL,'赵甜甜',NULL,'18310511358',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2016-12-24 20:48:36','2016-12-24 20:48:36',NULL,NULL,57),
+	(66,NULL,'张丽红',NULL,'13321111162',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2016-12-24 20:49:02','2016-12-24 20:49:02',NULL,NULL,57),
+	(67,NULL,'孔祥恩',NULL,'15718880706',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2016-12-24 20:49:35','2016-12-24 20:49:35',NULL,NULL,57),
+	(68,'855397','周斯恩','1','13161629961',NULL,'1','210204197008045252','1970-08-04',NULL,'1','','','2016-12-24 21:39:34',NULL,13,NULL,NULL),
+	(69,'964613','黄天舒','1','17310915976',NULL,'2','150203199512020472','1995-12-02',NULL,'1','','','2016-12-24 21:40:16',NULL,13,NULL,NULL),
+	(70,'355274','葛淑昌','1','15600701111',NULL,'2','411725198910144599','1989-10-14',NULL,'1','','','2016-12-24 21:40:55',NULL,13,NULL,NULL);
 
 /*!40000 ALTER TABLE `user_member` ENABLE KEYS */;
 UNLOCK TABLES;
-
-
-# Dump of table user_notifications
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `user_notifications`;
-
-CREATE TABLE `user_notifications` (
-  `noteId` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `noteTitle` varchar(200) DEFAULT NULL COMMENT '通知标题',
-  `noteContent` varchar(500) DEFAULT NULL COMMENT '通知内容',
-  `noteSender` int(11) DEFAULT NULL COMMENT '通知发件人',
-  `noteReceivers` varchar(200) DEFAULT NULL COMMENT '通知收件人,多个逗号分隔',
-  `noteAttachments` varchar(100) DEFAULT NULL COMMENT '通知附件',
-  `noteSenderStatus` varchar(1) DEFAULT NULL COMMENT '通知发送状态；1，未读；2，已读；3，未发送；4，已删除',
-  `noteReceiverStatus` varchar(1) DEFAULT NULL COMMENT '通知收件状态；1，未读；2，已读；3，已删除',
-  `noteCreateTime` varchar(20) DEFAULT NULL COMMENT '通知创建时间',
-  `noteSendTime` varchar(20) DEFAULT NULL COMMENT '通知发送时间',
-  `noteUpdateTime` varchar(20) DEFAULT NULL COMMENT '通知更新时间',
-  `noteReadTime` varchar(20) DEFAULT NULL COMMENT '通知阅读时间',
-  PRIMARY KEY (`noteId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
-# Dump of table user_notifications_attachments
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `user_notifications_attachments`;
-
-CREATE TABLE `user_notifications_attachments` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `attachmentsUrl` varchar(100) DEFAULT NULL COMMENT '附件地址',
-  `attachmentsType` varchar(30) DEFAULT NULL COMMENT '附件类型',
-  `uploadTime` varchar(20) DEFAULT NULL COMMENT '上传时间',
-  `attachmentsStatus` varchar(1) DEFAULT NULL COMMENT '附件状态：1，正常 2，已删除',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 
 # Dump of table user_operator
@@ -1266,11 +1481,24 @@ LOCK TABLES `user_operator` WRITE;
 
 INSERT INTO `user_operator` (`id`, `operatorId`, `operatorName`, `operatorPwd`, `operatorMobile`, `status`, `createTime`, `updateTime`, `lastLoginTime`, `operatorNo`, `operatorEffectDate`, `operatorEndDate`, `operatorBirthday`, `operatorContact`, `operatorAddress`, `operatorSex`)
 VALUES
-	(13,'admin','王军','q123456','11012345678','1','2016-11-17 10:37:53','2016-11-17 11:00:40','2016-12-22 04:17:56','u00000',NULL,NULL,'2016-11-01',NULL,'测测测测V如果让他更让他回合肥规范和风格和风格和符合规范化','1'),
-	(14,'lihongxu','李洪旭','q123456','11054353422','1','2016-11-17 15:58:58',NULL,NULL,'u00001','2016-11-17','2016-11-30','2016-11-01','李洪旭','和而非开发商就分手的分布式的','1'),
+	(13,'admin','王军','q123456','11012345678','1','2016-11-17 10:37:53','2016-11-17 11:00:40','2016-12-24 23:59:13','u00000',NULL,NULL,'2016-11-01',NULL,'测测测测V如果让他更让他回合肥规范和风格和风格和符合规范化','1'),
+	(14,'lihongxu','李洪旭','q123456','11054353422','1','2016-11-17 15:58:58',NULL,'2016-12-24 18:12:30','u00001','2016-11-17','2016-11-30','2016-11-01','李洪旭','和而非开发商就分手的分布式的','1'),
 	(15,'luanbaoshi','栾宝石','q123456','11097384343','1','2016-11-17 16:03:54',NULL,NULL,'u00002','2016-11-17','2016-12-31','2016-11-01','栾宝石','的所发生的格瑞特二万多问问','1'),
 	(37,'liushaochuan','刘少川','q123456','11012345678','1','2016-12-12 12:58:13',NULL,'2016-12-12 13:00:42','u00003','2016-12-12','2017-03-31','2016-12-01','刘少川','的所发生的格瑞特二万多问问','1'),
-	(49,'576311','尚福乐','123456','11012345678','1','2016-12-20 06:12:39',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+	(49,'576311','尚福乐','123456','13511007182','1','2016-12-20 06:12:39',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+	(50,'160150','张丹娜','123456','13811513905','1','2016-12-24 09:03:18',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+	(51,'521978','诗诗','123456','18710275906','1','2016-12-24 13:32:11',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+	(52,'443187','孙韦迦','123456','18701271870','1','2016-12-24 13:38:33',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+	(53,'529753','杨文军','123456','18612615130','1','2016-12-24 20:32:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+	(54,'937609','俞博文','123456','18612615331','1','2016-12-24 20:33:14',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+	(55,'675031','北体高科有限公司','123456','18612615370','1','2016-12-24 20:34:42',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+	(56,'576961','欧阳琼格','123456','18612703538','1','2016-12-24 20:36:31',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+	(57,'324104','王贺','123456','13011117186','1','2016-12-24 20:44:23',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+	(58,'111743','张兰兰','123456','13011117369','1','2016-12-24 20:45:20',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+	(59,'279794','李明洋','123456','15611118979','1','2016-12-24 20:46:17',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+	(60,'855397','周斯恩','123456','13161629961','1','2016-12-24 21:39:34',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+	(61,'964613','黄天舒','123456','17310915976','1','2016-12-24 21:40:16',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+	(62,'355274','葛淑昌','123456','15600701111','1','2016-12-24 21:40:55',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `user_operator` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1309,6 +1537,26 @@ CREATE TABLE `user_scheduling` (
   PRIMARY KEY (`schedulingId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='排班表';
 
+LOCK TABLES `user_scheduling` WRITE;
+/*!40000 ALTER TABLE `user_scheduling` DISABLE KEYS */;
+
+INSERT INTO `user_scheduling` (`schedulingId`, `operatorId`, `date`, `startTime`, `endTime`, `schedulingJob`, `createTime`, `updateTime`, `salesId`)
+VALUES
+	(1,'lihongxu','2016-12-24','18:00','22:00','财务核对账单','2016-12-24 17:22:45',NULL,13),
+	(2,'luanbaoshi','2016-12-24','06:00','12:00','日常工作','2016-12-24 17:24:32',NULL,13),
+	(3,'liushaochuan','2016-12-24','12:00','18:00','接待客户','2016-12-24 17:25:14',NULL,13),
+	(4,'liushaochuan','2016-12-25','06:00','12:00','日常工作','2016-12-24 17:26:01',NULL,13),
+	(5,'luanbaoshi','2016-12-25','12:00','18:00','','2016-12-24 17:26:46',NULL,13),
+	(6,'lihongxu','2016-12-25','16:00','22:00','财务核对账单','2016-12-24 17:27:15','2016-12-24 21:56:58',13),
+	(7,'lihongxu','2016-12-26','18:00','22:00','财务核对账单','2016-12-24 17:22:45',NULL,13),
+	(8,'luanbaoshi','2016-12-26','06:00','12:00','日常工作','2016-12-24 17:24:32',NULL,13),
+	(9,'liushaochuan','2016-12-26','11:00','18:00','接待客户','2016-12-24 17:25:14','2016-12-24 21:55:55',13),
+	(10,'liushaochuan','2016-12-27','06:00','14:00','日常工作','2016-12-24 17:26:01','2016-12-24 21:56:30',13),
+	(11,'luanbaoshi','2016-12-27','12:00','18:00','','2016-12-24 17:26:46',NULL,13),
+	(12,'lihongxu','2016-12-27','18:00','22:00','财务核对账单','2016-12-24 17:27:15',NULL,13);
+
+/*!40000 ALTER TABLE `user_scheduling` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table user_student
@@ -1334,6 +1582,17 @@ CREATE TABLE `user_student` (
   PRIMARY KEY (`studentId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='学生表';
 
+LOCK TABLES `user_student` WRITE;
+/*!40000 ALTER TABLE `user_student` DISABLE KEYS */;
+
+INSERT INTO `user_student` (`studentId`, `cardId`, `studentName`, `studentGrade`, `studentClass`, `studentMobile`, `siteCount`, `studentSex`, `studentStatus`, `studentAddress`, `studentRemark`, `createTime`, `updateTime`, `salesId`)
+VALUES
+	(1,44,'赵晓军','2014','01','15510201111',0,'1','1','','','2016-12-24 21:41:54',NULL,13),
+	(2,45,'于世芬','2014','01','15726665239',0,'2','1','','','2016-12-24 21:51:53',NULL,13),
+	(3,46,'董敏','2014','01','13126896668',0,'2','1','','','2016-12-24 21:52:27',NULL,13);
+
+/*!40000 ALTER TABLE `user_student` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 

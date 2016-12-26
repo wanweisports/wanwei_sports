@@ -34,11 +34,12 @@
                             }
                             return json;
                         } else {
-                            alert('没有搜索到会员');
+                            $.tipsWarningAlert('没有搜索到会员');
                             return [];
                         }
                     } else {
-                        alert('搜索会员失败, 请稍后重试');
+                        $.logConsole('搜索会员失败', res.message);
+                        $.tipsWarningAlert('搜索会员失败');
                         return [];
                     }
                 },
@@ -69,10 +70,11 @@
                             location.assign('/member/getMembersCardRecharge?cardNo='
                                 + data.members[0].cardNo);
                         } else {
-                            alert('没有搜索到会员');
+                            $.tipsWarningAlert('没有搜索到会员');
                         }
                     } else {
-                        alert('搜索会员失败, 请稍后重试');
+                        $.logConsole('搜索会员失败', res.message);
+                        $.tipsWarningAlert('搜索会员失败');
                     }
                 });
             });
@@ -92,7 +94,7 @@
                 var conditions = $form.serialize();
 
                 if ($("#recharge_cardId").val() === "") {
-                    alert("请先选择会员卡");
+                    $.tipsWarningAlert('请先选择会员卡');
                     return false;
                 }
 
@@ -105,21 +107,18 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $("#rechargeModal").modal({backdrop: false, show: true});
-                        setTimeout(function () {
-                            $("#rechargeModal").modal("hide");
+                        $("#invoice_confirm_modal").modal({backdrop: false, show: true});
 
-                            $("#invoice_confirm_modal").modal({backdrop: false, show: true});
-                            $.each(res.data, function(key, item){
-                                $("#member_card_ticket_form").find("input[name='" + key + "']").val(item);
-                            });
-                            $("#member_card_ticket_form").find("#ticket_header").val($("#member_name").val());
-                            $("#member_card_ticket_form").find("#ticket_money").val($("#recharge_money").val());
-                            $("#member_card_ticket_form").find("#ticket_content").val("会员卡充值");
-                        }, 3000);
+                        $.each(res.data, function(key, item){
+                            $("#member_card_ticket_form").find("input[name='" + key + "']").val(item);
+                        });
+                        $("#member_card_ticket_form").find("#ticket_header").val('');
+                        $("#member_card_ticket_form").find("#ticket_money").val('');
+                        $("#member_card_ticket_form").find("#ticket_content").val('');
+                        $("#member_card_ticket_form").find("#invoice_no").val(res.data.balanceNo);
                     } else {
-                        console.log(res.message || "会员充值失败, 请稍后重试");
-                        alert(res.message || "会员充值失败, 请稍后重试");
+                        $.logConsole('会员充值失败', res.message);
+                        $.tipsWarningAlert('会员充值失败');
                     }
                 });
             });
@@ -166,9 +165,23 @@
                         location.reload();
                         $("#invoice_confirm_modal").modal("hide");
                     } else {
-                        alert(res.message || "发票登记失败, 请稍后重试");
+                        $.logConsole('发票登记失败', res.message);
+                        $.tipsWarningAlert('发票登记失败');
                     }
                 });
+            });
+
+            // 支付方式改变
+            $("#recharge_type").on("change", function (e) {
+                e.preventDefault();
+
+                var $this = $(this);
+
+                if ($this.val() == 5) {
+                    $(".recharge-check-no").show();
+                } else {
+                    $(".recharge-check-no").hide();
+                }
             });
         }
     };

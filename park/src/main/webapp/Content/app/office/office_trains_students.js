@@ -5,11 +5,9 @@
         },
         initEvents: function () {
             function setTrainsStudentsInfo(data) {
-                $("#student_sign_modal").find("#students_class_id").val(data.id || '');
                 $("#student_sign_modal").find("#students_sign_name").val(data.studentName || '');
                 $("#student_sign_modal").find("#students_contact_phone").val(data.studentMobile || '');
                 $("#student_sign_modal").find("#trains_sign_desc").val(data.remark || '');
-                $("#student_sign_modal").find("#students_class_price").val(data.payPrice || '0');
                 if (data.payStatus == 2) {
                     $("#student_sign_modal").find("#students_pay_status2").prop("checked", true);
                 } else {

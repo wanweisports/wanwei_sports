@@ -1,13 +1,19 @@
 package com.park.controller;
 
 import com.park.common.annotation.NotProtected;
+import com.park.common.bean.PageBean;
 import com.park.common.bean.ResponseBean;
+import com.park.common.bean.TrainsClassInputView;
+import com.park.common.bean.TrainsClassStudentsInputView;
 import com.park.common.constant.IDBConstant;
 import com.park.common.constant.IPlatformConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.UserOperator;
+import com.park.common.util.JsonUtils;
 import com.park.common.util.StrUtil;
 import com.park.service.IOperatorService;
+import com.park.service.ITrainsClassService;
+import com.park.service.ITrainsClassStudentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +30,12 @@ public class MobileController extends BaseController {
 
     @Autowired
     private IOperatorService operatorService;
+
+    @Autowired
+    private ITrainsClassService trainsClassService;
+
+    @Autowired
+    private ITrainsClassStudentsService trainsClassStudentsService;
 
     // 用户登录
     @NotProtected
@@ -124,14 +136,37 @@ public class MobileController extends BaseController {
     public String renderTrainingSignUp() {
         return "Mobile/Training/TrainingSignUp";
     }
+
     // 报名课程列表
     @RequestMapping("training/list")
-    public String renderTrainingList() {
+    public String renderTrainingList(TrainsClassInputView trainsClassInputView, Model model) {
+        try {
+            UserOperator userInfo = super.getUserInfo();
+            trainsClassInputView.setSaleId(userInfo.getId());
+            model.addAllAttributes(JsonUtils.fromJsonDF(trainsClassInputView));
+            PageBean pageBean = trainsClassService.getTrainsClassList(trainsClassInputView);
+            super.setPageInfo(model, pageBean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return "Mobile/Training/TrainingList";
     }
+
     // 报名人数列表
     @RequestMapping("training/students")
-    public String renderTrainingStudents() {
+    public String renderTrainingStudents(TrainsClassStudentsInputView trainsClassStudentsInputView, Model model) {
+        try {
+            UserOperator userInfo = super.getUserInfo();
+            trainsClassStudentsInputView.setSaleId(userInfo.getId());
+            model.addAllAttributes(JsonUtils.fromJsonDF(trainsClassStudentsInputView));
+            model.addAttribute("classInfo", trainsClassService.getTrainsClassInfo(trainsClassStudentsInputView.getClassId()));
+            PageBean pageBean = trainsClassStudentsService.getTrainsClassStudentsList(trainsClassStudentsInputView);
+            super.setPageInfo(model, pageBean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return "Mobile/Training/TrainingStudents";
     }
 }
