@@ -1,8 +1,5 @@
 package com.park.controller;
 
-import com.park.common.bean.NotificationsSendersInputView;
-import com.park.common.bean.NotificationsReceiversInputView;
-import com.park.common.bean.PageBean;
 import com.park.service.INotificationsService;
 import com.park.service.IParkService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -15,11 +15,23 @@
         var date = moment();
         $(".top-header-date").text(date.format("今天是YYYY年MM月DD日 ") + weeks[date.format("e")]);
 
+        // 获取用户信息
         $.post('/passport/getUserProfile', function (res) {
             var data = res.data;
 
             if (res.code == 1) {
                 $(".top-menu-username").text(data.user.operatorName);
+            }
+        });
+
+        // 获取未读信息条数
+        $.post('/office/getNotReadMessageCount', function (res) {
+            var data = res.data;
+
+            if (res.code == 1 && data.count > 0) {
+                $(".unread-message-count").text(data.count).show();
+            } else {
+                $(".unread-message-count").hide();
             }
         });
     }
@@ -43,12 +55,17 @@
         }, 3000);
     };
 
-    $.tipsSuccessAlert = function (message) {
+    $.tipsSuccessAlert = function (message, callback) {
+        if (!callback) {
+            callback = new Function();
+        }
+
         $("#tips_success_modal").modal({show: true, backdrop: false}).find(".tips-content").text(message);
 
         var timeout = setTimeout(function () {
             $("#tips_success_modal").modal("hide");
             clearTimeout(timeout);
+            callback();
         }, 3000);
     };
 

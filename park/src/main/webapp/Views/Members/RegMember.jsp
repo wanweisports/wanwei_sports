@@ -47,7 +47,7 @@
                                            placeholder="会员卡号" value="${cardNo}"
                                            data-val="true" data-val-required="会员卡号不能为空">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-warning">
+                                        <button class="btn btn-warning member-card-read">
                                             <i class="glyphicon glyphicon-transfer"></i> 读取
                                         </button>
                                     </span>

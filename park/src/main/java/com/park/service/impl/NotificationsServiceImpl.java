@@ -9,7 +9,6 @@ import com.park.common.po.*;
 import com.park.common.util.*;
 import com.park.dao.IBaseDao;
 import com.park.service.INotificationsService;
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -78,7 +77,7 @@ public class NotificationsServiceImpl extends BaseService implements INotificati
         whereSql.append(" ORDER BY ni.sendTime DESC");
 		return super.getPageBean(headSql, bodySql, whereSql, notificationsReceiversInputView);
 	}
-	
+
 	@Override
 	public NotificationsSenders getNotificationInfo(int noteId) {
 		return baseDao.getToEvict(NotificationsSenders.class, noteId);

@@ -146,7 +146,7 @@
                     <tr class="timing-header">
                         <td></td>
                         <c:forEach var="site" items="${sites}" varStatus="loop">
-                            <td data-id="${site.siteId}" data-col="${loop.index}">${site.siteName}</td>
+                            <td data-id="${site.siteId}" data-col="${loop.index + 1}">${site.siteName}</td>
                         </c:forEach>
                     </tr>
                     <c:forEach var="time" items="${timePeriod}" varStatus="row">

@@ -64,6 +64,11 @@
                     }
                 });
             });
+
+            // 读取卡信息
+            $(".member-card-read").on("click", function (e) {
+                e.preventDefault();
+            });
         }
     };
 

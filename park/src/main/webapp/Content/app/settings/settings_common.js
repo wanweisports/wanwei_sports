@@ -12,16 +12,14 @@
             $('#start_time').datetimepicker({
                 datepicker: false,
                 format: "H:i",
-                step: 60,
-                value: '06:00'
+                step: 60
             });
 
             // 营业结束时间
             $('#end_time').datetimepicker({
                 datepicker: false,
                 format: "H:i",
-                step: 60,
-                value: '22:00'
+                step: 60
             });
         },
         initEvents: function () {
@@ -41,14 +39,12 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $("#tips_success_modal").modal({show: true, backdrop: false});
-                        setTimeout(function () {
-                            $("#tips_success_modal").modal("hide");
+                        $.tipsSuccessAlert('场馆基础信息设置成功！', function () {
                             location.reload();
-                        }, 3000);
+                        });
                     } else {
-                        console.log(res.message || "场馆基础信息设置失败, 请稍后重试");
-                        alert(res.message || "场馆基础信息设置失败, 请稍后重试");
+                        $.logConsole('场馆基础信息设置失败', res.message);
+                        $.tipsWarningAlert('场馆基础信息设置失败');
                     }
                 });
             });

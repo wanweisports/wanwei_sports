@@ -175,6 +175,30 @@ public class OfficeController extends BaseController {
         return "Office/OfficeMessage";
     }
 
+    // 获取未读消息条数
+    @ResponseBody
+    @RequestMapping(value = "getNotReadMessageCount", method = RequestMethod.POST)
+    public ResponseBean getNotReadMessageCount() {
+        try {
+            NotificationsReceiversInputView notificationsReceiversInputView = new NotificationsReceiversInputView();
+            UserOperator userInfo = super.getUserInfo();
+            notificationsReceiversInputView.setReceiverId(userInfo.getId());
+            notificationsReceiversInputView.setType(IDBConstant.NOTIFICATIONS_TYPE_RECEIVE_UNREAD);
+            notificationsReceiversInputView.setReceiverStatus(IDBConstant.NOTIFICATIONS_RECEIVER_NO);
+
+            PageBean unreadMessage = notificationsService.getNotificationsByReceiver(notificationsReceiversInputView);
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("count", unreadMessage.getCount() * unreadMessage.getPageSize());
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
     // 通知管理标记发送
     @ResponseBody
     @RequestMapping(value = "markNotificationRead", method = RequestMethod.POST)

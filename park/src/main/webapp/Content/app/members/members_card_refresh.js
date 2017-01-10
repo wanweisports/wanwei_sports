@@ -10,7 +10,8 @@
                 if (res.code == 1) {
                     $("#newCardNo").val(data.newCardNo);
                 } else {
-                    alert(res.message || "新会员卡号生成失败, 请稍后重试");
+                    $.logConsole('生成新会员卡号失败', res.message);
+                    $.tipsWarningAlert('生成新会员卡号失败');
                 }
             });
         },
@@ -45,11 +46,12 @@
                             }
                             return json;
                         } else {
-                            alert('没有搜索到会员');
+                            $.tipsWarningAlert('没有搜索到会员');
                             return [];
                         }
                     } else {
-                        alert('搜索会员失败, 请稍后重试');
+                        $.logConsole('搜索会员失败', res.message);
+                        $.tipsWarningAlert('搜索会员失败');
                         return [];
                     }
                 },
@@ -80,10 +82,11 @@
                             location.assign('/member/getMembersCardRefresh?cardNo='
                                 + data.members[0].cardNo);
                         } else {
-                            alert('没有搜索到会员');
+                            $.tipsWarningAlert('没有搜索到会员');
                         }
                     } else {
-                        alert('搜索会员失败, 请稍后重试');
+                        $.logConsole('搜索会员失败', res.message);
+                        $.tipsWarningAlert('搜索会员失败');
                     }
                 });
             });
@@ -103,7 +106,7 @@
                 var conditions = $form.serialize();
 
                 if ($("#refresh_cardId").val() === "") {
-                    alert("请先选择会员卡");
+                    $.tipsWarningAlert('请先选择会员卡');
                     return false;
                 }
 
@@ -122,8 +125,8 @@
                             location.assign('/member/getMembersCardRefresh?cardNo=' + $("#newCardNo").val());
                         }, 3000);
                     } else {
-                        console.log(res.message || "会员补办失败, 请稍后重试");
-                        alert(res.message || "会员补办失败, 请稍后重试");
+                        $.logConsole('会员补办失败', res.message);
+                        $.tipsWarningAlert('会员补办失败');
                     }
                 });
             });

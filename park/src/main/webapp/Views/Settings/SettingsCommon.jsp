@@ -115,7 +115,7 @@
                                        placeholder="请输入营业开始时间" autocomplete="off" value="${businessStartTime}"
                                        data-val="true" data-val-required="营业开始时间不能为空"
                                        data-val-regex-pattern="^(([0-1]\d)|(2[0-3])):[0-5]\d$"
-                                       data-val-regex="营业开始时间格式错误">
+                                       data-val-regex="营业开始时间格式错误" maxlength="5">
 
                                 <div data-valmsg-for="businessStartTime" data-valmsg-replace="true"></div>
                             </div>
@@ -132,7 +132,7 @@
                                        placeholder="请输入营业结束时间" autocomplete="off" value="${businessEndTime}"
                                        data-val="true" data-val-required="营业结束时间不能为空"
                                        data-val-regex-pattern="^(([0-1]\d)|(2[0-3])):[0-5]\d$"
-                                       data-val-regex="营业结束时间格式错误">
+                                       data-val-regex="营业结束时间格式错误" maxlength="5">
 
                                 <div data-valmsg-for="businessEndTime" data-valmsg-replace="true"></div>
                             </div>
@@ -159,12 +159,12 @@
                                 <span class="text-danger">*</span> 联系电话
                             </label>
 
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="site_phone" name="businessPhone"
+                            <div class="col-sm-8 input-parent-magnifier">
+                                <input type="text" class="form-control input-element-magnifier" id="site_phone" name="businessPhone"
                                        placeholder="请输入联系电话" autocomplete="off" value="${businessPhone}"
                                        data-val="true" data-val-required="联系电话不能为空"
-                                       data-val-regex-pattern="^110\d{8}$"
-                                       data-val-regex="联系人格式错误">
+                                       data-val-regex-pattern="^1\d{10}$"
+                                       data-val-regex="联系电话格式错误" maxlength="11">
 
                                 <div data-valmsg-for="businessPhone" data-valmsg-replace="true"></div>
                             </div>
@@ -195,23 +195,6 @@
                         </div>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="tips_success_modal" tabindex="-1" role="dialog"
-         aria-labelledby="tips_success_modal_label">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="tips_success_modal_label">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-success" role="alert">场馆基础信息设置成功!</div>
-                </div>
             </div>
         </div>
     </div>

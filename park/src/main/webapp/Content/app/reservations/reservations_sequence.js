@@ -767,9 +767,10 @@
         },
         queryMemberBalance: function (memberId) {
             if (!memberId) {
-                $('#reservations_paid_balance').val("0.00");
+                $('#reservations_paid_balance').val("0.00").parents(".form-group").hide();
                 return;
             }
+            $('#reservations_paid_balance').parents(".form-group").show();
 
             $.post('/member/memberDetail', {memberId: memberId}, function (res) {
                 var data = res.data;
