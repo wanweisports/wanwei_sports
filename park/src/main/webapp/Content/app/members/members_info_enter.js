@@ -40,6 +40,8 @@
             $(".register-member").on("click", function (e) {
                 e.preventDefault();
 
+                var $btn = $(this).button('loading');
+
                 var $form = $("#member_form");
                 var conditions = $form.serialize();
 
@@ -49,25 +51,20 @@
                 $form.attr("submitting", "submitting");
 
                 $.post('member/saveMember', conditions, function (res) {
-                    var data = res.data;
-
                     $form.attr("submitting", "");
 
+                    var data = res.data;
                     if (res.code == 1) {
-                        $("#tips_modal").modal({backdrop: false, show: true});
-                        setTimeout(function () {
-                            $("#tips_modal").modal("hide");
+                        $.tipsSuccessAlert('会员信息保存成功！', function () {
                             location.assign(content.opts.ToURL + '?memberId=' + data.memberId);
-                        }, 3000);
+                        });
                     } else {
-                        alert(res.message || "会员信息保存失败, 请稍后重试");
+                        $.logConsole('会员信息保存失败', res.message);
+                        $.tipsWarningAlert('会员信息保存失败');
                     }
-                });
-            });
 
-            // 读取卡信息
-            $(".member-card-read").on("click", function (e) {
-                e.preventDefault();
+                    $btn.button('reset');
+                });
             });
         }
     };
