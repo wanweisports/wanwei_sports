@@ -10,6 +10,8 @@
     $(".login-btn").on("click", function (e) {
         e.preventDefault();
 
+        var $btn = $(this).button('loading');
+
         var $form = $("#login_form");
         var conditions = $form.serialize();
 
@@ -20,6 +22,7 @@
 
         $.post('/passport/submitUserLogin', conditions, function (res) {
             $form.attr("submitting", "");
+            $btn.button('reset');
 
             if (res.code == 1) {
                 location.assign($('[name="return_url"]').val());
