@@ -90,6 +90,8 @@
             $(".recharge-card-submit").on("click", function (e) {
                 e.preventDefault();
 
+                var $btn = $(this).button('loading');
+
                 var $form = $("#recharge_card_form");
                 var conditions = $form.serialize();
 
@@ -107,6 +109,8 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
+                        // 打印收款单 [未完成] 连接小票机
+
                         $("#invoice_confirm_modal").modal({backdrop: false, show: true});
 
                         $.each(res.data, function(key, item){
@@ -120,6 +124,8 @@
                         $.logConsole('会员充值失败', res.message);
                         $.tipsWarningAlert('会员充值失败');
                     }
+
+                    $btn.button('reset');
                 });
             });
 

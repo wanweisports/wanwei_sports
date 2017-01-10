@@ -3,17 +3,19 @@
         init: function () {
             this.initEvents();
 
-            // 生成新会员卡号
-            $.post('/member/getNewCardNo', function (res) {
+            this.getNewCardNo();
+        },
+        getNewCardNo: function () {
+            // 生成新卡号
+            $.post('member/getNewCardNo', function (res) {
                 var data = res.data;
-
                 if (res.code == 1) {
                     $("#newCardNo").val(data.newCardNo);
                 } else {
-                    $.logConsole('生成新会员卡号失败', res.message);
-                    $.tipsWarningAlert('生成新会员卡号失败');
+                    $.logConsole('新会员卡号生成失败', res.message);
+                    $.tipsWarningAlert('新会员卡号生成失败');
                 }
-            });
+            }, 'json');
         },
         calculateRefreshMoney: function () {
             var $money = $("#refresh_money");
@@ -102,6 +104,8 @@
             $(".refresh-card-submit").on("click", function (e) {
                 e.preventDefault();
 
+                var $btn = $(this).button('loading');
+
                 var $form = $("#refresh_card_form");
                 var conditions = $form.serialize();
 
@@ -119,15 +123,14 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $("#refreshModal").modal({backdrop: false, show: true});
-                        setTimeout(function () {
-                            $("#refreshModal").modal("hide");
-                            location.assign('/member/getMembersCardRefresh?cardNo=' + $("#newCardNo").val());
-                        }, 3000);
+                        // 打印收款单 [未完成] 连接小票机
+                        location.reload();
                     } else {
                         $.logConsole('会员补办失败', res.message);
                         $.tipsWarningAlert('会员补办失败');
                     }
+
+                    $btn.button('reset');
                 });
             });
         }

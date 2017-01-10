@@ -78,9 +78,16 @@
                                 <div class="input-group">
                                     <input type="text" class="form-control" value="<c:if test='${cardBalance!=null}'>${cardBalance}元</c:if>" disabled>
                                     <span class="input-group-btn">
+                                        <c:if test="${cardNo != null}">
                                         <a class="btn btn-primary" href="/member/getBalances?cardId=${cardId}&memberId=${memberId}">
                                             <i class="glyphicon glyphicon-th-list"></i> 明细
                                         </a>
+                                        </c:if>
+                                        <c:if test="${cardNo == null}">
+                                        <a class="btn btn-default" href="javascript:;">
+                                            <i class="glyphicon glyphicon-th-list"></i> 明细
+                                        </a>
+                                        </c:if>
                                     </span>
                                 </div>
                             </div>
@@ -156,16 +163,9 @@
                             <label class="col-sm-4 control-label">新的卡号</label>
 
                             <div class="col-sm-8">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="newCardNo" name="newCardNo"
-                                           placeholder="新会员卡号" autocomplete="off"
-                                           data-val="true" data-val-required="新会员卡号不能为空">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-warning">
-                                            <i class="glyphicon glyphicon-transfer"></i> 读取
-                                        </button>
-                                    </span>
-                                </div>
+                                <input type="text" class="form-control" id="newCardNo" name="newCardNo"
+                                       placeholder="新会员卡号" autocomplete="off"
+                                       data-val="true" data-val-required="新会员卡号不能为空" readonly>
                                 <div data-valmsg-for="newCardNo" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -192,22 +192,6 @@
                         </div>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="refreshModal" tabindex="-1" role="dialog" aria-labelledby="refreshModalLabel">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="refreshModalLabel">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-success" role="alert">会员卡补办成功!</div>
-                </div>
             </div>
         </div>
     </div>
