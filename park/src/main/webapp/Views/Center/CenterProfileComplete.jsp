@@ -66,7 +66,9 @@
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="user_birthday" name="operatorBirthday"
                                            data-val="true" data-val-required="生日不能为空" placeholder="生日"
-                                           value="${operatorBirthday}">
+                                           value="${operatorBirthday}"
+                                           data-val-regex-pattern="^\d{4}-\d{2}-\d{2}$"
+                                           data-val-regex="联系电话格式错误" maxlength="10">
                                     <span class="input-group-addon user-birthday-select">
                                         <i class="glyphicon glyphicon-calendar"></i>
                                     </span>
