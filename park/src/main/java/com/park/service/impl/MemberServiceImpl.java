@@ -625,12 +625,17 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		}
 		return 100;
 	}
-	
+
+	// type 1会员 2教师 3学生  10位数字1-3-3-3
 	@Override
-	public String getCardNo() {
+	public String getCardNo(int type) {
 		do {
 			StringBuffer no = new StringBuffer();
-			for(int i = 0; i < 6; i++){
+            no.append(type);
+			for(int i = 0; i < 9; i++){
+                if (i % 3 == 0) {
+                    no.append('-');
+                }
 				no.append((int)(Math.random()*10));
 			}
 			if(availableCardNo(no.toString())) return no.toString(); 

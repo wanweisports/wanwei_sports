@@ -47,8 +47,8 @@ public class MemberController extends BaseController {
      */
     @RequestMapping("regMember")
 	public String toRegMember(Model model) {
-		model.addAttribute("cardNo", memberService.getCardNo()); //注册会员之前，生成会员号
-		return "Members/RegMember";
+		model.addAttribute("cardNo", memberService.getCardNo(1)); //注册会员之前，生成会员号
+		return "Members/MembersEnter";
 	}
 
     /**
@@ -431,7 +431,7 @@ public class MemberController extends BaseController {
     public ResponseBean getNewCardNo(Model model) {
         try {
             Map<String, Object> data = new HashMap<String, Object>();
-            data.put("newCardNo", memberService.getCardNo());
+            data.put("newCardNo", memberService.getCardNo(1));
             return new ResponseBean(data);
         } catch (MessageException e) {
             e.printStackTrace();

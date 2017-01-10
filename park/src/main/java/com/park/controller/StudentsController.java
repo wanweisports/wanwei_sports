@@ -38,7 +38,7 @@ public class StudentsController extends BaseController {
     // 学生注册
     @RequestMapping("register")
     public String studentsRegister(Model model) {
-    	model.addAttribute("cardNo", memberService.getCardNo());
+    	model.addAttribute("cardNo", memberService.getCardNo(3));
     	model.addAllAttributes(studentService.getCardDeposit(StrUtil.objToInt(IDBConstant.CARD_STUDENT)));
         return "Students/StudentsCreate";
     }

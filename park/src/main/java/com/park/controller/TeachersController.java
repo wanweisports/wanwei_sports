@@ -32,7 +32,7 @@ public class TeachersController extends BaseController {
     // 教师注册
     @RequestMapping("register")
     public String teachersRegister(Model model) {
-        model.addAttribute("cardNo", memberService.getCardNo()); //注册会员之前，生成会员号
+        model.addAttribute("cardNo", memberService.getCardNo(2)); //注册会员之前，生成会员号
         return "Teachers/TeachersCreate";
     }
 
