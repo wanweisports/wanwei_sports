@@ -7,8 +7,7 @@
             $('#user_birthday').datetimepicker({
                 timepicker: false,
                 lang: "zh",
-                format:'Y-m-d',
-                maxDate: 0
+                format:'Y-m-d'
             });
 
             $(".user-birthday-select").on("click", function (e) {
@@ -24,6 +23,8 @@
             $(".profile-submit").on("click", function (e) {
                 e.preventDefault();
 
+                var $btn = $(this).button('loading');
+
                 var $form = $("#center_form");
                 var conditions = $form.serialize();
 
@@ -34,15 +35,15 @@
 
                 $.post('passport/updateProfile', conditions, function (res) {
                     $form.attr("submitting", "");
+                    $btn.button('reset');
 
                     if (res.code == 1) {
-                        $("#tips_modal").modal({show: true, backdrop: false});
-                        setTimeout(function () {
-                            $("#tips_modal").modal("hide");
-                        }, 3000);
+                        $.tipsSuccessAlert('完善信息成功！', function () {
+                            location.reload();
+                        });
                     } else {
-                        console.log(res.message || "完善信息保存失败, 请稍后重试");
-                        alert(res.message || "完善信息保存失败, 请稍后重试");
+                        $.logConsole('完善信息失败', res.message);
+                        $.tipsWarningAlert('完善信息失败');
                     }
                 });
             });
