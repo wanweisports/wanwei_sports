@@ -81,14 +81,14 @@ public class MemberController extends BaseController {
      * @param model
      * @return
      */
-    @RequestMapping("membersInfoCar")
+    @RequestMapping("bindMembersCard")
 	public String toMembersInfoCar(Integer memberId, Model model) {
 		Map<String, Object> regMember = memberService.getRegMember(memberId);
 		model.addAllAttributes(regMember);
 		MemberInputView memberInputView = new  MemberInputView();
 		memberInputView.setCardType(regMember.get("memberType").toString());
 		model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(memberInputView));
-		return "Members/MembersInfoCar";
+		return "Members/MembersCardBind";
 	}
 
     /**

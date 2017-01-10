@@ -20,14 +20,14 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>会员管理</span> &gt;&gt; <span>会员绑卡充值</span>
+    当前位置: <span>会员管理</span> &gt;&gt; <span>会员绑卡</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <form id="member_form" class="form-horizontal" novalidate onsubmit="return false;">
             <div class="panel panel-default">
-                <div class="panel-heading">会员绑卡充值</div>
+                <div class="panel-heading">会员绑卡</div>
                 <div class="panel-body">
                     <input type="hidden" id="member_id" name="memberId" value="${memberId}">
                     <div class="col-sm-6">
@@ -46,12 +46,12 @@
                                 <span class="text-danger">*</span> 手机号码
                             </label>
 
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="member_mobile" name="memberMobile"
-                                       placeholder="请输入手机号码" autocomplete="off"
+                            <div class="col-sm-8 input-parent-magnifier">
+                                <input type="text" class="form-control input-element-magnifier" id="member_mobile"
+                                       name="memberMobile" placeholder="请输入手机号码" autocomplete="off"
                                        data-val="true" data-val-required="手机号码不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
-                                       data-val-regex="手机号码格式错误" value="${memberMobile}">
+                                       data-val-regex="手机号码格式错误" value="${memberMobile}" maxlength="11">
                                 <div data-valmsg-for="memberMobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -73,7 +73,8 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
-                                <button type="button" class="btn btn-primary col-sm-4 genxin-submit">
+                                <button type="button" class="btn btn-primary col-sm-4 genxin-submit"
+                                        data-loading-text="更新中...">
                                     <span class="glyphicon glyphicon-refresh"></span> 更新信息
                                 </button>
                             </div>
@@ -198,7 +199,8 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-4 col-sm-8">
-                                    <button type="button" class="btn btn-primary col-sm-4 register-recahrge">
+                                    <button type="button" class="btn btn-primary col-sm-4 register-recahrge"
+                                            data-loading-text="绑定中...">
                                         <span class="glyphicon glyphicon-ok"></span> 确定 & 付款
                                     </button>
                                 </div>
@@ -343,25 +345,10 @@
                     <label class="text-danger pull-left">
                         <input type="checkbox" value="1" name="is_print_ticket" id="is_print_ticket"> 登记发票吗?
                     </label>
-                    <button type="button" class="btn btn-primary print-ticket">
-                        <span class="glyphicon glyphicon-print"></span> 打印小票
+                    <button type="button" class="btn btn-primary print-ticket"
+                            data-loading-text="登记中...">
+                        <span class="glyphicon glyphicon-save"></span> 登记保存
                     </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="tips_modal" tabindex="-1" role="dialog" aria-labelledby="tipsModalLabel">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="tipsModalLabel">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-success" role="alert">会员信息更新成功!</div>
                 </div>
             </div>
         </div>

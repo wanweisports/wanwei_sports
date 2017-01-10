@@ -1,7 +1,7 @@
 (function ($) {
     var Members_register = {
         opts: {
-            ToURL: "/member/membersInfoCar"
+            ToURL: "/member/bindMembersCard"
         },
         init: function () {
             $.datetimepicker.setLocale('zh');
