@@ -95,10 +95,10 @@
                                        data-backdrop="false" data-cardId="${member.cardId}" data-cardNo="${member.cardNo}">
                                         <span class="glyphicon glyphicon-refresh"></span> 补办
                                     </a>
-                                    <a class="btn btn-danger teachers-delete" href="javascript:;"
+                                    <%--<a class="btn btn-danger teachers-delete" href="javascript:;"
                                         data-id="${member.memberId}">
                                         <span class="glyphicon glyphicon-trash"></span> 删除
-                                    </a>
+                                    </a>--%>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -202,7 +202,7 @@
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="refresh_newNo" name="newCardNo"
                                        placeholder="请输入新卡号" autocomplete="off"
-                                       data-val="true" data-val-required="新卡号不能为空">
+                                       data-val="true" data-val-required="新卡号不能为空" readonly>
                                 <div data-valmsg-for="newCardNo" data-valmsg-replace="true"></div>
                             </div>
                         </div>

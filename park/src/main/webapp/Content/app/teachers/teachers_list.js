@@ -50,8 +50,8 @@
                     if (res.code == 1) {
                         $("#refresh_newNo").val(data.newCardNo);
                     } else {
-                        console.log(res.message || "新会员卡号生成失败, 请稍后重试");
-                        alert(res.message || "新会员卡号生成失败, 请稍后重试");
+                        $.logConsole('新会员卡号生成失败', res1.message);
+                        $.tipsWarningAlert('新会员卡号生成失败');
                     }
                 });
             });
