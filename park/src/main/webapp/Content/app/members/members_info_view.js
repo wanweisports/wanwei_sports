@@ -25,8 +25,8 @@
                 if (res.code == 1) {
                     $("#newCardNo").val(data.newCardNo);
                 } else {
-                    console.log(res.message || "新会员卡号生成失败, 请稍后重试");
-                    alert(res.message || "新会员卡号生成失败, 请稍后重试");
+                    $.logConsole('新会员卡号生成失败', res.message);
+                    $.tipsWarningAlert('新会员卡号生成失败');
                 }
             }, 'json');
         },
@@ -67,13 +67,10 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $("#gengxinModal").modal({backdrop: false, show: true});
-                        setTimeout(function () {
-                            $("#gengxinModal").modal("hide");
-                        }, 3000);
+                        $.tipsSuccessAlert('会员信息更新成功！');
                     } else {
-                        console.log(res.message || "会员信息更新失败, 请稍后重试");
-                        alert(res.message || "会员信息更新失败, 请稍后重试");
+                        $.logConsole('会员信息更新失败', res.message);
+                        $.tipsWarningAlert('会员信息更新失败');
                     }
                 });
             });
@@ -110,8 +107,8 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        console.log(res.message || "会员充值失败, 请稍后重试");
-                        alert(res.message || "会员充值失败, 请稍后重试");
+                        $.logConsole('会员卡充值失败', res.message);
+                        $.tipsWarningAlert('会员卡充值失败');
                     }
                 });
             });
@@ -135,7 +132,8 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        alert(res.message || "会员补办失败, 请稍后重试");
+                        $.logConsole('会员补办失败', res.message);
+                        $.tipsWarningAlert('会员补办失败');
                     }
                 });
             });
@@ -149,7 +147,8 @@
                         $("#upgrade_discount").val(data.cardTypeDiscount);
                         $("#upgrade_deadline").val(data.cardDeadline);
                     } else {
-                        alert(res.message || "卡类型信息查询失败, 请稍后重试");
+                        $.logConsole('卡类型信息查询失败', res.message);
+                        $.tipsWarningAlert('卡类型信息查询失败');
                     }
                 });
             }
@@ -191,7 +190,8 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        alert(res.message || "会员升级失败, 请稍后重试");
+                        $.logConsole('会员升级失败', res.message);
+                        $.tipsWarningAlert('会员升级失败');
                     }
                 });
             });

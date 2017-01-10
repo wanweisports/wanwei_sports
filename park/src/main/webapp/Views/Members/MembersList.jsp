@@ -57,7 +57,7 @@
                             <th>余额(元)</th>
                             <th>子会员</th>
                             <th>操作人</th>
-                            <th>创建时间</th>
+                            <th>注册时间</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -110,9 +110,9 @@
                                             <span class="glyphicon glyphicon-credit-card"></span> 绑卡
                                         </a>
                                     </c:if>
-                                    <a class="btn btn-danger members-delete" href="javascript:;" data-id="${member.memberId}">
+                                    <%--<a class="btn btn-danger members-delete" href="javascript:;" data-id="${member.memberId}">
                                         <span class="glyphicon glyphicon-trash"></span> 删除
-                                    </a>
+                                    </a>--%>
                                 </td>
                             </tr>
                         </c:forEach>

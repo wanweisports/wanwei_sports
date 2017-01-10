@@ -14,8 +14,10 @@
     <script src="/Content/lib/echarts/echarts.min.js?v=${static_resource_version}"></script>
     <script src="/Content/app/data/data_members_register.js?v=${static_resource_version}"></script>
     <script>
-        $(".member-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
-        $(".member-date[data-count='${countNum}']").addClass("btn-primary").removeClass("btn-default");
+        $(document).ready(function () {
+            $(".member-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
+            $(".member-date[data-count='${countNum}']").addClass("btn-primary").removeClass("btn-default");
+        });
     </script>
 </layout:override>
 
@@ -55,46 +57,89 @@
                         <a href="javascript:;" class="btn btn-danger">
                             <span class="glyphicon glyphicon-export"></span> 导出数据
                         </a>
-                        <a href="/data/getMembersRegisterGroupDate" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-stats"></span> 图表显示
-                        </a>
                     </div>
                 </form>
             </div>
         </div>
         <div class="panel panel-default">
+            <div class="panel-heading">会员数量统计</div>
             <div class="panel-body">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>序号</th>
-                            <th>会员类型</th>
-                            <th>单价</th>
-                            <th>销售数量</th>
-                            <th>销售金额</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach var="member" items="${data.list}" varStatus="loop">
+                <div class="col-sm-6">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
                             <tr>
-                                <td>${loop.index + 1}</td>
-                                <td>${member.cardTypeName}</td>
-                                <td>${member.cardTypeMoney}元</td>
-                                <td>${member.count}个</td>
-                                <td>${member.countMoney}元</td>
+                                <th>会员类型</th>
+                                <th>总数量</th>
+                                <th>新增会员</th>
                             </tr>
-                        </c:forEach>
-                        <tr class="info">
-                            <th></th>
-                            <th></th>
-                            <th>合计</th>
-                            <th>${data.sumCount}个</th>
-                            <th>${data.sumCountMoney}元</th>
-                        </tr>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            <c:forEach var="member" items="${data.list}">
+                                <tr>
+                                    <td>${member.cardTypeName}</td>
+                                    <td>${member.count}个</td>
+                                    <td>2个</td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+                <div class="col-sm-6">
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">当日新增会员储值金额对比</div>
+            <div class="panel-body">
+                <div class="col-sm-6">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>今日新增会员储值</td>
+                                    <td>1000元</td>
+                                </tr>
+                                <tr>
+                                    <td>上周同日储值</td>
+                                    <td>1200元</td>
+                                </tr>
+                                <tr>
+                                    <td>本年最高储值</td>
+                                    <td>1500元</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-6"></div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">当日新增会员储值金额对比</div>
+            <div class="panel-body">
+                <div class="col-sm-6">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>场租消费</td>
+                                    <td>500元</td>
+                                </tr>
+                                <tr>
+                                    <td>商品消费</td>
+                                    <td>100元</td>
+                                </tr>
+                                <tr>
+                                    <td>会员储值余额</td>
+                                    <td>400元</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-6"></div>
             </div>
         </div>
     </div>

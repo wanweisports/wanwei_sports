@@ -123,11 +123,6 @@
                                         </button>
                                     </span>
                                 </div>
-                                <%--<input type="text" class="form-control" id="member_idcard" name="memberIdcard"
-                                       placeholder="请输入18位身份证号" autocomplete="off"
-                                       data-val="true" data-val-required="身份证号不能为空"
-                                       data-val-regex-pattern="^\d{17}(\d|X|x)$"
-                                       data-val-regex="身份证号格式错误">--%>
                                 <div data-valmsg-for="memberIdcard" data-valmsg-replace="true"></div>
                             </div>
                         </div>
