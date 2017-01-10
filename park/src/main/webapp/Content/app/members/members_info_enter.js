@@ -31,9 +31,11 @@
                 e.preventDefault();
 
                 var card = $(this).val();
+                var birthday = card.replace(/^\d{6}(\d{4})(\d{2})(\d{2})[0-9xX]{4}$/, "$1-$2-$3");
+                var sex = card.replace(/^\d{16}(\d{1})[0-9xX]{1}$/, "$1");
 
-                $("#member_birthday").val(card.replace(/\d{6}(\d{4})(\d{2})(\d{2})\d{4}/, "$1-$2-$3"));
-                $("[name='memberSex'][value='" + card.replace(/\d{16}(\d{1})\d{1}/, "$1") + "']").prop("checked", true);
+                $("#member_birthday").val(birthday);
+                $("[name='memberSex'][value='" + (sex % 2 ? 1 : 2) + "']").prop("checked", true);
             });
 
             // 注册用户提交

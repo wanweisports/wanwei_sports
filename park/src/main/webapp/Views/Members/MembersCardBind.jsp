@@ -213,7 +213,7 @@
     </div>
 
     <div class="modal fade" id="confirm_modal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel">
-        <div class="modal-dialog">
+        <div class="modal-dialog" style="width: 620px;">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
