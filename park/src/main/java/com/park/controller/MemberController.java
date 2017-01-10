@@ -344,7 +344,7 @@ public class MemberController extends BaseController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "Members/BalanceList";
+        return "Members/MembersBalanceList";
     }
 
     @RequestMapping(value = "getInvoices")

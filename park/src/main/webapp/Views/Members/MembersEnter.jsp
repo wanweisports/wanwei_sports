@@ -64,8 +64,8 @@
                             </label>
 
                             <div class="col-sm-8 input-parent-magnifier">
-                                <input type="text" class="form-control input-element-magnifier" id="member_mobile" name="memberMobile"
-                                       placeholder="请输入手机号码" autocomplete="off"
+                                <input type="text" class="form-control input-element-magnifier" id="member_mobile"
+                                       name="memberMobile" placeholder="请输入手机号码" autocomplete="off"
                                        data-val="true" data-val-required="手机号码不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
                                        data-val-regex="手机号码格式错误" maxlength="11">

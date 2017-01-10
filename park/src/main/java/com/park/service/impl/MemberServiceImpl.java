@@ -630,7 +630,8 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	public String getCardNo(int type) {
 		do {
 			StringBuffer no = new StringBuffer();
-            no.append('m' + type);
+            no.append('m');
+            no.append(type);
 			for(int i = 0; i < 6; i++){
 				no.append((int)(Math.random()*10));
 			}

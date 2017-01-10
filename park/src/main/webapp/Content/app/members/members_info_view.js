@@ -19,6 +19,9 @@
                 $('#member_birthday').datetimepicker("show");
             });
 
+            this.getNewCardNo();
+        },
+        getNewCardNo: function () {
             // 生成新卡号
             $.post('member/getNewCardNo', function (res) {
                 var data = res.data;
@@ -52,8 +55,10 @@
             var content = this;
 
             // 更新会员信息
-            $(".gengxin-modal").on("click", function (e) {
+            $(".refresh-modal").on("click", function (e) {
                 e.preventDefault();
+
+                var $btn = $(this).button('loading');
 
                 var $form = $("#member_form");
                 var conditions = $form.serialize();
@@ -72,7 +77,22 @@
                         $.logConsole('会员信息更新失败', res.message);
                         $.tipsWarningAlert('会员信息更新失败');
                     }
+
+                    $btn.button('reset');
                 });
+            });
+
+            // 支付方式改变
+            $("#recharge_type").on("change", function (e) {
+                e.preventDefault();
+
+                var $this = $(this);
+
+                if ($this.val() == 5) {
+                    $(".recharge-check-no").show();
+                } else {
+                    $(".recharge-check-no").hide();
+                }
             });
 
             // 充值金额,赠送金额改变
@@ -93,6 +113,8 @@
             $(".recharge-card-submit").on("click", function (e) {
                 e.preventDefault();
 
+                var $btn = $(this).button('loading');
+
                 var $form = $(".recharge-card-form");
                 var conditions = $form.serialize();
 
@@ -105,17 +127,22 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
+                        // 打印收款单 [未完成] 连接小票机
                         location.reload();
                     } else {
                         $.logConsole('会员卡充值失败', res.message);
                         $.tipsWarningAlert('会员卡充值失败');
                     }
                 });
+
+                $btn.button('reset');
             });
 
             // 会员卡补办
             $(".refresh-card-submit").on("click", function (e) {
                 e.preventDefault();
+
+                var $btn = $(this).button('loading');
 
                 // 生成新的会员卡号
                 var $form = $(".refresh-card-form");
@@ -130,12 +157,15 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
+                        // 打印收款单 [未完成] 连接小票机
                         location.reload();
                     } else {
                         $.logConsole('会员补办失败', res.message);
                         $.tipsWarningAlert('会员补办失败');
                     }
                 });
+
+                $btn.button('reset');
             });
 
             function getMemberCarType(id) {
