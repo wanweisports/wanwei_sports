@@ -9,7 +9,6 @@
     <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
     <script src="/Content/app/students/students_create.js?v=${static_resource_version}"></script>
-
     <script>
         // 表单校验配置
         $(document).ready(function () {
@@ -38,19 +37,9 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="card_no" name="cardNo"
-                                           placeholder="学生卡号" value="${cardNo}"
-                                           data-val="true" data-val-required="学生卡号不能为空">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-warning">
-                                            <i class="glyphicon glyphicon-transfer"></i> 读取
-                                        </button>
-                                    </span>
-                                </div>
-                                <!--<input type="text" class="form-control" id="card_no" name="cardNo"
+                                <input type="text" class="form-control" id="card_no" name="cardNo"
                                        placeholder="学生卡号" value="${cardNo}" autocomplete="off"
-                                       data-val="true" data-val-required="学生卡号不能为空">-->
+                                       data-val="true" data-val-required="学生卡号不能为空" readonly>
                                 <div data-valmsg-for="cardNo" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -88,12 +77,12 @@
                                 <span class="text-danger">*</span> 联系手机
                             </label>
 
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="student_mobile" name="studentMobile"
-                                       placeholder="请输入手机号码" autocomplete="off"
+                            <div class="col-sm-8 input-parent-magnifier">
+                                <input type="text" class="form-control input-element-magnifier" id="student_mobile"
+                                       name="studentMobile" placeholder="请输入手机号码" autocomplete="off"
                                        data-val="true" data-val-required="手机号码不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
-                                       data-val-regex="手机号码格式错误">
+                                       data-val-regex="手机号码格式错误" maxlength="11">
                                 <div data-valmsg-for="studentMobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -148,7 +137,8 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
-                                <button type="button" class="btn btn-primary col-sm-4 register-student">
+                                <button type="button" class="btn btn-primary col-sm-4 register-student"
+                                        data-loading-text="提交中...">
                                     <span class="glyphicon glyphicon-ok"></span>  注册 & 办卡
                                 </button>
                             </div>
@@ -157,22 +147,6 @@
                 </div>
             </div>
         </form>
-    </div>
-
-    <div class="modal fade" id="tips_success_modal" tabindex="-1" role="dialog" aria-labelledby="tips_success_modal_label">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="tips_success_modal_label">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-success" role="alert">学生办卡成功!</div>
-                </div>
-            </div>
-        </div>
     </div>
 </layout:override>
 
