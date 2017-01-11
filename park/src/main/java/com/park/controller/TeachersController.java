@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.park.common.bean.MemberCardOpInputView;
@@ -92,6 +93,22 @@ public class TeachersController extends BaseController {
 			e.printStackTrace();
 			return new ResponseBean(false);
 		}
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "getNewCardNo", method = RequestMethod.POST)
+    public ResponseBean getNewCardNo(Model model) {
+        try {
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("newCardNo", memberService.getCardNo(2));
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
     }
     
     @ResponseBody

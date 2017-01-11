@@ -44,7 +44,7 @@
                 $("#refresh_cardNo").val($this.attr("data-cardNo"));
 
                 // 生成新会员卡号
-                $.post('/member/getNewCardNo', function (res) {
+                $.post('/teachers/getNewCardNo', function (res) {
                     var data = res.data;
 
                     if (res.code == 1) {
@@ -59,6 +59,8 @@
             // 补办
             $(".confirm-refresh").on("click", function (e) {
                 e.preventDefault();
+
+                var $btn = $(this).button('loading');
 
                 var $form = $("#refresh_form");
                 var conditions = $form.serialize();
@@ -77,15 +79,17 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $("#refreshModal").modal({backdrop: false, show: true});
+                        $("#refresh_modal").modal({backdrop: false, show: true});
                         setTimeout(function () {
-                            $("#refreshModal").modal("hide");
+                            $("#refresh_modal").modal("hide");
                             location.reload();
                         }, 3000);
                     } else {
-                        console.log(res.message || "教师卡补办失败, 请稍后重试");
-                        alert(res.message || "教师卡补办失败, 请稍后重试");
+                        $.logConsole('教师卡补办失败', res.message);
+                        $.tipsWarningAlert('教师卡补办失败');
                     }
+
+                    $btn.button('reset');
                 });
             });
 
@@ -94,7 +98,7 @@
                 var $this = $(this);
 
                 $("#delete_teacherId").val($this.attr("data-id"));
-                $("#deleteModal").modal({backdrop: false, show: true});
+                $("#delete_modal").modal({backdrop: false, show: true});
             });
 
             // 删除
@@ -107,8 +111,8 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        console.log(res.message || "教师删除失败, 请稍后重试");
-                        alert(res.message || "教师删除失败, 请稍后重试");
+                        $.logConsole('教师删除失败', res.message);
+                        $.tipsWarningAlert('教师删除失败');
                     }
                 });
             });
