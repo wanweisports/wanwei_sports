@@ -75,7 +75,7 @@
                     </tbody>
                 </table>
                 <div class="alert alert-info" style="overflow: hidden">
-                    <p class="pull-left">商品预估总价： <span class="text-danger money-num">2000.00</span>元（<small>以实际支付金额为准</small>）</p>
+                    <p class="pull-left" style="margin-top: 6px;">商品预估总价： <span class="text-danger money-num">2000.00</span>元（<small>以实际支付金额为准</small>）</p>
                     <a href="#pay_model" class="btn btn-primary pull-right goods-buy-money" data-toggle="modal" data-backdrop="false">
                         <span class="glyphicon glyphicon-usd"></span> 结 算
                     </a>
