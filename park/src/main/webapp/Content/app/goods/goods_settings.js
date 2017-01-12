@@ -13,18 +13,16 @@
                     var res = JSON.parse(element.innerText.trim());
 
                     if (res.code == 1) {
-                        $("#tips_success_modal").modal({show: true, backdrop: false});
-                        setTimeout(function () {
-                            $("#tips_success_modal").modal("hide");
+                        $.tipsSuccessAlert('商品设置提交成功！', function () {
                             location.assign('/good/getGoods');
-                        }, 3000);
+                        });
                     } else {
-                        console.log(res.message || "商品设置提交失败, 请稍后重试");
-                        alert(res.message || "商品设置提交失败, 请稍后重试");
+                        $.logConsole('商品设置提交失败', res.message);
+                        $.tipsWarningAlert('商品设置提交失败');
                     }
                 } catch (e) {
-                    console.log(e);
-                    alert("商品设置提交错误, 请稍后重试");
+                    $.logConsole('商品设置提交失败', e);
+                    $.tipsWarningAlert('商品设置提交失败');
                 }
 
                 $("#good_form").attr("submitting", "");

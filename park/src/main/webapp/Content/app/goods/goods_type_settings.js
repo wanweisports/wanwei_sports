@@ -16,8 +16,6 @@
             $("#save_good_type").on("click", function (e) {
                 e.preventDefault();
 
-                var $btn = $(this).button('loading');
-
                 var $form = $("#good_type_form");
                 var conditions = $form.serialize();
 
@@ -37,8 +35,6 @@
                         $.logConsole('商品类别设置保存失败', res.message);
                         $.tipsWarningAlert('商品类别设置保存失败');
                     }
-
-                    $btn.button('reset');
                 });
             });
 

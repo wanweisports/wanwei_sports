@@ -106,7 +106,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="save_good_type" data-loading-text="保存中...">
+                    <button type="button" class="btn btn-primary" id="save_good_type">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>
