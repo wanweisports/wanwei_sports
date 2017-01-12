@@ -389,8 +389,10 @@ public class GoodController extends BaseController {
     public String getGoodsStock(GoodInputView goodInputView, Model model) {
         try {
             model.addAllAttributes(JsonUtils.fromJsonDF(goodInputView));
-            PageBean pageBean = goodService.countGoodsStock(goodInputView);
-            super.setPageInfo(model, pageBean);
+            //PageBean pageBean = goodService.countGoodsStock(goodInputView);
+            model.addAttribute("stock", goodService.countGoodsStock(goodInputView));
+
+            //super.setPageInfo(model, pageBean);
         } catch (Exception e) {
             e.printStackTrace();
         }

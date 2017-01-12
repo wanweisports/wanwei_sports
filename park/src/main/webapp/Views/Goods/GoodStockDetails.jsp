@@ -32,15 +32,11 @@
                 <form class="form-inline" id="goods_filter_form" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="/good/getGoodsStockDetails?countNum=2" data-count="2" class="btn btn-default stock-date">昨日</a>
-                            <a href="/good/getGoodsStockDetails?countNum=1" data-count="1" class="btn btn-default stock-date">今日</a>
-                            <a href="/good/getGoodsStockDetails?countNum=3" data-count="3" class="btn btn-default stock-date">本周</a>
-                            <a href="/good/getGoodsStockDetails?countNum=4" data-count="4" class="btn btn-default stock-date">本月</a>
+                            <a href="/good/getGoodsStockDetails?countNum=11" data-count="11" class="btn btn-default stock-date">今日</a>
+                            <a href="/good/getGoodsStockDetails?countNum=21" data-count="21" class="btn btn-default stock-date">本周</a>
+                            <a href="/good/getGoodsStockDetails?countNum=31" data-count="31" class="btn btn-default stock-date">本月</a>
+                            <a href="/good/getGoodsStockDetails?countNum=41" data-count="41" class="btn btn-default stock-date">本年</a>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="good_no" name="goodNo"
-                            placeholder="商品编号" value="${goodNo}">
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="createTimeStart" name="createTimeStart" placeholder="开始日期"
@@ -49,6 +45,10 @@
                     <div class="form-group">
                         <input type="text" class="form-control" id="createTimeEnd" name="createTimeEnd" placeholder="结束日期"
                                value="${createTimeEnd}">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="good_no" name="goodNo"
+                               placeholder="商品编号" value="${goodNo}">
                     </div>
                     <div class="form-group">
                         <a href="javascript:;" class="btn btn-primary goods-filter">

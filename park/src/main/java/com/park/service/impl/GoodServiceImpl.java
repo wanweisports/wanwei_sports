@@ -463,7 +463,7 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 		return list;
 	}
 
-    @Override
+    /*@Override
     public PageBean countGoodsStock(GoodInputView goodInputView){
         String goodNo = goodInputView.getGoodNo();
         String goodName = goodInputView.getGoodName();
@@ -480,6 +480,106 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
         }
         whereSql.append("  GROUP BY gi.goodId, log.opType ORDER BY gi.createTime DESC");
         return super.getPageBean(headSql, bodySql, whereSql, goodInputView);
+    }*/
+
+    @Override
+    public List<Map<String, Object>> countGoodsStock(GoodInputView goodInputView){
+        Integer countNum = goodInputView.getCountNum();
+        String goodNo = goodInputView.getGoodNo();
+        String goodName = goodInputView.getGoodName();
+        String createTimeStart = goodInputView.getCreateTimeStart();
+        String createTimeEnd = goodInputView.getCreateTimeEnd();
+
+        StringBuilder sql = new StringBuilder("SELECT gi.goodId, goodNo, goodName, goodCount, ROUND(goodPrice*SUM(log.countChange), 2) goodTotal, goodPrice, operatorName, gi.createTime, SUM(log.countChange) countGoods, log.opType");
+        sql.append(" FROM good_info gi INNER JOIN user_operator uo ON gi.salesId = uo.id");
+        sql.append(" LEFT JOIN good_inventory_log log ON log.goodId = gi.goodId");
+        sql.append(" WHERE 1=1");
+        if(StrUtil.isNotBlank(createTimeStart)){
+            sql.append(" AND DATE(log.createTime) >= :createTimeStart");
+        }
+        if(StrUtil.isNotBlank(createTimeEnd)){
+            sql.append(" AND DATE(log.createTime) <= :createTimeEnd");
+        }
+        if(StrUtil.isNotBlank(goodNo)){
+            sql.append(" AND goodNo = :goodNo");
+        }
+        if(StrUtil.isNotBlank(goodName)){
+            sql.append(" AND goodName = :goodName");
+        }
+        sql.append(dataService.getCountSql(countNum, "log.createTime"));
+        sql.append("  GROUP BY gi.goodId, log.opType ORDER BY gi.createTime DESC");
+
+        List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(goodInputView));
+        Map gMap = new HashMap();
+        List<Map<String, Object>> arrList = new ArrayList<Map<String, Object>>();
+        int index = 0;
+
+        Double goodTotal = 0.00;
+        int typeIn = 0;
+        int typeAdd = 0;
+        int typeOut = 0;
+        int typeMinus = 0;
+        int goodCount = 0;
+
+        for(Map<String, Object> map : list){
+            String key = "good_" + map.get("goodId");
+
+            if (gMap.get(key) != null) {
+                int mapIndex = StrUtil.objToInt(gMap.get(key));
+
+                if (StrUtil.objToStr(map.get("opType")).equals(IDBConstant.INVENTORY_OP_TYPE_ADD)) {
+                    arrList.get(mapIndex).put("typeAdd", StrUtil.objToStr(map.get("countGoods")));
+                    typeAdd += StrUtil.objToInt(map.get("countGoods"));
+                }
+                if (StrUtil.objToStr(map.get("opType")).equals(IDBConstant.INVENTORY_OP_TYPE_IN)) {
+                    arrList.get(mapIndex).put("typeIn", StrUtil.objToStr(map.get("countGoods")));
+                    typeIn += StrUtil.objToInt(map.get("countGoods"));
+                }
+                if (StrUtil.objToStr(map.get("opType")).equals(IDBConstant.INVENTORY_OP_TYPE_MINUS)) {
+                    arrList.get(mapIndex).put("typeMinus", StrUtil.objToStr(map.get("countGoods")));
+                    typeMinus += StrUtil.objToInt(map.get("countGoods"));
+                }
+                if (StrUtil.objToStr(map.get("opType")).equals(IDBConstant.INVENTORY_OP_TYPE_OUT)) {
+                    arrList.get(mapIndex).put("typeOut", StrUtil.objToStr(map.get("countGoods")));
+                    map.put("typeOutTotal", StrUtil.objToStr(map.get("goodTotal")));
+                    goodTotal += StrUtil.objToDouble(map.get("goodTotal"));
+                }
+            } else {
+                if (StrUtil.objToStr(map.get("opType")).equals(IDBConstant.INVENTORY_OP_TYPE_ADD)) {
+                    map.put("typeAdd", StrUtil.objToStr(map.get("countGoods")));
+                    typeAdd += StrUtil.objToInt(map.get("countGoods"));
+                }
+                if (StrUtil.objToStr(map.get("opType")).equals(IDBConstant.INVENTORY_OP_TYPE_IN)) {
+                    map.put("typeIn", StrUtil.objToStr(map.get("countGoods")));
+                    typeIn += StrUtil.objToInt(map.get("countGoods"));
+                }
+                if (StrUtil.objToStr(map.get("opType")).equals(IDBConstant.INVENTORY_OP_TYPE_MINUS)) {
+                    map.put("typeMinus", StrUtil.objToStr(map.get("countGoods")));
+                    typeMinus += StrUtil.objToInt(map.get("countGoods"));
+                }
+                if (StrUtil.objToStr(map.get("opType")).equals(IDBConstant.INVENTORY_OP_TYPE_OUT)) {
+                    map.put("typeOut", StrUtil.objToStr(map.get("countGoods")));
+                    map.put("typeOutTotal", StrUtil.objToStr(map.get("goodTotal")));
+                    goodTotal += StrUtil.objToDouble(map.get("goodTotal"));
+                }
+
+                goodCount += StrUtil.objToInt(map.get("goodCount"));
+                gMap.put(key, index);
+                arrList.add(map);
+                index++;
+            }
+        }
+        Map totalMap = new HashMap();
+        totalMap.put("goodCount", goodCount);
+        totalMap.put("typeAdd", typeAdd);
+        totalMap.put("typeIn", typeIn);
+        totalMap.put("typeMinus", typeMinus);
+        totalMap.put("typeOut", typeOut);
+        totalMap.put("goodTotal", String.format("%.2f", goodTotal));
+        totalMap.put("goodName", "商品合计");
+        arrList.add(totalMap);
+
+        return arrList;
     }
 	
 }

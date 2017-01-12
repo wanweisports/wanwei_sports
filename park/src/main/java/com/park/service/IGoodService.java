@@ -57,5 +57,7 @@ public interface IGoodService {
 	
 	public List<Map<String, Object>> getGoodOutInfo(GoodInputView goodInputView);
 
-    public PageBean countGoodsStock(GoodInputView goodInputView);
+    //public PageBean countGoodsStock(GoodInputView goodInputView);
+
+	public List<Map<String, Object>> countGoodsStock(GoodInputView goodInputView);
 }
