@@ -66,22 +66,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="good_mode1" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 计费方式
-                            </label>
-
-                            <div class="col-sm-8">
-                                <label class="radio-inline">
-                                    <input type="radio" name="goodMoneyType" id="good_mode1" value="1" checked> 计量收费
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="goodMoneyType" id="good_mode2"
-                                           value="2" <c:if test="${goodMoneyType == 2}">checked</c:if>> 计时收费
-                                </label>
-                                <div data-valmsg-for="goodMoneyType" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label for="good_type" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 商品类别
                             </label>
@@ -95,6 +79,22 @@
                                     </c:forEach>
                                 </select>
                                 <div data-valmsg-for="goodTypeId" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="good_mode1" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 计费方式
+                            </label>
+
+                            <div class="col-sm-8">
+                                <label class="radio-inline">
+                                    <input type="radio" name="goodMoneyType" id="good_mode1" value="1" checked> 计量收费
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="goodMoneyType" id="good_mode2"
+                                           value="2" <c:if test="${goodMoneyType == 2}">checked</c:if>> 计时收费
+                                </label>
+                                <div data-valmsg-for="goodMoneyType" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -128,8 +128,8 @@
                         <div class="form-group">
                             <label for="good_count" class="col-sm-4 control-label">初始库存</label>
 
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="good_count" name="goodCount"
+                            <div class="col-sm-8 input-parent-magnifier">
+                                <input type="text" class="form-control input-element-magnifier" id="good_count" name="goodCount"
                                        value="${goodCount}" placeholder="初始库存量" autocomplete="off"
                                        data-val-regex-pattern="^[1-9]\d*$"
                                        data-val-regex="初始库存量格式错误">

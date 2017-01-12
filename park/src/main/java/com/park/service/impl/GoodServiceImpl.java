@@ -82,7 +82,6 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 			goodInfoDB.setGoodDiscount(goodInfo.getGoodDiscount());
 			goodInfoDB.setGoodRemark(goodInfo.getGoodRemark());
 			goodInfoDB.setGoodMoneyType(goodInfo.getGoodMoneyType()); //计费方式
-			goodInfoDB.setGoodCount(goodInfo.getGoodCount());
 			goodInfoDB.setUpdateTime(nowDate);
 			goodInfoDB.setSalesId(goodInfo.getSalesId());
 			baseDao.save(goodInfoDB, goodInfoDB.getGoodId());
@@ -148,10 +147,13 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 	public void minusGoodCount(GoodInfo goodInfo){
 		GoodInfo goodInfoDB = this.getGoodInfo(goodInfo.getGoodId());
 		if(goodInfoDB == null) throw new MessageException("商品信息不存在！");
-		goodInfoDB.setGoodCount(goodInfoDB.getGoodCount() - goodInfo.getGoodCount());
+		int minus = goodInfoDB.getGoodCount() - goodInfo.getGoodCount();
+        if(minus < 0) throw new MessageException("损耗数量超过当前库存量！");
+		goodInfoDB.setGoodCount(minus);
 		//有库存：在售
 		//if(IDBConstant.GOOD_STATE_BOOKING.equals(goodInfoDB.getGoodStatus()) && goodInfoDB.getGoodCount() > 0) goodInfoDB.setGoodStatus(IDBConstant.GOOD_STATE_ING);
-		baseDao.save(goodInfoDB, goodInfoDB.getGoodId());
+		if (minus == 0) goodInfoDB.setGoodStatus(IDBConstant.GOOD_STATE_BOOKING);
+        baseDao.save(goodInfoDB, goodInfoDB.getGoodId());
 
 		//入库商品-库存日志
 		GoodInventoryLog inventoryLog = new GoodInventoryLog();
