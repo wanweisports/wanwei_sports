@@ -29,20 +29,15 @@
         <div class="panel panel-default">
             <div class="panel-heading">商品购物车</div>
             <div class="panel-body goods-cart-list">
-                <div class="alert alert-info" style="overflow: hidden">
-                    <p class="pull-left">商品预估总价： <span class="text-danger money-num">2000.00</span>元（<small>以实际支付金额为准</small>）</p>
-                    <a href="#zhifuModal" class="btn btn-primary pull-right goods-buy-money" data-toggle="modal" data-backdrop="false">
-                        <span class="glyphicon glyphicon-usd"></span> 结 算
-                    </a>
-                </div>
                 <table class="table cart-list">
                     <thead>
-                    <tr>
+                    <tr class="bg-info">
                         <th>商品编号</th>
-                        <th>商品图片</th>
+                        <!--<th>商品图片</th>-->
                         <th>商品名称</th>
-                        <th>商品单价(元)</th>
+                        <th>商品单价</th>
                         <th>购买数量</th>
+                        <th>商品小计</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -50,10 +45,10 @@
                     <c:forEach var="good" items="${goods}">
                         <tr class="cart-item" data-sid="${good.shoppingId}">
                             <td style="vertical-align: middle;">${good.goodNo}</td>
-                            <td style="vertical-align: middle;">
-                                <img src="${good.goodPic}" data-src="holder.js/100x80?text=${good.goodName}&random=yes&auto=yes"
+                            <%--<td style="vertical-align: middle;">
+                                <img src="${good.goodPic}" data-src="holder.js/100x80?text=${good.goodName}&theme=lava"
                                      alt="${good.goodName}" class="img-rounded" style="width: 100px; height: 80px;">
-                            </td>
+                            </td>--%>
                             <td style="vertical-align: middle;">${good.goodName}</td>
                             <td style="vertical-align: middle;">${good.goodPrice}元</td>
                             <td style="vertical-align: middle;">
@@ -62,12 +57,14 @@
                                         <button class="btn btn-default goods-minus" data-id="${good.goodId}">-</button>
                                     </span>
                                     <input type="text" class="form-control good-count" value="${good.shoppingGoodAmount}"
-                                           style="width: 40px; padding: 6px 0; text-align: center" data-money="${good.goodPrice}">
+                                           style="width: 40px; padding: 6px 0; text-align: center"
+                                           data-money="${good.goodPrice}">
                                     <span class="input-group-btn" style="width: auto">
                                         <button class="btn btn-default goods-plus" data-id="${good.goodId}">+</button>
                                     </span>
                                 </div>
                             </td>
+                            <td class="good-total" style="vertical-align: middle;">${good.goodTotal}元</td>
                             <td style="vertical-align: middle;">
                                 <a href="javascript:;" class="btn btn-warning goods-remove" data-sid="${good.shoppingId}">
                                     <span class="glyphicon glyphicon-trash"></span> 移除
@@ -78,8 +75,8 @@
                     </tbody>
                 </table>
                 <div class="alert alert-info" style="overflow: hidden">
-                    <p class="pull-left">商品预估总价： <span class="text-danger money-num">2000.00</span>元（<small>以实际支付金额为准</small>）</p></p>
-                    <a href="#zhifuModal" class="btn btn-primary pull-right goods-buy-money" data-toggle="modal" data-backdrop="false">
+                    <p class="pull-left">商品预估总价： <span class="text-danger money-num">2000.00</span>元（<small>以实际支付金额为准</small>）</p>
+                    <a href="#pay_model" class="btn btn-primary pull-right goods-buy-money" data-toggle="modal" data-backdrop="false">
                         <span class="glyphicon glyphicon-usd"></span> 结 算
                     </a>
                 </div>
@@ -87,14 +84,14 @@
         </div>
     </div>
 
-    <div class="modal fade" id="zhifuModal" tabindex="-1" role="dialog" aria-labelledby="zhifuModalLabel">
+    <div class="modal fade" id="pay_model" tabindex="-1" role="dialog" aria-labelledby="pay_model_label">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="zhifuModalLabel">支付订单</h4>
+                    <h5 class="modal-title" id="pay_model_label">支付订单</h5>
                 </div>
                 <div class="modal-body">
                     <div class="goods-steps">

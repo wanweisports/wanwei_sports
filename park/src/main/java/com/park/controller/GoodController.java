@@ -303,6 +303,24 @@ public class GoodController extends BaseController {
         }
     }
 
+    @ResponseBody
+    @RequestMapping(value = "getCartCount")
+    public ResponseBean getCartCount(){
+        try {
+            UserOperator userOperator = super.getUserInfo();
+            String cartCount = goodService.getGoodsCartCount(userOperator.getId());
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("cartCount", cartCount);
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
     /**
      * 显示当前购物车列表
      * @param model

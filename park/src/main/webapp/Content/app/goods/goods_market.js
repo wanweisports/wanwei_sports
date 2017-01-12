@@ -4,17 +4,17 @@
             data: {}
         },
         calCartCount: function () {
-            var goods = this.opts.data, id;
-            var count = 0;
+            $.post('/good/getCartCount', {}, function (res) {
+                var data = res.data;
 
-            for (id in goods) {
-                count += goods[id].goodCount;
-            }
-
-            return count;
+                if (res.code == 1) {
+                    $(".good-cart-count").find(".badge").html(data.cartCount);
+                }
+            });
         },
         init: function () {
             this.initEvents();
+            this.calCartCount();
 
             var goodType = location.search.replace("?goodType=", "");
             $(".good-type-list").find('[data-type="' + goodType + '"]')
@@ -31,24 +31,14 @@
                 var $this = $(this);
                 var goodId = $this.attr("data-id");
 
-                if (!content.opts.data[goodId]) {
-                    content.opts.data[goodId] = {
-                        goodId: goodId,
-                        name: $this.parents(".goods-list-item").find(".good-name").attr("data-text"),
-                        price: $this.parents(".goods-list-item").find(".good-price").attr("data-text"),
-                        url: $this.parents(".goods-list-item").find(".good-image").attr("src"),
-                        goodCount: 0
-                    };
-                }
-                content.opts.data[goodId].goodCount++;
-
-                $btnCart.find(".badge").html(content.calCartCount());
-
                 $.post('/good/addGoodsToCart', {goodId: goodId, amount: 1}, function (res) {
                     if (res.code != 1) {
-                        alert(res.message || "添加购物车失败, 请稍后重试");
-                        console.log(res.message || "添加购物车失败, 请稍后重试");
+                        $.logConsole('添加购物车失败', res.message);
+                        $.tipsWarningAlert('添加购物车失败');
+                        return false;
                     }
+
+                    content.calCartCount();
                 });
             });
 

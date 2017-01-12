@@ -206,9 +206,16 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 	}
 	
 	@Override
-	public List<Map<String, Object>> getGoodsCart(int salesId){
-		return baseDao.queryBySql("SELECT gi.goodId, gi.goodPic, gi.goodNo, gi.goodName, gi.goodPrice, gsi.shoppingId, gsi.shoppingGoodAmount FROM good_info gi, good_shopping gsi WHERE gi.goodId = gsi.goodId AND gsi.salesId = ?", salesId);
+	public String getGoodsCartCount(int salesId){
+        List<Map<String, Object>> list = baseDao.queryBySql("SELECT SUM(shoppingGoodAmount) cartCount FROM good_shopping WHERE salesId = ?", salesId);
+
+        return StrUtil.objToStr(list.get(0).get("cartCount"));
 	}
+
+    @Override
+    public List<Map<String, Object>> getGoodsCart(int salesId){
+        return baseDao.queryBySql("SELECT gi.goodId, gi.goodPic, gi.goodNo, gi.goodName, gi.goodPrice, gsi.shoppingId, gsi.shoppingGoodAmount, ROUND(gi.goodPrice*gsi.shoppingGoodAmount, 2) goodTotal FROM good_info gi, good_shopping gsi WHERE gi.goodId = gsi.goodId AND gsi.salesId = ?", salesId);
+    }
 	
 	@Override
 	public Integer saveGoodShopping(GoodShopping goodShopping, int amount){

@@ -3,7 +3,7 @@
         init: function () {
             this.initEvents();
 
-            var $uiGoodsSteps = $("#zhifuModal");
+            var $uiGoodsSteps = $("#pay_model");
 
             // 初始化支付流程步骤
             $uiGoodsSteps.find(".goods-steps").steps({
@@ -38,14 +38,15 @@
                 if (res.code == 1) {
                     $("#goods_paid_sum").val(data.presentPrice || data.originalPrice);
                 } else {
-                    alert(res.message || '订单计价失败，请稍后重试');
+                    $.logConsole('订单计价失败', res.message);
+                    $.tipsWarningAlert('订单计价失败');
                 }
             });
         },
         // 支付流程事件绑定
         bindPayEvents: function () {
             var content = this;
-            var $uiGoodsSteps = $("#zhifuModal");
+            var $uiGoodsSteps = $("#pay_model");
 
             // 结算
             $(".goods-buy-money").on("click", function () {
@@ -85,7 +86,8 @@
                             return [];
                         }
                     } else {
-                        alert('搜索会员失败, 请稍后重试');
+                        $.logConsole('搜索会员失败', res.message);
+                        $.tipsWarningAlert('搜索会员失败');
                         return [];
                     }
                 },
@@ -121,7 +123,8 @@
                         $uiGoodsSteps.find(".goods-steps").steps("next", 1);
                         $("#goods_paid_order").val(data.orderId);
                     } else {
-                        alert(res.message || '保存订单失败，请稍后重试');
+                        $.logConsole('保存订单失败', res.message);
+                        $.tipsWarningAlert('保存订单失败');
                     }
                 });
 
@@ -146,7 +149,8 @@
                     if (res.code == 1) {
                         location.assign('/order/getOrderList?orderServiceTypes=300');
                     } else {
-                        alert(res.message || '支付订单失败，请稍后重试');
+                        $.logConsole('支付订单失败', res.message);
+                        $.tipsWarningAlert('支付订单失败');
                     }
                 })
             });
@@ -167,7 +171,8 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        alert(res.message || "移除购物车失败, 请稍后重试");
+                        $.logConsole('移除购物车失败', res.message);
+                        $.tipsWarningAlert('移除购物车失败');
                     }
                 });
             });
@@ -183,11 +188,18 @@
                     goodId: $this.attr("data-id"),
                     amount: 1
                 }, function (res) {
+                    var $count = $this.parents(".input-group").find(".good-count");
+
                     if (res.code == 1) {
-                        $this.parents(".input-group").find(".good-count").val(++count);
+                        $count.val(++count);
                         $(".money-num").text(content.calculateMoney());
+
+                        var itemPrice = parseFloat($count.attr("data-money"));
+                        var itemCount = parseInt($count.val());
+                        $this.parents(".cart-item").find(".good-total").text((itemPrice * itemCount).toFixed(2) + "元");
                     } else {
-                        alert(res.message || "增加数量失败, 请稍后重试");
+                        $.logConsole('增加数量失败', res.message);
+                        $.tipsWarningAlert('增加数量失败');
                     }
                 });
             });
@@ -207,11 +219,18 @@
                     goodId: $this.attr("data-id"),
                     amount: -1
                 }, function (res) {
+                    var $count = $this.parents(".input-group").find(".good-count");
+
                     if (res.code == 1) {
-                        $this.parents(".input-group").find(".good-count").val(--count);
+                        $count.val(--count);
                         $(".money-num").text(content.calculateMoney());
+
+                        var itemPrice = parseFloat($count.attr("data-money"));
+                        var itemCount = parseInt($count.val());
+                        $this.parents(".cart-item").find(".good-total").text((itemPrice * itemCount).toFixed(2) + "元");
                     } else {
-                        alert(res.message || "减少数量失败, 请稍后重试");
+                        $.logConsole('减少数量失败', res.message);
+                        $.tipsWarningAlert('减少数量失败');
                     }
                 });
             });
