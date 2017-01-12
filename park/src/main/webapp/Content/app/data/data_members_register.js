@@ -74,7 +74,7 @@
                     series: [{
                         type: 'pie',
                         selectedMode: 'single',
-                        radius: ['50%', '100%'],
+                        radius: ['40%', '90%'],
                         color: ['#59ADF3', '#FF999A', '#FFCC67'],
 
                         label: {
@@ -136,7 +136,7 @@
                     },
                     xAxis: {
                         type: 'category',
-                        data: ["最高新增", "同比新增", "当前新增"],
+                        data: ["最高", "同比", "当前"],
                         axisLine: {
                             onZero: false,
                             lineStyle: {
@@ -180,12 +180,7 @@
                         itemStyle: {
                             normal: {
                                 color: function(params) {
-                                    var colorList = ['#59ADF3', '#FF999A', '#FFCC67',
-                                        '#C23531', '#2F4554', '#61A0A8',
-                                        '#D48265', '#91C7AE', '#749F83',
-                                        '#CA8622', '#BDA29A', '#6E7074',
-                                        '#546570', '#C4CCD3'
-                                    ];
+                                    var colorList = ['#59ADF3', '#FF999A', '#FFCC67'];
                                     return colorList[params.dataIndex]
                                 }
                             }
@@ -231,7 +226,7 @@
                     color: ['#59ADF3', '#FF999A', '#FFCC67'],
                     tooltip : {
                         trigger: 'item',
-                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                        formatter: "{b} <br/>金额：{c}元 <br/>比率：{d}%)"
                     },
                     toolbox: {
                         show: true,
@@ -248,12 +243,12 @@
                         {
                             name: '金额',
                             type: 'pie',
-                            radius : '100%',
+                            radius : '90%',
                             center: ['50%', '50%'],
                             data:[
-                                {value:300, name:'场租消费'},
-                                {value:600, name:'商品消费'},
-                                {value:200, name:'储值余额'}
+                                {value: 300, name: '场租'},
+                                {value: 600, name: '商品'},
+                                {value: 200, name: '余额'}
                             ],
                             label: {
                                 normal: {
@@ -270,7 +265,7 @@
                                 normal: {
                                     show: false
                                 }
-                            },
+                            }
                         }
                     ]
                 };

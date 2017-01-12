@@ -96,6 +96,7 @@
                             </tbody>
                         </table>
                     </div>
+                    <p class="text-danger">"最高"，"同比"，"当前"，仅针对今日，本周，本月的查询条件有效；</p>
                 </div>
                 <div class="col-sm-4">
                     <div id="member_count_chart" style="width: 100%; height: 200px;"></div>
@@ -144,6 +145,7 @@
                             </tbody>
                         </table>
                     </div>
+                    <p class="text-danger">"最高"，"同比"，"当前"，仅针对今日，本周，本月的查询条件有效；</p>
                 </div>
                 <div class="col-sm-4">
                     <div id="member_stored_chart" style="width: 100%; height: 200px;"></div>
