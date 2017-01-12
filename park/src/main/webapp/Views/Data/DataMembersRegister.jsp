@@ -64,82 +64,138 @@
         <div class="panel panel-default">
             <div class="panel-heading">会员数量统计</div>
             <div class="panel-body">
-                <div class="col-sm-6">
-                    <div class="table-responsive">
+                <div class="col-sm-8">
+                    <div class="table-responsive" style="margin-top: 40px;">
                         <table class="table table-bordered">
                             <thead>
-                            <tr>
+                            <tr class="bg-info">
                                 <th>会员类型</th>
                                 <th>总数量</th>
-                                <th>新增会员</th>
+                                <th>最高新增数量</th>
+                                <th>同比新增数量</th>
+                                <th>当前新增数量</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="member" items="${data.list}">
+                            <c:forEach var="member" items="${memberCount}">
                                 <tr>
                                     <td>${member.cardTypeName}</td>
-                                    <td>${member.count}个</td>
-                                    <td>2个</td>
+                                    <td>${member.cardTypeTotal}</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>${member.cardTypeCount}</td>
                                 </tr>
                             </c:forEach>
+                            <tr class="bg-success">
+                                <td>合计</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>3</td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
+                    <div id="member_count_chart" style="width: 100%; height: 200px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">新增会员储值对比</div>
+            <div class="panel-body">
+                <div class="col-sm-8">
+                    <div class="table-responsive" style="margin-top: 20px;">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr class="bg-info">
+                                <th>会员类型</th>
+                                <th>最高新增储值</th>
+                                <th>同比新增储值</th>
+                                <th>当前新增储值</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>教师卡</td>
+                                <td>1000元</td>
+                                <td>1000元</td>
+                                <td>1000元</td>
+                            </tr>
+                            <tr>
+                                <td>会员卡</td>
+                                <td>1200元</td>
+                                <td>1200元</td>
+                                <td>1200元</td>
+                            </tr>
+                            <tr>
+                                <td>学生卡</td>
+                                <td>1500元</td>
+                                <td>1500元</td>
+                                <td>1500元</td>
+                            </tr>
+                            <tr class="bg-success">
+                                <td>合计</td>
+                                <td>1500元</td>
+                                <td>1500元</td>
+                                <td>1500元</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div id="member_stored_chart" style="width: 100%; height: 200px;"></div>
                 </div>
             </div>
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">当日新增会员储值金额对比</div>
             <div class="panel-body">
-                <div class="col-sm-6">
-                    <div class="table-responsive">
+                <div class="col-sm-8">
+                    <div class="table-responsive" style="margin-top: 20px;">
                         <table class="table table-bordered">
+                            <thead>
+                            <tr class="bg-info">
+                                <th>会员类型</th>
+                                <th>场租消费</th>
+                                <th>商品消费</th>
+                                <th>会员储值余额</th>
+                            </tr>
+                            </thead>
                             <tbody>
-                                <tr>
-                                    <td>今日新增会员储值</td>
-                                    <td>1000元</td>
-                                </tr>
-                                <tr>
-                                    <td>上周同日储值</td>
-                                    <td>1200元</td>
-                                </tr>
-                                <tr>
-                                    <td>本年最高储值</td>
-                                    <td>1500元</td>
-                                </tr>
+                            <tr>
+                                <td>教师卡</td>
+                                <td>500元</td>
+                                <td>500元</td>
+                                <td>500元</td>
+                            </tr>
+                            <tr>
+                                <td>会员卡</td>
+                                <td>100元</td>
+                                <td>100元</td>
+                                <td>100元</td>
+                            </tr>
+                            <tr>
+                                <td>学生卡</td>
+                                <td>400元</td>
+                                <td>400元</td>
+                                <td>400元</td>
+                            </tr>
+                            <tr class="bg-success">
+                                <td>合计</td>
+                                <td>400元</td>
+                                <td>400元</td>
+                                <td>400元</td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="col-sm-6"></div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">当日新增会员储值金额对比</div>
-            <div class="panel-body">
-                <div class="col-sm-6">
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <tbody>
-                                <tr>
-                                    <td>场租消费</td>
-                                    <td>500元</td>
-                                </tr>
-                                <tr>
-                                    <td>商品消费</td>
-                                    <td>100元</td>
-                                </tr>
-                                <tr>
-                                    <td>会员储值余额</td>
-                                    <td>400元</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="col-sm-4">
+                    <div id="member_consume_chart" style="width: 100%; height: 200px;"></div>
                 </div>
-                <div class="col-sm-6"></div>
             </div>
         </div>
     </div>

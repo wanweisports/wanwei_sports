@@ -10,6 +10,8 @@ public interface IDataService {
 
 	public List<Map<String, Object>> getMembersRegister(DataInputView dataInputView);
 
+    public List<Map<String, Object>> getMembersRegisterStored(DataInputView dataInputView);
+
 	public List<Map<String, Object>> getMembersRegisterGroupDate(DataInputView dataInputView);
 	
 	public Map<String, Object> countMembersRegister(List<Map<String, Object>> dataList);
