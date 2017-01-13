@@ -18,6 +18,14 @@
     <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
     <script src="/Content/app/goods/goods_carts.js?v=${static_resource_version}"></script>
+    <script>
+        $(document).ready(function () {
+            // 配置表单校验
+            $('#goods_user_form, #goods_paid_form').validate({
+                ignore: ":hidden"
+            });
+        });
+    </script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
