@@ -113,7 +113,7 @@
                                 </c:if>
                                 <c:if test="${good.typeOut != null}">
                                     <td class="text-danger">${good.typeOut}件</td>
-                                    <td class="text-danger">${good.goodTotal}元</td>
+                                    <td class="text-danger">${good.typeOutTotal}元</td>
                                 </c:if>
 
                                 <c:if test="${good.typeMinus == null}">

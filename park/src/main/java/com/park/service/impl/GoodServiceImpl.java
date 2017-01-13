@@ -551,7 +551,7 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
                 if (StrUtil.objToStr(map.get("opType")).equals(IDBConstant.INVENTORY_OP_TYPE_OUT)) {
                     arrList.get(mapIndex).put("typeOut", StrUtil.objToStr(map.get("countGoods")));
                     typeOut += StrUtil.objToInt(map.get("countGoods"));
-                    map.put("typeOutTotal", StrUtil.objToStr(map.get("goodTotal")));
+                    arrList.get(mapIndex).put("typeOutTotal", StrUtil.objToStr(map.get("goodTotal")));
                     goodTotal += StrUtil.objToDouble(map.get("goodTotal"));
                 }
             } else {
@@ -586,7 +586,7 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
         totalMap.put("typeIn", typeIn);
         totalMap.put("typeMinus", typeMinus);
         totalMap.put("typeOut", typeOut);
-        totalMap.put("goodTotal", String.format("%.2f", goodTotal));
+        totalMap.put("typeOutTotal", String.format("%.2f", goodTotal));
         totalMap.put("goodName", "商品合计");
         arrList.add(totalMap);
 

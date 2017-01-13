@@ -10,7 +10,7 @@
             var content = this;
 
             // 筛选
-            $(".orders-filter").on("click", function (e) {
+            $(".order-filter").on("click", function (e) {
                 e.preventDefault();
 
                 var conditions = $("#orders_filter_form").serialize();
@@ -109,6 +109,8 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
+                        // 打印小票
+
                         $.tipsSuccessAlert('支付订单成功！', function () {
                             $("#pay_model").modal("hide");
                             location.reload();

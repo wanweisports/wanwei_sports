@@ -3,14 +3,14 @@
         init: function () {
             this.initEvents();
 
-            var $uiGoodsSteps = $("#pay_model");
+            /*var $uiGoodsSteps = $("#pay_model");
 
             // 初始化支付流程步骤
             $uiGoodsSteps.find(".goods-steps").steps({
                 enableFinishButton: false,
                 enablePagination: false,
                 enableAllSteps: false
-            });
+            });*/
 
             this.bindPayEvents();
             $(".money-num").text(this.calculateMoney());
@@ -147,7 +147,9 @@
                         $form.attr("submitting", "");
 
                         if (res.code == 1) {
-                            $.tipsWarningAlert('支付订单成功！', function () {
+                            // 打印小票
+
+                            $.tipsSuccessAlert('支付订单成功！', function () {
                                 location.assign('/order/getOrderList?orderServiceTypes=300');
                             });
                         } else {

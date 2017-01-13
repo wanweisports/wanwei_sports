@@ -19,6 +19,7 @@
             $('#goods_paid_form').validate({
                 ignore: ":hidden"
             });
+            $("#orders_pay_status").val('${payStatus}');
         });
     </script>
 </layout:override>
@@ -34,10 +35,10 @@
             <div class="panel-body">
                 <form id="orders_filter_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
-                        <select class="form-control" name="payStatus" style="width: 180px;">
+                        <select class="form-control" id="orders_pay_status" name="payStatus" style="width: 180px;">
                             <option value="">支付状态</option>
                             <option value="1">已支付</option>
-                            <option value="0">未支付</option>
+                            <option value="2">未支付</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -92,9 +93,9 @@
                     <div id="#order_body_${loop.index}" class="panel-collapse collapse in" role="tabpanel"
                          aria-labelledby="order_header_${loop.index}" aria-expanded="true">
                         <div class="table-responsive" style="padding: 10px;">
-                            <table class="table orders-list">
+                            <table class="table table-bordered orders-list">
                                 <thead>
-                                <tr>
+                                <tr class="bg-info">
                                     <th>商品名称</th>
                                     <th>预订人</th>
                                 	<th>预订人手机</th>
@@ -108,11 +109,11 @@
                                     <tr>
                                         <td>${item.itemName}</td>
                                         <td>${order.name}</td>
-                                		<td>${order.mobile}</td>
+                                        <td>${order.mobile}</td>
                                         <td>${item.itemPrice}元</td>
                                         <td>${item.itemAmount}件</td>
                                         <c:if test="${item.orderDetailStatus == 1}">
-                                            <td>已支付</td>
+                                            <td class="text-success">已支付</td>
                                         </c:if>
                                         <c:if test="${item.orderDetailStatus == 2}">
                                             <td class="text-danger">未支付</td>
@@ -126,14 +127,16 @@
                             合计金额: <strong class="text-danger">${order.orderSumPrice}</strong> 元
                             <div class="pull-right">
                                 <c:if test="${order.orderStatus == 1}">
-                                    <button class="btn btn-warning btn-sm order-delete" data-id="${order.orderId}">
+                                    <button class="btn btn-warning btn-sm order-delete" data-id="${order.orderId}"
+                                            style="display: none;">
                                         <span class="glyphicon glyphicon-trash"></span> 删除
                                     </button>
                                 </c:if>
                                 <c:if test="${order.orderStatus == 2}">
                                     <c:if test="${order.payStatus == 1}">
-                                        <button class="btn btn-danger btn-sm order-cancel" data-id="${order.orderId}" style="display: none;">
-                                            <span class="glyphicon glyphicon-remove"></span> 取消
+                                        <button class="btn btn-danger btn-sm order-delete" data-id="${order.orderId}"
+                                                style="display: none;">
+                                            <span class="glyphicon glyphicon-trash"></span> 删除
                                         </button>
                                     </c:if>
                                     <c:if test="${order.payStatus == 2}">
@@ -147,7 +150,8 @@
                                     </c:if>
                                 </c:if>
                                 <c:if test="${order.orderStatus == 3}">
-                                    <button class="btn btn-warning order-delete" data-id="${order.orderId}">
+                                    <button class="btn btn-warning order-delete" data-id="${order.orderId}"
+                                            style="display: none;">
                                         <span class="glyphicon glyphicon-trash"></span> 删除
                                     </button>
                                 </c:if>
