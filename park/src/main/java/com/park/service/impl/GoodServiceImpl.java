@@ -366,9 +366,6 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 			orderDetails.add(orderDetail);
 			//购买后，删除购物车的商品
 			baseDao.delete(goodShopping);
-			//购买后，库存减少
-			goodInfo.setGoodCount(goodCount - shoppingGoodAmount);
-			baseDao.save(goodInfo, goodInfo.getGoodId());
 		}
 		
 		Integer orderId = orderService.saveOrderInfo(orderInfo, orderDetails);
@@ -379,7 +376,8 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 	@Override
 	public void updateConfirmOrder(OrderInfo orderInfo) throws Exception{
 		if(orderInfo.getOrderId() == null) throw new MessageException("订单id为空");
-		orderInfo.setOrderStatus(IDBConstant.LOGIC_STATUS_YES); //商品支付后，直接已完成
+        orderInfo.setOrderStatus(IDBConstant.LOGIC_STATUS_YES); //商品支付后，直接已完成
+		orderInfo.setPayStatus(IDBConstant.LOGIC_STATUS_YES); //商品支付后，直接已完成
 		Integer orderId = orderService.updateConfirmOrder(orderInfo);
 		baseDao.updateBySql("UPDATE order_detail SET orderDetailStatus = ? WHERE orderId = ?", IDBConstant.LOGIC_STATUS_YES, orderId);
 		
@@ -393,9 +391,13 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 				inventoryLog.setGoodId(goodInfo.getGoodId());
 				inventoryLog.setOpType(IDBConstant.INVENTORY_OP_TYPE_OUT);
 				inventoryLog.setSalesId(goodInfo.getSalesId());
-				inventoryLog.setRemark("商品销售库存" + goodInfo.getGoodCount());
+				inventoryLog.setRemark("商品销售库存" + orderDetail.getItemAmount());
 				inventoryLog.setCreateTime(DateUtil.getNowDate());
 				baseDao.save(inventoryLog, null);
+
+                //购买后，库存减少
+                goodInfo.setGoodCount(goodInfo.getGoodCount() - orderDetail.getItemAmount());
+                baseDao.save(goodInfo, goodInfo.getGoodId());
 			}
 		}
 	}
@@ -548,6 +550,7 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
                 }
                 if (StrUtil.objToStr(map.get("opType")).equals(IDBConstant.INVENTORY_OP_TYPE_OUT)) {
                     arrList.get(mapIndex).put("typeOut", StrUtil.objToStr(map.get("countGoods")));
+                    typeOut += StrUtil.objToInt(map.get("countGoods"));
                     map.put("typeOutTotal", StrUtil.objToStr(map.get("goodTotal")));
                     goodTotal += StrUtil.objToDouble(map.get("goodTotal"));
                 }
@@ -566,6 +569,7 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
                 }
                 if (StrUtil.objToStr(map.get("opType")).equals(IDBConstant.INVENTORY_OP_TYPE_OUT)) {
                     map.put("typeOut", StrUtil.objToStr(map.get("countGoods")));
+                    typeOut += StrUtil.objToInt(map.get("countGoods"));
                     map.put("typeOutTotal", StrUtil.objToStr(map.get("goodTotal")));
                     goodTotal += StrUtil.objToDouble(map.get("goodTotal"));
                 }

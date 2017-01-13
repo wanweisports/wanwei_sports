@@ -84,7 +84,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="pay_model" tabindex="-1" role="dialog" aria-labelledby="pay_model_label">
+   <%-- <div class="modal fade" id="pay_model" tabindex="-1" role="dialog" aria-labelledby="pay_model_label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -112,7 +112,7 @@
                                                        placeholder="手机号码" autocomplete="off"
                                                        data-val="true" data-val-required="手机号码不能为空"
                                                        data-val-regex-pattern="^1\d{10}$"
-                                                       data-val-regex="手机号码格式错误">
+                                                       data-val-regex="手机号码格式错误" maxlength="11">
                                                 <div data-valmsg-for="moblie" data-valmsg-replace="true"></div>
                                             </div>
                                         </div>
@@ -122,7 +122,11 @@
                                             </label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" id="goods_user_name" name="name"
-                                                       placeholder="姓名" value="散客" autocomplete="off">
+                                                       placeholder="姓名" autocomplete="off"
+                                                       data-val="true" data-val-required="姓名不能为空"
+                                                       data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,9}$"
+                                                       data-val-regex="姓名长度只能2~12个字符">
+                                                <div data-valmsg-for="name" data-valmsg-replace="true"></div>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -136,7 +140,7 @@
                                 </div>
                             </div>
                         </div>
-                        <h1>商品支付</h1>
+                        <h1>去支付商品</h1>
                         <div class="goods-steps-pay">
                             <div class="panel panel-default">
                                 <div class="panel-body">
@@ -195,7 +199,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--%>
 
     <div class="modal fade" id="tips_confirm_modal" tabindex="-1" role="dialog" aria-labelledby="tips_confirm_modal_label">
         <div class="modal-dialog modal-sm">
@@ -212,6 +216,115 @@
                 <div class="modal-footer">
                     <button class="btn btn-warning" type="button" data-dismiss="modal">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="pay_model" tabindex="-1" role="dialog" aria-labelledby="pay_model_label">
+        <div class="modal-dialog" style="width: 640px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="pay_model_label">商品支付</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <p class="text-danger">在"购买人"输入框中，尝试着输入会员卡号、姓名、手机号作为检索条件。</p>
+                            <form id="goods_user_form" class="form-horizontal" novalidate onsubmit="return false;">
+                                <input type="hidden" id="goods_user_shoppingIds" name="shoppingIds">
+                                <input type="hidden" id="goods_user_memberId" name="memberId">
+                                <input type="hidden" id="goods_user_opType" name="opType" value="2">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="goods_user_name" class="col-sm-4 control-label">
+                                            <span class="text-danger">*</span> 购买人
+                                        </label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="goods_user_name" name="name"
+                                                   placeholder="购买人姓名" autocomplete="off"
+                                                   data-val="true" data-val-required="购买人不能为空"
+                                                   data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,9}$"
+                                                   data-val-regex="购买人姓名长度只能2~12个字符">
+                                            <div data-valmsg-for="name" data-valmsg-replace="true"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="goods_user_mobile" class="col-sm-4 control-label">
+                                            <span class="text-danger">*</span> 手机号码
+                                        </label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="goods_user_mobile" name="mobile"
+                                                   placeholder="手机号码" autocomplete="off"
+                                                   data-val="true" data-val-required="手机号码不能为空"
+                                                   data-val-regex-pattern="^1\d{10}$"
+                                                   data-val-regex="手机号码格式错误" maxlength="11">
+                                            <div data-valmsg-for="moblie" data-valmsg-replace="true"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <form id="goods_paid_form" class="form-horizontal" novalidate onsubmit="return false;">
+                                <input type="hidden" name="orderId" id="goods_paid_order">
+                                <input type="hidden" name="subAmount" id="goods_paid_subAmount" value="0">
+                                <input type="hidden" name="additionalPrice" id="goods_paid_additionalPrice" value="0">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="goods_paid_payType" class="col-sm-4 control-label">
+                                            <span class="text-danger">*</span> 支付方式
+                                        </label>
+
+                                        <div class="col-sm-8">
+                                            <select class="form-control" id="goods_paid_payType" name="payType"
+                                                    data-val="true" data-val-required="请选择支付方式">
+                                                <option value="">请选择</option>
+                                                <option value="1">现金</option>
+                                                <option value="2">支付宝</option>
+                                                <option value="3">微信</option>
+                                            </select>
+                                            <div data-valmsg-for="payType" data-valmsg-replace="true"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="goods_paid_sum" class="col-sm-4 control-label">
+                                            <span class="text-danger">*</span> 支付金额
+                                        </label>
+
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="goods_paid_sum" name="paySumPrice"
+                                                   placeholder="支付金额（元）" autocomplete="off"
+                                                   data-val="true" data-val-required="支付金额不能为空"
+                                                   data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                                   data-val-regex="支付金额格式错误" readonly>
+                                            <div data-valmsg-for="paySumPrice" data-valmsg-replace="true"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="goods_paid_remark" class="col-sm-2 control-label">备注</label>
+
+                                        <div class="col-sm-10">
+                                        <textarea class="form-control" rows="3" id="goods_paid_remark"
+                                                  name="orderRemark" placeholder="备注" autocomplete="off"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="goods_pay_order">
+                        <span class="glyphicon glyphicon-ok"></span> 确认支付
                     </button>
                 </div>
             </div>

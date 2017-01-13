@@ -36,7 +36,8 @@
                 var data = res.data;
 
                 if (res.code == 1) {
-                    $("#goods_paid_sum").val(data.presentPrice || data.originalPrice);
+                    var price = data.presentPrice || data.originalPrice;
+                    $("#goods_paid_sum").val(price.toFixed(2));
                 } else {
                     $.logConsole('订单计价失败', res.message);
                     $.tipsWarningAlert('订单计价失败');
@@ -46,7 +47,7 @@
         // 支付流程事件绑定
         bindPayEvents: function () {
             var content = this;
-            var $uiGoodsSteps = $("#pay_model");
+            //var $uiGoodsSteps = $("#pay_model");
 
             // 结算
             $(".goods-buy-money").on("click", function () {
@@ -58,10 +59,14 @@
                 });
 
                 $("#goods_user_shoppingIds").val(shoppingIds.join(","));
+
+                var $form = $("#goods_user_form");
+                var conditions = $form.serialize();
+                content.calculateShoppingMoney(conditions);
             });
 
             // 检索会员
-            $("#goods_user_mobile").autosuggest({
+            $("#goods_user_name").autosuggest({
                 url: '/member/searchMember',
                 method: 'post',
                 queryParamName: 'search',
@@ -82,7 +87,6 @@
                         } else {
                             $('#goods_user_memberId').val("0");
                             $('#goods_user_opType').val("2");
-                            $('#goods_user_name').val("散客");
                             return [];
                         }
                     } else {
@@ -103,8 +107,61 @@
                 }
             });
 
+            // 支付订单
+            $("#goods_pay_order").on("click", function (e) {
+                e.preventDefault();
+
+                function __saveOrder(cb) {
+                    var $form = $("#goods_user_form");
+                    var conditions = $form.serialize();
+
+                    if ($form.attr("submitting") === "submitting" || !$form.valid()) {
+                        return false;
+                    }
+                    $form.attr("submitting", "submitting");
+
+                    $.post('/good/saveOrder', conditions, function (res) {
+                        var data = res.data;
+                        $form.attr("submitting", "");
+
+                        if (res.code == 1) {
+                            $("#goods_paid_order").val(data.orderId);
+                            cb();
+                        } else {
+                            $.logConsole('保存订单失败', res.message);
+                            $.tipsWarningAlert('保存订单失败');
+                        }
+                    });
+                }
+
+                function __confirmOrder() {
+                    var $form = $("#goods_paid_form");
+                    var conditions = $form.serialize();
+
+                    if ($form.attr("submitting") === "submitting" || !$form.valid()) {
+                        return false;
+                    }
+                    $form.attr("submitting", "submitting");
+
+                    $.post('/good/confirmOrder', conditions, function (res) {
+                        $form.attr("submitting", "");
+
+                        if (res.code == 1) {
+                            $.tipsWarningAlert('支付订单成功！', function () {
+                                location.assign('/order/getOrderList?orderServiceTypes=300');
+                            });
+                        } else {
+                            $.logConsole('支付订单失败', res.message);
+                            $.tipsWarningAlert('支付订单失败');
+                        }
+                    });
+                }
+
+                __saveOrder(__confirmOrder);
+            });
+
             // 提交购买
-            $("#goods_user_pay").on("click", function (e) {
+            /*$("#goods_user_pay").on("click", function (e) {
                 e.preventDefault();
 
                 var $form = $("#goods_user_form");
@@ -153,7 +210,7 @@
                         $.tipsWarningAlert('支付订单失败');
                     }
                 })
-            });
+            });*/
         },
         initEvents: function () {
             var content = this;

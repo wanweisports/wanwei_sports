@@ -10,7 +10,17 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
     <script src="/Content/app/goods/goods_orders.js?v=${static_resource_version}"></script>
+    <script>
+        $(document).ready(function () {
+            // 配置表单校验
+            $('#goods_paid_form').validate({
+                ignore: ":hidden"
+            });
+        });
+    </script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
@@ -23,6 +33,27 @@
             <div class="panel-heading">商品订单查询</div>
             <div class="panel-body">
                 <form id="orders_filter_form" class="form-inline" onsubmit="return false;">
+                    <div class="form-group">
+                        <select class="form-control" name="payStatus" style="width: 180px;">
+                            <option value="">支付状态</option>
+                            <option value="1">已支付</option>
+                            <option value="0">未支付</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="orderNo" placeholder="订单号" value="${orderNo}">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="name" placeholder="购买人" value="${name}">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="mobile" placeholder="手机号码" value="${mobile}">
+                    </div>
+                    <div class="form-group">
+                        <a href="javascript:;" class="btn btn-primary order-filter">
+                            <span class="glyphicon glyphicon-search"></span> 检索 & 显示
+                        </a>
+                    </div>
                 </form>
             </div>
         </div>
@@ -70,6 +101,7 @@
                                     <th>商品价格</th>
                                     <th>购买数量</th>
                                     <th>预订状态</th>
+                                    <th>销售员</th>
                                 </tr>
                                 </thead>
                                 <c:forEach var="item" items="${order.orderDetailList}">
@@ -85,6 +117,7 @@
                                         <c:if test="${item.orderDetailStatus == 2}">
                                             <td class="text-danger">未支付</td>
                                         </c:if>
+                                        <td>${order.operatorName}</td>
                                     </tr>
                                 </c:forEach>
                             </table>
@@ -104,7 +137,8 @@
                                         </button>
                                     </c:if>
                                     <c:if test="${order.payStatus == 2}">
-                                        <button class="btn btn-primary btn-sm order-pay" data-id="${order.orderId}">
+                                        <button class="btn btn-primary btn-sm order-pay" data-id="${order.orderId}"
+                                                data-price="${order.orderSumPrice}">
                                             <span class="glyphicon glyphicon-usd"></span> 支付
                                         </button>
                                         <button class="btn btn-danger btn-sm order-cancel" data-id="${order.orderId}">
@@ -192,14 +226,14 @@
         </div>
     </div>
 
-    <div class="modal fade" id="zhifuModal" tabindex="-1" role="dialog" aria-labelledby="zhifuModalLabel">
+    <div class="modal fade" id="pay_model" tabindex="-1" role="dialog" aria-labelledby="pay_model_label">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="zhifuModalLabel">支付订单</h4>
+                    <h5 class="modal-title" id="pay_model_label">支付订单</h5>
                 </div>
                 <div class="modal-body">
                     <form id="goods_paid_form" class="form-horizontal" novalidate onsubmit="return false;">
@@ -240,7 +274,7 @@
                                        placeholder="支付金额" autocomplete="off"
                                        data-val="true" data-val-required="支付金额不能为空"
                                        data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
-                                       data-val-regex="支付金额格式错误">
+                                       data-val-regex="支付金额格式错误" readonly>
                                 <div data-valmsg-for="paySumPrice" data-valmsg-replace="true"></div>
                             </div>
                             <div class="col-sm-3">
