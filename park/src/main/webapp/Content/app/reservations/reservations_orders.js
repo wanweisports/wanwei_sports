@@ -28,12 +28,12 @@
 
                 if (conditions) {
                     if (conditions.indexOf("page=") == -1) {
-                        location.assign(content.opts.URL + '?' + conditions + '&page=' + pageIndex);
+                        location.assign(content.opts.URL + '&' + conditions + '&page=' + pageIndex);
                     } else {
-                        location.assign(content.opts.URL + '?' + conditions.replace(/(page=)\d+/, '$1' + pageIndex));
+                        location.assign(content.opts.URL + '&' + conditions.replace(/(page=)\d+/, '$1' + pageIndex));
                     }
                 } else {
-                    location.assign(content.opts.URL + '?page=' + pageIndex);
+                    location.assign(content.opts.URL + '&page=' + pageIndex);
                 }
             });
 
@@ -56,7 +56,8 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        alert(res.message || "取消订单失败, 请稍后重试");
+                        $.logConsole('取消订单失败', res.message);
+                        $.tipsWarningAlert('取消订单失败');
                     }
                 });
             });
@@ -80,7 +81,8 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        alert(res.message || "取消订单失败, 请稍后重试");
+                        $.logConsole('取消订单失败', res.message);
+                        $.tipsWarningAlert('取消订单失败');
                     }
                 });
             });
@@ -104,7 +106,7 @@
 
                     var data = res.data;
                     if (res.code == 1) {
-                        $("#zhifuModal").modal({backdrop: false, show: true});
+                        $("#pay_modal").modal({backdrop: false, show: true});
 
                         $("#reservations_paid_orderSumCount").val(data.sumNums);
                         $("#reservations_paid_orderSumPrice").val(data.originalPrice);
@@ -114,7 +116,8 @@
 
                         content.queryMemberBalance(conditions.memberId);
                     } else {
-                        alert(res.message || "查询订单支付失败, 请稍后重试");
+                        $.logConsole('查询订单支付失败', res.message);
+                        $.tipsWarningAlert('查询订单支付失败');
                     }
                 });
             });
@@ -123,13 +126,30 @@
             $(".reservations-pay-confirm").on("click", function (e) {
                 e.preventDefault();
 
-                $("#zhifuModal").modal("hide");
-                location.reload();
+                var $form = $("#reservations_paid_form");
+                var conditions = $form.serialize();
+
+                if ($form.attr("submitting") == "submitting" || !$form.valid()) {
+                    return false;
+                }
+                $form.attr("submitting", "submitting");
+
+                $.post('/site/confirmOrder', conditions, function (res) {
+                    $form.attr("submitting", "");
+
+                    if (res.code == 1) {
+                        $("#pay_modal").modal("hide");
+                        location.reload();
+                    } else {
+                        $.logConsole('确认订单失败', res.message);
+                        $.tipsWarningAlert('确认订单失败');
+                    }
+                });
             });
         },
         queryMemberBalance: function (memberId) {
             if (!memberId) {
-                $('#reservations_paid_balance').val("0.00");
+                $('#reservations_paid_balance').val("您还不是会员");
                 return;
             }
 
@@ -145,7 +165,8 @@
                         $("#reservations_paid_money").val(originalPrice - data.cardBalance);
                     }
                 } else {
-                    alert(res.message || "会员余额查询失败, 请稍后重试");
+                    $.logConsole('会员余额查询失败', res.message);
+                    $.tipsWarningAlert('会员余额查询失败');
                 }
             });
         },

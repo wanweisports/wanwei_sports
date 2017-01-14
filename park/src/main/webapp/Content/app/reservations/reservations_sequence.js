@@ -8,6 +8,7 @@
             ATTENTION: 4,    // 开场
             Current_Date: $("#current_date").val(),
             Current_Sport: $("#current_sport").val(),
+            Current_Week_Date: [],
             Reservation_Tpl: '<span class="name" data-id="#USERID#" data-name="#USERNAME#">#USERNAME1#</span>' +
                 '<span class="mobile" data-mobile="#USERMOBILE#" data-card="#CARDNO#">#USERMOBILE1#</span>' +
                 '<span class="angle" data-reserve="#RESERVETIMEID#"></span>',
@@ -16,7 +17,9 @@
             Reservation_list: '<li class="court">#SITENAME# #STARTTIME#-#ENDTIME#</li>'
         },
         init: function () {
+            // 初始化日期
             this.initDatePicker();
+            // 初始化日期菜单
             this.initMenuDate();
             this.loadReservations();
             this.initSequenceEvents();
@@ -38,8 +41,13 @@
                 defaultDate: new Date(),
                 onSelectDate: function (ct, $el) {
                     content.opts.Current_Date = $el.val();
-                    $(".sequence-date").find(".reservation-date-picker[data-value='" + content.opts.Current_Date + "']")
-                        .addClass("active").siblings().removeClass("active");
+
+                    if (content.opts.Current_Week_Date.indexOf(content.opts.Current_Date) > -1) {
+                        $(".sequence-date").find(".reservation-date-picker[data-value='" + content.opts.Current_Date + "']")
+                            .addClass("active").siblings().removeClass("active");
+                    } else {
+                        $(".sequence-date").find(".reservation-date-picker").removeClass("active");
+                    }
 
                     content.loadReservations();
                 }
@@ -64,11 +72,15 @@
             var Weeks = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
             var htmlArr = [];
             var week;
-            var weekday = date.weekday();
+            var weekday = parseInt(date.format("e"));//[1,2,3,4,5,6,0]
 
-            for (var i = 0; i < 7; i++) {
+            for (var i = 1; i <= 7; i++) {
                 date = moment(content.opts.Current_Date);
-                date.add(i, 'd');
+                if (i < weekday) {
+                    date.subtract(weekday - i, 'd');
+                } else {
+                    date.add(i - weekday, 'd');
+                }
 
                 if (date.format('e') == weekday) {
                     week = '今天';
@@ -82,6 +94,8 @@
                         .replace(/#DATEVALUE#/, date.format('YYYY-MM-DD'))
                         .replace(/#DATETEXT#/, week + '(' + date.format('MM-DD') + ')')
                 );
+
+                content.opts.Current_Week_Date.push(date.format('YYYY-MM-DD'));
             }
 
             $(".other-date-select").before(htmlArr.join(''));
@@ -98,22 +112,37 @@
                 $this.addClass("active").siblings().removeClass("active");
 
                 content.opts.Current_Date = $this.attr("data-value");
+                $("#other_date").val(content.opts.Current_Date);
                 content.loadReservations();
             });
 
-            $(".show-orders-btn .btn").on("click", function (e) {
-                e.preventDefault();
-
-                var $this = $(this);
-
-                if ($this.text() === "显示") {
-                    $this.text("隐藏");
-                    $(".show-orders-list").show();
+            var $draggableBtn = $(".show-orders-btn");
+            var $draggableList = $(".show-orders-list");
+            var $draggable = $draggableBtn.draggabilly({axis: 'x'});
+            var $textDraggableBtn = $draggableBtn.find(".btn");
+            $draggable.on('dragStart', function () {
+                $draggableBtn.css("position", "fixed");
+                $draggableList.hide();
+            });
+            $draggable.on('dragEnd', function (e, p) {
+                $draggableBtn.css("position", "fixed");
+                $draggableList.css("left", (p.x - 200) + "px");
+                if ($textDraggableBtn.text() === "显示") {
+                    $draggableList.hide();
                 } else {
-                    $this.text("显示");
-                    $(".show-orders-list").hide();
+                    $draggableList.show();
                 }
             });
+            $draggable.on('staticClick', function () {
+                if ($textDraggableBtn.text() === "显示") {
+                    $textDraggableBtn.text("隐藏");
+                    $draggableList.show();
+                } else {
+                    $textDraggableBtn.text("显示");
+                    $draggableList.hide();
+                }
+            });
+            $draggableBtn.css("position", "fixed");
         },
         // 加载当前所选日期的场地预订情况
         loadReservations: function () {
@@ -228,7 +257,8 @@
                         }
                     }
                 } else {
-                    alert(res.message || "查询预订信息失败, 请稍后重试");
+                    $.logConsole('查询预订信息失败', res.message);
+                    $.tipsWarningAlert('查询预订信息失败');
                 }
             });
         },
@@ -275,6 +305,9 @@
                 return;
             }
 
+            $selected = $selected.sort(function (min, max) {
+                return $(min).attr("data-col") - $(max).attr("data-col");
+            });
             var $sel = null;
             for (var i = 0; i < $selected.size(); i++) {
                 $sel = $selected.eq(i);
@@ -344,7 +377,7 @@
                     }
 
                     if ($sel.find("span.mobile").attr("data-mobile") !== mobile) {
-                        alert("请选择相同人的预订场地");
+                        $.tipsWarningAlert('请选择相同人的预订场地');
                         $this.addClass("sel").removeClass("sel");
                         return;
                     }
@@ -420,7 +453,7 @@
         // 初始化菜单操作
         initMenuButtons: function () {
             var content = this;
-            var $reservationsSteps = $("#zhifuModal");
+            var $reservationsModal = $("#pay_model");
 
             // 锁场
             $(".sequence-lock").on("click", function (e) {
@@ -429,13 +462,13 @@
                 var $this = $(this);
 
                 if ($this.attr("data-click") === "no") {
-                    return alert("当前不能锁定场地");
+                    return $.tipsWarningAlert('当前不能锁定场地');
                 }
 
                 var data = content.findReservationsSelected(content.opts.ORDERED);
 
                 if (data.length === 0) {
-                    return alert("请先选择场地");
+                    return $.tipsWarningAlert('请先选择场地');
                 }
 
                 content.opts.data = {
@@ -459,7 +492,8 @@
                             content.loadReservations();
                         }, 3000);
                     } else {
-                        alert(res.message || "锁场失败, 请稍后重试");
+                        $.logConsole('锁场失败', res.message);
+                        $.tipsWarningAlert('锁场失败');
                     }
                 });
             });
@@ -471,13 +505,13 @@
                 var $this = $(this);
 
                 if ($this.attr("data-click") === "no") {
-                    return alert("当前不能解锁场地");
+                    return $.tipsWarningAlert('当前不能解锁场地');
                 }
 
                 var data = content.findReservationsSelected(content.opts.LOCKED);
 
                 if (data.length === 0) {
-                    return alert("请先选择场地");
+                    return $.tipsWarningAlert('请先选择场地');
                 }
 
                 content.opts.data = {
@@ -500,7 +534,8 @@
                             content.loadReservations();
                         }, 3000);
                     } else {
-                        alert(res.message || "解锁失败, 请稍后重试");
+                        $.logConsole('解锁失败', res.message);
+                        $.tipsWarningAlert('解锁失败');
                     }
                 });
             });
@@ -512,13 +547,13 @@
                 var $this = $(this);
 
                 if ($this.attr("data-click") === "no") {
-                    return alert("当前不能预订场地");
+                    return $.tipsWarningAlert('当前不能预订场地');
                 }
 
                 var data = content.findReservationsSelected(content.opts.ORDERED);
 
                 if (data.length === 0) {
-                    return alert("请先选择场地");
+                    return $.tipsWarningAlert("请先选择场地");
                 }
 
                 content.opts.data = {
@@ -544,13 +579,13 @@
                         $("#reservations_paid_paySumPrice").val(data.originalPrice);
                         $("#reservations_paid_money").val(data.originalPrice);
                     } else {
-                        alert(res.message || "计算金额失败, 请稍后重试");
+                        $.logConsole('计算金额失败', res.message);
+                        $.tipsWarningAlert('计算金额失败');
                     }
                 });
 
-                $reservationsSteps.modal({backdrop: false, show: true});
-                $reservationsSteps.find(".reservations-steps").steps("previous", 1);
-                $("#reservations_user_name").val("散客");
+                $reservationsModal.modal({backdrop: false, show: true});
+                $("#reservations_user_name").val("");
                 $("#reservations_user_mobile").val("");
             });
 
@@ -559,37 +594,6 @@
                 e.preventDefault();
 
                 return false;
-
-                /*var $this = $(this);
-
-                if ($this.attr("data-click") === "no") {
-                    return alert("当前不能调换场地");
-                }
-
-                var data = content.findReservationsSelected(content.opts.REFRESHED);
-
-                if (data.length === 0) {
-                    return alert("请先选择场地");
-                }
-
-                content.opts.data = {
-                    siteReserveDateList: [{
-                        reserveStartDate: content.opts.Current_Date,
-                        reserveEndDate: content.opts.Current_Date,
-                        reserveWeek: content.formatWeek(content.opts.Current_Date),
-                        siteReserveTimeList: data
-                    }]
-                };
-                $.post('', {
-                    siteOperationJson: JSON.stringify(content.opts.data),
-                    lock: true
-                }, function (res) {
-                    if (res.code == 1) {
-                        $(".tips-modal").modal({backdrop: false, show: true});
-                    } else {
-                        alert(res.message || "锁场失败, 请稍后重试");
-                    }
-                });*/
             });
 
             // 开场
@@ -598,7 +602,7 @@
 
                 var data = content.findReservationsSelected(content.opts.REFRESHED);
                 if (data.length === 0) {
-                    return alert("请先选择场地");
+                    return $.tipsWarningAlert("请先选择场地");
                 }
 
                 $("#attention_user_name").val(data[0].name);
@@ -617,14 +621,14 @@
                 var $this = $(this);
 
                 if ($this.attr("data-click") === "no") {
-                    return alert("当前不能开场");
+                    return $.tipsWarningAlert("当前不能开场");
                 }
 
                 var data = content.findReservationsSelected(content.opts.REFRESHED);
                 var ids = [];
 
                 if (data.length === 0) {
-                    return alert("请先选择场地");
+                    return $.tipsWarningAlert("请先选择场地");
                 }
 
                 for (var i = 0; i < data.length; i++) {
@@ -645,7 +649,8 @@
 
                         location.reload();
                     } else {
-                        alert(res.message || "签到开场失败, 请稍后重试");
+                        $.logConsole('签到开场失败', res.message);
+                        $.tipsWarningAlert('签到开场失败');
                     }
                 });
             });
@@ -653,17 +658,71 @@
         // 预订弹窗弹窗
         initReservationsSteps: function () {
             var content = this;
-            var $reservationsSteps = $("#zhifuModal");
+            var $reservationsModal = $("#pay_model");
 
-            // 初始化支付流程步骤
-            $reservationsSteps.find(".reservations-steps").steps({
-                enableFinishButton: false,
-                enablePagination: false,
-                enableAllSteps: false
+            // 支付订单
+            $("#reservations_pay_order").on("click", function (e) {
+                e.preventDefault();
+
+                function __saveOrder(cb) {
+                    var $form = $("#reservations_user_form");
+
+                    if ($form.attr("submitting") === "submitting" || !$form.valid()) {
+                        return false;
+                    }
+                    $form.attr("submitting", "submitting");
+
+                    var data = content.opts.data;
+                    data.name = $("#reservations_user_name").val();
+                    data.mobile = $("#reservations_user_mobile").val();
+                    data.memberId = $("#reservations_user_member").val() || "0";
+                    data.opType = $("#reservations_user_opType").val();
+                    data.reserveType = "1";
+                    data.reserveModel = "1";
+
+                    $.post('/site/saveReservationSite', {
+                        siteOperationJson: JSON.stringify(data)
+                    }, function (res) {
+                        $form.attr("submitting", "");
+                        var data = res.data;
+
+                        if (res.code == 1) {
+                            $("#reservations_paid_order").val(data.orderId);
+                            cb();
+                        } else {
+                            $.logConsole('提交预订失败', res.message);
+                            $.tipsWarningAlert('提交预订失败');
+                        }
+                    });
+                }
+
+                function __confirmOrder() {
+                    var $form = $("#reservations_paid_form");
+                    var conditions = $form.serialize();
+
+                    if ($form.attr("submitting") == "submitting" || !$form.valid()) {
+                        return false;
+                    }
+                    $form.attr("submitting", "submitting");
+
+                    $.post('/site/confirmOrder', conditions, function (res) {
+                        $form.attr("submitting", "");
+
+                        if (res.code == 1) {
+                            $reservationsModal.modal("hide");
+                            content.loadReservations();
+                        } else {
+                            $.logConsole('确认订单失败', res.message);
+                            $.tipsWarningAlert('确认订单失败');
+                        }
+                    });
+                }
+
+                __saveOrder(__confirmOrder);
             });
 
             // 去支付
-            $("#reservations_user_pay").on("click", function (e) {
+            /*$("#reservations_user_pay").on("click", function (e) {
                 e.preventDefault();
 
                 var $form = $("#reservations_user_form");
@@ -689,9 +748,8 @@
 
                     if (res.code == 1) {
                         $("#reservations_paid_order").val(data.orderId);
-                        $reservationsSteps.find(".reservations-steps").steps("next", 1);
                     } else {
-                        alert(res.message || "提交预订失败, 请稍后重试");
+                        $.tipsWarningAlert(res.message || "提交预订失败, 请稍后重试");
                     }
                 });
             });
@@ -712,13 +770,13 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $reservationsSteps.modal("hide");
+                        $reservationsModal.modal("hide");
                         content.loadReservations();
                     } else {
-                        alert(res.message || "确认订单失败, 请稍后重试");
+                        $.tipsWarningAlert(res.message || "确认订单失败, 请稍后重试");
                     }
                 });
-            });
+            });*/
 
             // 检索会员
             $("#reservations_user_name").autosuggest({
@@ -741,13 +799,13 @@
                             return json;
                         } else {
                             $('#reservations_user_member').val("0");
-                            $('#reservations_user_mobile').val("");
                             $('#reservations_user_opType').val("2");
                             content.queryMemberBalance(0);
                             return [];
                         }
                     } else {
-                        alert('搜索会员失败, 请稍后重试');
+                        $.logConsole('搜索会员失败', res.message);
+                        $.tipsWarningAlert('搜索会员失败');
                         return [];
                     }
                 },
@@ -767,10 +825,9 @@
         },
         queryMemberBalance: function (memberId) {
             if (!memberId) {
-                $('#reservations_paid_balance').val("0.00").parents(".form-group").hide();
+                $('#reservations_paid_balance').val("您还不是会员");
                 return;
             }
-            $('#reservations_paid_balance').parents(".form-group").show();
 
             $.post('/member/memberDetail', {memberId: memberId}, function (res) {
                 var data = res.data;
@@ -784,7 +841,8 @@
                         $("#reservations_paid_money").val(originalPrice - data.cardBalance);
                     }
                 } else {
-                    alert(res.message || "会员余额查询失败, 请稍后重试");
+                    $.logConsole('会员余额查询失败', res.message);
+                    $.tipsWarningAlert('会员余额查询失败');
                 }
             });
         },

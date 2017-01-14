@@ -3,15 +3,6 @@
         init: function () {
             this.initEvents();
 
-            /*var $uiGoodsSteps = $("#pay_model");
-
-            // 初始化支付流程步骤
-            $uiGoodsSteps.find(".goods-steps").steps({
-                enableFinishButton: false,
-                enablePagination: false,
-                enableAllSteps: false
-            });*/
-
             this.bindPayEvents();
             $(".money-num").text(this.calculateMoney());
         },
@@ -47,7 +38,6 @@
         // 支付流程事件绑定
         bindPayEvents: function () {
             var content = this;
-            //var $uiGoodsSteps = $("#pay_model");
 
             // 结算
             $(".goods-buy-money").on("click", function () {
@@ -161,58 +151,6 @@
 
                 __saveOrder(__confirmOrder);
             });
-
-            // 提交购买
-            /*$("#goods_user_pay").on("click", function (e) {
-                e.preventDefault();
-
-                var $form = $("#goods_user_form");
-                var conditions = $form.serialize();
-
-                if ($form.attr("submitting") === "submitting" || !$form.valid()) {
-                    return false;
-                }
-                $form.attr("submitting", "submitting");
-
-                $.post('/good/saveOrder', conditions, function (res) {
-                    var data = res.data;
-                    $form.attr("submitting", "");
-
-                    if (res.code == 1) {
-                        $uiGoodsSteps.find(".goods-steps").steps("next", 1);
-                        $("#goods_paid_order").val(data.orderId);
-                    } else {
-                        $.logConsole('保存订单失败', res.message);
-                        $.tipsWarningAlert('保存订单失败');
-                    }
-                });
-
-                content.calculateShoppingMoney(conditions);
-            });
-
-            // 确定支付
-            $("#goods_paid_confirm").on("click", function (e) {
-                e.preventDefault();
-
-                var $form = $("#goods_paid_form");
-                var conditions = $form.serialize();
-
-                if ($form.attr("submitting") === "submitting" || !$form.valid()) {
-                    return false;
-                }
-                $form.attr("submitting", "submitting");
-
-                $.post('/good/confirmOrder', conditions, function (res) {
-                    $form.attr("submitting", "");
-
-                    if (res.code == 1) {
-                        location.assign('/order/getOrderList?orderServiceTypes=300');
-                    } else {
-                        $.logConsole('支付订单失败', res.message);
-                        $.tipsWarningAlert('支付订单失败');
-                    }
-                })
-            });*/
         },
         initEvents: function () {
             var content = this;

@@ -18,9 +18,9 @@
 
                 if (conditions) {
                     if (conditions.indexOf("page=") == -1) {
-                        location.assign(content.opts.URL + '?' + conditions + '&page=' + pageIndex);
+                        location.assign(content.opts.URL + conditions + '&page=' + pageIndex);
                     } else {
-                        location.assign(content.opts.URL + '?' + conditions.replace(/(page=)\d+/, '$1' + pageIndex));
+                        location.assign(content.opts.URL + conditions.replace(/(page=)\d+/, '$1' + pageIndex));
                     }
                 } else {
                     location.assign(content.opts.URL + '?page=' + pageIndex);

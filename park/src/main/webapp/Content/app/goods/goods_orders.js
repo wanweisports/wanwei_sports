@@ -55,7 +55,8 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        alert(res.message || "取消订单失败, 请稍后重试");
+                        $.logConsole('取消订单失败', res.message);
+                        $.tipsWarningAlert('取消订单失败');
                     }
                 });
             });
@@ -79,7 +80,8 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        alert(res.message || "取消订单失败, 请稍后重试");
+                        $.logConsole('取消订单失败', res.message);
+                        $.tipsWarningAlert('取消订单失败');
                     }
                 });
             });

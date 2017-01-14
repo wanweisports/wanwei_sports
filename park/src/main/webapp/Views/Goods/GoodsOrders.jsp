@@ -239,8 +239,8 @@
                     </button>
                     <h5 class="modal-title" id="pay_model_label">支付订单</h5>
                 </div>
-                <div class="modal-body">
-                    <form id="goods_paid_form" class="form-horizontal" novalidate onsubmit="return false;">
+                <div class="modal-body clearfix">
+                    <form id="goods_paid_form" class="form-horizontal clearfix" novalidate onsubmit="return false;">
                         <input type="hidden" name="orderId" id="goods_paid_order">
                         <input type="hidden" name="subAmount" id="goods_paid_subAmount" value="0">
                         <input type="hidden" name="additionalPrice" id="goods_paid_additionalPrice" value="0">
