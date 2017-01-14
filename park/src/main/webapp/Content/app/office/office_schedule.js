@@ -6,6 +6,18 @@
         init: function () {
             $.datetimepicker.setLocale('zh');
 
+            $('#createTimeStart').datetimepicker({
+                timepicker: false,
+                lang: "zh",
+                format:'Y-m-d'
+            });
+
+            $('#createTimeEnd').datetimepicker({
+                timepicker: false,
+                lang: "zh",
+                format:'Y-m-d'
+            });
+
             // 表单时间控件设置
             $('#user_schedule_date').datetimepicker({
                 timepicker: false,
@@ -20,7 +32,7 @@
                 datepicker: false,
                 format: "H:i",
                 step: 30,
-                value: '06:00'
+                value: '08:00'
             });
 
             // 结束时间
@@ -79,8 +91,8 @@
                     if (res.code == 1) {
                         setScheduleInfo(data);
                     } else {
-                        console.log(res.message || "查询值班详情失败, 请稍后重试");
-                        alert(res.message || "查询值班详情失败, 请稍后重试");
+                        $.logConsole('查询值班详情失败', res.message);
+                        $.tipsWarningAlert('查询值班详情失败');
                     }
                 });
             });
@@ -101,13 +113,12 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $("#tips_modal").modal({backdrop: false, show: true});
-                        setTimeout(function () {
-                            $("#tips_modal").modal("hide");
+                        $.tipsSuccessAlert("值班信息提交成功！", function () {
                             location.reload();
-                        }, 3000);
+                        });
                     } else {
-                        alert(res.message || "值班信息保存失败, 请稍后重试");
+                        $.logConsole('值班信息保存失败', res.message);
+                        $.tipsWarningAlert('值班信息保存失败');
                     }
                 });
             });
@@ -120,7 +131,8 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        alert(res.message || "值班信息删除失败, 请稍后重试");
+                        $.logConsole('值班信息删除失败', res.message);
+                        $.tipsWarningAlert('值班信息删除失败');
                     }
                 });
             });

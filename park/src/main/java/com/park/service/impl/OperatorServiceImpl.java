@@ -221,8 +221,9 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 		if(StrUtil.isNotBlank(createTimeEnd)){
 			sql.append(" AND DATE(us.date) <= :createTimeEnd");
 		}
-		sql.append(dataService.getCountSql(countNum, "us.date"));
-		
+		if (countNum != null) {
+			sql.append(dataService.getCountSql(countNum, "us.date"));
+		}
 		sql.append(" ORDER BY date, startTime");
 		
 		List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
