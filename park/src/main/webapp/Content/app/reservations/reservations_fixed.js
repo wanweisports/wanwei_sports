@@ -113,7 +113,7 @@
             });
         },
         queryMemberBalance: function (memberId) {
-            if (!memberId) {
+            if (!memberId || memberId == "0") {
                 $('#reservations_paid_balance').val("您还不是会员");
                 return;
             }
@@ -255,11 +255,13 @@
                 e.preventDefault();
 
                 var $list = $(".reservations-list");
+                var memberId = $("#reservations_batch_member").val();
                 if ($list.find("tr").size() == 1) {
                     alert("请先加场");
                     return false;
                 }
 
+                content.queryMemberBalance(memberId);
                 $("#pay_model").modal({backdrop: false, show: true});
             });
 
