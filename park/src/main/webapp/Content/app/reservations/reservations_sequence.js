@@ -484,13 +484,8 @@
                     lock: true
                 }, function (res) {
                     if (res.code == 1) {
-                        $(".tips-modal").modal({backdrop: false, show: true})
-                            .find(".text-message").text("您已经成功锁定这些场地。");
-
-                        setTimeout(function () {
-                            $(".tips-modal").modal("hide");
-                            content.loadReservations();
-                        }, 3000);
+                        content.loadReservations();
+                        $.tipsSuccessAlert('您已经成功锁定这些场地！');
                     } else {
                         $.logConsole('锁场失败', res.message);
                         $.tipsWarningAlert('锁场失败');
@@ -527,12 +522,8 @@
                     lock: false
                 }, function (res) {
                     if (res.code == 1) {
-                        $(".tips-modal").modal({backdrop: false, show: true})
-                            .find(".text-message").text("您已经成功解锁这些场地。");
-                        setTimeout(function () {
-                            $(".tips-modal").modal("hide");
-                            content.loadReservations();
-                        }, 3000);
+                        content.loadReservations();
+                        $.tipsSuccessAlert('您已经成功解锁这些场地！');
                     } else {
                         $.logConsole('解锁失败', res.message);
                         $.tipsWarningAlert('解锁失败');
@@ -709,8 +700,10 @@
                         $form.attr("submitting", "");
 
                         if (res.code == 1) {
-                            $reservationsModal.modal("hide");
                             content.loadReservations();
+                            $.tipsSuccessAlert('预订支付成功！', function () {
+                                $reservationsModal.modal("hide");
+                            });
                         } else {
                             $.logConsole('确认订单失败', res.message);
                             $.tipsWarningAlert('确认订单失败');

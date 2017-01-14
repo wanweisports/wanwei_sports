@@ -17,7 +17,7 @@
 
         // 获取用户信息
         var user = $.cookie('wc-user');
-        if (user) {
+        if (false && user) {
             user = JSON.parse(user);
             $(".top-menu-username").text(user.operatorName);
         } else {

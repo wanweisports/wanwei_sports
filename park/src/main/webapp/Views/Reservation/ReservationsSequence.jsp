@@ -97,7 +97,7 @@
                         </ul>
                     </div>
                 </nav>
-                <form class="form-inline" novalidate onsubmit="return false;" style="clear: both;">
+                <form class="form-inline" novalidate onsubmit="return false;" style="clear: both; display: none;">
                     <div class="form-group">
                         <label style="margin-left: 10px;">场地状态:</label>
 
@@ -417,22 +417,6 @@
                             </div>
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade tips-modal" tabindex="-1" role="dialog" aria-labelledby="tipsModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="tipsModalLabel">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-danger text-message" role="alert">您已经成功锁定这些场地!</div>
                 </div>
             </div>
         </div>

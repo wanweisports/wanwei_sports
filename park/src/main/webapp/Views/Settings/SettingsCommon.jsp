@@ -112,7 +112,7 @@
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="start_time" name="businessStartTime"
-                                       placeholder="请输入营业开始时间" autocomplete="off" value="${businessStartTime}"
+                                       placeholder="营业开始时间" autocomplete="off" value="${businessStartTime}"
                                        data-val="true" data-val-required="营业开始时间不能为空"
                                        data-val-regex-pattern="^(([0-1]\d)|(2[0-3])):[0-5]\d$"
                                        data-val-regex="营业开始时间格式错误" maxlength="5">
@@ -129,7 +129,7 @@
 
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="end_time" name="businessEndTime"
-                                       placeholder="请输入营业结束时间" autocomplete="off" value="${businessEndTime}"
+                                       placeholder="营业结束时间" autocomplete="off" value="${businessEndTime}"
                                        data-val="true" data-val-required="营业结束时间不能为空"
                                        data-val-regex-pattern="^(([0-1]\d)|(2[0-3])):[0-5]\d$"
                                        data-val-regex="营业结束时间格式错误" maxlength="5">
@@ -156,7 +156,7 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="site_phone" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 联系电话
+                                <span class="text-danger">*</span> 联系手机
                             </label>
 
                             <div class="col-sm-8 input-parent-magnifier">

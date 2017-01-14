@@ -108,6 +108,7 @@
                     if (res.code == 1) {
                         $("#pay_modal").modal({backdrop: false, show: true});
 
+                        $("#reservations_paid_order").val(conditions.orderId);
                         $("#reservations_paid_orderSumCount").val(data.sumNums);
                         $("#reservations_paid_orderSumPrice").val(data.originalPrice);
                         $("#reservations_paid_payCount").val(data.sumNums);
@@ -123,7 +124,7 @@
             });
 
             // 确认支付
-            $(".reservations-pay-confirm").on("click", function (e) {
+            $("#reservations_pay_order").on("click", function (e) {
                 e.preventDefault();
 
                 var $form = $("#reservations_paid_form");
@@ -148,7 +149,7 @@
             });
         },
         queryMemberBalance: function (memberId) {
-            if (!memberId) {
+            if (!memberId || memberId == "0") {
                 $('#reservations_paid_balance').val("您还不是会员");
                 return;
             }
