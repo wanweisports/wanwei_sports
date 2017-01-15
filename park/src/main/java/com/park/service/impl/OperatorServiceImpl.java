@@ -228,7 +228,7 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 		
 		List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
 		String datePre = null;
-		List<Map<String, Object>> listGroup = new ArrayList<Map<String, Object>>();	
+		List<Map<String, Object>> listGroup = new ArrayList<Map<String, Object>>();
 		for(Map<String, Object> map : list){
 			String date = StrUtil.objToStr(map.get("date"));
 			String today = StrUtil.objToStr(map.get("today"));

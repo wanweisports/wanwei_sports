@@ -323,7 +323,7 @@
                         </tr>
                         <tr class="list-nav-item office ${(param.nav == "office" && param.subNav == "schedule") ? "active" : ""}">
                             <td>
-                                <span><a href="/office/schedule?countNum=3">排班管理</a></span>
+                                <span><a href="/office/schedule?countNum=21">排班管理</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item office ${(param.nav == "office" && param.subNav == "course") ? "active" : ""}">

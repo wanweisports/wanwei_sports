@@ -35,8 +35,8 @@
                             $("#student_pay_modal").find("#students_status1").prop("checked", true);
                         }
                     } else {
-                        console.log(res.message || "查询报名详情失败, 请稍后重试");
-                        alert(res.message || "查询报名详情失败, 请稍后重试");
+                        $.logConsole('查询报名详情失败', res.message);
+                        $.tipsWarningAlert('查询报名详情失败');
                     }
                 });
             });
@@ -51,8 +51,8 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        console.log(res.message || "删除报名详情失败, 请稍后重试");
-                        alert(res.message || "删除报名详情失败, 请稍后重试");
+                        $.logConsole('删除报名详情失败', res.message);
+                        $.tipsWarningAlert('删除报名详情失败');
                     }
                 });
             });
@@ -82,7 +82,8 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        alert(res.message || "报名信息保存失败, 请稍后重试");
+                        $.logConsole('报名信息保存失败', res.message);
+                        $.tipsWarningAlert('报名信息保存失败');
                     }
                 });
             });
@@ -105,7 +106,8 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        alert(res.message || "报名信息保存失败, 请稍后重试");
+                        $.logConsole('报名信息保存失败', res.message);
+                        $.tipsWarningAlert('报名信息保存失败');
                     }
                 });
             });

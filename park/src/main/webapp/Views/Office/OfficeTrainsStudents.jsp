@@ -22,12 +22,14 @@
             <div class="panel-body">
                 <h3>${classInfo.className}</h3>
                 <p>${classInfo.classRemark}</p>
-                <p>
-                    <button type="button" class="btn btn-warning add-sign" data-toggle="modal"
-                            data-target="#student_sign_modal" data-backdrop="false">
-                        <span class="glyphicon glyphicon-user"></span> 我要报名
-                    </button>
-                </p>
+                <c:if test="${isSigned}">
+                    <p>
+                        <button type="button" class="btn btn-warning add-sign" data-toggle="modal"
+                                data-target="#student_sign_modal" data-backdrop="false">
+                            <span class="glyphicon glyphicon-user"></span> 我要报名
+                        </button>
+                    </p>
+                </c:if>
             </div>
         </div>
         <div class="panel panel-default">
@@ -68,9 +70,11 @@
                                             <span class="glyphicon glyphicon-usd"></span> 支付
                                         </button>
                                     </c:if>
-                                    <button type="button" class="btn btn-danger sign-delete" data-id="${student.id}">
-                                        <span class="glyphicon glyphicon-trash"></span> 移除
-                                    </button>
+                                    <c:if test="${!isSigned}">
+                                        <button type="button" class="btn btn-danger sign-delete" data-id="${student.id}">
+                                            <span class="glyphicon glyphicon-trash"></span> 移除
+                                        </button>
+                                    </c:if>
                                 </td>
                             </tr>
                         </c:forEach>

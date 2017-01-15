@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -412,7 +414,16 @@ public class OfficeController extends BaseController {
             UserOperator userInfo = super.getUserInfo();
             trainsClassStudentsInputView.setSaleId(userInfo.getId());
             model.addAllAttributes(JsonUtils.fromJsonDF(trainsClassStudentsInputView));
-            model.addAttribute("classInfo", trainsClassService.getTrainsClassInfo(trainsClassStudentsInputView.getClassId()));
+            TrainsClassInfo trainsClassInfo = trainsClassService.getTrainsClassInfo(trainsClassStudentsInputView.getClassId());
+
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            if (trainsClassInfo.getEndTime().compareTo(df.format(new Date())) < 0) {
+                model.addAttribute("isSigned", false);
+            } else {
+                model.addAttribute("isSigned", true);
+            }
+
+            model.addAttribute("classInfo", trainsClassInfo);
             PageBean pageBean = trainsClassStudentsService.getTrainsClassStudentsList(trainsClassStudentsInputView);
             super.setPageInfo(model, pageBean);
         } catch (Exception e) {
