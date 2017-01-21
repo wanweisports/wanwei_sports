@@ -8,6 +8,8 @@
             $(".register-student").on("click", function (e) {
                 e.preventDefault();
 
+                var $btn = $(this).button('loading');
+
                 var $form = $("#student_form");
                 var conditions = $form.serialize();
 
@@ -18,15 +20,15 @@
 
                 $.post('/students/saveStudent', conditions, function (res) {
                     if (res.code == 1) {
-                        $("#tips_success_modal").modal({show: true, backdrop: false});
-                        setTimeout(function () {
-                            $("#tips_success_modal").modal("hide");
+                        $.tipsSuccessAlert('学生办卡成功！', function () {
                             location.assign('/students/list');
-                        }, 3000);
+                        });
                     } else {
-                        console.log(res.message || "学生信息办理失败, 请稍后重试");
-                        alert(res.message || "学生信息办理失败, 请稍后重试");
+                        $.logConsole('学生办卡失败', res.message);
+                        $.tipsWarningAlert('学生办卡失败');
                     }
+
+                    $btn.button('reset');
                 });
             });
         }

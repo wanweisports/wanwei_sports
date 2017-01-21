@@ -43,7 +43,7 @@
 
                             <div class="col-sm-6">
                                 <input type="text" class="form-control" id="keywords" name="search" value="${cardNo}"
-                                       placeholder="手机号, 会员卡号" autocomplete="off"
+                                       placeholder="手机号，会员卡号，会员姓名" autocomplete="off"
                                        data-val="true" data-val-required="请输入搜索关键字">
                                 <div data-valmsg-for="search" data-valmsg-replace="true"></div>
                             </div>
@@ -59,14 +59,14 @@
                             <label class="col-sm-4 control-label">会员姓名</label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" value="${memberName }" disabled>
+                                <input type="text" class="form-control" value="${memberName}" disabled>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">手机号码</label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" value="${memberMobile }" disabled>
+                                <input type="text" class="form-control" value="${memberMobile}" disabled>
                             </div>
                         </div>
                     </div>
@@ -76,11 +76,19 @@
 
                             <div class="col-sm-8">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" value="<c:if test='${cardBalance!=null}'>${cardBalance}元</c:if>" disabled>
+                                    <input type="text" class="form-control"
+                                           value="<c:if test='${cardBalance != null}'>${cardBalance}元</c:if>" disabled>
                                     <span class="input-group-btn">
+                                        <c:if test="${cardNo != null}">
                                         <a class="btn btn-primary" href="/member/getBalances?cardId=${cardId}&memberId=${memberId}">
                                             <i class="glyphicon glyphicon-th-list"></i> 明细
                                         </a>
+                                        </c:if>
+                                        <c:if test="${cardNo == null}">
+                                        <a class="btn btn-default" href="javascript:;">
+                                            <i class="glyphicon glyphicon-th-list"></i> 明细
+                                        </a>
+                                        </c:if>
                                     </span>
                                 </div>
                             </div>
@@ -182,7 +190,8 @@
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
                                 <p class="sc-submit-tips"></p>
-                                <button type="button" class="btn btn-primary col-sm-4 recharge-card-submit">
+                                <button type="button" class="btn btn-primary col-sm-4 recharge-card-submit"
+                                        data-loading-text="充值中...">
                                     <span class="glyphicon glyphicon-ok"></span> 确认 & 收款
                                 </button>
                             </div>
@@ -194,7 +203,7 @@
     </div>
 
     <div class="modal fade" id="invoice_confirm_modal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel">
-        <div class="modal-dialog">
+        <div class="modal-dialog" style="width: 620px;">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -327,7 +336,7 @@
                         <input type="checkbox" value="1" name="is_print_ticket" id="is_print_ticket"> 登记发票吗?
                     </label>
                     <button type="button" class="btn btn-primary print-ticket">
-                        <span class="glyphicon glyphicon-print"></span> 打印小票
+                        <span class="glyphicon glyphicon-save"></span> 登记保存
                     </button>
                 </div>
             </div>

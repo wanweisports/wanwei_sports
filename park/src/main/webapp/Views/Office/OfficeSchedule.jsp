@@ -12,6 +12,7 @@
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/echarts/echarts.min.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
     <script src="/Content/app/office/office_schedule.js?v=${static_resource_version}"></script>
@@ -47,9 +48,9 @@
                 <form id="data_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="/office/schedule?countNum=100" data-date="100" class="btn btn-default schedule-date">上周</a>
-                            <a href="/office/schedule?countNum=3" data-date="3" class="btn btn-primary schedule-date">本周</a>
-                            <a href="/office/schedule?countNum=200" data-date="200" class="btn btn-default schedule-date">下周</a>
+                            <a href="/office/schedule?countNum=20" data-date="20" class="btn btn-default schedule-date">上周</a>
+                            <a href="/office/schedule?countNum=21" data-date="21" class="btn btn-primary schedule-date">本周</a>
+                            <a href="/office/schedule?countNum=22" data-date="22" class="btn btn-default schedule-date">下周</a>
                         </div>
                     </div>
                     <div class="form-group">
@@ -150,6 +151,9 @@
                 </div>
             </div>
         </c:forEach>
+        <c:if test="${fn:length(schedules) == 0}">
+            <p class="text-muted no-list-count">没有值班安排！</p>
+        </c:if>
     </div>
 
     <div class="modal fade" id="schedule_modal" tabindex="-1" role="dialog" aria-labelledby="schedule_modal_label">
@@ -229,22 +233,6 @@
                     <button type="button" class="btn btn-primary" id="user_schedule_submit">
                         <span class="glyphicon glyphicon-ok"></span> 保存值班
                     </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="tips_modal" tabindex="-1" role="dialog" aria-labelledby="tipsModalLabel">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="tipsModalLabel">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-success" role="alert">值班信息提交成功!</div>
                 </div>
             </div>
         </div>

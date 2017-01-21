@@ -1,5 +1,7 @@
 package com.park.controller;
 
+import com.park.common.bean.ResponseBean;
+import com.park.common.exception.MessageException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.park.common.bean.DataInputView;
 import com.park.common.util.JsonUtils;
 import com.park.service.IDataService;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by wangjun on 16/10/20.
@@ -18,14 +25,83 @@ public class DataController extends BaseController {
 	
 	@Autowired
 	private IDataService dataService;
-	
+
+    // 会员注册个数统计
+    @ResponseBody
+    @RequestMapping(value = "getMembersCountData", method = RequestMethod.POST)
+    public ResponseBean getMembersCountData(DataInputView dataInputView) {
+        try {
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("memberCount", dataService.getMembersRegister(dataInputView));
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
+    // 会员注册储值统计
+    @ResponseBody
+    @RequestMapping(value = "getMembersStoredData", method = RequestMethod.POST)
+    public ResponseBean getMembersStoredData(DataInputView dataInputView) {
+        try {
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("memberStored", dataService.getMembersRegisterStored(dataInputView));
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
+    // 会员注册消费统计
+    /*@ResponseBody
+    @RequestMapping(value = "getMembersConsumeData", method = RequestMethod.POST)
+    public ResponseBean getMembersConsumeData(DataInputView dataInputView) {
+        try {
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("memberConsume", dataService.getMembersRegisterStored(dataInputView));
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }*/
+
+    // 会员注册统计
+    @ResponseBody
+    @RequestMapping(value = "getMembersRegister", method = RequestMethod.POST)
+    public ResponseBean getMembersRegisterP(DataInputView dataInputView) {
+        try {
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("memberCount", dataService.getMembersRegister(dataInputView));
+            data.put("memberStored", dataService.getMembersRegisterStored(dataInputView));
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
 	
     // 会员注册统计
     @RequestMapping("getMembersRegister")
     public String getMembersRegister(DataInputView dataInputView, Model model) {
     	try {
     		model.addAllAttributes(JsonUtils.fromJson(dataInputView));
-			model.addAttribute("data", dataService.countMembersRegister(dataService.getMembersRegister(dataInputView)));
+            model.addAttribute("memberCount", dataService.getMembersRegister(dataInputView));
+            model.addAttribute("memberStored", dataService.getMembersRegisterStored(dataInputView));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

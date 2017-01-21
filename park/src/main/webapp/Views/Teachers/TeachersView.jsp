@@ -20,6 +20,7 @@
             $('#member_form').validate({
                 ignore: ":hidden"
             });
+            $('[name="memberSex"][value="${memberSex}"]').prop("checked", true);
         });
     </script>
 </layout:override>
@@ -52,13 +53,13 @@
                                 <span class="text-danger">*</span> 手机号码
                             </label>
 
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="member_mobile" name="memberMobile"
+                            <div class="col-sm-8 input-parent-magnifier">
+                                <input type="text" class="form-control input-element-magnifier" id="member_mobile" name="memberMobile"
                                        placeholder="请输入手机号码" autocomplete="off"
                                        data-val="true" data-val-required="手机号码不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
                                        data-val-regex="手机号码格式错误"
-                                       value="${memberMobile}">
+                                       value="${memberMobile}" maxlength="11">
                                 <div data-valmsg-for="memberMobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -68,7 +69,9 @@
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="memberBirthday" name="memberBirthday"
-                                           placeholder="教师生日" value="${memberBirthday}">
+                                           placeholder="教师生日" value="${memberBirthday}"
+                                           data-val-regex-pattern="^\d{4}-\d{2}-\d{2}$"
+                                           data-val-regex="会员生日格式错误" maxlength="10">
                                     <span class="input-group-addon member-birthday-select">
                                         <i class="glyphicon glyphicon-calendar"></i>
                                     </span>
@@ -93,17 +96,23 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="memberIdcard" class="col-sm-4 control-label">
+                            <label for="member_idcard" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 身份证号
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="memberIdcard" name="memberIdcard"
-                                       placeholder="请输入18位身份证号" autocomplete="off"
-                                       data-val="true" data-val-required="身份证号不能为空"
-                                       data-val-regex-pattern="^\d{17}(\d|X|x)$"
-                                       data-val-regex="身份证号格式错误"
-                                       value="${memberIdcard}">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="member_idcard" name="memberIdcard"
+                                           placeholder="请输入18位身份证号" autocomplete="off"
+                                           data-val="true" data-val-required="身份证号不能为空"
+                                           data-val-regex-pattern="^\d{17}(\d|X|x)$"
+                                           data-val-regex="身份证号格式错误" maxlength="18" value="${memberIdcard}">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-warning">
+                                            <i class="glyphicon glyphicon-transfer"></i> 读取
+                                        </button>
+                                    </span>
+                                </div>
                                 <div data-valmsg-for="memberIdcard" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -113,22 +122,12 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <c:if test="${memberSex == 1}">
-                                    <label class="radio-inline">
-                                        <input type="radio" name="memberSex" id="member_sex1" value="1" checked> 男
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="memberSex" id="member_sex2" value="2"> 女
-                                    </label>
-                                </c:if>
-                                <c:if test="${memberSex == 2}">
-                                    <label class="radio-inline">
-                                        <input type="radio" name="memberSex" id="member_sex1" value="1"> 男
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="memberSex" id="member_sex2" value="2" checked> 女
-                                    </label>
-                                </c:if>
+                                <label class="radio-inline">
+                                    <input type="radio" name="memberSex" id="member_sex1" value="1"> 男
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="memberSex" id="member_sex2" value="2" checked> 女
+                                </label>
                                 <div data-valmsg-for="memberSex" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -152,7 +151,8 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
-                                <button type="button" class="btn btn-primary col-sm-4 save-member">
+                                <button type="button" class="btn btn-primary col-sm-4 save-member"
+                                        data-loading-text="保存中...">
                                     <span class="glyphicon glyphicon-ok"></span>  保 存
                                 </button>
                             </div>

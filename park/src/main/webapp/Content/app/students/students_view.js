@@ -8,6 +8,8 @@
             $(".save-student").on("click", function (e) {
                 e.preventDefault();
 
+                var $btn = $(this).button('loading');
+
                 var $form = $("#student_form");
                 var conditions = $form.serialize();
 
@@ -20,15 +22,15 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $("#tips_success_modal").modal({backdrop: false, show: true});
-                        setTimeout(function () {
-                            $("#tips_success_modal").modal("hide");
+                        $.tipsSuccessAlert('学生信息保存成功！', function () {
                             location.assign('/students/list');
-                        }, 3000);
+                        });
                     } else {
-                        console.log(res.message || "学生信息保存失败, 请稍后重试");
-                        alert(res.message || "学生信息保存失败, 请稍后重试");
+                        $.logConsole('学生信息保存失败', res.message);
+                        $.tipsWarningAlert('学生信息保存失败');
                     }
+
+                    $btn.button('reset');
                 });
             });
         }

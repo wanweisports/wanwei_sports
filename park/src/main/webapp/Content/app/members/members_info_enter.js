@@ -1,7 +1,7 @@
 (function ($) {
     var Members_register = {
         opts: {
-            ToURL: "/member/membersInfoCar"
+            ToURL: "/member/bindMembersCard"
         },
         init: function () {
             $.datetimepicker.setLocale('zh');
@@ -31,14 +31,18 @@
                 e.preventDefault();
 
                 var card = $(this).val();
+                var birthday = card.replace(/^\d{6}(\d{4})(\d{2})(\d{2})[0-9xX]{4}$/, "$1-$2-$3");
+                var sex = card.replace(/^\d{16}(\d{1})[0-9xX]{1}$/, "$1");
 
-                $("#member_birthday").val(card.replace(/\d{6}(\d{4})(\d{2})(\d{2})\d{4}/, "$1-$2-$3"));
-                $("[name='memberSex'][value='" + card.replace(/\d{16}(\d{1})\d{1}/, "$1") + "']").prop("checked", true);
+                $("#member_birthday").val(birthday);
+                $("[name='memberSex'][value='" + (sex % 2 ? 1 : 2) + "']").prop("checked", true);
             });
 
             // 注册用户提交
             $(".register-member").on("click", function (e) {
                 e.preventDefault();
+
+                var $btn = $(this).button('loading');
 
                 var $form = $("#member_form");
                 var conditions = $form.serialize();
@@ -49,19 +53,19 @@
                 $form.attr("submitting", "submitting");
 
                 $.post('member/saveMember', conditions, function (res) {
-                    var data = res.data;
-
                     $form.attr("submitting", "");
 
+                    var data = res.data;
                     if (res.code == 1) {
-                        $("#tips_modal").modal({backdrop: false, show: true});
-                        setTimeout(function () {
-                            $("#tips_modal").modal("hide");
+                        $.tipsSuccessAlert('会员信息保存成功！', function () {
                             location.assign(content.opts.ToURL + '?memberId=' + data.memberId);
-                        }, 3000);
+                        });
                     } else {
-                        alert(res.message || "会员信息保存失败, 请稍后重试");
+                        $.logConsole('会员信息保存失败', res.message);
+                        $.tipsWarningAlert('会员信息保存失败');
                     }
+
+                    $btn.button('reset');
                 });
             });
         }

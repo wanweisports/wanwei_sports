@@ -10,6 +10,8 @@
     $(".login-btn").on("click", function (e) {
         e.preventDefault();
 
+        var $btn = $(this).button('loading');
+
         var $form = $("#login_form");
         var conditions = $form.serialize();
 
@@ -27,6 +29,8 @@
                 console.log(res.message || "用户登录失败, 请稍后重试");
                 alert(res.message || "用户登录失败, 请稍后重试");
             }
+
+            $btn.button('reset');
         });
     });
 })(jQuery);

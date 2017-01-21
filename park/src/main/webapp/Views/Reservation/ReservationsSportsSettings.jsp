@@ -16,8 +16,8 @@
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
     <script src="/Content/app/reservations/reservations_sports.js?v=${static_resource_version}"></script>
     <script>
-        // 配置表单校验
         $(document).ready(function () {
+            // 配置表单校验
             $('#sports_form').validate({
                 ignore: ":hidden"
             });
@@ -86,14 +86,15 @@
         </div>
     </div>
 
-    <div class="modal fade" id="settingModal" tabindex="-1" role="dialog" aria-labelledby="settingModalLabel">
+    <div class="modal fade" id="setting_modal" tabindex="-1" role="dialog" aria-labelledby="setting_modal_label"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="settingModalLabel">设置场地类型</h4>
+                    <h4 class="modal-title" id="setting_modal_label">设置场地类型</h4>
                 </div>
                 <div class="modal-body">
                     <form id="sports_form" class="form-horizontal" onsubmit="return false;">
@@ -112,7 +113,9 @@
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="sport_money" name="sportMoney"
                                        placeholder="单价/小时" autocomplete="off"
-                                       data-val="true" data-val-required="单价/小时不能为空">
+                                       data-val="true" data-val-required="单价不能为空"
+                                       data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                       data-val-regex="单价金额格式错误">
                                 <div data-valmsg-for="sportMoney" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -121,7 +124,9 @@
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="sport_deposit" name="sportDeposit"
                                        placeholder="预订押金" autocomplete="off"
-                                       data-val="true" data-val-required="预订押金不能为空">
+                                       data-val="true" data-val-required="预订押金不能为空"
+                                       data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                       data-val-regex="预订押金格式错误">
                                 <div data-valmsg-for="sportDeposit" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -132,7 +137,7 @@
                                        placeholder="开始时间" autocomplete="off"
                                        data-val="true" data-val-required="开始时间不能为空"
                                        data-val-regex-pattern="^\d{2}:\d{2}$"
-                                       data-val-regex="开始时间格式错误">
+                                       data-val-regex="开始时间格式错误" maxlength="5">
                                 <div data-valmsg-for="startTime" data-valmsg-replace="true"></div>
                             </div>
                             <div class="col-sm-5">
@@ -140,7 +145,7 @@
                                        placeholder="结束时间" autocomplete="off"
                                        data-val="true" data-val-required="结束时间不能为空"
                                        data-val-regex-pattern="^\d{2}:\d{2}$"
-                                       data-val-regex="结束时间格式错误">
+                                       data-val-regex="结束时间格式错误" maxlength="5">
                                 <div data-valmsg-for="endTime" data-valmsg-replace="true"></div>
                             </div>
                         </div>

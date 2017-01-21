@@ -76,9 +76,9 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
-                                <p class="sc-submit-tips"></p>
-                                <button type="submit" class="btn btn-primary col-sm-4 password-confirm">
-                                    <span class="glyphicon glyphicon-ok"></span> 确 定
+                                <button type="submit" class="btn btn-primary col-sm-4 password-confirm"
+                                        data-loading-text="保存中...">
+                                    <span class="glyphicon glyphicon-ok"></span> 保 存
                                 </button>
                             </div>
                         </div>
@@ -86,22 +86,6 @@
                 </div>
             </div>
         </form>
-    </div>
-
-    <div class="modal fade" id="tips_modal" tabindex="-1" role="dialog" aria-labelledby="tips_modal_label">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="tips_modal_label">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <p class="text-success">密码修改成功!</p>
-                </div>
-            </div>
-        </div>
     </div>
 </layout:override>
 

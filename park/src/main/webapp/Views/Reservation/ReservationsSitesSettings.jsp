@@ -10,11 +10,16 @@
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
     <script src="/Content/app/reservations/reservations_sites.js?v=${static_resource_version}"></script>
     <script>
-        // 配置表单校验
         $(document).ready(function () {
+            // 配置表单校验
             $('#site_form').validate({
                 ignore: ":hidden"
             });
+            $(".site-sport.btn-primary").addClass("btn-default").removeClass("btn-primary");
+            $(".site-sport[data-id='${sportId}']").addClass("btn-primary").removeClass("btn-default");
+            <c:if test="${sportId == null}">
+            $(".site-all").addClass("btn-primary").removeClass("btn-default");
+            </c:if>
         });
     </script>
 </layout:override>
@@ -30,21 +35,15 @@
             <div class="panel-body">
                 <form id="site_filter_form" class="form-inline col-sm-10" onsubmit="return false;">
                     <div class="form-group">
-                        <select class="form-control" name="sportId" style="width: 160px;">
-                            <option value="">场地类型</option>
-                            <c:forEach var="sport" items="${siteSportNames}">
-                                <option value="${sport.sportId}"
-                                        <c:if test="${sport.sportId == sportId}">selected</c:if> >${sport.sportName}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="场地名称" name="siteName">
-                    </div>
-                    <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary site-filter">
-                            <span class="glyphicon glyphicon-search"></span> 检索 & 显示
-                        </a>
+                        <div class="form-group">
+                            <div class="btn-group">
+                                <a href="/site/getSiteInfos" class="btn btn-default site-all">全部场地</a>
+                                <c:forEach var="sport" items="${siteSportNames}">
+                                    <a href="/site/getSiteInfos?sportId=${sport.sportId}" data-id="${sport.sportId}"
+                                       class="btn btn-default site-sport">${sport.sportName}</a>
+                                </c:forEach>
+                            </div>
+                        </div>
                     </div>
                 </form>
                 <div class="col-sm-2 text-right">
@@ -164,32 +163,31 @@
         </div>
     </div>
 
-    <div class="modal fade" id="settingModal" tabindex="-1" role="dialog" aria-labelledby="siteModalLabel">
+    <div class="modal fade" id="setting_modal" tabindex="-1" role="dialog" aria-labelledby="setting_modal_label">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="siteModalLabel">场地设置</h4>
+                    <h5 class="modal-title" id="setting_modal_label">场地设置</h5>
                 </div>
                 <div class="modal-body">
                     <form id="site_form" class="form-horizontal" onsubmit="return false;">
                         <input type="hidden" id="site_id" name="siteId">
                         <div class="form-group">
-                            <label for="site_type" class="col-sm-2 control-label">
+                            <label for="site_type1" class="col-sm-2 control-label">
                                 <span class="text-danger">*</span> 场地类型
                             </label>
                             <div class="col-sm-10">
-                                <select class="form-control" id="site_type" name="siteType"
-                                        data-val="true" data-val-required="场地类型不能为空">
-                                    <option value="">选择类型</option>
-                                    <c:forEach var="sport" items="${siteSportNames}">
-                                        <c:if test="${sport.sportStatus == 1}">
-                                            <option value="${sport.sportId}">${sport.sportName}</option>
-                                        </c:if>
-                                    </c:forEach>
-                                </select>
+                                <c:forEach var="sport" items="${siteSportNames}" varStatus="loop">
+                                    <c:if test="${sport.sportStatus == 1}">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="siteType" id="site_type1"
+                                                   value="${sport.sportId}" <c:if test="${loop.index == 0}">checked</c:if> > ${sport.sportName}
+                                        </label>
+                                    </c:if>
+                                </c:forEach>
                                 <div data-valmsg-for="siteType" data-valmsg-replace="true"></div>
                             </div>
                         </div>

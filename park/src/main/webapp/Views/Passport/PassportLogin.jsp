@@ -44,7 +44,8 @@
                     </div>
                     <div class="form-group text-right">
                         <input type="hidden" name="return_url" value="${returnUrl}">
-                        <button type="button" class="btn btn-primary login-btn">登 录</button>
+                        <button type="button" class="btn btn-primary login-btn" data-loading-text="登录中..."
+                                autocomplete="off">登 录</button>
                     </div>
                 </form>
             </div>

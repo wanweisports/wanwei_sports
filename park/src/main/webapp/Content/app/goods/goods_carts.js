@@ -3,15 +3,6 @@
         init: function () {
             this.initEvents();
 
-            var $uiGoodsSteps = $("#zhifuModal");
-
-            // 初始化支付流程步骤
-            $uiGoodsSteps.find(".goods-steps").steps({
-                enableFinishButton: false,
-                enablePagination: false,
-                enableAllSteps: false
-            });
-
             this.bindPayEvents();
             $(".money-num").text(this.calculateMoney());
         },
@@ -36,16 +27,17 @@
                 var data = res.data;
 
                 if (res.code == 1) {
-                    $("#goods_paid_sum").val(data.presentPrice || data.originalPrice);
+                    var price = data.presentPrice || data.originalPrice;
+                    $("#goods_paid_sum").val(price.toFixed(2));
                 } else {
-                    alert(res.message || '订单计价失败，请稍后重试');
+                    $.logConsole('订单计价失败', res.message);
+                    $.tipsWarningAlert('订单计价失败');
                 }
             });
         },
         // 支付流程事件绑定
         bindPayEvents: function () {
             var content = this;
-            var $uiGoodsSteps = $("#zhifuModal");
 
             // 结算
             $(".goods-buy-money").on("click", function () {
@@ -57,10 +49,14 @@
                 });
 
                 $("#goods_user_shoppingIds").val(shoppingIds.join(","));
+
+                var $form = $("#goods_user_form");
+                var conditions = $form.serialize();
+                content.calculateShoppingMoney(conditions);
             });
 
             // 检索会员
-            $("#goods_user_mobile").autosuggest({
+            $("#goods_user_name").autosuggest({
                 url: '/member/searchMember',
                 method: 'post',
                 queryParamName: 'search',
@@ -81,11 +77,11 @@
                         } else {
                             $('#goods_user_memberId').val("0");
                             $('#goods_user_opType').val("2");
-                            $('#goods_user_name').val("散客");
                             return [];
                         }
                     } else {
-                        alert('搜索会员失败, 请稍后重试');
+                        $.logConsole('搜索会员失败', res.message);
+                        $.tipsWarningAlert('搜索会员失败');
                         return [];
                     }
                 },
@@ -101,54 +97,59 @@
                 }
             });
 
-            // 提交购买
-            $("#goods_user_pay").on("click", function (e) {
+            // 支付订单
+            $("#goods_pay_order").on("click", function (e) {
                 e.preventDefault();
 
-                var $form = $("#goods_user_form");
-                var conditions = $form.serialize();
+                function __saveOrder(cb) {
+                    var $form = $("#goods_user_form");
+                    var conditions = $form.serialize();
 
-                if ($form.attr("submitting") === "submitting" || !$form.valid()) {
-                    return false;
-                }
-                $form.attr("submitting", "submitting");
-
-                $.post('/good/saveOrder', conditions, function (res) {
-                    var data = res.data;
-                    $form.attr("submitting", "");
-
-                    if (res.code == 1) {
-                        $uiGoodsSteps.find(".goods-steps").steps("next", 1);
-                        $("#goods_paid_order").val(data.orderId);
-                    } else {
-                        alert(res.message || '保存订单失败，请稍后重试');
+                    if ($form.attr("submitting") === "submitting" || !$form.valid()) {
+                        return false;
                     }
-                });
+                    $form.attr("submitting", "submitting");
 
-                content.calculateShoppingMoney(conditions);
-            });
+                    $.post('/good/saveOrder', conditions, function (res) {
+                        var data = res.data;
+                        $form.attr("submitting", "");
 
-            // 确定支付
-            $("#goods_paid_confirm").on("click", function (e) {
-                e.preventDefault();
-
-                var $form = $("#goods_paid_form");
-                var conditions = $form.serialize();
-
-                if ($form.attr("submitting") === "submitting" || !$form.valid()) {
-                    return false;
+                        if (res.code == 1) {
+                            $("#goods_paid_order").val(data.orderId);
+                            cb();
+                        } else {
+                            $.logConsole('保存订单失败', res.message);
+                            $.tipsWarningAlert('保存订单失败');
+                        }
+                    });
                 }
-                $form.attr("submitting", "submitting");
 
-                $.post('/good/confirmOrder', conditions, function (res) {
-                    $form.attr("submitting", "");
+                function __confirmOrder() {
+                    var $form = $("#goods_paid_form");
+                    var conditions = $form.serialize();
 
-                    if (res.code == 1) {
-                        location.assign('/order/getOrderList?orderServiceTypes=300');
-                    } else {
-                        alert(res.message || '支付订单失败，请稍后重试');
+                    if ($form.attr("submitting") === "submitting" || !$form.valid()) {
+                        return false;
                     }
-                })
+                    $form.attr("submitting", "submitting");
+
+                    $.post('/good/confirmOrder', conditions, function (res) {
+                        $form.attr("submitting", "");
+
+                        if (res.code == 1) {
+                            // 打印小票
+
+                            $.tipsSuccessAlert('支付订单成功！', function () {
+                                location.assign('/order/getOrderList?orderServiceTypes=300');
+                            });
+                        } else {
+                            $.logConsole('支付订单失败', res.message);
+                            $.tipsWarningAlert('支付订单失败');
+                        }
+                    });
+                }
+
+                __saveOrder(__confirmOrder);
             });
         },
         initEvents: function () {
@@ -167,7 +168,8 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        alert(res.message || "移除购物车失败, 请稍后重试");
+                        $.logConsole('移除购物车失败', res.message);
+                        $.tipsWarningAlert('移除购物车失败');
                     }
                 });
             });
@@ -183,11 +185,18 @@
                     goodId: $this.attr("data-id"),
                     amount: 1
                 }, function (res) {
+                    var $count = $this.parents(".input-group").find(".good-count");
+
                     if (res.code == 1) {
-                        $this.parents(".input-group").find(".good-count").val(++count);
+                        $count.val(++count);
                         $(".money-num").text(content.calculateMoney());
+
+                        var itemPrice = parseFloat($count.attr("data-money"));
+                        var itemCount = parseInt($count.val());
+                        $this.parents(".cart-item").find(".good-total").text((itemPrice * itemCount).toFixed(2) + "元");
                     } else {
-                        alert(res.message || "增加数量失败, 请稍后重试");
+                        $.logConsole('增加数量失败', res.message);
+                        $.tipsWarningAlert('增加数量失败');
                     }
                 });
             });
@@ -207,11 +216,18 @@
                     goodId: $this.attr("data-id"),
                     amount: -1
                 }, function (res) {
+                    var $count = $this.parents(".input-group").find(".good-count");
+
                     if (res.code == 1) {
-                        $this.parents(".input-group").find(".good-count").val(--count);
+                        $count.val(--count);
                         $(".money-num").text(content.calculateMoney());
+
+                        var itemPrice = parseFloat($count.attr("data-money"));
+                        var itemCount = parseInt($count.val());
+                        $this.parents(".cart-item").find(".good-total").text((itemPrice * itemCount).toFixed(2) + "元");
                     } else {
-                        alert(res.message || "减少数量失败, 请稍后重试");
+                        $.logConsole('减少数量失败', res.message);
+                        $.tipsWarningAlert('减少数量失败');
                     }
                 });
             });

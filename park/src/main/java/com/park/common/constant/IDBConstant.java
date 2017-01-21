@@ -105,4 +105,14 @@ public interface IDBConstant {
 
     public static final String INVOICE_TYPE_SPECIAL = "1";// 专票
     public static final String INVOICE_TYPE_GENERAL = "2"; //普票
+
+    public static final int DATA_DATE_PRE_DAY = 10; // 昨天
+    public static final int DATA_DATE_DAY = 11; // 今天
+    public static final int DATA_DATE_PRE_WEEK = 20; // 上周
+    public static final int DATA_DATE_WEEK = 21; // 本周
+    public static final int DATA_DATE_NEXT_WEEK = 22; // 下周
+    public static final int DATA_DATE_PRE_MONTH = 30; // 上月
+    public static final int DATA_DATE_MONTH = 31; // 本月
+    public static final int DATA_DATE_PRE_YEAR = 40; // 上年
+    public static final int DATA_DATE_YEAR = 41; // 本年
 }

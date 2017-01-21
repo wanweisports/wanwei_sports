@@ -15,11 +15,52 @@
         var date = moment();
         $(".top-header-date").text(date.format("今天是YYYY年MM月DD日 ") + weeks[date.format("e")]);
 
-        $.post('/passport/getUserProfile', function (res) {
+        // 获取用户信息
+        var user = $.cookie('wc-user');
+        if (false && user) {
+            user = JSON.parse(user);
+            $(".top-menu-username").text(user.operatorName);
+        } else {
+            $.post('/passport/getUserProfile', function (res) {
+                var data = res.data;
+
+                if (res.code == 1) {
+                    $.cookie('wc-user', JSON.stringify(data.user), {path: '/'});
+                    $(".top-menu-username").text(data.user.operatorName);
+                }
+            });
+        }
+
+        // 获取营运时间
+        var businessTime = $.cookie('wc-business-time');
+        if (!businessTime) {
+            $.post('/settings/getBusinessTime', function (res) {
+                var data = res.data;
+
+                if (res.code == 1) {
+                    var businessTime1 = [];
+                    var businessStartTime = parseInt(data.businessStartTime.replace(":00", ""));
+                    var businessEndTime = parseInt(data.businessEndTime.replace(":00", ""));
+                    var time;
+
+                    for (var i = businessStartTime; i <= businessEndTime; i++) {
+                        time = (i >= 10) ? ("" + i) : ("0" + i);
+                        businessTime1.push(time + ":00");
+                    }
+
+                    $.cookie('wc-business-time', JSON.stringify(businessTime1), {path: '/'});
+                }
+            });
+        }
+
+        // 获取未读信息条数
+        $.post('/office/getNotReadMessageCount', function (res) {
             var data = res.data;
 
-            if (res.code == 1) {
-                $(".top-menu-username").text(data.user.operatorName);
+            if (res.code == 1 && data.count > 0) {
+                $(".unread-message-count").text(data.count).show();
+            } else {
+                $(".unread-message-count").hide();
             }
         });
     }
@@ -43,12 +84,17 @@
         }, 3000);
     };
 
-    $.tipsSuccessAlert = function (message) {
+    $.tipsSuccessAlert = function (message, callback) {
+        if (!callback) {
+            callback = new Function();
+        }
+
         $("#tips_success_modal").modal({show: true, backdrop: false}).find(".tips-content").text(message);
 
         var timeout = setTimeout(function () {
             $("#tips_success_modal").modal("hide");
             clearTimeout(timeout);
+            callback();
         }, 3000);
     };
 

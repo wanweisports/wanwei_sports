@@ -10,8 +10,8 @@
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
     <script src="/Content/app/goods/goods_list.js?v=${static_resource_version}"></script>
     <script>
-        // 配置表单校验
         $(document).ready(function () {
+            // 配置表单校验
             $('#plus_count_form, #minus_count_form').validate({
                 ignore: ":hidden"
             });

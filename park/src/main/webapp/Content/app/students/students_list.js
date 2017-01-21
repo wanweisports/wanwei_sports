@@ -44,14 +44,14 @@
                 $("#refresh_cardNo").val($this.attr("data-cardNo"));
 
                 // 生成新会员卡号
-                $.post('/member/getNewCardNo', function (res) {
+                $.post('/students/getNewCardNo', function (res) {
                     var data = res.data;
 
                     if (res.code == 1) {
                         $("#refresh_newNo").val(data.newCardNo);
                     } else {
-                        console.log(res.message || "新会员卡号生成失败, 请稍后重试");
-                        alert(res.message || "新会员卡号生成失败, 请稍后重试");
+                        $.logConsole('新会员卡号生成失败', res.message);
+                        $.tipsWarningAlert('新会员卡号生成失败');
                     }
                 });
             });
@@ -59,6 +59,8 @@
             // 补办
             $(".confirm-refresh").on("click", function (e) {
                 e.preventDefault();
+
+                var $btn = $(this).button('loading');
 
                 var $form = $("#refresh_form");
                 var conditions = $form.serialize();
@@ -77,15 +79,15 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $("#refreshModal").modal({backdrop: false, show: true});
-                        setTimeout(function () {
-                            $("#refreshModal").modal("hide");
+                        $.tipsSuccessAlert('学生卡补办成功！', function () {
                             location.reload();
-                        }, 3000);
+                        });
                     } else {
-                        console.log(res.message || "学生卡补办失败, 请稍后重试");
-                        alert(res.message || "学生卡补办失败, 请稍后重试");
+                        $.logConsole('学生卡补办失败', res.message);
+                        $.tipsWarningAlert('学生卡补办失败');
                     }
+
+                    $btn.button('reset');
                 });
             });
 
@@ -94,7 +96,7 @@
                 var $this = $(this);
 
                 $("#delete_studentId").val($this.attr("data-id"));
-                $("#deleteModal").modal({backdrop: false, show: true});
+                $("#delete_modal").modal({backdrop: false, show: true});
             });
 
             // 删除
@@ -107,8 +109,8 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        console.log(res.message || "学生删除失败, 请稍后重试");
-                        alert(res.message || "学生删除失败, 请稍后重试");
+                        $.logConsole('学生删除失败', res.message);
+                        $.tipsWarningAlert('学生删除失败');
                     }
                 });
             });

@@ -255,12 +255,12 @@
                         </tr>
                         <tr class="list-nav-item good ${(param.nav == "good" && param.subNav == "stock") ? "active" : ""}">
                             <td>
-                                <span><a href="/good/getGoodsStock">商品进销存</a></span>
+                                <span><a href="/good/getGoodsStock?countNum=21">商品进销存</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item good ${(param.nav == "good" && param.subNav == "detail") ? "active" : ""}">
                             <td>
-                                <span><a href="/good/getGoodsStockDetails?countNum=1">商品操作明细</a></span>
+                                <span><a href="/good/getGoodsStockDetails?countNum=21">商品操作明细</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item good last-nav-item">

@@ -23,26 +23,52 @@ public class DataServiceImpl extends BaseService implements IDataService {
 
 	@Autowired
 	private IBaseDao baseDao;
-	
-	@Override
-	public List<Map<String, Object>> getMembersRegister(DataInputView dataInputView){
-		Integer countNum = dataInputView.getCountNum();
-		String createTimeStart = dataInputView.getCreateTimeStart();
-		String createTimeEnd = dataInputView.getCreateTimeEnd();
-		
-		StringBuffer sql = new StringBuffer("SELECT mct.cardTypeName, mct.cardTypeMoney, COUNT(mc.cardId) count, COUNT(mc.cardId)*mct.cardTypeMoney countMoney FROM member_card_type mct");
-		sql.append(" LEFT JOIN member_card mc ON(mc.cardTypeId = mct.cardTypeId");
-		if(StrUtil.isNotBlank(createTimeStart)){
-			sql.append(" AND DATE(mc.createTime) >= :createTimeStart");
-		}
-		if(StrUtil.isNotBlank(createTimeEnd)){
-			sql.append(" AND DATE(mc.createTime) <= :createTimeEnd");
-		}
-		sql.append(getCountSql(countNum, "mc.createTime"));
-		
-		sql.append(") GROUP BY mct.cardTypeId");
-		return baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
-	}
+
+    @Override
+    public List<Map<String, Object>> getMembersRegister(DataInputView dataInputView){
+        Integer countNum = dataInputView.getCountNum();
+        String createTimeStart = dataInputView.getCreateTimeStart();
+        String createTimeEnd = dataInputView.getCreateTimeEnd();
+        StringBuffer sql = new StringBuffer("SELECT total.cardTypeId, total.cardTypeName, total.cardTypeTotal, item.cardTypeCount FROM");
+        sql.append(" (SELECT mct.cardTypeId, mct.cardTypeName, COUNT(mc.cardTypeId) cardTypeTotal FROM member_card mc INNER JOIN member_card_type mct ON mc.cardTypeId = mct.cardTypeId GROUP BY mct.cardTypeId ORDER BY mct.cardTypeId) total,");
+
+        sql.append(" (SELECT mct.cardTypeId, mct.cardTypeName, COUNT(mc.cardTypeId) cardTypeCount FROM member_card mc INNER JOIN member_card_type mct ON mc.cardTypeId = mct.cardTypeId");
+        sql.append(" WHERE 1=1");
+        if(StrUtil.isNotBlank(createTimeStart)){
+            sql.append(" AND DATE(mc.createTime) >= :createTimeStart");
+        }
+        if(StrUtil.isNotBlank(createTimeEnd)){
+            sql.append(" AND DATE(mc.createTime) <= :createTimeEnd");
+        }
+        sql.append(getCountSql(countNum, "mc.createTime"));
+        sql.append(" GROUP BY mct.cardTypeId ORDER BY mct.cardTypeId) item");
+
+        sql.append(" WHERE total.cardTypeId = item.cardTypeId");
+        sql.append(" GROUP BY total.cardTypeId");
+        return baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
+    }
+
+    @Override
+    public List<Map<String, Object>> getMembersRegisterStored(DataInputView dataInputView){
+        Integer countNum = dataInputView.getCountNum();
+        String createTimeStart = dataInputView.getCreateTimeStart();
+        String createTimeEnd = dataInputView.getCreateTimeEnd();
+        dataInputView.setBalanceServiceTypeMin(StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_CARD_CZ));
+        dataInputView.setBalanceServiceTypeMax(StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_REG));
+        StringBuffer sql = new StringBuffer("SELECT total.cardTypeId, total.cardTypeName, SUM(total.realCount) realTotal, SUM(total.givingCount) givingTotal, SUM(total.cardBalance) balanceTotal FROM");
+        sql.append(" (SELECT mct.cardTypeId, mct.cardTypeName, SUM(ob.realAmount) realCount, SUM(ob.givingAmount) givingCount, mc.cardId, mc.cardBalance FROM member_card mc INNER JOIN member_card_type mct ON mc.cardTypeId = mct.cardTypeId INNER JOIN other_balance ob ON ob.balanceServiceId = mc.cardId");
+        sql.append(" WHERE ob.balanceServiceType = :balanceServiceTypeMin OR ob.balanceServiceType = :balanceServiceTypeMax");
+        if(StrUtil.isNotBlank(createTimeStart)){
+            sql.append(" AND DATE(mc.createTime) >= :createTimeStart");
+        }
+        if(StrUtil.isNotBlank(createTimeEnd)){
+            sql.append(" AND DATE(mc.createTime) <= :createTimeEnd");
+        }
+        sql.append(getCountSql(countNum, "mc.createTime"));
+        sql.append(" GROUP BY mc.cardId) total");
+        sql.append(" GROUP BY total.cardTypeId ORDER BY total.cardTypeId");
+        return baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
+    }
 
     @Override
     public List<Map<String, Object>> getMembersRegisterGroupDate(DataInputView dataInputView){
@@ -80,8 +106,32 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		countMap.put("list", dataList);
 		return countMap;
 	}
-	
-	@Override
+
+    @Override
+    public String getCountSql(Integer countNum, String field) {
+        countNum = countNum != null ? countNum : 10;
+
+        switch (countNum) {
+            case IDBConstant.DATA_DATE_DAY: //今日
+                return " AND DATE_FORMAT("+field+", '%Y-%m-%d') = CURDATE()";
+            case IDBConstant.DATA_DATE_PRE_DAY: //昨日
+                return " AND DATE_FORMAT("+field+", '%Y-%m-%d') = adddate(CURDATE(), -1)";
+            case IDBConstant.DATA_DATE_WEEK: //本周
+                return " AND YEARWEEK("+field+") = YEARWEEK(CURDATE())";
+            case IDBConstant.DATA_DATE_PRE_WEEK: //上周
+                return " AND YEARWEEK("+field+") = YEARWEEK(CURDATE())-1";
+            case IDBConstant.DATA_DATE_NEXT_WEEK: //下周
+                return " AND YEARWEEK("+field+") = YEARWEEK(CURDATE())+1";
+            case IDBConstant.DATA_DATE_MONTH: //本月
+                return " AND DATE_FORMAT("+field+", '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')";
+            case IDBConstant.DATA_DATE_YEAR: //本年
+                return " AND DATE_FORMAT("+field+", '%Y') = DATE_FORMAT(CURDATE(), '%Y')";
+            default:
+                return " ";
+        }
+    }
+
+	/*@Override
 	public String getCountSql(Integer countNum, String field) {
 		countNum = countNum != null ? countNum : 10;
 		switch (countNum) {
@@ -100,7 +150,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		default:
 			return " ";
 		}
-	}
+	}*/
 	
 	@Override
 	public Map<String, Object> getSitePercentage(DataInputView dataInputView){

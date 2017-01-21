@@ -21,6 +21,7 @@
             $('#member_form, .refresh-card-form, .recharge-card-form, .upgrade-card-form').validate({
                 ignore: ":hidden"
             });
+            $('[name="memberSex"][value="${memberSex}"]').prop("checked", true);
         });
     </script>
 </layout:override>
@@ -53,13 +54,13 @@
                                 <span class="text-danger">*</span> 手机号码
                             </label>
 
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="member_mobile" name="memberMobile"
-                                       placeholder="请输入手机号码" autocomplete="off"
+                            <div class="col-sm-8 input-parent-magnifier">
+                                <input type="text" class="form-control input-element-magnifier" id="member_mobile"
+                                       name="memberMobile" placeholder="请输入手机号码" autocomplete="off"
                                        data-val="true" data-val-required="手机号码不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
                                        data-val-regex="手机号码格式错误"
-                                       value="${memberMobile}">
+                                       value="${memberMobile}" maxlength="11">
                                 <div data-valmsg-for="memberMobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -69,7 +70,9 @@
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="member_birthday" name="memberBirthday"
-                                           value="${memberBirthday}" placeholder="会员生日">
+                                           value="${memberBirthday}" placeholder="会员生日"
+                                           data-val-regex-pattern="^\d{4}-\d{2}-\d{2}$"
+                                           data-val-regex="会员生日格式错误" maxlength="10">
                                     <span class="input-group-addon member-birthday-select">
                                         <i class="glyphicon glyphicon-calendar"></i>
                                     </span>
@@ -99,24 +102,18 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <!--<div class="input-group">
+                                <div class="input-group">
                                     <input type="text" class="form-control" id="member_idcard" name="memberIdcard"
                                            placeholder="请输入18位身份证号" autocomplete="off"
                                            data-val="true" data-val-required="身份证号不能为空"
                                            data-val-regex-pattern="^\d{17}(\d|X|x)$"
-                                           data-val-regex="身份证号格式错误">
+                                           data-val-regex="身份证号格式错误" value="${memberIdcard}" maxlength="18">
                                     <span class="input-group-btn">
                                         <button class="btn btn-warning">
                                             <i class="glyphicon glyphicon-transfer"></i> 读取
                                         </button>
                                     </span>
-                                </div>-->
-                                <input type="text" class="form-control" id="member_idcard" name="memberIdcard"
-                                       placeholder="请输入18位身份证号" autocomplete="off"
-                                       data-val="true" data-val-required="身份证号不能为空"
-                                       data-val-regex-pattern="^\d{18}$|^\d{17}(\d|X|x)$"
-                                       data-val-regex="身份证号格式错误"
-                                       value="${memberIdcard}">
+                                </div>
                                 <div data-valmsg-for="memberIdcard" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -126,22 +123,12 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <c:if test="${memberSex == 1}">
-                                    <label class="radio-inline">
-                                        <input type="radio" name="memberSex" id="member_sex1" value="1" checked> 男
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="memberSex" id="member_sex2" value="2"> 女
-                                    </label>
-                                </c:if>
-                                <c:if test="${memberSex == 2}">
-                                    <label class="radio-inline">
-                                        <input type="radio" name="memberSex" id="member_sex1" value="1"> 男
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="memberSex" id="member_sex2" value="2" checked> 女
-                                    </label>
-                                </c:if>
+                                <label class="radio-inline">
+                                    <input type="radio" name="memberSex" id="member_sex1" value="1" checked> 男
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="memberSex" id="member_sex2" value="2"> 女
+                                </label>
                                 <div data-valmsg-for="memberSex" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -238,11 +225,11 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <div class="text-center">
-                                <p class="sc-submit-tips"></p>
-                                <a href="javascript:;" class="btn btn-primary gengxin-modal">
+                                <a href="javascript:;" class="btn btn-primary refresh-modal"
+                                    data-loading-text="更新中...">
                                     <span class="glyphicon glyphicon-refresh"></span> 更新信息
                                 </a>
-                                <a href="#chongzhiModal" class="btn btn-primary" data-toggle="modal" data-backdrop="false">
+                                <a href="#recharge_modal" class="btn btn-primary" data-toggle="modal" data-backdrop="false">
                                     <span class="glyphicon glyphicon-usd"></span> 会员卡充值
                                 </a>
                                 <!--<a href="#shengjiModal" class="btn btn-primary shengji-modal" data-toggle="modal"
@@ -279,9 +266,9 @@
                                         <span class="text-danger">*</span> 补办金额(元)
                                     </label>
 
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="refresh_money" name="buBanMoney"
-                                               placeholder="补办金额(元)" autocomplete="off"
+                                    <div class="col-sm-8 input-parent-magnifier">
+                                        <input type="text" class="form-control input-element-magnifier" id="refresh_money"
+                                               name="buBanMoney" placeholder="补办金额(元)" autocomplete="off"
                                                data-val="true" data-val-required="补办金额不能为空"
                                                data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                                data-val-regex="补办金额格式错误">
@@ -309,9 +296,9 @@
                                 <div class="form-group">
                                     <label for="refresh_send" class="col-sm-4 control-label">赠送金额(元)</label>
 
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="refresh_send" name="givingAmount"
-                                               placeholder="请输入赠送金额(元)" autocomplete="off"
+                                    <div class="col-sm-8 input-parent-magnifier">
+                                        <input type="text" class="form-control input-element-magnifier" id="refresh_send"
+                                               name="givingAmount" placeholder="请输入赠送金额(元)" autocomplete="off"
                                                data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                                data-val-regex="赠送金额格式错误">
                                         <div data-valmsg-for="givingAmount" data-valmsg-replace="true"></div>
@@ -342,22 +329,23 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary refresh-card-submit" data-dismiss="modal">
-                        <span class="glyphicon glyphicon-ok"></span> 确认 & 付款
+                    <button type="button" class="btn btn-primary refresh-card-submit" data-dismiss="modal"
+                            data-loading-text="补办中...">
+                        <span class="glyphicon glyphicon-ok"></span> 确认 & 补办
                     </button>
                 </div>
             </form>
         </div>
     </div>
 
-    <div class="modal fade" id="chongzhiModal" tabindex="-1" role="dialog" aria-labelledby="chongzhiModalLabel">
+    <div class="modal fade" id="recharge_modal" tabindex="-1" role="dialog" aria-labelledby="recharge_modal_label">
         <div class="modal-dialog" style="width:800px;">
             <form class="modal-content recharge-card-form" onsubmit="return false;">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h5 class="modal-title" id="chongzhiModalLabel">会员卡充值</h5>
+                    <h5 class="modal-title" id="recharge_modal_label">会员卡充值</h5>
                 </div>
                 <div class="modal-body" style="clear: both;">
                     <div class="panel panel-default form-horizontal">
@@ -369,10 +357,10 @@
                                         <span class="text-danger">*</span> 充值金额(元)
                                     </label>
 
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="recharge_money" name="czMoney"
-                                               placeholder="请输入充值金额(元)" autocomplete="off"
-                                               data-val="true" data-val-required="充值金额不能为空"
+                                    <div class="col-sm-8 input-parent-magnifier">
+                                        <input type="text" class="form-control input-element-magnifier"
+                                               id="recharge_money" name="czMoney" placeholder="请输入充值金额(元)"
+                                               autocomplete="off" data-val="true" data-val-required="充值金额不能为空"
                                                data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                                data-val-regex="充值金额格式错误">
                                         <div data-valmsg-for="czMoney" data-valmsg-replace="true"></div>
@@ -390,6 +378,8 @@
                                             <option value="1">现金</option>
                                             <option value="2">支付宝</option>
                                             <option value="3">微信</option>
+                                            <option value="4">银联</option>
+                                            <option value="5">支票</option>
                                         </select>
                                         <div data-valmsg-for="balanceStyle" data-valmsg-replace="true"></div>
                                     </div>
@@ -399,12 +389,24 @@
                                 <div class="form-group">
                                     <label for="recharge_send" class="col-sm-4 control-label">赠送金额(元)</label>
 
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="recharge_send" name="givingAmount"
-                                               placeholder="请输入赠送金额(元)" autocomplete="off"
+                                    <div class="col-sm-8 input-parent-magnifier">
+                                        <input type="text" class="form-control input-element-magnifier"
+                                               id="recharge_send" name="givingAmount" placeholder="请输入赠送金额(元)" autocomplete="off"
                                                data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
                                                data-val-regex="赠送金额格式错误">
                                         <div data-valmsg-for="givingAmount" data-valmsg-replace="true"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group recharge-check-no" style="display: none;">
+                                    <label for="recharge_check_no" class="col-sm-4 control-label">
+                                        <span class="text-danger">*</span> 支票号
+                                    </label>
+
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="recharge_check_no" name="balanceCheckNo"
+                                               placeholder="请输入支票号" autocomplete="off"
+                                               data-val="true" data-val-required="支票号不能为空">
+                                        <div data-valmsg-for="balanceCheckNo" data-valmsg-replace="true"></div>
                                     </div>
                                 </div>
                             </div>
@@ -425,8 +427,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary recharge-card-submit" data-dismiss="modal">
-                        <span class="glyphicon glyphicon-ok"></span> 确认 & 付款
+                    <button type="button" class="btn btn-primary recharge-card-submit" data-dismiss="modal"
+                            data-loading-text="充值中...">
+                        <span class="glyphicon glyphicon-ok"></span> 确认 & 充值
                     </button>
                 </div>
             </form>
@@ -543,22 +546,6 @@
                     </button>
                 </div>
             </form>
-        </div>
-    </div>
-
-    <div class="modal fade" id="gengxinModal" tabindex="-1" role="dialog" aria-labelledby="gengxinModalLabel">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="gengxinModalLabel">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-success" role="alert">会员信息更新成功!</div>
-                </div>
-            </div>
         </div>
     </div>
 </layout:override>

@@ -9,15 +9,6 @@
         initEvents: function () {
             var content = this;
 
-            // 筛选场地列表
-            $(".site-filter").on("click", function (e) {
-                e.preventDefault();
-
-                var conditions = $("#site_filter_form").serialize();
-
-                location.assign(content.opts.URL + '?' + conditions);
-            });
-
             // 分页
             $(".page-first, .page-prev, .page-index, .page-next, .page-last").on("click", function (e) {
                 e.preventDefault();
@@ -27,9 +18,9 @@
 
                 if (conditions) {
                     if (conditions.indexOf("page=") == -1) {
-                        location.assign(content.opts.URL + '?' + conditions + '&page=' + pageIndex);
+                        location.assign(content.opts.URL + conditions + '&page=' + pageIndex);
                     } else {
-                        location.assign(content.opts.URL + '?' + conditions.replace(/(page=)\d+/, '$1' + pageIndex));
+                        location.assign(content.opts.URL + conditions.replace(/(page=)\d+/, '$1' + pageIndex));
                     }
                 } else {
                     location.assign(content.opts.URL + '?page=' + pageIndex);
@@ -49,7 +40,7 @@
                 e.preventDefault();
 
                 _resetSitesForm();
-                $("#settingModal").modal({backdrop: false, show: true});
+                $("#setting_modal").modal({backdrop: false, show: true});
             });
 
             // 更改场地类型
@@ -69,10 +60,10 @@
                         });
                         $("#site_form").find("input[name='siteStatus'][value='" + data.siteStatus + "']")
                             .prop("checked", true);
-                        $("#settingModal").modal({backdrop: false, show: true});
+                        $("#setting_modal").modal({backdrop: false, show: true});
                     } else {
-                        console.log(res.message || "场地查询失败, 请稍后重试");
-                        alert(res.message || "场地查询失败, 请稍后重试");
+                        $.logConsole('场地查询失败', res.message);
+                        $.tipsWarningAlert('场地查询失败');
                     }
                 });
             });
@@ -93,10 +84,12 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        location.reload();
+                        $.tipsSuccessAlert('场地设置成功！', function () {
+                            location.reload();
+                        });
                     } else {
-                        console.log(res.message || "场地设置失败, 请稍后重试");
-                        alert(res.message || "场地设置失败, 请稍后重试");
+                        $.logConsole('场地设置失败', res.message);
+                        $.tipsWarningAlert('场地设置失败');
                     }
                 });
             });

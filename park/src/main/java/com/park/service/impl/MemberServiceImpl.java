@@ -282,7 +282,6 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		bodySql.append(" LEFT JOIN member_card mc ON(um.memberId = mc.memberId)");
 		bodySql.append(" LEFT JOIN user_operator uo ON(um.salesId = uo.id)");
 		StringBuilder whereSql = new StringBuilder(" WHERE um.parentMemberId IS NULL AND um.memberStatus = ").append(IDBConstant.LOGIC_STATUS_YES);
-		
 		if(StrUtil.isNotBlank(memberMobile)){
 			whereSql.append(" AND um.memberMobile = :memberMobile");
 		}
@@ -625,11 +624,14 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		}
 		return 100;
 	}
-	
+
+	// type m1会员 m2教师 m3学生
 	@Override
-	public String getCardNo() {
+	public String getCardNo(int type) {
 		do {
 			StringBuffer no = new StringBuffer();
+            no.append('m');
+            no.append(type);
 			for(int i = 0; i < 6; i++){
 				no.append((int)(Math.random()*10));
 			}

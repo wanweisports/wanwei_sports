@@ -10,8 +10,8 @@
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
     <script src="/Content/app/goods/goods_settings.js?v=${static_resource_version}"></script>
     <script>
-        // 配置表单校验
         $(document).ready(function () {
+            // 配置表单校验
             $('#good_form').validate({
                 ignore: ":hidden"
             });
@@ -41,45 +41,22 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="good_no" name="goodNo"
                                        value="${goodNo}" placeholder="商品编号" autocomplete="off"
-                                       data-val="true" data-val-required="商品编号不能为空">
+                                       data-val="true" data-val-required="商品编号不能为空" readonly>
                                 <div data-valmsg-for="goodNo" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="good_price" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 商品价格
+                            <label for="good_original_price" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 商品原价
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="good_price" name="goodPrice"
-                                       value="${goodPrice}" placeholder="商品价格" autocomplete="off"
-                                       data-val="true" data-val-required="商品价格不能为空"
+                                <input type="text" class="form-control" id="good_original_price" name="goodOriginalPrice"
+                                       value="${goodOriginalPrice}" placeholder="商品原价，例如10.00" autocomplete="off"
+                                       data-val="true" data-val-required="商品原价不能为空"
                                        data-val-regex-pattern="^(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
-                                       data-val-regex="商品价格格式错误">
-                                <div data-valmsg-for="goodPrice" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">商品图片</label>
-
-                            <div class="col-sm-8">
-                                <input type="file" id="good_pic" name="goodPic" accept="image/*" value=""
-                                       placeholder="商品图片" autocomplete="off" style="font-size: 12px;">
-                                <p class="text-muted" style="font-size: 12px;">如需要重新上传图片, 请选择文件</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="good_name" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 商品名称
-                            </label>
-
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="good_name" name="goodName"
-                                       value="${goodName}" placeholder="商品名称" autocomplete="off"
-                                       data-val="true" data-val-required="商品名称不能为空">
-                                <div data-valmsg-for="goodName" data-valmsg-replace="true"></div>
+                                       data-val-regex="商品零售价格式错误">
+                                <div data-valmsg-for="goodOriginalPrice" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -92,7 +69,7 @@
                                         data-val="true" data-val-required="请选择商品类别">
                                     <option value="">请选择</option>
                                     <c:forEach var="type" items="${goodTypeNames}">
-                                    	<option value="${type.goodTypeId}" <c:if test='${type.goodTypeId==goodTypeId}'>selected</c:if>>${type.goodTypeName}</option>
+                                        <option value="${type.goodTypeId}" <c:if test='${type.goodTypeId == goodTypeId}'>selected</c:if>>${type.goodTypeName}</option>
                                     </c:forEach>
                                 </select>
                                 <div data-valmsg-for="goodTypeId" data-valmsg-replace="true"></div>
@@ -114,20 +91,41 @@
                                 <div data-valmsg-for="goodMoneyType" data-valmsg-replace="true"></div>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="good_discount1" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 商品折扣
+                            <label for="good_name" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 商品名称
                             </label>
 
                             <div class="col-sm-8">
-                                <label class="radio-inline">
-                                    <input type="radio" name="goodDiscount" id="good_discount1" value="1" checked> 无折扣
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="goodDiscount" id="good_discount2"
-                                           value="2" <c:if test="${goodDiscount == 2}">checked</c:if>> 会员折扣
-                                </label>
-                                <div data-valmsg-for="goodDiscount" data-valmsg-replace="true"></div>
+                                <input type="text" class="form-control" id="good_name" name="goodName"
+                                       value="${goodName}" placeholder="商品名称" autocomplete="off"
+                                       data-val="true" data-val-required="商品名称不能为空">
+                                <div data-valmsg-for="goodName" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="good_price" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 商品零售价
+                            </label>
+
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="good_price" name="goodPrice"
+                                       value="${goodPrice}" placeholder="商品零售价，例如10.00" autocomplete="off"
+                                       data-val="true" data-val-required="商品零售价不能为空"
+                                       data-val-regex-pattern="^(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                       data-val-regex="商品零售价格式错误">
+                                <div data-valmsg-for="goodPrice" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">商品图片</label>
+
+                            <div class="col-sm-8">
+                                <input type="file" id="good_pic" name="file" accept="image/*" value=""
+                                       placeholder="商品图片" autocomplete="off" style="font-size: 12px;">
+                                <div data-valmsg-for="goodPic" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -142,7 +140,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
-                                <p class="sc-submit-tips"></p>
+                                <input type="hidden" name="goodDiscount" value="1">
                                 <button type="button" class="btn btn-primary col-sm-4 goods-setting">
                                     <span class="glyphicon glyphicon-ok"></span> 设置商品
                                 </button>
@@ -152,22 +150,6 @@
                 </div>
             </div>
         </form>
-    </div>
-
-    <div class="modal fade" id="tips_success_modal" tabindex="-1" role="dialog" aria-labelledby="tips_success_modal_label">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="tips_success_modal_label">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <p class="text-success text-content">商品设置提交成功!</p>
-                </div>
-            </div>
-        </div>
     </div>
 </layout:override>
 

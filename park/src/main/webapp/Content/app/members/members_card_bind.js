@@ -5,14 +5,15 @@
         },
         init: function () {
             $.post('/member/getMemberCarType', {cardTypeId: $('[name="cardTypeId"]').val()}, function (res) {
-                if (res.code == 1) {
-                    var data = res.data;
+                var data = res.data;
 
+                if (res.code == 1) {
                     $('[name="cardTypeMoney"]').val(data.cardTypeMoney || "0.00");
                     $('[name="cardDeadline"]').val(data.cardTypeMonth > 0 ? data.cardDeadline : "无限制");
                     $('[name="cardDeposit"]').val(data.cardDeposit || "0.00");
                 } else {
-                    alert(res.message || "会员类别详情查询失败, 请稍后重试");
+                    $.logConsole('会员类别详情查询失败', res.message);
+                    $.tipsWarningAlert('会员类别详情查询失败');
                 }
             });
 
@@ -38,6 +39,8 @@
             $(".genxin-submit").on("click", function (e) {
                 e.preventDefault();
 
+                var $btn = $(this).button('loading');
+
                 var $form = $("#member_form");
                 var conditions = $form.serialize();
 
@@ -50,14 +53,13 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $("#tips_modal").modal({backdrop: false, show: true});
-                        setTimeout(function () {
-                            $("#tips_modal").modal("hide");
-                        }, 3000);
+                        $.tipsSuccessAlert('会员信息更新成功!');
                     } else {
-                        console.log(res.message || "会员信息更新失败, 请稍后重试");
-                        alert(res.message || "会员信息更新失败, 请稍后重试");
+                        $.logConsole('会员信息更新失败', res.message);
+                        $.tipsWarningAlert('会员信息更新失败');
                     }
+
+                    $btn.button('reset');
                 });
             });
 
@@ -100,9 +102,11 @@
                 $(".total-money").text(content.calculateMoney());
             });
 
-            // 会员绑卡充值
+            // 会员绑卡
             $(".register-recahrge").on("click", function (e) {
                 e.preventDefault();
+
+                var $btn = $(this).button('loading');
 
                 var $form = $("#member_card_form");
                 var conditions = $form.serialize();
@@ -114,6 +118,7 @@
 
                 $.post('/member/saveMemberCar', conditions, function (res) {
                     $form.attr("submitting", "");
+
                     if (res.code == 1) {
                         $("#confirm_modal").modal({backdrop: false, show: true});
 
@@ -125,10 +130,14 @@
                         $("#member_card_ticket_form").find("#ticket_money").val('');
                         $("#member_card_ticket_form").find("#ticket_content").val('');
                         $("#member_card_ticket_form").find("#invoice_no").val(res.data.balanceNo);
+
+                        // 打印收款单 [未完成] 连接小票机
                     } else {
-                        console.log(res.message || "会员卡充值失败, 请稍后重试");
-                        alert(res.message || "会员卡充值失败, 请稍后重试");
+                        $.logConsole('会员绑卡失败', res.message);
+                        $.tipsWarningAlert('会员绑卡失败');
                     }
+
+                    $btn.button('reset');
                 });
             });
 
@@ -150,12 +159,12 @@
                 e.preventDefault();
 
                 if (!$("#is_print_ticket").prop("checked")) {
-                    // 打印收款单 [未完成] 连接小票机
-
                     location.assign(content.opts.ToURL);
-                    $("#confirmModal").modal("hide");
+                    $("#confirm_modal").modal("hide");
                     return false;
                 }
+
+                var $btn = $(this).button('loading');
 
                 var $form = $("#member_card_ticket_form");
                 var conditions = $form.serialize();
@@ -169,13 +178,14 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        // 打印收款单 [未完成] 连接小票机
-
                         location.assign(content.opts.ToURL);
-                        $("#confirmModal").modal("hide");
+                        $("#confirm_modal").modal("hide");
                     } else {
-                        alert(res.message || "发票登记失败, 请稍后重试");
+                        $.logConsole('发票登记失败', res.message);
+                        $.tipsWarningAlert('发票登记失败');
                     }
+
+                    $btn.button('reset');
                 });
             });
         }

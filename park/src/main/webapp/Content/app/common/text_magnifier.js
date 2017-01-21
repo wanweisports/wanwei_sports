@@ -5,7 +5,6 @@
     function TextMagnifier(options) {
 
         this.config = {
-
             inputElem          :     '.input-element-magnifier',     // 放大输入框样式
             parentCls          :     '.input-parent-magnifier',      // 放大输入框父节点样式
             align              :     'top',            // 放大效果位置['top','bottom','left','right']

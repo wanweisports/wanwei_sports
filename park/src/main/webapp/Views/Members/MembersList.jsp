@@ -56,9 +56,8 @@
                             <th>截止日期</th>
                             <th>余额(元)</th>
                             <th>子会员</th>
-                            <th>状态</th>
                             <th>操作人</th>
-                            <th>操作时间</th>
+                            <th>注册时间</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -98,11 +97,6 @@
                                         <c:otherwise> -- </c:otherwise>
                                     </c:choose>
                                 </td>
-                                <c:choose>
-                                    <c:when test="${member.cardStatus == 1}"><td class="text-success">有效</td></c:when>
-                                    <c:when test="${member.cardStatus == 2}"><td class="text-danger">锁定</td></c:when>
-                                    <c:otherwise><td>--</td></c:otherwise>
-                                </c:choose>
                                 <td>${member.operatorName}</td>
                                 <td>${member.createTime}</td>
                                 <td>
@@ -112,13 +106,13 @@
                                         </a>
                                     </c:if>
                                     <c:if test="${member.tempCardNo != null}">
-                                        <a class="btn btn-warning" href="/member/membersInfoCar?memberId=${member.memberId}">
+                                        <a class="btn btn-warning" href="/member/bindMembersCard?memberId=${member.memberId}">
                                             <span class="glyphicon glyphicon-credit-card"></span> 绑卡
                                         </a>
                                     </c:if>
-                                    <a class="btn btn-danger members-delete" href="javascript:;" data-id="${member.memberId}">
+                                    <%--<a class="btn btn-danger members-delete" href="javascript:;" data-id="${member.memberId}">
                                         <span class="glyphicon glyphicon-trash"></span> 删除
-                                    </a>
+                                    </a>--%>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -188,6 +182,9 @@
                             </c:if>
                         </ul>
                     </nav>
+                    <c:if test="${fn:length(list) == 0}">
+                        <p class="text-muted no-list-count">没有检索到会员！</p>
+                    </c:if>
                 </div>
             </div>
         </div>

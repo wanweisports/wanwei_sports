@@ -9,13 +9,13 @@
     <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
     <script src="/Content/app/students/students_view.js?v=${static_resource_version}"></script>
-
     <script>
         // 表单校验配置
         $(document).ready(function () {
             $('#student_form').validate({
                 ignore: ":hidden"
             });
+            $('[name="studentSex"][value="${studentSex}"]').prop("checked", true);
         });
     </script>
 </layout:override>
@@ -76,13 +76,13 @@
                                 <span class="text-danger">*</span> 联系手机
                             </label>
 
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="student_mobile" name="studentMobile"
-                                       placeholder="请输入手机号码" autocomplete="off"
+                            <div class="col-sm-8 input-parent-magnifier">
+                                <input type="text" class="form-control input-element-magnifier" id="student_mobile"
+                                       name="studentMobile" placeholder="请输入手机号码" autocomplete="off"
                                        data-val="true" data-val-required="手机号码不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
                                        data-val-regex="手机号码格式错误"
-                                       value="${studentMobile}">
+                                       value="${studentMobile}" maxlength="11">
                                 <div data-valmsg-for="studentMobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -109,22 +109,12 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <c:if test="${studentSex == 1}">
-                                    <label class="radio-inline">
-                                        <input type="radio" name="studentSex" id="student_sex1" value="1" checked> 男
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="studentSex" id="student_sex2" value="2"> 女
-                                    </label>
-                                </c:if>
-                                <c:if test="${studentSex == 2}">
-                                    <label class="radio-inline">
-                                        <input type="radio" name="studentSex" id="student_sex1" value="1"> 男
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="studentSex" id="student_sex2" value="2" checked> 女
-                                    </label>
-                                </c:if>
+                                <label class="radio-inline">
+                                    <input type="radio" name="studentSex" id="student_sex1" value="1"> 男
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="studentSex" id="student_sex2" value="2" checked> 女
+                                </label>
                                 <div data-valmsg-for="studentSex" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -148,7 +138,8 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
-                                <button type="button" class="btn btn-primary col-sm-4 save-student">
+                                <button type="button" class="btn btn-primary col-sm-4 save-student"
+                                        data-loading-text="保存中...">
                                     <span class="glyphicon glyphicon-ok"></span>  保 存
                                 </button>
                             </div>
@@ -157,22 +148,6 @@
                 </div>
             </div>
         </form>
-    </div>
-
-    <div class="modal fade" id="tips_success_modal" tabindex="-1" role="dialog" aria-labelledby="tips_success_modal_label">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="tips_success_modal_label">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-success" role="alert">学生保存成功!</div>
-                </div>
-            </div>
-        </div>
     </div>
 </layout:override>
 

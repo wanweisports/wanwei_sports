@@ -1,4 +1,4 @@
-package com.park.service.impl;
+﻿package com.park.service.impl;
 
 import com.park.common.bean.NotificationsSendersInputView;
 import com.park.common.bean.NotificationsReceiversInputView;
@@ -78,7 +78,7 @@ public class NotificationsServiceImpl extends BaseService implements INotificati
         whereSql.append(" ORDER BY ni.sendTime DESC");
 		return super.getPageBean(headSql, bodySql, whereSql, notificationsReceiversInputView);
 	}
-	
+
 	@Override
 	public NotificationsSenders getNotificationInfo(int noteId) {
 		return baseDao.getToEvict(NotificationsSenders.class, noteId);
