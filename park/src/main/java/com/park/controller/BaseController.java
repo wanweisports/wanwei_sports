@@ -1,9 +1,12 @@
 package com.park.controller;
 
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -11,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.ui.Model;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -19,7 +23,9 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import com.park.common.bean.PageBean;
 import com.park.common.constant.IPlatformConstant;
 import com.park.common.po.UserOperator;
+import com.park.common.util.DateUtil;
 import com.park.common.util.JsonUtils;
+import com.park.common.util.PoiUtil;
 
 public class BaseController {
 	public static final String REQUEST_HEAD = "text/html; charset=UTF-8";
@@ -100,12 +106,12 @@ public class BaseController {
     protected UserOperator getUserInfo() {
         UserOperator userInfo = getUserInfo(getRequest().getSession());
         //方便测试，后期删除！
-        if(userInfo == null){
+        /*if(userInfo == null){
         	userInfo = new UserOperator();
         	userInfo.setId(1);
         	userInfo.setOperatorId("admin");
         	userInfo.setOperatorName("管理员");
-        }
+        }*/
         return userInfo;
     }
 
@@ -120,5 +126,16 @@ public class BaseController {
 		model.addAttribute("currentPage", pageBean.getCurrentPage());
 		model.addAttribute("pageSize", pageBean.getPageSize());
     }
+    
+    protected void outExcel(HttpServletResponse response, Workbook workbook, String excelName) throws IOException {
+    	HttpServletRequest request = getRequest();
+		response.setHeader("Content-Disposition", "attachment;" + PoiUtil.getEncodingFileName(excelName + DateUtil.dateToString(new Date(), DateUtil.YYYYMMDD) + IPlatformConstant.EXCEL_EXTENSION_X, request.getHeader("User-Agent")));
+		response.setStatus(200);
+		ServletOutputStream outputStream = response.getOutputStream();
+		workbook.write(outputStream);
+		workbook.close();
+		outputStream.flush();
+		outputStream.close();
+	}
     
 }

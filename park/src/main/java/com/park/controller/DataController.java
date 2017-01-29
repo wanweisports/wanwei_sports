@@ -1,20 +1,24 @@
 package com.park.controller;
 
-import com.park.common.bean.ResponseBean;
-import com.park.common.exception.MessageException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.park.common.bean.DataInputView;
-import com.park.common.util.JsonUtils;
-import com.park.service.IDataService;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.park.common.bean.DataInputView;
+import com.park.common.bean.ResponseBean;
+import com.park.common.exception.MessageException;
+import com.park.common.util.JsonUtils;
+import com.park.service.IDataService;
+import com.park.service.IXlsExportImportService;
 
 /**
  * Created by wangjun on 16/10/20.
@@ -25,6 +29,9 @@ public class DataController extends BaseController {
 	
 	@Autowired
 	private IDataService dataService;
+	
+	@Autowired
+	private IXlsExportImportService xlsExportImportService;
 
     // 会员注册个数统计
     @ResponseBody
@@ -173,4 +180,22 @@ public class DataController extends BaseController {
 		}
         return "Data/DataVenuePercentage";
     }
+    
+    //营业收支统计导出excel
+    @RequestMapping("exportBusinessIncome")
+    public void exportBusinessIncome(DataInputView dataInputView, HttpServletResponse response){
+    	try {
+    		Map<String, Object> resultMap = dataService.getBusinessIncome(dataInputView);
+    		
+    		System.out.println(JsonUtils.toJson(resultMap));
+            Workbook workbook = dataService.exportBusinessIncome(dataInputView);
+            outExcel(response, workbook, "营业收支统计");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
 }
+
+
+
