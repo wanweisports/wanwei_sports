@@ -1,6 +1,7 @@
 package com.park.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -185,14 +186,37 @@ public class DataController extends BaseController {
     @RequestMapping("exportBusinessIncome")
     public void exportBusinessIncome(DataInputView dataInputView, HttpServletResponse response){
     	try {
-    		Map<String, Object> resultMap = dataService.getBusinessIncome(dataInputView);
-    		
-    		System.out.println(JsonUtils.toJson(resultMap));
             Workbook workbook = dataService.exportBusinessIncome(dataInputView);
             outExcel(response, workbook, "营业收支统计");
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+ 	//用户签到记录导出excel
+    @RequestMapping("exportMembersAttendance")
+    public void exportMembersAttendance(DataInputView dataInputView, HttpServletResponse response) {
+    	try {
+    		dataInputView.setPageSize(null);
+    		List list = dataService.getDataMembersAttendance(dataInputView).getList();
+    		Workbook workbook = xlsExportImportService.xlsExport("template_members_attendance.xlsx", list);
+    		outExcel(response, workbook, "签到记录统计");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+    
+    //场地使用率导出excel
+    @RequestMapping("exportVenuePercentage")
+    public void exportVenuePercentage(DataInputView dataInputView, HttpServletResponse response) {
+    	try {
+    		dataInputView.setPageSize(null);
+    		List list = (List) dataService.getSitePercentage(dataInputView).get("list");
+    		Workbook workbook = xlsExportImportService.xlsExport("template_venue_percentage.xlsx", list);
+    		outExcel(response, workbook, "场地使用率统计");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
     
 }

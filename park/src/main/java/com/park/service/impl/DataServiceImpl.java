@@ -224,10 +224,12 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		for(Map<String, Object> map : siteCountList){
 			Double siteSumCount = StrUtil.objToDoubleDef0(map.get("siteSumCount"));
 			Double siteUseCount = StrUtil.objToDoubleDef0(map.get("siteUseCount"));
+			Double siteBusinessCount = StrUtil.objToDoubleDef0(map.get("siteBusinessCount"));
 			map.put("siteSumCount", siteSumCount.intValue());
 			map.put("siteUseCount", siteUseCount.intValue());
-			map.put("siteSumPercentage", sumCountAll > 0 ? StrUtil.roundKeepTwo(siteSumCount / sumCountAll) : 0); //场地预订率
-			map.put("siteUsePercentage", StrUtil.roundKeepTwo(StrUtil.objToDoubleDef0(map.get("siteUsePercentage")))); //场地使用率
+			map.put("siteBusinessCount", siteBusinessCount.intValue());
+			map.put("siteSumPercentage", (sumCountAll > 0 ? StrUtil.roundKeepTwo(siteSumCount / sumCountAll) : 0) * 100); //场地预订率
+			map.put("siteUsePercentage", (StrUtil.roundKeepTwo(StrUtil.objToDoubleDef0(map.get("siteUsePercentage")))) * 100); //场地使用率
 		}
 		PageBean pageBean = new PageBean(siteCountList, page, pageSize, siteCountList.size());
 		pageBean.pagedList().init();
@@ -247,6 +249,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("pageBean", JsonUtils.fromJson(pageBean));
+		resultMap.put("list", pageBean.getList());
 		resultMap.put("sportCountList", sportCountList);
 
 		return resultMap;
@@ -475,7 +478,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		Map<String, Object> resultMap = getBusinessIncome(dataInputView);
 		Map cardCounts = (Map)resultMap.get("cardCounts");
 		List cardList = (List) cardCounts.get("countList");
-		Workbook workbook = xlsExportImportService.getWorkbook(XlsExportImportServiceImpl.class.getResourceAsStream(XlsExportImportServiceImpl.ROOT + "business_income_template.xlsx"), IPlatformConstant.EXCEL_EXTENSION_X);
+		Workbook workbook = xlsExportImportService.getWorkbook(XlsExportImportServiceImpl.class.getResourceAsStream(XlsExportImportServiceImpl.ROOT + "template_business_income.xlsx"), IPlatformConstant.EXCEL_EXTENSION_X);
 		
 		Sheet sheetAt0 = workbook.getSheetAt(0);
 		

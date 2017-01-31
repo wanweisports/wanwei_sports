@@ -53,6 +53,7 @@
                                value="${createTimeEnd}">
                     </div>
                     <div class="form-group">
+                    	<input type="hidden" value="${countNum}" name="countNum" />
                         <a href="javascript:;" class="btn btn-primary data-filter">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
@@ -72,7 +73,7 @@
                 <li style="margin-right: 15px;">篮球 <span class="badge">42%</span></li>-->
             </ul>
             <div class="pull-right">
-                <a href="javascript:;" class="btn btn-danger">
+                <a href="javascript:;" class="btn btn-danger" onclick="window.open('/data/exportVenuePercentage?'+$('#data_form').serialize());">
                     <span class="glyphicon glyphicon-export"></span> 导出数据
                 </a>
                 <a href="javascript:;" class="btn btn-primary" style="display: none;">
@@ -100,11 +101,11 @@
                             <tr>
                                 <td>${data.sportName}</td>
                                 <td>${data.siteName}</td>
-                                <td>${data.siteBusinessCount}</td>
+                                <td>${data.siteBusinessCount}次</td>
                                 <td>${data.siteSumCount}次</td>
+                                <td>${data.siteSumPercentage}%</td>
                                 <td>${data.siteUseCount}次</td>
-                                <td>${data.siteSumPercentage * 100}%</td>
-                                <td>${data.siteUsePercentage * 100}%</td>
+                                <td>${data.siteUsePercentage}%</td>
                             </tr>
                         </c:forEach>
                         <!--<tr>

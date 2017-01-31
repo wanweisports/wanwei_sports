@@ -55,7 +55,8 @@
                         </a>
                     </div>
                     <div class="form-group pull-right">
-                        <a href="javascript:;" class="btn btn-danger goods-filter">
+                    	<input type="hidden" name="countNum" value="${countNum}" />
+                        <a href="javascript:;" class="btn btn-danger goods-filter" onclick="window.open('/data/exportMembersAttendance?'+$('#data_form').serialize());">
                             <span class="glyphicon glyphicon-export"></span> 导出数据
                         </a>
                     </div>
