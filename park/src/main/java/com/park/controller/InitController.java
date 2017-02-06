@@ -16,7 +16,7 @@ import com.park.service.IInitService;
  * Created by wangjun on 16/10/26.
  */
 @Controller
-@RequestMapping("init")
+@RequestMapping("init") 
 public class InitController extends BaseController {
 	
 	@Autowired

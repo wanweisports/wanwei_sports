@@ -44,4 +44,8 @@ public interface IPlatformConstant {
 	
 	public static final String APP_SECRET = (String) CustomizedPropertyConfigurer.getContextProperty("appsecret"); //密钥
 	
+	
+	public static final String EXCEL_EXTENSION = ".xls";
+    public static final String EXCEL_EXTENSION_X = ".xlsx";
+	
 }

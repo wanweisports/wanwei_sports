@@ -53,7 +53,8 @@
                         </a>
                     </div>
                     <div class="form-group pull-right">
-                        <a href="javascript:;" class="btn btn-danger goods-filter">
+                    	<input type="hidden" value="${countNum}" name="countNum" />
+                        <a href="javascript:;" class="btn btn-danger goods-filter" onclick="window.open('/data/exportBusinessIncome?'+$('#data_form').serialize());">
                             <span class="glyphicon glyphicon-export"></span> 导出数据
                         </a>
                         <a href="/data/getBusinessIncomeGroupDate" class="btn btn-primary">

@@ -1,12 +1,14 @@
 package com.park.service.impl;
 
-import com.park.common.bean.NotificationsSendersInputView;
 import com.park.common.bean.NotificationsReceiversInputView;
+import com.park.common.bean.NotificationsSendersInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
-import com.park.common.po.*;
-import com.park.common.util.*;
+import com.park.common.po.NotificationsReceivers;
+import com.park.common.po.NotificationsSenders;
+import com.park.common.util.DateUtil;
+import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
 import com.park.service.INotificationsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +19,8 @@ import java.io.IOException;
 @Service
 public class NotificationsServiceImpl extends BaseService implements INotificationsService {
 
-	@Autowired
-	private IBaseDao baseDao;
+    @Autowired
+    private IBaseDao baseDao;
 
     @Override
     public PageBean getNotificationsDraft(NotificationsSendersInputView notificationsSendersInputView){
@@ -38,11 +40,11 @@ public class NotificationsServiceImpl extends BaseService implements INotificati
         return super.getPageBean(headSql, bodySql, whereSql, notificationsSendersInputView);
     }
 
-	@Override
-	public PageBean getNotificationsBySender(NotificationsSendersInputView notificationsSendersInputView){
-		String noteTitle = notificationsSendersInputView.getNoteTitle();
+    @Override
+    public PageBean getNotificationsBySender(NotificationsSendersInputView notificationsSendersInputView){
+        String noteTitle = notificationsSendersInputView.getNoteTitle();
         Integer senderId = notificationsSendersInputView.getSenderId();
-		String sendStatus = notificationsSendersInputView.getSendStatus();
+        String sendStatus = notificationsSendersInputView.getSendStatus();
 
         StringBuilder headSql = new StringBuilder("SELECT ni.*, uo.operatorName,uo.operatorMobile,nr.*");
         StringBuilder bodySql = new StringBuilder(" FROM notifications_senders ni");
@@ -54,11 +56,11 @@ public class NotificationsServiceImpl extends BaseService implements INotificati
             whereSql.append(" AND ni.noteTitle = :noteTitle");
         }
         whereSql.append(" ORDER BY ni.sendTime DESC");
-		return super.getPageBean(headSql, bodySql, whereSql, notificationsSendersInputView);
-	}
+        return super.getPageBean(headSql, bodySql, whereSql, notificationsSendersInputView);
+    }
 
-	@Override
-	public PageBean getNotificationsByReceiver(NotificationsReceiversInputView notificationsReceiversInputView){
+    @Override
+    public PageBean getNotificationsByReceiver(NotificationsReceiversInputView notificationsReceiversInputView){
         String receiverStatus = notificationsReceiversInputView.getReceiverStatus();
         Integer receiverId = notificationsReceiversInputView.getReceiverId();
 
@@ -75,45 +77,45 @@ public class NotificationsServiceImpl extends BaseService implements INotificati
             whereSql.append(" AND nr.receiverStatus = :receiverStatus");
         }
         whereSql.append(" ORDER BY ni.sendTime DESC");
-		return super.getPageBean(headSql, bodySql, whereSql, notificationsReceiversInputView);
-	}
+        return super.getPageBean(headSql, bodySql, whereSql, notificationsReceiversInputView);
+    }
 
-	@Override
-	public NotificationsSenders getNotificationInfo(int noteId) {
-		return baseDao.getToEvict(NotificationsSenders.class, noteId);
-	}
-	
-	@Override
-	public void deleteNotification(int noteId){
+    @Override
+    public NotificationsSenders getNotificationInfo(int noteId) {
+        return baseDao.getToEvict(NotificationsSenders.class, noteId);
+    }
+
+    @Override
+    public void deleteNotification(int noteId){
         NotificationsSenders notificationInfo = getNotificationInfo(noteId);
-		if(notificationInfo == null) throw new MessageException("该通知消息不存在");
+        if(notificationInfo == null) throw new MessageException("该通知消息不存在");
 
         notificationInfo.setSendStatus(IDBConstant.NOTIFICATIONS_SENDER_DEL);
         baseDao.save(notificationInfo, noteId);
-	}
-	
-	@Override
-	public Integer saveSetNotification(NotificationsSenders notificationsSenders) throws IOException {
-		String nowDate = DateUtil.getNowDate();
+    }
+
+    @Override
+    public Integer saveSetNotification(NotificationsSenders notificationsSenders) throws IOException {
+        String nowDate = DateUtil.getNowDate();
         Integer noteId = notificationsSenders.getNoteId();
 
-		if (noteId == null) {
+        if (noteId == null) {
             notificationsSenders.setCreateTime(nowDate);
             notificationsSenders.setUpdateTime(nowDate);
             notificationsSenders.setSendStatus(IDBConstant.NOTIFICATIONS_SENDER_NO);
-			baseDao.save(notificationsSenders, null);
-			noteId = notificationsSenders.getNoteId();
-		} else {
+            baseDao.save(notificationsSenders, null);
+            noteId = notificationsSenders.getNoteId();
+        } else {
             NotificationsSenders notificationsSendersDB = getNotificationInfo(noteId);
             if(notificationsSendersDB == null) throw new MessageException("该通知消息不存在");
             notificationsSendersDB.setNoteTitle(notificationsSenders.getNoteTitle());
             notificationsSendersDB.setNoteContent(notificationsSenders.getNoteContent());
             notificationsSendersDB.setUpdateTime(nowDate);
-			baseDao.save(notificationsSendersDB, noteId);
-		}
+            baseDao.save(notificationsSendersDB, noteId);
+        }
 
-		return noteId;
-	}
+        return noteId;
+    }
 
     @Override
     public Integer saveSendNotification(NotificationsReceivers notificationsReceivers) {
@@ -145,9 +147,9 @@ public class NotificationsServiceImpl extends BaseService implements INotificati
         notificationsReceivers.setReceiverStatus(IDBConstant.NOTIFICATIONS_RECEIVER_DEL);
         baseDao.save(notificationsReceivers, id);
     }
-	
-	@Override
-	public void saveMarkNotificationRead(int id){
+
+    @Override
+    public void saveMarkNotificationRead(int id){
         String nowDate = DateUtil.getNowDate();
 
         NotificationsReceivers notificationsReceivers = getNotificationReceivers(id);
@@ -156,6 +158,6 @@ public class NotificationsServiceImpl extends BaseService implements INotificati
         notificationsReceivers.setReadTime(nowDate);
 
         baseDao.save(notificationsReceivers, id);
-	}
+    }
 }
 

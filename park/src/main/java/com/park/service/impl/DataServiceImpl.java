@@ -5,22 +5,31 @@ import static com.park.common.constant.IPlatformConstant.*;
 import java.util.*;
 
 import com.park.common.util.DateUtil;
+
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.park.common.bean.DataInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.constant.IDBConstant;
+import com.park.common.constant.IPlatformConstant;
 import com.park.common.util.JsonUtils;
 import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
 import com.park.service.IDataService;
+import com.park.service.IXlsExportImportService;
 
 @Service
 public class DataServiceImpl extends BaseService implements IDataService {
 
 	@Autowired
 	private IBaseDao baseDao;
+	
+	@Autowired
+	private IXlsExportImportService xlsExportImportService;
 
 	// 查询某周的会员注册统计
     @Override
@@ -308,10 +317,12 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		for(Map<String, Object> map : siteCountList){
 			Double siteSumCount = StrUtil.objToDoubleDef0(map.get("siteSumCount"));
 			Double siteUseCount = StrUtil.objToDoubleDef0(map.get("siteUseCount"));
+			Double siteBusinessCount = StrUtil.objToDoubleDef0(map.get("siteBusinessCount"));
 			map.put("siteSumCount", siteSumCount.intValue());
 			map.put("siteUseCount", siteUseCount.intValue());
-			map.put("siteSumPercentage", sumCountAll > 0 ? StrUtil.roundKeepTwo(siteSumCount / sumCountAll) : 0); //场地预订率
-			map.put("siteUsePercentage", StrUtil.roundKeepTwo(StrUtil.objToDoubleDef0(map.get("siteUsePercentage")))); //场地使用率
+			map.put("siteBusinessCount", siteBusinessCount.intValue());
+			map.put("siteSumPercentage", (sumCountAll > 0 ? StrUtil.roundKeepTwo(siteSumCount / sumCountAll) : 0) * 100); //场地预订率
+			map.put("siteUsePercentage", (StrUtil.roundKeepTwo(StrUtil.objToDoubleDef0(map.get("siteUsePercentage")))) * 100); //场地使用率
 		}
 		PageBean pageBean = new PageBean(siteCountList, page, pageSize, siteCountList.size());
 		pageBean.pagedList().init();
@@ -331,6 +342,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("pageBean", JsonUtils.fromJson(pageBean));
+		resultMap.put("list", pageBean.getList());
 		resultMap.put("sportCountList", sportCountList);
 
 		return resultMap;
@@ -553,5 +565,46 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		sumPriceMap.put("sumPrice", xianjinSum+zhifubaoSum+weixinSum+yinlianSum+zhipiaoSum);
 		return sumPriceMap;
 	}
+	
+	@Override
+	public Workbook exportBusinessIncome(DataInputView dataInputView){
+		Map<String, Object> resultMap = getBusinessIncome(dataInputView);
+		Map cardCounts = (Map)resultMap.get("cardCounts");
+		List cardList = (List) cardCounts.get("countList");
+		Workbook workbook = xlsExportImportService.getWorkbook(XlsExportImportServiceImpl.class.getResourceAsStream(XlsExportImportServiceImpl.ROOT + "template_business_income.xlsx"), IPlatformConstant.EXCEL_EXTENSION_X);
+		
+		Sheet sheetAt0 = workbook.getSheetAt(0);
+		
+		xlsExportImportService.writeWorkbook(StrUtil.zeroToLine(cardList), workbook, 0, 0, 2, false);
+		xlsExportImportService.writeWorkbook(getSum(cardCounts, "会员收入小计"), workbook, 0, 0, sheetAt0.getLastRowNum()+1, false);
+		
+		Map siteCounts = (Map)resultMap.get("siteCounts");
+		List siteList = (List) siteCounts.get("countList");
+		xlsExportImportService.writeWorkbook(StrUtil.zeroToLine(siteList), workbook, 0, 0, sheetAt0.getLastRowNum()+2, false);
+		xlsExportImportService.writeWorkbook(getSum(siteCounts, "场地收入小计"), workbook, 0, 0, sheetAt0.getLastRowNum()+1, false);
+		
+		Map goodsCounts = (Map)resultMap.get("goodsCounts");
+		List goodsList = (List) goodsCounts.get("countList");
+		xlsExportImportService.writeWorkbook(StrUtil.zeroToLine(goodsList), workbook, 0, 0, sheetAt0.getLastRowNum()+2, false);
+		xlsExportImportService.writeWorkbook(getSum(goodsCounts, "商品收入小计"), workbook, 0, 0, sheetAt0.getLastRowNum()+1, false);
+		
+		xlsExportImportService.writeWorkbook(getSum(resultMap, "金额总计"), workbook, 0, 0, sheetAt0.getLastRowNum()+1, true);
+		return workbook;
+	}
+	
+	private List getSum(Map<String, Object> map, String name){
+		Map newMap = new HashMap();
+		for(String key : map.keySet()){
+			newMap.put(key.replace("SumPrice", StrUtil.EMPTY), map.get(key));
+		}
+		newMap.put("name", name);
+		
+		List list = new ArrayList();
+		list.add(newMap);
+		return list;
+	}
+	
+	
+	
 	
 }
