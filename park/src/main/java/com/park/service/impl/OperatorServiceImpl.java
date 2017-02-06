@@ -306,5 +306,10 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 	private int getEmployeeCount(){
 		return baseDao.getUniqueResult("SELECT COUNT(1) FROM user_operator").intValue();
 	}
+
+	@Override
+	public UserOperator checkUserNameExist(String userName, int type) {
+		return JsonUtils.fromJson(baseDao.queryBySqlFirst("SELECT * FROM user_operator WHERE operatorId = ? AND operatorType = ?", userName, type), UserOperator.class);
+	}
 	
 }

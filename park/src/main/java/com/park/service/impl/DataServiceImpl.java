@@ -2,11 +2,9 @@ package com.park.service.impl;
 
 import static com.park.common.constant.IPlatformConstant.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import com.park.common.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +22,104 @@ public class DataServiceImpl extends BaseService implements IDataService {
 	@Autowired
 	private IBaseDao baseDao;
 
+	// 查询某周的会员注册统计
+    @Override
+    public Map<String, Object> getCountMembersByWeek(DataInputView dataInputView) {
+        List<String> dateList = DateUtil.getWeekDate("");
+
+        ArrayList<String> weeks = new ArrayList<String>() {{
+            add("Monday");
+            add("Tuesday");
+            add("Wednesday");
+            add("Thursday");
+            add("Friday");
+            add("Saturday");
+            add("Sunday");
+        }};
+
+        // 全周每天的统计
+        StringBuffer sql = new StringBuffer("SELECT mc.cardTypeId, mct.cardTypeName");
+        sql.append(", COUNT(case when (DATE_FORMAT(mc.createTime, '%Y-%m-%d')>='" + dateList.get(0) +
+                "' AND DATE_FORMAT(mc.createTime, '%Y-%m-%d')<='" + dateList.get(dateList.size() - 1) +
+                "') then 'allWeek' end) as 'allWeek'");
+        for (int i = 0; i < dateList.size(); i++) {
+            sql.append(", COUNT(case when DATE_FORMAT(mc.createTime, '%Y-%m-%d')='" + dateList.get(i) +
+                    "' then '" + weeks.get(i) + "' end) as '" + weeks.get(i) + "'");
+        }
+        sql.append(" FROM member_card mc INNER JOIN member_card_type mct ON mc.cardTypeId = mct.cardTypeId");
+        sql.append(" GROUP BY mc.cardTypeId ORDER BY mc.cardTypeId ASC");
+
+        List<Map<String, Object>> dataWeekList = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
+
+        // 全周统计
+        StringBuffer countSql = new StringBuffer("SELECT '合计' as 'cardTypeName'");
+        countSql.append(", COUNT(case when (DATE_FORMAT(mc.createTime, '%Y-%m-%d')>='" + dateList.get(0) +
+                "' AND DATE_FORMAT(mc.createTime, '%Y-%m-%d')<='" + dateList.get(dateList.size() - 1) +
+                "') then 'allWeek' end) as 'allWeek'");
+        for (int i = 0; i < dateList.size(); i++) {
+            countSql.append(", COUNT(case when DATE_FORMAT(mc.createTime, '%Y-%m-%d')='" + dateList.get(i) +
+                    "' then '" + weeks.get(i) + "' end) as '" + weeks.get(i) + "'");
+        }
+        countSql.append(" FROM member_card mc INNER JOIN member_card_type mct ON mc.cardTypeId = mct.cardTypeId");
+
+        List<Map<String, Object>> dataCountList = baseDao.queryBySql(countSql.toString(), JsonUtils.fromJson(dataInputView));
+
+        // 组合数据
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("data", dataWeekList);
+        resultMap.put("total", dataCountList);
+        resultMap.put("DICT", weeks);
+
+        return resultMap;
+    }
+
+    // 查询某月的会员注册统计
+    @Override
+    public Map<String, Object> getCountMembersByMonth(DataInputView dataInputView) {
+        List<String> dateList = DateUtil.getMonthDate("");
+
+        // 全月每天的统计
+        StringBuffer sql = new StringBuffer("SELECT mc.cardTypeId, mct.cardTypeName");
+        sql.append(", COUNT(case when (DATE_FORMAT(mc.createTime, '%Y-%m-%d')>='" + dateList.get(0) +
+                "' AND DATE_FORMAT(mc.createTime, '%Y-%m-%d')<='" + dateList.get(dateList.size() - 1) +
+                "') then 'allMonth' end) as 'allMonth'");
+        for (int i = 0; i < dateList.size(); i++) {
+            sql.append(", COUNT(case when DATE_FORMAT(mc.createTime, '%Y-%m-%d')='" + dateList.get(i) +
+                    "' then '" + dateList.get(i) + "' end) as '" + dateList.get(i) + "'");
+        }
+        sql.append(" FROM member_card mc INNER JOIN member_card_type mct ON mc.cardTypeId = mct.cardTypeId");
+        sql.append(" GROUP BY mc.cardTypeId ORDER BY mc.cardTypeId ASC");
+
+        List<Map<String, Object>> dataMonthList = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
+
+        // 全月统计
+        StringBuffer countSql = new StringBuffer("SELECT '合计' as 'cardTypeName'");
+        countSql.append(", COUNT(case when (DATE_FORMAT(mc.createTime, '%Y-%m-%d')>='" + dateList.get(0) +
+                "' AND DATE_FORMAT(mc.createTime, '%Y-%m-%d')<='" + dateList.get(dateList.size() - 1) +
+                "') then 'allMonth' end) as 'allMonth'");
+        for (int i = 0; i < dateList.size(); i++) {
+            countSql.append(", COUNT(case when DATE_FORMAT(mc.createTime, '%Y-%m-%d')='" + dateList.get(i) +
+                    "' then '" + dateList.get(i) + "' end) as '" + dateList.get(i) + "'");
+        }
+        countSql.append(" FROM member_card mc INNER JOIN member_card_type mct ON mc.cardTypeId = mct.cardTypeId");
+
+        List<Map<String, Object>> dataCountList = baseDao.queryBySql(countSql.toString(), JsonUtils.fromJson(dataInputView));
+
+        // 组合数据
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("data", dataMonthList);
+        resultMap.put("total", dataCountList);
+        resultMap.put("DICT", dateList);
+
+        return resultMap;
+    }
+
     @Override
     public List<Map<String, Object>> getMembersRegister(DataInputView dataInputView){
         Integer countNum = dataInputView.getCountNum();
         String createTimeStart = dataInputView.getCreateTimeStart();
         String createTimeEnd = dataInputView.getCreateTimeEnd();
+
         StringBuffer sql = new StringBuffer("SELECT total.cardTypeId, total.cardTypeName, total.cardTypeTotal, item.cardTypeCount FROM");
         sql.append(" (SELECT mct.cardTypeId, mct.cardTypeName, COUNT(mc.cardTypeId) cardTypeTotal FROM member_card mc INNER JOIN member_card_type mct ON mc.cardTypeId = mct.cardTypeId GROUP BY mct.cardTypeId ORDER BY mct.cardTypeId) total,");
 
@@ -108,10 +199,10 @@ public class DataServiceImpl extends BaseService implements IDataService {
 	}
 
     @Override
-    public String getCountSql(Integer countNum, String field) {
-        countNum = countNum != null ? countNum : 10;
+    public String getCountSql(Integer countItem, String field) {
+		countItem = countItem != null ? countItem : IDBConstant.DATA_DATE_MONTH;
 
-        switch (countNum) {
+        switch (countItem) {
             case IDBConstant.DATA_DATE_DAY: //今日
                 return " AND DATE_FORMAT("+field+", '%Y-%m-%d') = CURDATE()";
             case IDBConstant.DATA_DATE_PRE_DAY: //昨日

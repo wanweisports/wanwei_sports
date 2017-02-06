@@ -27,7 +27,49 @@ public class DateUtil {
     public static final String YYYYMMDD_ZH = "yyyy年MM月dd日";
     public static final String YYYYMMDDHHMMSS_ZH = "yyyy年MM月dd日HH:mm:ss";
     public static final int FIRST_DAY_OF_WEEK = Calendar.MONDAY;// 中国周一是一周的第一天
-	
+
+	// 获取本周的七天
+	public static List<String> getWeekDate(String dateStr) {
+        List<String> dateList = new ArrayList<String>();
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c = Calendar.getInstance();
+		// 今天是一周中的第几天
+		int dayOfWeek = c.get(Calendar.DAY_OF_WEEK );
+
+		if (c.getFirstDayOfWeek() == Calendar.SUNDAY) {
+			c.add(Calendar.DAY_OF_MONTH, 1);
+		}
+		// 计算一周开始的日期
+		c.add(Calendar.DAY_OF_MONTH, -dayOfWeek);
+
+		for (int i=1;i<=7;i++) {
+			c.add(Calendar.DAY_OF_MONTH, 1);
+            dateList.add(sdf.format(c.getTime()));
+		}
+
+		return dateList;
+	}
+
+    // 获取每月的日期
+    public static List<String> getMonthDate(String dateStr) {
+        List<String> dateList = new ArrayList<String>();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+
+        cal.setTime(cal.getTime());
+        cal.set(Calendar.DATE, 1);
+
+        int month = cal.get(Calendar.MONTH);
+        while(cal.get(Calendar.MONTH) == month){
+            dateList.add(sdf.format(cal.getTime()));
+            cal.add(Calendar.DATE, 1);
+        }
+
+        return dateList;
+    }
+
 	/**
 		 * @param time
 		 * @return

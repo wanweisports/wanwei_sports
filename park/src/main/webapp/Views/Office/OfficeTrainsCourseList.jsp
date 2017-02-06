@@ -52,7 +52,7 @@
                 <div class="table-responsive course-list">
                     <table class="table">
                         <thead>
-                        <tr>
+                        <tr class="bg-info">
                             <th>课程编号</th>
                             <th>课程名称</th>
                             <th>课程描述</th>
@@ -158,6 +158,9 @@
                             </c:if>
                         </ul>
                     </nav>
+                    <c:if test="${fn:length(list) == 0}">
+                        <p class="text-muted no-list-count">没有检索到任何课程！</p>
+                    </c:if>
                 </div>
             </div>
         </div>

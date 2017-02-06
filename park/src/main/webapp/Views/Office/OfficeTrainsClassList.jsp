@@ -63,7 +63,7 @@
                 <div class="table-responsive class-list">
                     <table class="table">
                         <thead>
-                        <tr>
+                        <tr class="bg-info">
                             <th>班级名称</th>
                             <th>班级描述</th>
                             <th>课程名称</th>
@@ -186,6 +186,9 @@
                             </c:if>
                         </ul>
                     </nav>
+                    <c:if test="${fn:length(list) == 0}">
+                        <p class="text-muted no-list-count">没有检索到任何班级！</p>
+                    </c:if>
                 </div>
             </div>
         </div>

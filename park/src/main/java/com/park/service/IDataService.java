@@ -8,6 +8,10 @@ import com.park.common.bean.PageBean;
 
 public interface IDataService {
 
+	public Map<String, Object> getCountMembersByWeek(DataInputView dataInputView);
+
+	public Map<String, Object> getCountMembersByMonth(DataInputView dataInputView);
+
 	public List<Map<String, Object>> getMembersRegister(DataInputView dataInputView);
 
     public List<Map<String, Object>> getMembersRegisterStored(DataInputView dataInputView);
@@ -22,6 +26,6 @@ public interface IDataService {
 	
 	public Map<String, Object> getBusinessIncome(DataInputView dataInputView);
 	
-	public String getCountSql(Integer countNum, String field);
+	public String getCountSql(Integer countItem, String field);
 	
 }

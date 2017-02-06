@@ -1,6 +1,7 @@
 package com.park.controller;
 
 import com.park.common.bean.ResponseBean;
+import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,13 +27,14 @@ public class DataController extends BaseController {
 	@Autowired
 	private IDataService dataService;
 
-    // 会员注册个数统计
+    // 会员注册个数
     @ResponseBody
     @RequestMapping(value = "getMembersCountData", method = RequestMethod.POST)
     public ResponseBean getMembersCountData(DataInputView dataInputView) {
         try {
-            Map<String, Object> data = new HashMap<String, Object>();
-            data.put("memberCount", dataService.getMembersRegister(dataInputView));
+            Map<String, Object> data;
+            //data = dataService.getCountMembersByWeek(dataInputView);
+            data = dataService.getCountMembersByMonth(dataInputView);
             return new ResponseBean(data);
         } catch (MessageException e) {
             e.printStackTrace();
@@ -85,6 +87,7 @@ public class DataController extends BaseController {
             Map<String, Object> data = new HashMap<String, Object>();
             data.put("memberCount", dataService.getMembersRegister(dataInputView));
             data.put("memberStored", dataService.getMembersRegisterStored(dataInputView));
+            data.put("memberCount1", dataService.getCountMembersByWeek(dataInputView));
             return new ResponseBean(data);
         } catch (MessageException e) {
             e.printStackTrace();

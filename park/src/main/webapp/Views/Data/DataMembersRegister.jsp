@@ -33,11 +33,10 @@
                 <form id="data_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="/data/getMembersRegister?countNum=10" data-count="10" class="btn btn-primary member-date">全部</a>
                             <a href="/data/getMembersRegister?countNum=1" data-count="1" class="btn btn-default member-date">今日</a>
-                            <a href="/data/getMembersRegister?countNum=2" data-count="2" class="btn btn-default member-date">昨日</a>
                             <a href="/data/getMembersRegister?countNum=3" data-count="3" class="btn btn-default member-date">本周</a>
                             <a href="/data/getMembersRegister?countNum=4" data-count="4" class="btn btn-default member-date">本月</a>
+                            <a href="/data/getMembersRegister?countNum=4" data-count="4" class="btn btn-default member-date">本年</a>
                         </div>
                     </div>
                     <div class="form-group">
@@ -50,7 +49,7 @@
                     </div>
                     <div class="form-group">
                         <a href="javascript:;" class="btn btn-primary data-filter">
-                            <span class="glyphicon glyphicon-search"></span> 检索 & 显示
+                            <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
                         </a>
                     </div>
                     <div class="form-group pull-right">
@@ -62,98 +61,99 @@
             </div>
         </div>
         <div class="panel panel-default">
-            <div class="panel-heading">会员数量统计</div>
+            <div class="panel-heading">会员注册数量</div>
             <div class="panel-body">
-                <div class="col-sm-8">
-                    <div class="table-responsive" style="margin-top: 40px;">
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr class="bg-info">
-                                <th>会员类型</th>
-                                <th>总数量</th>
-                                <th>最高新增数量</th>
-                                <th>同比新增数量</th>
-                                <th>当前新增数量</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach var="member" items="${memberCount}">
-                                <tr>
-                                    <td>${member.cardTypeName}</td>
-                                    <td>${member.cardTypeTotal}</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>${member.cardTypeCount}</td>
-                                </tr>
-                            </c:forEach>
-                            <tr class="bg-success">
-                                <td>合计</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <p class="text-danger">"最高"，"同比"，"当前"，仅针对今日，本周，本月的查询条件有效；</p>
+                <div class="table-responsive">
+                    <table class="table table-bordered data-members-count">
+                        <thead>
+                        <tr class="bg-info">
+                            <th>会员类型</th>
+                            <th>本周</th>
+                            <th>周一</th>
+                            <th>周二</th>
+                            <th>周三</th>
+                            <th>周四</th>
+                            <th>周五</th>
+                            <th>周六</th>
+                            <th>周日</th>
+                        </tr>
+                        </thead>
+                    </table>
                 </div>
-                <div class="col-sm-4">
-                    <div id="member_count_chart" style="width: 100%; height: 200px;"></div>
-                </div>
+                <div id="member_count_chart" style="width: 100%; height: 300px;"></div>
             </div>
         </div>
         <div class="panel panel-default">
-            <div class="panel-heading">新增会员储值对比</div>
+            <div class="panel-heading">会员储值金额</div>
             <div class="panel-body">
-                <div class="col-sm-8">
-                    <div class="table-responsive" style="margin-top: 20px;">
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr class="bg-info">
-                                <th>会员类型</th>
-                                <th>最高新增储值</th>
-                                <th>同比新增储值</th>
-                                <th>当前新增储值</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>教师卡</td>
-                                <td>1000元</td>
-                                <td>1000元</td>
-                                <td>1000元</td>
-                            </tr>
-                            <tr>
-                                <td>会员卡</td>
-                                <td>1200元</td>
-                                <td>1200元</td>
-                                <td>1200元</td>
-                            </tr>
-                            <tr>
-                                <td>学生卡</td>
-                                <td>1500元</td>
-                                <td>1500元</td>
-                                <td>1500元</td>
-                            </tr>
-                            <tr class="bg-success">
-                                <td>合计</td>
-                                <td>1500元</td>
-                                <td>1500元</td>
-                                <td>1500元</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <p class="text-danger">"最高"，"同比"，"当前"，仅针对今日，本周，本月的查询条件有效；</p>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr class="bg-info">
+                            <th>会员类型</th>
+                            <th>本周</th>
+                            <th>周一</th>
+                            <th>周二</th>
+                            <th>周三</th>
+                            <th>周四</th>
+                            <th>周五</th>
+                            <th>周六</th>
+                            <th>周日</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>教师卡</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                        </tr>
+                        <tr>
+                            <td>会员卡</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                        </tr>
+                        <tr>
+                            <td>学生卡</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                        </tr>
+                        <tr class="bg-success">
+                            <td>合计</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="col-sm-4">
-                    <div id="member_stored_chart" style="width: 100%; height: 200px;"></div>
-                </div>
+                <div id="member_stored_chart" style="width: 100%; height: 400px;"></div>
             </div>
         </div>
         <div class="panel panel-default">
-            <div class="panel-heading">当日新增会员储值金额对比</div>
+            <div class="panel-heading">会员储值金额</div>
             <div class="panel-body">
                 <div class="col-sm-8">
                     <div class="table-responsive" style="margin-top: 20px;">
