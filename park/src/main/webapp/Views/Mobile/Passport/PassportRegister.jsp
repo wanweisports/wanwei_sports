@@ -38,12 +38,24 @@
                                        autocomplete="off">
                             </div>
                         </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="password" placeholder="确认密码" name="pwd"
+                                       autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="weui-cell weui-cell_vcode">
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="number" placeholder="验证码">
+                            </div>
+                            <div class="weui-cell__ft">
+                                <img class="weui-vcode-img" src="/Content/images/mobile/vcode.jpg">
+                            </div>
+                        </div>
                     </div>
 
                     <div class="weui-btn-area">
-                        <input type="hidden" name="return_url" value="${returnUrl}">
-                        <a class="weui-btn weui-btn_primary login-btn" href="javascript:">立即登录</a>
-                        <a class="weui-btn weui-btn_primary" href="/mobile/passport/register">用户注册</a>
+                        <a class="weui-btn weui-btn_primary" href="/mobile/passport/profile">立即注册</a>
                     </div>
                 </form>
             </div>

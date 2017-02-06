@@ -72,6 +72,18 @@ public class MobileController extends BaseController {
         }
     }
 
+    // 用户注册
+    @RequestMapping("passport/register")
+    public String renderRegister() {
+        return "Mobile/Passport/PassportRegister";
+    }
+
+    // 用户完善
+    @RequestMapping("passport/profile")
+    public String renderProfile() {
+        return "Mobile/Passport/PassportProfile";
+    }
+
     // 用户退出
     @RequestMapping("passport/logout")
     public String logout() {
