@@ -239,6 +239,56 @@ public class DateUtil {
 		return "";
 	}
 	
+	public static String getWeekName(int i){
+    	switch (i) {
+		case 0:
+			return "周一";
+		case 1:
+			return "周二";
+		case 2:
+			return "周三";
+		case 3:
+			return "周四";
+		case 4:
+			return "周五";
+		case 5:
+			return "周六";
+		case 6:
+			return "周日";
+		}
+    	return "";
+    }
+	
+	public static String getMonthName(int i){
+    	switch (i) {
+		case 0:
+			return "一月";
+		case 1:
+			return "二月";
+		case 2:
+			return "三月";
+		case 3:
+			return "四月";
+		case 4:
+			return "五月";
+		case 5:
+			return "六月";
+		case 6:
+			return "七月";
+		case 7:
+			return "八月";
+		case 8:
+			return "九月";
+		case 9:
+			return "十月";
+		case 10:
+			return "十一月";
+		case 11:
+			return "十二月";
+    	}
+    	return "";
+    }
+	
 	/*
 	 * 注意事项：
 		Calendar 的 month 从 0 开始，也就是全年 12 个月由 0 ~ 11 进行表示。

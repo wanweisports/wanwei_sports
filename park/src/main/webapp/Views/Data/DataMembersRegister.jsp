@@ -68,16 +68,26 @@
                         <thead>
                         <tr class="bg-info">
                             <th>会员类型</th>
+                            <th>上周</th>
                             <th>本周</th>
-                            <th>周一</th>
-                            <th>周二</th>
-                            <th>周三</th>
-                            <th>周四</th>
-                            <th>周五</th>
-                            <th>周六</th>
-                            <th>周日</th>
+                            <c:forEach var="title" items="${titleList}">
+                           	<th>${title}</th>
+                            </c:forEach>
                         </tr>
                         </thead>
+                        <tbody>
+                        	<c:forEach var="o" items="${list}">
+                        	<tr>
+                        		<td>${o.cardTypeName}</td>
+                        		<td></td>
+                        		<td>${o.count}</td>
+                        		<c:forEach begin="0" end="${num}" varStatus="vs">
+                        			<c:set var="key" value="d${vs.index }"  />
+                        			<td>${o[key]}</td> 
+                        		</c:forEach>
+                        	</tr>
+                        	</c:forEach>
+                        </tbody>
                     </table>
                 </div>
                 <div id="member_count_chart" style="width: 100%; height: 300px;"></div>

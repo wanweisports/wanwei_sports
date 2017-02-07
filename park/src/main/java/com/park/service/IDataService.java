@@ -15,6 +15,8 @@ public interface IDataService {
 	public Map<String, Object> getCountMembersByMonth(DataInputView dataInputView);
 
 	public List<Map<String, Object>> getMembersRegister(DataInputView dataInputView);
+	
+	public Map<String, Object> getMembersRegisterNew(DataInputView dataInputView);
 
     public List<Map<String, Object>> getMembersRegisterStored(DataInputView dataInputView);
 

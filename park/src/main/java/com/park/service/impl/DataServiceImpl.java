@@ -1,14 +1,19 @@
 package com.park.service.impl;
 
-import static com.park.common.constant.IPlatformConstant.*;
+import static com.park.common.constant.IPlatformConstant.WEIXIN;
+import static com.park.common.constant.IPlatformConstant.XIANJIN;
+import static com.park.common.constant.IPlatformConstant.YINLIAN;
+import static com.park.common.constant.IPlatformConstant.ZHIFUBAO;
+import static com.park.common.constant.IPlatformConstant.ZHIPIAO;
 
-import java.util.*;
-
-import com.park.common.util.DateUtil;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +21,7 @@ import com.park.common.bean.DataInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.constant.IDBConstant;
 import com.park.common.constant.IPlatformConstant;
+import com.park.common.util.DateUtil;
 import com.park.common.util.JsonUtils;
 import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
@@ -34,7 +40,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 	// 查询某周的会员注册统计
     @Override
     public Map<String, Object> getCountMembersByWeek(DataInputView dataInputView) {
-        List<String> dateList = DateUtil.getWeekDate("");
+        /*List<String> dateList = DateUtil.getWeekDate("");
 
         ArrayList<String> weeks = new ArrayList<String>() {{
             add("Monday");
@@ -79,13 +85,14 @@ public class DataServiceImpl extends BaseService implements IDataService {
         resultMap.put("total", dataCountList);
         resultMap.put("DICT", weeks);
 
-        return resultMap;
+        return resultMap;*/
+    	return null;
     }
 
     // 查询某月的会员注册统计
     @Override
     public Map<String, Object> getCountMembersByMonth(DataInputView dataInputView) {
-        List<String> dateList = DateUtil.getMonthDate("");
+        /*List<String> dateList = DateUtil.getMonthDate("");
 
         // 全月每天的统计
         StringBuffer sql = new StringBuffer("SELECT mc.cardTypeId, mct.cardTypeName");
@@ -120,7 +127,44 @@ public class DataServiceImpl extends BaseService implements IDataService {
         resultMap.put("total", dataCountList);
         resultMap.put("DICT", dateList);
 
-        return resultMap;
+        return resultMap;*/
+    	return null;
+    }
+    
+    @Override
+    public Map<String, Object> getMembersRegisterNew(DataInputView dataInputView){
+    	Integer countNum = dataInputView.getCountNum();
+    	Map<String, Object> rusltMap = new HashMap<String, Object>();
+    	List<String> titleList = new ArrayList<String>();
+    	
+    	StringBuilder sql = new StringBuilder("SELECT mct.cardTypeName, COUNT(1) count");
+    	
+    	if(countNum == IDBConstant.DATA_DATE_WEEK){ //本周
+	    	for (int i = 0; i < 6; i++) {
+	    		sql.append(" ,(SELECT COUNT(1) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN user_member um1 ON(mc1.memberId = um1.memberId) WHERE mct1.cardTypeId = mct.cardTypeId AND mc1.createTime BETWEEN ? AND ? AND DATE_FORMAT(mc1.createTime, '%w')=").append(i).append(") d"+i);
+	    		titleList.add(DateUtil.getWeekName(i));
+	    		rusltMap.put("num", i);
+	    	}
+    	}else if(countNum == IDBConstant.DATA_DATE_YEAR){ //本年
+    		String year = DateUtil.dateToString(new Date(), DateUtil.YYYY);
+	    	for (int i = 0; i < 12; i++) {
+	    		sql.append(" ,(SELECT COUNT(1) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN user_member um1 ON(mc1.memberId = um1.memberId) WHERE mct1.cardTypeId = mct.cardTypeId AND mc1.createTime BETWEEN ? AND ? AND DATE_FORMAT(mc1.createTime, '%Y%c')=").append(year).append(i+1).append(") d"+i);
+	    		titleList.add(DateUtil.getMonthName(i));
+	    		rusltMap.put("num", i);
+	    	}
+    	}
+    	sql.append(" FROM member_card_type mct");
+    	sql.append(" LEFT JOIN member_card mc ON(mct.cardTypeId = mc.cardTypeId)");
+    	sql.append(" LEFT JOIN user_member um ON(mc.memberId = um.memberId)");
+    	sql.append(" GROUP BY mct.cardTypeId");
+    	
+    	List<Map<String, Object>> list = baseDao.queryBySql(sql.toString());
+    	
+    	rusltMap.put("list", list);
+    	rusltMap.put("titleList", titleList);
+    	
+    	
+    	return rusltMap;
     }
 
     @Override
