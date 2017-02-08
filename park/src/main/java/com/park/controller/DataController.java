@@ -117,7 +117,8 @@ public class DataController extends BaseController {
     		model.addAllAttributes(JsonUtils.fromJson(dataInputView));
             /*model.addAttribute("memberCount", dataService.getMembersRegister(dataInputView));
             model.addAttribute("memberStored", dataService.getMembersRegisterStored(dataInputView));*/
-    		model.addAllAttributes(dataService.getMembersRegisterNew(dataInputView));
+    		model.addAttribute("register", dataService.getMembersRegisterNew(dataInputView));
+    		model.addAttribute("cz", dataService.getMembersCZNew(dataInputView));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -791,6 +791,10 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		balance.setCreateTime(nowDate);
 		balance.setSalesId(orderInfo.getSalesId());
 		balance.setBalanceStatus(IDBConstant.BALANCE_STATUS_ALL);
+		if(orderInfo.getMemberId() != null){
+			List<MemberCard> memberCards = getMemberCards(orderInfo.getMemberId());
+			if(memberCards != null && memberCards.size() > 0) balance.setBalanceCardId(memberCards.get(0).getCardId());
+		}
 		baseDao.save(balance, null);
 		return balance.getBalanceId();
 	}

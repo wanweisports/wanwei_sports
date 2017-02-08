@@ -68,20 +68,17 @@
                         <thead>
                         <tr class="bg-info">
                             <th>会员类型</th>
-                            <th>上周</th>
-                            <th>本周</th>
-                            <c:forEach var="title" items="${titleList}">
+                            <c:forEach var="title" items="${register.titleList}">
                            	<th>${title}</th>
                             </c:forEach>
                         </tr>
                         </thead>
                         <tbody>
-                        	<c:forEach var="o" items="${list}">
+                        	<c:forEach var="o" items="${register.list}">
                         	<tr>
                         		<td>${o.cardTypeName}</td>
-                        		<td></td>
                         		<td>${o.count}</td>
-                        		<c:forEach begin="0" end="${num}" varStatus="vs">
+                        		<c:forEach begin="0" end="${register.num}" varStatus="vs">
                         			<c:set var="key" value="d${vs.index }"  />
                         			<td>${o[key]}</td> 
                         		</c:forEach>
@@ -101,61 +98,22 @@
                         <thead>
                         <tr class="bg-info">
                             <th>会员类型</th>
-                            <th>本周</th>
-                            <th>周一</th>
-                            <th>周二</th>
-                            <th>周三</th>
-                            <th>周四</th>
-                            <th>周五</th>
-                            <th>周六</th>
-                            <th>周日</th>
+                            <c:forEach var="title" items="${cz.titleList}">
+                           	<th>${title}</th>
+                            </c:forEach>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>教师卡</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                        </tr>
-                        <tr>
-                            <td>会员卡</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                        </tr>
-                        <tr>
-                            <td>学生卡</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                        </tr>
-                        <tr class="bg-success">
-                            <td>合计</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                            <td>1000元</td>
-                        </tr>
+                        <c:forEach var="o" items="${cz.list}">
+                        	<tr>
+                        		<td>${o.cardTypeName}</td>
+                        		<td>${o.realAmountSum}</td>
+                        		<c:forEach begin="0" end="${cz.num}" varStatus="vs">
+                        			<c:set var="key" value="d${vs.index }"  />
+                        			<td>${o[key]}</td> 
+                        		</c:forEach>
+                        	</tr>
+                        	</c:forEach>
                         </tbody>
                     </table>
                 </div>

@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
 import com.park.common.constant.IDBConstant;
+import com.park.common.constant.IPlatformConstant;
 
 public class DateUtil {
 	public static final String YYYYMMDD_S = "yyyyMMdd";
@@ -27,6 +28,7 @@ public class DateUtil {
     public static final String YYYYMMDD_ZH = "yyyy年MM月dd日";
     public static final String YYYYMMDDHHMMSS_ZH = "yyyy年MM月dd日HH:mm:ss";
     public static final int FIRST_DAY_OF_WEEK = Calendar.MONDAY;// 中国周一是一周的第一天
+    public static final String[] DAYS = {"一号","二号","三号","四号","五号","六号","七号","八号","九号","十号","十一号","十二号","十三号","十四号","十五号","十六号","十七号","十八号","十九号","二十号","二十一号","二十二号","二十三号","二十四号","二十五号","二十六号","二十七号","二十八号","二十九号","三十号","三十一号",};
 
 	// 获取本周的七天
 	public static List<String> getWeekDate(String dateStr) {
@@ -289,6 +291,73 @@ public class DateUtil {
     	return "";
     }
 	
+	public static String getDayName(int i){
+		return DAYS[i];
+	}
+	
+	/** 
+     * 获取当月的 天数 
+     * */  
+    public static int getCurrentMonthDay() {  
+        Calendar a = Calendar.getInstance();  
+        a.set(Calendar.DATE, 1);  
+        a.roll(Calendar.DATE, -1);  
+        int maxDate = a.get(Calendar.DATE);  
+        return maxDate;  
+    }
+    
+    // 获得本周一0点时间  Date
+    public static Date getTimesWeekmorning() {  
+        Calendar cal = Calendar.getInstance();  
+        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);  
+        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);  
+        return cal.getTime();  
+    }
+    
+    // 获得本周一0点时间  Str
+    public static String getTimesWeekmorningStr(){
+     	return dateToString(getTimesWeekmorning(), YYYYMMDDHHMMSS);
+	}
+  
+    // 获得本周日24点时间  Str
+    public static String getTimesWeeknight() {  
+        Calendar cal = Calendar.getInstance();  
+        cal.setTime(getTimesWeekmorning());  
+        cal.add(Calendar.DAY_OF_WEEK, 7);  
+        return dateToString(cal.getTime(), YYYYMMDDHHMMSS);  
+    }
+    
+    // 获得本月第一天0点时间  
+    public static String getTimesMonthmorning() {  
+        Calendar cal = Calendar.getInstance();  
+        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);  
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH));  
+        return dateToString(cal.getTime(), YYYYMMDDHHMMSS);
+    }  
+  
+    // 获得本月最后一天24点时间  
+    public static String getTimesMonthnight() {  
+        Calendar cal = Calendar.getInstance();  
+        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);  
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));  
+        cal.set(Calendar.HOUR_OF_DAY, 24);  
+        return dateToString(cal.getTime(), YYYYMMDDHHMMSS); 
+    }
+    
+    public static String getCurrentYearEndTime() {  
+        Calendar cal = Calendar.getInstance();  
+        cal.setTime(new Date());  
+        cal.add(Calendar.YEAR, 0);  
+        return dateToString(cal.getTime(), YYYY); 
+    }  
+  
+    public static String getLastYearStartTime() {  
+        Calendar cal = Calendar.getInstance();  
+        cal.setTime(new Date());  
+        cal.add(Calendar.YEAR, 1);  
+        return dateToString(cal.getTime(), YYYY);
+    } 
+	
 	/*
 	 * 注意事项：
 		Calendar 的 month 从 0 开始，也就是全年 12 个月由 0 ~ 11 进行表示。
@@ -302,6 +371,8 @@ public class DateUtil {
 		Calendar.SATURDAY = 7 //周六
 	 */
 	public static void main(String[] args) throws ParseException {
+		System.out.println(getCurrentYearEndTime());
+		System.out.println(getLastYearStartTime());
 		/*long s = System.currentTimeMillis();
 		for(int i=0;i<100000;i++){
 			System.out.println(i);
@@ -337,10 +408,10 @@ public class DateUtil {
             
             System.out.println("---");
         }*/
-		Date startDate = stringToDate("08:00", HHMM);
+		/*Date startDate = stringToDate("08:00", HHMM);
 		Date endDate = stringToDate("12:00", HHMM);
 		int a = (int) ((endDate.getTime() - startDate.getTime())/DateUtils.MILLIS_PER_HOUR);
-		System.out.println(a);
+		System.out.println(a);*/
 	}
 
 }

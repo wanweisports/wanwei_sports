@@ -18,7 +18,7 @@ public class ResponseBean {
 	public ResponseBean(Map<String, Object> data) {
 		this.code = IPlatformConstant.SUCCESS_CODE;
 		this.message = IPlatformConstant.SUCCESS_MESSAGE;
-		this.data.putAll(data);
+		this.data.putAll(data != null ? data : new HashMap());
 	}
 	
 	public ResponseBean(boolean isSuccess) {
