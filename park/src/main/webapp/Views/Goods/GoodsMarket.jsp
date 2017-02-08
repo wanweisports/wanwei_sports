@@ -5,6 +5,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="/Content/style/goods/goods_market.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/lib/holder/holder.min.js?v=${static_resource_version}"></script>
     <script src="/Content/app/goods/goods_market.js?v=${static_resource_version}"></script>
@@ -48,26 +52,15 @@
             <div class="panel-body">
                 <div class="row goods-buy-list">
                     <c:forEach var="good" items="${goods}" varStatus="loop">
-                        <div class="col-sm-2 col-md-2 goods-list-item">
-                            <div class="thumbnail">
-                                <img class="good-image" data-src="holder.js/300x110?text=${good.goodName}&random=yes&auto=yes"
-                                     src="${good.goodPic}" alt="${good.goodName}" style="width: 100%;height: 110px;">
-                                <div class="caption" style="padding: 0">
-                                    <p class="good-name" data-text="${good.goodName}"
-                                       style="margin-bottom: 1px">${good.goodName}</p>
-                                    <p class="text-primary good-price" data-text="${good.goodPrice}"
-                                       style="margin-bottom: 1px">${good.goodPrice}元</p>
-                                    <p style="margin-bottom: 1px; overflow: hidden">
-                                        <!--<a href="javascript:;" class="btn btn-warning pull-left good-cart-buy"
-                                           data-id="${good.goodId}" title="直接购买">
-                                            <span class="glyphicon glyphicon-usd"></span>
-                                        </a>-->
-                                        <a href="javascript:;" class="btn btn-primary pull-right good-cart-add"
-                                            data-id="${good.goodId}" title="加入购物车">
-                                            <span class="glyphicon glyphicon-shopping-cart"></span>
-                                        </a>
-                                    </p>
-                                </div>
+                        <div class="grid">
+                            <div class="imgholder">
+                                <img data-src="holder.js/300x110?text=${good.goodName}&theme=lava"
+                                      src="${good.goodPic}" alt="${good.goodName}">
+                            </div>
+                            <strong>${good.goodName}</strong>
+                            <p>${good.goodPrice}元</p>
+                            <div class="meta">
+                                <a href="javascript:;" class="good-cart-add" data-id="${good.goodId}">购物车>>></a>
                             </div>
                         </div>
                     </c:forEach>

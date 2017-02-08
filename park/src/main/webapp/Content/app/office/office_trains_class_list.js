@@ -91,8 +91,8 @@
                     if (res.code == 1) {
                         setTrainsClassInfo(data);
                     } else {
-                        console.log(res.message || "查询班级详情失败, 请稍后重试");
-                        alert(res.message || "查询班级详情失败, 请稍后重试");
+                        $.logConsole('查询班级详情失败', res.message);
+                        $.tipsWarningAlert('查询班级详情失败');
                     }
                 });
             });
@@ -107,8 +107,8 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        console.log(res.message || "删除班级详情失败, 请稍后重试");
-                        alert(res.message || "删除班级详情失败, 请稍后重试");
+                        $.logConsole('删除班级详情失败', res.message);
+                        $.tipsWarningAlert('删除班级详情失败');
                     }
                 });
             });
@@ -138,7 +138,8 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        alert(res.message || "班级信息保存失败, 请稍后重试");
+                        $.logConsole('班级信息保存失败', res.message);
+                        $.tipsWarningAlert('班级信息保存失败');
                     }
                 });
             });

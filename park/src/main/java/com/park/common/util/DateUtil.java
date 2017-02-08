@@ -27,7 +27,49 @@ public class DateUtil {
     public static final String YYYYMMDD_ZH = "yyyy年MM月dd日";
     public static final String YYYYMMDDHHMMSS_ZH = "yyyy年MM月dd日HH:mm:ss";
     public static final int FIRST_DAY_OF_WEEK = Calendar.MONDAY;// 中国周一是一周的第一天
-	
+
+	// 获取本周的七天
+	public static List<String> getWeekDate(String dateStr) {
+        List<String> dateList = new ArrayList<String>();
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c = Calendar.getInstance();
+		// 今天是一周中的第几天
+		int dayOfWeek = c.get(Calendar.DAY_OF_WEEK );
+
+		if (c.getFirstDayOfWeek() == Calendar.SUNDAY) {
+			c.add(Calendar.DAY_OF_MONTH, 1);
+		}
+		// 计算一周开始的日期
+		c.add(Calendar.DAY_OF_MONTH, -dayOfWeek);
+
+		for (int i=1;i<=7;i++) {
+			c.add(Calendar.DAY_OF_MONTH, 1);
+            dateList.add(sdf.format(c.getTime()));
+		}
+
+		return dateList;
+	}
+
+    // 获取每月的日期
+    public static List<String> getMonthDate(String dateStr) {
+        List<String> dateList = new ArrayList<String>();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+
+        cal.setTime(cal.getTime());
+        cal.set(Calendar.DATE, 1);
+
+        int month = cal.get(Calendar.MONTH);
+        while(cal.get(Calendar.MONTH) == month){
+            dateList.add(sdf.format(cal.getTime()));
+            cal.add(Calendar.DATE, 1);
+        }
+
+        return dateList;
+    }
+
 	/**
 		 * @param time
 		 * @return
@@ -196,6 +238,56 @@ public class DateUtil {
 		if(nowTime.after(endTime)) return IDBConstant.LOGIC_STATUS_YES; //已完成
 		return "";
 	}
+	
+	public static String getWeekName(int i){
+    	switch (i) {
+		case 0:
+			return "周一";
+		case 1:
+			return "周二";
+		case 2:
+			return "周三";
+		case 3:
+			return "周四";
+		case 4:
+			return "周五";
+		case 5:
+			return "周六";
+		case 6:
+			return "周日";
+		}
+    	return "";
+    }
+	
+	public static String getMonthName(int i){
+    	switch (i) {
+		case 0:
+			return "一月";
+		case 1:
+			return "二月";
+		case 2:
+			return "三月";
+		case 3:
+			return "四月";
+		case 4:
+			return "五月";
+		case 5:
+			return "六月";
+		case 6:
+			return "七月";
+		case 7:
+			return "八月";
+		case 8:
+			return "九月";
+		case 9:
+			return "十月";
+		case 10:
+			return "十一月";
+		case 11:
+			return "十二月";
+    	}
+    	return "";
+    }
 	
 	/*
 	 * 注意事项：

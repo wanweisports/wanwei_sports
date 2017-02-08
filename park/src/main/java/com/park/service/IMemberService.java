@@ -78,7 +78,7 @@ public interface IMemberService {
 	
 	public double getMemberDiscount(Integer memberId, String opType);
 	
-	public String getCardNo();
+	public String getCardNo(int type);
 	
 	public List<Map<String, Object>> searchMember(String search);
 

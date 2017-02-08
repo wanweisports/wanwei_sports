@@ -221,13 +221,14 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 		if(StrUtil.isNotBlank(createTimeEnd)){
 			sql.append(" AND DATE(us.date) <= :createTimeEnd");
 		}
-		sql.append(dataService.getCountSql(countNum, "us.date"));
-		
+		if (countNum != null) {
+			sql.append(dataService.getCountSql(countNum, "us.date"));
+		}
 		sql.append(" ORDER BY date, startTime");
 		
 		List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
 		String datePre = null;
-		List<Map<String, Object>> listGroup = new ArrayList<Map<String, Object>>();	
+		List<Map<String, Object>> listGroup = new ArrayList<Map<String, Object>>();
 		for(Map<String, Object> map : list){
 			String date = StrUtil.objToStr(map.get("date"));
 			String today = StrUtil.objToStr(map.get("today"));
@@ -304,6 +305,11 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 	
 	private int getEmployeeCount(){
 		return baseDao.getUniqueResult("SELECT COUNT(1) FROM user_operator").intValue();
+	}
+
+	@Override
+	public UserOperator checkUserNameExist(String userName, int type) {
+		return JsonUtils.fromJson(baseDao.queryBySqlFirst("SELECT * FROM user_operator WHERE operatorId = ? AND operatorType = ?", userName, type), UserOperator.class);
 	}
 	
 }

@@ -213,6 +213,9 @@
                             </c:if>
                         </ul>
                     </nav>
+                    <c:if test="${fn:length(list) == 0}">
+                        <p class="text-muted no-list-count">没有检索到任何登记发票！</p>
+                    </c:if>
                 </div>
             </div>
         </div>

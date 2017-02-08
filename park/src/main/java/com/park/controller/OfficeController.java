@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -173,6 +175,30 @@ public class OfficeController extends BaseController {
         }
 
         return "Office/OfficeMessage";
+    }
+
+    // 获取未读消息条数
+    @ResponseBody
+    @RequestMapping(value = "getNotReadMessageCount", method = RequestMethod.POST)
+    public ResponseBean getNotReadMessageCount() {
+        try {
+            NotificationsReceiversInputView notificationsReceiversInputView = new NotificationsReceiversInputView();
+            UserOperator userInfo = super.getUserInfo();
+            notificationsReceiversInputView.setReceiverId(userInfo.getId());
+            notificationsReceiversInputView.setType(IDBConstant.NOTIFICATIONS_TYPE_RECEIVE_UNREAD);
+            notificationsReceiversInputView.setReceiverStatus(IDBConstant.NOTIFICATIONS_RECEIVER_NO);
+
+            PageBean unreadMessage = notificationsService.getNotificationsByReceiver(notificationsReceiversInputView);
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("count", unreadMessage.getCount() * unreadMessage.getPageSize());
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
     }
 
     // 通知管理标记发送
@@ -388,7 +414,16 @@ public class OfficeController extends BaseController {
             UserOperator userInfo = super.getUserInfo();
             trainsClassStudentsInputView.setSaleId(userInfo.getId());
             model.addAllAttributes(JsonUtils.fromJsonDF(trainsClassStudentsInputView));
-            model.addAttribute("classInfo", trainsClassService.getTrainsClassInfo(trainsClassStudentsInputView.getClassId()));
+            TrainsClassInfo trainsClassInfo = trainsClassService.getTrainsClassInfo(trainsClassStudentsInputView.getClassId());
+
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            if (trainsClassInfo.getEndTime().compareTo(df.format(new Date())) < 0) {
+                model.addAttribute("isSigned", false);
+            } else {
+                model.addAttribute("isSigned", true);
+            }
+
+            model.addAttribute("classInfo", trainsClassInfo);
             PageBean pageBean = trainsClassStudentsService.getTrainsClassStudentsList(trainsClassStudentsInputView);
             super.setPageInfo(model, pageBean);
         } catch (Exception e) {

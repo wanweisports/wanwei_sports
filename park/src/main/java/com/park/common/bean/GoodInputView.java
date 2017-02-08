@@ -3,7 +3,7 @@ package com.park.common.bean;
 import com.park.common.po.OrderInfo;
 
 public class GoodInputView extends BaseInputView {
-	
+
 	private String goodName;
 	private String goodStatus;
 	private String goodType;
@@ -18,7 +18,7 @@ public class GoodInputView extends BaseInputView {
 	private Integer countNum;
 	private String createTimeStart;
 	private String createTimeEnd;
-	
+
 	public String getGoodName() {
 		return goodName;
 	}

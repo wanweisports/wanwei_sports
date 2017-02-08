@@ -35,7 +35,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">培训班级管理</div>
             <div class="panel-body">
-                <form id="trains_filter_form" class="form-inline col-sm-8" onsubmit="return false;">
+                <form id="trains_filter_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
                         <select class="form-control" style="width: 160px;" name="courseId" id="trains_filter_course">
                             <option value="">全部课程</option>
@@ -49,13 +49,13 @@
                             <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
                         </a>
                     </div>
+                    <div class="form-group pull-right">
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#add_class_modal" data-backdrop="false">
+                            <span class="glyphicon glyphicon-plus"></span> 添加班级
+                        </button>
+                    </div>
                 </form>
-                <div class="col-sm-4 text-right">
-                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#add_class_modal" data-backdrop="false">
-                        <span class="glyphicon glyphicon-plus"></span> 添加班级
-                    </button>
-                </div>
             </div>
         </div>
         <div class="panel panel-default">
@@ -63,7 +63,7 @@
                 <div class="table-responsive class-list">
                     <table class="table">
                         <thead>
-                        <tr>
+                        <tr class="bg-info">
                             <th>班级名称</th>
                             <th>班级描述</th>
                             <th>课程名称</th>
@@ -114,9 +114,9 @@
                                             data-target="#add_class_modal" data-backdrop="false" data-id="${item.id}">
                                         <span class="glyphicon glyphicon-share-alt"></span> 查看
                                     </button>
-                                    <button type="button" class="btn btn-danger" data-id="${item.id}">
+                                    <%--<button type="button" class="btn btn-danger" data-id="${item.id}">
                                         <span class="glyphicon glyphicon-remove"></span> 删除
-                                    </button>
+                                    </button>--%>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -186,13 +186,16 @@
                             </c:if>
                         </ul>
                     </nav>
+                    <c:if test="${fn:length(list) == 0}">
+                        <p class="text-muted no-list-count">没有检索到任何班级！</p>
+                    </c:if>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="modal fade" id="add_class_modal" tabindex="-1" role="dialog" aria-labelledby="add_class_modal_label">
-        <div class="modal-dialog">
+        <div class="modal-dialog" style="width: 640px;">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -200,121 +203,142 @@
                     </button>
                     <h5 class="modal-title" id="add_class_modal_label">班级编辑</h5>
                 </div>
-                <div class="modal-body" style="overflow: hidden;">
-                    <form id="class_form" class="form-horizontal" onsubmit="return false;">
-                        <input type="hidden" id="class_id" name="id">
-                        <div class="form-group">
-                            <label for="class_name" class="col-sm-3 control-label">
-                                <span class="text-danger">*</span> 班级名称
-                            </label>
+                <div class="modal-body">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <form id="class_form" class="form-horizontal" onsubmit="return false;">
+                                <input type="hidden" id="class_id" name="id">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="class_name" class="col-sm-4 control-label">
+                                            <span class="text-danger">*</span> 班级名称
+                                        </label>
 
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="class_name" name="className"
-                                       placeholder="例如, 兴趣班, 乔丹班" autocomplete="off"
-                                       data-val="true" data-val-required="班级名称不能为空"
-                                       data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,5}$"
-                                       data-val-regex="班级名称长度只能2~6个字符">
-                                <div data-valmsg-for="className" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="course_name" class="col-sm-3 control-label">
-                                <span class="text-danger">*</span> 课程名称
-                            </label>
-
-                            <div class="col-sm-9">
-                                <select class="form-control" id="course_name" name="courseId"
-                                        data-val="true" data-val-required="请选择课程名称">
-                                    <option value="">请选择</option>
-                                    <c:forEach var="course" items="${courseNames.courseNames}">
-                                        <option value="${course.id}">${course.courseName}</option>
-                                    </c:forEach>
-                                </select>
-                                <div data-valmsg-for="courseId" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="class_desc" class="col-sm-3 control-label">班级描述</label>
-
-                            <div class="col-sm-9">
-                                <textarea class="form-control" id="class_desc" name="classRemark" rows="3"
-                                          placeholder="课程描述"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="start_date" class="col-sm-3 control-label">
-                                <span class="text-danger">*</span> 开始日期
-                            </label>
-
-                            <div class="col-sm-9">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="start_date" name="startTime"
-                                           placeholder="开始日期" autocomplete="off"
-                                           data-val="true" data-val-required="开始日期不能为空">
-                                    <span class="input-group-addon class-start-select">
-                                        <i class="glyphicon glyphicon-calendar"></i>
-                                    </span>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="class_name" name="className"
+                                                   placeholder="例如, 兴趣班, 乔丹班" autocomplete="off"
+                                                   data-val="true" data-val-required="班级名称不能为空"
+                                                   data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,5}$"
+                                                   data-val-regex="班级名称长度只能2~6个字符">
+                                            <div data-valmsg-for="className" data-valmsg-replace="true"></div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div data-valmsg-for="startTime" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="end_date" class="col-sm-3 control-label">
-                                <span class="text-danger">*</span> 结束日期
-                            </label>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="course_name" class="col-sm-4 control-label">
+                                            <span class="text-danger">*</span> 课程名称
+                                        </label>
 
-                            <div class="col-sm-9">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="end_date" name="endTime"
-                                           placeholder="结束日期" autocomplete="off"
-                                           data-val="true" data-val-required="结束日期不能为空">
-                                    <span class="input-group-addon class-end-select">
-                                        <i class="glyphicon glyphicon-calendar"></i>
-                                    </span>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" id="course_name" name="courseId"
+                                                    data-val="true" data-val-required="请选择课程名称">
+                                                <option value="">请选择</option>
+                                                <c:forEach var="course" items="${courseNames.courseNames}">
+                                                    <option value="${course.id}">${course.courseName}</option>
+                                                </c:forEach>
+                                            </select>
+                                            <div data-valmsg-for="courseId" data-valmsg-replace="true"></div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div data-valmsg-for="endTime" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="class_desc" class="col-sm-2 control-label">班级描述</label>
 
-                        <div class="form-group">
-                            <label for="leader_teacher" class="col-sm-3 control-label">
-                                <span class="text-danger">*</span> 责任老师
-                            </label>
+                                        <div class="col-sm-10">
+                                        <textarea class="form-control" id="class_desc" name="classRemark" rows="3"
+                                                  placeholder="课程描述"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="start_date" class="col-sm-4 control-label">
+                                            <span class="text-danger">*</span> 开始日期
+                                        </label>
 
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="leader_teacher" name="leaderName"
-                                       placeholder="责任老师" autocomplete="off"
-                                       data-val="true" data-val-required="责任老师不能为空">
-                                <div data-valmsg-for="leaderName" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="contact_phone" class="col-sm-3 control-label">
-                                <span class="text-danger">*</span> 联系手机
-                            </label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="start_date" name="startTime"
+                                                       placeholder="开始日期" autocomplete="off"
+                                                       data-val="true" data-val-required="开始日期不能为空"
+                                                       data-val-regex-pattern="^\d{4}-\d{2}-\d{2}$"
+                                                       data-val-regex="开始日期格式错误" maxlength="10">
+                                                <span class="input-group-addon class-start-select">
+                                                <i class="glyphicon glyphicon-calendar"></i>
+                                            </span>
+                                            </div>
+                                            <div data-valmsg-for="startTime" data-valmsg-replace="true"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="leader_teacher" class="col-sm-4 control-label">
+                                            <span class="text-danger">*</span> 责任老师
+                                        </label>
 
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="contact_phone" name="leaderMobile"
-                                       placeholder="联系手机" autocomplete="off"
-                                       data-val="true" data-val-required="手机号码不能为空"
-                                       data-val-regex-pattern="^1\d{10}$"
-                                       data-val-regex="手机号码格式错误">
-                                <div data-valmsg-for="leaderMobile" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="class_price" class="col-sm-3 control-label">
-                                <span class="text-danger">*</span> 班级价格
-                            </label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="leader_teacher" name="leaderName"
+                                                   placeholder="责任老师" autocomplete="off"
+                                                   data-val="true" data-val-required="责任老师不能为空"
+                                                   data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,5}$"
+                                                   data-val-regex="责任老师长度只能2~6个字符">
+                                            <div data-valmsg-for="leaderName" data-valmsg-replace="true"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="class_price" class="col-sm-4 control-label">
+                                            <span class="text-danger">*</span> 班级价格
+                                        </label>
 
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="class_price" name="classPrice"
-                                       placeholder="班级价格" autocomplete="off"
-                                       data-val="true" data-val-required="班级价格不能为空">
-                                <div data-valmsg-for="classPrice" data-valmsg-replace="true"></div>
-                            </div>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="class_price" name="classPrice"
+                                                   placeholder="班级价格" autocomplete="off"
+                                                   data-val="true" data-val-required="班级价格不能为空"
+                                                   data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                                   data-val-regex="班级价格格式错误">
+                                            <div data-valmsg-for="classPrice" data-valmsg-replace="true"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="end_date" class="col-sm-4 control-label">
+                                            <span class="text-danger">*</span> 结束日期
+                                        </label>
+
+                                        <div class="col-sm-8">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="end_date" name="endTime"
+                                                       placeholder="结束日期" autocomplete="off"
+                                                       data-val="true" data-val-required="结束日期不能为空"
+                                                       data-val-regex-pattern="^\d{4}-\d{2}-\d{2}$"
+                                                       data-val-regex="结束日期格式错误" maxlength="10">
+                                                <span class="input-group-addon class-end-select">
+                                                <i class="glyphicon glyphicon-calendar"></i>
+                                            </span>
+                                            </div>
+                                            <div data-valmsg-for="endTime" data-valmsg-replace="true"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contact_phone" class="col-sm-4 control-label">
+                                            <span class="text-danger">*</span> 联系手机
+                                        </label>
+
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="contact_phone" name="leaderMobile"
+                                                   placeholder="联系手机" autocomplete="off"
+                                                   data-val="true" data-val-required="手机号码不能为空"
+                                                   data-val-regex-pattern="^1\d{10}$"
+                                                   data-val-regex="手机号码格式错误" maxlength="11">
+                                            <div data-valmsg-for="leaderMobile" data-valmsg-replace="true"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary class-confirm">

@@ -34,7 +34,7 @@
     <div class="container-fluid" style="text-align: left;">
         <form id="reservations_fixed_form" class="form-horizontal" novalidate onsubmit="return false;">
             <div class="panel panel-default sc-booking-user">
-                <div class="panel-heading">定场预订</div>
+                <div class="panel-heading">定场预订<p class="pull-right text-danger">在"预订人"输入框中，尝试着输入会员卡号、姓名、手机号作为检索条件。</p></div>
                 <div class="panel-body">
                     <input type="hidden" id="reservations_fixed_opType" name="opType" value="2"><!--1会员2散客-->
                     <input type="hidden" id="reservations_fixed_member" name="memberId">
@@ -47,7 +47,7 @@
                             </label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="reservations_fixed_name" name="name"
-                                       placeholder="预订人" autocomplete="off" value="散客"
+                                       placeholder="预订人姓名" autocomplete="off"
                                        data-val="true" data-val-required="预订人不能为空"
                                        data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,9}$"
                                        data-val-regex="预订人长度只能2~12个字符">
@@ -75,7 +75,10 @@
                             </label>
                             <div class="col-sm-8">
                                 <input class="form-control" id="reservations_fixed_start" name="siteStartTime"
-                                       data-val="true" data-val-required="请选择开始时间">
+                                       autocomplete="off" placeholder="开始时间"
+                                       data-val="true" data-val-required="开始时间不能为空"
+                                       data-val-regex-pattern="^(([0-1]\d)|(2[0-3])):[0-5]\d$"
+                                       data-val-regex="开始时间格式错误" maxlength="5">
                                 <div data-valmsg-for="siteStartTime" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -90,7 +93,7 @@
                                        placeholder="手机号码" autocomplete="off"
                                        data-val="true" data-val-required="手机号码不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
-                                       data-val-regex="手机号码格式错误">
+                                       data-val-regex="手机号码格式错误" maxlength="11">
                                 <div data-valmsg-for="mobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -102,7 +105,9 @@
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="reservations_fixed_date" name="reserveStartDate"
                                            placeholder="预订日期" autocomplete="off"
-                                           data-val="true" data-val-required="预订日期不能为空">
+                                           data-val="true" data-val-required="预订日期不能为空"
+                                           data-val-regex-pattern="^\d{4}-\d{2}-\d{2}$"
+                                           data-val-regex="预订日期格式错误" maxlength="10">
                                     <span class="input-group-addon start-date-select">
                                         <i class="glyphicon glyphicon-calendar"></i>
                                     </span>
@@ -116,17 +121,17 @@
                             </label>
                             <div class="col-sm-8">
                                 <input class="form-control" id="reservations_fixed_end" name="siteEndTime"
-                                       data-val="true" data-val-required="请选择结束时间">
+                                       autocomplete="off" placeholder="结束时间"
+                                       data-val="true" data-val-required="结束时间不能为空"
+                                       data-val-regex-pattern="^(([0-1]\d)|(2[0-3])):[0-5]\d$"
+                                       data-val-regex="结束时间格式错误" maxlength="5">
                                 <div data-valmsg-for="siteEndTime" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <div class="col-sm-12">
-                                <a href="javascript:void(0);" class="btn btn-primary user-search" title="搜索">
-                                    <span class="glyphicon glyphicon-search"></span> 搜索
-                                </a>
+                            <div class="col-sm-offset-1 col-sm-11">
                                 <a href="/members/memberList" class="btn btn-primary" title="选择会员">
                                     <span class="glyphicon glyphicon-th-list"></span> 选择会员
                                 </a>
@@ -151,8 +156,8 @@
                 <div class="panel-body">
                     <div class="col-sm-9">
                         <div class="table-responsive sc-table">
-                            <table class="table table-striped reservations-list">
-                                <tr class="sc-table-header">
+                            <table class="table reservations-list">
+                                <tr class="bg-info sc-table-header">
                                     <th>类型</th>
                                     <th>预订日期</th>
                                     <th>预订时间</th>
@@ -184,14 +189,14 @@
         </form>
     </div>
 
-    <div class="modal fade" id="zhifuModal" tabindex="-1" role="dialog" aria-labelledby="zhifuModalLabel">
-        <div class="modal-dialog">
+    <div class="modal fade" id="pay_model" tabindex="-1" role="dialog" aria-labelledby="pay_model_label">
+        <div class="modal-dialog" style="width: 640px;">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h5 class="modal-title" id="zhifuModalLabel">预订支付</h5>
+                    <h5 class="modal-title" id="pay_model_label">预订支付</h5>
                 </div>
                 <div class="modal-body">
                     <div class="panel panel-default">
@@ -202,67 +207,77 @@
                                 <input type="hidden" id="reservations_paid_additionalPrice" name="additionalPrice" value="0">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="reservations_paid_orderSumCount" class="col-sm-6 control-label">
-                                            <span class="text-danger">*</span> 总场次(时)
-                                        </label>
+                                        <label for="reservations_paid_orderSumCount" class="col-sm-4 control-label">总场次</label>
 
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="reservations_paid_orderSumCount"
-                                                   name="orderSumCount" autocomplete="off" disabled>
+                                        <div class="col-sm-8">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="reservations_paid_orderSumCount"
+                                                       name="orderSumCount" autocomplete="off" disabled>
+                                                <span class="input-group-addon">时</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="reservations_paid_orderSumPrice" class="col-sm-6 control-label">
-                                            <span class="text-danger">*</span> 总金额(元)
+                                        <label for="reservations_paid_orderSumPrice" class="col-sm-4 control-label">
+                                            <span class="text-danger">*</span> 总金额
                                         </label>
 
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="reservations_paid_orderSumPrice"
-                                                   name="orderSumPrice" placeholder="总金额(元)" autocomplete="off"
-                                                   data-val="true" data-val-required="总金额不能为空"
-                                                   data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
-                                                   data-val-regex="总金额格式错误">
+                                        <div class="col-sm-8">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="reservations_paid_orderSumPrice"
+                                                       name="orderSumPrice" placeholder="总金额(元)" autocomplete="off"
+                                                       data-val="true" data-val-required="总金额不能为空"
+                                                       data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                                       data-val-regex="总金额格式错误">
+                                                <span class="input-group-addon">元</span>
+                                            </div>
                                             <div data-valmsg-for="orderSumPrice" data-valmsg-replace="true"></div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="reservations_paid_payCount" class="col-sm-6 control-label">
-                                            <span class="text-danger">*</span> 支付场次(时)
+                                        <label for="reservations_paid_payCount" class="col-sm-4 control-label">
+                                            <span class="text-danger">*</span> 支付场次
                                         </label>
 
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="reservations_paid_payCount" name="payCount"
-                                                   placeholder="支付场次" autocomplete="off"
-                                                   data-val="true" data-val-required="支付场次不能为空"
-                                                   data-val-regex-pattern="^[1-9]\d*$"
-                                                   data-val-regex="支付场次格式错误">
+                                        <div class="col-sm-8">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="reservations_paid_payCount"
+                                                       name="payCount" placeholder="支付场次" autocomplete="off"
+                                                       data-val="true" data-val-required="支付场次不能为空"
+                                                       data-val-regex-pattern="^[1-9]\d*$"
+                                                       data-val-regex="支付场次格式错误">
+                                                <span class="input-group-addon">时</span>
+                                            </div>
                                             <div data-valmsg-for="payCount" data-valmsg-replace="true"></div>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="reservations_paid_paySumPrice" class="col-sm-6 control-label">
-                                            <span class="text-danger">*</span> 支付金额(元)
+                                        <label for="reservations_paid_paySumPrice" class="col-sm-4 control-label">
+                                            <span class="text-danger">*</span> 支付金额
                                         </label>
 
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="reservations_paid_paySumPrice" name="paySumPrice"
-                                                   placeholder="支付金额(元)" autocomplete="off"
-                                                   data-val="true" data-val-required="支付金额不能为空"
-                                                   data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
-                                                   data-val-regex="支付金额格式错误">
+                                        <div class="col-sm-8">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="reservations_paid_paySumPrice"
+                                                       name="paySumPrice" placeholder="支付金额(元)" autocomplete="off"
+                                                       data-val="true" data-val-required="支付金额不能为空"
+                                                       data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                                       data-val-regex="支付金额格式错误">
+                                                <span class="input-group-addon">元</span>
+                                            </div>
                                             <div data-valmsg-for="paySumPrice" data-valmsg-replace="true"></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-12">
+                                <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="reservations_money_type" class="col-sm-3 control-label">
+                                        <label for="reservations_money_type" class="col-sm-4 control-label">
                                             <span class="text-danger">*</span> 支付方式
                                         </label>
 
-                                        <div class="col-sm-9">
+                                        <div class="col-sm-8">
                                             <select class="form-control" id="reservations_money_type" name="payType"
                                                     data-val="true" data-val-required="请选择支付方式">
                                                 <option value="">请选择</option>
@@ -273,36 +288,46 @@
                                             <div data-valmsg-for="payType" data-valmsg-replace="true"></div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="reservations_paid_remark" class="col-sm-3 control-label">备注</label>
-
-                                        <div class="col-sm-9">
-                                    <textarea class="form-control" rows="3" id="reservations_paid_remark"
-                                              name="orderRemark" placeholder="备注"></textarea>
+                                        <label for="reservations_paid_balance"
+                                               class="col-sm-4 control-label text-success">会员余额</label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="reservations_paid_balance"
+                                                       name="balance" autocomplete="off" value="0.00" disabled>
+                                                <span class="input-group-addon">元</span>
+                                            </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label for="reservations_paid_balance" class="col-sm-3 control-label">
-                                            <span class="text-danger">*</span> 余额(元)
-                                        </label>
+                                        <label for="reservations_paid_remark" class="col-sm-2 control-label">备注</label>
+
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" rows="3" id="reservations_paid_remark"
+                                                    name="orderRemark" placeholder="备注"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="reservations_paid_money"
+                                               class="col-sm-2 control-label text-success">实收金额</label>
 
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="reservations_paid_balance"
-                                                   name="balance" autocomplete="off" value="0.00" disabled>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="reservations_paid_money"
+                                                       name="paySumPrice" placeholder="实收金额(元)" autocomplete="off"
+                                                       value="0.00" disabled>
+                                                <span class="input-group-addon">元</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="reservations_paid_money" class="col-sm-3 control-label">
-                                            <span class="text-danger">*</span> 实收金额(元)
-                                        </label>
-
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="reservations_paid_money" name="paySumPrice"
-                                                   placeholder="实收金额(元)" autocomplete="off" value="0.00" disabled>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <button class="btn btn-primary" id="reservations_paid_confirm">
-                                                <span class="glyphicon glyphicon-ok"></span> 确 定
+                                        <div class="col-sm-2">
+                                            <button type="button" class="btn btn-primary" id="reservations_paid_confirm">
+                                                <span class="glyphicon glyphicon-ok"></span> 支付
                                             </button>
                                         </div>
                                     </div>
@@ -310,22 +335,6 @@
                             </form>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="tips_success_modal" tabindex="-1" role="dialog" aria-labelledby="tips_success_modal_label">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="tips_success_modal_label">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-success" role="alert">预订支付成功!</div>
                 </div>
             </div>
         </div>

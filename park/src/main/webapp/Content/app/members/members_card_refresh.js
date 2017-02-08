@@ -3,16 +3,19 @@
         init: function () {
             this.initEvents();
 
-            // 生成新会员卡号
-            $.post('/member/getNewCardNo', function (res) {
+            this.getNewCardNo();
+        },
+        getNewCardNo: function () {
+            // 生成新卡号
+            $.post('member/getNewCardNo', function (res) {
                 var data = res.data;
-
                 if (res.code == 1) {
                     $("#newCardNo").val(data.newCardNo);
                 } else {
-                    alert(res.message || "新会员卡号生成失败, 请稍后重试");
+                    $.logConsole('新会员卡号生成失败', res.message);
+                    $.tipsWarningAlert('新会员卡号生成失败');
                 }
-            });
+            }, 'json');
         },
         calculateRefreshMoney: function () {
             var $money = $("#refresh_money");
@@ -45,11 +48,12 @@
                             }
                             return json;
                         } else {
-                            alert('没有搜索到会员');
+                            $.tipsWarningAlert('没有搜索到会员');
                             return [];
                         }
                     } else {
-                        alert('搜索会员失败, 请稍后重试');
+                        $.logConsole('搜索会员失败', res.message);
+                        $.tipsWarningAlert('搜索会员失败');
                         return [];
                     }
                 },
@@ -80,10 +84,11 @@
                             location.assign('/member/getMembersCardRefresh?cardNo='
                                 + data.members[0].cardNo);
                         } else {
-                            alert('没有搜索到会员');
+                            $.tipsWarningAlert('没有搜索到会员');
                         }
                     } else {
-                        alert('搜索会员失败, 请稍后重试');
+                        $.logConsole('搜索会员失败', res.message);
+                        $.tipsWarningAlert('搜索会员失败');
                     }
                 });
             });
@@ -99,11 +104,13 @@
             $(".refresh-card-submit").on("click", function (e) {
                 e.preventDefault();
 
+                var $btn = $(this).button('loading');
+
                 var $form = $("#refresh_card_form");
                 var conditions = $form.serialize();
 
                 if ($("#refresh_cardId").val() === "") {
-                    alert("请先选择会员卡");
+                    $.tipsWarningAlert('请先选择会员卡');
                     return false;
                 }
 
@@ -116,15 +123,14 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $("#refreshModal").modal({backdrop: false, show: true});
-                        setTimeout(function () {
-                            $("#refreshModal").modal("hide");
-                            location.assign('/member/getMembersCardRefresh?cardNo=' + $("#newCardNo").val());
-                        }, 3000);
+                        // 打印收款单 [未完成] 连接小票机
+                        location.reload();
                     } else {
-                        console.log(res.message || "会员补办失败, 请稍后重试");
-                        alert(res.message || "会员补办失败, 请稍后重试");
+                        $.logConsole('会员补办失败', res.message);
+                        $.tipsWarningAlert('会员补办失败');
                     }
+
+                    $btn.button('reset');
                 });
             });
         }

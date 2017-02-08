@@ -93,10 +93,10 @@
                                        data-backdrop="false" data-cardId="${student.cardId}" data-cardNo="${student.cardNo}">
                                         <span class="glyphicon glyphicon-refresh"></span> 补办
                                     </a>
-                                    <a class="btn btn-danger students-delete" href="javascript:;"
+                                    <%--<a class="btn btn-danger students-delete" href="javascript:;"
                                         data-id="${student.studentId}">
                                         <span class="glyphicon glyphicon-trash"></span> 删除
-                                    </a>
+                                    </a>--%>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -200,14 +200,15 @@
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="refresh_newNo" name="newCardNo"
                                        placeholder="请输入新卡号" autocomplete="off"
-                                       data-val="true" data-val-required="新卡号不能为空">
+                                       data-val="true" data-val-required="新卡号不能为空" readonly>
                                 <div data-valmsg-for="newCardNo" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary confirm-refresh" data-dismiss="modal">
+                    <button type="button" class="btn btn-primary confirm-refresh" data-dismiss="modal"
+                            data-loading-text="补办中...">
                         <span class="glyphicon glyphicon-ok"></span> 确 认
                     </button>
                 </div>
@@ -215,30 +216,14 @@
         </div>
     </div>
 
-    <div class="modal fade" id="refreshModal" tabindex="-1" role="dialog" aria-labelledby="refreshModalLabel">
+    <div class="modal fade" id="delete_modal" tabindex="-1" role="dialog" aria-labelledby="delete_modal_label">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h5 class="modal-title" id="refreshModalLabel">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-info" role="alert">学生卡补办成功!</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="deleteModalLabel">提示框</h5>
+                    <h5 class="modal-title" id="delete_modal_label">提示框</h5>
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-danger" role="alert">删除后无法恢复！您确定要删除此会员吗？</div>

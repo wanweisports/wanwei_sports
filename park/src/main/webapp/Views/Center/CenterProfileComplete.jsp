@@ -25,7 +25,7 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>通行证</span> &gt;&gt; <span>完善信息</span>
+    当前位置: <span>个人中心</span> &gt;&gt; <span>完善信息</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -66,7 +66,9 @@
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="user_birthday" name="operatorBirthday"
                                            data-val="true" data-val-required="生日不能为空" placeholder="生日"
-                                           value="${operatorBirthday}">
+                                           value="${operatorBirthday}"
+                                           data-val-regex-pattern="^\d{4}-\d{2}-\d{2}$"
+                                           data-val-regex="联系电话格式错误" maxlength="10">
                                     <span class="input-group-addon user-birthday-select">
                                         <i class="glyphicon glyphicon-calendar"></i>
                                     </span>
@@ -108,12 +110,12 @@
                                 <span class="text-danger">*</span> 联系电话
                             </label>
 
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="user_mobile" name="operatorMobile"
+                            <div class="col-sm-8 input-parent-magnifier">
+                                <input type="text" class="form-control input-element-magnifier" id="user_mobile" name="operatorMobile"
                                        placeholder="请输入联系电话" autocomplete="off"
                                        data-val="true" data-val-required="联系电话不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
-                                       data-val-regex="联系电话格式错误" value="${operatorMobile}">
+                                       data-val-regex="联系电话格式错误" value="${operatorMobile}" maxlength="11">
                                 <div data-valmsg-for="operatorMobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -129,9 +131,9 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
-                                <p class="sc-submit-tips"></p>
-                                <button type="submit" class="btn btn-primary col-sm-4 profile-submit">
-                                    <span class="glyphicon glyphicon-ok"></span> 确定修改
+                                <button type="submit" class="btn btn-primary col-sm-4 profile-submit"
+                                        data-loading-text="保存中...">
+                                    <span class="glyphicon glyphicon-ok"></span> 保 存
                                 </button>
                             </div>
                         </div>
@@ -139,22 +141,6 @@
                 </div>
             </div>
         </form>
-    </div>
-
-    <div class="modal fade" id="tips_modal" tabindex="-1" role="dialog" aria-labelledby="tips_modal_label">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="tips_modal_label">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <p class="text-success">完善信息保存成功!</p>
-                </div>
-            </div>
-        </div>
     </div>
 </layout:override>
 

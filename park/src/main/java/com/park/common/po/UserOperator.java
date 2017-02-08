@@ -33,6 +33,7 @@ public class UserOperator implements java.io.Serializable {
 	private String operatorContact;
 	private String operatorAddress;
 	private String operatorSex;
+	private String operatorType;
 
 	// Constructors
 
@@ -50,8 +51,8 @@ public class UserOperator implements java.io.Serializable {
 			String operatorPwd, String operatorMobile, String status,
 			String createTime, String updateTime, String lastLoginTime,
 			String operatorNo, String operatorEffectDate,
-			String operatorEndDate, String operatorBirthday,
-			String operatorContact, String operatorAddress, String operatorSex) {
+			String operatorEndDate, String operatorBirthday, String operatorContact,
+            String operatorAddress, String operatorSex, String operatorType) {
 		this.operatorId = operatorId;
 		this.operatorName = operatorName;
 		this.operatorPwd = operatorPwd;
@@ -67,6 +68,7 @@ public class UserOperator implements java.io.Serializable {
 		this.operatorContact = operatorContact;
 		this.operatorAddress = operatorAddress;
 		this.operatorSex = operatorSex;
+        this.operatorType = operatorType;
 	}
 
 	// Property accessors
@@ -215,5 +217,14 @@ public class UserOperator implements java.io.Serializable {
 	public void setOperatorSex(String operatorSex) {
 		this.operatorSex = operatorSex;
 	}
+
+    @Column(name = "operatorType", length = 1)
+    public String getOperatorType() {
+        return this.operatorType;
+    }
+
+    public void setOperatorType(String operatorType) {
+        this.operatorSex = operatorType;
+    }
 
 }

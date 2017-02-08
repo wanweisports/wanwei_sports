@@ -28,7 +28,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">培训课程管理</div>
             <div class="panel-body">
-                <form id="course_filter_form" class="form-inline col-sm-8" onsubmit="return false;">
+                <form id="course_filter_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
                         <input type="text" class="form-control" name="courseName" placeholder="课程名称"
                                value="${courseName}" autocomplete="off">
@@ -38,13 +38,13 @@
                             <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
                         </a>
                     </div>
+                    <div class="form-group pull-right">
+                        <button type="button" class="btn btn-primary course-add" data-toggle="modal"
+                                data-target="#add_course_modal" data-backdrop="false">
+                            <span class="glyphicon glyphicon-plus"></span> 添加课程
+                        </button>
+                    </div>
                 </form>
-                <div class="col-sm-4 text-right">
-                    <button type="button" class="btn btn-primary course-add" data-toggle="modal"
-                            data-target="#add_course_modal" data-backdrop="false">
-                        <span class="glyphicon glyphicon-plus"></span> 添加课程
-                    </button>
-                </div>
             </div>
         </div>
         <div class="panel panel-default">
@@ -52,7 +52,7 @@
                 <div class="table-responsive course-list">
                     <table class="table">
                         <thead>
-                        <tr>
+                        <tr class="bg-info">
                             <th>课程编号</th>
                             <th>课程名称</th>
                             <th>课程描述</th>
@@ -86,9 +86,9 @@
                                        data-backdrop="false" data-id="${course.id}">
                                         <span class="glyphicon glyphicon-share-alt"></span> 查看
                                     </a>
-                                    <button type="button" class="btn btn-danger course-delete" data-id="${course.id}">
+                                    <%--<button type="button" class="btn btn-danger course-delete" data-id="${course.id}">
                                         <span class="glyphicon glyphicon-remove"></span> 删除
-                                    </button>
+                                    </button>--%>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -158,6 +158,9 @@
                             </c:if>
                         </ul>
                     </nav>
+                    <c:if test="${fn:length(list) == 0}">
+                        <p class="text-muted no-list-count">没有检索到任何课程！</p>
+                    </c:if>
                 </div>
             </div>
         </div>

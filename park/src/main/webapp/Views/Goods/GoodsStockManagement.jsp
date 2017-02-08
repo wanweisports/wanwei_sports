@@ -5,16 +5,17 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
     <script src="/Content/app/goods/goods_stock_management.js?v=${static_resource_version}"></script>
     <script>
-        // 配置表单校验
         $(document).ready(function () {
-            $('#good_kucun_form').validate({
-                ignore: ":hidden"
-            });
+            $(".good-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
+            $(".good-date[data-count='${countNum}']").addClass("btn-primary").removeClass("btn-default");
         });
     </script>
 </layout:override>
@@ -30,13 +31,30 @@
             <div class="panel-body">
                 <form class="form-inline" id="goods_filter_form" onsubmit="return false;">
                     <div class="form-group">
+                        <div class="btn-group">
+                            <%--<a href="/good/getGoodsStock?countNum=100" data-count="100" class="btn btn-primary good-date">全部</a>--%>
+                            <a href="/good/getGoodsStock?countNum=11" data-count="11" class="btn btn-default good-date">今日</a>
+                            <a href="/good/getGoodsStock?countNum=21" data-count="21" class="btn btn-default good-date">本周</a>
+                            <a href="/good/getGoodsStock?countNum=31" data-count="31" class="btn btn-default good-date">本月</a>
+                            <a href="/good/getGoodsStock?countNum=41" data-count="41" class="btn btn-default good-date">本年</a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="createTimeStart" name="createTimeStart"
+                               placeholder="开始日期" value="${createTimeStart}">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="createTimeEnd" name="createTimeEnd"
+                               placeholder="结束日期" value="${createTimeEnd}">
+                    </div>
+                    <div class="form-group">
                         <input type="text" class="form-control" id="good_no" name="goodNo"
                                placeholder="商品编号" value="${goodNo}">
                     </div>
-                    <div class="form-group">
+                    <%--<div class="form-group">
                         <input type="text" class="form-control" id="good_name" name="goodName"
                                placeholder="商品名称" value="${goodName}">
-                    </div>
+                    </div>--%>
                     <div class="form-group">
                         <label>&nbsp;</label>
                         <a href="javascript:;" class="btn btn-primary goods-filter">
@@ -59,131 +77,62 @@
                         <tr class="bg-info">
                             <th>商品编号</th>
                             <th>商品名称</th>
-                            <th>价格(元)</th>
+                            <th>零售价(元)</th>
                             <th>商品增加</th>
                             <th>商品入库</th>
                             <th>商品销售</th>
+                            <th>销售金额</th>
                             <th>商品损耗</th>
                             <th>库存剩余</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="data" items="${list}">
-                            <tr>
-                                <td>${data.goodNo}</td>
-                                <td>${data.goodName}</td>
-                                <td>${data.goodPrice}</td>
-                                <c:choose>
-                                    <c:when test="${data.opType == 1}">
-                                        <td class="text-success">${data.countGoods}件</td>
-                                        <td>--</td>
-                                        <td>--</td>
-                                        <td>--</td>
-                                    </c:when>
-                                    <c:when test="${data.opType == 2}">
-                                        <td>--</td>
-                                        <td class="text-success">${data.countGoods}件</td>
-                                        <td>--</td>
-                                        <td>--</td>
-                                    </c:when>
-                                    <c:when test="${data.opType == 3}">
-                                        <td>--</td>
-                                        <td>--</td>
-                                        <td class="text-danger">${data.countGoods}件</td>
-                                        <td>--</td>
-                                    </c:when>
-                                    <c:when test="${data.opType == 4}">
-                                        <td>--</td>
-                                        <td>--</td>
-                                        <td>--</td>
-                                        <td class="text-danger">${data.countGoods}件</td>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <td>--</td>
-                                        <td>--</td>
-                                        <td>--</td>
-                                        <td>--</td>
-                                    </c:otherwise>
-                                </c:choose>
-                                <td>${data.goodCount}</td>
+                        <c:forEach var="good" items="${stock}">
+                            <tr <c:if test="${good.goodNo == null}">class="bg-success"</c:if></tr>
+                                <td>${good.goodNo}</td>
+                                <td>${good.goodName}</td>
+                                <td>${good.goodPrice}</td>
+
+                                <c:if test="${good.typeAdd == null}">
+                                    <td>0件</td>
+                                </c:if>
+                                <c:if test="${good.typeAdd != null}">
+                                    <td class="text-success">${good.typeAdd}件</td>
+                                </c:if>
+
+                                <c:if test="${good.typeIn == null}">
+                                    <td>0件</td>
+                                </c:if>
+                                <c:if test="${good.typeIn != null}">
+                                    <td class="text-success">${good.typeIn}件</td>
+                                </c:if>
+
+                                <c:if test="${good.typeOut == null}">
+                                    <td>0件</td>
+                                    <td>0.00元</td>
+                                </c:if>
+                                <c:if test="${good.typeOut != null}">
+                                    <td class="text-danger">${good.typeOut}件</td>
+                                    <td class="text-danger">${good.typeOutTotal}元</td>
+                                </c:if>
+
+                                <c:if test="${good.typeMinus == null}">
+                                    <td>0件</td>
+                                </c:if>
+                                <c:if test="${good.typeMinus != null}">
+                                    <td class="text-danger">${good.typeMinus}件</td>
+                                </c:if>
+
+                                <c:if test="${good.goodCount == null}">
+                                    <td>0件</td>
+                                </c:if>
+                                <c:if test="${good.goodCount != null}">
+                                    <td>${good.goodCount}件</td>
+                                </c:if>
                             </tr>
                         </c:forEach>
-                        <tr>
-                            <td>G0001</td>
-                            <td>斯伯丁NBA篮球	</td>
-                            <td>139.00</td>
-                            <td class="text-success">+ 60件</td>
-                            <td class="text-success">+ 10件</td>
-                            <td class="text-danger">- 3件</td>
-                            <td class="text-danger">- 4件</td>
-                            <td>63件</td>
-                        </tr>
                         </tbody>
                     </table>
-                    <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >
-                        <p class="pull-left" style="margin: 12px 14px;">
-                            <span>${pageSize}条/页</span>
-                            <span>总${count}条</span>
-                        </p>
-                        <ul class="pagination pull-right">
-                            <c:if test="${currentPage == 1}">
-                                <li class="disabled">
-                                    <a href="javascript:;" data-index="1">
-                                        <span>首页</span>
-                                    </a>
-                                </li>
-                                <li class="disabled">
-                                    <a href="javascript:;" data-index="1">
-                                        <span>上一页</span>
-                                    </a>
-                                </li>
-                            </c:if>
-                            <c:if test="${currentPage != 1}">
-                                <li>
-                                    <a class="page-first" href="javascript:;" data-index="1">
-                                        <span>首页</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="page-prev" href="javascript:;" data-index="${currentPage - 1}">
-                                        <span>上一页</span>
-                                    </a>
-                                </li>
-                            </c:if>
-                            <c:forEach var="i" begin="1" end="${lastPage}">
-                                <c:if test="${i == currentPage}">
-                                    <li class="active"><a href="javascript:;" data-index="${i}">${i}</a></li>
-                                </c:if>
-                                <c:if test="${i != currentPage}">
-                                    <li><a class="page-index" href="javascript:;" data-index="${i}">${i}</a></li>
-                                </c:if>
-                            </c:forEach>
-                            <c:if test="${currentPage == lastPage}">
-                                <li class="disabled">
-                                    <a href="javascript:;" data-index="1">
-                                        <span>下一页</span>
-                                    </a>
-                                </li>
-                                <li class="disabled">
-                                    <a href="javascript:;" data-index="1">
-                                        <span>末页</span>
-                                    </a>
-                                </li>
-                            </c:if>
-                            <c:if test="${currentPage != lastPage}">
-                                <li>
-                                    <a class="page-next" href="javascript:;" data-index="${currentPage + 1}">
-                                        <span>下一页</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="page-last" href="javascript:;" data-index="${lastPage}">
-                                        <span>末页</span>
-                                    </a>
-                                </li>
-                            </c:if>
-                        </ul>
-                    </nav>
                 </div>
             </div>
         </div>

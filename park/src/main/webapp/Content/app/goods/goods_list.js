@@ -43,7 +43,8 @@
                     if(res.code == 1){
                         location.reload();
                     }else{
-                        alert(res.message || '上/下架失败, 请稍后重试');
+                        $.logConsole('商品上/下架失败失败', res.message);
+                        $.tipsWarningAlert('商品上/下架失败失败');
                     }
                 });
             }
@@ -81,7 +82,8 @@
                 var $this = $(this);
 
                 $("#plus_good_id").val($this.attr("data-id"));
-                $("#plus_current_good_count").html($this.attr("data-count"));
+                $("#plus_current_good_count").text($this.attr("data-count"));
+                $("#plus_good_count").val("");
             });
 
             // 确认增加库存
@@ -102,7 +104,8 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        alert(res.message || "增加库存失败, 请稍后重试");
+                        $.logConsole('增加库存失败', res.message);
+                        $.tipsWarningAlert('增加库存失败');
                     }
                 });
             });
@@ -112,7 +115,8 @@
                 var $this = $(this);
 
                 $("#minus_good_id").val($this.attr("data-id"));
-                $("#minus_current_good_count").html($this.attr("data-count"));
+                $("#minus_current_good_count").text($this.attr("data-count"));
+                $("#minus_good_count").val("");
             });
 
             // 确认损耗库存
@@ -121,10 +125,17 @@
 
                 var $form = $("#minus_count_form");
                 var conditions = $form.serialize();
+                var curCount = $("#minus_current_good_count").text();
+                var count = $("#minus_good_count").val();
 
                 if ($form.attr("submitting") == "submitting" || !$form.valid()) {
                     return false;
                 }
+                if (parseInt(curCount) < parseInt(count)) {
+                    $.tipsWarningAlert('损耗大于当前库存');
+                    return false;
+                }
+
                 $form.attr("submitting", "submitting");
 
                 $.post("/good/minusGoodCount", conditions, function (res) {
@@ -133,7 +144,8 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        alert(res.message || "损耗库存失败, 请稍后重试");
+                        $.logConsole('损耗库存失败', res.message);
+                        $.tipsWarningAlert('损耗库存失败');
                     }
                 });
             });

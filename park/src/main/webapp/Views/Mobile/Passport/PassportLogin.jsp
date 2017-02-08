@@ -28,13 +28,13 @@
                     <div class="weui-cells weui-cells_form">
                         <div class="weui-cell">
                             <div class="weui-cell__bd">
-                                <input class="weui-input" type="text" placeholder="用户名" name="name"
+                                <input class="weui-input" type="text" placeholder="手机号码" name="mobile"
                                        autocomplete="off">
                             </div>
                         </div>
                         <div class="weui-cell">
                             <div class="weui-cell__bd">
-                                <input class="weui-input" type="password" placeholder="用户密码" name="pwd"
+                                <input class="weui-input" type="password" placeholder="密码" name="pwd"
                                        autocomplete="off">
                             </div>
                         </div>
@@ -42,7 +42,8 @@
 
                     <div class="weui-btn-area">
                         <input type="hidden" name="return_url" value="${returnUrl}">
-                        <a class="weui-btn weui-btn_primary login-btn" href="javascript:">登 录</a>
+                        <a class="weui-btn weui-btn_primary login-btn" href="javascript:">立即登录</a>
+                        <a class="weui-btn weui-btn_primary" href="/mobile/passport/register">用户注册</a>
                     </div>
                 </form>
             </div>

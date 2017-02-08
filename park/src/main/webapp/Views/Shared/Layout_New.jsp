@@ -147,6 +147,7 @@
     <script src="/Content/lib/jquery/jquery-1.12.3.min.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/bootstrap/bootstrap.min.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/moment/moment.min.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.cookie/jquery.cookie-1.4.1.min.js?v=${static_resource_version}"></script>
     <script src="/Content/app/common/text_magnifier.js?v=${static_resource_version}"></script>
     <script src="/Content/app/common/base_new.js?v=${static_resource_version}"></script>
 

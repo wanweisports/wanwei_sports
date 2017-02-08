@@ -23,6 +23,7 @@ public class GoodInfo implements java.io.Serializable {
 	private Integer goodTypeId;
 	private String goodMoneyType;
 	private Double goodPrice;
+	private Double goodOriginalPrice;
 	private String goodDiscount;
 	private String goodStatus;
 	private Integer goodCount;
@@ -38,9 +39,10 @@ public class GoodInfo implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public GoodInfo(String goodNo, Double goodPrice) {
+	public GoodInfo(String goodNo, Double goodPrice, Double goodOriginalPrice) {
 		this.goodNo = goodNo;
 		this.goodPrice = goodPrice;
+        this.goodOriginalPrice = goodOriginalPrice;
 	}
 
 	/** full constructor */
@@ -48,7 +50,7 @@ public class GoodInfo implements java.io.Serializable {
 			Integer goodTypeId, String goodMoneyType, Double goodPrice,
 			String goodDiscount, String goodStatus, Integer goodCount,
 			String goodRemark, String createTime, String updateTime,
-			Integer salesId) {
+			Integer salesId, Double goodOriginalPrice) {
 		this.goodNo = goodNo;
 		this.goodName = goodName;
 		this.goodPic = goodPic;
@@ -62,6 +64,7 @@ public class GoodInfo implements java.io.Serializable {
 		this.createTime = createTime;
 		this.updateTime = updateTime;
 		this.salesId = salesId;
+        this.goodOriginalPrice = goodOriginalPrice;
 	}
 
 	// Property accessors
@@ -129,6 +132,15 @@ public class GoodInfo implements java.io.Serializable {
 	public void setGoodPrice(Double goodPrice) {
 		this.goodPrice = goodPrice;
 	}
+
+    @Column(name = "goodOriginalPrice", nullable = false, precision = 10)
+    public Double getGoodOriginalPrice() {
+        return this.goodOriginalPrice;
+    }
+
+    public void setGoodOriginalPrice(Double goodOriginalPrice) {
+        this.goodOriginalPrice = goodOriginalPrice;
+    }
 
 	@Column(name = "goodDiscount", length = 16)
 	public String getGoodDiscount() {

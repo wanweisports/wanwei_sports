@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.park.common.bean.MemberCardOpInputView;
@@ -38,7 +39,7 @@ public class StudentsController extends BaseController {
     // 学生注册
     @RequestMapping("register")
     public String studentsRegister(Model model) {
-    	model.addAttribute("cardNo", memberService.getCardNo());
+    	model.addAttribute("cardNo", memberService.getCardNo(3));
     	model.addAllAttributes(studentService.getCardDeposit(StrUtil.objToInt(IDBConstant.CARD_STUDENT)));
         return "Students/StudentsCreate";
     }
@@ -116,6 +117,22 @@ public class StudentsController extends BaseController {
     		e.printStackTrace();
     		return false;
 		}
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "getNewCardNo", method = RequestMethod.POST)
+    public ResponseBean getNewCardNo(Model model) {
+        try {
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("newCardNo", memberService.getCardNo(3));
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
     }
     
     @ResponseBody

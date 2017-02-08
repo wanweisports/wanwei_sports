@@ -21,6 +21,8 @@
             }
         },
         init: function () {
+            var allowTimes = JSON.parse($.cookie('wc-business-time'));
+
             $.datetimepicker.setLocale('zh');
 
             // 表单时间控件设置
@@ -55,15 +57,15 @@
             $('#reservations_batch_start').datetimepicker({
                 datepicker: false,
                 format: 'H:i',
-                step: 60,
-                value: '06:00'
+                allowTimes: allowTimes,
+                value: allowTimes[0]
             });
 
             $('#reservations_batch_end').datetimepicker({
                 datepicker: false,
                 format: 'H:i',
-                step: 60,
-                value: '22:00'
+                allowTimes: allowTimes,
+                value: allowTimes[allowTimes.length - 1]
             });
 
             this.initEvents();
@@ -79,7 +81,7 @@
         searchMembers: function () {
             var content = this;
 
-            $("#reservations_batch_mobile").autosuggest({
+            $("#reservations_batch_name").autosuggest({
                 url: '/member/searchMember',
                 method: 'post',
                 queryParamName: 'search',
@@ -99,13 +101,13 @@
                             return json;
                         } else {
                             $('#reservations_batch_member').val("0");
-                            $('#reservations_batch_name').val("散客");
                             $('#reservations_batch_opType').val("2");
                             content.queryMemberBalance(0);
                             return [];
                         }
                     } else {
-                        alert('搜索会员失败, 请稍后重试');
+                        $.logConsole('搜索会员失败', res.message);
+                        $.tipsWarningAlert('搜索会员失败');
                         return [];
                     }
                 },
@@ -124,8 +126,8 @@
             });
         },
         queryMemberBalance: function (memberId) {
-            if (!memberId) {
-                $('#reservations_paid_balance').val("0.00");
+            if (!memberId || memberId == "0") {
+                $('#reservations_paid_balance').val("您还不是会员");
                 return;
             }
 
@@ -142,7 +144,8 @@
                         $("#reservations_paid_money").val(originalPrice - data.cardBalance);
                     }
                 } else {
-                    alert(res.message || "会员余额查询失败, 请稍后重试");
+                    $.logConsole('会员余额查询失败', res.message);
+                    $.tipsWarningAlert('会员余额查询失败');
                 }
             });
         },
@@ -182,7 +185,8 @@
                     $("#reservations_paid_paySumPrice").val(data.originalPrice);
                     $("#reservations_paid_money").val(data.originalPrice);
                 } else {
-                    alert(res.message || "计算金额失败, 请稍后重试");
+                    $.logConsole('计算金额失败', res.message);
+                    $.tipsWarningAlert('计算金额失败');
                 }
             });
         },
@@ -210,8 +214,8 @@
 
                         $("#reservations_batch_siteId").html(html);
                     } else {
-                        console.log(res.message || "查询场地失败, 请稍后重试");
-                        alert(res.message || "查询场地失败, 请稍后重试");
+                        $.logConsole('查询场地失败', res.message);
+                        $.tipsWarningAlert('查询场地失败');
                     }
                 });
             });
@@ -296,29 +300,14 @@
                 e.preventDefault();
 
                 var $list = $(".reservations-list");
+                var memberId = $("#reservations_batch_member").val();
                 if ($list.find("tr").size() == 1) {
                     alert("请先加场");
                     return false;
                 }
 
-                var data = content.opts.data;
-                /*data.mobile = $("#reservations_batch_mobile").val();
-                data.name = $("#reservations_batch_name").val();
-                data.memberId = $("#reservations_batch_member").val() || "0";
-                data.opType = $("#reservations_batch_opType").val();*/
-
-                $.post('site/saveReservationSite', {
-                    siteOperationJson: JSON.stringify(content.opts.data)
-                }, function (res) {
-                    var data = res.data;
-
-                    if (res.code == 1) {
-                        $("#reservations_paid_order").val(data.orderId);
-                        $("#zhifuModal").modal({backdrop: false, show: true});
-                    } else {
-                        alert(res.message || "提交预订失败, 请稍后重试");
-                    }
-                });
+                content.queryMemberBalance(memberId);
+                $("#pay_modal").modal({backdrop: false, show: true});
             });
 
             // 确认支付
@@ -326,27 +315,43 @@
                 e.preventDefault();
 
                 var $form = $("#reservations_paid_form");
-                var conditions = $form.serialize();
 
                 if ($form.attr("submitting") == "submitting" || !$form.valid()) {
                     return false;
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/site/confirmOrder', conditions, function (res) {
-                    $form.attr("submitting", "");
+                function __saveOrder(cb) {
+                    $.post('site/saveReservationSite', {
+                        siteOperationJson: JSON.stringify(content.opts.data)
+                    }, function (res) {
+                        var data = res.data;
 
-                    if (res.code == 1) {
-                        $("#zhifuModal").modal("hide");
+                        if (res.code == 1) {
+                            $("#reservations_paid_order").val(data.orderId);
+                            cb();
+                        } else {
+                            $.logConsole('提交预订失败', res.message);
+                            $.tipsWarningAlert('提交预订失败');
+                        }
+                    });
+                }
 
-                        $("#tips_success_modal").modal({show: true, backdrop: false});
-                        setTimeout(function () {
-                            $("#tips_success_modal").modal("hide");
-                            location.reload();
-                        }, 3000);
-                    } else {
-                        alert(res.message || "确认订单失败, 请稍后重试");
-                    }
+                __saveOrder(function () {
+                    var conditions = $("#reservations_paid_form").serialize();
+                    $.post('/site/confirmOrder', conditions, function (res) {
+                        $form.attr("submitting", "");
+
+                        if (res.code == 1) {
+                            $.tipsSuccessAlert('预订支付成功！', function () {
+                                $("#pay_modal").modal("hide");
+                                location.reload();
+                            });
+                        } else {
+                            $.logConsole('确认订单失败', res.message);
+                            $.tipsWarningAlert('确认订单失败');
+                        }
+                    });
                 });
             });
         }

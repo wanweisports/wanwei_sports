@@ -153,36 +153,36 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 	@Override
 	public PageBean getOrderList(OrderInputView orderInputView) throws Exception{
 		
-		String operatorId = orderInputView.getOperatorId();
+		//String operatorId = orderInputView.getOperatorId();
 		String orderServiceTypes = orderInputView.getOrderServiceTypes();
 		String payStatus = orderInputView.getPayStatus();
 		String orderNo = orderInputView.getOrderNo();
 		String name = orderInputView.getName();
 		String mobile = orderInputView.getMobile();
 		
-		StringBuilder headSql = new StringBuilder("SELECT *");
-		StringBuilder bodySql = new StringBuilder(" FROM order_info");
-		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
-		if(!super.isAdmin(orderInputView)){
+		StringBuilder headSql = new StringBuilder("SELECT oi.*, uo.operatorName");
+		StringBuilder bodySql = new StringBuilder(" FROM order_info oi, user_operator uo");
+		StringBuilder whereSql = new StringBuilder(" WHERE uo.id=oi.salesId");
+		/*if(!super.isAdmin(orderInputView)){
 			whereSql.append(" AND salesId = :salesId");
-		}
+		}*/
 		if(StrUtil.isNotBlank(payStatus)){
-			whereSql.append(" AND payStatus = :payStatus");
+			whereSql.append(" AND oi.payStatus = :payStatus");
 		}
 		if(StrUtil.isNotBlank(orderNo)){
-			whereSql.append(" AND orderNo = :orderNo");
+			whereSql.append(" AND oi.orderNo = :orderNo");
 		}
 		if(StrUtil.isNotBlank(name)){
-			whereSql.append(" AND name LIKE :name");
+			whereSql.append(" AND oi.name LIKE :name");
 			orderInputView.setName(name + "%");
 		}
 		if(StrUtil.isNotBlank(mobile)){
-			whereSql.append(" AND mobile = :mobile");
+			whereSql.append(" AND oi.mobile = :mobile");
 		}
 		if(StrUtil.isNotBlank(orderServiceTypes)){
-			whereSql.append(" AND orderServiceType IN (:orderServiceTypes)");
+			whereSql.append(" AND oi.orderServiceType IN (:orderServiceTypes)");
 		}
-		whereSql.append(" ORDER BY updateTime DESC");
+		whereSql.append(" ORDER BY oi.createTime DESC");
 		
 		PageBean pageBean = super.getPageBean(headSql, bodySql, whereSql, orderInputView, SQLUtil.getInToSQL("orderServiceTypes", orderServiceTypes));
 		List<Map<String, Object>> list = pageBean.getList();

@@ -14,8 +14,10 @@
     <script src="/Content/lib/echarts/echarts.min.js?v=${static_resource_version}"></script>
     <script src="/Content/app/data/data_members_register.js?v=${static_resource_version}"></script>
     <script>
-        $(".member-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
-        $(".member-date[data-count='${countNum}']").addClass("btn-primary").removeClass("btn-default");
+        $(document).ready(function () {
+            $(".member-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
+            $(".member-date[data-count='${countNum}']").addClass("btn-primary").removeClass("btn-default");
+        });
     </script>
 </layout:override>
 
@@ -31,11 +33,10 @@
                 <form id="data_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="/data/getMembersRegister?countNum=10" data-count="10" class="btn btn-primary member-date">全部</a>
                             <a href="/data/getMembersRegister?countNum=1" data-count="1" class="btn btn-default member-date">今日</a>
-                            <a href="/data/getMembersRegister?countNum=2" data-count="2" class="btn btn-default member-date">昨日</a>
                             <a href="/data/getMembersRegister?countNum=3" data-count="3" class="btn btn-default member-date">本周</a>
                             <a href="/data/getMembersRegister?countNum=4" data-count="4" class="btn btn-default member-date">本月</a>
+                            <a href="/data/getMembersRegister?countNum=4" data-count="4" class="btn btn-default member-date">本年</a>
                         </div>
                     </div>
                     <div class="form-group">
@@ -48,52 +49,164 @@
                     </div>
                     <div class="form-group">
                         <a href="javascript:;" class="btn btn-primary data-filter">
-                            <span class="glyphicon glyphicon-search"></span> 检索 & 显示
+                            <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
                         </a>
                     </div>
                     <div class="form-group pull-right">
                         <a href="javascript:;" class="btn btn-danger">
                             <span class="glyphicon glyphicon-export"></span> 导出数据
                         </a>
-                        <a href="/data/getMembersRegisterGroupDate" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-stats"></span> 图表显示
-                        </a>
                     </div>
                 </form>
             </div>
         </div>
         <div class="panel panel-default">
+            <div class="panel-heading">会员注册数量</div>
             <div class="panel-body">
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table table-bordered data-members-count">
                         <thead>
-                        <tr>
-                            <th>序号</th>
+                        <tr class="bg-info">
                             <th>会员类型</th>
-                            <th>单价</th>
-                            <th>销售数量</th>
-                            <th>销售金额</th>
+                            <th>上周</th>
+                            <th>本周</th>
+                            <c:forEach var="title" items="${titleList}">
+                           	<th>${title}</th>
+                            </c:forEach>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="member" items="${data.list}" varStatus="loop">
-                            <tr>
-                                <td>${loop.index + 1}</td>
-                                <td>${member.cardTypeName}</td>
-                                <td>${member.cardTypeMoney}元</td>
-                                <td>${member.count}个</td>
-                                <td>${member.countMoney}元</td>
-                            </tr>
-                        </c:forEach>
-                        <tr class="info">
-                            <th></th>
-                            <th></th>
-                            <th>合计</th>
-                            <th>${data.sumCount}个</th>
-                            <th>${data.sumCountMoney}元</th>
+                        	<c:forEach var="o" items="${list}">
+                        	<tr>
+                        		<td>${o.cardTypeName}</td>
+                        		<td></td>
+                        		<td>${o.count}</td>
+                        		<c:forEach begin="0" end="${num}" varStatus="vs">
+                        			<c:set var="key" value="d${vs.index }"  />
+                        			<td>${o[key]}</td> 
+                        		</c:forEach>
+                        	</tr>
+                        	</c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="member_count_chart" style="width: 100%; height: 300px;"></div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">会员储值金额</div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr class="bg-info">
+                            <th>会员类型</th>
+                            <th>本周</th>
+                            <th>周一</th>
+                            <th>周二</th>
+                            <th>周三</th>
+                            <th>周四</th>
+                            <th>周五</th>
+                            <th>周六</th>
+                            <th>周日</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>教师卡</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                        </tr>
+                        <tr>
+                            <td>会员卡</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                        </tr>
+                        <tr>
+                            <td>学生卡</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                        </tr>
+                        <tr class="bg-success">
+                            <td>合计</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
+                            <td>1000元</td>
                         </tr>
                         </tbody>
                     </table>
+                </div>
+                <div id="member_stored_chart" style="width: 100%; height: 400px;"></div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">会员储值金额</div>
+            <div class="panel-body">
+                <div class="col-sm-8">
+                    <div class="table-responsive" style="margin-top: 20px;">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr class="bg-info">
+                                <th>会员类型</th>
+                                <th>场租消费</th>
+                                <th>商品消费</th>
+                                <th>会员储值余额</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>教师卡</td>
+                                <td>500元</td>
+                                <td>500元</td>
+                                <td>500元</td>
+                            </tr>
+                            <tr>
+                                <td>会员卡</td>
+                                <td>100元</td>
+                                <td>100元</td>
+                                <td>100元</td>
+                            </tr>
+                            <tr>
+                                <td>学生卡</td>
+                                <td>400元</td>
+                                <td>400元</td>
+                                <td>400元</td>
+                            </tr>
+                            <tr class="bg-success">
+                                <td>合计</td>
+                                <td>400元</td>
+                                <td>400元</td>
+                                <td>400元</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div id="member_consume_chart" style="width: 100%; height: 200px;"></div>
                 </div>
             </div>
         </div>

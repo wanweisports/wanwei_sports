@@ -291,6 +291,8 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 			orderInfo.setMemberId(member.getMemberId());
 			siteReserveBasic.setMobile(member.getMemberMobile()); //如果预定是会员，预定为会员的手机号
 			siteReserveBasic.setName(member.getMemberName());
+			orderInfo.setName(siteReserveBasic.getName());
+			orderInfo.setMobile(siteReserveBasic.getMobile());
 		}else if(IDBConstant.LOGIC_STATUS_NO.equals(siteReserveBasic.getOpType())){
 			orderInfo.setMemberId(0); //散客
 			orderInfo.setName(siteReserveBasic.getName());

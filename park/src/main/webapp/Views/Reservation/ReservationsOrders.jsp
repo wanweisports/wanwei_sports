@@ -10,7 +10,18 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
     <script src="/Content/app/reservations/reservations_orders.js?v=${static_resource_version}"></script>
+    <script>
+        $(document).ready(function () {
+            // 配置表单校验
+            $('#reservations_paid_form').validate({
+                ignore: ":hidden"
+            });
+            $("#orders_pay_status").val('${payStatus}');
+        });
+    </script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
@@ -24,15 +35,20 @@
             <div class="panel-body">
                 <form id="orders_filter_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
-                        <select class="form-control" name="payStatus" style="width:160px;">
-                            <option value="">全部订单</option>
-                            <option value="2" <c:if test='${payStatus==2}'>selected</c:if>>未支付</option>
-                            <option value="1" <c:if test='${payStatus==1}'>selected</c:if>>已支付</option>
-                            <!-- <option value="10">已完成</option> -->
+                        <select class="form-control" id="orders_pay_status" name="payStatus" style="width: 180px;">
+                            <option value="">支付状态</option>
+                            <option value="1">已支付</option>
+                            <option value="2">未支付</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="订单号" name="orderNo" value="${orderNo}">
+                        <input type="text" class="form-control" name="orderNo" placeholder="订单号" value="${orderNo}">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="name" placeholder="预订人" value="${name}">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="mobile" placeholder="手机号码" value="${mobile}">
                     </div>
                     <div class="form-group">
                         <a href="javascript:;" class="btn btn-primary orders-filter">
@@ -44,107 +60,109 @@
         </div>
         <div class="panel-group" role="tablist">
             <c:forEach var="order" items="${list}" varStatus="loop">
-            <div class="panel panel-info">
-                <div class="panel-heading" id="order_header_${loop.index}">
-                    <h5 class="panel-title" style="font-size: 14px;">
-                        <a data-toggle="collapse" href="#order_body_${loop.index}" aria-expanded="true"
-                           aria-controls="#order_body_${loop.index}">
-                            订单号：<span class="text-primary">${order.orderNo}</span>
-                        </a>
+                <div class="panel panel-info">
+                    <div class="panel-heading" id="order_header_${loop.index}">
+                        <h5 class="panel-title" style="font-size: 14px;">
+                            <a data-toggle="collapse" href="#order_body_${loop.index}" aria-expanded="true"
+                               aria-controls="#order_body_${loop.index}">
+                                订单号：<span class="text-primary">${order.orderNo}</span>
+                            </a>
 
-                        <div class="pull-right">
-                            <small class="text-muted">${order.createTime} </small>
-                        <c:if test="${order.orderStatus == 1}">
-                            <span class="text-success">已完成</span>
-                        </c:if>
-                        <c:if test="${order.orderStatus == 2}">
-                            <c:if test="${order.payStatus == 1}">
-                                <span class="text-success">已支付</span>
-                            </c:if>
-                            <c:if test="${order.payStatus == 2}">
-                                <span class="text-danger">未支付</span>
-                            </c:if>
-                            <c:if test="${order.payStatus == 3}">
-                                <span class="text-danger">部分支付</span>
-                            </c:if>
-                        </c:if>
-                        <c:if test="${order.orderStatus == 3}">
-                            <span class="text-muted">已取消</span>
-                        </c:if>
-                        </div>
-                    </h5>
-                </div>
-                <div id="#order_body_${loop.index}" class="panel-collapse collapse in" role="tabpanel"
-                     aria-labelledby="order_header_${loop.index}" aria-expanded="true">
-                    <div class="table-responsive">
-                        <table class="table orders-list">
-                            <thead>
-                            <tr>
-                                <th>预订项</th>
-                                <th>预订人</th>
-                                <th>预订人手机</th>
-                                <th>开始时间</th>
-                                <th>结束时间</th>
-                                <th>预订状态</th>
-                            </tr>
-                            </thead>
-                            <c:forEach var="item" items="${order.orderDetailList}">
-                            <tr>
-                                <td>${item.itemName}</td>
-                                <td>${order.name}</td>
-                                <td>${order.mobile}</td>
-                                <td>${item.itemStartTime}</td>
-                                <td>${item.itemEndTime}</td>
-                                <c:if test="${item.orderDetailStatus == 1}">
-                                    <td>已完成</td>
+                            <div class="pull-right">
+                                <small class="text-muted">${order.createTime} </small>
+                                <c:if test="${order.orderStatus == 1}">
+                                    <span class="text-success">已完成</span>
                                 </c:if>
-                                <c:if test="${item.orderDetailStatus == 2}">
-                                    <td class="text-danger">未开场</td>
+                                <c:if test="${order.orderStatus == 2}">
+                                    <c:if test="${order.payStatus == 1}">
+                                        <span class="text-success">已支付</span>
+                                    </c:if>
+                                    <c:if test="${order.payStatus == 2}">
+                                        <span class="text-danger">未支付</span>
+                                    </c:if>
+                                    <c:if test="${order.payStatus == 3}">
+                                        <span class="text-danger">部分支付</span>
+                                    </c:if>
                                 </c:if>
-                                <c:if test="${item.orderDetailStatus == 3}">
-                                    <td class="text-success">进行中</td>
+                                <c:if test="${order.orderStatus == 3}">
+                                    <span class="text-muted">已取消</span>
                                 </c:if>
-                            </tr>
-                            </c:forEach>
-                        </table>
+                            </div>
+                        </h5>
                     </div>
-                    <div class="panel-footer">
-                        合计金额: <strong class="text-danger">${order.orderSumPrice}</strong> 元
-                        <div class="pull-right">
-                            <c:if test="${order.orderStatus == 1}">
-                                <button class="btn btn-warning btn-sm order-delete" data-id="${order.orderId}"
-                                        data-member="${order.memberId}">
-                                    <span class="glyphicon glyphicon-trash"></span> 删除
-                                </button>
-                            </c:if>
-                            <c:if test="${order.orderStatus == 2}">
-                                <c:if test="${order.payStatus == 1}">
-                                    <button class="btn btn-danger btn-sm order-cancel" data-id="${order.orderId}"
+                    <div id="#order_body_${loop.index}" class="panel-collapse collapse in" role="tabpanel"
+                         aria-labelledby="order_header_${loop.index}" aria-expanded="true">
+                        <div class="table-responsive" style="padding: 10px;">
+                            <table class="table table-bordered orders-list">
+                                <thead>
+                                <tr class="bg-info">
+                                    <th>场地类型</th>
+                                    <th>预订人</th>
+                                    <th>预订人手机</th>
+                                    <th>开始时间</th>
+                                    <th>结束时间</th>
+                                    <th>预订状态</th>
+                                    <th>销售员</th>
+                                </tr>
+                                </thead>
+                                <c:forEach var="item" items="${order.orderDetailList}">
+                                    <tr>
+                                        <td>${item.itemName}</td>
+                                        <td>${order.name}</td>
+                                        <td>${order.mobile}</td>
+                                        <td>${item.itemStartTime}</td>
+                                        <td>${item.itemEndTime}</td>
+                                        <c:if test="${item.orderDetailStatus == 1}">
+                                            <td>已完成</td>
+                                        </c:if>
+                                        <c:if test="${item.orderDetailStatus == 2}">
+                                            <td class="text-danger">未开场</td>
+                                        </c:if>
+                                        <c:if test="${item.orderDetailStatus == 3}">
+                                            <td class="text-success">进行中</td>
+                                        </c:if>
+                                        <td>${order.operatorName}</td>
+                                    </tr>
+                                </c:forEach>
+                            </table>
+                        </div>
+                        <div class="panel-footer">
+                            合计金额: <strong class="text-danger">${order.orderSumPrice}</strong> 元
+                            <div class="pull-right">
+                                <c:if test="${order.orderStatus == 1}">
+                                    <button class="btn btn-warning btn-sm order-delete" data-id="${order.orderId}"
                                             data-member="${order.memberId}" style="display: none;">
-                                        <span class="glyphicon glyphicon-remove"></span> 取消
+                                        <span class="glyphicon glyphicon-trash"></span> 删除
                                     </button>
                                 </c:if>
-                                <c:if test="${order.payStatus == 2}">
-                                    <button class="btn btn-primary btn-sm order-pay" data-id="${order.orderId}"
-                                            data-member="${order.memberId}">
-                                        <span class="glyphicon glyphicon-usd"></span> 支付
-                                    </button>
-                                    <button class="btn btn-danger btn-sm order-cancel" data-id="${order.orderId}"
-                                            data-member="${order.memberId}">
-                                        <span class="glyphicon glyphicon-remove"></span> 取消
+                                <c:if test="${order.orderStatus == 2}">
+                                    <c:if test="${order.payStatus == 1}">
+                                        <button class="btn btn-danger btn-sm order-delete" data-id="${order.orderId}"
+                                                data-member="${order.memberId}" style="display: none;">
+                                            <span class="glyphicon glyphicon-remove"></span> 删除
+                                        </button>
+                                    </c:if>
+                                    <c:if test="${order.payStatus == 2}">
+                                        <button class="btn btn-primary btn-sm order-pay" data-id="${order.orderId}"
+                                                data-member="${order.memberId}">
+                                            <span class="glyphicon glyphicon-usd"></span> 支付
+                                        </button>
+                                        <button class="btn btn-danger btn-sm order-cancel" data-id="${order.orderId}"
+                                                data-member="${order.memberId}">
+                                            <span class="glyphicon glyphicon-remove"></span> 取消
+                                        </button>
+                                    </c:if>
+                                </c:if>
+                                <c:if test="${order.orderStatus == 3}">
+                                    <button class="btn btn-warning order-delete" data-id="${order.orderId}"
+                                            data-member="${order.memberId}" style="display: none;">
+                                        <span class="glyphicon glyphicon-trash"></span> 删除
                                     </button>
                                 </c:if>
-                            </c:if>
-                            <c:if test="${order.orderStatus == 3}">
-                                <button class="btn btn-warning order-delete" data-id="${order.orderId}"
-                                        data-member="${order.memberId}">
-                                    <span class="glyphicon glyphicon-trash"></span> 删除
-                                </button>
-                            </c:if>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             </c:forEach>
             <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >
                 <p class="pull-left" style="margin: 12px 14px;">
@@ -210,17 +228,20 @@
                     </c:if>
                 </ul>
             </nav>
+            <c:if test="${fn:length(list) == 0}">
+                <p class="text-muted no-list-count">没有检索到场地订单！</p>
+            </c:if>
         </div>
     </div>
 
-    <div class="modal fade" id="zhifuModal" tabindex="-1" role="dialog" aria-labelledby="zhifuModalLabel">
+    <div class="modal fade" id="pay_modal" tabindex="-1" role="dialog" aria-labelledby="pay_modal_label">
         <div class="modal-dialog" style="width: 640px;">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h5 class="modal-title" id="zhifuModalLabel">订单支付</h5>
+                    <h5 class="modal-title" id="pay_modal_label">支付订单</h5>
                 </div>
                 <div class="modal-body">
                     <div class="panel panel-default">
@@ -231,67 +252,77 @@
                                 <input type="hidden" id="reservations_paid_additionalPrice" name="additionalPrice" value="0">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="reservations_paid_orderSumCount" class="col-sm-6 control-label">
-                                            <span class="text-danger">*</span> 总场次(时)
-                                        </label>
+                                        <label for="reservations_paid_orderSumCount" class="col-sm-4 control-label">总场次</label>
 
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="reservations_paid_orderSumCount"
-                                                   name="orderSumCount" autocomplete="off" disabled>
+                                        <div class="col-sm-8">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="reservations_paid_orderSumCount"
+                                                       name="orderSumCount" autocomplete="off" disabled>
+                                                <span class="input-group-addon">时</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="reservations_paid_orderSumPrice" class="col-sm-6 control-label">
-                                            <span class="text-danger">*</span> 总金额(元)
+                                        <label for="reservations_paid_orderSumPrice" class="col-sm-4 control-label">
+                                            <span class="text-danger">*</span> 总金额
                                         </label>
 
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="reservations_paid_orderSumPrice"
-                                                   name="orderSumPrice" placeholder="总金额(元)" autocomplete="off"
-                                                   data-val="true" data-val-required="总金额不能为空"
-                                                   data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
-                                                   data-val-regex="总金额格式错误">
+                                        <div class="col-sm-8">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="reservations_paid_orderSumPrice"
+                                                       name="orderSumPrice" placeholder="总金额(元)" autocomplete="off"
+                                                       data-val="true" data-val-required="总金额不能为空"
+                                                       data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                                       data-val-regex="总金额格式错误">
+                                                <span class="input-group-addon">元</span>
+                                            </div>
                                             <div data-valmsg-for="orderSumPrice" data-valmsg-replace="true"></div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="reservations_paid_payCount" class="col-sm-6 control-label">
-                                            <span class="text-danger">*</span> 支付场次(时)
+                                        <label for="reservations_paid_payCount" class="col-sm-4 control-label">
+                                            <span class="text-danger">*</span> 支付场次
                                         </label>
 
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="reservations_paid_payCount" name="payCount"
-                                                   placeholder="支付场次" autocomplete="off"
-                                                   data-val="true" data-val-required="支付场次不能为空"
-                                                   data-val-regex-pattern="^[1-9]\d*$"
-                                                   data-val-regex="支付场次格式错误">
+                                        <div class="col-sm-8">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="reservations_paid_payCount" name="payCount"
+                                                       placeholder="支付场次" autocomplete="off"
+                                                       data-val="true" data-val-required="支付场次不能为空"
+                                                       data-val-regex-pattern="^[1-9]\d*$"
+                                                       data-val-regex="支付场次格式错误">
+                                                <span class="input-group-addon">时</span>
+                                            </div>
                                             <div data-valmsg-for="payCount" data-valmsg-replace="true"></div>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="reservations_paid_paySumPrice" class="col-sm-6 control-label">
-                                            <span class="text-danger">*</span> 支付金额(元)
+                                        <label for="reservations_paid_paySumPrice" class="col-sm-4 control-label">
+                                            <span class="text-danger">*</span> 支付金额
                                         </label>
 
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="reservations_paid_paySumPrice" name="paySumPrice"
-                                                   placeholder="支付金额(元)" autocomplete="off"
-                                                   data-val="true" data-val-required="支付金额不能为空"
-                                                   data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
-                                                   data-val-regex="支付金额格式错误">
+                                        <div class="col-sm-8">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="reservations_paid_paySumPrice" name="paySumPrice"
+                                                       placeholder="支付金额(元)" autocomplete="off"
+                                                       data-val="true" data-val-required="支付金额不能为空"
+                                                       data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                                       data-val-regex="支付金额格式错误">
+                                                <span class="input-group-addon">元</span>
+                                            </div>
                                             <div data-valmsg-for="paySumPrice" data-valmsg-replace="true"></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-12">
+                                <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="reservations_money_type" class="col-sm-3 control-label">
+                                        <label for="reservations_money_type" class="col-sm-4 control-label">
                                             <span class="text-danger">*</span> 支付方式
                                         </label>
 
-                                        <div class="col-sm-9">
+                                        <div class="col-sm-8">
                                             <select class="form-control" id="reservations_money_type" name="payType"
                                                     data-val="true" data-val-required="请选择支付方式">
                                                 <option value="">请选择</option>
@@ -302,36 +333,46 @@
                                             <div data-valmsg-for="payType" data-valmsg-replace="true"></div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="reservations_paid_remark" class="col-sm-3 control-label">备注</label>
-
-                                        <div class="col-sm-9">
-                                    <textarea class="form-control" rows="3" id="reservations_paid_remark"
-                                              name="orderRemark" placeholder="备注"></textarea>
+                                        <label for="reservations_paid_balance"
+                                               class="col-sm-4 control-label text-success">会员余额</label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="reservations_paid_balance"
+                                                       name="balance" autocomplete="off" value="0.00" disabled>
+                                                <span class="input-group-addon">元</span>
+                                            </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label for="reservations_paid_balance" class="col-sm-3 control-label">
-                                            <span class="text-danger">*</span> 余额(元)
-                                        </label>
+                                        <label for="reservations_paid_remark" class="col-sm-2 control-label">备注</label>
+
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" rows="3" id="reservations_paid_remark"
+                                                      name="orderRemark" placeholder="备注"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="reservations_paid_money"
+                                               class="col-sm-2 control-label text-success">实收金额</label>
 
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="reservations_paid_balance"
-                                                   name="balance" autocomplete="off" value="0.00" disabled>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="reservations_paid_money"
+                                                       name="paySumPrice" placeholder="实收金额(元)" autocomplete="off"
+                                                       value="0.00" disabled>
+                                                <span class="input-group-addon">元</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="reservations_paid_money" class="col-sm-3 control-label">
-                                            <span class="text-danger">*</span> 实收金额(元)
-                                        </label>
-
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="reservations_paid_money" name="paySumPrice"
-                                                   placeholder="实收金额(元)" autocomplete="off" value="0.00" disabled>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <button class="btn btn-primary" id="reservations_paid_confirm">
-                                                <span class="glyphicon glyphicon-ok"></span> 确 定
+                                        <div class="col-sm-2">
+                                            <button type="button" class="btn btn-primary" id="reservations_pay_order">
+                                                <span class="glyphicon glyphicon-ok"></span> 支付
                                             </button>
                                         </div>
                                     </div>

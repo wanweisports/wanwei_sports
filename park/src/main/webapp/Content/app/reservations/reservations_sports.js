@@ -5,50 +5,23 @@
             this.initTimePicker();
         },
         initTimePicker: function () {
+            var allowTimes = JSON.parse($.cookie('wc-business-time'));
+
             $.datetimepicker.setLocale('zh');
 
-            $.post("/settings/getBusinessTime", {}, function (res) {
-                var data = res.data;
+            $('#start_time').datetimepicker({
+                datepicker: false,
+                format: "H:i",
+                allowTimes: allowTimes,
+                value: allowTimes[0]
+            });
 
-                if (res.code == 1) {
-                    // 营业开始时间
-                    $('#start_time').datetimepicker({
-                        datepicker: false,
-                        format: "H:i",
-                        step: 60,
-                        value: data.businessStartTime,
-                        minTime: data.businessStartTime,
-                        maxTime: data.businessEndTime
-                    });
-
-                    // 营业结束时间
-                    $('#end_time').datetimepicker({
-                        datepicker: false,
-                        format: "H:i",
-                        step: 60,
-                        value: data.businessEndTime,
-                        minTime: data.businessStartTime,
-                        maxTime: data.businessEndTime
-                    });
-                } else {
-                    console.log(res.message || "运营时间查询失败, 请稍后重试");
-                    alert(res.message || "运营时间查询失败, 请稍后重试");
-                    // 营业开始时间
-                    $('#start_time').datetimepicker({
-                        datepicker: false,
-                        format: "H:i",
-                        step: 60,
-                        value: "06:00"
-                    });
-
-                    // 营业结束时间
-                    $('#end_time').datetimepicker({
-                        datepicker: false,
-                        format: "H:i",
-                        step: 60,
-                        value: "22:00"
-                    });
-                }
+            // 营业结束时间
+            $('#end_time').datetimepicker({
+                datepicker: false,
+                format: "H:i",
+                allowTimes: allowTimes,
+                value: allowTimes[allowTimes.length - 1]
             });
         },
         initEvents: function () {
@@ -68,10 +41,12 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        location.reload();
+                        $.tipsSuccessAlert('场地运动类型设置成功！', function () {
+                            location.reload();
+                        });
                     } else {
-                        console.log(res.message || "场地运动类型设置失败, 请稍后重试");
-                        alert(res.message || "场地运动类型设置失败, 请稍后重试");
+                        $.logConsole('场地运动类型设置失败', res.message);
+                        $.tipsWarningAlert('场地运动类型设置失败');
                     }
                 });
             });
@@ -91,7 +66,7 @@
                 e.preventDefault();
 
                 _resetSportsForm();
-                $("#settingModal").modal({backdrop: false, show: true});
+                $("#setting_modal").modal({backdrop: false, show: true});
             });
 
             // 查询场地详情
@@ -112,10 +87,10 @@
                         $("#sports_form").find("input[name='sportStatus'][value='" + data.sportStatus + "']")
                             .prop("checked", true);
 
-                        $("#settingModal").modal({backdrop: false, show: true});
+                        $("#setting_modal").modal({backdrop: false, show: true});
                     } else {
-                        console.log(res.message || "场地运动类型查询失败, 请稍后重试");
-                        alert(res.message || "场地运动类型查询失败, 请稍后重试");
+                        $.logConsole('运动类型详情查询失败', res.message);
+                        $.tipsWarningAlert('运动类型详情查询失败');
                     }
                 });
             });

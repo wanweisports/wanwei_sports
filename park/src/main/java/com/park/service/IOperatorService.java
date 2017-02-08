@@ -43,5 +43,8 @@ public interface IOperatorService {
 	public Integer saveUserScheduling(UserScheduling userScheduling);
 	
 	public UserScheduling getUserScheduling(int schedulingId);
+
+	// 检测用户名的存在性，根据类型（管理员1，销售员2，客户3）
+	public UserOperator checkUserNameExist(String userName, int type);
 	
 }

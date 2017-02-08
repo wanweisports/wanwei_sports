@@ -8,6 +8,8 @@
             $(".password-confirm").on("click", function (e) {
                 e.preventDefault();
 
+                var $btn = $(this).button('loading');
+
                 var $form = $("#center_form");
                 var conditions = $form.serialize();
 
@@ -18,15 +20,15 @@
 
                 $.post('passport/updatePwd', conditions, function (res) {
                     $form.attr("submitting", "");
+                    $btn.button('reset');
 
                     if (res.code == 1) {
-                        $("#tips_modal").modal({show: true, backdrop: false});
-                        setTimeout(function () {
-                            $("#tips_modal").modal("hide");
-                        }, 3000);
+                        $.tipsSuccessAlert('密码重置成功！', function () {
+                            location.reload();
+                        });
                     } else {
-                        console.log(res.message || "密码修改失败, 请稍后重试");
-                        alert(res.message || "密码修改失败, 请稍后重试");
+                        $.logConsole('密码重置失败', res.message);
+                        $.tipsWarningAlert('密码重置失败');
                     }
                 });
             });

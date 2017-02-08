@@ -30,6 +30,8 @@ public interface IGoodService {
 	public List<Map<String, Object>> getGoodsMarket(GoodInputView goodInputView);
 	
 	public List<Map<String, Object>> getGoodsCart(int salesId);
+
+    public String getGoodsCartCount(int salesId);
 	
 	public Integer saveGoodShopping(GoodShopping goodShopping, int amount);
 	
@@ -57,5 +59,7 @@ public interface IGoodService {
 	
 	public List<Map<String, Object>> getGoodOutInfo(GoodInputView goodInputView);
 
-    public PageBean countGoodsStock(GoodInputView goodInputView);
+    //public PageBean countGoodsStock(GoodInputView goodInputView);
+
+	public List<Map<String, Object>> countGoodsStock(GoodInputView goodInputView);
 }

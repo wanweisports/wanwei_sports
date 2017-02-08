@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -76,6 +77,20 @@ public class StrUtil extends StringUtils {
 
     public static double roundKeepThree(double num){
         return Double.parseDouble(decimalFormatThree.format(num));
+    }
+    
+    public static List<Map<String, Object>> zeroToLine(List<Map<String, Object>> list){
+    	if(list != null && list.size() > 0){
+    		for(Map<String, Object> map : list){
+    			for(String key : map.keySet()){
+    				Object obj = map.get(key);
+    				if(obj instanceof Number && ((Number)obj).intValue() == 0){
+    					map.put(key, "--");
+    				}
+    			}
+    		}
+    	}
+    	return list;
     }
 
     public static List parseObjToList(Object obj){

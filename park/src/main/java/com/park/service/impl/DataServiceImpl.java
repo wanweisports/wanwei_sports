@@ -1,22 +1,32 @@
 package com.park.service.impl;
 
-import static com.park.common.constant.IPlatformConstant.*;
+import static com.park.common.constant.IPlatformConstant.WEIXIN;
+import static com.park.common.constant.IPlatformConstant.XIANJIN;
+import static com.park.common.constant.IPlatformConstant.YINLIAN;
+import static com.park.common.constant.IPlatformConstant.ZHIFUBAO;
+import static com.park.common.constant.IPlatformConstant.ZHIPIAO;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.park.common.bean.DataInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.constant.IDBConstant;
+import com.park.common.constant.IPlatformConstant;
+import com.park.common.util.DateUtil;
 import com.park.common.util.JsonUtils;
 import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
 import com.park.service.IDataService;
+import com.park.service.IXlsExportImportService;
 
 @Service
 public class DataServiceImpl extends BaseService implements IDataService {
@@ -24,25 +34,185 @@ public class DataServiceImpl extends BaseService implements IDataService {
 	@Autowired
 	private IBaseDao baseDao;
 	
-	@Override
-	public List<Map<String, Object>> getMembersRegister(DataInputView dataInputView){
-		Integer countNum = dataInputView.getCountNum();
-		String createTimeStart = dataInputView.getCreateTimeStart();
-		String createTimeEnd = dataInputView.getCreateTimeEnd();
-		
-		StringBuffer sql = new StringBuffer("SELECT mct.cardTypeName, mct.cardTypeMoney, COUNT(mc.cardId) count, COUNT(mc.cardId)*mct.cardTypeMoney countMoney FROM member_card_type mct");
-		sql.append(" LEFT JOIN member_card mc ON(mc.cardTypeId = mct.cardTypeId");
-		if(StrUtil.isNotBlank(createTimeStart)){
-			sql.append(" AND DATE(mc.createTime) >= :createTimeStart");
-		}
-		if(StrUtil.isNotBlank(createTimeEnd)){
-			sql.append(" AND DATE(mc.createTime) <= :createTimeEnd");
-		}
-		sql.append(getCountSql(countNum, "mc.createTime"));
-		
-		sql.append(") GROUP BY mct.cardTypeId");
-		return baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
-	}
+	@Autowired
+	private IXlsExportImportService xlsExportImportService;
+
+	// 查询某周的会员注册统计
+    @Override
+    public Map<String, Object> getCountMembersByWeek(DataInputView dataInputView) {
+        /*List<String> dateList = DateUtil.getWeekDate("");
+
+        ArrayList<String> weeks = new ArrayList<String>() {{
+            add("Monday");
+            add("Tuesday");
+            add("Wednesday");
+            add("Thursday");
+            add("Friday");
+            add("Saturday");
+            add("Sunday");
+        }};
+
+        // 全周每天的统计
+        StringBuffer sql = new StringBuffer("SELECT mc.cardTypeId, mct.cardTypeName");
+        sql.append(", COUNT(case when (DATE_FORMAT(mc.createTime, '%Y-%m-%d')>='" + dateList.get(0) +
+                "' AND DATE_FORMAT(mc.createTime, '%Y-%m-%d')<='" + dateList.get(dateList.size() - 1) +
+                "') then 'allWeek' end) as 'allWeek'");
+        for (int i = 0; i < dateList.size(); i++) {
+            sql.append(", COUNT(case when DATE_FORMAT(mc.createTime, '%Y-%m-%d')='" + dateList.get(i) +
+                    "' then '" + weeks.get(i) + "' end) as '" + weeks.get(i) + "'");
+        }
+        sql.append(" FROM member_card mc INNER JOIN member_card_type mct ON mc.cardTypeId = mct.cardTypeId");
+        sql.append(" GROUP BY mc.cardTypeId ORDER BY mc.cardTypeId ASC");
+
+        List<Map<String, Object>> dataWeekList = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
+
+        // 全周统计
+        StringBuffer countSql = new StringBuffer("SELECT '合计' as 'cardTypeName'");
+        countSql.append(", COUNT(case when (DATE_FORMAT(mc.createTime, '%Y-%m-%d')>='" + dateList.get(0) +
+                "' AND DATE_FORMAT(mc.createTime, '%Y-%m-%d')<='" + dateList.get(dateList.size() - 1) +
+                "') then 'allWeek' end) as 'allWeek'");
+        for (int i = 0; i < dateList.size(); i++) {
+            countSql.append(", COUNT(case when DATE_FORMAT(mc.createTime, '%Y-%m-%d')='" + dateList.get(i) +
+                    "' then '" + weeks.get(i) + "' end) as '" + weeks.get(i) + "'");
+        }
+        countSql.append(" FROM member_card mc INNER JOIN member_card_type mct ON mc.cardTypeId = mct.cardTypeId");
+
+        List<Map<String, Object>> dataCountList = baseDao.queryBySql(countSql.toString(), JsonUtils.fromJson(dataInputView));
+
+        // 组合数据
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("data", dataWeekList);
+        resultMap.put("total", dataCountList);
+        resultMap.put("DICT", weeks);
+
+        return resultMap;*/
+    	return null;
+    }
+
+    // 查询某月的会员注册统计
+    @Override
+    public Map<String, Object> getCountMembersByMonth(DataInputView dataInputView) {
+        /*List<String> dateList = DateUtil.getMonthDate("");
+
+        // 全月每天的统计
+        StringBuffer sql = new StringBuffer("SELECT mc.cardTypeId, mct.cardTypeName");
+        sql.append(", COUNT(case when (DATE_FORMAT(mc.createTime, '%Y-%m-%d')>='" + dateList.get(0) +
+                "' AND DATE_FORMAT(mc.createTime, '%Y-%m-%d')<='" + dateList.get(dateList.size() - 1) +
+                "') then 'allMonth' end) as 'allMonth'");
+        for (int i = 0; i < dateList.size(); i++) {
+            sql.append(", COUNT(case when DATE_FORMAT(mc.createTime, '%Y-%m-%d')='" + dateList.get(i) +
+                    "' then '" + dateList.get(i) + "' end) as '" + dateList.get(i) + "'");
+        }
+        sql.append(" FROM member_card mc INNER JOIN member_card_type mct ON mc.cardTypeId = mct.cardTypeId");
+        sql.append(" GROUP BY mc.cardTypeId ORDER BY mc.cardTypeId ASC");
+
+        List<Map<String, Object>> dataMonthList = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
+
+        // 全月统计
+        StringBuffer countSql = new StringBuffer("SELECT '合计' as 'cardTypeName'");
+        countSql.append(", COUNT(case when (DATE_FORMAT(mc.createTime, '%Y-%m-%d')>='" + dateList.get(0) +
+                "' AND DATE_FORMAT(mc.createTime, '%Y-%m-%d')<='" + dateList.get(dateList.size() - 1) +
+                "') then 'allMonth' end) as 'allMonth'");
+        for (int i = 0; i < dateList.size(); i++) {
+            countSql.append(", COUNT(case when DATE_FORMAT(mc.createTime, '%Y-%m-%d')='" + dateList.get(i) +
+                    "' then '" + dateList.get(i) + "' end) as '" + dateList.get(i) + "'");
+        }
+        countSql.append(" FROM member_card mc INNER JOIN member_card_type mct ON mc.cardTypeId = mct.cardTypeId");
+
+        List<Map<String, Object>> dataCountList = baseDao.queryBySql(countSql.toString(), JsonUtils.fromJson(dataInputView));
+
+        // 组合数据
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("data", dataMonthList);
+        resultMap.put("total", dataCountList);
+        resultMap.put("DICT", dateList);
+
+        return resultMap;*/
+    	return null;
+    }
+    
+    @Override
+    public Map<String, Object> getMembersRegisterNew(DataInputView dataInputView){
+    	Integer countNum = dataInputView.getCountNum();
+    	Map<String, Object> rusltMap = new HashMap<String, Object>();
+    	List<String> titleList = new ArrayList<String>();
+    	
+    	StringBuilder sql = new StringBuilder("SELECT mct.cardTypeName, COUNT(1) count");
+    	
+    	if(countNum == IDBConstant.DATA_DATE_WEEK){ //本周
+	    	for (int i = 0; i < 6; i++) {
+	    		sql.append(" ,(SELECT COUNT(1) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN user_member um1 ON(mc1.memberId = um1.memberId) WHERE mct1.cardTypeId = mct.cardTypeId AND mc1.createTime BETWEEN ? AND ? AND DATE_FORMAT(mc1.createTime, '%w')=").append(i).append(") d"+i);
+	    		titleList.add(DateUtil.getWeekName(i));
+	    		rusltMap.put("num", i);
+	    	}
+    	}else if(countNum == IDBConstant.DATA_DATE_YEAR){ //本年
+    		String year = DateUtil.dateToString(new Date(), DateUtil.YYYY);
+	    	for (int i = 0; i < 12; i++) {
+	    		sql.append(" ,(SELECT COUNT(1) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN user_member um1 ON(mc1.memberId = um1.memberId) WHERE mct1.cardTypeId = mct.cardTypeId AND mc1.createTime BETWEEN ? AND ? AND DATE_FORMAT(mc1.createTime, '%Y%c')=").append(year).append(i+1).append(") d"+i);
+	    		titleList.add(DateUtil.getMonthName(i));
+	    		rusltMap.put("num", i);
+	    	}
+    	}
+    	sql.append(" FROM member_card_type mct");
+    	sql.append(" LEFT JOIN member_card mc ON(mct.cardTypeId = mc.cardTypeId)");
+    	sql.append(" LEFT JOIN user_member um ON(mc.memberId = um.memberId)");
+    	sql.append(" GROUP BY mct.cardTypeId");
+    	
+    	List<Map<String, Object>> list = baseDao.queryBySql(sql.toString());
+    	
+    	rusltMap.put("list", list);
+    	rusltMap.put("titleList", titleList);
+    	
+    	
+    	return rusltMap;
+    }
+
+    @Override
+    public List<Map<String, Object>> getMembersRegister(DataInputView dataInputView){
+        Integer countNum = dataInputView.getCountNum();
+        String createTimeStart = dataInputView.getCreateTimeStart();
+        String createTimeEnd = dataInputView.getCreateTimeEnd();
+
+        StringBuffer sql = new StringBuffer("SELECT total.cardTypeId, total.cardTypeName, total.cardTypeTotal, item.cardTypeCount FROM");
+        sql.append(" (SELECT mct.cardTypeId, mct.cardTypeName, COUNT(mc.cardTypeId) cardTypeTotal FROM member_card mc INNER JOIN member_card_type mct ON mc.cardTypeId = mct.cardTypeId GROUP BY mct.cardTypeId ORDER BY mct.cardTypeId) total,");
+
+        sql.append(" (SELECT mct.cardTypeId, mct.cardTypeName, COUNT(mc.cardTypeId) cardTypeCount FROM member_card mc INNER JOIN member_card_type mct ON mc.cardTypeId = mct.cardTypeId");
+        sql.append(" WHERE 1=1");
+        if(StrUtil.isNotBlank(createTimeStart)){
+            sql.append(" AND DATE(mc.createTime) >= :createTimeStart");
+        }
+        if(StrUtil.isNotBlank(createTimeEnd)){
+            sql.append(" AND DATE(mc.createTime) <= :createTimeEnd");
+        }
+        sql.append(getCountSql(countNum, "mc.createTime"));
+        sql.append(" GROUP BY mct.cardTypeId ORDER BY mct.cardTypeId) item");
+
+        sql.append(" WHERE total.cardTypeId = item.cardTypeId");
+        sql.append(" GROUP BY total.cardTypeId");
+        return baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
+    }
+
+    @Override
+    public List<Map<String, Object>> getMembersRegisterStored(DataInputView dataInputView){
+        Integer countNum = dataInputView.getCountNum();
+        String createTimeStart = dataInputView.getCreateTimeStart();
+        String createTimeEnd = dataInputView.getCreateTimeEnd();
+        dataInputView.setBalanceServiceTypeMin(StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_CARD_CZ));
+        dataInputView.setBalanceServiceTypeMax(StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_REG));
+        StringBuffer sql = new StringBuffer("SELECT total.cardTypeId, total.cardTypeName, SUM(total.realCount) realTotal, SUM(total.givingCount) givingTotal, SUM(total.cardBalance) balanceTotal FROM");
+        sql.append(" (SELECT mct.cardTypeId, mct.cardTypeName, SUM(ob.realAmount) realCount, SUM(ob.givingAmount) givingCount, mc.cardId, mc.cardBalance FROM member_card mc INNER JOIN member_card_type mct ON mc.cardTypeId = mct.cardTypeId INNER JOIN other_balance ob ON ob.balanceServiceId = mc.cardId");
+        sql.append(" WHERE ob.balanceServiceType = :balanceServiceTypeMin OR ob.balanceServiceType = :balanceServiceTypeMax");
+        if(StrUtil.isNotBlank(createTimeStart)){
+            sql.append(" AND DATE(mc.createTime) >= :createTimeStart");
+        }
+        if(StrUtil.isNotBlank(createTimeEnd)){
+            sql.append(" AND DATE(mc.createTime) <= :createTimeEnd");
+        }
+        sql.append(getCountSql(countNum, "mc.createTime"));
+        sql.append(" GROUP BY mc.cardId) total");
+        sql.append(" GROUP BY total.cardTypeId ORDER BY total.cardTypeId");
+        return baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
+    }
 
     @Override
     public List<Map<String, Object>> getMembersRegisterGroupDate(DataInputView dataInputView){
@@ -80,8 +250,32 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		countMap.put("list", dataList);
 		return countMap;
 	}
-	
-	@Override
+
+    @Override
+    public String getCountSql(Integer countItem, String field) {
+		countItem = countItem != null ? countItem : IDBConstant.DATA_DATE_MONTH;
+
+        switch (countItem) {
+            case IDBConstant.DATA_DATE_DAY: //今日
+                return " AND DATE_FORMAT("+field+", '%Y-%m-%d') = CURDATE()";
+            case IDBConstant.DATA_DATE_PRE_DAY: //昨日
+                return " AND DATE_FORMAT("+field+", '%Y-%m-%d') = adddate(CURDATE(), -1)";
+            case IDBConstant.DATA_DATE_WEEK: //本周
+                return " AND YEARWEEK("+field+") = YEARWEEK(CURDATE())";
+            case IDBConstant.DATA_DATE_PRE_WEEK: //上周
+                return " AND YEARWEEK("+field+") = YEARWEEK(CURDATE())-1";
+            case IDBConstant.DATA_DATE_NEXT_WEEK: //下周
+                return " AND YEARWEEK("+field+") = YEARWEEK(CURDATE())+1";
+            case IDBConstant.DATA_DATE_MONTH: //本月
+                return " AND DATE_FORMAT("+field+", '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')";
+            case IDBConstant.DATA_DATE_YEAR: //本年
+                return " AND DATE_FORMAT("+field+", '%Y') = DATE_FORMAT(CURDATE(), '%Y')";
+            default:
+                return " ";
+        }
+    }
+
+	/*@Override
 	public String getCountSql(Integer countNum, String field) {
 		countNum = countNum != null ? countNum : 10;
 		switch (countNum) {
@@ -100,7 +294,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		default:
 			return " ";
 		}
-	}
+	}*/
 	
 	@Override
 	public Map<String, Object> getSitePercentage(DataInputView dataInputView){
@@ -167,10 +361,12 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		for(Map<String, Object> map : siteCountList){
 			Double siteSumCount = StrUtil.objToDoubleDef0(map.get("siteSumCount"));
 			Double siteUseCount = StrUtil.objToDoubleDef0(map.get("siteUseCount"));
+			Double siteBusinessCount = StrUtil.objToDoubleDef0(map.get("siteBusinessCount"));
 			map.put("siteSumCount", siteSumCount.intValue());
 			map.put("siteUseCount", siteUseCount.intValue());
-			map.put("siteSumPercentage", sumCountAll > 0 ? StrUtil.roundKeepTwo(siteSumCount / sumCountAll) : 0); //场地预订率
-			map.put("siteUsePercentage", StrUtil.roundKeepTwo(StrUtil.objToDoubleDef0(map.get("siteUsePercentage")))); //场地使用率
+			map.put("siteBusinessCount", siteBusinessCount.intValue());
+			map.put("siteSumPercentage", (sumCountAll > 0 ? StrUtil.roundKeepTwo(siteSumCount / sumCountAll) : 0) * 100); //场地预订率
+			map.put("siteUsePercentage", (StrUtil.roundKeepTwo(StrUtil.objToDoubleDef0(map.get("siteUsePercentage")))) * 100); //场地使用率
 		}
 		PageBean pageBean = new PageBean(siteCountList, page, pageSize, siteCountList.size());
 		pageBean.pagedList().init();
@@ -190,6 +386,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("pageBean", JsonUtils.fromJson(pageBean));
+		resultMap.put("list", pageBean.getList());
 		resultMap.put("sportCountList", sportCountList);
 
 		return resultMap;
@@ -412,5 +609,46 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		sumPriceMap.put("sumPrice", xianjinSum+zhifubaoSum+weixinSum+yinlianSum+zhipiaoSum);
 		return sumPriceMap;
 	}
+	
+	@Override
+	public Workbook exportBusinessIncome(DataInputView dataInputView){
+		Map<String, Object> resultMap = getBusinessIncome(dataInputView);
+		Map cardCounts = (Map)resultMap.get("cardCounts");
+		List cardList = (List) cardCounts.get("countList");
+		Workbook workbook = xlsExportImportService.getWorkbook(XlsExportImportServiceImpl.class.getResourceAsStream(XlsExportImportServiceImpl.ROOT + "template_business_income.xlsx"), IPlatformConstant.EXCEL_EXTENSION_X);
+		
+		Sheet sheetAt0 = workbook.getSheetAt(0);
+		
+		xlsExportImportService.writeWorkbook(StrUtil.zeroToLine(cardList), workbook, 0, 0, 2, false);
+		xlsExportImportService.writeWorkbook(getSum(cardCounts, "会员收入小计"), workbook, 0, 0, sheetAt0.getLastRowNum()+1, false);
+		
+		Map siteCounts = (Map)resultMap.get("siteCounts");
+		List siteList = (List) siteCounts.get("countList");
+		xlsExportImportService.writeWorkbook(StrUtil.zeroToLine(siteList), workbook, 0, 0, sheetAt0.getLastRowNum()+2, false);
+		xlsExportImportService.writeWorkbook(getSum(siteCounts, "场地收入小计"), workbook, 0, 0, sheetAt0.getLastRowNum()+1, false);
+		
+		Map goodsCounts = (Map)resultMap.get("goodsCounts");
+		List goodsList = (List) goodsCounts.get("countList");
+		xlsExportImportService.writeWorkbook(StrUtil.zeroToLine(goodsList), workbook, 0, 0, sheetAt0.getLastRowNum()+2, false);
+		xlsExportImportService.writeWorkbook(getSum(goodsCounts, "商品收入小计"), workbook, 0, 0, sheetAt0.getLastRowNum()+1, false);
+		
+		xlsExportImportService.writeWorkbook(getSum(resultMap, "金额总计"), workbook, 0, 0, sheetAt0.getLastRowNum()+1, true);
+		return workbook;
+	}
+	
+	private List getSum(Map<String, Object> map, String name){
+		Map newMap = new HashMap();
+		for(String key : map.keySet()){
+			newMap.put(key.replace("SumPrice", StrUtil.EMPTY), map.get(key));
+		}
+		newMap.put("name", name);
+		
+		List list = new ArrayList();
+		list.add(newMap);
+		return list;
+	}
+	
+	
+	
 	
 }

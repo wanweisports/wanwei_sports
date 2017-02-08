@@ -47,8 +47,8 @@ public class MemberController extends BaseController {
      */
     @RequestMapping("regMember")
 	public String toRegMember(Model model) {
-		model.addAttribute("cardNo", memberService.getCardNo()); //注册会员之前，生成会员号
-		return "Members/RegMember";
+		model.addAttribute("cardNo", memberService.getCardNo(1)); //注册会员之前，生成会员号
+		return "Members/MembersEnter";
 	}
 
     /**
@@ -81,14 +81,14 @@ public class MemberController extends BaseController {
      * @param model
      * @return
      */
-    @RequestMapping("membersInfoCar")
+    @RequestMapping("bindMembersCard")
 	public String toMembersInfoCar(Integer memberId, Model model) {
 		Map<String, Object> regMember = memberService.getRegMember(memberId);
 		model.addAllAttributes(regMember);
 		MemberInputView memberInputView = new  MemberInputView();
 		memberInputView.setCardType(regMember.get("memberType").toString());
 		model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(memberInputView));
-		return "Members/MembersInfoCar";
+		return "Members/MembersCardBind";
 	}
 
     /**
@@ -344,7 +344,7 @@ public class MemberController extends BaseController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "Members/BalanceList";
+        return "Members/MembersBalanceList";
     }
 
     @RequestMapping(value = "getInvoices")
@@ -431,7 +431,7 @@ public class MemberController extends BaseController {
     public ResponseBean getNewCardNo(Model model) {
         try {
             Map<String, Object> data = new HashMap<String, Object>();
-            data.put("newCardNo", memberService.getCardNo());
+            data.put("newCardNo", memberService.getCardNo(1));
             return new ResponseBean(data);
         } catch (MessageException e) {
             e.printStackTrace();

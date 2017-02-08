@@ -10,9 +10,11 @@
     <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
     <script src="/Content/app/goods/goods_type_settings.js?v=${static_resource_version}"></script>
     <script>
-        // 表单校验设置
-        $('#good_type_form').validate({
-            ignore: ":hidden"
+        $(document).ready(function () {
+            // 配置表单校验
+            $('#good_type_form').validate({
+                ignore: ":hidden"
+            });
         });
     </script>
 </layout:override>
@@ -27,7 +29,7 @@
             <div class="panel-heading">商品类别查询</div>
             <div class="panel-body">
                 <button type="button" class="btn btn-primary good-type-add" data-toggle="modal"
-                        data-target="#addModal" data-backdrop="false">
+                        data-target="#add_modal" data-backdrop="false">
                     <span class="glyphicon glyphicon-plus"></span> 增加商品类别
                 </button>
             </div>
@@ -53,7 +55,7 @@
                                 <td>${type.goodTypeDescribe}</td>
                                 <td>${type.createTime}</td>
                                 <td>
-                                    <a class="btn btn-primary type-item" href="#addModal" data-toggle="modal"
+                                    <a class="btn btn-primary type-item" href="#add_modal" data-toggle="modal"
                                        data-backdrop="false" data-id="${type.goodTypeId}">
                                         <span class="glyphicon glyphicon-share-alt"></span> 查看
                                     </a>
@@ -67,14 +69,14 @@
         </div>
     </div>
 
-    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel">
+    <div class="modal fade" id="add_modal" tabindex="-1" role="dialog" aria-labelledby="add_modal_label">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h5 class="modal-title" id="addModalLabel">设置商品类别</h5>
+                    <h5 class="modal-title" id="add_modal_label">设置商品类别</h5>
                 </div>
                 <div class="modal-body" style="overflow: hidden;">
                     <form id="good_type_form" class="form-horizontal" onsubmit="return false;">
@@ -107,22 +109,6 @@
                     <button type="button" class="btn btn-primary" id="save_good_type">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="tips_success_modal" tabindex="-1" role="dialog" aria-labelledby="tips_success_modal_label">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="tips_success_modal_label">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-success" role="alert">商品类别设置保存成功!</div>
                 </div>
             </div>
         </div>

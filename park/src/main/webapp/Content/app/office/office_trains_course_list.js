@@ -60,8 +60,8 @@
                     if (res.code == 1) {
                         setTrainsCourseInfo(data);
                     } else {
-                        console.log(res.message || "查询课程详情失败, 请稍后重试");
-                        alert(res.message || "查询课程详情失败, 请稍后重试");
+                        $.logConsole('查询课程详情失败', res.message);
+                        $.tipsWarningAlert('查询课程详情失败');
                     }
                 });
             });
@@ -78,8 +78,8 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        console.log(res.message || "删除课程详情失败, 请稍后重试");
-                        alert(res.message || "删除课程详情失败, 请稍后重试");
+                        $.logConsole('删除课程详情失败', res.message);
+                        $.tipsWarningAlert('删除课程详情失败');
                     }
                 });
             });
@@ -109,7 +109,8 @@
                     if (res.code == 1) {
                         location.reload();
                     } else {
-                        alert(res.message || "课程信息保存失败, 请稍后重试");
+                        $.logConsole('课程信息保存失败', res.message);
+                        $.tipsWarningAlert('课程信息保存失败');
                     }
                 });
             });

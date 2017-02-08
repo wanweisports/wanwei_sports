@@ -22,12 +22,14 @@
             <div class="panel-body">
                 <h3>${classInfo.className}</h3>
                 <p>${classInfo.classRemark}</p>
-                <p>
-                    <button type="button" class="btn btn-warning add-sign" data-toggle="modal"
-                            data-target="#student_sign_modal" data-backdrop="false">
-                        <span class="glyphicon glyphicon-user"></span> 我要报名
-                    </button>
-                </p>
+                <c:if test="${isSigned}">
+                    <p>
+                        <button type="button" class="btn btn-warning add-sign" data-toggle="modal"
+                                data-target="#student_sign_modal" data-backdrop="false">
+                            <span class="glyphicon glyphicon-user"></span> 我要报名
+                        </button>
+                    </p>
+                </c:if>
             </div>
         </div>
         <div class="panel panel-default">
@@ -35,7 +37,7 @@
                 <div class="table-responsive sign-list">
                     <table class="table">
                         <thead>
-                        <tr>
+                        <tr class="bg-info">
                             <th>学生姓名</th>
                             <th>联系电话</th>
                             <th>支付状态</th>
@@ -68,9 +70,11 @@
                                             <span class="glyphicon glyphicon-usd"></span> 支付
                                         </button>
                                     </c:if>
-                                    <button type="button" class="btn btn-danger sign-delete" data-id="${student.id}">
-                                        <span class="glyphicon glyphicon-trash"></span> 移除
-                                    </button>
+                                    <c:if test="${isSigned}">
+                                        <button type="button" class="btn btn-danger sign-delete" data-id="${student.id}">
+                                            <span class="glyphicon glyphicon-trash"></span> 移除
+                                        </button>
+                                    </c:if>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -140,6 +144,9 @@
                             </c:if>
                         </ul>
                     </nav>
+                    <c:if test="${fn:length(list) == 0}">
+                        <p class="text-muted no-list-count">还没有学生报名！</p>
+                    </c:if>
                 </div>
             </div>
         </div>
@@ -181,7 +188,7 @@
                                        placeholder="联系电话" autocomplete="off"
                                        data-val="true" data-val-required="手机号码不能为空"
                                        data-val-regex-pattern="^1\d{10}$"
-                                       data-val-regex="手机号码格式错误">
+                                       data-val-regex="手机号码格式错误" maxlength="11">
                                 <div data-valmsg-for="studentMobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -207,7 +214,9 @@
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="students_class_price" name="payPrice"
                                        placeholder="支付价格" autocomplete="off" value="${classInfo.classPrice}"
-                                       data-val="true" data-val-required="支付价格不能为空">
+                                       data-val="true" data-val-required="支付价格不能为空"
+                                       data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                       data-val-regex="支付价格格式错误">
                                 <div data-valmsg-for="payPrice" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -274,7 +283,9 @@
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="students_pay_price" name="payPrice"
                                        placeholder="输入总支付金额" autocomplete="off" value="${classInfo.classPrice}"
-                                       data-val="true" data-val-required="输入总支付金额不能为空">
+                                       data-val="true" data-val-required="总支付金额不能为空"
+                                       data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                       data-val-regex="总支付金额格式错误">
                                 <div data-valmsg-for="payPrice" data-valmsg-replace="true"></div>
                             </div>
                         </div>
