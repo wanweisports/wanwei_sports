@@ -47,4 +47,8 @@ public interface IOperatorService {
 	// 检测用户名的存在性，根据类型（管理员1，销售员2，客户3）
 	public UserOperator checkUserNameExist(String userName, int type);
 	
+	public UserOperator getUserOperatorByOpenId(String openId);
+	
+	public UserOperator updateUserOperatorOpenId(String operatorId, String openId);
+	
 }

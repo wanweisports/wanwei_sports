@@ -312,4 +312,17 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 		return JsonUtils.fromJson(baseDao.queryBySqlFirst("SELECT * FROM user_operator WHERE operatorId = ? AND operatorType = ?", userName, type), UserOperator.class);
 	}
 	
+	@Override
+	public UserOperator getUserOperatorByOpenId(String openId){
+		return baseDao.queryByHqlFirst("FROM UserOperator WHERE openId = ?", openId);
+	}
+	
+	@Override
+	public UserOperator updateUserOperatorOpenId(String operatorId, String openId){
+		UserOperator userOperator = getOperator(operatorId);
+		userOperator.setOpenId(openId);
+		baseDao.save(userOperator, operatorId);
+		return userOperator;
+	}
+	
 }

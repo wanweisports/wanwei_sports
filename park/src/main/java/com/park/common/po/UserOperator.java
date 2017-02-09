@@ -34,6 +34,7 @@ public class UserOperator implements java.io.Serializable {
 	private String operatorAddress;
 	private String operatorSex;
 	private String operatorType;
+	private String openId;
 
 	// Constructors
 
@@ -51,8 +52,9 @@ public class UserOperator implements java.io.Serializable {
 			String operatorPwd, String operatorMobile, String status,
 			String createTime, String updateTime, String lastLoginTime,
 			String operatorNo, String operatorEffectDate,
-			String operatorEndDate, String operatorBirthday, String operatorContact,
-            String operatorAddress, String operatorSex, String operatorType) {
+			String operatorEndDate, String operatorBirthday,
+			String operatorContact, String operatorAddress, String operatorSex,
+			String operatorType, String openId) {
 		this.operatorId = operatorId;
 		this.operatorName = operatorName;
 		this.operatorPwd = operatorPwd;
@@ -68,7 +70,8 @@ public class UserOperator implements java.io.Serializable {
 		this.operatorContact = operatorContact;
 		this.operatorAddress = operatorAddress;
 		this.operatorSex = operatorSex;
-        this.operatorType = operatorType;
+		this.operatorType = operatorType;
+		this.openId = openId;
 	}
 
 	// Property accessors
@@ -218,13 +221,22 @@ public class UserOperator implements java.io.Serializable {
 		this.operatorSex = operatorSex;
 	}
 
-    @Column(name = "operatorType", length = 1)
-    public String getOperatorType() {
-        return this.operatorType;
-    }
+	@Column(name = "operatorType", length = 1)
+	public String getOperatorType() {
+		return this.operatorType;
+	}
 
-    public void setOperatorType(String operatorType) {
-        this.operatorSex = operatorType;
-    }
+	public void setOperatorType(String operatorType) {
+		this.operatorType = operatorType;
+	}
+
+	@Column(name = "openId", length = 32)
+	public String getOpenId() {
+		return this.openId;
+	}
+
+	public void setOpenId(String openId) {
+		this.openId = openId;
+	}
 
 }
