@@ -53,10 +53,12 @@ public class WXOAuth2Controller extends BaseController {
 			HttpSession session = request.getSession();
 			session.setAttribute(IPlatformConstant.WX_OPEN_ID_KEY, openId);
 			UserOperator userInfo = getUserInfo();
-			if(userOperator == null && userInfo != null){ //已登录并不存在openId的先保存
-				userOperator = operatorService.updateUserOperatorOpenId(userInfo.getOperatorId(), openId);
+			if(userInfo != null){
+				if(userOperator == null){ //已登录并不存在openId的先保存
+					userOperator = operatorService.updateUserOperatorOpenId(userInfo.getOperatorId(), openId);
+					super.getRequest().getSession().setAttribute(IPlatformConstant.LOGIN_USER, userOperator);
+				}
 			}
-			super.getRequest().getSession().setAttribute(IPlatformConstant.LOGIN_USER, userOperator);
 		}
 		return "";
 	}
