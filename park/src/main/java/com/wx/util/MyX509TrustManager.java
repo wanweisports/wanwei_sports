@@ -1,4 +1,4 @@
-package com.park.common.util;
+package com.wx.util;
 
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;

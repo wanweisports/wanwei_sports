@@ -1,4 +1,4 @@
-package com.park.common.util;
+package com.wx.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -11,6 +11,10 @@ import java.util.Arrays;
 public class SignUtil {
 	// 与接口配置信息中的Token要一致  
     private static String token = "chenxiaosong";  
+    
+    public static String getTimeStamp() {
+		return String.valueOf(System.currentTimeMillis() / 1000);
+	}
   
     /** 
      * 验证签名 

@@ -1,6 +1,8 @@
 package com.park.controller;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
@@ -136,6 +138,23 @@ public class BaseController {
 		workbook.close();
 		outputStream.flush();
 		outputStream.close();
+	}
+    
+    protected String getStreamResult(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		InputStream in=request.getInputStream();
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		byte[] buffer = new byte[1024];
+		int len = 0;
+		while((len=in.read(buffer))!=-1){
+			out.write(buffer, 0, len);
+		}
+		out.close();
+		in.close();
+		return new String(out.toByteArray(),"utf-8");
 	}
     
 }

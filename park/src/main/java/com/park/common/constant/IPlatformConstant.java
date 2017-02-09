@@ -47,5 +47,7 @@ public interface IPlatformConstant {
 	
 	public static final String EXCEL_EXTENSION = ".xls";
     public static final String EXCEL_EXTENSION_X = ".xlsx";
+    
+    public static final String WX_OPEN_ID_KEY = "openId";
 	
 }
