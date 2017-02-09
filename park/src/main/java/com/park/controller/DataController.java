@@ -119,6 +119,7 @@ public class DataController extends BaseController {
             model.addAttribute("memberStored", dataService.getMembersRegisterStored(dataInputView));*/
     		model.addAttribute("register", dataService.getMembersRegisterNew(dataInputView));
     		model.addAttribute("cz", dataService.getMembersCZNew(dataInputView));
+    		model.addAttribute("xf", dataService.getMembersXFNew(dataInputView));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

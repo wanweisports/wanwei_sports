@@ -785,7 +785,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		balance.setBalanceStyle(orderInfo.getPayType());
 		balance.setOldAmount(orderInfo.getOrderSumPrice());
 		balance.setSubAmount(orderInfo.getSubAmount());
-		balance.setRealAmount(orderInfo.getPaySumPrice());
+		balance.setRealAmount(orderInfo.getRealAmount() != null ? orderInfo.getRealAmount() : orderInfo.getPaySumPrice());
 		balance.setBalanceType(IDBConstant.BALANCE_TYPE_OTHER);
 		balance.setServiceDate(nowDate);
 		balance.setCreateTime(nowDate);

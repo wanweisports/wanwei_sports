@@ -111,8 +111,11 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 			if(memberCards.size() > 0){
 				MemberCard memberCard = memberCards.get(0);
 				double remainingCardPrice = memberCard.getCardBalance() - paySumPrice;
-				memberCard.setCardBalance(remainingCardPrice > 0 ? remainingCardPrice : 0); //最低扣到0
+				double realAmount = remainingCardPrice > 0 ? remainingCardPrice : 0;  //最低扣到0
+				memberCard.setCardBalance(realAmount);
 				baseDao.save(memberCard, memberCard.getCardId());
+				
+				orderInfoDB.setRealAmount(realAmount);
 				if(orderInfo.getPayCount() < orderInfoDB.getSumCount()){ //场次不是最大，生成应收款
 					memberReceivableService.saveMemberReceivable(new MemberReceivable(memberId, orderId, null, null, orderInfo.getSalesId()), 0, 0, StrUtil.EMPTY);
 				}

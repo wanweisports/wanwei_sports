@@ -19,6 +19,8 @@ public interface IDataService {
 	public Map<String, Object> getMembersRegisterNew(DataInputView dataInputView);
 	
 	public Map<String, Object> getMembersCZNew(DataInputView dataInputView);
+	
+	public Map<String, Object> getMembersXFNew(DataInputView dataInputView);
 
     public List<Map<String, Object>> getMembersRegisterStored(DataInputView dataInputView);
 

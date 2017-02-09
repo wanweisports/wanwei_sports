@@ -3,6 +3,8 @@ package com.park.common.po;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Transient;
+
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -41,6 +43,8 @@ public class OrderInfo implements java.io.Serializable {
 	private Integer useCount;
 	private String name;
 	private String mobile;
+	@Transient
+	private Double realAmount; //总支付-卡余额
 
 	// Constructors
 
@@ -309,6 +313,16 @@ public class OrderInfo implements java.io.Serializable {
 
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+
+	@Transient
+	public Double getRealAmount() {
+		return realAmount;
+	}
+
+	@Transient
+	public void setRealAmount(Double realAmount) {
+		this.realAmount = realAmount;
 	}
 
 }

@@ -135,30 +135,14 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>教师卡</td>
-                                <td>500元</td>
-                                <td>500元</td>
-                                <td>500元</td>
-                            </tr>
-                            <tr>
-                                <td>会员卡</td>
-                                <td>100元</td>
-                                <td>100元</td>
-                                <td>100元</td>
-                            </tr>
-                            <tr>
-                                <td>学生卡</td>
-                                <td>400元</td>
-                                <td>400元</td>
-                                <td>400元</td>
-                            </tr>
-                            <tr class="bg-success">
-                                <td>合计</td>
-                                <td>400元</td>
-                                <td>400元</td>
-                                <td>400元</td>
-                            </tr>
+                            <c:forEach var="o" items="${xf.list}">
+                           		<tr>
+                           			<td>${o.cardTypeName}</td>
+                           			<td>${o.siteXF}</td>
+                           			<td>${o.goodsXF}</td>
+                           			<td>${o.cardBalance}</td>
+                           		</tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
