@@ -18,27 +18,36 @@
                 </div>
                 <div class="weui-cell__bd">
                     <select class="weui-select" name="select2">
-                        <option value="1">羽毛球</option>
-                        <option value="2">篮球</option>
+                        <c:forEach var="sport" items="${siteSports}">
+                            <option value="${sport.sportId}">${sport.sportName}</option>
+                        </c:forEach>
                     </select>
                 </div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">预订日期</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="date" placeholder="预订日期">
+                    <input class="weui-input" type="date" placeholder="预订日期" value="${curDate}">
                 </div>
             </div>
-            <div class="weui-cell">
+            <div class="weui-cell weui-cell_select weui-cell_select-after">
                 <div class="weui-cell__hd"><label class="weui-label">开始时间</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="time" placeholder="开始时间">
+                    <select class="weui-select" name="select2">
+                        <c:forEach var="time" items="${timePeriod}">
+                            <option value="${time.startTime}">${time.startTime}</option>
+                        </c:forEach>
+                    </select>
                 </div>
             </div>
-            <div class="weui-cell">
+            <div class="weui-cell weui-cell_select weui-cell_select-after">
                 <div class="weui-cell__hd"><label class="weui-label">结束时间</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="time" placeholder="结束时间">
+                    <select class="weui-select" name="select2">
+                        <c:forEach var="time" items="${timePeriod}">
+                            <option value="${time.endTime}">${time.endTime}</option>
+                        </c:forEach>
+                    </select>
                 </div>
             </div>
         </div>
@@ -46,36 +55,14 @@
             <a class="weui-btn weui-btn_primary" href="javascript:">筛选场地</a>
         </div>
         <div class="weui-grids">
-            <a href="javascript:;" class="weui-grid">
-                <div class="weui-grid__icon">
-                    <img src="/Content/images/mobile/stadium.png?v=${static_resource_version}">
-                </div>
-                <p class="weui-grid__label">场地1</p>
-            </a>
-            <a href="javascript:;" class="weui-grid">
-                <div class="weui-grid__icon">
-                    <img src="/Content/images/mobile/stadium.png?v=${static_resource_version}">
-                </div>
-                <p class="weui-grid__label">场地1</p>
-            </a>
-            <a href="javascript:;" class="weui-grid">
-                <div class="weui-grid__icon">
-                    <img src="/Content/images/mobile/stadium.png?v=${static_resource_version}">
-                </div>
-                <p class="weui-grid__label">场地1</p>
-            </a>
-            <a href="javascript:;" class="weui-grid">
-                <div class="weui-grid__icon">
-                    <img src="/Content/images/mobile/stadium.png?v=${static_resource_version}">
-                </div>
-                <p class="weui-grid__label">场地1</p>
-            </a>
-            <a href="javascript:;" class="weui-grid">
-                <div class="weui-grid__icon">
-                    <img src="/Content/images/mobile/stadium.png?v=${static_resource_version}">
-                </div>
-                <p class="weui-grid__label">场地1</p>
-            </a>
+            <c:forEach var="site" items="${sites}">
+                <a href="javascript:;" class="weui-grid">
+                    <div class="weui-grid__icon">
+                        <img src="/Content/images/mobile/stadium.png?v=${static_resource_version}">
+                    </div>
+                    <p class="weui-grid__label">${site.siteName}</p>
+                </a>
+            </c:forEach>
         </div>
     </div>
 </layout:override>

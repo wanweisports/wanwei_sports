@@ -15,37 +15,47 @@
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div id="main" class="container">
-        <div class="weui-flex">
+        <div class="weui-flex log-logo">
             <div class="weui-flex__item">
                 <div class="placeholder">
                     <img src="/Content/images/new/logo.png?v=${static_resource_version}" alt="LOGO">
                 </div>
             </div>
         </div>
-        <div class="weui-flex">
+        <div class="weui-flex log-form">
             <div class="weui-flex__item">
                 <form id="login_form" novalidate onsubmit="return false;">
+                    <input type="hidden" name="return_url" value="${returnUrl}">
                     <div class="weui-cells weui-cells_form">
                         <div class="weui-cell">
+                            <div class="weui-cell__hd"><label class="weui-label">手机号</label></div>
                             <div class="weui-cell__bd">
-                                <input class="weui-input" type="text" placeholder="手机号码" name="mobile"
+                                <input class="weui-input" type="number" placeholder="请输入手机号" id="mobile" name="mobile"
                                        autocomplete="off">
                             </div>
-                        </div>
-                        <div class="weui-cell">
-                            <div class="weui-cell__bd">
-                                <input class="weui-input" type="password" placeholder="密码" name="pwd"
-                                       autocomplete="off">
+                            <div class="weui-cell__ft">
+                                <i class="weui-icon-warn"></i>
                             </div>
                         </div>
                     </div>
-
-                    <div class="weui-btn-area">
-                        <input type="hidden" name="return_url" value="${returnUrl}">
-                        <a class="weui-btn weui-btn_primary login-btn" href="javascript:">立即登录</a>
-                        <a class="weui-btn weui-btn_primary" href="/mobile/passport/register">用户注册</a>
+                    <div class="weui-cells weui-cells_form">
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd"><label class="weui-label">密码</label></div>
+                            <div class="weui-cell__bd">
+                                <input class="weui-input" type="password" placeholder="请输入密码" id="password" name="password"
+                                       autocomplete="off">
+                            </div>
+                            <div class="weui-cell__ft">
+                                <i class="weui-icon-warn"></i>
+                            </div>
+                        </div>
                     </div>
                 </form>
+            </div>
+        </div>
+        <div class="weui-flex log-btns">
+            <div class="weui-flex__item">
+                <a class="weui-btn weui-btn_primary login-btn" href="javascript:">立即登录</a>
             </div>
         </div>
     </div>

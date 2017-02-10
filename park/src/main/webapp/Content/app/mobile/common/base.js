@@ -40,4 +40,58 @@
             window.history.go(-1);
         });
     }
+
+    $.isDebug = true;
+    $.logConsole = function (tag, message) {
+        if ($.isDebug) {
+            console.log(moment().format("YYYYMMDDHHmmss -- ") + tag + "：" + message);
+        }
+    };
+
+    $.tipsWarningAlert = function (message) {
+        $("#tips_failure_modal").show().find(".tips-content").text(message);
+
+        var timeout = setTimeout(function () {
+            $("#tips_failure_modal").hide();
+            clearTimeout(timeout);
+        }, 3000);
+    };
+
+    $.tipsSuccessAlert = function (message, callback) {
+        if (!callback) {
+            callback = new Function();
+        }
+
+        $("#tips_failure_modal").show().find(".tips-content").text(message);
+
+        var timeout = setTimeout(function () {
+            $("#tips_failure_modal").hide();
+            clearTimeout(timeout);
+            callback();
+        }, 3000);
+    };
+
+    $.tipsSuccessAlert = function (message, callback) {
+        if (!callback) {
+            callback = new Function();
+        }
+
+        $("#tips_success_modal").show().find(".tips-content").text(message);
+
+        var timeout = setTimeout(function () {
+            $("#tips_success_modal").hide();
+            clearTimeout(timeout);
+            callback();
+        }, 3000);
+    };
+
+    $.tipsSuccessConfirm = function (message) {
+        $("#tips_confirm_modal").show().find(".tips-content").text(message);
+    };
+
+    $(".tips-know").on("click", function (e) {
+        e.preventDefault();
+
+        $("#tips_failure_modal").hide();
+    });
 })(Vue, Zepto);
