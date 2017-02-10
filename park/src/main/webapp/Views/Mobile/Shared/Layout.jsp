@@ -43,8 +43,31 @@
         <layout:block name="<%=Blocks.BLOCK_BODY%>"/>
     </div>
 
+    <div id="tips_failure_modal" style="display: none;">
+        <div class="weui-mask"></div>
+        <div class="weui-dialog">
+            <div class="weui-dialog__bd tips-content"></div>
+            <div class="weui-dialog__ft">
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary tips-know">知道了</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="tipsSuccessConfirm" style="display: none;">
+        <div class="weui-mask"></div>
+        <div class="weui-dialog">
+            <div class="weui-dialog__bd tips-content"></div>
+            <div class="weui-dialog__ft">
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default">取 消</a>
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary">确 定</a>
+            </div>
+        </div>
+    </div>
+
     <script src="/Content/lib/vue/vue.min.js?v=${static_resource_version}"></script>
     <script src="/Content/lib/zepto/zepto.min.js?v=${static_resource_version}"></script>
+    <script src="/Content/lib/moment/moment.min.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/mobile/common/base.js?v=${static_resource_version}"></script>
     <layout:block name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>"/>
     <layout:block name="<%=Blocks.BLOCK_TRACE_SCRIPTS%>"/>
 </body>
