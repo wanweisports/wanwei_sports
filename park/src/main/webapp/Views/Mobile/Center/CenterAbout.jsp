@@ -16,7 +16,7 @@
                 <div class="weui-cell__bd">
                     <p>联系电话</p>
                 </div>
-                <div class="weui-cell__ft">(010)64212471</div>
+                <div class="weui-cell__ft">010-64212471</div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__bd">
@@ -41,9 +41,7 @@
         <article class="weui-article">
             <section>
                 <section>
-                    <p>
-                        <img src="/Content/images/mobile/about.jpg?v=${static_resource_version}" alt="北京市第一七一中学">
-                    </p>
+                    <img src="/Content/images/mobile/about.jpg?v=${static_resource_version}" alt="北京市第一七一中学">
                     <p>北京市第一七一中学位于首都核心功能区东城区，始建于1958年。1978年被定为东城区重点中学，北京市对外教育窗口校，2005年被评为北京市示范高中。学校现有南北两个教学点，初、高中78个教学班，在校学生3006人，在岗教职工336人。</p>
                 </section>
                 <section>

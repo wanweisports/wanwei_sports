@@ -19,8 +19,8 @@
             </div>
             <div class="weui-msg__opr-area">
                 <p class="weui-btn-area">
-                    <a href="javascript:;" class="weui-btn weui-btn_primary">我的订单</a>
-                    <a href="javascript:;" class="weui-btn weui-btn_default">返回首页</a>
+                    <a href="/mobile/reservation/orders" class="weui-btn weui-btn_primary">我的订单</a>
+                    <a href="/mobile/dashboard" class="weui-btn weui-btn_default">返回首页</a>
                 </p>
             </div>
         </div>

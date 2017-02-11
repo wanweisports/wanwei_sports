@@ -46,17 +46,6 @@ public class MobileController extends BaseController {
 
     // 用户登录
     @NotProtected
-    @RequestMapping("passport/login")
-    public String passportLogin(String returnUrl, Model model) {
-        if (checkLogin()) {
-            return redirect("/mobile/dashboard");
-        }
-        model.addAttribute("returnUrl", StrUtil.isBlank(returnUrl) ? "/mobile/dashboard" : returnUrl);
-        return "Mobile/Passport/PassportLogin";
-    }
-
-    // 用户登录
-    @NotProtected
     @ResponseBody
     @RequestMapping("/passport/userLogin")
     public ResponseBean userLogin(String mobile, String password) {
@@ -72,6 +61,22 @@ public class MobileController extends BaseController {
 
             operatorService.saveLastLoginTime(operator.getId());
             super.getRequest().getSession().setAttribute(IPlatformConstant.LOGIN_USER, operator);
+            return new ResponseBean(true);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
+    // 用户退出
+    @ResponseBody
+    @RequestMapping("passport/userLogout")
+    public ResponseBean userLogout() {
+        try{
+            super.getRequest().getSession().invalidate();
             return new ResponseBean(true);
         } catch (MessageException e) {
             e.printStackTrace();
@@ -123,13 +128,6 @@ public class MobileController extends BaseController {
         return "Mobile/Passport/PassportProfile";
     }
 
-    // 用户退出
-    @RequestMapping("passport/logout")
-    public String logout() {
-        super.getRequest().getSession().invalidate();
-        return redirect("/mobile/passport/login");
-    }
-
     // 首页
     @NotProtected
     @RequestMapping("dashboard")
@@ -166,6 +164,7 @@ public class MobileController extends BaseController {
     }
 
     // 个人中心关于我们
+    @NotProtected
     @RequestMapping("center/about")
     public String renderCenterAbout() {
         return "Mobile/Center/CenterAbout";

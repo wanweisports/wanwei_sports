@@ -1,4 +1,21 @@
 (function ($) {
+    /**** 登录 ****/
+
+    $('.login-dialog-show').on('click', function(){
+        $(".login-dialog").show();
+    });
+
+    $('.logout-confirm').on('click', function(){
+        $.post('/mobile/passport/userLogout', {}, function (res) {
+            if (res.code == 1) {
+                location.reload();
+            } else {
+                $.logConsole('用户退出登录失败', res.message);
+                $.tipsWarningAlert(res.message || '用户退出登录失败');
+            }
+        });
+    });
+
     $("#mobile").on('input', function (e) {
         e.preventDefault();
 
@@ -19,8 +36,15 @@
         }
     });
 
+    // 登录取消
+    $(".login-cancel").on("click", function (e) {
+        e.preventDefault();
+
+        $(".login-dialog").hide();
+    });
+
     // 登录跳转
-    $(".login-btn").on("click", function (e) {
+    $(".login-confirm").on("click", function (e) {
         e.preventDefault();
 
         var $form = $("#login_form");
@@ -43,7 +67,7 @@
             $form.attr("submitting", "");
 
             if (res.code == 1) {
-                window.location.href = $('[name="return_url"]').val();
+                location.reload();
             } else {
                 $.logConsole('用户登录失败', res.message);
                 $.tipsWarningAlert(res.message || '用户登录失败');
