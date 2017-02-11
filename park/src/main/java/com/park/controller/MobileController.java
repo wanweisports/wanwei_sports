@@ -205,6 +205,20 @@ public class MobileController extends BaseController {
         return "Mobile/Reservation/ReservationSequence";
     }
 
+    // 预订支付结果
+    @NotProtected
+    @RequestMapping("reservation/result")
+    public String renderReservationResult() {
+        return "Mobile/Reservation/ReservationResult";
+    }
+
+    // 预订支付确认
+    @NotProtected
+    @RequestMapping("reservation/confirm")
+    public String renderReservationConfirm() {
+        return "Mobile/Reservation/ReservationConfirm";
+    }
+
     // 预订订单
     @NotProtected
     @RequestMapping("reservation/orders")

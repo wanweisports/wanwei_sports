@@ -9,6 +9,10 @@
     <link href="/Content/style/mobile/reservation/reservation_sequence.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/app/mobile/reservation/reservation_sequence.js?v=${static_resource_version}"></script>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div id="main" class="container">
         <div class="weui-cells weui-cells_form">
@@ -52,7 +56,7 @@
             </div>
         </div>
         <div class="weui-btn-area">
-            <a class="weui-btn weui-btn_primary" href="javascript:">筛选场地</a>
+            <a class="weui-btn weui-btn_warn" href="javascript:" id="showIOSActionSheet">查看选择结果</a>
         </div>
         <div class="weui-grids">
             <c:forEach var="site" items="${sites}">
@@ -65,6 +69,49 @@
             </c:forEach>
         </div>
     </div>
+
+    <div>
+        <div class="weui-mask" style="display: none;" id="iosMask"></div>
+        <div class="weui-actionsheet" id="iosActionsheet">
+            <div class="weui-actionsheet__btns">
+                <div class="weui-actionsheet__btn">
+                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">删 除</a>
+                </div>
+                <div class="weui-actionsheet__btn">
+                    <a href="/mobile/reservation/confirm"
+                       class="weui-btn weui-btn_mini weui-btn_primary float-right">支 付</a>
+                </div>
+            </div>
+            <div class="weui-actionsheet__menu">
+                <div class="weui-cells weui-cells_checkbox">
+                    <label class=" weui-cell weui-check__label" for="s11">
+                        <div class="weui-cell__hd">
+                            <input type="checkbox" class="weui-check" name="checkbox1" id="s11" checked="checked">
+                            <i class="weui-icon-checked"></i>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <p>场地1</p>
+                        </div>
+                        <div class="weui-cell__ft">11:00-12:00</div>
+                    </label>
+                    <label class=" weui-cell weui-check__label" for="s11">
+                        <div class="weui-cell__hd">
+                            <input type="checkbox" class="weui-check" name="checkbox1" id="s11" checked="checked">
+                            <i class="weui-icon-checked"></i>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <p>场地1</p>
+                        </div>
+                        <div class="weui-cell__ft">11:00-12:00</div>
+                    </label>
+                </div>
+            </div>
+            <div class="weui-actionsheet__action">
+                <div class="weui-actionsheet__cell" id="iosActionsheetCancel">继续选择</div>
+            </div>
+        </div>
+    </div>
+
 </layout:override>
 
 <c:import url="../Shared/Layout.jsp">
