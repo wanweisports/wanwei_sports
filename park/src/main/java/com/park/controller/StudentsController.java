@@ -16,6 +16,7 @@ import com.park.common.bean.ResponseBean;
 import com.park.common.bean.StudentInputView;
 import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
+import com.park.common.po.MemberSiteStudentSign;
 import com.park.common.po.UserOperator;
 import com.park.common.po.UserStudent;
 import com.park.common.util.JsonUtils;
@@ -154,5 +155,21 @@ public class StudentsController extends BaseController {
             return new ResponseBean(false);
         }
     }
+    
+    @ResponseBody
+	@RequestMapping("sudentSign")
+	public ResponseBean sudentSign(MemberSiteStudentSign memberSiteStudentSign){
+		try {
+			memberSiteStudentSign.setSalesId(super.getUserInfo().getId());
+			studentService.saveStudentGign(memberSiteStudentSign);
+			return new ResponseBean(true);
+		} catch (MessageException e) {
+			e.printStackTrace();
+			return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
+	}
     
 }

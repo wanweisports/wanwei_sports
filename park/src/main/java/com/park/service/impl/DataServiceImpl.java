@@ -12,8 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.crypto.Data;
-
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -840,6 +838,15 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		List list = new ArrayList();
 		list.add(newMap);
 		return list;
+	}
+	
+	@Override
+	public PageBean getOtherBalance(DataInputView dataInputView){
+		StringBuilder headSql = new StringBuilder("");
+		StringBuilder bodySql = new StringBuilder("");
+		StringBuilder whereSql = new StringBuilder("");
+		
+		return super.getPageBean(headSql, bodySql, whereSql, dataInputView);
 	}
 	
 	

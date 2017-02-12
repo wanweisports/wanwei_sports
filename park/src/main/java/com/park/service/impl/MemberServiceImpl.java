@@ -20,6 +20,7 @@ import com.park.common.constant.IPlatformConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.MemberCard;
 import com.park.common.po.MemberCardType;
+import com.park.common.po.MemberSiteStudentSign;
 import com.park.common.po.OrderInfo;
 import com.park.common.po.OtherBalance;
 import com.park.common.po.OtherInvoice;

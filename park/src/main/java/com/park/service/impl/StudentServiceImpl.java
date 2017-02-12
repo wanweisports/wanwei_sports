@@ -1,5 +1,6 @@
 package com.park.service.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.MemberCard;
 import com.park.common.po.MemberCardType;
+import com.park.common.po.MemberSiteStudentSign;
 import com.park.common.po.OtherBalance;
 import com.park.common.po.UserStudent;
 import com.park.common.util.DateUtil;
@@ -141,6 +143,29 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 		student.setStudentStatus(IDBConstant.LOGIC_STATUS_NO);
 		student.setSalesId(salesId);
 		baseDao.save(student, studentId);
+	}
+	
+	@Override
+	public void saveStudentGign(MemberSiteStudentSign memberSiteStudentSign){
+		String signStudentCardNo = memberSiteStudentSign.getSignStudentCardNo();
+		
+		Map<String, Object> studentCardInfo = getStudentByCardNo(signStudentCardNo);
+		
+		if(studentCardInfo == null) throw new MessageException("学生会员不存在");
+		if(getStudentByTime(signStudentCardNo, DateUtil.dateToString(new Date(), null)) != null) throw new MessageException("学生会员今日已签到过，请勿重复签到");
+		
+		memberSiteStudentSign.setCreateTime(DateUtil.getNowDate());
+		memberSiteStudentSign.setSignMobile(StrUtil.objToStr(studentCardInfo.get("studentMobile")));
+		memberSiteStudentSign.setSignName(StrUtil.objToStr(studentCardInfo.get("studentName")));
+		baseDao.save(memberSiteStudentSign, null);
+	}
+	
+	private Map<String, Object> getStudentByCardNo(String cardNo){
+		return baseDao.queryBySqlFirst("SELECT * FROM user_student us, member_card mc WHERE us.cardId=mc.cardId AND mc.cardNo=?", cardNo);
+	}
+	
+	private Map<String, Object> getStudentByTime(String cardNo, String time){
+		return baseDao.queryBySqlFirst("SELECT * FROM member_site_student_sign WHERE signStudentCardNo=? AND DATE(createTime)=?", cardNo, time);
 	}
 	
 	@Override
