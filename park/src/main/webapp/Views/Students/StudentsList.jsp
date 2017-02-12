@@ -93,6 +93,10 @@
                                        data-backdrop="false" data-cardId="${student.cardId}" data-cardNo="${student.cardNo}">
                                         <span class="glyphicon glyphicon-refresh"></span> 补办
                                     </a>
+                                    <a class="btn btn-info students-sign" href="javascript:;"
+                                       data-cardId="${student.cardId}" data-cardNo="${student.cardNo}">
+                                        <span class="glyphicon glyphicon-tag"></span> 签到
+                                    </a>
                                     <%--<a class="btn btn-danger students-delete" href="javascript:;"
                                         data-id="${student.studentId}">
                                         <span class="glyphicon glyphicon-trash"></span> 删除

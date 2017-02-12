@@ -114,6 +114,22 @@
                     }
                 });
             });
+
+            // 学生签到
+            $(".students-list").on("click", ".students-sign", function (e) {
+                e.preventDefault();
+
+                var cardNo = $(this).attr("data-cardNo");
+
+                $.post('/students/sudentSign', {signStudentCardNo: cardNo}, function (res) {
+                    if (res.code == 1) {
+                        location.reload();
+                    } else {
+                        $.logConsole('学生签到失败', res.message);
+                        $.tipsWarningAlert('学生签到失败');
+                    }
+                });
+            });
         }
     };
 
