@@ -1,6 +1,5 @@
 package com.park.controller;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,16 +75,19 @@ public class MemberSignController extends BaseController {
 	
 	@RequestMapping("toQr")
     public String toQr(Model model, HttpSession httpSession){
+		System.out.println(httpSession.getId());
     	model.addAttribute("sessionId", httpSession.getId());
+    	httpSession.setAttribute("name", "张三");
+    	System.out.println(httpSession.getAttribute("name")); 
     	return "";
     }
     
     @NotProtected
     @RequestMapping("qrSign")
-    public void qrSign(String sessionId, HttpSession httpSession) throws IOException {
+    public void qrSign(String sessionId, String mobile, HttpSession httpSession) throws Exception {
     	
     	Session session = WebSocketTest.getSession(sessionId);
-    	session.getBasicRemote().sendText();
+    	session.getBasicRemote().sendText(JsonUtils.toJson(memberSignService.getQrSign(getUserInfo().getOperatorId(), mobile)));
     	
     	return;
     }
