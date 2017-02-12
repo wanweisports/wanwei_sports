@@ -44,9 +44,21 @@ public class DataController extends BaseController {
     @RequestMapping(value = "getMembersCountData", method = RequestMethod.POST)
     public ResponseBean getMembersCountData(DataInputView dataInputView) {
         try {
-            Map<String, Object> data;
-            //data = dataService.getCountMembersByWeek(dataInputView);
-            data = dataService.getCountMembersByMonth(dataInputView);
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("current", dataService.getMembersRegisterNew(dataInputView));
+
+            if (dataInputView.getCountNum() == IDBConstant.DATA_DATE_WEEK) {
+                dataInputView.setCountNum(IDBConstant.DATA_DATE_PRE_WEEK);
+                data.put("previous", dataService.getMembersRegisterNew(dataInputView));
+            }
+            if (dataInputView.getCountNum() == IDBConstant.DATA_DATE_MONTH) {
+                dataInputView.setCountNum(IDBConstant.DATA_DATE_PRE_MONTH);
+                data.put("previous", dataService.getMembersRegisterNew(dataInputView));
+            }
+            if (dataInputView.getCountNum() == IDBConstant.DATA_DATE_YEAR) {
+                dataInputView.setCountNum(IDBConstant.DATA_DATE_PRE_YEAR);
+                data.put("previous", dataService.getMembersRegisterNew(dataInputView));
+            }
             return new ResponseBean(data);
         } catch (MessageException e) {
             e.printStackTrace();
@@ -63,7 +75,20 @@ public class DataController extends BaseController {
     public ResponseBean getMembersStoredData(DataInputView dataInputView) {
         try {
             Map<String, Object> data = new HashMap<String, Object>();
-            data.put("memberStored", dataService.getMembersRegisterStored(dataInputView));
+            data.put("current", dataService.getMembersCZNew(dataInputView));
+
+            if (dataInputView.getCountNum() == IDBConstant.DATA_DATE_WEEK) {
+                dataInputView.setCountNum(IDBConstant.DATA_DATE_PRE_WEEK);
+                data.put("previous", dataService.getMembersCZNew(dataInputView));
+            }
+            if (dataInputView.getCountNum() == IDBConstant.DATA_DATE_MONTH) {
+                dataInputView.setCountNum(IDBConstant.DATA_DATE_PRE_MONTH);
+                data.put("previous", dataService.getMembersCZNew(dataInputView));
+            }
+            if (dataInputView.getCountNum() == IDBConstant.DATA_DATE_YEAR) {
+                dataInputView.setCountNum(IDBConstant.DATA_DATE_PRE_YEAR);
+                data.put("previous", dataService.getMembersCZNew(dataInputView));
+            }
             return new ResponseBean(data);
         } catch (MessageException e) {
             e.printStackTrace();
@@ -75,31 +100,25 @@ public class DataController extends BaseController {
     }
 
     // 会员注册消费统计
-    /*@ResponseBody
-    @RequestMapping(value = "getMembersConsumeData", method = RequestMethod.POST)
-    public ResponseBean getMembersConsumeData(DataInputView dataInputView) {
-        try {
-            Map<String, Object> data = new HashMap<String, Object>();
-            data.put("memberConsume", dataService.getMembersRegisterStored(dataInputView));
-            return new ResponseBean(data);
-        } catch (MessageException e) {
-            e.printStackTrace();
-            return new ResponseBean(e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseBean(false);
-        }
-    }*/
-
-    // 会员注册统计
     @ResponseBody
-    @RequestMapping(value = "getMembersRegister", method = RequestMethod.POST)
-    public ResponseBean getMembersRegisterP(DataInputView dataInputView) {
+    @RequestMapping(value = "getMembersConsumedData", method = RequestMethod.POST)
+    public ResponseBean getMembersConsumedData(DataInputView dataInputView) {
         try {
             Map<String, Object> data = new HashMap<String, Object>();
-            data.put("memberCount", dataService.getMembersRegister(dataInputView));
-            data.put("memberStored", dataService.getMembersRegisterStored(dataInputView));
-            data.put("memberCount1", dataService.getCountMembersByWeek(dataInputView));
+            data.put("current", dataService.getMembersXFNew(dataInputView));
+
+            if (dataInputView.getCountNum() == IDBConstant.DATA_DATE_WEEK) {
+                dataInputView.setCountNum(IDBConstant.DATA_DATE_PRE_WEEK);
+                data.put("previous", dataService.getMembersXFNew(dataInputView));
+            }
+            if (dataInputView.getCountNum() == IDBConstant.DATA_DATE_MONTH) {
+                dataInputView.setCountNum(IDBConstant.DATA_DATE_PRE_MONTH);
+                data.put("previous", dataService.getMembersXFNew(dataInputView));
+            }
+            if (dataInputView.getCountNum() == IDBConstant.DATA_DATE_YEAR) {
+                dataInputView.setCountNum(IDBConstant.DATA_DATE_PRE_YEAR);
+                data.put("previous", dataService.getMembersXFNew(dataInputView));
+            }
             return new ResponseBean(data);
         } catch (MessageException e) {
             e.printStackTrace();

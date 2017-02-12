@@ -15,6 +15,9 @@
                         .replace('#FRIDAY#', data.Friday)
                         .replace('#SATURDAY#', data.Saturday)
                         .replace('#SUNDAY#', data.Sunday);
+            },
+            conditions: {
+                countNum: $("#count_num").val()
             }
         },
         init: function () {
@@ -38,7 +41,7 @@
             });
 
             //this.renderMemberCountCharts();
-            this.renderMemberStoredCharts();
+            this.getDataMembersStored();
             this.renderMemberConsumeCharts();
             this.getDataMembersCount();
         },
@@ -55,6 +58,8 @@
             });
         },
         renderMemberStoredCharts: function () {
+            var content = this;
+
             function __format(memberCount) {
                 var data = [];
 
@@ -142,18 +147,25 @@
                     }]
                 };
             }
-            $.post('/data/getMembersRegister', {}, function (res) {
+        },
+        getDataMembersStored: function () {
+            var content = this;
+            var $memberCount = $(".data-members-count");
+
+            $.post('/data/getMembersStoredData', content.opts.conditions, function (res) {
                 var data = res.data;
 
                 if (res.code == 1) {
-                    var memberCount = __format(data.memberCount);
-
-                    var chart = echarts.init(document.getElementById('member_stored_chart'));
-                    chart.setOption(__options(memberCount));
+                    var current = data.current;
+                    //var previous = data.previous;
+                    content.renderMemberStoredCharts(current.titleList, current.list);
+                    $memberCount.find("tr:last-child").addClass("bg-success");
                 }
             });
         },
         renderMemberConsumeCharts: function () {
+            var content = this;
+
             function __format(memberCount) {
                 var data = [];
 
@@ -217,7 +229,7 @@
                 };
             }
 
-            $.post('/data/getMembersRegister', {}, function (res) {
+            $.post('/data/getMembersConsumedData', content.opts.conditions, function (res) {
                 var data = res.data;
 
                 if (res.code == 1) {
@@ -228,17 +240,16 @@
                 }
             });
         },
-        renderMemberCountCharts: function (weeks, total, WEEKS) {
+        renderMemberCountCharts: function (title, list) {
             var seriesData = [];
 
             function __formatBar(data) {
                 var series = [];
-                for (var i = 0; i < data.length; i++) {
+                for (var i = 0; i < data.length - 1; i++) {
                     var item = {
                         name: data[i].cardTypeName,
                         type: 'bar',
-                        data: [data[i].Monday, data[i].Tuesday, data[i].Wednesday,
-                            data[i].Thursday, data[i].Friday, data[i].Saturday, data[i].Sunday],
+                        data: data[i].data,
                         stack: '数量',
                         barMaxWidth: '40px',
                         label: {
@@ -260,12 +271,11 @@
 
             function __formatLine(data) {
                 var series = [];
-                for (var i = 0; i < data.length; i++) {
+                for (var i = data.length - 1; i < data.length; i++) {
                     var item = {
-                        name: "合计",
+                        name: data[i].cardTypeName,
                         type: "line",
-                        data: [data[i].Monday, data[i].Tuesday, data[i].Wednesday,
-                            data[i].Thursday, data[i].Friday, data[i].Saturday, data[i].Sunday],
+                        data: data[i].data,
                         stack: "数量",
                         symbolSize: 10,
                         symbol: 'circle',
@@ -288,8 +298,10 @@
                 return series;
             }
 
-            seriesData = seriesData.concat(__formatBar(weeks));
-            seriesData = seriesData.concat(__formatLine(total));
+            console.log("会员注册数量");
+            console.log(list);
+            seriesData = seriesData.concat(__formatBar(list));
+            seriesData = seriesData.concat(__formatLine(list));
             console.log(seriesData);
 
             var options = {
@@ -307,7 +319,7 @@
                 },
                 xAxis: {
                     type: 'category',
-                    data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+                    data: title,
                     axisLine: {
                         onZero: false,
                         lineStyle: {
@@ -334,25 +346,99 @@
             var chart = echarts.init(document.getElementById('member_count_chart'));
             chart.setOption(options);
         },
+        renderMemberCountCompareCharts: function (current, previous) {
+            var content = this;
+
+            function __options() {
+                return  {
+                    backgroundColor: '#FFFFFF',
+                    color: ['#59ADF3', '#FF999A', '#FFCC67'],
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{b}:{c}元'
+                    },
+                    grid: {
+                        left: 60,
+                        top: 10
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: ["最高", "同比", "当前"],
+                        axisLine: {
+                            onZero: false,
+                            lineStyle: {
+                                width: 3
+                            }
+                        },
+                        axisTick: {
+                            show: false
+                        },
+                        axisLabel: {
+                            margin: 10,
+                            textStyle: {
+                                fontWeight: 'bold'
+                            }
+                        },
+                        offset: 1
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisTick: {
+                            show: false
+                        },
+                        nameRotate: 0,
+                        axisLine: {
+                            onZero: false,
+                            lineStyle: {
+                                width: 3
+                            }
+                        },
+                        axisLabel: {
+                            margin: 10,
+                            textStyle: {
+                                fontWeight: 'bold'
+                            },
+                            formatter: '{value}元'
+                        }
+                    },
+                    series: [{
+                        type: 'bar',
+                        data: [36, previous, current],
+                        itemStyle: {
+                            normal: {
+                                color: function(params) {
+                                    var colorList = ['#59ADF3', '#FF999A', '#FFCC67'];
+                                    return colorList[params.dataIndex]
+                                }
+                            }
+                        },
+                        barMaxWidth: '40px',
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'top',
+                                formatter: '{c}元'
+                            }
+                        }
+                    }]
+                };
+            }
+
+            var chart = echarts.init(document.getElementById('member_count_compare_chart'));
+            chart.setOption(__options());
+        },
         getDataMembersCount: function () {
             var content = this;
             var $memberCount = $(".data-members-count");
 
-            $.post('/data/getMembersCountData', {}, function (res) {
+            $.post('/data/getMembersCountData', content.opts.conditions, function (res) {
                 var data = res.data;
 
                 if (res.code == 1) {
-                    var weeks = data.weeks;
-                    for (var i = 0; i < weeks.length; i++) {
-                        $memberCount.append(content.opts.TPL(weeks[i]));
-                    }
-
-                    var total = data.total;
-                    for (var j = 0; j < total.length; j++) {
-                        $memberCount.append(content.opts.TPL(total[j]));
-                    }
-
-                    content.renderMemberCountCharts(weeks, total, data.WEEKS);
+                    var current = data.current;
+                    //var previous = data.previous;
+                    content.renderMemberCountCharts(current.titleList, current.list);
+                    content.renderMemberCountCompareCharts(current.num, previous.num);
                     $memberCount.find("tr:last-child").addClass("bg-success");
                 }
             });
