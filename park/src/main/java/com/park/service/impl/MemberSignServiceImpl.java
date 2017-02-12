@@ -14,6 +14,7 @@ import com.park.common.exception.MessageException;
 import com.park.common.po.MemberSiteSign;
 import com.park.common.po.OrderInfo;
 import com.park.common.po.UserMember;
+import com.park.common.po.UserOperator;
 import com.park.common.util.DateUtil;
 import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
@@ -128,6 +129,11 @@ public class MemberSignServiceImpl extends BaseService implements IMemberSignSer
 	@Override
 	public MemberSiteSign getMemberSiteSign(int reserveTimeId, String date) throws ParseException{
 		return baseDao.queryByHqlFirst("FROM MemberSiteSign WHERE reserveTimeId = ? AND DATE(signDate) = ?", reserveTimeId, DateUtil.stringToDate(date, null));
+	}
+	
+	@Override
+	public Map<String, Object> getQrSign(UserOperator userOperator){
+		//memberService.getMemberOperator(userOperator.getOperatorId());
 	}
 	
 }

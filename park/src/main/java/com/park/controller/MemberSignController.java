@@ -1,7 +1,11 @@
 package com.park.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,12 +13,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.park.common.annotation.NotProtected;
 import com.park.common.bean.MemberSignInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.bean.ResponseBean;
 import com.park.common.exception.MessageException;
 import com.park.common.po.MemberSiteSign;
 import com.park.common.util.JsonUtils;
+import com.park.push.WebSocketTest;
 import com.park.service.IMemberSignService;
 
 @Controller
@@ -67,5 +73,21 @@ public class MemberSignController extends BaseController {
 			return new ResponseBean(false);
 		}
 	}
+	
+	@RequestMapping("toQr")
+    public String toQr(Model model, HttpSession httpSession){
+    	model.addAttribute("sessionId", httpSession.getId());
+    	return "";
+    }
+    
+    @NotProtected
+    @RequestMapping("qrSign")
+    public void qrSign(String sessionId, HttpSession httpSession) throws IOException {
+    	
+    	Session session = WebSocketTest.getSession(sessionId);
+    	session.getBasicRemote().sendText();
+    	
+    	return;
+    }
 	
 }

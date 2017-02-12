@@ -38,7 +38,7 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 		String cardNo = studentInputView.getCardNo();
 		String studentName = studentInputView.getStudentName();
 		
-		StringBuilder headSql = new StringBuilder("SELECT mc.cardId, mc.cardNo, mc.cardDeposit, us.studentMobile, us.studentId, us.studentName, us.studentGrade, us.studentClass, CONCAT(us.studentGrade, us.studentClass) gradeClass, us.siteCount, mc.cardDeadline, us.studentStatus, uo.operatorName, us.createTime");
+		StringBuilder headSql = new StringBuilder("SELECT mc.cardId, mc.cardNo, mc.cardDeposit, us.studentMobile, us.studentId, us.studentName, us.studentGrade, us.studentClass, CONCAT(us.studentGrade, us.studentClass) gradeClass, (SELECT COUNT(1) FROM member_site_student_sign WHERE signStudentCardNo=mc.cardNo) siteCount, mc.cardDeadline, us.studentStatus, uo.operatorName, us.createTime");
 		StringBuilder bodySql = new StringBuilder(" FROM user_student us");
 		StringBuilder whereSql = new StringBuilder(" WHERE us.studentStatus = ").append(IDBConstant.LOGIC_STATUS_YES);
 		
