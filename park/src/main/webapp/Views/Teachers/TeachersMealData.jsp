@@ -74,7 +74,7 @@
         <div class="alert alert-info clearfix">
             <ul class="nav nav-pills pull-left">
                 <li style="margin-right: 15px;">订餐总计:</li>
-                <li style="margin-right: 15px;">普通餐 <span class="badge">6份</span></li>
+                <li style="margin-right: 15px;">普通餐 <span class="badge">${total}份</span></li>
             </ul>
             <div class="pull-right">
                 <a href="javascript:;" class="btn btn-danger">
@@ -102,7 +102,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <!--<tr>
                             <td>1</td>
                             <td>20161214111123</td>
                             <td>李老师</td>
@@ -129,7 +129,7 @@
                                     <span class="glyphicon glyphicon-trash"></span> 删除
                                 </a>
                             </td>
-                        </tr>
+                        </tr>-->
                         <c:forEach var="data" items="${list}" varStatus="loop">
                             <tr>
                                 <td>${loop.index + 1}</td>

@@ -302,6 +302,7 @@ public class SiteController extends BaseController {
 			model.addAllAttributes(JsonUtils.fromJsonDF(siteInputView));
 			PageBean pageBean = siteService.getMeals(siteInputView);
 			super.setPageInfo(model, pageBean);
+            model.addAttribute("total", siteService.getMealTotal(siteInputView));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
