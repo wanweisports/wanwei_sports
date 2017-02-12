@@ -141,7 +141,7 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $.tipsSuccessAlert('学生签到失败成功！', function () {
+                        $.tipsSuccessAlert('学生签到成功！', function () {
                             location.reload();
                         });
                     } else {
