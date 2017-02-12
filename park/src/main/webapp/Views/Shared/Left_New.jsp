@@ -279,22 +279,22 @@
                     <table style="width: 100%;">
                         <tr class="list-nav-item data ${(param.nav == "data" && param.subNav == "register") ? "active" : ""}">
                             <td>
-                                <span><a href="/data/getMembersRegister?countNum=10">会员办理统计</a></span>
+                                <span><a href="/data/getMembersRegister?countNum=21">会员办理统计</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item data ${(param.nav == "data" && param.subNav == "businessLog") ? "active" : ""}">
                             <td>
-                                <span><a href="/data/getBusinessIncomeLog?countNum=1">营业流水日志</a></span>
+                                <span><a href="/data/getBusinessIncomeLog?countNum=21">营业流水日志</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item data ${(param.nav == "data" && param.subNav == "business") ? "active" : ""}">
                             <td>
-                                <span><a href="/data/getBusinessIncome?countNum=1">营业收支统计</a></span>
+                                <span><a href="/data/getBusinessIncome?countNum=21">营业收支统计</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item data ${(param.nav == "data" && param.subNav == "percent") ? "active" : ""}">
                             <td>
-                                <span><a href="/data/getVenuePercentage?countNum=1">场地使用率</a></span>
+                                <span><a href="/data/getVenuePercentage?countNum=21">场地使用率</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item data ${(param.nav == "data" && param.subNav == "attendance") ? "active" : ""}">
