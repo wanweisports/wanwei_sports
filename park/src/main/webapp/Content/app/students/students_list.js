@@ -117,17 +117,39 @@
 
             // 学生签到
             $(".students-list").on("click", ".students-sign", function (e) {
+                var $this = $(this);
+
+                $("#sign_card_no").val($this.attr("data-cardNo"));
+                $("#sign_student").val($this.attr("data-student"));
+            });
+
+            // 确认签到
+            $(".confirm-sign").on("click", function (e) {
                 e.preventDefault();
 
-                var cardNo = $(this).attr("data-cardNo");
+                var $btn = $(this).button('loading');
 
-                $.post('/students/studentSign', {signStudentCardNo: cardNo}, function (res) {
+                var $form = $("#sign_form");
+                var conditions = $form.serialize();
+
+                if ($form.attr("submitting") == "submitting" || !$form.valid()) {
+                    return false;
+                }
+                $form.attr("submitting", "submitting");
+
+                $.post('/students/studentSign', conditions, function (res) {
+                    $form.attr("submitting", "");
+
                     if (res.code == 1) {
-                        location.reload();
+                        $.tipsSuccessAlert('学生签到失败成功！', function () {
+                            location.reload();
+                        });
                     } else {
                         $.logConsole('学生签到失败', res.message);
                         $.tipsWarningAlert('学生签到失败');
                     }
+
+                    $btn.button('reset');
                 });
             });
         }
