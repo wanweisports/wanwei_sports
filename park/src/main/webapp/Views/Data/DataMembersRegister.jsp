@@ -46,12 +46,12 @@
                     <div class="form-group">
                         <input type="text" class="form-control" id="createTimeEnd" name="createTimeEnd"
                                placeholder="结束日期" value="${createTimeEnd}">
-                    </div>-->
+                    </div>
                     <div class="form-group">
                         <a href="javascript:;" class="btn btn-primary data-filter">
                             <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
                         </a>
-                    </div>
+                    </div>-->
                     <div class="form-group pull-right">
                         <a href="javascript:;" class="btn btn-danger">
                             <span class="glyphicon glyphicon-export"></span> 导出数据
@@ -64,27 +64,27 @@
         <div class="panel panel-default">
             <div class="panel-heading">会员注册数量</div>
             <div class="panel-body">
-                <div class="table-responsive">
+                <div style="overflow: auto;">
                     <table class="table table-bordered data-members-count">
                         <thead>
                         <tr class="bg-info">
                             <th>会员类型</th>
                             <c:forEach var="title" items="${register.titleList}">
-                           	<th>${title}</th>
+                                <th>${title}</th>
                             </c:forEach>
                         </tr>
                         </thead>
                         <tbody>
-                        	<c:forEach var="o" items="${register.list}">
-                        	<tr>
-                        		<td>${o.cardTypeName}</td>
-                        		<td>${o.count}</td>
-                        		<c:forEach begin="0" end="${register.num}" varStatus="vs">
-                        			<c:set var="key" value="d${vs.index }"  />
-                        			<td>${o[key]}</td> 
-                        		</c:forEach>
-                        	</tr>
-                        	</c:forEach>
+                        <c:forEach var="o" items="${register.list}">
+                            <tr>
+                                <td>${o.cardTypeName}</td>
+                                <td>${o.count}</td>
+                                <c:forEach begin="0" end="${register.num}" varStatus="vs">
+                                    <c:set var="key" value="d${vs.index }"  />
+                                    <td>${o[key]}</td>
+                                </c:forEach>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>

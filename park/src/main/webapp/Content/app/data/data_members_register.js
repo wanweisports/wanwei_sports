@@ -246,6 +246,7 @@
             function __formatBar(data) {
                 var series = [];
                 for (var i = 0; i < data.length - 1; i++) {
+                    data[i].data.splice(0, 0, data[i].count);
                     var item = {
                         name: data[i].cardTypeName,
                         type: 'bar',
@@ -272,6 +273,7 @@
             function __formatLine(data) {
                 var series = [];
                 for (var i = data.length - 1; i < data.length; i++) {
+                    data[i].data.splice(0, 0, data[i].count);
                     var item = {
                         name: data[i].cardTypeName,
                         type: "line",
@@ -298,11 +300,8 @@
                 return series;
             }
 
-            console.log("会员注册数量");
-            console.log(list);
             seriesData = seriesData.concat(__formatBar(list));
             seriesData = seriesData.concat(__formatLine(list));
-            console.log(seriesData);
 
             var options = {
                 backgroundColor: '#FFFFFF',
@@ -347,19 +346,17 @@
             chart.setOption(options);
         },
         renderMemberCountCompareCharts: function (current, previous) {
-            var content = this;
-
             function __options() {
                 return  {
                     backgroundColor: '#FFFFFF',
                     color: ['#59ADF3', '#FF999A', '#FFCC67'],
                     tooltip: {
                         trigger: 'item',
-                        formatter: '{b}:{c}元'
+                        formatter: '{b}:{c}'
                     },
                     grid: {
                         left: 60,
-                        top: 10
+                        top: 20
                     },
                     xAxis: {
                         type: 'category',
@@ -398,12 +395,12 @@
                             textStyle: {
                                 fontWeight: 'bold'
                             },
-                            formatter: '{value}元'
+                            formatter: '{value}'
                         }
                     },
                     series: [{
                         type: 'bar',
-                        data: [36, previous, current],
+                        data: [30, previous, current],
                         itemStyle: {
                             normal: {
                                 color: function(params) {
@@ -417,7 +414,7 @@
                             normal: {
                                 show: true,
                                 position: 'top',
-                                formatter: '{c}元'
+                                formatter: '{c}'
                             }
                         }
                     }]
@@ -436,7 +433,7 @@
 
                 if (res.code == 1) {
                     var current = data.current;
-                    //var previous = data.previous;
+                    var previous = data.previous;
                     content.renderMemberCountCharts(current.titleList, current.list);
                     content.renderMemberCountCompareCharts(current.num, previous.num);
                     $memberCount.find("tr:last-child").addClass("bg-success");

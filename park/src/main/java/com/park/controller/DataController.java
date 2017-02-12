@@ -51,11 +51,11 @@ public class DataController extends BaseController {
                 dataInputView.setCountNum(IDBConstant.DATA_DATE_PRE_WEEK);
                 data.put("previous", dataService.getMembersRegisterNew(dataInputView));
             }
-            if (dataInputView.getCountNum() == IDBConstant.DATA_DATE_MONTH) {
+            else if (dataInputView.getCountNum() == IDBConstant.DATA_DATE_MONTH) {
                 dataInputView.setCountNum(IDBConstant.DATA_DATE_PRE_MONTH);
                 data.put("previous", dataService.getMembersRegisterNew(dataInputView));
             }
-            if (dataInputView.getCountNum() == IDBConstant.DATA_DATE_YEAR) {
+            else if (dataInputView.getCountNum() == IDBConstant.DATA_DATE_YEAR) {
                 dataInputView.setCountNum(IDBConstant.DATA_DATE_PRE_YEAR);
                 data.put("previous", dataService.getMembersRegisterNew(dataInputView));
             }
@@ -81,11 +81,11 @@ public class DataController extends BaseController {
                 dataInputView.setCountNum(IDBConstant.DATA_DATE_PRE_WEEK);
                 data.put("previous", dataService.getMembersCZNew(dataInputView));
             }
-            if (dataInputView.getCountNum() == IDBConstant.DATA_DATE_MONTH) {
+            else if (dataInputView.getCountNum() == IDBConstant.DATA_DATE_MONTH) {
                 dataInputView.setCountNum(IDBConstant.DATA_DATE_PRE_MONTH);
                 data.put("previous", dataService.getMembersCZNew(dataInputView));
             }
-            if (dataInputView.getCountNum() == IDBConstant.DATA_DATE_YEAR) {
+            else if (dataInputView.getCountNum() == IDBConstant.DATA_DATE_YEAR) {
                 dataInputView.setCountNum(IDBConstant.DATA_DATE_PRE_YEAR);
                 data.put("previous", dataService.getMembersCZNew(dataInputView));
             }
@@ -111,11 +111,11 @@ public class DataController extends BaseController {
                 dataInputView.setCountNum(IDBConstant.DATA_DATE_PRE_WEEK);
                 data.put("previous", dataService.getMembersXFNew(dataInputView));
             }
-            if (dataInputView.getCountNum() == IDBConstant.DATA_DATE_MONTH) {
+            else if (dataInputView.getCountNum() == IDBConstant.DATA_DATE_MONTH) {
                 dataInputView.setCountNum(IDBConstant.DATA_DATE_PRE_MONTH);
                 data.put("previous", dataService.getMembersXFNew(dataInputView));
             }
-            if (dataInputView.getCountNum() == IDBConstant.DATA_DATE_YEAR) {
+            else if (dataInputView.getCountNum() == IDBConstant.DATA_DATE_YEAR) {
                 dataInputView.setCountNum(IDBConstant.DATA_DATE_PRE_YEAR);
                 data.put("previous", dataService.getMembersXFNew(dataInputView));
             }
