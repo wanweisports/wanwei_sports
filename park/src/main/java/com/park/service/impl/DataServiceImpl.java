@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.crypto.Data;
+
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -135,6 +137,9 @@ public class DataServiceImpl extends BaseService implements IDataService {
     @Override
     public Map<String, Object> getMembersRegisterNew(DataInputView dataInputView){
     	Integer countNum = dataInputView.getCountNum();
+    	
+    	dataInputView = getDataCountTime(dataInputView, countNum);
+    	
     	Map<String, Object> resultMap = new HashMap<String, Object>();
     	List<String> titleList = new ArrayList<String>();
     	
@@ -172,7 +177,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
     		dataInputView.setCreateTimeEnd(DateUtil.getTimesWeeknight());
     	} 
     	sql.append(" FROM member_card_type mct");
-    	sql.append(" LEFT JOIN member_card mc ON(mct.cardTypeId = mc.cardTypeId  AND mc.createTime BETWEEN :createTimeStart AND :createTimeEnd)"); 
+    	sql.append(" LEFT JOIN member_card mc ON(mct.cardTypeId = mc.cardTypeId AND mc.createTime BETWEEN :createTimeStart AND :createTimeEnd)"); 
     	sql.append(" LEFT JOIN user_member um ON(mc.memberId = um.memberId)");
     	sql.append(" GROUP BY mct.cardTypeId");
     	
@@ -216,6 +221,9 @@ public class DataServiceImpl extends BaseService implements IDataService {
     @Override
     public Map<String, Object> getMembersCZNew(DataInputView dataInputView){
     	Integer countNum = dataInputView.getCountNum();
+    	
+    	dataInputView = getDataCountTime(dataInputView, countNum);
+    	
     	Map<String, Object> resultMap = new HashMap<String, Object>();
     	List<String> titleList = new ArrayList<String>();
     	
@@ -230,8 +238,6 @@ public class DataServiceImpl extends BaseService implements IDataService {
     			sql.append(" ,(SELECT IFNULL(SUM(realAmount),0) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN other_balance ob1 ON(mc1.cardId = ob1.balanceServiceId AND ob1.balanceServiceType IN(:balanceServiceTypes)) WHERE mct1.cardTypeId = mct.cardTypeId AND :createTimeEnd AND DATE_FORMAT(mc1.createTime, '%Y-%m%e')='").append(yearMonth).append(i+1).append("') d"+i);
 	    		titleList.add(DateUtil.getDayName(i));
     		}
-    		dataInputView.setCreateTimeStart(DateUtil.getTimesMonthmorning());
-    		dataInputView.setCreateTimeEnd(DateUtil.getTimesMonthnight());
     	} else if(countNum == IDBConstant.DATA_DATE_YEAR){ //本年
     		titleList.add("本年");
     		String year = DateUtil.dateToString(new Date(), DateUtil.YYYY);
@@ -240,21 +246,17 @@ public class DataServiceImpl extends BaseService implements IDataService {
 	    		sql.append(" ,(SELECT IFNULL(SUM(realAmount),0) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN other_balance ob1 ON(mc1.cardId = ob1.balanceServiceId AND ob1.balanceServiceType IN(:balanceServiceTypes)) WHERE mct1.cardTypeId = mct.cardTypeId AND :createTimeEnd AND DATE_FORMAT(mc1.createTime, '%Y%c')='").append(year).append(i+1).append("') d"+i);
 	    		titleList.add(DateUtil.getMonthName(i));
 	    	}
-	    	dataInputView.setCreateTimeStart(DateUtil.getCurrentYearEndTime());
-    		dataInputView.setCreateTimeEnd(DateUtil.getLastYearStartTime());
     	}else{ //默认本周
     		titleList.add("本周");
     		num = 7;
     		for (int i = 0; i < num; i++) { 
-	    		sql.append(" ,(SELECT IFNULL(SUM(realAmount),0) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN other_balance ob1 ON(mc1.cardId = ob1.balanceServiceId AND ob1.balanceServiceType IN(:balanceServiceTypes)) WHERE mct1.cardTypeId = mct.cardTypeId AND ob1.createTime BETWEEN :createTimeStart AND :createTimeEnd AND DATE_FORMAT(ob1.createTime, '%w')=").append((i==num-1?0:i+1)).append(") d"+i);
+	    		sql.append(" ,(SELECT IFNULL(SUM(realAmount),0) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN other_balance ob1 ON(mc1.cardId = ob1.balanceServiceId AND ob1.balanceServiceType IN(:balanceServiceTypes)) WHERE mct1.cardTypeId = mct.cardTypeId AND mc1.createTime BETWEEN :createTimeStart AND :createTimeEnd AND DATE_FORMAT(mc1.createTime, '%w')=").append((i==num-1?0:i+1)).append(") d"+i);
 	    		titleList.add(DateUtil.getWeekName(i)); 
 	    	}
-    		dataInputView.setCreateTimeStart(DateUtil.getTimesWeekmorningStr()); 
-    		dataInputView.setCreateTimeEnd(DateUtil.getTimesWeeknight());
     	} 
     	sql.append(" FROM member_card_type mct"); 
-    	sql.append(" LEFT JOIN member_card mc ON(mct.cardTypeId = mc.cardTypeId)"); 
-    	sql.append(" LEFT JOIN other_balance ob ON(mc.cardId = ob.balanceServiceId AND ob.balanceServiceType IN(:balanceServiceTypes) AND ob.createTime BETWEEN :createTimeStart AND :createTimeEnd)");
+    	sql.append(" LEFT JOIN member_card mc ON(mct.cardTypeId = mc.cardTypeId AND mc.createTime BETWEEN :createTimeStart AND :createTimeEnd)"); 
+    	sql.append(" LEFT JOIN other_balance ob ON(mc.cardId = ob.balanceServiceId AND ob.balanceServiceType IN(:balanceServiceTypes))");
     	sql.append(" GROUP BY mct.cardTypeId");
     	
     	dataInputView.setBalanceServiceTypeArr(new Integer[]{StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_REG), StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_CARD_CZ)});
@@ -293,18 +295,22 @@ public class DataServiceImpl extends BaseService implements IDataService {
     @Override
     public Map<String, Object> getMembersXFNew(DataInputView dataInputView){
     	
+    	Integer countNum = dataInputView.getCountNum();
+    	
+    	dataInputView = getDataCountTime(dataInputView, countNum);
+    	
     	Map<String, Object> resultMap = new HashMap<String, Object>();
     	
     	StringBuffer sql = new StringBuffer("SELECT mct.cardTypeName");
-    	sql.append(" ,SUM(CASE WHEN ob.balanceServiceType IN(?,?) THEN ob.realAmount ELSE 0 END) siteXF");
-    	sql.append(" ,SUM(CASE WHEN ob.balanceServiceType = ? THEN ob.realAmount ELSE 0 END) goodsXF");
-    	sql.append(" ,IFNULL((SELECT SUM(cardBalance) FROM member_card mc WHERE mc.cardTypeId = mct.cardTypeId),0) cardBalance");
+    	sql.append(" ,SUM(CASE WHEN ob.balanceServiceType IN(100,200) THEN ob.realAmount ELSE 0 END) siteXF");
+    	sql.append(" ,SUM(CASE WHEN ob.balanceServiceType = 300 THEN ob.realAmount ELSE 0 END) goodsXF");
+    	sql.append(" ,IFNULL((SELECT SUM(cardBalance) FROM member_card mc1 WHERE mc1.cardTypeId = mct.cardTypeId AND mc1.createTime BETWEEN :createTimeStart AND :createTimeEnd),0) cardBalance");
     	sql.append(" FROM member_card_type mct");
-    	sql.append(" LEFT JOIN member_card mc ON(mct.cardTypeId = mc.cardTypeId)");
+    	sql.append(" LEFT JOIN member_card mc ON(mct.cardTypeId = mc.cardTypeId AND mc.createTime BETWEEN :createTimeStart AND :createTimeEnd)");
     	sql.append(" LEFT JOIN other_balance ob ON(ob.balanceCardId = mc.cardId)");
     	sql.append(" GROUP BY mct.cardTypeId");
-    	
-    	List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), IDBConstant.BALANCE_SERVICE_TYPE_SITE, IDBConstant.BALANCE_SERVICE_TYPE_BLOCK_SITE, IDBConstant.BALANCE_SERVICE_TYPE_GOODS);
+    	//IDBConstant.BALANCE_SERVICE_TYPE_SITE, IDBConstant.BALANCE_SERVICE_TYPE_BLOCK_SITE, IDBConstant.BALANCE_SERVICE_TYPE_GOODS
+    	List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
     	
     	Map<String, Object> combinedMap = new HashMap<String, Object>();
     	combinedMap.put("cardTypeName", "合计");
@@ -331,6 +337,28 @@ public class DataServiceImpl extends BaseService implements IDataService {
     	resultMap.put("list", list);
     	
     	return resultMap;
+    }
+    
+    private DataInputView getDataCountTime(DataInputView dataInputView, Integer countNum){
+    	
+    	countNum = countNum != null ? countNum : IDBConstant.DATA_DATE_WEEK;
+    	switch (countNum) {
+		case IDBConstant.DATA_DATE_MONTH:
+			dataInputView.setCreateTimeStart(DateUtil.getTimesMonthmorning());
+    		dataInputView.setCreateTimeEnd(DateUtil.getTimesMonthnight());
+			break;
+		case IDBConstant.DATA_DATE_YEAR:
+			dataInputView.setCreateTimeStart(DateUtil.getCurrentYearEndTime());
+    		dataInputView.setCreateTimeEnd(DateUtil.getLastYearStartTime());
+			break;
+		case IDBConstant.DATA_DATE_WEEK:
+		default:
+			dataInputView.setCreateTimeStart(DateUtil.getTimesWeekmorningStr());
+			dataInputView.setCreateTimeEnd(DateUtil.getTimesWeeknight());
+			break;
+		}
+
+		return dataInputView;
     }
 
     @Override
