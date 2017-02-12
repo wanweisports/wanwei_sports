@@ -22,13 +22,7 @@ import com.wx.util.QrUtil;
 import com.wx.util.SignUtil;
 import com.wx.util.XMLUtil;
 
-
-
-/**
- * @author ex_yangxiaoyi
- * 
- */
-@RequestMapping("")
+@RequestMapping("wxPay")
 @Controller
 public class WXPayController extends BaseController {
 	
@@ -223,8 +217,8 @@ public class WXPayController extends BaseController {
 		return "";
 	}
 	
-	@RequestMapping("asynNotify")
 	//微信支付异步通知接口
+	@RequestMapping("asynNotify")
     public void asynNotify(HttpServletRequest request, HttpServletResponse response) throws Exception{
         String msgxml = super.getStreamResult(request, response);//xml数据
         logger.info(msgxml);

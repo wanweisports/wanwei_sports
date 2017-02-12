@@ -23,6 +23,7 @@ import com.park.common.constant.IDBConstant;
 import com.park.common.constant.IPlatformConstant;
 import com.park.common.util.DateUtil;
 import com.park.common.util.JsonUtils;
+import com.park.common.util.SQLUtil;
 import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
 import com.park.service.IDataService;
@@ -177,7 +178,9 @@ public class DataServiceImpl extends BaseService implements IDataService {
     	sql.append(" GROUP BY mct.cardTypeId");
     	
     	List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
+    	
     	Map<String, Object> combinedMap = new HashMap<String, Object>();
+    	
     	combinedMap.put("cardTypeName", "合计");
     	for (int i = 0; i < num+1; i++) {
     		combinedMap.put("d"+i, (int)getCombinedByNum(list, i));
@@ -187,12 +190,19 @@ public class DataServiceImpl extends BaseService implements IDataService {
     		count += StrUtil.objToDouble(map.get("count"));
 		}
     	combinedMap.put("count", count);
-    	
     	list.add(combinedMap);
+    	
+    	for (Map<String, Object> map : list) {
+    		List<String> values = new ArrayList<String>();
+    		for (int i = 0; i < num+1; i++) {
+    			values.add(map.get("d"+i).toString());
+    		}
+    		map.put("data", values);
+		}
+    	
     	resultMap.put("num", num);
     	resultMap.put("list", list);
     	resultMap.put("titleList", titleList);
-    	
     	return resultMap;
     }
     
@@ -218,7 +228,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
     		String yearMonth = DateUtil.dateToString(new Date(), DateUtil.YYYYMM);
     		int currentMonthDay = DateUtil.getCurrentMonthDay();
     		for (int i = 0; i < currentMonthDay; i++) {
-    			sql.append(" ,(SELECT IFNULL(SUM(realAmount),0) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN other_balance ob1 ON(mc1.cardId = ob1.balanceServiceId AND ob1.balanceServiceType = :balanceServiceType) WHERE mct1.cardTypeId = mct.cardTypeId AND :createTimeEnd AND DATE_FORMAT(mc1.createTime, '%Y-%m%e')='").append(yearMonth).append(i+1).append("') d"+i);
+    			sql.append(" ,(SELECT IFNULL(SUM(realAmount),0) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN other_balance ob1 ON(mc1.cardId = ob1.balanceServiceId AND ob1.balanceServiceType IN(:balanceServiceTypes)) WHERE mct1.cardTypeId = mct.cardTypeId AND :createTimeEnd AND DATE_FORMAT(mc1.createTime, '%Y-%m%e')='").append(yearMonth).append(i+1).append("') d"+i);
 	    		titleList.add(DateUtil.getDayName(i));
 	    		num = i;
     		}
@@ -228,7 +238,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
     		titleList.add("本年");
     		String year = DateUtil.dateToString(new Date(), DateUtil.YYYY);
 	    	for (int i = 0; i < 12; i++) {
-	    		sql.append(" ,(SELECT IFNULL(SUM(realAmount),0) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN other_balance ob1 ON(mc1.cardId = ob1.balanceServiceId AND ob1.balanceServiceType = :balanceServiceType) WHERE mct1.cardTypeId = mct.cardTypeId AND :createTimeEnd AND DATE_FORMAT(mc1.createTime, '%Y%c')='").append(year).append(i+1).append("') d"+i);
+	    		sql.append(" ,(SELECT IFNULL(SUM(realAmount),0) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN other_balance ob1 ON(mc1.cardId = ob1.balanceServiceId AND ob1.balanceServiceType IN(:balanceServiceTypes)) WHERE mct1.cardTypeId = mct.cardTypeId AND :createTimeEnd AND DATE_FORMAT(mc1.createTime, '%Y%c')='").append(year).append(i+1).append("') d"+i);
 	    		titleList.add(DateUtil.getMonthName(i));
 	    		num = i;
 	    	}
@@ -237,7 +247,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
     	}else{ //默认本周
     		titleList.add("本周");
     		for (int i = 0; i < 7; i++) {
-	    		sql.append(" ,(SELECT IFNULL(SUM(realAmount),0) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN other_balance ob1 ON(mc1.cardId = ob1.balanceServiceId AND ob1.balanceServiceType = :balanceServiceType) WHERE mct1.cardTypeId = mct.cardTypeId AND ob1.createTime BETWEEN :createTimeStart AND :createTimeEnd AND DATE_FORMAT(ob1.createTime, '%w')=").append(i).append(") d"+i);
+	    		sql.append(" ,(SELECT IFNULL(SUM(realAmount),0) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN other_balance ob1 ON(mc1.cardId = ob1.balanceServiceId AND ob1.balanceServiceType IN(:balanceServiceTypes)) WHERE mct1.cardTypeId = mct.cardTypeId AND ob1.createTime BETWEEN :createTimeStart AND :createTimeEnd AND DATE_FORMAT(ob1.createTime, '%w')=").append(i).append(") d"+i);
 	    		titleList.add(DateUtil.getWeekName(i)); 
 	    		num = i;
 	    	}
@@ -246,12 +256,15 @@ public class DataServiceImpl extends BaseService implements IDataService {
     	} 
     	sql.append(" FROM member_card_type mct");
     	sql.append(" LEFT JOIN member_card mc ON(mct.cardTypeId = mc.cardTypeId)"); 
-    	sql.append(" LEFT JOIN other_balance ob ON(mc.cardId = ob.balanceServiceId AND ob.balanceServiceType = :balanceServiceType AND ob.createTime BETWEEN :createTimeStart AND :createTimeEnd)");
+    	sql.append(" LEFT JOIN other_balance ob ON(mc.cardId = ob.balanceServiceId AND ob.balanceServiceType IN(:balanceServiceTypes) AND ob.createTime BETWEEN :createTimeStart AND :createTimeEnd)");
     	sql.append(" GROUP BY mct.cardTypeId");
     	
-    	dataInputView.setBalanceServiceType(StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_CARD_CZ));
+    	dataInputView.setBalanceServiceTypeArr(new Integer[]{StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_REG), StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_CARD_CZ)});
     	
-    	List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
+    	Map<String, Object> paramMap = JsonUtils.fromJson(dataInputView);
+    	paramMap.putAll(SQLUtil.getInToSQL("balanceServiceTypes", dataInputView.getBalanceServiceTypeArr()));
+    	
+    	List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), paramMap);
     	Map<String, Object> combinedMap = new HashMap<String, Object>();
     	combinedMap.put("cardTypeName", "合计");
     	for (int i = 0; i < num+1; i++) {
@@ -262,8 +275,16 @@ public class DataServiceImpl extends BaseService implements IDataService {
     		realAmountSum += StrUtil.objToDouble(map.get("realAmountSum"));
 		}
     	combinedMap.put("realAmountSum", realAmountSum);
-    	
     	list.add(combinedMap);
+    	
+    	for (Map<String, Object> map : list) {
+    		List<String> values = new ArrayList<String>();
+    		for (int i = 0; i < num+1; i++) {
+    			values.add(map.get("d"+i).toString());
+    		}
+    		map.put("data", values);
+		}
+    	
     	resultMap.put("num", num);
     	resultMap.put("list", list);
     	resultMap.put("titleList", titleList);
@@ -300,6 +321,14 @@ public class DataServiceImpl extends BaseService implements IDataService {
     	combinedMap.put("goodsXF", goodsXF);
     	combinedMap.put("cardBalance", cardBalance); 
     	list.add(combinedMap);
+    	
+    	for (Map<String, Object> map : list) {
+    		List<String> values = new ArrayList<String>();
+    		values.add(map.get("siteXF").toString());
+    		values.add(map.get("goodsXF").toString());
+    		values.add(map.get("cardBalance").toString());
+    		map.put("data", values);
+		}
     	
     	resultMap.put("list", list);
     	

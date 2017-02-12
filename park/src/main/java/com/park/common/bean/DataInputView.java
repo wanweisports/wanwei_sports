@@ -14,6 +14,7 @@ public class DataInputView extends BaseInputView {
 	private String dictName;
 	private String memberName;
 	private String sportId;
+	private Integer[] balanceServiceTypeArr; 
 
 	public Integer getCountNum() {
 		return countNum;
@@ -109,6 +110,14 @@ public class DataInputView extends BaseInputView {
 
 	public void setSportId(String sportId) {
 		this.sportId = sportId;
+	}
+
+	public Integer[] getBalanceServiceTypeArr() {
+		return balanceServiceTypeArr;
+	}
+
+	public void setBalanceServiceTypeArr(Integer[] balanceServiceTypeArr) {
+		this.balanceServiceTypeArr = balanceServiceTypeArr;
 	}
 	
 }
