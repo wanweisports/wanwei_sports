@@ -102,7 +102,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <!--<tr>
                             <td>1</td>
                             <td>20161214111123</td>
                             <td>李老师</td>
@@ -129,7 +129,7 @@
                                     <span class="glyphicon glyphicon-trash"></span> 删除
                                 </a>
                             </td>
-                        </tr>
+                        </tr>-->
                         <c:forEach var="data" items="${list}" varStatus="loop">
                             <tr>
                                 <td>${loop.index + 1}</td>
