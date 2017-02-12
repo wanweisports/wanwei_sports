@@ -64,36 +64,31 @@
         <div class="panel panel-default">
             <div class="panel-heading">会员注册数量</div>
             <div class="panel-body">
-                <div style="overflow: auto;">
+                <div class="table-responsive">
                     <table class="table table-bordered data-members-count">
                         <thead>
                         <tr class="bg-info">
                             <th>会员类型</th>
                             <c:forEach var="title" items="${register.titleList}">
-                                <th>${title}</th>
+                           	<th>${title}</th>
                             </c:forEach>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="o" items="${register.list}">
-                            <tr>
-                                <td>${o.cardTypeName}</td>
-                                <td>${o.count}</td>
-                                <c:forEach begin="0" end="${register.num}" varStatus="vs">
-                                    <c:set var="key" value="d${vs.index }"  />
-                                    <td>${o[key]}</td>
-                                </c:forEach>
-                            </tr>
-                        </c:forEach>
+                        	<c:forEach var="o" items="${register.list}">
+                        	<tr>
+                        		<td>${o.cardTypeName}</td>
+                        		<td>${o.count}</td>
+                        		<c:forEach begin="0" end="${register.num}" varStatus="vs">
+                        			<c:set var="key" value="d${vs.index }"  />
+                        			<td>${o[key]}</td>
+                        		</c:forEach>
+                        	</tr>
+                        	</c:forEach>
                         </tbody>
                     </table>
                 </div>
-                <div class="col-sm-8">
-                    <div id="member_count_chart" style="width: 100%; height: 300px;"></div>
-                </div>
-                <div class="col-sm-4">
-                    <div id="member_count_compare_chart" style="width: 100%; height: 300px;"></div>
-                </div>
+                <div id="member_count_chart" style="width: 100%; height: 300px;"></div>
             </div>
         </div>
         <div class="panel panel-default">
@@ -123,7 +118,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div id="member_stored_chart" style="width: 100%; height: 400px;"></div>
+                <div id="member_stored_chart" style="width: 100%; height: 300px;"></div>
             </div>
         </div>
         <div class="panel panel-default">
