@@ -74,7 +74,7 @@
         <div class="alert alert-info clearfix">
             <ul class="nav nav-pills pull-left">
                 <li style="margin-right: 15px;">订餐总计:</li>
-                <li style="margin-right: 15px;">普通餐 <span class="badge">6份</span></li>
+                <li style="margin-right: 15px;">普通餐 <span class="badge">${total}份</span></li>
             </ul>
             <div class="pull-right">
                 <a href="javascript:;" class="btn btn-danger">
