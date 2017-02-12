@@ -157,8 +157,8 @@ public class StudentsController extends BaseController {
     }
     
     @ResponseBody
-	@RequestMapping("sudentSign")
-	public ResponseBean sudentSign(MemberSiteStudentSign memberSiteStudentSign){
+	@RequestMapping("studentSign")
+	public ResponseBean studentSign(MemberSiteStudentSign memberSiteStudentSign){
 		try {
 			memberSiteStudentSign.setSalesId(super.getUserInfo().getId());
 			studentService.saveStudentGign(memberSiteStudentSign);

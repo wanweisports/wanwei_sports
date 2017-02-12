@@ -2,6 +2,8 @@ package com.park.common.po;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -28,16 +30,10 @@ public class MemberSiteStudentSign implements java.io.Serializable {
 	public MemberSiteStudentSign() {
 	}
 
-	/** minimal constructor */
-	public MemberSiteStudentSign(Integer signId) {
-		this.signId = signId;
-	}
-
 	/** full constructor */
-	public MemberSiteStudentSign(Integer signId, String signStudentCardNo,
-			String signName, String signMobile, String createTime,
-			String updateTime, Integer salesId) {
-		this.signId = signId;
+	public MemberSiteStudentSign(String signStudentCardNo, String signName,
+			String signMobile, String createTime, String updateTime,
+			Integer salesId) {
 		this.signStudentCardNo = signStudentCardNo;
 		this.signName = signName;
 		this.signMobile = signMobile;
@@ -48,6 +44,7 @@ public class MemberSiteStudentSign implements java.io.Serializable {
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "signId", unique = true, nullable = false)
 	public Integer getSignId() {
 		return this.signId;

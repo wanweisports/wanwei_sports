@@ -121,7 +121,7 @@
 
                 var cardNo = $(this).attr("data-cardNo");
 
-                $.post('/students/sudentSign', {signStudentCardNo: cardNo}, function (res) {
+                $.post('/students/studentSign', {signStudentCardNo: cardNo}, function (res) {
                     if (res.code == 1) {
                         location.reload();
                     } else {
