@@ -39,8 +39,8 @@ public class WXOAuth2Controller extends BaseController {
 		// 用户同意授权后，能获取到code
 		String code = request.getParameter("code");
 		String returnUrl = request.getParameter("returnUrl");
-		System.out.println(code);
-		System.out.println(returnUrl);
+		logger.info(code);
+		logger.info(returnUrl);
 
 		// 用户同意授权
 		if (!"authdeny".equals(code)) {
@@ -56,8 +56,10 @@ public class WXOAuth2Controller extends BaseController {
 			if(userInfo != null){
 				if(userOperator == null){ //已登录并不存在openId的先保存
 					userOperator = operatorService.updateUserOperatorOpenId(userInfo.getOperatorId(), openId);
-					super.getRequest().getSession().setAttribute(IPlatformConstant.LOGIN_USER, userOperator);
 				}
+			}
+			if(userOperator != null){
+				super.getRequest().getSession().setAttribute(IPlatformConstant.LOGIN_USER, userOperator);
 			}
 		}
 		return "";
