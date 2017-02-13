@@ -93,10 +93,12 @@
                                        data-backdrop="false" data-cardId="${student.cardId}" data-cardNo="${student.cardNo}">
                                         <span class="glyphicon glyphicon-refresh"></span> 补办
                                     </a>
-                                    <a class="btn btn-info students-sign" href="#sign_modal" data-toggle="modal"
-                                       data-backdrop="false" data-student="${student.studentName}" data-cardNo="${student.cardNo}">
-                                        <span class="glyphicon glyphicon-tag"></span> 签到
-                                    </a>
+                                    <c:if test="${student.isSign == null}">
+	                                    <a class="btn btn-info students-sign" href="#sign_modal" data-toggle="modal"
+	                                       data-backdrop="false" data-student="${student.studentName}" data-cardNo="${student.studentId}">
+	                                        <span class="glyphicon glyphicon-tag"></span> 签到
+	                                    </a>
+                                    </c:if>
                                     <%--<a class="btn btn-danger students-delete" href="javascript:;"
                                         data-id="${student.studentId}">
                                         <span class="glyphicon glyphicon-trash"></span> 删除
@@ -253,7 +255,7 @@
                 </div>
                 <div class="modal-body" style="clear: both;">
                     <form id="sign_form" class="form-horizontal" onsubmit="return false;">
-                        <input type="hidden" id="sign_card_no" name="signStudentCardNo">
+                        <input type="hidden" id="sign_card_no" name="studentId">
                         <div class="form-group">
                             <label for="sign_student" class="col-sm-2 control-label">签到学生</label>
 

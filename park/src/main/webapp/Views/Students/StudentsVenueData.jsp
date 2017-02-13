@@ -31,16 +31,16 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="student_name" name="student_name"
+                        <input type="text" class="form-control" id="student_name" name="studentName" value="${studentName}"
                                placeholder="请输入学生姓名">
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="createTimeStart" name="createTimeStart" placeholder="开始日期"
-                               value="${createTimeStart}">
+                               value="${createStartTime}">
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="createTimeEnd" name="createTimeEnd" placeholder="结束日期"
-                               value="${createTimeEnd}">
+                               value="${createEndTime}">
                     </div>
                     <div class="form-group">
                         <a href="javascript:;" class="btn btn-primary">
@@ -54,9 +54,9 @@
         <div class="alert alert-info clearfix">
             <ul class="nav nav-pills pull-left">
                 <li style="margin-right: 15px;">场地类型总计:</li>
-                <li style="margin-right: 15px;">全部 <span class="badge">42次</span></li>
-                <li style="margin-right: 15px;">羽毛球 <span class="badge">21次</span></li>
-                <li style="margin-right: 15px;">篮球 <span class="badge">21次</span></li>
+                <c:forEach var="d" items="${data}">
+                	<li style="margin-right: 15px;">${d.sportName}<span class="badge">${d.count}次</span></li>
+                </c:forEach>
             </ul>
             <div class="pull-right">
                 <a href="javascript:;" class="btn btn-danger">
@@ -83,96 +83,17 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>李洪旭</td>
-                            <td>6年级1班</td>
-                            <td>2016-10-25 12:11</td>
-                            <td>羽毛球</td>
-                            <td>李晓丹</td>
-                            <td>2016-09-03</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>李洪旭</td>
-                            <td>6年级1班</td>
-                            <td>2016-10-25 12:11</td>
-                            <td>羽毛球</td>
-                            <td>李晓丹</td>
-                            <td>2016-09-03</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>李洪旭</td>
-                            <td>6年级1班</td>
-                            <td>2016-10-25 12:11</td>
-                            <td>羽毛球</td>
-                            <td>李晓丹</td>
-                            <td>2016-09-03</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>李洪旭</td>
-                            <td>6年级1班</td>
-                            <td>2016-10-25 12:11</td>
-                            <td>羽毛球</td>
-                            <td>李晓丹</td>
-                            <td>2016-09-03</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>李洪旭</td>
-                            <td>6年级1班</td>
-                            <td>2016-10-25 12:11</td>
-                            <td>羽毛球</td>
-                            <td>李晓丹</td>
-                            <td>2016-09-03</td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>李洪旭</td>
-                            <td>6年级1班</td>
-                            <td>2016-10-25 12:11</td>
-                            <td>羽毛球</td>
-                            <td>李晓丹</td>
-                            <td>2016-09-03</td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td>李洪旭</td>
-                            <td>6年级1班</td>
-                            <td>2016-10-25 12:11</td>
-                            <td>羽毛球</td>
-                            <td>李晓丹</td>
-                            <td>2016-09-03</td>
-                        </tr>
-                        <tr>
-                            <td>8</td>
-                            <td>李洪旭</td>
-                            <td>6年级1班</td>
-                            <td>2016-10-25 12:11</td>
-                            <td>羽毛球</td>
-                            <td>李晓丹</td>
-                            <td>2016-09-03</td>
-                        </tr>
-                        <tr>
-                            <td>9</td>
-                            <td>李洪旭</td>
-                            <td>6年级1班</td>
-                            <td>2016-10-25 12:11</td>
-                            <td>羽毛球</td>
-                            <td>李晓丹</td>
-                            <td>2016-09-03</td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td>李洪旭</td>
-                            <td>6年级1班</td>
-                            <td>2016-10-25 12:11</td>
-                            <td>羽毛球</td>
-                            <td>李晓丹</td>
-                            <td>2016-09-03</td>
-                        </tr>
+                        <c:forEach var="student" items="${list}">
+	                        <tr>
+	                            <td>${student.signId}</td>
+	                            <td>${student.studentName}</td>
+	                            <td>${student.studentGrade}年级${student.studentClass}班</td>
+	                            <td>${student.createTime}</td>
+	                            <td>${student.sportName}</td>
+	                            <td>${student.operatorName}</td>
+	                            <td>${student.createTime}</td>
+	                        </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                     <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >

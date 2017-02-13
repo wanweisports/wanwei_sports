@@ -25,4 +25,8 @@ public interface IStudentService {
 	
 	public void saveStudentGign(MemberSiteStudentSign memberSiteStudentSign);
 	
+	public PageBean getStudentSites(StudentInputView studentInputView);
+	
+	public Map<String, Object> getSudentVenueCount();
+	
 }

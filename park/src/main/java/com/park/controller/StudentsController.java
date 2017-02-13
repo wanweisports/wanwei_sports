@@ -92,7 +92,18 @@ public class StudentsController extends BaseController {
 
     // 学生用场流水
     @RequestMapping("data")
-    public String studentsVenueData() {return "Students/StudentsVenueData";}
+    public String studentsVenueData(StudentInputView studentInputView, Model model) {
+    	try{
+    		model.addAllAttributes(JsonUtils.fromJsonDF(studentInputView));
+    		PageBean pageBean = studentService.getStudentSites(studentInputView);
+    		super.setPageInfo(model, pageBean);
+    		
+    		model.addAllAttributes(studentService.getSudentVenueCount());
+    	}catch (Exception e) {
+			e.printStackTrace();
+		}
+    	return "Students/StudentsVenueData";
+    }
     
     @ResponseBody
     @RequestMapping("lockStudent")

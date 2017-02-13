@@ -19,7 +19,7 @@ import com.park.common.bean.ResponseBean;
 import com.park.common.exception.MessageException;
 import com.park.common.po.MemberSiteSign;
 import com.park.common.util.JsonUtils;
-import com.park.push.WebSocketTest;
+/*import com.park.push.WebSocketTest;*/
 import com.park.service.IMemberSignService;
 
 @Controller
@@ -86,8 +86,8 @@ public class MemberSignController extends BaseController {
     @RequestMapping("qrSign")
     public void qrSign(String sessionId, String mobile, HttpSession httpSession) throws Exception {
     	
-    	Session session = WebSocketTest.getSession(sessionId);
-    	session.getBasicRemote().sendText(JsonUtils.toJson(memberSignService.getQrSign(getUserInfo().getOperatorId(), mobile)));
+    	/*Session session = WebSocketTest.getSession(sessionId);
+    	session.getBasicRemote().sendText(JsonUtils.toJson(memberSignService.getQrSign(getUserInfo().getOperatorId(), mobile)));*/
     	
     	return;
     }

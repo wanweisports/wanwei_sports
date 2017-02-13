@@ -2,6 +2,7 @@ package com.park.service.impl;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 		String cardNo = studentInputView.getCardNo();
 		String studentName = studentInputView.getStudentName();
 		
-		StringBuilder headSql = new StringBuilder("SELECT mc.cardId, mc.cardNo, mc.cardDeposit, us.studentMobile, us.studentId, us.studentName, us.studentGrade, us.studentClass, CONCAT(us.studentGrade, us.studentClass) gradeClass, (SELECT COUNT(1) FROM member_site_student_sign WHERE signStudentCardNo=mc.cardNo) siteCount, mc.cardDeadline, us.studentStatus, uo.operatorName, us.createTime");
+		StringBuilder headSql = new StringBuilder("SELECT mc.cardId, mc.cardNo, mc.cardDeposit, us.studentMobile, us.studentId, us.studentName, us.studentGrade, us.studentClass, CONCAT(us.studentGrade, us.studentClass) gradeClass, (SELECT COUNT(1) FROM member_site_student_sign WHERE studentId=us.studentId) siteCount, mc.cardDeadline, us.studentStatus, uo.operatorName, us.createTime, (SELECT 1 FROM member_site_student_sign WHERE DATE(createTime)=CURDATE() AND studentId=us.studentId) isSign");
 		StringBuilder bodySql = new StringBuilder(" FROM user_student us");
 		StringBuilder whereSql = new StringBuilder(" WHERE us.studentStatus = ").append(IDBConstant.LOGIC_STATUS_YES);
 		
@@ -147,16 +148,18 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 	
 	@Override
 	public void saveStudentGign(MemberSiteStudentSign memberSiteStudentSign){
-		String signStudentCardNo = memberSiteStudentSign.getSignStudentCardNo();
+		/*String signStudentCardNo = memberSiteStudentSign.getSignStudentCardNo();
+		Map<String, Object> studentCardInfo = getStudentByCardNo(signStudentCardNo);*/
+		Integer studentId = memberSiteStudentSign.getStudentId();
 		
-		Map<String, Object> studentCardInfo = getStudentByCardNo(signStudentCardNo);
+		UserStudent student = getStudent(studentId);
 		
-		if(studentCardInfo == null) throw new MessageException("学生会员不存在");
-		if(getStudentByTime(signStudentCardNo, DateUtil.dateToString(new Date(), null)) != null) throw new MessageException("学生会员今日已签到过，请勿重复签到");
+		if(student == null) throw new MessageException("学生会员不存在");
+		if(getStudentByTime(studentId, DateUtil.dateToString(new Date(), null)) != null) throw new MessageException("学生会员今日已签到过，请勿重复签到");
 		
 		memberSiteStudentSign.setCreateTime(DateUtil.getNowDate());
-		memberSiteStudentSign.setSignMobile(StrUtil.objToStr(studentCardInfo.get("studentMobile")));
-		memberSiteStudentSign.setSignName(StrUtil.objToStr(studentCardInfo.get("studentName")));
+		memberSiteStudentSign.setSignMobile(student.getStudentMobile());
+		memberSiteStudentSign.setSignName(student.getStudentName());
 		baseDao.save(memberSiteStudentSign, null);
 	}
 	
@@ -164,13 +167,64 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 		return baseDao.queryBySqlFirst("SELECT * FROM user_student us, member_card mc WHERE us.cardId=mc.cardId AND mc.cardNo=?", cardNo);
 	}
 	
-	private Map<String, Object> getStudentByTime(String cardNo, String time){
-		return baseDao.queryBySqlFirst("SELECT * FROM member_site_student_sign WHERE signStudentCardNo=? AND DATE(createTime)=?", cardNo, time);
+	private Map<String, Object> getStudentByTime(Integer studentId, String time){
+		return baseDao.queryBySqlFirst("SELECT * FROM member_site_student_sign WHERE studentId=? AND DATE(createTime)=?", studentId, time);
 	}
 	
 	@Override
 	public Map<String, Object> getCardDeposit(int cardTypeId){
 		return baseDao.queryBySqlFirst("SELECT cardDeposit FROM member_card_type WHERE cardTypeId = ?", cardTypeId);
+	}
+	
+	@Override
+	public PageBean getStudentSites(StudentInputView studentInputView){
+		
+		String studentName = studentInputView.getStudentName();
+		Integer sportId = studentInputView.getSportId();
+		String createStartTime = studentInputView.getCreateStartTime();
+		String createEndTime = studentInputView.getCreateEndTime();
+		
+		StringBuilder headSql = new StringBuilder("SELECT msss.signId, us.studentId, us.studentName, us.studentGrade, us.studentClass, msss.createTime, ss.sportName, uo.operatorName");
+		StringBuilder bodySql = new StringBuilder(" FROM member_site_student_sign msss");
+		bodySql.append(" INNER JOIN site_sport ss ON(msss.sportId = ss.sportId)");
+		bodySql.append(" INNER JOIN user_student us ON(us.studentId=msss.studentId)");
+		bodySql.append(" INNER JOIN user_operator uo ON(uo.id = msss.salesId)");
+		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
+		
+		if(StrUtil.isNotBlank(studentName)){
+			whereSql.append(" AND us.studentName LIKE :studentName");
+			studentInputView.setStudentName(studentName + "%");
+		}
+		if(sportId != null){
+			whereSql.append(" AND msss.sportId = :sportId");
+		}
+		if(StrUtil.isNotBlank(createStartTime)){
+			whereSql.append(" AND msss.createTime >= :createStartTime");
+		}
+		if(StrUtil.isNotBlank(createEndTime)){
+			whereSql.append(" AND msss.createTime <= :createEndTime");
+		}
+		
+		return super.getPageBean(headSql, bodySql, whereSql, studentInputView);
+	}
+	
+	@Override
+	public Map<String, Object> getSudentVenueCount(){
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> list = baseDao.queryBySql("SELECT sportName, COUNT(msss.sportId) count FROM site_sport ss LEFT JOIN member_site_student_sign msss ON(msss.sportId = ss.sportId) GROUP BY ss.sportId");
+		
+		Map<String, Object> mapSum = new HashMap<String, Object>();
+		mapSum.put("sportName", "全部");
+		int countSum = 0;
+		for (Map<String, Object> map : list) {
+			countSum += StrUtil.objToInt(map.get("count"));
+		}
+		mapSum.put("count", countSum);
+		list.add(0, mapSum);
+		resultMap.put("data", list);
+		
+		return resultMap;
 	}
 	
 }

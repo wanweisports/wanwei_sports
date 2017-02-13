@@ -17,9 +17,11 @@ public class MemberSiteStudentSign implements java.io.Serializable {
 	// Fields
 
 	private Integer signId;
+	private Integer studentId;
 	private String signStudentCardNo;
 	private String signName;
 	private String signMobile;
+	private Integer sportId;
 	private String createTime;
 	private String updateTime;
 	private Integer salesId;
@@ -31,12 +33,14 @@ public class MemberSiteStudentSign implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public MemberSiteStudentSign(String signStudentCardNo, String signName,
-			String signMobile, String createTime, String updateTime,
-			Integer salesId) {
+	public MemberSiteStudentSign(Integer studentId, String signStudentCardNo,
+			String signName, String signMobile, Integer sportId,
+			String createTime, String updateTime, Integer salesId) {
+		this.studentId = studentId;
 		this.signStudentCardNo = signStudentCardNo;
 		this.signName = signName;
 		this.signMobile = signMobile;
+		this.sportId = sportId;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
 		this.salesId = salesId;
@@ -52,6 +56,15 @@ public class MemberSiteStudentSign implements java.io.Serializable {
 
 	public void setSignId(Integer signId) {
 		this.signId = signId;
+	}
+
+	@Column(name = "studentId")
+	public Integer getStudentId() {
+		return this.studentId;
+	}
+
+	public void setStudentId(Integer studentId) {
+		this.studentId = studentId;
 	}
 
 	@Column(name = "signStudentCardNo", length = 32)
@@ -79,6 +92,15 @@ public class MemberSiteStudentSign implements java.io.Serializable {
 
 	public void setSignMobile(String signMobile) {
 		this.signMobile = signMobile;
+	}
+
+	@Column(name = "sportId")
+	public Integer getSportId() {
+		return this.sportId;
+	}
+
+	public void setSportId(Integer sportId) {
+		this.sportId = sportId;
 	}
 
 	@Column(name = "createTime", length = 20)
