@@ -67,7 +67,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <!--<tr>
                             <td>20161214123212</td>
                             <td>北京万为体育集团</td>
                             <td>11043526785</td>
@@ -126,7 +126,7 @@
                                     <span class="glyphicon glyphicon-usd"></span> 收 款
                                 </button>
                             </td>
-                        </tr>
+                        </tr>-->
                         <c:forEach var="loan" items="${list}">
                             <tr>
                                 <td>${loan.orderNo}</td>

@@ -1,24 +1,25 @@
 package com.park.controller;
 
 import com.park.common.annotation.NotProtected;
-import com.park.common.bean.PageBean;
-import com.park.common.bean.ResponseBean;
-import com.park.common.bean.TrainsClassInputView;
-import com.park.common.bean.TrainsClassStudentsInputView;
+import com.park.common.bean.*;
 import com.park.common.constant.IDBConstant;
 import com.park.common.constant.IPlatformConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.po.UserOperator;
+import com.park.common.util.DateUtil;
 import com.park.common.util.JsonUtils;
 import com.park.common.util.StrUtil;
-import com.park.service.IOperatorService;
-import com.park.service.ITrainsClassService;
-import com.park.service.ITrainsClassStudentsService;
+import com.park.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wangjun on 16/10/17.
@@ -32,6 +33,12 @@ public class MobileController extends BaseController {
     private IOperatorService operatorService;
 
     @Autowired
+    private ISiteService siteService;
+
+    @Autowired
+    private IParkService parkService;
+
+    @Autowired
     private ITrainsClassService trainsClassService;
 
     @Autowired
@@ -39,24 +46,16 @@ public class MobileController extends BaseController {
 
     // 用户登录
     @NotProtected
-    @RequestMapping("passport/login")
-    public String passportLogin(String returnUrl, Model model) {
-        model.addAttribute("returnUrl", StrUtil.isBlank(returnUrl) ? "/mobile/dashboard" : returnUrl);
-        return "Mobile/Passport/PassportLogin";
-    }
-
-    // 用户登录
-    @NotProtected
     @ResponseBody
     @RequestMapping("/passport/userLogin")
-    public ResponseBean userLogin(String name, String pwd) {
+    public ResponseBean userLogin(String mobile, String password) {
         try{
-            if(StrUtil.isBlank(name)) throw new MessageException("请输入用户名！");
-            if(StrUtil.isBlank(pwd)) throw new MessageException("请输入密码！");
+            if(StrUtil.isBlank(mobile)) throw new MessageException("请输入手机号！");
+            if(StrUtil.isBlank(password)) throw new MessageException("请输入密码！");
 
-            UserOperator operator = operatorService.innerLogin(name);
-            if(operator == null) throw new MessageException("用户名错误！");
-            if(!pwd.equals(operator.getOperatorPwd())) throw new MessageException("密码错误！");
+            UserOperator operator = operatorService.userMobileLogin(mobile);
+            if(operator == null) throw new MessageException("此用户不存在！");
+            if(!password.equals(operator.getOperatorPwd())) throw new MessageException("密码错误！");
             if(!IDBConstant.LOGIC_STATUS_YES.equals(operator.getStatus())) throw new MessageException("您的帐号已被锁定，请联系管理员！");
             operator.setOperatorPwd(null);
 
@@ -72,28 +71,69 @@ public class MobileController extends BaseController {
         }
     }
 
-    // 用户注册
+    // 用户退出
+    @ResponseBody
+    @RequestMapping("passport/userLogout")
+    public ResponseBean userLogout() {
+        try{
+            super.getRequest().getSession().invalidate();
+            return new ResponseBean(true);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
+    // 用户注册[临时不做]
+    @NotProtected
     @RequestMapping("passport/register")
     public String renderRegister() {
         return "Mobile/Passport/PassportRegister";
     }
 
-    // 用户完善
+    // 用户注册[临时不做]
+    @NotProtected
+    @ResponseBody
+    @RequestMapping("/passport/userRegister")
+    public ResponseBean userRegister(String mobile, String password, String confirm) {
+        try{
+            if(StrUtil.isBlank(mobile)) throw new MessageException("请输入手机号！");
+            if(StrUtil.isBlank(password)) throw new MessageException("请输入密码！");
+            if(StrUtil.isBlank(confirm)) throw new MessageException("请输入确认密码！");
+            if(password.equals(confirm)) throw new MessageException("密码和确认密码不一致！");
+
+            UserOperator operator = operatorService.userMobileLogin(mobile);
+            if(operator != null) throw new MessageException("此手机号已被占用！");
+            operator.setOperatorPwd(null);
+
+            operatorService.saveLastLoginTime(operator.getId());
+            super.getRequest().getSession().setAttribute(IPlatformConstant.LOGIN_USER, operator);
+            return new ResponseBean(true);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
+    // 用户完善[临时不做]
+    @NotProtected
     @RequestMapping("passport/profile")
     public String renderProfile() {
         return "Mobile/Passport/PassportProfile";
     }
 
-    // 用户退出
-    @RequestMapping("passport/logout")
-    public String logout() {
-        super.getRequest().getSession().invalidate();
-        return redirect("/mobile/passport/login");
-    }
-
     // 首页
+    @NotProtected
     @RequestMapping("dashboard")
-    public String renderDashboard() {
+    public String renderDashboard(Model model) {
+        model.addAttribute("isLogin", checkLogin());
+
         return "Mobile/Dashboard/DashboardIndex";
     }
 
@@ -124,18 +164,62 @@ public class MobileController extends BaseController {
     }
 
     // 个人中心关于我们
+    @NotProtected
     @RequestMapping("center/about")
     public String renderCenterAbout() {
         return "Mobile/Center/CenterAbout";
     }
 
     // 预订时序图
+    @NotProtected
     @RequestMapping("reservation/sequence")
     public String renderReservationSequence() {
         return "Mobile/Reservation/ReservationSequence";
     }
 
+    // 快速预订
+    @NotProtected
+    @RequestMapping("reservation/quick")
+    public String renderReservationQuick(SiteInputView siteInputView, Model model) throws ParseException {
+        siteInputView.setSportStatus(IDBConstant.LOGIC_STATUS_YES);
+        List<Map<String, Object>> siteSports = siteService.getSiteSportNames(siteInputView);
+        if(siteSports.size() > 0){
+            Integer sportId = siteInputView.getSportId();
+            if(sportId == null){ //未选择，默认第一个
+                Map<String, Object> sportMap = siteSports.get(0);
+                sportId = StrUtil.objToInt(sportMap.get("sportId"));
+            }
+            siteInputView.setSportId(sportId);
+            siteInputView.setSiteStatus(IDBConstant.LOGIC_STATUS_YES);
+            List<Map<String, Object>> sites = siteService.getSites(siteInputView);
+            List<Map<String, Object>> timePeriod = parkService.getTimePeriod(parkService.getBusiness());
+            model.addAttribute("sportId", sportId);
+            model.addAttribute("siteSports", siteSports);
+            model.addAttribute("sites", sites);
+            model.addAttribute("timePeriod", timePeriod);
+            model.addAttribute("curDate", DateUtil.dateToString(new Date(), null));
+            model.addAttribute("curSportId", sportId);
+        }
+
+        return "Mobile/Reservation/ReservationSequence";
+    }
+
+    // 预订支付结果
+    @NotProtected
+    @RequestMapping("reservation/result")
+    public String renderReservationResult() {
+        return "Mobile/Reservation/ReservationResult";
+    }
+
+    // 预订支付确认
+    @NotProtected
+    @RequestMapping("reservation/confirm")
+    public String renderReservationConfirm() {
+        return "Mobile/Reservation/ReservationConfirm";
+    }
+
     // 预订订单
+    @NotProtected
     @RequestMapping("reservation/orders")
     public String renderReservationOrders() {
         return "Mobile/Reservation/ReservationList";
@@ -180,5 +264,14 @@ public class MobileController extends BaseController {
         }
 
         return "Mobile/Training/TrainingStudents";
+    }
+
+    private boolean checkLogin() {
+        if (super.getUserInfo() == null) {
+            return false;
+        } else {
+            UserOperator operator = operatorService.getOperator(super.getUserInfo().getOperatorId());
+            return operator != null;
+        }
     }
 }

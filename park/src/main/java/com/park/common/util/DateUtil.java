@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -308,7 +310,7 @@ public class DateUtil {
     
     // 获得本周一0点时间  Date
     public static Date getTimesWeekmorning() {  
-        Calendar cal = Calendar.getInstance();  
+        Calendar cal = sundaySubOneDay(Calendar.getInstance());
         cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);  
         cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);  
         return cal.getTime();  
@@ -321,10 +323,17 @@ public class DateUtil {
   
     // 获得本周日24点时间  Str
     public static String getTimesWeeknight() {  
-        Calendar cal = Calendar.getInstance();  
+        Calendar cal = sundaySubOneDay(Calendar.getInstance());  
         cal.setTime(getTimesWeekmorning());  
         cal.add(Calendar.DAY_OF_WEEK, 7);  
         return dateToString(cal.getTime(), YYYYMMDDHHMMSS);  
+    }
+    
+    public static Calendar sundaySubOneDay(Calendar cal){
+    	if(cal.get(Calendar.DAY_OF_WEEK) == 1){
+    		cal.add(Calendar.DATE, -1);
+    	}
+    	return cal;
     }
     
     // 获得本月第一天0点时间  
@@ -371,8 +380,14 @@ public class DateUtil {
 		Calendar.SATURDAY = 7 //周六
 	 */
 	public static void main(String[] args) throws ParseException {
-		System.out.println(getCurrentYearEndTime());
-		System.out.println(getLastYearStartTime());
+		  
+	    System.out.println(DateUtil.getTimesWeekmorningStr());
+	    System.out.println(DateUtil.getTimesWeeknight());
+		
+		/*Calendar cal = Calendar.getInstance();
+		System.out.println(cal.get(Calendar.DAY_OF_WEEK));
+		
+		*/
 		/*long s = System.currentTimeMillis();
 		for(int i=0;i<100000;i++){
 			System.out.println(i);

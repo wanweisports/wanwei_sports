@@ -18,4 +18,6 @@ public interface IMemberSignService {
 	
 	public MemberSiteSign getMemberSiteSign(int reserveTimeId, String date) throws ParseException;
 	
+	public Map<String, Object> getQrSign(String operatorId, String mobile) throws ParseException;
+	
 }

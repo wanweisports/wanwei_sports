@@ -33,13 +33,13 @@
                 <form id="data_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="/data/getMembersRegister?countNum=1" data-count="1" class="btn btn-default member-date">今日</a>
-                            <a href="/data/getMembersRegister?countNum=3" data-count="3" class="btn btn-default member-date">本周</a>
-                            <a href="/data/getMembersRegister?countNum=4" data-count="4" class="btn btn-default member-date">本月</a>
-                            <a href="/data/getMembersRegister?countNum=4" data-count="4" class="btn btn-default member-date">本年</a>
+                            <!--<a href="/data/getMembersRegister?countNum=1" data-count="1" class="btn btn-default member-date">今日</a>-->
+                            <a href="/data/getMembersRegister?countNum=21" data-count="21" class="btn btn-default member-date">本周</a>
+                            <a href="/data/getMembersRegister?countNum=31" data-count="31" class="btn btn-default member-date">本月</a>
+                            <a href="/data/getMembersRegister?countNum=41" data-count="41" class="btn btn-default member-date">本年</a>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <input type="text" class="form-control" id="createTimeStart" name="createTimeStart"
                                placeholder="开始日期" value="${createTimeStart}">
                     </div>
@@ -51,7 +51,7 @@
                         <a href="javascript:;" class="btn btn-primary data-filter">
                             <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
                         </a>
-                    </div>
+                    </div>-->
                     <div class="form-group pull-right">
                         <a href="javascript:;" class="btn btn-danger">
                             <span class="glyphicon glyphicon-export"></span> 导出数据
@@ -60,6 +60,7 @@
                 </form>
             </div>
         </div>
+        <input type="hidden" id="count_num" value="${countNum}">
         <div class="panel panel-default">
             <div class="panel-heading">会员注册数量</div>
             <div class="panel-body">
@@ -80,7 +81,7 @@
                         		<td>${o.count}</td>
                         		<c:forEach begin="0" end="${register.num}" varStatus="vs">
                         			<c:set var="key" value="d${vs.index }"  />
-                        			<td>${o[key]}</td> 
+                        			<td>${o[key]}</td>
                         		</c:forEach>
                         	</tr>
                         	</c:forEach>
@@ -117,7 +118,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div id="member_stored_chart" style="width: 100%; height: 400px;"></div>
+                <div id="member_stored_chart" style="width: 100%; height: 300px;"></div>
             </div>
         </div>
         <div class="panel panel-default">

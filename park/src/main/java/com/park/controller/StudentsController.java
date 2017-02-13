@@ -3,6 +3,8 @@ package com.park.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.park.common.bean.*;
+import com.park.service.ISiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,12 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.park.common.bean.MemberCardOpInputView;
-import com.park.common.bean.PageBean;
-import com.park.common.bean.ResponseBean;
-import com.park.common.bean.StudentInputView;
 import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
+import com.park.common.po.MemberSiteStudentSign;
 import com.park.common.po.UserOperator;
 import com.park.common.po.UserStudent;
 import com.park.common.util.JsonUtils;
@@ -32,7 +31,10 @@ public class StudentsController extends BaseController {
 	
 	@Autowired
 	private IStudentService studentService;
-	
+
+    @Autowired
+    private ISiteService siteService;
+
 	@Autowired
 	private IMemberService memberService;
 	
@@ -68,6 +70,9 @@ public class StudentsController extends BaseController {
     		model.addAllAttributes(JsonUtils.fromJsonDF(studentInputView));
     		PageBean pageBean = studentService.getStudents(studentInputView);
     		super.setPageInfo(model, pageBean);
+
+            SiteInputView siteInputView = new SiteInputView();
+            model.addAttribute("siteSportNames", siteService.getSiteSportNames(siteInputView));
     	}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -154,5 +159,21 @@ public class StudentsController extends BaseController {
             return new ResponseBean(false);
         }
     }
+    
+    @ResponseBody
+	@RequestMapping("studentSign")
+	public ResponseBean studentSign(MemberSiteStudentSign memberSiteStudentSign){
+		try {
+			memberSiteStudentSign.setSalesId(super.getUserInfo().getId());
+			studentService.saveStudentGign(memberSiteStudentSign);
+			return new ResponseBean(true);
+		} catch (MessageException e) {
+			e.printStackTrace();
+			return new ResponseBean(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseBean(false);
+		}
+	}
     
 }

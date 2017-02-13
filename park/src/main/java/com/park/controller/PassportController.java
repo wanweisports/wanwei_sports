@@ -1,6 +1,7 @@
 package com.park.controller;
 
 import com.park.common.annotation.NotProtected;
+import com.park.common.bean.MenuInputView;
 import com.park.common.bean.ResponseBean;
 import com.park.common.constant.IDBConstant;
 import com.park.common.constant.IPlatformConstant;
@@ -8,6 +9,7 @@ import com.park.common.exception.MessageException;
 import com.park.common.po.UserOperator;
 import com.park.common.util.JsonUtils;
 import com.park.common.util.StrUtil;
+import com.park.service.IMenuService;
 import com.park.service.IOperatorService;
 import com.park.service.IParkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by wangjun on 17/1/10.
@@ -31,6 +35,9 @@ public class PassportController extends BaseController {
 
     @Autowired
     private IOperatorService operatorService;
+    
+    @Autowired
+    private IMenuService menuService;
 
     // 登录
     @NotProtected
@@ -44,7 +51,7 @@ public class PassportController extends BaseController {
     @NotProtected
     @ResponseBody
     @RequestMapping("submitUserLogin")
-    public ResponseBean submitUserLogin(String name, String pwd) {
+    public ResponseBean submitUserLogin(String name, String pwd, HttpSession session) {
         try{
             if(StrUtil.isBlank(name)) throw new MessageException("请输入用户名！");
             if(StrUtil.isBlank(pwd)) throw new MessageException("请输入密码！");
@@ -55,6 +62,10 @@ public class PassportController extends BaseController {
             operator.setOperatorPwd(null);
             operatorService.saveLastLoginTime(operator.getId());
             super.getRequest().getSession().setAttribute(IPlatformConstant.LOGIN_USER, operator);
+            //获取菜单
+            MenuInputView menuInputView = new MenuInputView();
+			menuInputView.setOperatorId(super.getUserInfo().getOperatorId());
+			session.setAttribute("menus", menuService.getMenus(menuInputView));
             return new ResponseBean(true);
         } catch (MessageException e) {
             e.printStackTrace();

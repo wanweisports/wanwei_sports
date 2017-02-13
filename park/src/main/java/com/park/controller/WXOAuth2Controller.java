@@ -15,12 +15,6 @@ import com.park.service.IOperatorService;
 import com.wx.WeiXinConnector;
 import com.wx.pojo.WeixinOauth2Token;
 
-
-
-/**
- * @author ex_yangxiaoyi
- * 
- */
 @RequestMapping("oAuth2")
 @Controller
 public class WXOAuth2Controller extends BaseController {

@@ -36,6 +36,8 @@ a
     border 1px solid #2FAEF6
 .weui-cells_radio .weui_check:checked+.weui_icon_checked:before
     color #2FAEF6
+.weui-cells_checkbox .weui-check:checked+.weui-icon-checked:before
+    color #2FAEF6
 .weui_icon_success:before
     color #2FAEF6
 .weui-switch:checked
@@ -44,6 +46,8 @@ a
 .weui-cell__ft
     font-size 12px
 .weui-btn_dialog.primary
+    color #2FAEF6
+.weui-dialog__btn_primary
     color #2FAEF6
 .weui-actionsheet
     max-height 100%
@@ -54,6 +58,9 @@ a
     padding-left 15px
 .weui-select
     color #888
+.weui-cell_select-after
+    .weui-select
+        padding-left 15px
 .weui-cell_select .weui-cell__bd:after
     display none
 .weui-form-preview__btn_primary
@@ -64,6 +71,19 @@ a
 .weui-cells_form
     textarea
         padding-left 15px
+
+.weui-actionsheet__btns
+    margin 8px 0 -8px 0
+    overflow hidden
+    .weui-actionsheet__btn
+        float left
+        width 50%
+        .weui-btn
+            margin 0 10px
+
+.weui-article
+    p
+        text-indent 28px
 
 [v-cloak]
     display none
@@ -109,6 +129,10 @@ a
     margin 0 auto
 
 // 浮动清除
+.float-left
+    float left
+.float-right
+    float right
 .float-clear
     clear both
 

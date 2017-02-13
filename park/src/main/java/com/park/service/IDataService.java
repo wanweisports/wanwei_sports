@@ -38,4 +38,6 @@ public interface IDataService {
 	
 	public Workbook exportBusinessIncome(DataInputView dataInputView);
 	
+	public PageBean getOtherBalance(DataInputView dataInputView);
+	
 }

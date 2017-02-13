@@ -93,6 +93,10 @@
                                        data-backdrop="false" data-cardId="${student.cardId}" data-cardNo="${student.cardNo}">
                                         <span class="glyphicon glyphicon-refresh"></span> 补办
                                     </a>
+                                    <a class="btn btn-info students-sign" href="#sign_modal" data-toggle="modal"
+                                       data-backdrop="false" data-student="${student.studentName}" data-cardNo="${student.cardNo}">
+                                        <span class="glyphicon glyphicon-tag"></span> 签到
+                                    </a>
                                     <%--<a class="btn btn-danger students-delete" href="javascript:;"
                                         data-id="${student.studentId}">
                                         <span class="glyphicon glyphicon-trash"></span> 删除
@@ -200,7 +204,7 @@
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="refresh_newNo" name="newCardNo"
                                        placeholder="请输入新卡号" autocomplete="off"
-                                       data-val="true" data-val-required="新卡号不能为空" readonly>
+                                       data-val="true" data-val-required="新卡号不能为空">
                                 <div data-valmsg-for="newCardNo" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -231,6 +235,51 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary confirm-delete">
+                        <span class="glyphicon glyphicon-ok"></span> 确 认
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="sign_modal" tabindex="-1" role="dialog" aria-labelledby="sign_modal_label">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="sign_modal_label">学生签到</h5>
+                </div>
+                <div class="modal-body" style="clear: both;">
+                    <form id="sign_form" class="form-horizontal" onsubmit="return false;">
+                        <input type="hidden" id="sign_card_no" name="signStudentCardNo">
+                        <div class="form-group">
+                            <label for="sign_student" class="col-sm-2 control-label">签到学生</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="sign_student" value="" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="sign_sport" class="col-sm-2 control-label">场地类型</label>
+
+                            <div class="col-sm-10">
+                                <select class="form-control" id="sign_sport" name="sportId" data-val="true"
+                                        data-val-required="请选择签到场地类型">
+                                    <option value="">全部场地</option>
+                                    <c:forEach var="sport" items="${siteSportNames}">
+                                        <option value="${sport.sportId}">${sport.sportName}</option>
+                                    </c:forEach>
+                                </select>
+                                <div data-valmsg-for="sportId" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary confirm-sign" data-dismiss="modal"
+                            data-loading-text="签到中...">
                         <span class="glyphicon glyphicon-ok"></span> 确 认
                     </button>
                 </div>

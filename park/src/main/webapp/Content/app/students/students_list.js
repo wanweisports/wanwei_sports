@@ -114,6 +114,44 @@
                     }
                 });
             });
+
+            // 学生签到
+            $(".students-list").on("click", ".students-sign", function (e) {
+                var $this = $(this);
+
+                $("#sign_card_no").val($this.attr("data-cardNo"));
+                $("#sign_student").val($this.attr("data-student"));
+            });
+
+            // 确认签到
+            $(".confirm-sign").on("click", function (e) {
+                e.preventDefault();
+
+                var $btn = $(this).button('loading');
+
+                var $form = $("#sign_form");
+                var conditions = $form.serialize();
+
+                if ($form.attr("submitting") == "submitting" || !$form.valid()) {
+                    return false;
+                }
+                $form.attr("submitting", "submitting");
+
+                $.post('/students/studentSign', conditions, function (res) {
+                    $form.attr("submitting", "");
+
+                    if (res.code == 1) {
+                        $.tipsSuccessAlert('学生签到成功！', function () {
+                            location.reload();
+                        });
+                    } else {
+                        $.logConsole('学生签到失败', res.message);
+                        $.tipsWarningAlert('学生签到失败');
+                    }
+
+                    $btn.button('reset');
+                });
+            });
         }
     };
 

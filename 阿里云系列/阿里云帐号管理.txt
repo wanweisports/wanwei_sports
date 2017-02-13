@@ -18,7 +18,9 @@
 
 ²¿Êð£º
 
+kill -9 
 
+ps -ef|grep java
 
 
 tomcatÆô¶¯£ºnohup ./startup.sh &

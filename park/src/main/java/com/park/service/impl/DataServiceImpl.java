@@ -23,6 +23,7 @@ import com.park.common.constant.IDBConstant;
 import com.park.common.constant.IPlatformConstant;
 import com.park.common.util.DateUtil;
 import com.park.common.util.JsonUtils;
+import com.park.common.util.SQLUtil;
 import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
 import com.park.service.IDataService;
@@ -134,6 +135,9 @@ public class DataServiceImpl extends BaseService implements IDataService {
     @Override
     public Map<String, Object> getMembersRegisterNew(DataInputView dataInputView){
     	Integer countNum = dataInputView.getCountNum();
+    	
+    	dataInputView = getDataCountTime(dataInputView, countNum);
+    	
     	Map<String, Object> resultMap = new HashMap<String, Object>();
     	List<String> titleList = new ArrayList<String>();
     	
@@ -143,43 +147,44 @@ public class DataServiceImpl extends BaseService implements IDataService {
     	if(countNum == IDBConstant.DATA_DATE_MONTH){ //本月
     		titleList.add("本月");
     		String yearMonth = DateUtil.dateToString(new Date(), DateUtil.YYYYMM);
-    		int currentMonthDay = DateUtil.getCurrentMonthDay();
-    		for (int i = 0; i < currentMonthDay; i++) {
+    		num = DateUtil.getCurrentMonthDay();
+    		for (int i = 0; i < num; i++) {
     			sql.append(" ,(SELECT COUNT(1) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN user_member um1 ON(mc1.memberId = um1.memberId) WHERE mct1.cardTypeId = mct.cardTypeId AND DATE_FORMAT(mc1.createTime, '%Y-%m%e')='").append(yearMonth).append(i+1).append("') d"+i);
 	    		titleList.add(DateUtil.getDayName(i));
-	    		num = i;
     		}
     		dataInputView.setCreateTimeStart(DateUtil.getTimesMonthmorning());
     		dataInputView.setCreateTimeEnd(DateUtil.getTimesMonthnight());
     	} else if(countNum == IDBConstant.DATA_DATE_YEAR){ //本年
     		titleList.add("本年");
     		String year = DateUtil.dateToString(new Date(), DateUtil.YYYY);
-	    	for (int i = 0; i < 12; i++) {
+    		num = 12;
+	    	for (int i = 0; i < num; i++) {
 	    		sql.append(" ,(SELECT COUNT(1) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN user_member um1 ON(mc1.memberId = um1.memberId) WHERE mct1.cardTypeId = mct.cardTypeId AND DATE_FORMAT(mc1.createTime, '%Y%c')='").append(year).append(i+1).append("') d"+i);
 	    		titleList.add(DateUtil.getMonthName(i));
-	    		num = i;
 	    	}
 	    	dataInputView.setCreateTimeStart(DateUtil.getCurrentYearEndTime());
     		dataInputView.setCreateTimeEnd(DateUtil.getLastYearStartTime());
     	}else{ //默认本周
     		titleList.add("本周");
-    		for (int i = 0; i < 7; i++) {
-	    		sql.append(" ,(SELECT COUNT(1) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN user_member um1 ON(mc1.memberId = um1.memberId) WHERE mct1.cardTypeId = mct.cardTypeId AND mc1.createTime BETWEEN :createTimeStart AND :createTimeEnd AND DATE_FORMAT(mc1.createTime, '%w')=").append(i).append(") d"+i);
+    		num = 7;
+    		for (int i = 0; i < num; i++) {
+	    		sql.append(" ,(SELECT COUNT(1) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN user_member um1 ON(mc1.memberId = um1.memberId) WHERE mct1.cardTypeId = mct.cardTypeId AND mc1.createTime BETWEEN :createTimeStart AND :createTimeEnd AND DATE_FORMAT(mc1.createTime, '%w')=").append((i==num-1?0:i+1)).append(") d"+i);
 	    		titleList.add(DateUtil.getWeekName(i)); 
-	    		num = i;
 	    	}
     		dataInputView.setCreateTimeStart(DateUtil.getTimesWeekmorningStr());
     		dataInputView.setCreateTimeEnd(DateUtil.getTimesWeeknight());
     	} 
     	sql.append(" FROM member_card_type mct");
-    	sql.append(" LEFT JOIN member_card mc ON(mct.cardTypeId = mc.cardTypeId  AND mc.createTime BETWEEN :createTimeStart AND :createTimeEnd)"); 
+    	sql.append(" LEFT JOIN member_card mc ON(mct.cardTypeId = mc.cardTypeId AND mc.createTime BETWEEN :createTimeStart AND :createTimeEnd)"); 
     	sql.append(" LEFT JOIN user_member um ON(mc.memberId = um.memberId)");
     	sql.append(" GROUP BY mct.cardTypeId");
     	
     	List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
+    	
     	Map<String, Object> combinedMap = new HashMap<String, Object>();
+    	
     	combinedMap.put("cardTypeName", "合计");
-    	for (int i = 0; i < num+1; i++) {
+    	for (int i = 0; i < num; i++) {
     		combinedMap.put("d"+i, (int)getCombinedByNum(list, i));
 		}
     	int count = 0;
@@ -187,12 +192,19 @@ public class DataServiceImpl extends BaseService implements IDataService {
     		count += StrUtil.objToDouble(map.get("count"));
 		}
     	combinedMap.put("count", count);
-    	
     	list.add(combinedMap);
-    	resultMap.put("num", num);
+    	
+    	for (Map<String, Object> map : list) {
+    		List<String> values = new ArrayList<String>();
+    		for (int i = 0; i < num; i++) {
+    			values.add(map.get("d"+i).toString());
+    		}
+    		map.put("data", values);
+		}
+    	
+    	resultMap.put("num", num-1);
     	resultMap.put("list", list);
     	resultMap.put("titleList", titleList);
-    	
     	return resultMap;
     }
     
@@ -207,6 +219,9 @@ public class DataServiceImpl extends BaseService implements IDataService {
     @Override
     public Map<String, Object> getMembersCZNew(DataInputView dataInputView){
     	Integer countNum = dataInputView.getCountNum();
+    	
+    	dataInputView = getDataCountTime(dataInputView, countNum);
+    	
     	Map<String, Object> resultMap = new HashMap<String, Object>();
     	List<String> titleList = new ArrayList<String>();
     	
@@ -216,45 +231,41 @@ public class DataServiceImpl extends BaseService implements IDataService {
     	if(countNum == IDBConstant.DATA_DATE_MONTH){ //本月
     		titleList.add("本月");
     		String yearMonth = DateUtil.dateToString(new Date(), DateUtil.YYYYMM);
-    		int currentMonthDay = DateUtil.getCurrentMonthDay();
-    		for (int i = 0; i < currentMonthDay; i++) {
-    			sql.append(" ,(SELECT IFNULL(SUM(realAmount),0) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN other_balance ob1 ON(mc1.cardId = ob1.balanceServiceId AND ob1.balanceServiceType = :balanceServiceType) WHERE mct1.cardTypeId = mct.cardTypeId AND :createTimeEnd AND DATE_FORMAT(mc1.createTime, '%Y-%m%e')='").append(yearMonth).append(i+1).append("') d"+i);
+    		num = DateUtil.getCurrentMonthDay();
+    		for (int i = 0; i < num; i++) {
+    			sql.append(" ,(SELECT IFNULL(SUM(realAmount),0) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN other_balance ob1 ON(mc1.cardId = ob1.balanceServiceId AND ob1.balanceServiceType IN(:balanceServiceTypes)) WHERE mct1.cardTypeId = mct.cardTypeId AND :createTimeEnd AND DATE_FORMAT(mc1.createTime, '%Y-%m%e')='").append(yearMonth).append(i+1).append("') d"+i);
 	    		titleList.add(DateUtil.getDayName(i));
-	    		num = i;
     		}
-    		dataInputView.setCreateTimeStart(DateUtil.getTimesMonthmorning());
-    		dataInputView.setCreateTimeEnd(DateUtil.getTimesMonthnight());
     	} else if(countNum == IDBConstant.DATA_DATE_YEAR){ //本年
     		titleList.add("本年");
     		String year = DateUtil.dateToString(new Date(), DateUtil.YYYY);
-	    	for (int i = 0; i < 12; i++) {
-	    		sql.append(" ,(SELECT IFNULL(SUM(realAmount),0) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN other_balance ob1 ON(mc1.cardId = ob1.balanceServiceId AND ob1.balanceServiceType = :balanceServiceType) WHERE mct1.cardTypeId = mct.cardTypeId AND :createTimeEnd AND DATE_FORMAT(mc1.createTime, '%Y%c')='").append(year).append(i+1).append("') d"+i);
+    		num = 12;
+	    	for (int i = 0; i < num; i++) {
+	    		sql.append(" ,(SELECT IFNULL(SUM(realAmount),0) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN other_balance ob1 ON(mc1.cardId = ob1.balanceServiceId AND ob1.balanceServiceType IN(:balanceServiceTypes)) WHERE mct1.cardTypeId = mct.cardTypeId AND :createTimeEnd AND DATE_FORMAT(mc1.createTime, '%Y%c')='").append(year).append(i+1).append("') d"+i);
 	    		titleList.add(DateUtil.getMonthName(i));
-	    		num = i;
 	    	}
-	    	dataInputView.setCreateTimeStart(DateUtil.getCurrentYearEndTime());
-    		dataInputView.setCreateTimeEnd(DateUtil.getLastYearStartTime());
     	}else{ //默认本周
     		titleList.add("本周");
-    		for (int i = 0; i < 7; i++) {
-	    		sql.append(" ,(SELECT IFNULL(SUM(realAmount),0) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN other_balance ob1 ON(mc1.cardId = ob1.balanceServiceId AND ob1.balanceServiceType = :balanceServiceType) WHERE mct1.cardTypeId = mct.cardTypeId AND ob1.createTime BETWEEN :createTimeStart AND :createTimeEnd AND DATE_FORMAT(ob1.createTime, '%w')=").append(i).append(") d"+i);
+    		num = 7;
+    		for (int i = 0; i < num; i++) { 
+	    		sql.append(" ,(SELECT IFNULL(SUM(realAmount),0) FROM member_card_type mct1 LEFT JOIN member_card mc1 ON(mct1.cardTypeId = mc1.cardTypeId) LEFT JOIN other_balance ob1 ON(mc1.cardId = ob1.balanceServiceId AND ob1.balanceServiceType IN(:balanceServiceTypes)) WHERE mct1.cardTypeId = mct.cardTypeId AND mc1.createTime BETWEEN :createTimeStart AND :createTimeEnd AND DATE_FORMAT(mc1.createTime, '%w')=").append((i==num-1?0:i+1)).append(") d"+i);
 	    		titleList.add(DateUtil.getWeekName(i)); 
-	    		num = i;
 	    	}
-    		dataInputView.setCreateTimeStart(DateUtil.getTimesWeekmorningStr()); 
-    		dataInputView.setCreateTimeEnd(DateUtil.getTimesWeeknight());
     	} 
-    	sql.append(" FROM member_card_type mct");
-    	sql.append(" LEFT JOIN member_card mc ON(mct.cardTypeId = mc.cardTypeId)"); 
-    	sql.append(" LEFT JOIN other_balance ob ON(mc.cardId = ob.balanceServiceId AND ob.balanceServiceType = :balanceServiceType AND ob.createTime BETWEEN :createTimeStart AND :createTimeEnd)");
+    	sql.append(" FROM member_card_type mct"); 
+    	sql.append(" LEFT JOIN member_card mc ON(mct.cardTypeId = mc.cardTypeId AND mc.createTime BETWEEN :createTimeStart AND :createTimeEnd)"); 
+    	sql.append(" LEFT JOIN other_balance ob ON(mc.cardId = ob.balanceServiceId AND ob.balanceServiceType IN(:balanceServiceTypes))");
     	sql.append(" GROUP BY mct.cardTypeId");
     	
-    	dataInputView.setBalanceServiceType(StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_CARD_CZ));
+    	dataInputView.setBalanceServiceTypeArr(new Integer[]{StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_REG), StrUtil.objToInt(IDBConstant.BALANCE_SERVICE_TYPE_CARD_CZ)});
     	
-    	List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
+    	Map<String, Object> paramMap = JsonUtils.fromJson(dataInputView);
+    	paramMap.putAll(SQLUtil.getInToSQL("balanceServiceTypes", dataInputView.getBalanceServiceTypeArr()));
+    	
+    	List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), paramMap);
     	Map<String, Object> combinedMap = new HashMap<String, Object>();
     	combinedMap.put("cardTypeName", "合计");
-    	for (int i = 0; i < num+1; i++) {
+    	for (int i = 0; i < num; i++) {
     		combinedMap.put("d"+i, getCombinedByNum(list, i)); 
 		}
     	double realAmountSum = 0;
@@ -262,9 +273,17 @@ public class DataServiceImpl extends BaseService implements IDataService {
     		realAmountSum += StrUtil.objToDouble(map.get("realAmountSum"));
 		}
     	combinedMap.put("realAmountSum", realAmountSum);
-    	
     	list.add(combinedMap);
-    	resultMap.put("num", num);
+    	
+    	for (Map<String, Object> map : list) {
+    		List<String> values = new ArrayList<String>();
+    		for (int i = 0; i < num; i++) {
+    			values.add(map.get("d"+i).toString());
+    		}
+    		map.put("data", values);
+		}
+    	
+    	resultMap.put("num", num-1);
     	resultMap.put("list", list);
     	resultMap.put("titleList", titleList);
     	
@@ -274,18 +293,22 @@ public class DataServiceImpl extends BaseService implements IDataService {
     @Override
     public Map<String, Object> getMembersXFNew(DataInputView dataInputView){
     	
+    	Integer countNum = dataInputView.getCountNum();
+    	
+    	dataInputView = getDataCountTime(dataInputView, countNum);
+    	
     	Map<String, Object> resultMap = new HashMap<String, Object>();
     	
     	StringBuffer sql = new StringBuffer("SELECT mct.cardTypeName");
-    	sql.append(" ,SUM(CASE WHEN ob.balanceServiceType IN(?,?) THEN ob.realAmount ELSE 0 END) siteXF");
-    	sql.append(" ,SUM(CASE WHEN ob.balanceServiceType = ? THEN ob.realAmount ELSE 0 END) goodsXF");
-    	sql.append(" ,IFNULL((SELECT SUM(cardBalance) FROM member_card mc WHERE mc.cardTypeId = mct.cardTypeId),0) cardBalance");
+    	sql.append(" ,SUM(CASE WHEN ob.balanceServiceType IN(100,200) THEN ob.realAmount ELSE 0 END) siteXF");
+    	sql.append(" ,SUM(CASE WHEN ob.balanceServiceType = 300 THEN ob.realAmount ELSE 0 END) goodsXF");
+    	sql.append(" ,IFNULL((SELECT SUM(cardBalance) FROM member_card mc1 WHERE mc1.cardTypeId = mct.cardTypeId AND mc1.createTime BETWEEN :createTimeStart AND :createTimeEnd),0) cardBalance");
     	sql.append(" FROM member_card_type mct");
-    	sql.append(" LEFT JOIN member_card mc ON(mct.cardTypeId = mc.cardTypeId)");
+    	sql.append(" LEFT JOIN member_card mc ON(mct.cardTypeId = mc.cardTypeId AND mc.createTime BETWEEN :createTimeStart AND :createTimeEnd)");
     	sql.append(" LEFT JOIN other_balance ob ON(ob.balanceCardId = mc.cardId)");
     	sql.append(" GROUP BY mct.cardTypeId");
-    	
-    	List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), IDBConstant.BALANCE_SERVICE_TYPE_SITE, IDBConstant.BALANCE_SERVICE_TYPE_BLOCK_SITE, IDBConstant.BALANCE_SERVICE_TYPE_GOODS);
+    	//IDBConstant.BALANCE_SERVICE_TYPE_SITE, IDBConstant.BALANCE_SERVICE_TYPE_BLOCK_SITE, IDBConstant.BALANCE_SERVICE_TYPE_GOODS
+    	List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
     	
     	Map<String, Object> combinedMap = new HashMap<String, Object>();
     	combinedMap.put("cardTypeName", "合计");
@@ -301,9 +324,39 @@ public class DataServiceImpl extends BaseService implements IDataService {
     	combinedMap.put("cardBalance", cardBalance); 
     	list.add(combinedMap);
     	
+    	for (Map<String, Object> map : list) {
+    		List<String> values = new ArrayList<String>();
+    		values.add(map.get("siteXF").toString());
+    		values.add(map.get("goodsXF").toString());
+    		values.add(map.get("cardBalance").toString());
+    		map.put("data", values);
+		}
+    	
     	resultMap.put("list", list);
     	
     	return resultMap;
+    }
+    
+    private DataInputView getDataCountTime(DataInputView dataInputView, Integer countNum){
+    	
+    	countNum = countNum != null ? countNum : IDBConstant.DATA_DATE_WEEK;
+    	switch (countNum) {
+		case IDBConstant.DATA_DATE_MONTH:
+			dataInputView.setCreateTimeStart(DateUtil.getTimesMonthmorning());
+    		dataInputView.setCreateTimeEnd(DateUtil.getTimesMonthnight());
+			break;
+		case IDBConstant.DATA_DATE_YEAR:
+			dataInputView.setCreateTimeStart(DateUtil.getCurrentYearEndTime());
+    		dataInputView.setCreateTimeEnd(DateUtil.getLastYearStartTime());
+			break;
+		case IDBConstant.DATA_DATE_WEEK:
+		default:
+			dataInputView.setCreateTimeStart(DateUtil.getTimesWeekmorningStr());
+			dataInputView.setCreateTimeEnd(DateUtil.getTimesWeeknight());
+			break;
+		}
+
+		return dataInputView;
     }
 
     @Override
@@ -785,6 +838,15 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		List list = new ArrayList();
 		list.add(newMap);
 		return list;
+	}
+	
+	@Override
+	public PageBean getOtherBalance(DataInputView dataInputView){
+		StringBuilder headSql = new StringBuilder("");
+		StringBuilder bodySql = new StringBuilder("");
+		StringBuilder whereSql = new StringBuilder("");
+		
+		return super.getPageBean(headSql, bodySql, whereSql, dataInputView);
 	}
 	
 	

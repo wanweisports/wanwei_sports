@@ -1,6 +1,7 @@
 package com.park.service.impl;
 
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import com.park.common.bean.MemberSignInputView;
 import com.park.common.bean.PageBean;
 import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
+import com.park.common.po.MemberCard;
 import com.park.common.po.MemberSiteSign;
 import com.park.common.po.OrderInfo;
 import com.park.common.po.UserMember;
@@ -130,4 +132,31 @@ public class MemberSignServiceImpl extends BaseService implements IMemberSignSer
 		return baseDao.queryByHqlFirst("FROM MemberSiteSign WHERE reserveTimeId = ? AND DATE(signDate) = ?", reserveTimeId, DateUtil.stringToDate(date, null));
 	}
 	
+	@Override
+	public Map<String, Object> getQrSign(String operatorId, String mobile) throws ParseException{
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		UserMember userMember = memberService.getMemberOperator(operatorId);
+		
+		resultMap.put("memberId", userMember.getMemberId());
+		
+		String signType = IDBConstant.LOGIC_STATUS_NO; //默认散客
+		String signMemberCardNo = StrUtil.EMPTY;
+		if(userMember != null){
+			signType = IDBConstant.LOGIC_STATUS_YES; //团体||教师
+			List<MemberCard> memberCards = memberService.getMemberCards(userMember.getMemberId());
+			if(memberCards != null && memberCards.size() > 0){
+				signMemberCardNo = memberCards.get(0).getCardNo();
+			}
+		}
+		resultMap.put("signSites", getSignSites(signType, signMemberCardNo, mobile));
+		
+		return resultMap;
+	}
+	
 }
+
+
+
+

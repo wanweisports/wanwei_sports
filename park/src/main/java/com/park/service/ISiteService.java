@@ -70,6 +70,8 @@ public interface ISiteService {
 	public Map<String, Object> getSiteSportTime(int sportId);
 	
 	public PageBean getMeals(SiteInputView siteInputView);
+
+	public int getMealTotal(SiteInputView siteInputView);
 	
 	public SiteMealInfo getMealInfo(Integer mealId);
 	

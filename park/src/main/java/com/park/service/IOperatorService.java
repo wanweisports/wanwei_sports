@@ -33,6 +33,10 @@ public interface IOperatorService {
 	public void updateProfile(UserOperator operator);
 	
 	public UserOperator innerLogin(String name);
+
+	public UserOperator userMobileLogin(String mobile);
+
+    public UserOperator userMobileRegister(String mobile, String password);
 	
 	public void saveLastLoginTime(int id);
 	
