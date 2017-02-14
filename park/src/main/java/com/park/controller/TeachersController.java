@@ -3,6 +3,9 @@ package com.park.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +22,7 @@ import com.park.common.exception.MessageException;
 import com.park.common.po.UserOperator;
 import com.park.common.util.JsonUtils;
 import com.park.service.IMemberService;
+import com.park.service.IXlsExportImportService;
 
 /**
  * Created by wangjun on 16/11/15.
@@ -29,6 +33,9 @@ public class TeachersController extends BaseController {
 	
 	@Autowired
 	private IMemberService memberService;
+	
+	@Autowired
+	private IXlsExportImportService xlsExportImportService;
 	
     // 教师注册
     @RequestMapping("register")
@@ -73,12 +80,29 @@ public class TeachersController extends BaseController {
     @RequestMapping("data")
     public String teachersVenueData(MemberInputView memberInputView, Model model) {
     	try {
-    		memberInputView.setCardId(IDBConstant.CARD_TEACHERS);
-			model.addAllAttributes(memberService.countTeacher(memberInputView));
+    		memberInputView.setCardTypeId(IDBConstant.CARD_TEACHERS);
+    		PageBean pageBean = memberService.getTeachersData(memberInputView);
+    		Map<String, Object> countTeacher = memberService.countTeacher(pageBean.getList());
+    		countTeacher.put("pageBean", pageBean);
+			model.addAllAttributes(countTeacher);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    	return "Teachers/TeachersVenueData";
+    	return "Teachers/TeachersVenueData"; 
+    }
+    
+    //教师用场流水导出excel
+    @RequestMapping("exportTeachersVenueData")
+    public void exportTeachersVenueData(MemberInputView memberInputView, HttpServletResponse response) {
+    	try {
+    		memberInputView.setPageSize(null);
+    		memberInputView.setCardTypeId(IDBConstant.CARD_TEACHERS);
+    		PageBean pageBean = memberService.getTeachersData(memberInputView);
+    		Workbook workbook = xlsExportImportService.xlsExport("template_teachers_venue_data.xlsx", pageBean.getList());
+    		outExcel(response, workbook, "教师用场流水");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
     
     @ResponseBody

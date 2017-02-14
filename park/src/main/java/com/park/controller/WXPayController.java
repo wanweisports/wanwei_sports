@@ -1,5 +1,7 @@
 package com.park.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.IOException;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.jdom2.JDOMException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,15 +32,13 @@ public class WXPayController extends BaseController {
 	private static Logger logger = Logger.getLogger(WXCoreController.class);
 	
 	//微信支付商户开通后 微信会提供appid和appsecret和商户号partner
-	private static String appid = "";
-	private static String appsecret = "";
-	private static String partner = "";
-	//这个参数partnerkey是在商户后台配置的一个32位的key,微信商户平台-账户设置-安全设置-api安全
-	private static String partnerkey = "";
-	//openId 是微信用户针对公众号的标识，授权的部分这里不解释
-	private static String openId = "";
-	//微信支付成功后通知地址 必须要求80端口并且地址不能带参数
-	private static String notifyurl = "";																	 // Key
+		private static String appid = WeiXinConnector.APP_ID;//"wx86c89d3d834ee891";
+		private static String appsecret = WeiXinConnector.SECRET;//"f0ea47515f733c537d196c4017a51c6e";
+		private static String partner = WeiXinConnector.MCH_ID;
+		//这个参数partnerkey是在商户后台配置的一个32位的key,微信商户平台-账户中心-账户设置-api安全
+		private static String partnerkey = WeiXinConnector.KEY;
+		//微信支付成功后通知地址 必须要求80端口并且地址不能带参数
+		private static String notifyurl = "http://tuhao.viphk.ngrok.org/front/asynNotify.action";																 // Key
 
 	/**
 	 * @param args
@@ -121,15 +122,15 @@ public class WXPayController extends BaseController {
 	/**
 	 * 获取请求预支付id报文
 	 */
-	@RequestMapping("payPackage")
-	public String payPackage(PayInputView payInputView, Model model) {
+	@RequestMapping("wxPayPackage")
+	public String wxPayPackage(PayInputView payInputView, Model model) throws JDOMException, IOException {
 		
 		String openId = payInputView.getOpenId(); //从session中获取
 		// 1 参数
 		// 订单号
 		String orderId = payInputView.getOrderId();
 		// 附加数据 原样返回
-		String attach = "";
+		String attach = "cxs";
 		// 总金额以分为单位，不带小数点
 		String totalFee = StrUtil.getMoney(payInputView.getTotalFee());
 		
@@ -170,29 +171,11 @@ public class WXPayController extends BaseController {
 		packageParams.put("sign", sign);
 		
 		String requestXML = PayCommonUtil.getRequestXml(packageParams);
+		logger.info("requestXML：" + requestXML);
+		Map map = XMLUtil.doXMLParse(HttpConnect.httpsRequestStr(ConfigUtil.UNIFIED_ORDER_URL, "POST", requestXML));
 
-		/*RequestHandler reqHandler = new RequestHandler(null, null);
-		reqHandler.init(appid, appsecret, partnerkey);*/
-
-		/*String xml = "<xml>" + "<appid>" + appid + "</appid>" + "<mch_id>"
-				+ mch_id + "</mch_id>" + "<nonce_str>" + nonce_str
-				+ "</nonce_str>" + "<sign>" + sign + "</sign>"
-				+ "<body><![CDATA[" + body + "]]></body>" 
-				+ "<out_trade_no>" + out_trade_no + "</out_trade_no>"
-				+ "<attach>" + attach + "</attach>"
-				+ "<total_fee>" + totalFee + "</total_fee>"
-				+ "<spbill_create_ip>" + spbill_create_ip
-				+ "</spbill_create_ip>" + "<notify_url>" + notify_url
-				+ "</notify_url>" + "<trade_type>" + trade_type
-				+ "</trade_type>" + "<openid>" + openId + "</openid>"
-				+ "</xml>";*/
-		
-		String prepay_id = "";
-		//prepay_id = new GetWxOrderno().getPayNo(createOrderURL, xml);
-		prepay_id =HttpConnect.httpsRequest(ConfigUtil.UNIFIED_ORDER_URL, "POST", requestXML).getString("prepay_id");
-
+		String prepay_id = map.get("prepay_id").toString();
 		logger.info("获取到的预支付ID：" + prepay_id);
-		
 		
 		//获取prepay_id后，拼接最后请求支付所需要的package
 		
@@ -220,10 +203,11 @@ public class WXPayController extends BaseController {
 	//微信支付异步通知接口
 	@RequestMapping("asynNotify")
     public void asynNotify(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        String msgxml = super.getStreamResult(request, response);//xml数据
-        logger.info(msgxml);
-        
+		
+		response.setContentType("text/xml");
+		String msgxml = this.getStreamResult(request, response);//xml数据
         Map map = XMLUtil.doXMLParse(msgxml);
+        
         String result_code=(String) map.get("result_code");
         String out_trade_no  = (String) map.get("out_trade_no");
         String total_fee  = (String) map.get("total_fee");
@@ -242,6 +226,8 @@ public class WXPayController extends BaseController {
             String time_end  = (String) map.get("time_end");
             String trade_type  = (String) map.get("trade_type");
             String transaction_id  = (String) map.get("transaction_id");
+            String attach  = (String) map.get("attach");
+            
             //需要对以下字段进行签名
             SortedMap<Object, Object> packageParams = new TreeMap<Object, Object>();
             packageParams.put("appid", appid);
@@ -256,27 +242,33 @@ public class WXPayController extends BaseController {
             packageParams.put("result_code", result_code);
             packageParams.put("return_code", return_code);
             packageParams.put("sub_mch_id", sub_mch_id);
-            packageParams.put("time_end", time_end);
-            packageParams.put("total_fee", String.valueOf(amount)/*order_total_fee*/); //用自己系统的数据：订单金额
+            packageParams.put("time_end", time_end); 
+            packageParams.put("total_fee", total_fee); //用自己系统的数据：订单金额
             packageParams.put("trade_type", trade_type);
             packageParams.put("transaction_id", transaction_id);
+            packageParams.put("attach", attach);
 
             String endsign = PayCommonUtil.createSign("UTF-8", packageParams);
             if(sign.equals(endsign)){//验证签名是否正确  官方签名工具地址：https://pay.weixin.qq.com/wiki/tools/signverify/
                 //处理自己的业务逻辑
-                response.getWriter().write(setXml("SUCCESS", "OK"));    //告诉微信已经收到通知了
+            	logger.info("支付成功!");
+            	//response.getWriter().write(setXML("SUCCESS", "OK"));    //告诉微信已经收到通知了
+            	BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
+                out.write(setXML("SUCCESS", "OK").getBytes());
+                out.flush();
+                out.close();
             }else{
-                System.out.println("sign===>" + sign);
-                System.out.println("endsign===>" + endsign);
-                System.out.println("验证签名不正确");
+            	logger.info("sign===>" + sign);
+            	logger.info("endsign===>" + endsign);
+            	logger.info("验证签名不正确");
             }
         }else{
-        	response.getWriter().write(setXml("FAIL", "报文为空"));
+        	response.getWriter().write(setXML("FAIL", "报文为空")); 
 		}
     }
-    
-    private static String setXml(String return_code,String return_msg){
-        return "<xml><return_code><![CDATA["+return_code+"]]></return_code><return_msg><![CDATA["+return_msg+"]]></return_msg></xml>";
+	
+	public static String setXML(String return_code, String return_msg) {
+        return "<xml><return_code><![CDATA[" + return_code + "]]></return_code><return_msg><![CDATA[" + return_msg + "]]></return_msg></xml>";
     }
 
 }

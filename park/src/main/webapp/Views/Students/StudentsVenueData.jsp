@@ -35,11 +35,11 @@
                                placeholder="请输入学生姓名">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="createTimeStart" name="createTimeStart" placeholder="开始日期"
+                        <input type="text" class="form-control" id="createTimeStart" name="createStartTime" placeholder="开始日期"
                                value="${createStartTime}">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="createTimeEnd" name="createTimeEnd" placeholder="结束日期"
+                        <input type="text" class="form-control" id="createTimeEnd" name="createEndTime" placeholder="结束日期"
                                value="${createEndTime}">
                     </div>
                     <div class="form-group">
@@ -59,7 +59,7 @@
                 </c:forEach>
             </ul>
             <div class="pull-right">
-                <a href="javascript:;" class="btn btn-danger">
+                <a href="javascript:;" class="btn btn-danger" onclick="window.open('/students/exportStudentsVenueData?'+$('#data_filter_form').serialize());">
                     <span class="glyphicon glyphicon-export"></span> 导出数据
                 </a>
                 <a href="javascript:;" class="btn btn-primary" style="display: none;">

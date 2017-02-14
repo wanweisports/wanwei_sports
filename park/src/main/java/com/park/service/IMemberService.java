@@ -100,7 +100,9 @@ public interface IMemberService {
 	
 	public void updateLockTeacher(int memberId, int salesId);
 	
-	public Map<String, Object> countTeacher(MemberInputView memberInputView) throws Exception ;
+	public PageBean getTeachersData(MemberInputView memberInputView) throws Exception;
+	
+	public Map<String, Object> countTeacher(List<Map<String, Object>> list) throws Exception;
 	
 	public Integer saveBalanceByOrderInfo(OrderInfo orderInfo);
 	

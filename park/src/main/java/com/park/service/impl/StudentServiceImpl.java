@@ -184,7 +184,7 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 		String createStartTime = studentInputView.getCreateStartTime();
 		String createEndTime = studentInputView.getCreateEndTime();
 		
-		StringBuilder headSql = new StringBuilder("SELECT msss.signId, us.studentId, us.studentName, us.studentGrade, us.studentClass, msss.createTime, ss.sportName, uo.operatorName");
+		StringBuilder headSql = new StringBuilder("SELECT msss.signId, us.studentId, us.studentName, us.studentGrade, us.studentClass, msss.createTime, ss.sportName, uo.operatorName, CONCAT(us.studentGrade,'级',us.studentClass,'班') gradeClass");
 		StringBuilder bodySql = new StringBuilder(" FROM member_site_student_sign msss");
 		bodySql.append(" INNER JOIN site_sport ss ON(msss.sportId = ss.sportId)");
 		bodySql.append(" INNER JOIN user_student us ON(us.studentId=msss.studentId)");

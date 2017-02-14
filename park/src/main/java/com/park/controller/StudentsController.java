@@ -3,8 +3,12 @@ package com.park.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.park.common.bean.*;
 import com.park.service.ISiteService;
+
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +25,7 @@ import com.park.common.util.JsonUtils;
 import com.park.common.util.StrUtil;
 import com.park.service.IMemberService;
 import com.park.service.IStudentService;
+import com.park.service.IXlsExportImportService;
 
 /**
  * Created by wangjun on 16/11/11.
@@ -37,6 +42,9 @@ public class StudentsController extends BaseController {
 
 	@Autowired
 	private IMemberService memberService;
+	
+	@Autowired
+	private IXlsExportImportService xlsExportImportService;
 	
     // 学生注册
     @RequestMapping("register")
@@ -103,6 +111,19 @@ public class StudentsController extends BaseController {
 			e.printStackTrace();
 		}
     	return "Students/StudentsVenueData";
+    }
+    
+    //学生用场流水导出excel
+    @RequestMapping("exportStudentsVenueData")
+    public void exportStudentsVenueData(StudentInputView studentInputView, HttpServletResponse response) {
+    	try {
+    		studentInputView.setPageSize(null);
+    		PageBean pageBean = studentService.getStudentSites(studentInputView);
+    		Workbook workbook = xlsExportImportService.xlsExport("template_students_venue_data.xlsx", pageBean.getList());
+    		outExcel(response, workbook, "学生用场流水");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
     
     @ResponseBody

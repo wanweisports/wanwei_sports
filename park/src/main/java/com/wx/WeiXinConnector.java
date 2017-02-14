@@ -16,11 +16,13 @@ public class WeiXinConnector {
 
 	public static final String CORP_ID = "wx1cfcdf89afb2c7c9";//企业号的CorpID
 	
+	public static final String APP_ID = "wx86c89d3d834ee891";//"wx3b705c91dccc6f35";//"wx86c89d3d834ee891";//"wx48ce782a498f4a72";//"wx86c89d3d834ee891";//APP_ID
+	
 	public static final String MCH_ID = "1262530601";//商户号mch_id
 	
 	public static final String KEY = "5krH8dN26Qze0Lrn6Ry4G2l8cep2N24U";//商户号mch_id
 	
-	private static final String SECRET = "uHweaFnV-72CpM8_uq8XxS4zPXAkgHOymD-OODSBd7L3hFh4jkZcOFiq2ZgBHNoX";//企业的Secret
+	public static final String SECRET = "uHweaFnV-72CpM8_uq8XxS4zPXAkgHOymD-OODSBd7L3hFh4jkZcOFiq2ZgBHNoX";//企业的Secret
 	
 	//企业号TOKEN
 	private static final String ACCESS_TOKEN_URL = "https://qyapi.weixin.qq.com/cgi-bin/gettoken";
