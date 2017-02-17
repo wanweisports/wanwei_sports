@@ -756,7 +756,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		
 		StringBuilder headSql = new StringBuilder("SELECT ob.balanceId, ob.balanceNo, mc.cardNo, IFNULL(um.memberName,'散客') memberName, (SELECT dictValue FROM system_dict WHERE dictName='BALANCE_SERVICE_TYPE' AND dictKey = ob.balanceServiceType) balanceServiceType,(SELECT dictValue FROM system_dict WHERE dictName='BALANCE_STYLE' AND dictKey = ob.balanceStyle) payStyle, CONCAT(ob.realAmount,'元') realAmount, uo.operatorName, ob.createTime");
 		StringBuilder bodySql = new StringBuilder(" FROM other_balance ob");
-		bodySql.append(" LEFT JOIN member_card mc ON(ob.balanceCardId = mc.cardId)");
+		bodySql.append(" LEFT JOIN member_card mc ON(ob.balanceServiceId = mc.cardId)");
 		bodySql.append(" LEFT JOIN user_member um ON(mc.memberId = um.memberId)");
 		bodySql.append(" LEFT JOIN user_operator uo ON(uo.id = ob.salesId)");
 		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");

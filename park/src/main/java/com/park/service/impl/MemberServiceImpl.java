@@ -276,7 +276,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		String cardTypeId = memberInputView.getCardTypeId();
 		String memberType = memberInputView.getMemberType();
 		
-		StringBuilder headSql = new StringBuilder("SELECT uo.operatorName, um.memberId, mc.cardId, um.memberName, um.memberMobile, um.memberIdcard, mc.cardNo, mc.cardTypeId, mc.cardDeadline, mc.cardBalance, mc.cardStatus, mc.salesId, um.createTime, COUNT(mss.reserveTimeId) siteCount");
+		StringBuilder headSql = new StringBuilder("SELECT uo.operatorName, um.memberId, mc.cardId, um.memberName, um.memberMobile, um.memberIdcard, mc.cardNo, mc.cardTypeId, mc.cardDeadline, mc.cardBalance, mc.cardStatus, mc.salesId, um.createTime, COUNT(mss.reserveTimeId) siteCount， , tempCardNo, (SELECT COUNT(1) FROM user_member umc WHERE umc.parentMemberId=um.memberId) childrenCount");
 		StringBuilder bodySql = new StringBuilder(" FROM user_member um");
 		bodySql.append(" LEFT JOIN member_card mc ON(um.memberId = mc.memberId)");
 		bodySql.append(" LEFT JOIN user_operator uo ON(um.salesId = uo.id)");
@@ -658,7 +658,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		memberMap.put("cardNo", memberCards.get(0).getCardNo());
 		memberMap.put("memberName", userMember.getMemberName());
 		memberMap.put("memberId", userMember.getMemberId());
-		
+
 		List<Map<String, Object>> childrenMembers = baseDao.queryBySql("SELECT memberId, memberName, memberMobile FROM user_member WHERE parentMemberId = ? ORDER BY createTime DESC", memberId);
 
 		Map<String, Object> resultMap = new HashMap<String, Object>();

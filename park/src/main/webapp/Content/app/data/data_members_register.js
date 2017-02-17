@@ -268,7 +268,7 @@
                     formatter: "{b} <br/>金额：{c}元 <br/>比率：{d}%)"
                 },
                 toolbox: {
-                    show: true,
+                    show: false,
                     orient: 'vertical',
                     left: 'right',
                     top: 'center',

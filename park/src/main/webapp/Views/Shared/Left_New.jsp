@@ -299,7 +299,7 @@
                         </tr>
                         <tr class="list-nav-item data ${(param.nav == "data" && param.subNav == "attendance") ? "active" : ""}">
                             <td>
-                                <span><a href="/data/getMembersAttendance">签到记录</a></span>
+                                <span><a href="/data/getMembersAttendance?countNum=21">签到记录</a></span>
                             </td>
                         </tr>
                         <tr class="list-nav-item data last-nav-item">
