@@ -5,6 +5,7 @@ import com.park.common.bean.*;
 import com.park.common.constant.IDBConstant;
 import com.park.common.constant.IPlatformConstant;
 import com.park.common.exception.MessageException;
+import com.park.common.po.TrainsClassStudents;
 import com.park.common.po.UserOperator;
 import com.park.common.util.DateUtil;
 import com.park.common.util.JsonUtils;
@@ -14,10 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -228,17 +231,38 @@ public class MobileController extends BaseController {
     // 培训
 
     // 培训报名
+    @NotProtected
     @RequestMapping("training/signup")
-    public String renderTrainingSignUp() {
+    public String renderTrainingSignUp(Model model) {
+        model.addAttribute("classList", trainsClassService.getTrainsSignClassList());
         return "Mobile/Training/TrainingSignUp";
     }
 
+    @NotProtected
+    @ResponseBody
+    @RequestMapping(value = "training/signTrainsStudents", method = RequestMethod.POST)
+    public ResponseBean signTrainsStudents(TrainsClassStudents trainsClassStudents) {
+        try {
+            trainsClassStudents.setSaleId(13);
+
+            Integer signId = trainsClassStudentsService.saveTrainsClassStudentsSign(trainsClassStudents);
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("signId", signId);
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
     // 报名课程列表
+    @NotProtected
     @RequestMapping("training/list")
     public String renderTrainingList(TrainsClassInputView trainsClassInputView, Model model) {
         try {
-            UserOperator userInfo = super.getUserInfo();
-            trainsClassInputView.setSaleId(userInfo.getId());
             model.addAllAttributes(JsonUtils.fromJsonDF(trainsClassInputView));
             PageBean pageBean = trainsClassService.getTrainsClassList(trainsClassInputView);
             super.setPageInfo(model, pageBean);
@@ -250,6 +274,7 @@ public class MobileController extends BaseController {
     }
 
     // 报名人数列表
+    @NotProtected
     @RequestMapping("training/students")
     public String renderTrainingStudents(TrainsClassStudentsInputView trainsClassStudentsInputView, Model model) {
         try {

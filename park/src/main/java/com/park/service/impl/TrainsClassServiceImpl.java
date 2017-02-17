@@ -9,7 +9,11 @@ import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
 import com.park.service.ITrainsClassService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DaoSupport;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class TrainsClassServiceImpl extends BaseService implements ITrainsClassService {
@@ -22,6 +26,7 @@ public class TrainsClassServiceImpl extends BaseService implements ITrainsClassS
 	public PageBean getTrainsClassList(TrainsClassInputView trainsClassInputView){
 		String className = trainsClassInputView.getClassName();
         Integer courseId = trainsClassInputView.getCourseId();
+		Integer classStatus = trainsClassInputView.getClassStatus();
 		
 		StringBuilder headSql = new StringBuilder("SELECT trc.*, uo.operatorName, tc.courseName, COUNT(tcs.id) studentsCount,");
         headSql.append(" (CURDATE() >= trc.startTime AND  CURDATE() <= trc.endTime) signClass,");
@@ -38,10 +43,28 @@ public class TrainsClassServiceImpl extends BaseService implements ITrainsClassS
 		if(courseId != null){
 			whereSql.append(" AND courseId = :courseId");
 		}
+        if(classStatus != null && classStatus == 1){  // 未开始报名
+            whereSql.append(" AND (CURDATE() < trc.startTime)");
+        }
+        if(classStatus != null && classStatus == 2){  // 开始报名
+            whereSql.append(" AND (CURDATE() >= trc.startTime AND CURDATE() <= trc.endTime)");
+        }
+        if(classStatus != null && classStatus == 3){  // 结束报名
+            whereSql.append(" AND (CURDATE() > trc.endTime)");
+        }
         whereSql.append(" GROUP BY trc.id ORDER BY trc.updateTime DESC");
 
 		return super.getPageBean(headSql, bodySql, whereSql, trainsClassInputView, true);
 	}
+
+    @Override
+    public List<Map<String, Object>> getTrainsSignClassList(){
+        StringBuilder sql = new StringBuilder("SELECT trc.* FROM trains_class trc");
+        sql.append(" WhERE CURDATE() >= trc.startTime AND CURDATE() <= trc.endTime");
+        sql.append(" ORDER BY trc.updateTime DESC");
+
+        return baseDao.queryBySql(sql.toString());
+    }
 	
 	@Override
 	public TrainsClassInfo getTrainsClassInfo(int classId) {

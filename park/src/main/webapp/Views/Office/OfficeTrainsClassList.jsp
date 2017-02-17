@@ -22,6 +22,7 @@
             });
 
             $("#trains_filter_course").val('${courseId}');
+            $("#trains_filter_class").val('${classStatus}');
         });
     </script>
 </layout:override>
@@ -42,6 +43,14 @@
                             <c:forEach var="course" items="${courseNames.courseNames}">
                                 <option value="${course.id}">${course.courseName}</option>
                             </c:forEach>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" style="width: 160px;" name="classStatus" id="trains_filter_class">
+                            <option value="">全部班级</option>
+                            <option value="1">未开始</option>
+                            <option value="2">已开始</option>
+                            <option value="3">已结束</option>
                         </select>
                     </div>
                     <div class="form-group">

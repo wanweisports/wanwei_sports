@@ -9,6 +9,16 @@
     <link href="/Content/style/mobile/center/center_profile.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/app/mobile/training/training_class.js?v=${static_resource_version}"></script>
+    <script>
+        $(document).ready(function () {
+            $(".class-status.weui-bar__item_on").removeClass("weui-bar__item_on");
+            $(".class-status[data-status='${classStatus}']").addClass("weui-bar__item_on");
+        });
+    </script>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <c:set var="basketball" value="篮球"/>
     <c:set var="shuttercock" value="羽毛球"/>
@@ -16,19 +26,11 @@
 
     <div id="main" class="container">
         <div class="weui-tab">
-            <div class="weui-navbar">
-                <div class="weui-navbar__item weui-bar__item_on">
-                    全部课程
-                </div>
-                <div class="weui-navbar__item">
-                    未开始
-                </div>
-                <div class="weui-navbar__item">
-                    报名中
-                </div>
-                <div class="weui-navbar__item">
-                    已完成
-                </div>
+            <div class="weui-navbar class-status-select">
+                <div class="weui-navbar__item weui-bar__item_on class-status">全部课程</div>
+                <div class="weui-navbar__item class-status" data-status="1">未开始</div>
+                <div class="weui-navbar__item class-status" data-status="2">报名中</div>
+                <div class="weui-navbar__item class-status" data-status="3">已完成</div>
             </div>
             <div class="weui-tab__panel">
                 <div class="weui-btn-area">

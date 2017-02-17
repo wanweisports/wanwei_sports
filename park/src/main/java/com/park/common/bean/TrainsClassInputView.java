@@ -18,6 +18,7 @@ public class TrainsClassInputView extends BaseInputView {
     private String createTime;
     private String updateTime;
     private Double classPrice;
+    private Integer classStatus;
 
 
 
@@ -131,6 +132,14 @@ public class TrainsClassInputView extends BaseInputView {
 
     public void setClassPrice(Double classPrice) {
         this.classPrice = classPrice;
+    }
+
+    public Integer getClassStatus() {
+        return this.classStatus;
+    }
+
+    public void setClassStatus(Integer classStatus) {
+        this.classStatus = classStatus;
     }
 
 }
