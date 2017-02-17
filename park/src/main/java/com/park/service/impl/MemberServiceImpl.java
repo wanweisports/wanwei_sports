@@ -276,10 +276,11 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		String cardTypeId = memberInputView.getCardTypeId();
 		String memberType = memberInputView.getMemberType();
 		
-		StringBuilder headSql = new StringBuilder("SELECT uo.operatorName, um.memberId, mc.cardId, um.memberName, um.memberMobile, um.memberIdcard, mc.cardNo, mc.cardTypeId, mc.cardDeadline, mc.cardBalance, mc.cardStatus, mc.salesId, um.createTime, tempCardNo, (SELECT COUNT(1) FROM user_member umc WHERE umc.parentMemberId=um.memberId) childrenCount");
+		StringBuilder headSql = new StringBuilder("SELECT uo.operatorName, um.memberId, mc.cardId, um.memberName, um.memberMobile, um.memberIdcard, mc.cardNo, mc.cardTypeId, mc.cardDeadline, mc.cardBalance, mc.cardStatus, mc.salesId, um.createTime, COUNT(mss.reserveTimeId) siteCount");
 		StringBuilder bodySql = new StringBuilder(" FROM user_member um");
 		bodySql.append(" LEFT JOIN member_card mc ON(um.memberId = mc.memberId)");
 		bodySql.append(" LEFT JOIN user_operator uo ON(um.salesId = uo.id)");
+		bodySql.append(" LEFT JOIN member_site_sign mss ON(mss.signMemberCardNo = mc.cardNo)");
 		StringBuilder whereSql = new StringBuilder(" WHERE um.parentMemberId IS NULL AND um.memberStatus = ").append(IDBConstant.LOGIC_STATUS_YES);
 		if(StrUtil.isNotBlank(memberMobile)){
 			whereSql.append(" AND um.memberMobile = :memberMobile");
@@ -300,8 +301,8 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		if(StrUtil.isNotBlank(memberType)){
 			whereSql.append(" AND um.memberType = :memberType");
 		}
-		whereSql.append(" ORDER BY um.createTime DESC");
-		PageBean pageBean = super.getPageBean(headSql, bodySql, whereSql, memberInputView);
+		whereSql.append(" GROUP BY mc.cardNo ORDER BY um.createTime DESC");
+		PageBean pageBean = super.getPageBean(headSql, bodySql, whereSql, memberInputView, true);
 		List<Map<String, Object>> list = pageBean.getList();
 		for(Map<String, Object> map : list){
 			map.put("cardTypeName", baseDao.getUniqueObjectResult("SELECT cardTypeName FROM member_card_type WHERE cardTypeId = ?", map.get("cardTypeId")));

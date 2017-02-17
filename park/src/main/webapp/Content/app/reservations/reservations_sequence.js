@@ -308,13 +308,33 @@
             $selected = $selected.sort(function (min, max) {
                 return $(min).attr("data-col") - $(max).attr("data-col");
             });
+            var selectedSites = [];
             var $sel = null;
             for (var i = 0; i < $selected.size(); i++) {
                 $sel = $selected.eq(i);
 
-                html += content.opts.Reservation_list.replace("#SITENAME#", $sel.attr("data-name"))
-                    .replace("#STARTTIME#", $sel.attr("data-start"))
-                    .replace("#ENDTIME#", $sel.attr("data-end"));
+                selectedSites.push({
+                    siteName : $sel.attr("data-name"),
+                    startTime : $sel.attr("data-start"),
+                    endTime : $sel.attr("data-end")
+                });
+            }
+
+            for (var j = 1; j < selectedSites.length; j++) {
+                if (selectedSites[j-1].siteName == selectedSites[j].siteName &&
+                    selectedSites[j-1].endTime == selectedSites[j].startTime) {
+
+                    selectedSites[j-1].endTime = selectedSites[j].endTime;
+
+                    selectedSites.splice(j, 1);
+                    j--;
+                }
+            }
+
+            for (var z = 0; z < selectedSites.length; z++) {
+                html += content.opts.Reservation_list.replace("#SITENAME#", selectedSites[z].siteName)
+                    .replace("#STARTTIME#", selectedSites[z].startTime)
+                    .replace("#ENDTIME#", selectedSites[z].endTime);
             }
 
             $ordersListSelected.find(".none").hide();
@@ -432,6 +452,37 @@
             if ($selected.size() === 0) {
                 return data;
             }
+
+            /*$selected = $selected.sort(function (min, max) {
+                return $(min).attr("data-col") - $(max).attr("data-col");
+            });
+            var selectedSites = [];
+            var $sel = null;
+            for (var i = 0; i < $selected.size(); i++) {
+                $sel = $selected.eq(i);
+
+                selectedSites.push({
+                    siteStartTime: $sel.attr("data-start"),
+                    siteEndTime: $sel.attr("data-end"),
+                    siteId: $sel.attr("data-id"),
+                    mobile: $sel.find("span.mobile").attr("data-mobile"),
+                    name: $sel.find("span.name").attr("data-name"),
+                    member: $sel.find("span.name").attr("data-id"),
+                    card: $sel.find("span.mobile").attr("data-card"),
+                    timeId: $sel.find("span.angle").attr("data-reserve")
+                });
+            }
+
+            for (var j = 1; j < selectedSites.length; j++) {
+                if (selectedSites[j-1].siteId == selectedSites[j].siteId &&
+                    selectedSites[j-1].siteEndTime == selectedSites[j].siteStartTime) {
+
+                    selectedSites[j-1].siteEndTime = selectedSites[j].siteEndTime;
+
+                    selectedSites.splice(j, 1);
+                    j--;
+                }
+            }*/
 
             for (var i = 0; i < $selected.size(); i++) {
                 var $sel = $selected.eq(i);

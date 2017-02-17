@@ -10,10 +10,6 @@ import com.park.common.bean.PageBean;
 
 public interface IDataService {
 
-	public Map<String, Object> getCountMembersByWeek(DataInputView dataInputView);
-
-	public Map<String, Object> getCountMembersByMonth(DataInputView dataInputView);
-
 	public List<Map<String, Object>> getMembersRegister(DataInputView dataInputView);
 	
 	public Map<String, Object> getMembersRegisterNew(DataInputView dataInputView);

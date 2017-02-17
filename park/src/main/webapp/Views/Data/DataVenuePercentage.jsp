@@ -32,10 +32,10 @@
                 <form class="form-inline" id="data_form" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="/data/getVenuePercentage?countNum=10" data-count="10" class="btn btn-primary venue-date">全部</a>
-                            <a href="/data/getVenuePercentage?countNum=1" data-count="1" class="btn btn-default venue-date">今日</a>
-                            <a href="/data/getVenuePercentage?countNum=3" data-count="3" class="btn btn-default venue-date">本周</a>
-                            <a href="/data/getVenuePercentage?countNum=4" data-count="4" class="btn btn-default venue-date">本月</a>
+                            <a href="/data/getVenuePercentage?countNum=11" data-count="11" class="btn btn-default venue-date">今日</a>
+                            <a href="/data/getVenuePercentage?countNum=21" data-count="21" class="btn btn-default venue-date">本周</a>
+                            <a href="/data/getVenuePercentage?countNum=31" data-count="31" class="btn btn-default venue-date">本月</a>
+                            <a href="/data/getVenuePercentage?countNum=41" data-count="41" class="btn btn-default venue-date">本年</a>
                         </div>
                     </div>
                     <div class="form-group">

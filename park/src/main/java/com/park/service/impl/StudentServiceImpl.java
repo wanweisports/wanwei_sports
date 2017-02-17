@@ -53,6 +53,7 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 			whereSql.append(" AND us.studentName LIKE :studentName");
 			studentInputView.setStudentName(studentName + "%");
 		}
+		whereSql.append(" ORDER BY us.createTime DESC");
 		
 		return super.getPageBean(headSql, bodySql, whereSql, studentInputView);
 	}
@@ -77,10 +78,10 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 	
 	@Override
 	public Integer saveStudent(UserStudent student, String cardNo){
-		if(!availableMobile(student.getStudentMobile())) throw new MessageException("学生手机号重复，请重新输入！");
 		String nowDate = DateUtil.getNowDate();
 		Integer studentId = student.getStudentId();
 		if(studentId == null){
+            if(!availableMobile(student.getStudentMobile())) throw new MessageException("学生手机号重复，请重新输入！");
 			MemberCardType memberCarType = memberService.getMemberCardType(StrUtil.objToInt(IDBConstant.CARD_STUDENT));
 			if(memberCarType == null) throw new MessageException("学生卡类型不存在，请联系管理员！");
 			

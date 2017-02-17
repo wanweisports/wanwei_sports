@@ -595,12 +595,16 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 
     @Override
     public int getMealTotal(SiteInputView siteInputView){
-        StringBuilder headSql = new StringBuilder("SELECT SUM(smi.mealCount)");
-        StringBuilder bodySql = new StringBuilder(" FROM site_meal_info smi INNER JOIN order_info oi ON smi.orderId = oi.orderId");
-        StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
+        StringBuilder sql = new StringBuilder("SELECT SUM(smi.mealCount) total");
+        sql.append(" FROM site_meal_info smi INNER JOIN order_info oi ON smi.orderId = oi.orderId");
+        sql.append(" WHERE 1=1");
 
-        PageBean pageBean = super.getPageBean(headSql, bodySql, whereSql, siteInputView);
-        return pageBean.getCount();
+		List<Map<String, Object>> list = baseDao.queryBySql(sql.toString());
+        int total = 0;
+        for(Map<String, Object> map : list){
+            total = StrUtil.objToInt(map.get("total"));
+        }
+        return total;
     }
 
 

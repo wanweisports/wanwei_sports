@@ -99,6 +99,11 @@
 	                                        <span class="glyphicon glyphicon-tag"></span> 签到
 	                                    </a>
                                     </c:if>
+                                    <c:if test="${student.isSign == 1}">
+                                        <a class="btn btn-info disabled" href="javascript:;">
+                                            <span class="glyphicon glyphicon-tag"></span> 已签
+                                        </a>
+                                    </c:if>
                                     <%--<a class="btn btn-danger students-delete" href="javascript:;"
                                         data-id="${student.studentId}">
                                         <span class="glyphicon glyphicon-trash"></span> 删除

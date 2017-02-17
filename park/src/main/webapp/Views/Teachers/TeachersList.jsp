@@ -78,7 +78,7 @@
                                         <c:otherwise>${member.cardDeadline}</c:otherwise>
                                     </c:choose>
                                 </td>
-                                <td>0次</td>
+                                <td>${member.siteCount}次</td>
                                 <c:if test="${member.cardStatus == 1}">
                                     <td class="text-success">有效</td>
                                 </c:if>

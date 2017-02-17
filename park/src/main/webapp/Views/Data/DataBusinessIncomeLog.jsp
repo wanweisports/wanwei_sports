@@ -30,11 +30,11 @@
                 <form id="data_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="/data/getBusinessIncome?countNum=10" data-count="10" class="btn btn-primary member-date">全部</a>
-                            <a href="/data/getBusinessIncome?countNum=1" data-count="1" class="btn btn-default member-date">今日</a>
-                            <a href="/data/getBusinessIncome?countNum=2" data-count="2" class="btn btn-default member-date">昨日</a>
-                            <a href="/data/getBusinessIncome?countNum=3" data-count="3" class="btn btn-default member-date">本周</a>
-                            <a href="/data/getBusinessIncome?countNum=4" data-count="4" class="btn btn-default member-date">本月</a>
+                            <a href="/data/getBusinessIncomeLog?countNum=11" data-count="11" class="btn btn-default member-date">今日</a>
+                            <a href="/data/getBusinessIncomeLog?countNum=10" data-count="10" class="btn btn-default member-date">昨日</a>
+                            <a href="/data/getBusinessIncomeLog?countNum=21" data-count="21" class="btn btn-default member-date">本周</a>
+                            <a href="/data/getBusinessIncomeLog?countNum=31" data-count="31" class="btn btn-default member-date">本月</a>
+                            <a href="/data/getBusinessIncomeLog?countNum=41" data-count="41" class="btn btn-default member-date">本年</a>
                         </div>
                     </div>
                     <div class="form-group">
