@@ -30,6 +30,7 @@
                 <form id="data_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
+                            <a href="/data/getBusinessIncomeLog?countNum=1000" data-count="1000" class="btn btn-primary member-date">全部</a>
                             <a href="/data/getBusinessIncomeLog?countNum=11" data-count="11" class="btn btn-default member-date">今日</a>
                             <a href="/data/getBusinessIncomeLog?countNum=10" data-count="10" class="btn btn-default member-date">昨日</a>
                             <a href="/data/getBusinessIncomeLog?countNum=21" data-count="21" class="btn btn-default member-date">本周</a>
@@ -38,8 +39,11 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <select class="form-control">
-                            <option>订单类型</option>
+                        <select class="form-control" name="balanceServiceType">
+                            <option value="">订单类型</option>
+                            <c:forEach var="map" items="${balanceServiceTypes}">
+                            	<option value="${map.key}">${map.value}</option>
+                            </c:forEach>
                         </select>
                     </div>
                     <div class="form-group">
@@ -62,15 +66,13 @@
         <div class="alert alert-info clearfix">
             <ul class="nav nav-pills pull-left">
                 <li style="margin-right: 15px;">支付方式:</li>
-                <li style="margin-right: 15px;">全部 <span class="badge">100元</span></li>
-                <li style="margin-right: 15px;">现金 <span class="badge">100元</span></li>
-                <li style="margin-right: 15px;">支付宝 <span class="badge">100元</span></li>
-                <li style="margin-right: 15px;">微信 <span class="badge">100元</span></li>
-                <li style="margin-right: 15px;">银联 <span class="badge">100元</span></li>
-                <li style="margin-right: 15px;">支票 <span class="badge">100元</span></li>
+                <c:forEach var="c" items="${balancesCount}">
+                	<li style="margin-right: 15px;">${c.payStyle} <span class="badge">${c.realAmountSum}元</span></li>
+                </c:forEach>
+                
             </ul>
             <div class="pull-right">
-                <a href="javascript:;" class="btn btn-danger">
+                <a href="javascript:;" class="btn btn-danger" onclick="window.open('/data/exportBusinessIncomeLog?'+$('#data_form').serialize());">
                     <span class="glyphicon glyphicon-export"></span> 导出数据
                 </a>
                 <a href="javascript:;" class="btn btn-primary" style="display: none;">
@@ -96,46 +98,18 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>20161214015050</td>
-                            <td>214110</td>
-                            <td>车靖童</td>
-                            <td>会员卡办理</td>
-                            <td>微信</td>
-                            <td>50.00</td>
-                            <td>王军</td>
-                            <td>2016-12-14</td>
-                        </tr>
-                        <tr>
-                            <td>20161214015050</td>
-                            <td>214110</td>
-                            <td>车靖童</td>
-                            <td>会员卡补办</td>
-                            <td>微信</td>
-                            <td>50.00</td>
-                            <td>王军</td>
-                            <td>2016-12-14</td>
-                        </tr>
-                        <tr>
-                            <td>20161214015050</td>
-                            <td>214110</td>
-                            <td>车靖童</td>
-                            <td>场地预订</td>
-                            <td>支付宝</td>
-                            <td>50.00</td>
-                            <td>王军</td>
-                            <td>2016-12-14</td>
-                        </tr>
-                        <tr>
-                            <td>20161214015050</td>
-                            <td>214110</td>
-                            <td>车靖童</td>
-                            <td>商品消费</td>
-                            <td>支付宝</td>
-                            <td>50.00</td>
-                            <td>王军</td>
-                            <td>2016-12-14</td>
-                        </tr>
+                        <c:forEach var="d" items="${list}">
+                        	<tr>
+	                            <td>${d.balanceNo}</td>
+	                            <td>${d.cardNo}</td>
+	                            <td>${d.memberName}</td>
+	                            <td>${d.balanceServiceType}</td>
+	                            <td>${d.payStyle}</td>
+	                            <td>${d.realAmount}</td>
+	                            <td>${d.operatorName}</td>
+	                            <td>${d.createTime}</td>
+	                        </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                     <nav class="pull-right" <c:if test="${count <= pageSize}">style="display: none;"</c:if> >

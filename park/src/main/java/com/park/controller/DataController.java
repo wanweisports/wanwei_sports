@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.park.common.bean.DataInputView;
+import com.park.common.bean.PageBean;
 import com.park.common.bean.ResponseBean;
 import com.park.common.constant.IDBConstant;
 import com.park.common.exception.MessageException;
 import com.park.common.util.JsonUtils;
 import com.park.service.IDataService;
+import com.park.service.IDictService;
 import com.park.service.IXlsExportImportService;
 
 /**
@@ -35,6 +37,9 @@ public class DataController extends BaseController {
 	
 	@Autowired
 	private IXlsExportImportService xlsExportImportService;
+	
+	@Autowired
+	private IDictService dictService;
 
     // 会员注册个数
     @ResponseBody
@@ -188,11 +193,34 @@ public class DataController extends BaseController {
         return "Data/DataBusinessIncomeGroupDate";
     }
 
-	// 营业收支日志
+	// 营业收支日志(流水)
 	@RequestMapping("getBusinessIncomeLog")
 	public String getBusinessIncomeLog(DataInputView dataInputView, Model model) {
+		try {
+            model.addAllAttributes(JsonUtils.fromJsonDF(dataInputView));
+            PageBean pageBean = dataService.getOtherBalances(dataInputView);
+            super.setPageInfo(model, pageBean);
+            
+            model.addAllAttributes(dataService.getOtherBalancesCount(dataInputView));
+            model.addAttribute("balanceServiceTypes", dictService.getDictToMap(IDBConstant.BALANCE_SERVICE_TYPE));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 		return "Data/DataBusinessIncomeLog";
 	}
+	
+    //营业收支日志(流水)导出excel
+    @RequestMapping("exportBusinessIncomeLog")
+    public void exportBusinessIncomeLog(DataInputView dataInputView, HttpServletResponse response) {
+    	try {
+    		dataInputView.setPageSize(null);
+    		PageBean pageBean = dataService.getOtherBalances(dataInputView);
+    		Workbook workbook = xlsExportImportService.xlsExport("template_businessIncome_log.xlsx", pageBean.getList());
+    		outExcel(response, workbook, "营业流水日志");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
 
     // 场地使用率
     @RequestMapping("getVenuePercentage")

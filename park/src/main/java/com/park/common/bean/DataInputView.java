@@ -14,6 +14,7 @@ public class DataInputView extends BaseInputView {
 	private String dictName;
 	private String memberName;
 	private String sportId;
+	
 	private Integer[] balanceServiceTypeArr; 
 
 	public Integer getCountNum() {
