@@ -453,11 +453,11 @@ public class DataServiceImpl extends BaseService implements IDataService {
             case IDBConstant.DATA_DATE_PRE_DAY: //昨日
                 return " AND DATE_FORMAT("+field+", '%Y-%m-%d') = adddate(CURDATE(), -1)";
             case IDBConstant.DATA_DATE_WEEK: //本周
-                return " AND YEARWEEK("+field+") = YEARWEEK(CURDATE())";
+                return " AND YEARWEEK("+field+",1) = YEARWEEK(CURDATE(),1)";
             case IDBConstant.DATA_DATE_PRE_WEEK: //上周
-                return " AND YEARWEEK("+field+") = YEARWEEK(CURDATE())-1";
+                return " AND YEARWEEK("+field+",1) = YEARWEEK(CURDATE(),1)-1";
             case IDBConstant.DATA_DATE_NEXT_WEEK: //下周
-                return " AND YEARWEEK("+field+") = YEARWEEK(CURDATE())+1";
+                return " AND YEARWEEK("+field+",1) = YEARWEEK(CURDATE(),1)+1";
             case IDBConstant.DATA_DATE_MONTH: //本月
                 return " AND DATE_FORMAT("+field+", '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')";
             case IDBConstant.DATA_DATE_YEAR: //本年
@@ -841,15 +841,69 @@ public class DataServiceImpl extends BaseService implements IDataService {
 	}
 	
 	@Override
-	public PageBean getOtherBalance(DataInputView dataInputView){
-		StringBuilder headSql = new StringBuilder("");
-		StringBuilder bodySql = new StringBuilder("");
-		StringBuilder whereSql = new StringBuilder("");
+	public PageBean getOtherBalances(DataInputView dataInputView){
 		
+		Integer countNum = dataInputView.getCountNum();
+		String createTimeStart = dataInputView.getCreateTimeStart();
+		String createTimeEnd = dataInputView.getCreateTimeEnd();
+		Integer balanceServiceType = dataInputView.getBalanceServiceType();
+		
+		StringBuilder headSql = new StringBuilder("SELECT ob.balanceId, ob.balanceNo, mc.cardNo, IFNULL(um.memberName,'散客') memberName, (SELECT dictValue FROM system_dict WHERE dictName='BALANCE_SERVICE_TYPE' AND dictKey = ob.balanceServiceType) balanceServiceType,(SELECT dictValue FROM system_dict WHERE dictName='BALANCE_STYLE' AND dictKey = ob.balanceStyle) payStyle, CONCAT(ob.realAmount,'元') realAmount, uo.operatorName, ob.createTime");
+		StringBuilder bodySql = new StringBuilder(" FROM other_balance ob");
+		bodySql.append(" LEFT JOIN member_card mc ON(ob.balanceCardId = mc.cardId)");
+		bodySql.append(" LEFT JOIN user_member um ON(mc.memberId = um.memberId)");
+		bodySql.append(" LEFT JOIN user_operator uo ON(uo.id = ob.salesId)");
+		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
+		if(StrUtil.isNotBlank(createTimeStart)){
+			whereSql.append(" AND DATE(mc.createTime) >= :createTimeStart");
+        }
+        if(StrUtil.isNotBlank(createTimeEnd)){
+        	whereSql.append(" AND DATE(mc.createTime) <= :createTimeEnd");
+        }
+        if(balanceServiceType != null){
+        	whereSql.append(" AND ob.balanceServiceType =:balanceServiceType");
+        }
+		whereSql.append(getCountSql(countNum, "ob.createTime"));
 		return super.getPageBean(headSql, bodySql, whereSql, dataInputView);
 	}
 	
-	
+	@Override
+	public Map<String, Object> getOtherBalancesCount(DataInputView dataInputView){
+		
+		Integer countNum = dataInputView.getCountNum();
+		String createTimeStart = dataInputView.getCreateTimeStart();
+		String createTimeEnd = dataInputView.getCreateTimeEnd();
+		Integer balanceServiceType = dataInputView.getBalanceServiceType();
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		StringBuilder sql = new StringBuilder("SELECT dictValue payStyle, IFNULL(SUM(ob.realAmount),0) realAmountSum FROM system_dict sd LEFT JOIN other_balance ob ON(ob.balanceStyle = sd.dictKey");
+		sql.append(getCountSql(countNum, "ob.createTime"));
+		sql.append(") WHERE dictName='BALANCE_STYLE'");
+		if(StrUtil.isNotBlank(createTimeStart)){
+            sql.append(" AND DATE(mc.createTime) >= :createTimeStart");
+        }
+        if(StrUtil.isNotBlank(createTimeEnd)){
+            sql.append(" AND DATE(mc.createTime) <= :createTimeEnd");
+        }
+        if(balanceServiceType != null){
+        	sql.append(" AND ob.balanceServiceType =:balanceServiceType");
+        }
+		sql.append(" GROUP BY sd.dictKey");
+		
+		List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
+		
+		Map<String, Object> allMap = new HashMap<String, Object>();
+		allMap.put("payStyle", "全部");
+		double allRealAmountSum = 0;
+		for (Map<String, Object> map : list) {
+			allRealAmountSum += StrUtil.objToDoubleDef0(map.get("realAmountSum"));
+		}
+		allMap.put("realAmountSum", allRealAmountSum);
+		list.add(0, allMap);
+		
+		resultMap.put("balancesCount", list);
+		return resultMap;
+	}
 	
 	
 }

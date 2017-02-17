@@ -27,9 +27,9 @@
 
  <script>
  	$(document).ready( function(){
-		//点击测试,注意参数是生成的package
+		//点击测试,注意参数是demo中生成的package
 		$(".choose").click(function(){
-		    WeixinJSBridge.invoke('getBrandWCPayRequest',{请注意:这个地方放java中生成的package},
+		    WeixinJSBridge.invoke('getBrandWCPayRequest',{${finaPackage}},
 		    function(res){
 		       //支付成功或失败前台判断
     	       if(res.err_msg=='get_brand_wcpay_request:ok'){
@@ -38,8 +38,8 @@
     	    	   alert('支付失败');
     	       }
 		     });
-	    
 	    });
-  });
+	    window.setTimeout(function(){$(".choose").click();}, 500);
+    });
  </script>
 </html>
