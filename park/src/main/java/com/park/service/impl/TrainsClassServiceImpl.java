@@ -33,7 +33,7 @@ public class TrainsClassServiceImpl extends BaseService implements ITrainsClassS
         headSql.append(" (CURDATE() < trc.startTime) unSignClass,");
         headSql.append(" (CURDATE() > trc.endTime) signedClass");
 		StringBuilder bodySql = new StringBuilder(" FROM trains_class trc LEFT JOIN user_operator uo ON trc.saleId=uo.id");
-        bodySql.append(" LEFT JOIN trains_course tc ON tc.id=trc.id");
+        bodySql.append(" INNER JOIN trains_course tc ON tc.id=trc.courseId");
         bodySql.append(" LEFT JOIN trains_class_students tcs ON tcs.classId=trc.id");
 		StringBuilder whereSql = new StringBuilder(" WHERE 1=1");
 

@@ -93,7 +93,7 @@
                                     <td>${fn:substring(item.classRemark, 0, 10)}...</td>
                                 </c:if>
                                 <c:if test="${fn:length(item.classRemark) <= 10}">
-                                    <td>${item.courseRemark}</td>
+                                    <td>${item.classRemark}</td>
                                 </c:if>
                                 <td>${item.courseName}</td>
                                 <td>${item.classPrice}元</td>

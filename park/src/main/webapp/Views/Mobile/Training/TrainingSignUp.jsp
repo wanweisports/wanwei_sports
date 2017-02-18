@@ -9,6 +9,15 @@
     <link href="/Content/style/mobile/center/center_profile.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/app/mobile/training/training_signup.js?v=${static_resource_version}"></script>
+    <script>
+        $(document).ready(function () {
+            $("#class_id").val("${classId}").trigger("change");
+        });
+    </script>
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div id="main" class="container">
         <form id="signup_form">
@@ -32,14 +41,24 @@
                 </div>
                 <div class="weui-cell weui-cell_select weui-cell_select-after">
                     <div class="weui-cell__hd">
-                        <label class="weui-label">报名课程</label>
+                        <label class="weui-label">报名班级</label>
                     </div>
                     <div class="weui-cell__bd">
                         <select id="class_id" name="classId" class="weui-select">
+                            <option value="0">请选择班级</option>
                             <c:forEach var="cl" items="${classList}">
                                 <option value="${cl.id}">${cl.className}</option>
                             </c:forEach>
                         </select>
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <label class="weui-label">班级价格</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <input id="pay_status" name="payStatus" value="1" type="hidden">
+                        <input id="pay_price" name="payPrice" class="weui-input" type="text" value="0.00" readonly>
                     </div>
                 </div>
                 <div class="weui-cell">
@@ -53,9 +72,7 @@
             </div>
             <label for="weuiAgree" class="weui-agree">
                 <input id="weuiAgree" type="checkbox" class="weui-agree__checkbox">
-                <span class="weui-agree__text">
-                阅读并同意<a href="javascript:void(0);">《相关条款》</a>
-            </span>
+                <span class="weui-agree__text">阅读并同意<a href="javascript:void(0);">《相关条款》</a></span>
             </label>
 
             <div class="weui-btn-area">

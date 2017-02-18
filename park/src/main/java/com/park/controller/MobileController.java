@@ -233,7 +233,8 @@ public class MobileController extends BaseController {
     // 培训报名
     @NotProtected
     @RequestMapping("training/signup")
-    public String renderTrainingSignUp(Model model) {
+    public String renderTrainingSignUp(int classId ,Model model) {
+        model.addAttribute("classId", classId);
         model.addAttribute("classList", trainsClassService.getTrainsSignClassList());
         return "Mobile/Training/TrainingSignUp";
     }
@@ -244,6 +245,7 @@ public class MobileController extends BaseController {
     public ResponseBean signTrainsStudents(TrainsClassStudents trainsClassStudents) {
         try {
             trainsClassStudents.setSaleId(13);
+            trainsClassStudents.setPayStatus(IDBConstant.LOGIC_STATUS_YES);
 
             Integer signId = trainsClassStudentsService.saveTrainsClassStudentsSign(trainsClassStudents);
             Map<String, Object> data = new HashMap<String, Object>();
@@ -278,8 +280,6 @@ public class MobileController extends BaseController {
     @RequestMapping("training/students")
     public String renderTrainingStudents(TrainsClassStudentsInputView trainsClassStudentsInputView, Model model) {
         try {
-            UserOperator userInfo = super.getUserInfo();
-            trainsClassStudentsInputView.setSaleId(userInfo.getId());
             model.addAllAttributes(JsonUtils.fromJsonDF(trainsClassStudentsInputView));
             model.addAttribute("classInfo", trainsClassService.getTrainsClassInfo(trainsClassStudentsInputView.getClassId()));
             PageBean pageBean = trainsClassStudentsService.getTrainsClassStudentsList(trainsClassStudentsInputView);
@@ -289,6 +289,24 @@ public class MobileController extends BaseController {
         }
 
         return "Mobile/Training/TrainingStudents";
+    }
+
+    // 报名人数列表
+    @NotProtected
+    @ResponseBody
+    @RequestMapping(value = "training/classInfo", method = RequestMethod.POST)
+    public ResponseBean getTrainingClassInfo(TrainsClassStudentsInputView trainsClassStudentsInputView, Model model) {
+        try {
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("classInfo", trainsClassService.getTrainsClassInfo(trainsClassStudentsInputView.getClassId()));
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
     }
 
     private boolean checkLogin() {

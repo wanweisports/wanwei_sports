@@ -38,10 +38,13 @@
                         </div>
                     </c:forEach>
                 </div>
+                <c:if test="${fn:length(list) == 0}">
+                    <div class="weui-cells__tips">还没有任何报名学生！</div>
+                </c:if>
             </div>
         </div>
         <div class="weui-btn-area">
-            <a class="weui-btn weui-btn_primary" href="javascript:">我要报名</a>
+            <a class="weui-btn weui-btn_primary" href="/mobile/training/signup?classId=${classInfo.id}">我要报名</a>
         </div>
     </div>
 </layout:override>

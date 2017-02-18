@@ -71,22 +71,25 @@
         }, 3000);
     };
 
-    $.tipsSuccessAlert = function (message, callback) {
-        if (!callback) {
-            callback = new Function();
-        }
-
-        $("#tips_success_modal").show().find(".tips-content").text(message);
-
-        var timeout = setTimeout(function () {
-            $("#tips_success_modal").hide();
-            clearTimeout(timeout);
-            callback();
-        }, 3000);
-    };
-
-    $.tipsSuccessConfirm = function (message) {
+    $.tipsSuccessConfirm = function (message, confirm, cancel) {
         $("#tips_confirm_modal").show().find(".tips-content").text(message);
+
+        confirm = confirm || new Function();
+        cancel = cancel || new Function();
+
+        $("#tips_confirm_modal").on("click", ".confirm-cancel", function (e) {
+            e.preventDefault();
+
+            $("#tips_confirm_modal").hide();
+            cancel();
+        });
+
+        $("#tips_confirm_modal").on("click", ".confirm-pay", function (e) {
+            e.preventDefault();
+
+            $("#tips_confirm_modal").hide();
+            confirm();
+        });
     };
 
     $(".tips-know").on("click", function (e) {

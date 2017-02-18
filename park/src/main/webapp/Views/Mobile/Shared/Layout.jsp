@@ -53,13 +53,13 @@
         </div>
     </div>
 
-    <div id="tipsSuccessConfirm" style="display: none;">
+    <div id="tips_confirm_modal" style="display: none;">
         <div class="weui-mask"></div>
         <div class="weui-dialog">
             <div class="weui-dialog__bd tips-content"></div>
             <div class="weui-dialog__ft">
-                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default">取 消</a>
-                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary">确 定</a>
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default confirm-cancel">取 消</a>
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary confirm-pay">确 定</a>
             </div>
         </div>
     </div>
