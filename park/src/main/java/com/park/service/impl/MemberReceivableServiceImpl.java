@@ -60,6 +60,7 @@ public class MemberReceivableServiceImpl extends BaseService implements IMemberR
 		balance.setBalanceStyle(payType);
 		balance.setOldAmount(orderInfo.getOrderSumPrice());
 		balance.setRealAmount(payPrice);
+		balance.setXjAmount(payPrice);
 		balance.setBalanceType(IDBConstant.BALANCE_TYPE_OTHER);
 		balance.setServiceDate(nowDate);
 		balance.setCreateTime(nowDate);

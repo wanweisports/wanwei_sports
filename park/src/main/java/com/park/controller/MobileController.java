@@ -5,6 +5,7 @@ import com.park.common.bean.*;
 import com.park.common.constant.IDBConstant;
 import com.park.common.constant.IPlatformConstant;
 import com.park.common.exception.MessageException;
+import com.park.common.po.ParkBusiness;
 import com.park.common.po.TrainsClassStudents;
 import com.park.common.po.UserOperator;
 import com.park.common.util.DateUtil;
@@ -187,21 +188,30 @@ public class MobileController extends BaseController {
         siteInputView.setSportStatus(IDBConstant.LOGIC_STATUS_YES);
         List<Map<String, Object>> siteSports = siteService.getSiteSportNames(siteInputView);
         if(siteSports.size() > 0){
+        	ParkBusiness business = parkService.getBusiness();
             Integer sportId = siteInputView.getSportId();
             if(sportId == null){ //未选择，默认第一个
                 Map<String, Object> sportMap = siteSports.get(0);
                 sportId = StrUtil.objToInt(sportMap.get("sportId"));
             }
+            if(StrUtil.isBlank(siteInputView.getSiteDate())){ //默认当时间
+            	siteInputView.setSiteDate(DateUtil.dateToString(new Date(), null));
+            	siteInputView.setStartTime(business.getBusinessStartTime());
+            	siteInputView.setEndTime(business.getBusinessEndTime());
+            }
             siteInputView.setSportId(sportId);
             siteInputView.setSiteStatus(IDBConstant.LOGIC_STATUS_YES);
-            List<Map<String, Object>> sites = siteService.getSites(siteInputView);
-            List<Map<String, Object>> timePeriod = parkService.getTimePeriod(parkService.getBusiness());
+            siteInputView.setSportStatus(IDBConstant.LOGIC_STATUS_YES);
+            siteInputView.setPageSize(null); //暂不分页
+            PageBean pageBean = siteService.getMobileReservationSite(siteInputView);
+            List<Map<String, Object>> timePeriod = parkService.getTimePeriod(business);
             model.addAttribute("sportId", sportId);
             model.addAttribute("siteSports", siteSports);
-            model.addAttribute("sites", sites);
+            model.addAttribute("sites", pageBean.getList());
             model.addAttribute("timePeriod", timePeriod);
             model.addAttribute("curDate", DateUtil.dateToString(new Date(), null));
             model.addAttribute("curSportId", sportId);
+            model.addAllAttributes(JsonUtils.fromJson(siteInputView));
         }
 
         return "Mobile/Reservation/ReservationSequence";
@@ -227,6 +237,7 @@ public class MobileController extends BaseController {
     public String renderReservationOrders() {
         return "Mobile/Reservation/ReservationList";
     }
+    
 
     // 培训
 

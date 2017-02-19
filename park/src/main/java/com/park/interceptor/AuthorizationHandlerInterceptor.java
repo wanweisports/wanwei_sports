@@ -39,7 +39,7 @@ public class AuthorizationHandlerInterceptor implements HandlerInterceptor {
                     out.close();
                     return false;
                 }else {
-                    //response.sendRedirect("/passport/login");
+                	request.getAttribute("login");
                 	request.getRequestDispatcher("/passport/login?returnUrl="+RequestUtil.getRequestURIQuery(request)).forward(request, response);    
                     return false;// 终止拦截器继续传播
                 }

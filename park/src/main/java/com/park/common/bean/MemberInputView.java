@@ -30,6 +30,8 @@ public class MemberInputView extends BaseInputView {
 	
 	private String siteType;
 	
+	private Integer memberId;
+	
 	public String getMemberMobile() {
 		return memberMobile;
 	}
@@ -140,6 +142,14 @@ public class MemberInputView extends BaseInputView {
 
 	public void setSiteType(String siteType) {
 		this.siteType = siteType;
+	}
+
+	public Integer getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
 	}
 	
 }

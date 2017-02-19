@@ -37,6 +37,9 @@ public class BusinessController extends BaseController {
     @Autowired
     private INotificationsService notificationsService;
 
+    @Autowired
+    private IDataService dataService;
+    
     // 用户登录
     @NotProtected
     @RequestMapping("passport/login")
@@ -198,12 +201,12 @@ public class BusinessController extends BaseController {
     // 收入统计
     @RequestMapping("data/income")
     public String income(DataInputView dataInputView, Model model) {
-        /*try{
+        try{
             model.addAllAttributes(JsonUtils.fromJson(dataInputView));
-            model.addAllAttributes(dataService.getBusinessIncome(dataInputView));
+            model.addAllAttributes(dataService.getMobileBusinessIncome(dataInputView));
         }catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
 
         return "Business/Data/DataIncome";
     }

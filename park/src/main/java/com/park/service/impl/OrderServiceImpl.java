@@ -79,12 +79,12 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 		OrderInfo orderInfoDB = getOrderInfo(orderId);
 		if(orderInfoDB == null) throw new MessageException("订单不存在");
 		if(IDBConstant.LOGIC_STATUS_YES.equals(orderInfoDB.getPayStatus())) throw new MessageException("该订单已支付过了，请不要重复支付");
-		Double orderSumPrice = orderInfoDB.getOrderSumPrice();
 		//orderInfoDB.setPaySumPrice((orderInfoDB.getPaySumPrice()!=null?orderInfoDB.getPaySumPrice():0) + orderInfo.getPaySumPrice()); //【老需求】加上之前已经支付过多少钱
 		Double paySumPrice = orderInfo.getPaySumPrice();
 		orderInfoDB.setPaySumPrice(paySumPrice); //新需求：剩余金额在应收款中收取
 		//会员付款--->应收款（散客无应收款）
 		Integer memberId = orderInfoDB.getMemberId();
+		orderInfoDB.setXjAmount(paySumPrice);
 		if(memberId != null && memberId > 0 && (IDBConstant.ORDER_SERVICE_TYPE_SITE.equals(orderInfoDB.getOrderServiceType())||IDBConstant.ORDER_SERVICE_TYPE_BLOCK_SITE.equals(orderInfoDB.getOrderServiceType()))){
 			//之前的逻辑
 			/*//扣除订单orderSumPrice金额：先扣除用户支付输入的金额
@@ -109,13 +109,16 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 			//新逻辑
 			List<MemberCard> memberCards = memberService.getMemberCards(memberId);
 			if(memberCards.size() > 0){
+				
 				MemberCard memberCard = memberCards.get(0);
 				double remainingCardPrice = memberCard.getCardBalance() - paySumPrice;
 				double realAmount = remainingCardPrice > 0 ? remainingCardPrice : 0;  //最低扣到0
+				
+				orderInfoDB.setXjAmount(realAmount > 0 ? 0 : paySumPrice-memberCard.getCardBalance());
+				
 				memberCard.setCardBalance(realAmount);
 				baseDao.save(memberCard, memberCard.getCardId());
 				
-				orderInfoDB.setRealAmount(realAmount);
 				if(orderInfo.getPayCount() < orderInfoDB.getSumCount()){ //场次不是最大，生成应收款
 					memberReceivableService.saveMemberReceivable(new MemberReceivable(memberId, orderId, null, null, orderInfo.getSalesId()), 0, 0, StrUtil.EMPTY);
 				}

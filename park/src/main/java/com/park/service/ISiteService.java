@@ -79,4 +79,6 @@ public interface ISiteService {
 	
 	public void deleteMeal(int mealId);
 	
+	public PageBean getMobileReservationSite(SiteInputView siteInputView);
+	
 }

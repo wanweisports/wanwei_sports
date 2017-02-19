@@ -209,11 +209,11 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>￥3660元</td>
-                        <td>￥9930元</td>
-                        <td>￥1243元</td>
-                        <td>￥14833元</td>
-                        <td>￥14833元</td>
+                        <td>￥${siteSum}元</td>
+                        <td>￥${cardSum}元</td>
+                        <td>￥${goodsSum}元</td>
+                        <td>￥${siteSum+cardSum+goodsSum}元</td>
+                        <td>￥${siteSum+cardSum+goodsSum}元</td>
                     </tr>
                     </tbody>
                 </table>
@@ -233,11 +233,11 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>￥3966元</td>
-                        <td>￥1966元</td>
-                        <td>￥966元</td>
-                        <td>￥4966元</td>
-                        <td>￥2966元</td>
+                        <td>￥${countSum.xianjinSumPrice}元</td>
+                        <td>￥${countSum.zhifubaoSumPrice}元</td>
+                        <td>￥${countSum.weixinSumPrice}元</td>
+                        <td>￥${countSum.yinlianSumPrice}元</td>
+                        <td>￥${countSum.zhipiaoSumPrice}元</td>
                     </tr>
                     </tbody>
                 </table>

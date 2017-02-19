@@ -38,6 +38,10 @@ public class SiteInputView extends BaseInputView {
 	
 	private Boolean lock;
 	
+	private String startTime;
+	
+	private String endTime;
+	
 	public Integer getSiteId() {
 		return siteId;
 	}
@@ -182,4 +186,20 @@ public class SiteInputView extends BaseInputView {
 		this.lock = lock;
 	}
 
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+	
 }

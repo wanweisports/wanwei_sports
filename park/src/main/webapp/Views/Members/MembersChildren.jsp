@@ -64,7 +64,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="user" items="${childrenMembers}">
+                            <c:forEach var="user" items="${pageBean.list}">
                                 <tr>
                                     <td>${user.memberName}</td>
                                     <td>${user.memberMobile}</td>
@@ -142,7 +142,7 @@
                                 </c:if>
                             </ul>
                         </nav>
-                        <c:if test="${fn:length(list) == 0}">
+                        <c:if test="${fn:length(pageBean.list) == 0}">
                             <p class="text-muted no-list-count">没有检索到子会员！</p>
                         </c:if>
                     </div>

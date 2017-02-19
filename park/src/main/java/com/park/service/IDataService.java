@@ -38,4 +38,6 @@ public interface IDataService {
 	
 	public Map<String, Object> getOtherBalancesCount(DataInputView dataInputView);
 	
+	public Map<String, Object> getMobileBusinessIncome(DataInputView dataInputView);
+	
 }

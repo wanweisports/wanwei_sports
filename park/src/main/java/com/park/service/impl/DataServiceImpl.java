@@ -532,7 +532,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		String createTimeEnd = dataInputView.getCreateTimeEnd();
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		StringBuilder sql = new StringBuilder("SELECT cardTypeName name, SUM(realAmount) price, ob.balanceStyle style, ob.balanceId");
+		StringBuilder sql = new StringBuilder("SELECT cardTypeName name, SUM(xjAmount) price, ob.balanceStyle style, ob.balanceId");
 		sql.append(" FROM member_card_type mct");
 		sql.append(" LEFT JOIN member_card mc ON(mct.cardTypeId = mc.cardTypeId)");
 		sql.append(" LEFT JOIN other_balance ob ON(ob.balanceServiceId = mc.cardId AND CAST(ob.balanceServiceType AS signed INTEGER) >= :balanceServiceTypeMin AND CAST(ob.balanceServiceType AS signed INTEGER) <= :balanceServiceTypeMax");
@@ -552,7 +552,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		resultMap.put("cardCounts", getCountMap(cardCountsList));
 		
 		sql.setLength(0);
-		sql.append("SELECT dictValue name, SUM(realAmount) price, ob.balanceStyle style, ob.balanceId");
+		sql.append("SELECT dictValue name, SUM(xjAmount) price, ob.balanceStyle style, ob.balanceId");
 		sql.append(" FROM system_dict sd");
 		sql.append(" LEFT JOIN other_balance ob ON(ob.balanceServiceType = sd.dictKey");
 		
@@ -576,7 +576,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		resultMap.put("siteCounts", getCountMap(siteCountsList));
 		
 		sql.setLength(0);
-		sql.append("SELECT dictValue name, SUM(realAmount) price, ob.balanceStyle style, ob.balanceId");
+		sql.append("SELECT dictValue name, SUM(xjAmount) price, ob.balanceStyle style, ob.balanceId");
 		sql.append(" FROM system_dict sd");
 		sql.append(" LEFT JOIN other_balance ob ON(ob.balanceServiceType = sd.dictKey");
 		
@@ -608,6 +608,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 	
 	private Map<String, Object> getCountMap(List<Map<String, Object>> countList){
 		countList = getCountItemPrice(countList);
+
 		Map map = new HashMap<>();
 		map.put("countList", countList);
 		map.putAll(getCountSumPrice(countList));
@@ -732,6 +733,24 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		
 		xlsExportImportService.writeWorkbook(getSum(resultMap, "金额总计"), workbook, 0, 0, sheetAt0.getLastRowNum()+1, true);
 		return workbook;
+	}
+	
+	@Override
+	public Map<String, Object> getMobileBusinessIncome(DataInputView dataInputView){
+		//年月日时间参数[由前端传入]
+		String createTimeStart = dataInputView.getCreateTimeStart();
+		String createTimeEnd = dataInputView.getCreateTimeEnd();
+		Map<String, Object> resultMap = getBusinessIncome(dataInputView);
+		Map cardCounts = (Map)resultMap.get("cardCounts");
+		Map siteCounts = (Map)resultMap.get("siteCounts");
+		Map goodsCounts = (Map)resultMap.get("goodsCounts");
+		
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("cardSum", cardCounts.get("sumPrice"));
+		data.put("siteSum", siteCounts.get("sumPrice"));
+		data.put("goodsSum", goodsCounts.get("sumPrice"));
+		data.put("countSum", resultMap);
+		return data;
 	}
 	
 	private List getSum(Map<String, Object> map, String name){
