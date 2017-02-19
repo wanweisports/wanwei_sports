@@ -20,7 +20,7 @@
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div id="main" class="container">
-        <form id="signup_form">
+        <form id="signup_form" onsubmit="return false;">
             <div class="weui-flex class-buttons">
                 <div class="weui-flex__item">
                     <div class="class-btn">

@@ -16,10 +16,13 @@
             <div class="weui-panel__bd">
                 <div class="weui-media-box weui-media-box_text">
                     <h4 class="weui-media-box__title">${classInfo.className}</h4>
+                    <p class="weui-media-box__desc">报名时间：${classInfo.startTime} ~ ${classInfo.endTime}</p>
                     <p class="weui-media-box__desc">${classInfo.classRemark}</p>
-                    <div class="weui-btn-area">
-                        <a class="weui-btn weui-btn_primary" href="/business/training/signup?classId=${classInfo.id}">学生报名</a>
-                    </div>
+                    <c:if test="${today >= classInfo.startTime && today <= classInfo.endTime}">
+                        <div class="weui-btn-area">
+                            <a class="weui-btn weui-btn_primary" href="/business/training/signup?classId=${classInfo.id}">学生报名</a>
+                        </div>
+                    </c:if>
                 </div>
             </div>
         </div>

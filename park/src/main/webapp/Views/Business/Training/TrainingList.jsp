@@ -85,8 +85,17 @@
                                 </div>
                                 <div class="weui-media-box__bd">
                                     <h4 class="weui-media-box__title">${item.className}</h4>
+                                    <c:if test="${item.unSignClass == 1}">
+                                        <p class="weui-media-box__desc stress-color">报名费：${item.classPrice}元</p>
+                                    </c:if>
+                                    <c:if test="${item.signClass == 1}">
+                                        <p class="weui-media-box__desc highlight-color">报名费：${item.classPrice}元</p>
+                                    </c:if>
+                                    <c:if test="${item.signedClass == 1}">
+                                        <p class="weui-media-box__desc">报名费：${item.classPrice}元</p>
+                                    </c:if>
                                     <c:if test="${fn:length(item.classRemark) > 30}">
-                                        <p class="weui-media-box__desc">${fn:substring(item.classRemark, 0, 30)}...</p>
+                                        <p class="weui-media-box__desc">${fn:substring(item.classRemark, 0, 10)}...</p>
                                     </c:if>
                                     <c:if test="${fn:length(item.classRemark) <= 30}">
                                         <p class="weui-media-box__desc">${item.classRemark}</p>

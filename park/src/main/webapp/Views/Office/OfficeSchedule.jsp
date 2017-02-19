@@ -115,11 +115,7 @@
                                     </c:when>
                                 </c:choose>
                                 <tr>
-                                    <td class="edit-schedule" data-target="#schedule_modal"
-                                        data-toggle="modal" data-backdrop="false"
-                                        data-id="${schedule.schedulingId}" title="${schedule.schedulingJob}">
-                                            ${schedule.operatorName}
-                                    </td>
+                                    <td>${schedule.operatorName}</td>
                                     <c:if test="${schedule.startCount > 0}">
                                         <td colspan="${schedule.startCount}"></td>
                                     </c:if>
