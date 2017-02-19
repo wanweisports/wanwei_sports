@@ -5,6 +5,7 @@ import com.park.common.bean.*;
 import com.park.common.constant.IDBConstant;
 import com.park.common.constant.IPlatformConstant;
 import com.park.common.exception.MessageException;
+import com.park.common.po.TrainsClassStudents;
 import com.park.common.po.UserOperator;
 import com.park.common.util.JsonUtils;
 import com.park.common.util.StrUtil;
@@ -13,7 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by wangjun on 16/11/11.
@@ -278,5 +283,35 @@ public class BusinessController extends BaseController {
         model.addAttribute("courseNames", trainsCourseService.getTrainsCourseNames());
 
         return "Business/Training/TrainingCreate";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "training/signTrainsStudents", method = RequestMethod.POST)
+    public ResponseBean signTrainsStudents(TrainsClassStudents trainsClassStudents) {
+        try {
+            UserOperator userInfo = super.getUserInfo();
+            trainsClassStudents.setSaleId(userInfo.getId());
+            trainsClassStudents.setPayStatus(IDBConstant.LOGIC_STATUS_YES);
+
+            Integer signId = trainsClassStudentsService.saveTrainsClassStudentsSign(trainsClassStudents);
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("signId", signId);
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
+    // 培训报名
+    @RequestMapping("training/signup")
+    public String renderTrainingSignUp(int classId, Model model) {
+        model.addAttribute("classId", classId);
+        model.addAttribute("classList", trainsClassService.getTrainsSignClassList());
+
+        return "Business/Training/TrainingSignUp";
     }
 }
