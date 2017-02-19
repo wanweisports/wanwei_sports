@@ -25,8 +25,8 @@ public interface IDBConstant {
     public static final String BALANCE_STYLE_XJ = "1";//现金
     public static final String BALANCE_STYLE_ZFB = "2";//支付宝
     public static final String BALANCE_STYLE_WX = "3";//微信
-    public final String BALANCE_STYLE_YINLIAN = "yinlian";//银联
-    public final String BALANCE_STYLE_ZHIPIAO = "zhipiao";//支票
+    public final String BALANCE_STYLE_YINLIAN = "4";//银联
+    public final String BALANCE_STYLE_ZHIPIAO = "5";//支票
     
     public static final int ZERO = 0;
     

@@ -25,7 +25,7 @@ public class SiteReserveDate implements java.io.Serializable {
 	private String reserveStartDate;
 	private String reserveEndDate;
 	private String reserveWeek;
-	
+	private String reserveDates;
 	@Transient
 	private List<SiteReserveTime> siteReserveTimeList;
 
@@ -37,11 +37,12 @@ public class SiteReserveDate implements java.io.Serializable {
 
 	/** full constructor */
 	public SiteReserveDate(Integer siteReserveId, String reserveStartDate,
-			String reserveEndDate, String reserveWeek) {
+			String reserveEndDate, String reserveWeek, String reserveDates) {
 		this.siteReserveId = siteReserveId;
 		this.reserveStartDate = reserveStartDate;
 		this.reserveEndDate = reserveEndDate;
 		this.reserveWeek = reserveWeek;
+		this.reserveDates = reserveDates;
 	}
 
 	// Property accessors
@@ -90,6 +91,15 @@ public class SiteReserveDate implements java.io.Serializable {
 
 	public void setReserveWeek(String reserveWeek) {
 		this.reserveWeek = reserveWeek;
+	}
+
+	@Column(name = "reserveDates", length = 16777215)
+	public String getReserveDates() {
+		return this.reserveDates;
+	}
+
+	public void setReserveDates(String reserveDates) {
+		this.reserveDates = reserveDates;
 	}
 
 	@Transient

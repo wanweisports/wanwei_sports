@@ -7,15 +7,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
 import com.park.common.constant.IDBConstant;
-import com.park.common.constant.IPlatformConstant;
 
 public class DateUtil {
 	public static final String YYYYMMDD_S = "yyyyMMdd";
@@ -189,6 +186,11 @@ public class DateUtil {
 		return getDateScopeByWeek(startDateStr, endDateStr, weeks, null).size();
 	}
 	
+	//获取时间范围内指定星期的时间List
+	public static List<String> getDateScopeWeekList(String startDateStr, String endDateStr, String weeks) throws ParseException{
+		return getDateScopeByWeek(startDateStr, endDateStr, weeks, null);
+	}
+	
 	public static List<String> getDateScopeByWeek(String startDateStr, String endDateStr, String weeks, String format) throws ParseException{
 		List<String> dataList = new ArrayList<String>();
 		List<String> weekList = Arrays.asList(weeks.split(","));
@@ -203,7 +205,7 @@ public class DateUtil {
 		while (dateToDate(startCal.getTime()).before(dateToDate(endCal.getTime()))) {
 			Date date = startCal.getTime();
 			if(weekList.contains(StrUtil.objToStr(getWeek(date)))){
-				 dataList.add(dateToString(date, YYYYMMDDHHMM));
+				 dataList.add(dateToString(date, YYYYMMDD));
 			}
 			startCal.add(Calendar.DATE, 1);
 		}

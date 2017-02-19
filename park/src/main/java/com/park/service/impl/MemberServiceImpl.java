@@ -49,6 +49,8 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	public Integer saveMember(UserMember userMember) {
 		Integer memberId = userMember.getMemberId();
 		String nowDate = DateUtil.getNowDate();
+		//判断手机号是否重复
+		if(getMemberByMobile(userMember.getMemberMobile()) != null) throw new MessageException("会员手机号重复，请重新输入！");
 		if(memberId == null){ //新增
 			userMember.setCreateTime(nowDate);
 			userMember.setMemberStatus(IDBConstant.LOGIC_STATUS_YES);
@@ -124,6 +126,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			otherBalance.setOldAmount(memberCard.getCardBalance());
 			//实际价格（最终支付金额）
 			otherBalance.setRealAmount(memberCard.getCardBalance()+memberCarType.getCardTypeMoney()-StrUtil.objToDoubleDef0(otherBalance.getSubAmount()));
+			otherBalance.setXjAmount(otherBalance.getRealAmount());
 			
 			memberCard.setCardBalance(memberCard.getCardBalance()+StrUtil.objToDoubleDef0(otherBalance.getGivingAmount())); //会员卡金额（充值+赠送）
 			baseDao.save(memberCard, memberCard.getCardId());
@@ -170,6 +173,11 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			sql.append(" AND cardType = :cardType");
 		}
 		return baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(memberInputView));
+	}
+	
+	@Override
+	public UserMember getMemberByMobile(String mobile){
+		return baseDao.queryByHqlFirst("FROM UserMember WHERE memberMobile=?", mobile);
 	}
 	
 	@Override
@@ -276,7 +284,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		String cardTypeId = memberInputView.getCardTypeId();
 		String memberType = memberInputView.getMemberType();
 		
-		StringBuilder headSql = new StringBuilder("SELECT uo.operatorName, um.memberId, mc.cardId, um.memberName, um.memberMobile, um.memberIdcard, mc.cardNo, mc.cardTypeId, mc.cardDeadline, mc.cardBalance, mc.cardStatus, mc.salesId, um.createTime, COUNT(mss.reserveTimeId) siteCount， , tempCardNo, (SELECT COUNT(1) FROM user_member umc WHERE umc.parentMemberId=um.memberId) childrenCount");
+		StringBuilder headSql = new StringBuilder("SELECT uo.operatorName, um.memberId, mc.cardId, um.memberName, um.memberMobile, um.memberIdcard, mc.cardNo, mc.cardTypeId, mc.cardDeadline, mc.cardBalance, mc.cardStatus, mc.salesId, um.createTime, COUNT(mss.reserveTimeId) siteCount, tempCardNo, (SELECT COUNT(1) FROM user_member umc WHERE umc.parentMemberId=um.memberId) childrenCount");
 		StringBuilder bodySql = new StringBuilder(" FROM user_member um");
 		bodySql.append(" LEFT JOIN member_card mc ON(um.memberId = mc.memberId)");
 		bodySql.append(" LEFT JOIN user_operator uo ON(um.salesId = uo.id)");
@@ -659,11 +667,17 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		memberMap.put("memberName", userMember.getMemberName());
 		memberMap.put("memberId", userMember.getMemberId());
 
-		List<Map<String, Object>> childrenMembers = baseDao.queryBySql("SELECT memberId, memberName, memberMobile FROM user_member WHERE parentMemberId = ? ORDER BY createTime DESC", memberId);
-
+		StringBuilder headSql = new StringBuilder("SELECT memberId, memberName, memberMobile");
+		StringBuilder bodySql = new StringBuilder(" FROM user_member");
+		StringBuilder whereSql = new StringBuilder(" WHERE parentMemberId = :memberId ORDER BY createTime DESC");
+		
+		MemberInputView memberInputView = new MemberInputView();
+		memberInputView.setMemberId(memberId);
+		PageBean pageBean = super.getPageBean(headSql, bodySql, whereSql, memberInputView);
+		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("member", memberMap);
-		resultMap.put("childrenMembers", childrenMembers);
+		resultMap.put("pageBean", pageBean);
 		
 		return resultMap;
 	}
@@ -791,7 +805,8 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		balance.setBalanceStyle(orderInfo.getPayType());
 		balance.setOldAmount(orderInfo.getOrderSumPrice());
 		balance.setSubAmount(orderInfo.getSubAmount());
-		balance.setRealAmount(orderInfo.getRealAmount() != null ? orderInfo.getRealAmount() : orderInfo.getPaySumPrice());
+		balance.setRealAmount(orderInfo.getPaySumPrice());
+		balance.setXjAmount(orderInfo.getXjAmount());
 		balance.setBalanceType(IDBConstant.BALANCE_TYPE_OTHER);
 		balance.setServiceDate(nowDate);
 		balance.setCreateTime(nowDate);

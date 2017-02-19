@@ -1,6 +1,7 @@
 package com.park.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
+import com.park.common.constant.IPlatformConstant;
 
 public class InterceptorHelp {
 
@@ -17,5 +18,15 @@ public class InterceptorHelp {
             return false;
         }
     }
+	
+	/*
+	 * 判断是C端，移动端或者PC端的登录
+	 */
+	public static String loginType(HttpServletRequest request){
+		String requestURI = request.getRequestURI();
+		if(requestURI.startsWith(IPlatformConstant.LOGIN_TYPE_MOBILE))return ""; //C端
+		if(requestURI.startsWith(IPlatformConstant.LOGIN_TYPE_BUSINESS))return "/business/passport/login"; //移动端
+		else return "/passport/login"; //PC端
+	}
 	
 }

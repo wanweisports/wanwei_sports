@@ -44,7 +44,7 @@ public class OrderInfo implements java.io.Serializable {
 	private String name;
 	private String mobile;
 	@Transient
-	private Double realAmount; //总支付-卡余额
+	private Double xjAmount; //总支付-卡余额
 
 	// Constructors
 
@@ -316,13 +316,13 @@ public class OrderInfo implements java.io.Serializable {
 	}
 
 	@Transient
-	public Double getRealAmount() {
-		return realAmount;
+	public Double getXjAmount() {
+		return xjAmount;
 	}
 
 	@Transient
-	public void setRealAmount(Double realAmount) {
-		this.realAmount = realAmount;
+	public void setXjAmount(Double xjAmount) {
+		this.xjAmount = xjAmount;
 	}
 
 }

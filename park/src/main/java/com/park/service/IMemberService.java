@@ -28,6 +28,8 @@ public interface IMemberService {
 	
 	public List<MemberCard> getMemberCards(int memberId);
 	
+	public UserMember getMemberByMobile(String mobile);
+	
 	public MemberCard getMemberCard(String cardNo);
 	
 	public OtherBalance getOtherBalance(String balanceServiceType, Integer balanceServiceId);

@@ -15,15 +15,15 @@
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div id="main" class="container">
-        <div class="weui-cells weui-cells_form">
+        <form class="weui-cells weui-cells_form" id="form">
             <div class="weui-cell weui-cell_select weui-cell_select-after">
                 <div class="weui-cell__hd">
                     <label class="weui-label">场地类型</label>
                 </div>
                 <div class="weui-cell__bd">
-                    <select class="weui-select" name="select2">
+                    <select class="weui-select" name="sportId">
                         <c:forEach var="sport" items="${siteSports}">
-                            <option value="${sport.sportId}">${sport.sportName}</option>
+                            <option <c:if test='${sport.sportId==sportId}'>selected</c:if> value="${sport.sportId}">${sport.sportName}</option>
                         </c:forEach>
                     </select>
                 </div>
@@ -31,15 +31,15 @@
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">预订日期</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="date" placeholder="预订日期" value="${curDate}">
+                    <input class="weui-input" type="date" placeholder="预订日期" value="${siteDate}" name="siteDate">
                 </div>
             </div>
             <div class="weui-cell weui-cell_select weui-cell_select-after">
                 <div class="weui-cell__hd"><label class="weui-label">开始时间</label></div>
                 <div class="weui-cell__bd">
-                    <select class="weui-select" name="select2">
+                    <select class="weui-select" name="startTime">
                         <c:forEach var="time" items="${timePeriod}">
-                            <option value="${time.startTime}">${time.startTime}</option>
+                            <option <c:if test='${time.startTime==startTime}'>selected</c:if> value="${time.startTime}">${time.startTime}</option>
                         </c:forEach>
                     </select>
                 </div>
@@ -47,13 +47,16 @@
             <div class="weui-cell weui-cell_select weui-cell_select-after">
                 <div class="weui-cell__hd"><label class="weui-label">结束时间</label></div>
                 <div class="weui-cell__bd">
-                    <select class="weui-select" name="select2">
+                    <select class="weui-select" name="endTime">
                         <c:forEach var="time" items="${timePeriod}">
-                            <option value="${time.endTime}">${time.endTime}</option>
+                            <option <c:if test='${time.endTime==endTime}'>selected</c:if> value="${time.endTime}">${time.endTime}</option>
                         </c:forEach>
                     </select>
                 </div>
             </div>
+        </form>
+        <div class="weui-btn-area">
+            <a class="weui-btn weui-btn_warn" href="javascript:" onclick="window.location.href='/mobile/reservation/quick?'+$('#form').serialize()">确定</a>
         </div>
         <div class="weui-btn-area">
             <a class="weui-btn weui-btn_warn" href="javascript:" id="showIOSActionSheet">查看选择结果</a>
@@ -64,7 +67,7 @@
                     <div class="weui-grid__icon">
                         <img src="/Content/images/mobile/stadium.png?v=${static_resource_version}">
                     </div>
-                    <p class="weui-grid__label">${site.siteName}</p>
+                    <p class="weui-grid__label">${site.siteName}-${site.sportName}</p>
                 </a>
             </c:forEach>
         </div>

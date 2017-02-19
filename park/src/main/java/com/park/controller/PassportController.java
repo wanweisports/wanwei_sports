@@ -51,7 +51,7 @@ public class PassportController extends BaseController {
     @NotProtected
     @ResponseBody
     @RequestMapping("submitUserLogin")
-    public ResponseBean submitUserLogin(String name, String pwd, HttpSession session) {
+    public ResponseBean submitUserLogin(String name, String pwd, String loginType, HttpSession session) {
         try{
             if(StrUtil.isBlank(name)) throw new MessageException("请输入用户名！");
             if(StrUtil.isBlank(pwd)) throw new MessageException("请输入密码！");

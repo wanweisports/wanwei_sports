@@ -28,6 +28,14 @@ public interface IPlatformConstant {
     
     public final String ADMIN_NAME = "管理员";
     
+    public final String DOU_HAO = ",";
+    
+    public final String LOGIN_TYPE_PC = ""; //PC端
+    
+    public final String LOGIN_TYPE_MOBILE = "/mobile"; //C端
+    
+    public final String LOGIN_TYPE_BUSINESS = "/business"; //移动端
+    
     public final String ORDER_SITE_NAME = ""; //场地预定
     
     public final int SITE_ADVANCE_START_TIME = -20; //场地开场可以提前20分钟签到

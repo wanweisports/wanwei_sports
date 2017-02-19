@@ -185,11 +185,8 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	@Override
 	public SiteReserveOutputView getSiteReservationInfo(SiteInputView siteInputView) throws ParseException{
 		
-		ParkBusiness business = parkService.getBusiness();
-		if(business == null) throw new MessageException("请设置场馆营业时间");
-		
-		String siteDate = siteInputView.getSiteDate(); //选中场馆的日期
-		if(StrUtil.isBlank(siteDate)) throw new MessageException("参数错误");
+		ParkBusiness business = validationDate(siteInputView);
+		String siteDate = siteInputView.getSiteDate();
 		
 		siteInputView.setSiteStatus(IDBConstant.LOGIC_STATUS_YES);
 		siteInputView.setSportStatus(IDBConstant.LOGIC_STATUS_YES);
@@ -324,8 +321,11 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		int hourNums = 0;
 		int weekNums = 0;
 		for(SiteReserveDate siteReserveDate : siteReserveDateList){
-			weekNums += getWeekNums(siteReserveDate);
+			//weekNums += getWeekNums(siteReserveDate);
+			List<String> weekDataList = getWeekList(siteReserveDate);
+			weekNums += weekDataList.size();
 			siteReserveDate.setSiteReserveId(siteReserveBasic.getSiteReserveId());
+			siteReserveDate.setReserveDates(StrUtil.join(weekDataList, IPlatformConstant.DOU_HAO));
 			baseDao.save(siteReserveDate, null);
 			List<SiteReserveTime> siteReserveTimeList = siteReserveDate.getSiteReserveTimeList();
 			for(SiteReserveTime siteReserveTime : siteReserveTimeList){
@@ -471,7 +471,11 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	}
 
 	private int getWeekNums(SiteReserveDate siteReserveDate) throws ParseException {
-		return DateUtil.getDateScopeWeekNums(siteReserveDate.getReserveStartDate(), siteReserveDate.getReserveEndDate(), siteReserveDate.getReserveWeek());
+		return getWeekList(siteReserveDate).size();
+	}
+	
+	private List<String> getWeekList(SiteReserveDate siteReserveDate) throws ParseException {
+		return DateUtil.getDateScopeWeekList(siteReserveDate.getReserveStartDate(), siteReserveDate.getReserveEndDate(), siteReserveDate.getReserveWeek());
 	}
 
 	private Double getHourPrice(SiteReserveTime siteReserveTime) throws ParseException {
@@ -642,11 +646,34 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		}
 	}
 	
-	private Map<String, Object> getReserveIntersection(int siteId, String startDate, String endDate, String weeks, String startTime, String endTime) throws ParseException{
+	@Override
+	public PageBean getMobileReservationSite(SiteInputView siteInputView){
+		ParkBusiness business = validationDate(siteInputView);
+		Integer sportId = siteInputView.getSportId();
+		String siteDate = siteInputView.getSiteDate();
+		String startTime = siteInputView.getStartTime();
+		String endTime = siteInputView.getEndTime();
+		StringBuilder headSql = new StringBuilder("SELECT si.siteId, si.siteName, ss.sportId, ss.sportName");
+		StringBuilder bodySql = new StringBuilder(" FROM site_info si, site_sport ss");
+		StringBuilder whereSql = new StringBuilder(" WHERE si.siteType = ss.sportId AND NOT EXISTS(");
+		whereSql.append(" SELECT 1 FROM site_reserve_time srt, site_reserve_date srd");
+		whereSql.append(" WHERE srt.reserveDateId = srd.reserveDateId AND srd.reserveDates regexp :siteDate");
+		whereSql.append(" AND NOT ((TIME(siteEndTime) <= TIME(:startTime)) OR (TIME(siteStartTime) >= TIME(:endTime))) AND si.siteId = srt.siteId)");
+		if(sportId != null){
+			whereSql.append(" AND ss.sportId = :sportId");
+		}
+		whereSql.append(" AND si.siteStatus = :siteStatus AND ss.sportStatus = :sportStatus");
+		return super.getPageBean(headSql, bodySql, whereSql, siteInputView);
+	}
+	
+	//BG：页面传的时间List（startDate+1...endDate）逗号分隔regexp reserveDates字段
+	private Map<String, Object> getReserveIntersection(Integer siteId, String startDate, String endDate, String weeks, String startTime, String endTime) throws ParseException{
 		startDate = DateUtil.getAddDay(startDate, -1);
 		
 		StringBuilder sql = new StringBuilder("SELECT name, memberId, mobile, opType, reserveType, siteReserveStatus, reserveTimeId FROM site_reserve_basic srb, site_reserve_date srd, site_reserve_time srt WHERE srb.siteReserveId = srd.siteReserveId AND srd.reserveDateId = srt.reserveDateId");
-		sql.append(" AND siteId = ?");
+		if(siteId != null){
+			sql.append(" AND siteId = ?");
+		}
 		sql.append(" AND NOT ((DATE(reserveEndDate) <= DATE(?)) OR (DATE(reserveStartDate) > DATE(?)))");
 		sql.append(" AND NOT ((TIME(siteEndTime) <= TIME(?)) OR (TIME(siteStartTime) >= TIME(?)))");
 		if(StrUtil.isNotBlank(weeks)){
@@ -654,6 +681,15 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 			return baseDao.queryBySqlFirst(sql.toString(), siteId, startDate, endDate, startTime, endTime, weeks.replace(",", "|"));
 		}
 		return baseDao.queryBySqlFirst(sql.toString(), siteId, startDate, endDate, startTime, endTime);
+	}
+	
+	private ParkBusiness validationDate(SiteInputView siteInputView) {
+		ParkBusiness business = parkService.getBusiness();
+		if(business == null) throw new MessageException("请设置场馆营业时间");
+		
+		//选中场馆的日期
+		if(StrUtil.isBlank(siteInputView.getSiteDate())) throw new MessageException("参数错误");
+		return business;
 	}
 	
 	private Map<String, Object> getSiteSportName(int siteId){

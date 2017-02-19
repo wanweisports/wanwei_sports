@@ -2,6 +2,7 @@ package com.park.interceptor;
 
 import static com.park.interceptor.InterceptorHelp.NOT_LOGIN;
 import static com.park.interceptor.InterceptorHelp.isAjax;
+import static com.park.interceptor.InterceptorHelp.loginType;
 
 import java.io.PrintWriter;
 
@@ -39,8 +40,7 @@ public class AuthorizationHandlerInterceptor implements HandlerInterceptor {
                     out.close();
                     return false;
                 }else {
-                    //response.sendRedirect("/passport/login");
-                	request.getRequestDispatcher("/passport/login?returnUrl="+RequestUtil.getRequestURIQuery(request)).forward(request, response);    
+                	request.getRequestDispatcher(loginType(request)+"?returnUrl="+RequestUtil.getRequestURIQuery(request)).forward(request, response);    
                     return false;// 终止拦截器继续传播
                 }
             }
