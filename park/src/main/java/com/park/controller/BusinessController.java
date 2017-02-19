@@ -5,6 +5,7 @@ import com.park.common.bean.*;
 import com.park.common.constant.IDBConstant;
 import com.park.common.constant.IPlatformConstant;
 import com.park.common.exception.MessageException;
+import com.park.common.po.TrainsClassInfo;
 import com.park.common.po.TrainsClassStudents;
 import com.park.common.po.UserOperator;
 import com.park.common.util.JsonUtils;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -265,10 +268,13 @@ public class BusinessController extends BaseController {
     @RequestMapping("training/students")
     public String renderTrainingStudents(TrainsClassStudentsInputView trainsClassStudentsInputView, Model model) {
         try {
+            Date date = new Date();//取时间
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             UserOperator userInfo = super.getUserInfo();
             trainsClassStudentsInputView.setSaleId(userInfo.getId());
             model.addAllAttributes(JsonUtils.fromJsonDF(trainsClassStudentsInputView));
             model.addAttribute("classInfo", trainsClassService.getTrainsClassInfo(trainsClassStudentsInputView.getClassId()));
+            model.addAttribute("today", formatter.format(date));
             PageBean pageBean = trainsClassStudentsService.getTrainsClassStudentsList(trainsClassStudentsInputView);
             super.setPageInfo(model, pageBean);
         } catch (Exception e) {
@@ -283,6 +289,27 @@ public class BusinessController extends BaseController {
         model.addAttribute("courseNames", trainsCourseService.getTrainsCourseNames());
 
         return "Business/Training/TrainingCreate";
+    }
+
+    // 培训班级保存
+    @ResponseBody
+    @RequestMapping(value = "training/saveTrainsClassInfo", method = RequestMethod.POST)
+    public ResponseBean saveTrainsClassInfo(TrainsClassInfo trainsClassInfo) {
+        try {
+            UserOperator userInfo = super.getUserInfo();
+            trainsClassInfo.setSaleId(userInfo.getId());
+
+            Integer classId = trainsClassService.saveTrainsClassInfo(trainsClassInfo);
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("classId", classId);
+            return new ResponseBean(data);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
     }
 
     @ResponseBody
