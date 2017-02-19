@@ -1,4 +1,4 @@
-package com.park.push;
+/*package com.park.push;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -12,7 +12,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-//@ServerEndpoint(value = "/websocket" , configurator = HttpSessionConfigurator.class)
+@ServerEndpoint(value = "/websocket" , configurator = HttpSessionConfigurator.class)
 public class WebSocketTest {
 	
 	private HttpSession httpSession;
@@ -44,3 +44,4 @@ public class WebSocketTest {
     }
     
 }
+*/

@@ -1,4 +1,4 @@
-package com.park.push;
+/*package com.park.push;
 
 import javax.servlet.http.HttpSession;
 import javax.websocket.HandshakeResponse;
@@ -19,3 +19,4 @@ public class HttpSessionConfigurator extends Configurator {
     }
 	
 }
+*/
