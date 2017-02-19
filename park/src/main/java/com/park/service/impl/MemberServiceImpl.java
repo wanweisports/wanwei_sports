@@ -49,9 +49,9 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	public Integer saveMember(UserMember userMember) {
 		Integer memberId = userMember.getMemberId();
 		String nowDate = DateUtil.getNowDate();
-		//判断手机号是否重复
-		if(getMemberByMobile(userMember.getMemberMobile()) != null) throw new MessageException("会员手机号重复，请重新输入！");
 		if(memberId == null){ //新增
+            //判断手机号是否重复
+            if(getMemberByMobile(userMember.getMemberMobile()) != null) throw new MessageException("会员手机号重复，请重新输入！");
 			userMember.setCreateTime(nowDate);
 			userMember.setMemberStatus(IDBConstant.LOGIC_STATUS_YES);
 			UserOperator operator = new UserOperator();
@@ -68,8 +68,10 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 			UserMember userMemberDB = getUserMember(memberId);
 			if(userMemberDB == null) throw new MessageException("会员信息不存在！");
 			userMemberDB.setMemberName(userMember.getMemberName());
-			userMemberDB.setMemberMobile(userMember.getMemberMobile());
-			userMemberDB.setMemberMobile2(userMember.getMemberMobile2());
+            //判断手机号是否重复
+            if(getMemberByMobile(userMember.getMemberMobile()) == null) {
+                userMemberDB.setMemberMobile(userMember.getMemberMobile());
+            }
 			userMemberDB.setMemberIdcard(userMember.getMemberIdcard());
 			userMemberDB.setMemberSex(userMember.getMemberSex());
 			userMemberDB.setMemberBirthday(userMember.getMemberBirthday());
@@ -655,7 +657,16 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	public String getBalanceNo(){
 		return DateUtil.dateToString(new Date(), DateUtil.YYYYMMDD_HMS);
 	}
-	
+
+	@Override
+	public PageBean getMembersChildrenList(MemberInputView memberInputView) {
+		StringBuilder headSql = new StringBuilder("SELECT memberId, memberName, memberMobile");
+		StringBuilder bodySql = new StringBuilder(" FROM user_member");
+		StringBuilder whereSql = new StringBuilder(" WHERE parentMemberId = :memberId ORDER BY createTime DESC");
+
+		return super.getPageBean(headSql, bodySql, whereSql, memberInputView);
+	}
+
 	@Override
 	public Map<String, Object> getMembersChildren(int memberId){
 		UserMember userMember = getUserMember(memberId);
@@ -666,20 +677,8 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		memberMap.put("cardNo", memberCards.get(0).getCardNo());
 		memberMap.put("memberName", userMember.getMemberName());
 		memberMap.put("memberId", userMember.getMemberId());
-
-		StringBuilder headSql = new StringBuilder("SELECT memberId, memberName, memberMobile");
-		StringBuilder bodySql = new StringBuilder(" FROM user_member");
-		StringBuilder whereSql = new StringBuilder(" WHERE parentMemberId = :memberId ORDER BY createTime DESC");
 		
-		MemberInputView memberInputView = new MemberInputView();
-		memberInputView.setMemberId(memberId);
-		PageBean pageBean = super.getPageBean(headSql, bodySql, whereSql, memberInputView);
-		
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap.put("member", memberMap);
-		resultMap.put("pageBean", pageBean);
-		
-		return resultMap;
+		return memberMap;
 	}
 	
 	@Override

@@ -3,6 +3,7 @@ package com.park.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.park.service.IParkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +40,9 @@ public class MemberController extends BaseController {
     
     @Autowired
     private IMemberReceivableService memberReceivableService;
+
+    @Autowired
+    private IParkService parkService;
 
     /**
      * [页面]注册会员的录入会员信息页面,自动生成会员卡的编号
@@ -88,6 +92,8 @@ public class MemberController extends BaseController {
 		MemberInputView memberInputView = new  MemberInputView();
 		memberInputView.setCardType(regMember.get("memberType").toString());
 		model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(memberInputView));
+        model.addAttribute("payTypeList", parkService.getPayTypeList());
+        model.addAttribute("checkType", IDBConstant.BALANCE_STYLE_ZHIPIAO);
 		return "Members/MembersCardBind";
 	}
 
@@ -254,13 +260,12 @@ public class MemberController extends BaseController {
             MemberInputView memberInputView = new  MemberInputView();
             memberInputView.setCardType(userMemberAndCard.get("memberType").toString());
             model.addAttribute("memberCarTypeNames", memberService.getMemberCarTypeNames(memberInputView));
-            //return new ResponseBean(JsonUtils.fromJsonDF(memberService.getUserMemberAndCard(super.getData(param, UserMember.class).getMemberId())));
+            model.addAttribute("payTypeList", parkService.getPayTypeList());
+            model.addAttribute("checkType", IDBConstant.BALANCE_STYLE_ZHIPIAO);
         } catch (MessageException e) {
             e.printStackTrace();
-            //return new ResponseBean(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
-            //return new ResponseBean(false);
         }
         return "Members/MembersInfo";
     }
@@ -395,6 +400,8 @@ public class MemberController extends BaseController {
             if(StrUtil.isNotBlank(cardNo)){
                 model.addAllAttributes(memberService.getOperations(cardNo));
             }
+            model.addAttribute("payTypeList", parkService.getPayTypeList());
+            model.addAttribute("checkType", IDBConstant.BALANCE_STYLE_ZHIPIAO);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -407,6 +414,8 @@ public class MemberController extends BaseController {
             if(StrUtil.isNotBlank(cardNo)){
                 model.addAllAttributes(memberService.getOperations(cardNo));
             }
+            model.addAttribute("payTypeList", parkService.getPayTypeList());
+            model.addAttribute("checkType", IDBConstant.BALANCE_STYLE_ZHIPIAO);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -498,7 +507,17 @@ public class MemberController extends BaseController {
     // 会员子会员
     @RequestMapping(value = "getMembersChildren")
     public String getMembersChildren(int memberId, Model model) {
-    	model.addAllAttributes(memberService.getMembersChildren(memberId));
+        try {
+            MemberInputView memberInputView = new MemberInputView();
+            memberInputView.setMemberId(memberId);
+
+            PageBean pageBean = memberService.getMembersChildrenList(memberInputView);
+            model.addAttribute("member", memberService.getMembersChildren(memberId));
+            super.setPageInfo(model, pageBean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return "Members/MembersChildren";
     }
     

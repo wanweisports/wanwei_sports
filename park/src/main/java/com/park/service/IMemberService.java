@@ -89,6 +89,8 @@ public interface IMemberService {
 	public String getBalanceNo();
 	
 	public Map<String, Object> getMembersChildren(int memberId);
+
+	public PageBean getMembersChildrenList(MemberInputView memberInputView);
 	
 	public void deleteChildrenMember(int memberId);
 	

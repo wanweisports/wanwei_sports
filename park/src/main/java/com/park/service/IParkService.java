@@ -19,5 +19,7 @@ public interface IParkService {
 	public Map<String, Object> getBusinessTime();
 
 	public List<String> getBusinessTimePeriod();
+
+    public List<Map<String, Object>> getPayTypeList();
 	
 }

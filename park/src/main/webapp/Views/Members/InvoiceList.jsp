@@ -30,7 +30,7 @@
                         <div class="btn-group">
                             <a href="/member/getInvoices?invoiceOpenState=2&invoiceState=2" data-open="2" data-state="2"
                                class="btn btn-default invoice-status">已登记</a>
-                            <a href="/member/getInvoices?invoiceOpenState=1&invoiceState=2" data-open="2" data-state="1"
+                            <a href="/member/getInvoices?invoiceOpenState=1&invoiceState=2" data-open="1" data-state="2"
                                class="btn btn-default invoice-status">已开票</a>
                             <a href="/member/getInvoices?invoiceOpenState=1&invoiceState=1" data-open="1" data-state="1"
                                class="btn btn-default invoice-status">已领取</a>
@@ -66,7 +66,7 @@
                     <table class="table">
                         <thead>
                         <tr class="bg-info">
-                            <th>选择</th>
+                            <th></th>
                             <th>流水单号</th>
                             <th>发票抬头</th>
                             <th>发票金额</th>
@@ -75,7 +75,7 @@
                             <th>备注</th>
                             <th>状态</th>
                             <th>操作时间</th>
-                            <th>操作</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>

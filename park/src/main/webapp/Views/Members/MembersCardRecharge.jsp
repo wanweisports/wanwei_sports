@@ -140,11 +140,9 @@
                                 <select class="form-control" id="recharge_type" name="balanceStyle"
                                         data-val="true" data-val-required="请选择支付方式">
                                     <option value="">请选择</option>
-                                    <option value="1">现金</option>
-                                    <option value="2">支付宝</option>
-                                    <option value="3">微信</option>
-                                    <option value="4">银联</option>
-                                    <option value="5">支票</option>
+                                    <c:forEach var="pay" items="${payTypeList}">
+                                        <option value="${pay.value}">${pay.text}</option>
+                                    </c:forEach>
                                 </select>
                                 <div data-valmsg-for="balanceStyle" data-valmsg-replace="true"></div>
                             </div>
@@ -162,7 +160,7 @@
                                 <div data-valmsg-for="givingAmount" data-valmsg-replace="true"></div>
                             </div>
                         </div>
-                        <div class="form-group recharge-check-no" style="display: none;">
+                        <div class="form-group recharge-check-no" data-value="${checkType}" style="display: none;">
                             <label for="recharge_check_no" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 支票号
                             </label>

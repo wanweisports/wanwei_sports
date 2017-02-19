@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.park.common.constant.IDBConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -92,6 +93,38 @@ public class ParkServiceImpl extends BaseService implements IParkService {
         }
 
         return timelist;
+    }
+
+    @Override
+    public List<Map<String, Object>> getPayTypeList(){
+        List<Map<String, Object>> payList = new ArrayList<Map<String, Object>>();
+
+        Map<String, Object> cash = new HashMap<String, Object>();
+        cash.put("value", IDBConstant.BALANCE_STYLE_XJ);
+        cash.put("text", "现金");
+        payList.add(cash);
+
+        Map<String, Object> alipay = new HashMap<String, Object>();
+        alipay.put("value", IDBConstant.BALANCE_STYLE_ZFB);
+        alipay.put("text", "支付宝");
+        payList.add(alipay);
+
+        Map<String, Object> wechat = new HashMap<String, Object>();
+        wechat.put("value", IDBConstant.BALANCE_STYLE_WX);
+        wechat.put("text", "微信");
+        payList.add(wechat);
+
+        Map<String, Object> unionpay = new HashMap<String, Object>();
+        unionpay.put("value", IDBConstant.BALANCE_STYLE_YINLIAN);
+        unionpay.put("text", "银联");
+        payList.add(unionpay);
+
+        Map<String, Object> check = new HashMap<String, Object>();
+        check.put("value", IDBConstant.BALANCE_STYLE_ZHIPIAO);
+        check.put("text", "支票");
+        payList.add(check);
+
+        return payList;
     }
 	
 }

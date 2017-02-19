@@ -284,9 +284,11 @@
                                         <select class="form-control" id="pay_type" name="balanceStyle"
                                                 data-val="true" data-val-required="请选择支付方式">
                                             <option value="">请选择</option>
-                                            <option value="1">现金</option>
-                                            <option value="2">支付宝</option>
-                                            <option value="3">微信</option>
+                                            <c:forEach var="pay" items="${payTypeList}">
+                                                <c:if test="${pay.value != checkType}">
+                                                    <option value="${pay.value}">${pay.text}</option>
+                                                </c:if>
+                                            </c:forEach>
                                         </select>
                                         <div data-valmsg-for="balanceStyle" data-valmsg-replace="true"></div>
                                     </div>
@@ -304,15 +306,15 @@
                                         <div data-valmsg-for="givingAmount" data-valmsg-replace="true"></div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">新的卡号</label>
+                                    <label class="col-sm-4 control-label">新的卡号</label>
 
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-8">
                                         <input type="text" class="form-control" id="newCardNo" name="newCardNo" readonly>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="refresh_remark" class="col-sm-2 control-label">补办备注</label>
 
@@ -375,11 +377,9 @@
                                         <select class="form-control" id="recharge_type" name="balanceStyle"
                                                 data-val="true" data-val-required="请选择支付方式">
                                             <option value="">请选择</option>
-                                            <option value="1">现金</option>
-                                            <option value="2">支付宝</option>
-                                            <option value="3">微信</option>
-                                            <option value="4">银联</option>
-                                            <option value="5">支票</option>
+                                            <c:forEach var="pay" items="${payTypeList}">
+                                                <option value="${pay.value}">${pay.text}</option>
+                                            </c:forEach>
                                         </select>
                                         <div data-valmsg-for="balanceStyle" data-valmsg-replace="true"></div>
                                     </div>
@@ -397,7 +397,7 @@
                                         <div data-valmsg-for="givingAmount" data-valmsg-replace="true"></div>
                                     </div>
                                 </div>
-                                <div class="form-group recharge-check-no" style="display: none;">
+                                <div class="form-group recharge-check-no" data-value="${checkType}" style="display: none;">
                                     <label for="recharge_check_no" class="col-sm-4 control-label">
                                         <span class="text-danger">*</span> 支票号
                                     </label>
@@ -492,9 +492,9 @@
                                         <select class="form-control" id="upper_type" name="balanceStyle"
                                                 data-val="true" data-val-required="请选择支付方式">
                                             <option value="">请选择</option>
-                                            <option value="1">现金</option>
-                                            <option value="2">支付宝</option>
-                                            <option value="3">微信</option>
+                                            <c:forEach var="pay" items="${payTypeList}">
+                                                <option value="${pay.value}">${pay.text}</option>
+                                            </c:forEach>
                                         </select>
                                         <div data-valmsg-for="balanceStyle" data-valmsg-replace="true"></div>
                                     </div>
@@ -546,6 +546,147 @@
                     </button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="invoice_confirm_modal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel">
+        <div class="modal-dialog" style="width: 620px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="confirmModalLabel">发票登记</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-success">会员卡已经充值成功，需要登记领取发票？</div>
+                    <div class="panel panel-default">
+                        <form id="member_card_ticket_form" class="form-horizontal" novalidate onsubmit="return false;">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">流水单号</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="balanceNo" readonly="readonly">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">订单状态</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="balanceStatusName"  readonly="readonly">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">订单类型</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="balanceServiceTypeName" readonly="readonly">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">创建时间</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="createTime" readonly="readonly">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row is-show-ticket" style="display: none;">
+                                    <input type="hidden" name="invoiceServiceId" value="${memberId}">
+                                    <input type="hidden" name="invoiceServiceType" value="11">
+                                    <input type="hidden" name="invoiceNo" id="invoice_no">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="ticket_header" class="col-sm-2 control-label">
+                                                <span class="text-danger">*</span> 发票抬头
+                                            </label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="ticket_header"
+                                                       name="invoiceHeader" placeholder="发票抬头" autocomplete="off"
+                                                       data-val="true" data-val-required="发票抬头不能为空">
+                                                <div data-valmsg-for="invoiceHeader" data-valmsg-replace="true"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="ticket_money" class="col-sm-4 control-label">
+                                                <span class="text-danger">*</span> 发票金额
+                                            </label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="ticket_money"
+                                                       name="invoiceMoney" placeholder="发票金额" autocomplete="off"
+                                                       data-val="true" data-val-required="发票金额不能为空"
+                                                       data-val-regex-pattern="^[+-]?(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
+                                                       data-val-regex="发票金额格式错误">
+                                                <div data-valmsg-for="invoiceMoney" data-valmsg-replace="true"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="ticket_project" class="col-sm-4 control-label">
+                                                <span class="text-danger">*</span> 服务项目
+                                            </label>
+
+                                            <div class="col-sm-8">
+                                                <select class="form-control" id="ticket_project" name="invoiceContent"
+                                                        data-val="true" data-val-required="请选择服务项目">
+                                                    <option value="">请选择</option>
+                                                    <option value="场地费">场地费</option>
+                                                    <option value="会议费">会议费</option>
+                                                    <option value="培训费">培训费</option>
+                                                </select>
+                                                <div data-valmsg-for="invoiceContent" data-valmsg-replace="true"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="ticket_remark" class="col-sm-2 control-label">备注</label>
+
+                                            <div class="col-sm-10">
+                                            <textarea class="form-control" id="ticket_remark" name="invoiceRemark"
+                                                      rows="3" placeholder="备注"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ticket_type1" class="col-sm-2 control-label">
+                                                <span class="text-danger">*</span> 发票类型
+                                            </label>
+
+                                            <div class="col-sm-10">
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="invoiceType" id="ticket_type1" value="1"> 增值税专票
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="invoiceType" id="ticket_type2" value="2"> 增值税普票
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <label class="text-danger pull-left">
+                        <input type="checkbox" value="1" name="is_print_ticket" id="is_print_ticket"> 登记发票吗?
+                    </label>
+                    <button type="button" class="btn btn-primary print-ticket">
+                        <span class="glyphicon glyphicon-save"></span> 登记保存
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </layout:override>

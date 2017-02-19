@@ -182,11 +182,12 @@
                 e.preventDefault();
 
                 var $this = $(this);
+                var $check = $(".recharge-check-no");
 
-                if ($this.val() == 5) {
-                    $(".recharge-check-no").show();
+                if ($this.val() == $check.attr("data-value")) {
+                    $check.show();
                 } else {
-                    $(".recharge-check-no").hide();
+                    $check.hide();
                 }
             });
         }

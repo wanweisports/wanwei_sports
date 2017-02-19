@@ -139,9 +139,11 @@
                                 <select class="form-control" id="pay_type" name="balanceStyle"
                                         data-val="true" data-val-required="请选择支付方式">
                                     <option value="">请选择</option>
-                                    <option value="1">现金</option>
-                                    <option value="2">支付宝</option>
-                                    <option value="3">微信</option>
+                                    <c:forEach var="pay" items="${payTypeList}">
+                                        <c:if test="${pay.value != checkType}">
+                                            <option value="${pay.value}">${pay.text}</option>
+                                        </c:if>
+                                    </c:forEach>
                                 </select>
                                 <div data-valmsg-for="balanceStyle" data-valmsg-replace="true"></div>
                             </div>
