@@ -6,7 +6,21 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
-    <link href="/Content/style/mobile/center/center_profile.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="/Content/style/business/training/training_list.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
+
+<layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
+    <script src="/Content/app/business/training/training_class.js?v=${static_resource_version}"></script>
+    <script>
+        $(document).ready(function () {
+            $(".class-status.weui-bar__item_on").removeClass("weui-bar__item_on");
+            $(".class-status[data-status='${classStatus}']").addClass("weui-bar__item_on");
+
+            if ($(".class-status.weui-bar__item_on").size() === 0) {
+                $(".class-status-all").addClass("weui-bar__item_on");
+            }
+        });
+    </script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -16,24 +30,41 @@
 
     <div id="main" class="container">
         <div class="weui-tab">
-            <div class="weui-navbar">
-                <div class="weui-navbar__item weui-bar__item_on">
-                    全部课程
-                </div>
-                <div class="weui-navbar__item">
-                    未开始
-                </div>
-                <div class="weui-navbar__item">
-                    报名中
-                </div>
-                <div class="weui-navbar__item">
-                    已完成
-                </div>
+            <div class="weui-navbar class-status-select">
+                <div class="weui-navbar__item weui-bar__item_on class-status class-status-all">全部课程</div>
+                <div class="weui-navbar__item class-status" data-status="1">未开始</div>
+                <div class="weui-navbar__item class-status" data-status="2">报名中</div>
+                <div class="weui-navbar__item class-status" data-status="3">已完成</div>
             </div>
             <div class="weui-tab__panel">
-                <div class="weui-btn-area">
-                    <a class="weui-btn weui-btn_primary" href="/business/training/create">创建班级</a>
-                </div>
+                <c:if test="${fn:length(list) == 0}">
+                    <div class="weui-msg">
+                        <div class="weui-msg__text-area">
+                            <p class="weui-msg__desc">还没有检索到任何的培训班级！</p>
+                        </div>
+                    </div>
+
+                    <div class="weui-btn-area">
+                        <a class="weui-btn weui-btn_primary" href="/business/training/create">直接创建班级</a>
+                        <a class="weui-btn weui-btn_plain-primary" href="/business/dashboard">返回首页</a>
+                    </div>
+                </c:if>
+
+                <c:if test="${fn:length(list) > 0}">
+                    <div class="weui-flex class-buttons">
+                        <div class="weui-flex__item">
+                            <div class="class-btn">
+                                <a class="weui-btn weui-btn_plain-primary" href="/business/dashboard">返回首页</a>
+                            </div>
+                        </div>
+                        <div class="weui-flex__item">&nbsp;</div>
+                        <div class="weui-flex__item">
+                            <div class="class-btn">
+                                <a class="weui-btn weui-btn_primary" href="/business/training/create">创建班级</a>
+                            </div>
+                        </div>
+                    </div>
+                </c:if>
 
                 <c:forEach var="item" items="${list}">
                     <div class="weui-panel weui-panel_access">

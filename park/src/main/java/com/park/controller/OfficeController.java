@@ -6,6 +6,7 @@ import com.park.common.exception.MessageException;
 import com.park.common.po.*;
 import com.park.common.util.JsonUtils;
 import com.park.service.*;
+import com.park.service.impl.ParkServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +40,9 @@ public class OfficeController extends BaseController {
 
     @Autowired
     private IOperatorService operatorService;
+
+    @Autowired
+    private IParkService parkService;
 
     // 获取通知列表
     @RequestMapping("getNotifications")
@@ -238,6 +242,7 @@ public class OfficeController extends BaseController {
             OperatorInputView operatorInputView = new OperatorInputView();
             model.addAttribute("operators", operatorService.getOperatorsName(operatorInputView));
     		model.addAttribute("schedules", operatorService.getUserSchedulings(dataInputView));
+            model.addAttribute("businessTime", parkService.getBusinessTimePeriod());
     	}catch(Exception e){
     		e.printStackTrace();
     	}
