@@ -17,6 +17,9 @@
                 <div class="weui-media-box weui-media-box_text">
                     <h4 class="weui-media-box__title">${classInfo.className}</h4>
                     <p class="weui-media-box__desc">${classInfo.classRemark}</p>
+                    <div class="weui-btn-area">
+                        <a class="weui-btn weui-btn_primary" href="/business/training/signup?classId=${classInfo.id}">学生报名</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -38,10 +41,17 @@
                         </div>
                     </c:forEach>
                 </div>
+                <c:if test="${fn:length(list) == 0}">
+                    <div class="weui-msg">
+                        <div class="weui-msg__text-area">
+                            <p class="weui-msg__desc">还没有检索到任何的学生！</p>
+                        </div>
+                    </div>
+                </c:if>
             </div>
         </div>
         <div class="weui-btn-area">
-            <a class="weui-btn weui-btn_primary" href="javascript:">学生报名</a>
+            <a class="weui-btn weui-btn_plain-primary" href="/business/training/list">返回班级列表</a>
         </div>
     </div>
 </layout:override>
