@@ -12,7 +12,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint(value = "/websocket" , configurator = HttpSessionConfigurator.class)
+//@ServerEndpoint(value = "/websocket" , configurator = HttpSessionConfigurator.class)
 public class WebSocketTest {
 	
 	private HttpSession httpSession;
