@@ -35,6 +35,9 @@
                 </c:forEach>
             </div>
         </c:forEach>
+        <c:if test="${fn:length(list) == 0}">
+            <div class="weui-cells__tips">还没有值班安排！</div>
+        </c:if>
     </div>
 
     <div id="tips_alert" style="display: none;">

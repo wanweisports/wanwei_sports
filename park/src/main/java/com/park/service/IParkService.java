@@ -17,5 +17,7 @@ public interface IParkService {
 	public Integer saveParkBusiness(ParkBusiness parkBusiness);
 	
 	public Map<String, Object> getBusinessTime();
+
+	public List<String> getBusinessTimePeriod();
 	
 }

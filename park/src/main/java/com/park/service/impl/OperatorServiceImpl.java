@@ -237,6 +237,7 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 		sql.append(" ORDER BY date, startTime");
 		
 		List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
+        Map<String, Object> businessTime = parkService.getBusinessTime();
 		String datePre = null;
 		List<Map<String, Object>> listGroup = new ArrayList<Map<String, Object>>();
 		for(Map<String, Object> map : list){
@@ -246,17 +247,23 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 			map.put("today", today);
 
 			int week = StrUtil.objToInt(map.get("operatorWeek"));
-			String[] weeks = new String[]{"周日","周一","周二","周三","周四","周五","周六"};
+			String[] weeks = new String[]{"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
 
 			String startTime = StrUtil.objToStr(map.get("startTime"));
-            int startCount = (StrUtil.objToInt(startTime.substring(0,2)) - 6) * 2 + StrUtil.objToInt(startTime.substring(3,5)) / 30;
+			String businessStartTime = StrUtil.objToStr(businessTime.get("businessStartTime"));
             String endTime = StrUtil.objToStr(map.get("endTime"));
-            int endCount = (StrUtil.objToInt(endTime.substring(0,2)) - 6) * 2 + StrUtil.objToInt(endTime.substring(3,5)) / 30;
+            String businessEndTime = StrUtil.objToStr(businessTime.get("businessEndTime"));
+            int startCount = (StrUtil.objToInt(startTime.substring(0,2)) - StrUtil.objToInt(businessStartTime.substring(0,2))) * 2 +
+                    StrUtil.objToInt(startTime.substring(3,5)) / 30;
+            int endCount = (StrUtil.objToInt(endTime.substring(0,2)) - StrUtil.objToInt(businessStartTime.substring(0,2))) * 2 +
+                    StrUtil.objToInt(endTime.substring(3,5)) / 30;
             int compareCount = endCount - startCount;
+            int totalCount = (StrUtil.objToInt(businessEndTime.substring(0,2)) - StrUtil.objToInt(businessStartTime.substring(0,2))) * 2;
 
             map.put("startCount", startCount);
             map.put("endCount", endCount);
             map.put("compareCount", compareCount);
+            map.put("totalCount", totalCount);
 
 			if(!date.equals(datePre)){
 				Map<String, Object> mapGroup = new HashMap<String, Object>();

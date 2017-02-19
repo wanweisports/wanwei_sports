@@ -36,6 +36,16 @@
     <style>
         .edit-schedule {
             cursor: pointer;
+            position: relative;
+        }
+        .bar-schedule {
+            position: absolute;
+            width: 100%;
+            height: 80%;
+            left: 0;
+            top: 10%;
+            opacity: 0.8;
+            border-radius: 30px;
         }
         .table th {
             width: 6%;
@@ -98,10 +108,9 @@
                             <thead>
                             <tr>
                                 <th></th>
-                                <th colspan="2">06:00</th><th colspan="2">07:00</th><th colspan="2">08:00</th><th colspan="2">09:00</th>
-                                <th colspan="2">10:00</th><th colspan="2">11:00</th><th colspan="2">12:00</th><th colspan="2">13:00</th>
-                                <th colspan="2">14:00</th><th colspan="2">15:00</th><th colspan="2">16:00</th><th colspan="2">17:00</th>
-                                <th colspan="2">18:00</th><th colspan="2">19:00</th><th colspan="2">20:00</th><th colspan="2">21:00</th>
+                                <c:forEach var="time" items="${businessTime}">
+                                    <th colspan="2">${time}</th>
+                                </c:forEach>
                             </tr>
                             </thead>
                             <tbody>
@@ -124,7 +133,7 @@
                                     </c:when>
                                 </c:choose>
                                 <tr>
-                                    <td class="${bgColor} edit-schedule" data-target="#schedule_modal"
+                                    <td class="edit-schedule" data-target="#schedule_modal"
                                         data-toggle="modal" data-backdrop="false"
                                         data-id="${schedule.schedulingId}" title="${schedule.schedulingJob}">
                                             ${schedule.operatorName}
@@ -132,16 +141,18 @@
                                     <c:if test="${schedule.startCount > 0}">
                                         <td colspan="${schedule.startCount}"></td>
                                     </c:if>
-                                    <td colspan="${schedule.compareCount}" class="${bgColor} text-center edit-schedule"
+                                    <td colspan="${schedule.compareCount}" class="text-center edit-schedule"
                                         data-target="#schedule_modal" data-toggle="modal" data-backdrop="false"
                                         data-id="${schedule.schedulingId}">
-                                        <c:if test="${schedule.schedulingJob != ''}">
-                                            <span class="glyphicon glyphicon-info-sign" title="${schedule.schedulingJob}"></span>
-                                        </c:if>
-                                        <span>${schedule.startTime} - ${schedule.endTime}</span>
+                                        <div class="bar-schedule ${bgColor}" title="${schedule.schedulingJob}">
+                                            <c:if test="${schedule.schedulingJob != ''}">
+                                                <span class="glyphicon glyphicon-info-sign"></span>
+                                            </c:if>
+                                            <span>${schedule.startTime} - ${schedule.endTime}</span>
+                                        </div>
                                     </td>
-                                    <c:if test="${32 - schedule.compareCount - schedule.startCount > 0}">
-                                        <td colspan="${32 - schedule.compareCount - schedule.startCount}"></td>
+                                    <c:if test="${schedule.totalCount - schedule.compareCount - schedule.startCount > 0}">
+                                        <td colspan="${schedule.totalCount - schedule.compareCount - schedule.startCount}"></td>
                                     </c:if>
                                 </tr>
                             </c:forEach>

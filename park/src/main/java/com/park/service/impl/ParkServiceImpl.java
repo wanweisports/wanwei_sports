@@ -79,5 +79,19 @@ public class ParkServiceImpl extends BaseService implements IParkService {
 	public Map<String, Object> getBusinessTime(){
 		return baseDao.queryBySqlFirst("SELECT businessId, businessStartTime, businessEndTime FROM park_business");
 	}
+
+    @Override
+    public List<String> getBusinessTimePeriod(){
+        Map<String, Object> businessTime = getBusinessTime();
+        int businessStartTime = StrUtil.objToInt(StrUtil.objToStr(businessTime.get("businessStartTime")).substring(0,2));
+        int businessEndTime = StrUtil.objToInt(StrUtil.objToStr(businessTime.get("businessEndTime")).substring(0,2));
+
+        List<String> timelist = new ArrayList<String>();
+        for (int i = businessStartTime; i < businessEndTime; i++) {
+            timelist.add((i < 10 ? "0" + i : i) + ":00");
+        }
+
+        return timelist;
+    }
 	
 }
