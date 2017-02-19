@@ -33,24 +33,6 @@
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
-    <style>
-        .edit-schedule {
-            cursor: pointer;
-            position: relative;
-        }
-        .bar-schedule {
-            position: absolute;
-            width: 100%;
-            height: 80%;
-            left: 0;
-            top: 10%;
-            opacity: 0.8;
-            border-radius: 30px;
-        }
-        .table th {
-            width: 6%;
-        }
-    </style>
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
             <div class="panel-heading">排班表</div>
