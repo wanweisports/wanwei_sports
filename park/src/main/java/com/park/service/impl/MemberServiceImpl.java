@@ -231,6 +231,11 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	public UserMember getUserMember(int memberId) {
 		return baseDao.getToEvict(UserMember.class, memberId);
 	}
+
+    @Override
+    public UserOperator getUserOperator(String operatorId) {
+        return baseDao.queryByHqlFirst("FROM UserOperator WHERE operatorId = ?", operatorId);
+    }
 	
 	@Override
 	public MemberCard getMemberCard(int cardId) {
@@ -453,7 +458,15 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		if(memberCard == null) throw new MessageException("会员卡信息不存在！");
 		
 		if(!availableCardNo(newCardNo)) throw new MessageException("会员卡号重复，请重新输入！");
-		
+
+        UserMember userMember = getUserMember(memberCard.getMemberId());
+        userMember.setOperationId(newCardNo);
+        baseDao.save(userMember, memberCard.getMemberId());
+
+        UserOperator userOperator = getUserOperator(memberCard.getCardNo());
+        userOperator.setOperatorId(newCardNo);
+        baseDao.save(userOperator, userOperator.getId());
+
 		String nowDate = DateUtil.getNowDate();
 		
 		memberCard.setCardStatus(IDBConstant.LOGIC_STATUS_YES); //补办会员卡后，默认会员卡为可用状态

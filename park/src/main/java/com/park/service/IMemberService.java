@@ -8,12 +8,7 @@ import com.park.common.bean.InvoiceInputView;
 import com.park.common.bean.MemberCardOpInputView;
 import com.park.common.bean.MemberInputView;
 import com.park.common.bean.PageBean;
-import com.park.common.po.MemberCard;
-import com.park.common.po.MemberCardType;
-import com.park.common.po.OrderInfo;
-import com.park.common.po.OtherBalance;
-import com.park.common.po.OtherInvoice;
-import com.park.common.po.UserMember;
+import com.park.common.po.*;
 
 
 public interface IMemberService {
@@ -41,6 +36,8 @@ public interface IMemberService {
 	public Map<String, Object> getMemberCardTypeMap(int cardTypeId);
 	
 	public UserMember getUserMember(int memberId);
+
+    public UserOperator getUserOperator(String operatorId);
 	
 	public MemberCard getMemberCard(int cardId);
 	
