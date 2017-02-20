@@ -198,11 +198,11 @@ public class DataController extends BaseController {
 	public String getBusinessIncomeLog(DataInputView dataInputView, Model model) {
 		try {
             model.addAllAttributes(JsonUtils.fromJsonDF(dataInputView));
-            PageBean pageBean = dataService.getOtherBalances(dataInputView);
-            super.setPageInfo(model, pageBean);
-            
             model.addAllAttributes(dataService.getOtherBalancesCount(dataInputView));
             model.addAttribute("balanceServiceTypes", dictService.getDictToMap(IDBConstant.BALANCE_SERVICE_TYPE));
+
+            PageBean pageBean = dataService.getOtherBalances(dataInputView);
+            super.setPageInfo(model, pageBean);
         } catch (Exception e) {
             e.printStackTrace();
         }

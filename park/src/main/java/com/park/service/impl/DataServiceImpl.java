@@ -789,6 +789,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
         	whereSql.append(" AND ob.balanceServiceType =:balanceServiceType");
         }
 		whereSql.append(getCountSql(countNum, "ob.createTime"));
+		whereSql.append(" ORDER BY ob.createTime DESC");
 		return super.getPageBean(headSql, bodySql, whereSql, dataInputView);
 	}
 	

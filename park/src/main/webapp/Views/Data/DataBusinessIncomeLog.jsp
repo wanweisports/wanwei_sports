@@ -11,7 +11,7 @@
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/app/data/data_business_income.js?v=${static_resource_version}"></script>
+    <script src="/Content/app/data/data_business_income_log.js?v=${static_resource_version}"></script>
     <script>
         $(".member-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
         $(".member-date[data-count='${countNum}']").addClass("btn-primary").removeClass("btn-default");
