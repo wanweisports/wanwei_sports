@@ -122,7 +122,7 @@
             </div>
         </div>
         <div class="panel panel-default">
-            <div class="panel-heading">会员储值金额</div>
+            <div class="panel-heading">会员储值转化</div>
             <div class="panel-body">
                 <div class="col-sm-8">
                     <div class="table-responsive" style="margin-top: 20px;">

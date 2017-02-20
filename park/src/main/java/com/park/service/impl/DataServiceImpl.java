@@ -532,7 +532,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		String createTimeEnd = dataInputView.getCreateTimeEnd();
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		StringBuilder sql = new StringBuilder("SELECT cardTypeName name, SUM(xjAmount) price, ob.balanceStyle style, ob.balanceId");
+		StringBuilder sql = new StringBuilder("SELECT cardTypeName name, SUM(realAmount) price, ob.balanceStyle style, ob.balanceId");
 		sql.append(" FROM member_card_type mct");
 		sql.append(" LEFT JOIN member_card mc ON(mct.cardTypeId = mc.cardTypeId)");
 		sql.append(" LEFT JOIN other_balance ob ON(ob.balanceServiceId = mc.cardId AND CAST(ob.balanceServiceType AS signed INTEGER) >= :balanceServiceTypeMin AND CAST(ob.balanceServiceType AS signed INTEGER) <= :balanceServiceTypeMax");

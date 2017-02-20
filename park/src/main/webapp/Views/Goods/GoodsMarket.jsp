@@ -57,8 +57,13 @@
                                 <img data-src="holder.js/300x110?text=${good.goodName}&theme=lava"
                                       src="${good.goodPic}" alt="${good.goodName}">
                             </div>
-                            <strong>${good.goodName}</strong>
-                            <p>${good.goodPrice}元</p>
+                            <c:if test="${fn:length(good.goodName) > 18}">
+                                <strong>${fn:substring(good.goodName, 0, 18)}...</strong>
+                            </c:if>
+                            <c:if test="${fn:length(good.goodName) <= 18}">
+                                <strong>${good.goodName}</strong>
+                            </c:if>
+                            <p class="money">${good.goodPrice}元</p>
                             <div class="meta">
                                 <a href="javascript:;" class="good-cart-add" data-id="${good.goodId}">购物车>>></a>
                             </div>

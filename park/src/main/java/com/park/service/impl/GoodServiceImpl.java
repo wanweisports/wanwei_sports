@@ -425,8 +425,8 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 		}
 
 		whereSql.append(dataService.getCountSql(countNum, "log.createTime"));
-		
-		
+		whereSql.append(" ORDER BY log.createTime DESC");
+
 		return super.getPageBean(headSql, bodySql, whereSql, goodInputView);
 	}
 	

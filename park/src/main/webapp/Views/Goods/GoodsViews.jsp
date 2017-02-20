@@ -55,7 +55,7 @@
                                        value="${goodOriginalPrice}" placeholder="商品原价，例如10.00" autocomplete="off"
                                        data-val="true" data-val-required="商品原价不能为空"
                                        data-val-regex-pattern="^(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
-                                       data-val-regex="商品零售价格式错误">
+                                       data-val-regex="商品零售价格式错误" readonly>
                                 <div data-valmsg-for="goodOriginalPrice" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -115,7 +115,7 @@
                                        value="${goodPrice}" placeholder="商品零售价，例如10.00" autocomplete="off"
                                        data-val="true" data-val-required="商品零售价不能为空"
                                        data-val-regex-pattern="^(0(\.[0-9]{1,2})?|[1-9][0-9]*(\.[0-9]{1,2})?)$"
-                                       data-val-regex="商品零售价格式错误">
+                                       data-val-regex="商品零售价格式错误" readonly>
                                 <div data-valmsg-for="goodPrice" data-valmsg-replace="true"></div>
                             </div>
                         </div>

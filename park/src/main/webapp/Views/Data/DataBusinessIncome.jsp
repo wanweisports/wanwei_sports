@@ -57,7 +57,10 @@
                         <a href="javascript:;" class="btn btn-danger goods-filter" onclick="window.open('/data/exportBusinessIncome?'+$('#data_form').serialize());">
                             <span class="glyphicon glyphicon-export"></span> 导出数据
                         </a>
-                        <a href="/data/getBusinessIncomeGroupDate" class="btn btn-primary">
+                        <a href="#check_money_modal" class="btn btn-warning" data-toggle="modal" data-backdrop="false">
+                            <span class="glyphicon glyphicon-eye-open"></span> 核对财务
+                        </a>
+                        <a href="/data/getBusinessIncomeGroupDate" class="btn btn-primary" style="display: none;">
                             <span class="glyphicon glyphicon-stats"></span> 图表显示
                         </a>
                     </div>
@@ -151,6 +154,96 @@
                         </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="check_money_modal" tabindex="-1" role="dialog" aria-labelledby="check_money_modal_label">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="check_money_modal_label">核对财务</h5>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted">请仔细核对相应的财务金额。</p>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr><th>支付类型</th><th>计算金额</th><th>核对金额</th><th></th></tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>现金</td><td>${xianjinSumPrice}元</td>
+                                <td><input type="text" class="form-control" placeholder="请输入" value="${xianjinSumPrice}"></td>
+                                <td>
+                                    <button type="button" class="btn btn-danger confirm-check-money">
+                                        <span class="glyphicon glyphicon-remove"></span> 有误
+                                    </button>
+                                    <button type="button" class="btn btn-primary confirm-check-money">
+                                        <span class="glyphicon glyphicon-ok"></span> 无误
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>支付宝</td><td>${zhifubaoSumPrice}元</td>
+                                <td><input type="text" class="form-control" placeholder="请输入" value="${zhifubaoSumPrice}"></td>
+                                <td>
+                                    <button type="button" class="btn btn-danger confirm-check-money">
+                                        <span class="glyphicon glyphicon-remove"></span> 有误
+                                    </button>
+                                    <button type="button" class="btn btn-primary confirm-check-money">
+                                        <span class="glyphicon glyphicon-ok"></span> 无误
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>微信</td><td>${weixinSumPrice}元</td>
+                                <td><input type="text" class="form-control" placeholder="请输入" value="${weixinSumPrice}"></td>
+                                <td>
+                                    <button type="button" class="btn btn-danger confirm-check-money">
+                                        <span class="glyphicon glyphicon-remove"></span> 有误
+                                    </button>
+                                    <button type="button" class="btn btn-primary confirm-check-money">
+                                        <span class="glyphicon glyphicon-ok"></span> 无误
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>银联</td><td>${yinlianSumPrice}元</td>
+                                <td><input type="text" class="form-control" placeholder="请输入" value="${yinlianSumPrice}"></td>
+                                <td>
+                                    <button type="button" class="btn btn-danger confirm-check-money">
+                                        <span class="glyphicon glyphicon-remove"></span> 有误
+                                    </button>
+                                    <button type="button" class="btn btn-primary confirm-check-money">
+                                        <span class="glyphicon glyphicon-ok"></span> 无误
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>支票</td><td>${zhipiaoSumPrice}元</td>
+                                <td><input type="text" class="form-control" placeholder="请输入" value="${zhipiaoSumPrice}"></td>
+                                <td>
+                                    <button type="button" class="btn btn-danger confirm-check-money">
+                                        <span class="glyphicon glyphicon-remove"></span> 有误
+                                    </button>
+                                    <button type="button" class="btn btn-primary confirm-check-money">
+                                        <span class="glyphicon glyphicon-ok"></span> 无误
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>合计</td><td>${sumPrice}元</td>
+                                <td><input type="text" class="form-control" placeholder="请输入" value="${sumPrice}" readonly></td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

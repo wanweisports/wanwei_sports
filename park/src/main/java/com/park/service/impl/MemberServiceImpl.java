@@ -1,5 +1,6 @@
 package com.park.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -652,9 +653,13 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 	@Override
 	public String getCardNo(int type) {
 		do {
+			Date date = new Date();
+			SimpleDateFormat df = new SimpleDateFormat("MMdd");//设置日期时间格式
+			System.out.println(df.format(date));
 			StringBuffer no = new StringBuffer();
             no.append('m');
             no.append(type);
+            no.append(df.format(date));
 			for(int i = 0; i < 6; i++){
 				no.append((int)(Math.random()*10));
 			}
