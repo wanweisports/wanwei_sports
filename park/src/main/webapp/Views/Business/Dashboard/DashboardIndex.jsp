@@ -20,13 +20,13 @@
     </div>
     <div class="weui-flex">
         <div class="weui-grids">
-            <a href="/business/data/income?countNum=21" class="weui-grid">
+            <a href="/business/data/income?countNum=11" class="weui-grid">
                 <div class="weui-grid__icon">
                     <img src="/Content/images/mobile/coins.png?v=${static_resource_version}" alt="营业数据">
                 </div>
                 <p class="weui-grid__label">营业数据</p>
             </a>
-            <a href="/business/data/venuePercentage?countNum=21" class="weui-grid">
+            <a href="/business/data/venuePercentage?countNum=11" class="weui-grid">
                 <div class="weui-grid__icon">
                     <img src="/Content/images/mobile/chart.png?v=${static_resource_version}" alt="场地数据">
                 </div>

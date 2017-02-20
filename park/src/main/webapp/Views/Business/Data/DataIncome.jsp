@@ -16,14 +16,14 @@
         var myChart = echarts.init(document.getElementById('data_echarts1'));
 
         var data = [{
-            value: 3660,
-            name: '场地预订'
+            value: ${siteSum},
+            name: '场地'
         }, {
-            value: 1243,
-            name: '商品销售'
+            value: ${goodsSum},
+            name: '商品'
         }, {
-            value: 9930,
-            name: '会员储值'
+            value: ${cardSum},
+            name: '会员'
         }];
         var option = {
             backgroundColor: "#faf6f3",
@@ -46,7 +46,7 @@
                 show: true,
                 orient: 'horizontal',
                 top: '0%',
-                data: ['场地预订', '商品销售', '会员储值']
+                data: ['场地', '商品', '会员']
             },
             series: [{
                 type: 'pie',
@@ -104,19 +104,19 @@
         var myChart2 = echarts.init(document.getElementById('data_echarts2'));
 
         var data2 = [{
-            value: 3966,
+            value: ${countSum.xianjinSumPrice},
             name: '现金'
         }, {
-            value: 1966,
+            value: ${countSum.zhifubaoSumPrice},
             name: '支付宝'
         }, {
-            value: 966,
+            value: ${countSum.weixinSumPrice},
             name: '微信'
         }, {
-            value: 4966,
+            value: ${countSum.yinlianSumPrice},
             name: '银联'
         }, {
-            value: 2966,
+            value: ${countSum.zhipiaoSumPrice},
             name: '支票'
         }];
         var option2 = {
@@ -201,19 +201,19 @@
                 <table>
                     <thead>
                     <tr>
-                        <th>场地预订</th>
-                        <th>会员储值</th>
-                        <th>商品销售</th>
-                        <th>总收入</th>
-                        <th>财务核对</th>
+                        <th>场地</th>
+                        <th>会员</th>
+                        <th>商品</th>
+                        <th>总金额</th>
+                        <th>核对</th>
                     </thead>
                     <tbody>
                     <tr>
-                        <td>￥${siteSum}元</td>
-                        <td>￥${cardSum}元</td>
-                        <td>￥${goodsSum}元</td>
-                        <td>￥${siteSum+cardSum+goodsSum}元</td>
-                        <td>￥${siteSum+cardSum+goodsSum}元</td>
+                        <td>￥${siteSum}</td>
+                        <td>￥${cardSum}</td>
+                        <td>￥${goodsSum}</td>
+                        <td>￥${siteSum+cardSum+goodsSum}</td>
+                        <td>￥${siteSum+cardSum+goodsSum}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -233,11 +233,11 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>￥${countSum.xianjinSumPrice}元</td>
-                        <td>￥${countSum.zhifubaoSumPrice}元</td>
-                        <td>￥${countSum.weixinSumPrice}元</td>
-                        <td>￥${countSum.yinlianSumPrice}元</td>
-                        <td>￥${countSum.zhipiaoSumPrice}元</td>
+                        <td>￥${countSum.xianjinSumPrice}</td>
+                        <td>￥${countSum.zhifubaoSumPrice}</td>
+                        <td>￥${countSum.weixinSumPrice}</td>
+                        <td>￥${countSum.yinlianSumPrice}</td>
+                        <td>￥${countSum.zhipiaoSumPrice}</td>
                     </tr>
                     </tbody>
                 </table>
