@@ -40,4 +40,8 @@ public interface IDataService {
 	
 	public Map<String, Object> getMobileBusinessIncome(DataInputView dataInputView);
 	
+	public Map<String, Object> getBusinessSiteCount(DataInputView dataInputView);
+	
+	public Map<String, Object> getBusinessSiteSignCount(DataInputView dataInputView);
+	
 }

@@ -27,6 +27,7 @@ import com.park.common.util.SQLUtil;
 import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
 import com.park.service.IDataService;
+import com.park.service.IParkService;
 import com.park.service.IXlsExportImportService;
 
 @Service
@@ -37,6 +38,9 @@ public class DataServiceImpl extends BaseService implements IDataService {
 	
 	@Autowired
 	private IXlsExportImportService xlsExportImportService;
+	
+	@Autowired
+	private IParkService parkService;
     
     @Override
     public Map<String, Object> getMembersRegisterNew(DataInputView dataInputView){
@@ -827,6 +831,83 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		
 		resultMap.put("balancesCount", list);
 		return resultMap;
+	}
+	
+	@Override
+	public Map<String, Object> getBusinessSiteCount(DataInputView dataInputView){
+		int sumSiteCount = parkService.getBusinessTimePeriod().size();
+		
+		String sportId = dataInputView.getSportId();
+		String createTimeStart = dataInputView.getCreateTimeStart();
+		String createTimeEnd = dataInputView.getCreateTimeEnd();
+		
+		StringBuilder sql = new StringBuilder("SELECT IFNULL(SUM(sc),0) reserveCount");
+		sql.append(" FROM(SELECT SUM(siteEndTime-siteStartTime) * (LENGTH(reserveDates) - LENGTH(REPLACE(reserveDates,',','')) + 1) sc");
+		sql.append(" FROM site_reserve_time srt, site_reserve_date srd, site_reserve_basic srb, site_info si, site_sport ss");
+		sql.append(" WHERE srt.reserveDateId = srd.reserveDateId AND srd.siteReserveId = srb.siteReserveId AND srt.siteId = si.siteId AND si.siteType = ss.sportId");
+		if(StrUtil.isNotBlank(sportId)){
+            sql.append(" AND ss.sportId = :sportId");
+        }
+		if(StrUtil.isNotBlank(createTimeStart)){
+            sql.append(" AND DATE(srb.createTime) >= :createTimeStart");
+        }
+        if(StrUtil.isNotBlank(createTimeEnd)){
+            sql.append(" AND DATE(srb.createTime) <= :createTimeEnd");
+        }
+        sql.append(getCountSql(dataInputView.getCountNum(), "srb.createTime"));
+		sql.append(" GROUP BY srd.reserveDateId) t");
+		
+		int sc = baseDao.getUniqueResult(sql.toString(), JsonUtils.fromJson(dataInputView)).intValue();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("sumSiteCount", sumSiteCount);
+		resultMap.put("emptySiteCount", sumSiteCount-sc);
+		resultMap.put("useRate", sc/sumSiteCount*1.0*100);
+		resultMap.put("parkBusiness", parkService.getBusiness());
+		return resultMap;
+	}
+	
+	@Override
+	public Map<String, Object> getBusinessSiteSignCount(DataInputView dataInputView){
+		
+		String sportId = dataInputView.getSportId();
+		String createTimeStart = dataInputView.getCreateTimeStart();
+		String createTimeEnd = dataInputView.getCreateTimeEnd();
+		
+		StringBuilder sql = new StringBuilder("SELECT COUNT(DISTINCT signMemberCardNo) signTeacherCount FROM member_site_sign mss, site_reserve_time srt, site_info si, site_sport ss");
+		sql.append(" WHERE mss.reserveTimeId = srt.reserveTimeId AND srt.siteId = si.siteId AND si.siteType = ss.sportId");
+		sql.append(" AND mss.signType = ").append(IDBConstant.LOGIC_STATUS_OTHER);
+		if(StrUtil.isNotBlank(sportId)){
+            sql.append(" AND ss.sportId = :sportId");
+        }
+		if(StrUtil.isNotBlank(createTimeStart)){
+            sql.append(" AND DATE(mss.createTime) >= :createTimeStart");
+        }
+        if(StrUtil.isNotBlank(createTimeEnd)){
+            sql.append(" AND DATE(mss.createTime) <= :createTimeEnd");
+        }
+        sql.append(getCountSql(dataInputView.getCountNum(), "mss.createTime"));
+        int signTeacherCount = baseDao.getUniqueResult(sql.toString(), JsonUtils.fromJson(dataInputView)).intValue();
+        
+        sql.setLength(0);
+        
+        sql.append("SELECT COUNT(1) signTeacherCount FROM member_site_student_sign msss, site_sport ss");
+        sql.append(" WHERE msss.sportId = ss.sportId");
+        if(StrUtil.isNotBlank(sportId)){
+            sql.append(" AND ss.sportId = :sportId");
+        }
+		if(StrUtil.isNotBlank(createTimeStart)){
+            sql.append(" AND DATE(msss.createTime) >= :createTimeStart");
+        }
+        if(StrUtil.isNotBlank(createTimeEnd)){
+            sql.append(" AND DATE(msss.createTime) <= :createTimeEnd");
+        }
+        sql.append(getCountSql(dataInputView.getCountNum(), "msss.createTime"));
+        int signStudentCount = baseDao.getUniqueResult(sql.toString(), JsonUtils.fromJson(dataInputView)).intValue();
+        
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("signTeacherCount", signTeacherCount);
+        resultMap.put("signStudentCount", signStudentCount);
+        return resultMap;
 	}
 	
 	
