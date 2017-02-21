@@ -863,7 +863,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("sumSiteCount", sumSiteCount);
 		resultMap.put("emptySiteCount", sumSiteCount-sc);
-		resultMap.put("useRate", ((sumSiteCount-sc)/sumSiteCount*1.0)*100);
+		resultMap.put("useRate", sc/sumSiteCount*1.0*100);
 		resultMap.put("parkBusiness", parkService.getBusiness());
 		return resultMap;
 	}
