@@ -33,7 +33,11 @@
                 show: true,
                 top: 0,
                 right: 0,
-                data: ['上周六', '周五', '周六']
+                data: [
+                    "${fn:replace(compareWeek, '星期', '上周')}",
+                    "${fn:replace(yesterdayWeek, '星期', '周')}",
+                    "${fn:replace(todayWeek, '星期', '周')}"
+                ]
             },
             grid: {
                 left: '5%',
@@ -49,36 +53,53 @@
                 axisLabel: {
                     textStyle: {color: '#777'},
                     formatter: function (value) {
-                        return (value / 10000) + "万";
+                        if (value / 10000 >= 1) {
+                            return (value / 10000) + "万";
+                        } else if (value / 1000 >= 1) {
+                            return (value / 1000) + "千";
+                        } else {
+                            return value;
+                        }
                     }
                 }
             },
             yAxis: {
                 type: 'category',
-                data: ['会员\n储值', '商品\n销售', '场地\n预订', '营业\n收入'],
+                data: ['会员', '场地', '商品', '营业\n收入'],
                 axisLabel: {
                     textStyle: {
                         fontSize: 16
                     }
                 }
             },
-            series: [
-                {
-                    name: '上周六',
-                    type: 'bar',
-                    data: [1930, 2243, 3660, 7833]
-                },
-                {
-                    name: '周五',
-                    type: 'bar',
-                    data: [4930, 6243, 6660, 17833]
-                },
-                {
-                    name: '周六',
-                    type: 'bar',
-                    data: [9930, 1243, 9930, 14833]
-                }
-            ]
+            series: [{
+                name: "${fn:replace(compareWeek, '星期', '上周')}",
+                type: 'bar',
+                data: [
+                    ${compare.cardSum},
+                    ${compare.siteSum},
+                    ${compare.goodsSum},
+                    ${compare.siteSum + compare.cardSum + compare.goodsSum}
+                ]
+            }, {
+                name: "${fn:replace(yesterdayWeek, '星期', '周')}",
+                type: 'bar',
+                data: [
+                    ${yesterday.cardSum},
+                    ${yesterday.siteSum},
+                    ${yesterday.goodsSum},
+                    ${yesterday.siteSum + yesterday.cardSum + yesterday.goodsSum}
+                ]
+            }, {
+                name: "${fn:replace(todayWeek, '星期', '周')}",
+                type: 'bar',
+                data: [
+                    ${today.cardSum},
+                    ${today.siteSum},
+                    ${today.goodsSum},
+                    ${today.siteSum + today.cardSum + today.goodsSum}
+                ]
+            }]
         };
 
         myChart.setOption(option);
@@ -92,33 +113,33 @@
                 <table>
                     <thead>
                     <tr>
-                        <th></th>
-                        <th>场地预订</th>
-                        <th>会员储值</th>
-                        <th>商品销售</th>
+                        <th>日期</th>
+                        <th>会员</th>
+                        <th>场地</th>
+                        <th>商品</th>
                         <th>总金额</th>
                     </thead>
                     <tbody>
                     <tr>
-                        <th>上周六</th>
-                        <td>￥3660元</td>
-                        <td>￥1930元</td>
-                        <td>￥2243元</td>
-                        <td>￥7833元</td>
+                        <th>${fn:replace(compareWeek, '星期', '上周')}</th>
+                        <td>￥${compare.cardSum}</td>
+                        <td>￥${compare.siteSum}</td>
+                        <td>￥${compare.goodsSum}</td>
+                        <td>￥${compare.siteSum + compare.cardSum + compare.goodsSum}</td>
                     </tr>
                     <tr>
-                        <th>周五</th>
-                        <td>￥6660元</td>
-                        <td>￥4930元</td>
-                        <td>￥6243元</td>
-                        <td>￥17833元</td>
+                        <th>${fn:replace(yesterdayWeek, '星期', '周')}</th>
+                        <td>￥${yesterday.cardSum}</td>
+                        <td>￥${yesterday.siteSum}</td>
+                        <td>￥${yesterday.goodsSum}</td>
+                        <td>￥${yesterday.siteSum + yesterday.cardSum + yesterday.goodsSum}</td>
                     </tr>
                     <tr>
-                        <th>周六</th>
-                        <td>￥3660元</td>
-                        <td>￥9930元</td>
-                        <td>￥1243元</td>
-                        <td>￥14833元</td>
+                        <th>${fn:replace(todayWeek, '星期', '周')}</th>
+                        <td>￥${today.cardSum}</td>
+                        <td>￥${today.siteSum}</td>
+                        <td>￥${today.goodsSum}</td>
+                        <td>￥${today.siteSum + today.cardSum + today.goodsSum}</td>
                     </tr>
                     </tbody>
                 </table>

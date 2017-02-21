@@ -738,8 +738,6 @@ public class DataServiceImpl extends BaseService implements IDataService {
 	@Override
 	public Map<String, Object> getMobileBusinessIncome(DataInputView dataInputView){
 		//年月日时间参数[由前端传入]
-		String createTimeStart = dataInputView.getCreateTimeStart();
-		String createTimeEnd = dataInputView.getCreateTimeEnd();
 		Map<String, Object> resultMap = getBusinessIncome(dataInputView);
 		Map cardCounts = (Map)resultMap.get("cardCounts");
 		Map siteCounts = (Map)resultMap.get("siteCounts");

@@ -221,7 +221,27 @@ public class BusinessController extends BaseController {
 
     // 收入统计对比
     @RequestMapping("data/incomeCompare")
-    public String incomeCompare() {
+    public String incomeCompare(Model model) {
+        Date date = new Date();//取时间
+        SimpleDateFormat formatterWeek = new SimpleDateFormat("E");
+
+        DataInputView dataInputView = new DataInputView();
+        dataInputView.setCountNum(IDBConstant.DATA_DATE_DAY);
+        model.addAttribute("today", dataService.getMobileBusinessIncome(dataInputView));
+        model.addAttribute("todayWeek", formatterWeek.format(date.getTime()));
+
+        Date yesterday = new Date(date.getTime() - (long)24 * 60 * 60 * 1000);
+        dataInputView.setCountNum(IDBConstant.DATA_DATE_PRE_DAY);
+        model.addAttribute("yesterday", dataService.getMobileBusinessIncome(dataInputView));
+        model.addAttribute("yesterdayWeek", formatterWeek.format(yesterday));
+
+        Date compare = new Date(date.getTime() - (long)7 * 24 * 60 * 60 * 1000);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        dataInputView.setCreateTimeStart(formatter.format(compare));
+        dataInputView.setCreateTimeEnd(formatter.format(compare));
+        model.addAttribute("compare", dataService.getMobileBusinessIncome(dataInputView));
+        model.addAttribute("compareWeek", formatterWeek.format(compare));
+
         return "Business/Data/DataIncomeCompare";
     }
 

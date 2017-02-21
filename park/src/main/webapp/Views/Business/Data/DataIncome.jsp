@@ -201,16 +201,16 @@
                 <table>
                     <thead>
                     <tr>
-                        <th>场地</th>
                         <th>会员</th>
+                        <th>场地</th>
                         <th>商品</th>
                         <th>总金额</th>
                         <th>核对</th>
                     </thead>
                     <tbody>
                     <tr>
-                        <td>￥${siteSum}</td>
                         <td>￥${cardSum}</td>
+                        <td>￥${siteSum}</td>
                         <td>￥${goodsSum}</td>
                         <td>￥${siteSum+cardSum+goodsSum}</td>
                         <td>￥${siteSum+cardSum+goodsSum}</td>
