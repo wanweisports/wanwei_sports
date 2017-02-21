@@ -6,12 +6,15 @@ import static com.park.common.constant.IPlatformConstant.YINLIAN;
 import static com.park.common.constant.IPlatformConstant.ZHIFUBAO;
 import static com.park.common.constant.IPlatformConstant.ZHIPIAO;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.park.common.bean.SiteInputView;
+import com.park.service.ISiteService;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +44,9 @@ public class DataServiceImpl extends BaseService implements IDataService {
 	
 	@Autowired
 	private IParkService parkService;
+
+    @Autowired
+    private ISiteService siteService;
     
     @Override
     public Map<String, Object> getMembersRegisterNew(DataInputView dataInputView){
@@ -832,37 +838,96 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		resultMap.put("balancesCount", list);
 		return resultMap;
 	}
-	
+
+    /*@Override
+    public Map<String, Object> getBusinessSiteCount(DataInputView dataInputView){
+        SiteInputView siteInputView = new SiteInputView();
+        siteInputView.setSportId(StrUtil.objToInt(dataInputView.getSportId()));
+        siteInputView.setSiteStatus(IDBConstant.LOGIC_STATUS_YES);
+        List<Map<String, Object>> sites = siteService.getSiteNames(siteInputView);
+
+        int sumSiteCount = (parkService.getBusinessTimePeriod().size()) * sites.size();
+
+        String sportId = dataInputView.getSportId();
+        String createTimeStart = dataInputView.getCreateTimeStart();
+        String createTimeEnd = dataInputView.getCreateTimeEnd();
+
+        StringBuilder sql = new StringBuilder("SELECT IFNULL(SUM(sc),0) reserveCount");
+        sql.append(" FROM(SELECT SUM(siteEndTime-siteStartTime) * (LENGTH(reserveDates) - LENGTH(REPLACE(reserveDates,',','')) + 1) sc");
+        sql.append(" FROM site_reserve_time srt, site_reserve_date srd, site_reserve_basic srb, site_info si, site_sport ss");
+        sql.append(" WHERE srt.reserveDateId = srd.reserveDateId AND srd.siteReserveId = srb.siteReserveId AND srt.siteId = si.siteId AND si.siteType = ss.sportId");
+        if(StrUtil.isNotBlank(sportId)){
+            sql.append(" AND ss.sportId = :sportId");
+        }
+        if(StrUtil.isNotBlank(createTimeStart)){
+            sql.append(" AND DATE(srd.reserveStartDate) <= :createTimeStart");
+        }
+        if(StrUtil.isNotBlank(createTimeEnd)){
+            sql.append(" AND DATE(srd.reserveEndDate) >= :createTimeEnd");
+        }
+        sql.append(" GROUP BY srd.reserveDateId) t");
+
+        int sc = baseDao.getUniqueResult(sql.toString(), JsonUtils.fromJson(dataInputView)).intValue();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("sumSiteCount", sumSiteCount);
+        resultMap.put("emptySiteCount", sumSiteCount-sc);
+        resultMap.put("useRate", (sc/sumSiteCount)*1.00*100);
+        resultMap.put("parkBusiness", parkService.getBusiness());
+        return resultMap;
+    }*/
+
 	@Override
 	public Map<String, Object> getBusinessSiteCount(DataInputView dataInputView){
-		int sumSiteCount = parkService.getBusinessTimePeriod().size();
+        SiteInputView siteInputView = new SiteInputView();
+        siteInputView.setSportId(StrUtil.objToInt(dataInputView.getSportId()));
+        siteInputView.setSiteStatus(IDBConstant.LOGIC_STATUS_YES);
+        List<Map<String, Object>> sites = siteService.getSiteNames(siteInputView);
+
+        int sumSiteCount = (parkService.getBusinessTimePeriod().size()) * sites.size();
 		
 		String sportId = dataInputView.getSportId();
 		String createTimeStart = dataInputView.getCreateTimeStart();
 		String createTimeEnd = dataInputView.getCreateTimeEnd();
 		
-		StringBuilder sql = new StringBuilder("SELECT IFNULL(SUM(sc),0) reserveCount");
-		sql.append(" FROM(SELECT SUM(siteEndTime-siteStartTime) * (LENGTH(reserveDates) - LENGTH(REPLACE(reserveDates,',','')) + 1) sc");
-		sql.append(" FROM site_reserve_time srt, site_reserve_date srd, site_reserve_basic srb, site_info si, site_sport ss");
-		sql.append(" WHERE srt.reserveDateId = srd.reserveDateId AND srd.siteReserveId = srb.siteReserveId AND srt.siteId = si.siteId AND si.siteType = ss.sportId");
+		StringBuilder sql = new StringBuilder("SELECT srd.reserveDateId, srd.reserveStartDate, srd.reserveEndDate, srt.reserveTimeId, srt.siteEndTime, srt.siteStartTime, srd.reserveDates");
+		sql.append(" FROM site_reserve_time srt, site_reserve_date srd, site_info si, site_sport ss");
+		sql.append(" WHERE srt.reserveDateId = srd.reserveDateId AND srt.siteId = si.siteId AND si.siteType = ss.sportId");
 		if(StrUtil.isNotBlank(sportId)){
             sql.append(" AND ss.sportId = :sportId");
         }
-		if(StrUtil.isNotBlank(createTimeStart)){
-            sql.append(" AND DATE(srb.createTime) >= :createTimeStart");
+        if(StrUtil.isNotBlank(createTimeStart) && StrUtil.isNotBlank(createTimeEnd)){
+            sql.append(" AND ((DATE(srd.reserveStartDate) <= :createTimeStart AND DATE(srd.reserveEndDate) >= :createTimeStart) || (DATE(srd.reserveStartDate) <= :createTimeEnd AND DATE(srd.reserveEndDate) >= :createTimeEnd))");
         }
-        if(StrUtil.isNotBlank(createTimeEnd)){
-            sql.append(" AND DATE(srb.createTime) <= :createTimeEnd");
+
+        List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
+        Map<String, Object> item = new HashMap<String, Object>();
+        int hasReservedSize = 0;
+        for (Map<String, Object> map : list) {
+            String reserveDates = StrUtil.objToStr(map.get("reserveDates"));
+            String reserveStartDate = StrUtil.objToStr(map.get("reserveStartDate"));
+            String reserveEndDate = StrUtil.objToStr(map.get("reserveEndDate"));
+
+            String[] reserveDatesList = reserveDates.split(",");
+            if (reserveDatesList.length > 1) {
+                for (int i = 0; i < reserveDatesList.length; i++) {
+                    String reserveDate = reserveDatesList[i];
+
+                    if(StrUtil.isNotBlank(createTimeStart) && StrUtil.isNotBlank(createTimeEnd)){
+                        if (reserveDate.compareTo(createTimeStart) >= 0 && reserveDate.compareTo(createTimeEnd) <= 0) {
+                            hasReservedSize++;
+                        }
+                    }
+                }
+            } else {
+                hasReservedSize++;
+            }
         }
-        sql.append(getCountSql(dataInputView.getCountNum(), "srb.createTime"));
-		sql.append(" GROUP BY srd.reserveDateId) t");
-		
-		int sc = baseDao.getUniqueResult(sql.toString(), JsonUtils.fromJson(dataInputView)).intValue();
+
+        DecimalFormat df = new DecimalFormat("0.00");//格式化小数
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("sumSiteCount", sumSiteCount);
-		resultMap.put("emptySiteCount", sumSiteCount-sc);
-		resultMap.put("useRate", sc/sumSiteCount*1.0*100);
-		resultMap.put("parkBusiness", parkService.getBusiness());
+		resultMap.put("emptySiteCount", sumSiteCount - hasReservedSize);
+		resultMap.put("useRate", df.format((hasReservedSize/(sumSiteCount*1.0))*100));
 		return resultMap;
 	}
 	
@@ -873,10 +938,11 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		String createTimeStart = dataInputView.getCreateTimeStart();
 		String createTimeEnd = dataInputView.getCreateTimeEnd();
 		
-		StringBuilder sql = new StringBuilder("SELECT COUNT(DISTINCT signMemberCardNo) signTeacherCount FROM member_site_sign mss, site_reserve_time srt, site_info si, site_sport ss");
+		StringBuilder sql = new StringBuilder("SELECT COUNT(DISTINCT signMemberCardNo) signTeacherCount FROM member_site_sign mss, site_reserve_time srt, site_info si, site_sport ss,member_card mc,member_card_type mct");
 		sql.append(" WHERE mss.reserveTimeId = srt.reserveTimeId AND srt.siteId = si.siteId AND si.siteType = ss.sportId");
-		sql.append(" AND mss.signType = ").append(IDBConstant.LOGIC_STATUS_OTHER);
-		if(StrUtil.isNotBlank(sportId)){
+        sql.append(" AND mc.cardNo = mss.signMemberCardNo AND mc.cardTypeId=1");
+
+        if(StrUtil.isNotBlank(sportId)){
             sql.append(" AND ss.sportId = :sportId");
         }
 		if(StrUtil.isNotBlank(createTimeStart)){
@@ -885,12 +951,11 @@ public class DataServiceImpl extends BaseService implements IDataService {
         if(StrUtil.isNotBlank(createTimeEnd)){
             sql.append(" AND DATE(mss.createTime) <= :createTimeEnd");
         }
-        sql.append(getCountSql(dataInputView.getCountNum(), "mss.createTime"));
         int signTeacherCount = baseDao.getUniqueResult(sql.toString(), JsonUtils.fromJson(dataInputView)).intValue();
         
         sql.setLength(0);
         
-        sql.append("SELECT COUNT(1) signTeacherCount FROM member_site_student_sign msss, site_sport ss");
+        sql.append("SELECT COUNT(1) signStudentCount FROM member_site_student_sign msss, site_sport ss");
         sql.append(" WHERE msss.sportId = ss.sportId");
         if(StrUtil.isNotBlank(sportId)){
             sql.append(" AND ss.sportId = :sportId");
@@ -901,7 +966,6 @@ public class DataServiceImpl extends BaseService implements IDataService {
         if(StrUtil.isNotBlank(createTimeEnd)){
             sql.append(" AND DATE(msss.createTime) <= :createTimeEnd");
         }
-        sql.append(getCountSql(dataInputView.getCountNum(), "msss.createTime"));
         int signStudentCount = baseDao.getUniqueResult(sql.toString(), JsonUtils.fromJson(dataInputView)).intValue();
         
         Map<String, Object> resultMap = new HashMap<String, Object>();

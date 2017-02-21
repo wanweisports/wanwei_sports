@@ -26,7 +26,7 @@
                 </div>
                 <p class="weui-grid__label">营业数据</p>
             </a>
-            <a href="/business/data/venuePercentage?countNum=11" class="weui-grid">
+            <a href="/business/data/venuePercentage" class="weui-grid">
                 <div class="weui-grid__icon">
                     <img src="/Content/images/mobile/chart.png?v=${static_resource_version}" alt="场地数据">
                 </div>

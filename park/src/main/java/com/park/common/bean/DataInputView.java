@@ -1,7 +1,8 @@
 package com.park.common.bean;
 
 public class DataInputView extends BaseInputView {
-	
+
+	private String createTime;
 	private Integer countNum;
 	private String createTimeStart;
 	private String createTimeEnd;
@@ -15,7 +16,15 @@ public class DataInputView extends BaseInputView {
 	private String memberName;
 	private String sportId;
 	
-	private Integer[] balanceServiceTypeArr; 
+	private Integer[] balanceServiceTypeArr;
+
+	public String getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
 
 	public Integer getCountNum() {
 		return countNum;

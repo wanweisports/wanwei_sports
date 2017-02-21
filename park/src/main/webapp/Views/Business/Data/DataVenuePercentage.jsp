@@ -11,16 +11,24 @@
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/lib/echarts/echarts.min.js?v=${static_resource_version}"></script>
+    <script>
+        $(document).ready(function () {
+            $(".sport-list .sport-type").addClass("weui-form-preview__btn_primary")
+                .removeClass("weui-form-preview__btn_default");
+            $(".sport-list .sport-type[data-id='${sportId}']").addClass("weui-form-preview__btn_default")
+                .removeClass("weui-form-preview__btn_primary");
+        });
+    </script>
     <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('data_echarts1'));
 
         var data = [{
-            value: 16 * 10 - 4,
-            name: '实际使用'
+            value: ${todaySiteCount.sumSiteCount - todaySiteCount.emptySiteCount},
+            name: '已预订'
         }, {
-            value: 4,
-            name: '未使用'
+            value: ${todaySiteCount.emptySiteCount},
+            name: '未预订'
         }];
         var option = {
             backgroundColor: "#faf6f3",
@@ -43,7 +51,7 @@
                 show: true,
                 orient: 'horizontal',
                 top: '0%',
-                data: ['实际使用', '未使用']
+                data: ['已预订', '未预订']
             },
             series: [{
                 type: 'pie',
@@ -120,7 +128,7 @@
             },
             xAxis : [{
                 type : 'category',
-                data : ['上周六', '本周六'],
+                data : ["${fn:replace(compareWeek, '星期', '上周')}", '今日'],
                 axisLabel: {
                     textStyle: {
                         fontSize: 16
@@ -133,11 +141,11 @@
             series : [{
                 name:'教师',
                 type:'bar',
-                data:[30, 20]
+                data:[${compareSignCount.signTeacherCount}, ${todaySignCount.signTeacherCount}]
             }, {
                 name:'学生',
                 type:'bar',
-                data:[65, 30]
+                data:[${compareSignCount.signStudentCount}, ${todaySignCount.signStudentCount}]
             }]
         };
         myChart2.setOption(option2);
@@ -155,15 +163,23 @@
                         <th>总场次</th>
                         <th>空场次</th>
                         <th>利用率</th>
-                        <th>同比上周</th>
+                        <th>${fn:replace(compareWeek, '星期', '上周')}</th>
                     </thead>
                     <tbody>
                     <tr>
                         <td>${parkBusiness.businessStartTime}-${parkBusiness.businessEndTime}</td>
-                        <td>${sumSiteCount}场</td>
-                        <td>${emptySiteCount}场</td>
-                        <td>${useRate}%</td>
-                        <td>增加10%</td>
+                        <td>${todaySiteCount.sumSiteCount}场</td>
+                        <td>${todaySiteCount.emptySiteCount}场</td>
+                        <td>${todaySiteCount.useRate}%</td>
+                        <c:if test="${todaySiteCount.useRate < compareSiteCount.useRate}">
+                            <td style="color: #F43530;">减少${compareSiteCount.useRate - todaySiteCount.useRate}%</td>
+                        </c:if>
+                        <c:if test="${todaySiteCount.useRate > compareSiteCount.useRate}">
+                            <td style="color: #1AAD19;">增加${todaySiteCount.useRate - compareSiteCount.useRate}%</td>
+                        </c:if>
+                        <c:if test="${todaySiteCount.useRate == compareSiteCount.useRate}">
+                            <td>相同</td>
+                        </c:if>
                     </tr>
                     </tbody>
                 </table>
@@ -176,13 +192,29 @@
                     <tbody>
                     <tr>
                         <th>教师</th>
-                        <td>${signTeacherCount}人</td>
-                        <td>同比减少10人</td>
+                        <td>${todaySignCount.signTeacherCount}人</td>
+                        <c:if test="${todaySignCount.signTeacherCount < compareSignCount.signTeacherCount}">
+                            <td style="color: #F43530;">同比减少${compareSignCount.signTeacherCount - todaySignCount.signTeacherCount}人</td>
+                        </c:if>
+                        <c:if test="${todaySignCount.signTeacherCount > compareSignCount.signTeacherCount}">
+                            <td style="color: #1AAD19;">同比增加${todaySignCount.signTeacherCount - compareSignCount.signTeacherCount}人</td>
+                        </c:if>
+                        <c:if test="${todaySignCount.signTeacherCount == compareSignCount.signTeacherCount}">
+                            <td>同比人数相同</td>
+                        </c:if>
                     </tr>
                     <tr>
                         <th>学生</th>
-                        <td>${signStudentCount}人</td>
-                        <td>同比减少35人</td>
+                        <td>${todaySignCount.signStudentCount}人</td>
+                        <c:if test="${todaySignCount.signStudentCount < compareSignCount.signStudentCount}">
+                            <td style="color: #F43530;">同比减少${compareSignCount.signStudentCount - todaySignCount.signStudentCount}人</td>
+                        </c:if>
+                        <c:if test="${todaySignCount.signStudentCount > compareSignCount.signStudentCount}">
+                            <td style="color: #1AAD19;">同比增加${todaySignCount.signStudentCount - compareSignCount.signStudentCount}人</td>
+                        </c:if>
+                        <c:if test="${todaySignCount.signStudentCount == compareSignCount.signStudentCount}">
+                            <td>同比人数相同</td>
+                        </c:if>
                     </tr>
                     </tbody>
                 </table>
@@ -192,10 +224,12 @@
                     </div>
                 </div>
             </div>
-            <div class="weui-form-preview__ft">
-                <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:">羽毛球</a>
-                <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">篮球</a>
-                <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">乒乓球</a>
+            <div class="weui-form-preview__ft sport-list">
+                <c:forEach var="sport" items="${siteSportNames}">
+                    <a class="weui-form-preview__btn weui-form-preview__btn_primary sport-type"
+                       href="/business/data/venuePercentage?sportId=${sport.sportId}"
+                       data-id="${sport.sportId}">${sport.sportName}</a>
+                </c:forEach>
             </div>
         </div>
     </div>

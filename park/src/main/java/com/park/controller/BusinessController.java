@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,6 +48,12 @@ public class BusinessController extends BaseController {
 
     @Autowired
     private IDataService dataService;
+
+    @Autowired
+    private ISiteService siteService;
+
+    @Autowired
+    private IParkService parkService;
     
     // 用户登录
     @NotProtected
@@ -249,8 +256,35 @@ public class BusinessController extends BaseController {
     @RequestMapping("data/venuePercentage")
     public String venuePercentage(DataInputView dataInputView, Model model) {
     	try{
-    		model.addAllAttributes(dataService.getBusinessSiteCount(dataInputView));
-    		model.addAllAttributes(dataService.getBusinessSiteSignCount(dataInputView));
+    	    SiteInputView siteInputView = new SiteInputView();
+    	    siteInputView.setSiteStatus(IDBConstant.LOGIC_STATUS_YES);
+
+            List<Map<String, Object>> siteSportNames = siteService.getSiteSportNames(siteInputView);
+            model.addAttribute("siteSportNames", siteSportNames);
+
+            model.addAttribute("parkBusiness", parkService.getBusinessTime());
+
+            if (StrUtil.isBlank(dataInputView.getSportId())) {
+                dataInputView.setSportId(siteSportNames.get(0).get("sportId").toString());
+            }
+
+            model.addAllAttributes(JsonUtils.fromJson(dataInputView));
+
+            Date date = new Date();//取时间
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            dataInputView.setCreateTimeStart(formatter.format(date));
+            dataInputView.setCreateTimeEnd(formatter.format(date));
+
+    		model.addAttribute("todaySiteCount", dataService.getBusinessSiteCount(dataInputView));
+    		model.addAttribute("todaySignCount", dataService.getBusinessSiteSignCount(dataInputView));
+
+            Date compare = new Date(date.getTime() - (long)7 * 24 * 60 * 60 * 1000);
+            SimpleDateFormat formatterWeek = new SimpleDateFormat("E");
+            dataInputView.setCreateTimeStart(formatter.format(compare));
+            dataInputView.setCreateTimeEnd(formatter.format(compare));
+            model.addAttribute("compareSiteCount", dataService.getBusinessSiteCount(dataInputView));
+            model.addAttribute("compareSignCount", dataService.getBusinessSiteSignCount(dataInputView));
+            model.addAttribute("compareWeek", formatterWeek.format(compare));
     	}catch (Exception e) {
 			e.printStackTrace();
 		}

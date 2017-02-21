@@ -19,10 +19,10 @@ gulp.task('stylus-compile', function() {
         .pipe(notify({
             message: '<%= file.relative %> compiled successful',
             title: 'minify css'}))
-        //.pipe(rename({suffix: '.min'}))
+        .pipe(rename({suffix: '.min'}))
         .pipe(minifycss())
-        .pipe(plumber.stop())
         .pipe(gulp.dest('./Content/style/'))
+        .pipe(plumber.stop())
         .pipe(notify({
             message: '<%= file.relative %> minified successful',
             title: 'minify css'}));
@@ -46,10 +46,9 @@ gulp.task('stylus-watch', function() {
             .pipe(notify({
                 message: '<%= file.relative %> compiled successful',
                 title: 'minify css'}))
-            //.pipe(rename({suffix: '.min'}))
-            //.pipe(minifycss())
-            .pipe(plumber.stop())
+            .pipe(rename({suffix: '.min'}))
             .pipe(gulp.dest('./Content/style/'))
+            .pipe(plumber.stop())
             .pipe(notify({
                 message: '<%= file.relative %> watch successful',
                 title: 'minify css'}));
