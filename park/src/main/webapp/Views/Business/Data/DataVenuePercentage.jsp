@@ -159,10 +159,10 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>06:00-22:00</td>
-                        <td>160场</td>
-                        <td>4场</td>
-                        <td>97.5%</td>
+                        <td>${parkBusiness.businessStartTime}-${parkBusiness.businessEndTime}</td>
+                        <td>${sumSiteCount}场</td>
+                        <td>${emptySiteCount}场</td>
+                        <td>${useRate}%</td>
                         <td>增加10%</td>
                     </tr>
                     </tbody>
@@ -176,12 +176,12 @@
                     <tbody>
                     <tr>
                         <th>教师</th>
-                        <td>20人</td>
+                        <td>${signTeacherCount}人</td>
                         <td>同比减少10人</td>
                     </tr>
                     <tr>
                         <th>学生</th>
-                        <td>30人</td>
+                        <td>${signStudentCount}人</td>
                         <td>同比减少35人</td>
                     </tr>
                     </tbody>

@@ -227,7 +227,13 @@ public class BusinessController extends BaseController {
 
     // 场地使用率
     @RequestMapping("data/venuePercentage")
-    public String venuePercentage() {
+    public String venuePercentage(DataInputView dataInputView, Model model) {
+    	try{
+    		model.addAllAttributes(dataService.getBusinessSiteCount(dataInputView));
+    		model.addAllAttributes(dataService.getBusinessSiteSignCount(dataInputView));
+    	}catch (Exception e) {
+			e.printStackTrace();
+		}
         return "Business/Data/DataVenuePercentage";
     }
 
