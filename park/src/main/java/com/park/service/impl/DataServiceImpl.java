@@ -536,7 +536,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		String createTimeEnd = dataInputView.getCreateTimeEnd();
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		StringBuilder sql = new StringBuilder("SELECT cardTypeName name, SUM(realAmount) price, ob.balanceStyle style, ob.balanceId");
+		StringBuilder sql = new StringBuilder("SELECT cardTypeName name, SUM(xjAmount) price, ob.balanceStyle style, ob.balanceId");
 		sql.append(" FROM member_card_type mct");
 		sql.append(" LEFT JOIN member_card mc ON(mct.cardTypeId = mc.cardTypeId)");
 		sql.append(" LEFT JOIN other_balance ob ON(ob.balanceServiceId = mc.cardId AND CAST(ob.balanceServiceType AS signed INTEGER) >= :balanceServiceTypeMin AND CAST(ob.balanceServiceType AS signed INTEGER) <= :balanceServiceTypeMax");
@@ -804,7 +804,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		Integer balanceServiceType = dataInputView.getBalanceServiceType();
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		StringBuilder sql = new StringBuilder("SELECT dictValue payStyle, IFNULL(SUM(ob.realAmount),0) realAmountSum FROM system_dict sd LEFT JOIN other_balance ob ON(ob.balanceStyle = sd.dictKey");
+		StringBuilder sql = new StringBuilder("SELECT dictValue payStyle, IFNULL(SUM(ob.xjAmount),0) realAmountSum FROM system_dict sd LEFT JOIN other_balance ob ON(ob.balanceStyle = sd.dictKey");
 		sql.append(getCountSql(countNum, "ob.createTime"));
 		sql.append(") WHERE dictName='BALANCE_STYLE'");
 		if(StrUtil.isNotBlank(createTimeStart)){

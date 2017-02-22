@@ -385,6 +385,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		balance.setBalanceStyle(balanceStyle);
 		balance.setOldAmount(upLevelMoney);
 		balance.setSubAmount(subMoney);
+		balance.setXjAmount(subMoney);
 		balance.setRealAmount(balance.getOldAmount()-balance.getSubAmount());
 		balance.setGivingAmount(givingAmount);
 		balance.setBalanceType(IDBConstant.BALANCE_TYPE_OTHER);
@@ -424,6 +425,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		balance.setOldAmount(czMoney);
 		balance.setSubAmount(subMoney);
 		balance.setRealAmount(czMoney-subMoney);
+		balance.setXjAmount(balance.getRealAmount());
 		balance.setGivingAmount(givingAmount);
 		balance.setBalanceType(IDBConstant.BALANCE_TYPE_CZ);
 		balance.setServiceDate(nowDate);
@@ -486,6 +488,7 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
 		balance.setOldAmount(buBanMoney);
 		balance.setSubAmount(subMoney);
 		balance.setRealAmount(buBanMoney-balance.getSubAmount());
+		balance.setXjAmount(balance.getRealAmount());
 		balance.setGivingAmount(givingAmount);
 		balance.setBalanceType(IDBConstant.BALANCE_TYPE_OTHER);
 		balance.setServiceDate(nowDate);
