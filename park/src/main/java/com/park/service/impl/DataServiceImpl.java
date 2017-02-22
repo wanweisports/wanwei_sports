@@ -904,8 +904,6 @@ public class DataServiceImpl extends BaseService implements IDataService {
         int hasReservedSize = 0;
         for (Map<String, Object> map : list) {
             String reserveDates = StrUtil.objToStr(map.get("reserveDates"));
-            String reserveStartDate = StrUtil.objToStr(map.get("reserveStartDate"));
-            String reserveEndDate = StrUtil.objToStr(map.get("reserveEndDate"));
 
             String[] reserveDatesList = reserveDates.split(",");
             if (reserveDatesList.length > 1) {
