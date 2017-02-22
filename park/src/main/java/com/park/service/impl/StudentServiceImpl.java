@@ -108,6 +108,7 @@ public class StudentServiceImpl extends BaseService implements IStudentService {
 			balance.setBalanceStyle(IDBConstant.BALANCE_STYLE_XJ);
 			balance.setOldAmount(memberCarType.getCardDeposit());
 			balance.setRealAmount(memberCarType.getCardDeposit());
+			balance.setXjAmount(memberCarType.getCardDeposit());
 			balance.setBalanceType(IDBConstant.BALANCE_TYPE_OTHER);
 			balance.setServiceDate(nowDate);
 			balance.setCreateTime(nowDate);
