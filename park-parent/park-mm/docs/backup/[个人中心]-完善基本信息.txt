@@ -1,0 +1,24 @@
+获取登录者基本信息：
+请求：passport/profile
+
+返回：
+{
+    "operatorId": "123456",    //登录帐号
+    "operatorName": "佟大为",  //姓名
+    "operatorMobile": "13051788102", //联系手机
+    "operatorNo": "001", //编号
+    "operatorBirthday": "1990-07-20", //生日
+    "operatorAddress": "北京市天府路", //地址
+    "operatorSex": "1" //性别1（1：男  2：女）
+}
+============================================================================================================
+
+完善修改登录者基本信息：【Ajax】
+请求：passport/updateProfile?operatorName=佟大为&operatorMobile=13051788102&operatorBirthday=1990-07-20&operatorAddress=北京市天府路&operatorSex=1
+
+返回：
+{
+    "code": "1",
+    "message": "操作成功",
+    "data": {}
+}

@@ -1,0 +1,132 @@
+@charset "utf-8"
+@import "mixins"
+
+// 通用
+html
+body
+    -webkit-font-smoothing antialiased
+    width 100%
+    height 100%
+    padding 0
+    margin 0
+    background #EFEFEF
+    color #333333
+    overflow-x hidden
+a
+    text-decoration none
+    &:hover
+        text-decoration none
+
+// weui 重写
+.weui-cells
+    font-size 14px
+    .weui-label
+        width 5em
+.weui-btn
+    font-size 14px
+.weui-btn_primary
+    background-color #2FAEF6
+.weui-btn_primary:not(.weui-btn_disabled):active
+    background-color #2FAEF6
+.weui-btn_plain-primary
+    color #2FAEF6
+    border 1px solid #2FAEF6
+.weui-btn_plain_primary:not(.weui-btn_disabled):active
+    color #2FAEF6
+    border 1px solid #2FAEF6
+.weui-cells_radio .weui_check:checked+.weui_icon_checked:before
+    color #2FAEF6
+.weui_icon_success:before
+    color #2FAEF6
+.weui-switch:checked
+    border-color #2FAEF6
+    background-color #2FAEF6
+.weui-cell__ft
+    font-size 12px
+.weui-dialog__btn_primary
+    color #2FAEF6
+.weui-actionsheet
+    max-height 100%
+    overflow auto
+.weui-mask.info-container
+    overflow auto
+.weui-input
+    padding-left 15px
+.weui-select
+    color #888
+.weui-cell_select .weui-cell__bd:after
+    display none
+.weui-cell_select-after
+    .weui-select
+        padding-left 15px
+.weui-form-preview__btn_primary
+    color #2FAEF6
+.weui-navbar__item.weui-bar__item_on
+    background #2FAEF6
+    color #fff
+.weui-cells_form
+    textarea
+        padding-left 15px
+.weui-navbar+.weui-tab__panel
+    padding-bottom 10px
+
+[v-cloak]
+    display none
+
+// 颜色定义
+.highlight-color
+    color #2FAEF6 !important
+.stress-color
+    color #FF8A38 !important
+.stress-background
+    background-color #FF8A38 !important
+.warning-color
+    color #EF4F4F !important
+.default-color
+    color #888888 !important
+.tips-color
+    color #999999 !important
+
+// 字体定义
+.f10
+    font-size 10px !important
+.f12
+    font-size 12px !important
+.f14
+    font-size 14px !important
+.f16
+    font-size 16px !important
+.f18
+    font-size 18px !important
+.f20
+    font-size 20px !important
+.f22
+    font-size 22px !important
+
+// 强调加粗
+.stress
+    font-weight 700
+
+// 居中
+.text-center
+    text-align center
+.block-center
+    margin 0 auto
+
+// 浮动清除
+.float-clear
+    clear both
+
+// 高度占位
+.position-height
+    height rem(100px)
+.position-height120
+    height rem(120px)
+.position-height140
+    height rem(140px)
+
+// 按钮不可用
+.car-btn-disabled
+    background #009DD9
+    color rgba(255, 255, 255, 0.6)
+    opacity 0.6

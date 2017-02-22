@@ -1,0 +1,41 @@
+﻿商品类型列表：
+
+请求：good/typeGood
+
+返回：
+[
+    {
+        "createTime": "2016-10-10 15:30:00",
+        "goodTypeDescribe": "饮料，水",
+        "operatorName": "李晓丹1",
+        "goodTypeId": "1",
+        "goodTypeName": "饮料"
+    }
+]
+============================================================================================
+单个商品类型：【Ajax请求】
+
+请求：good/goodTypeInfo?goodTypeId=1
+
+返回：
+{
+    "code": "1",
+    "message": "操作成功",
+    "data": {
+        "goodTypeDescribe": "饮料，水",
+        "goodTypeId": "1",
+        "goodTypeName": "饮料"
+    }
+}
+============================================================================================
+保存商品类型：【Ajax请求】
+
+请求：good/saveGoodType?goodTypeName=饮料&goodTypeDescribe=饮料，水&goodTypeId=2  //goodTypeId：无此参数添加，有则更新
+
+返回：
+{
+    "code": "-1",
+    "message": "商品类型不存在",
+    "data": {}
+}
+
