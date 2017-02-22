@@ -1,0 +1,74 @@
+﻿营业时间详情：
+接口名：settings/common
+
+请求：无
+
+返回：
+{
+    "businessStartTime": "08:00",
+    "businessEndTime": "17:00",
+    "businessName": "万维体育",
+    "businessAreaName": "北京市",
+    "businessContact": "张三",
+    "businessPhone": "15110275787",
+    "businessAddress": "北京市海淀区130号"
+}
+
+
+========================================================================================================================
+
+营业时间修改：【Ajax】
+接口名：settings/saveCommon
+
+请求：
+/settings/saveCommon?businessName=万维体育&businessAreaName=北京市&businessStartTime=08:00&businessEndTime=17:00&businessContact=张三&businessPhone=15110275787&businessAddress=北京市海淀区130号
+
+
+  `businessStartTime`  '营业开始时间',
+  `businessEndTime`  '营业结束时间',
+  `businessTimePeriod`  '营业时间段',
+  `businessName`  '场馆名称',
+  `businessAreaName`  '所在省市',
+  `businessContact`  '联系人',
+  `businessPhone`  '联系电话',
+  `businessAddress`  '详细地址',
+
+
+
+返回：
+{
+    "code": "1",
+    "message": "操作成功",
+    "data": {}
+}
+
+========================================================================================================================
+
+场馆营业时间：【Ajax】
+请求：/settings/getBusinessTime
+
+返回：
+{
+    "code": "1",
+    "message": "操作成功",
+    "data": {
+	  "businessStartTime": "06:00",
+	  "businessEndTime": "19:00"
+	}
+}
+
+
+========================================================================================================================
+场地营业时间：
+请求：/site/getSiteSportTime?sportId=1
+
+返回：
+{
+    "code": "1",
+    "message": "操作成功",
+    "data": {
+	  "sportId": 1,  //场地类型id
+	  "startTime": "09:00",
+	  "endTime": "12:00"
+	}
+}

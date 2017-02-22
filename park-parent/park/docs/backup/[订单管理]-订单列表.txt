@@ -1,0 +1,74 @@
+订单列表：【带分页】
+请求：order/getOrderList&orderServiceTypes=2,3   //订单业务类型（1. 预定场地   2. 购买商品   3.场地包场），多个逗号分隔
+
+返回：
+{
+    "list": [
+        {
+            "createTime": "2016-10-31 10:28:19",  //订单时间
+            "orderServiceType": "1",      //订单业务类型（1. 预定场地   2. 购买商品   3.场地包场）
+            "orderNo": "20161031102819",  //订单号
+            "payStatus": "2",     //支付状态（1：已支付  2：未支付  3：部分支付）
+            "orderStatus": "2",  //【新】主订单状态（1：已全部完成 2：未完成 3：已取消）PS:当子订单全部完成时，此状态为1
+            "orderId": "68",      //订单id
+            "orderSumPrice": 80,  //订单总价格
+            "orderDetailList": [  //子订单信息
+                {
+                    "itemName": "【羽毛球】场地预定",  //购买名称
+                    "itemPrice": 10,         //子订单价格
+                    "itemStartTime": "2016-11-01 08:00", //开始时间
+                    "itemEndTime": "2016-11-01 09:00",    //结束时间
+		    "orderDetailStatus": "1", //【新】子订单状态（1：已完成  2：未完成  3：进行中）
+		    "itemMoneyType": "2",  //【新】计费方式（1. 计次收费  2. 计时收费）
+                },
+                {
+                    "itemName": "【羽毛球】场地预定",
+                    "itemPrice": 20,
+                    "itemStartTime": "2016-11-02 11:00",
+                    "itemEndTime": "2016-11-02 12:00",
+                    "orderDetailStatus": "3",
+		    "itemMoneyType": "2",
+                },
+                {
+                    "itemName": "【篮球】场地预定",
+                    "itemPrice": 50,
+                    "itemStartTime": "2016-11-02 16:00",
+                    "itemEndTime": "2016-11-02 17:00",
+                    "orderDetailStatus": "2",
+		    "itemMoneyType": "2",
+                }
+            ]
+        },
+       {
+	    "createTime": "2016-11-01 11:59:55",  //订单时间
+            "orderServiceType": "2",      //订单业务类型（1. 预定场地   2. 购买商品   3.场地包场）
+            "orderNo": "20161101115955",  //订单号
+            "payStatus": "2",     //支付状态（1：已支付  2：未支付  3：部分支付）
+            "orderStatus": "2",  //【新】主订单状态（1：已全部完成 2：未完成 3：已取消）PS:当子订单全部完成时，此状态为1
+            "orderId": "68",      //订单id
+            "orderSumPrice": 80,  //订单总价格
+            "orderDetailList": [
+                {
+                    "itemName": "农夫山泉",
+                    "itemPrice": 6,
+                    "itemAmount": "3",     //【新】购买商品数量
+                    "itemMoneyType": "2",  //【新】计费方式（1. 计次收费  2. 计时收费）
+                    "orderDetailStatus": "2" //【新】子订单状态（1：已完成  2：未完成）
+                },
+                {
+                    "itemName": "3",
+                    "itemPrice": 2,
+                    "itemAmount": "1",
+                    "itemMoneyType": "2",
+                    "orderDetailStatus": "2"
+                }
+            ]
+        }	
+
+    ],
+    "count": "1",
+    "lastPage": "1",
+    "currentPage": "1",
+    "pageSize": "10"
+}
+=======================================================================================================================

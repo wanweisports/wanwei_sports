@@ -1,0 +1,1 @@
+user_operator新增一个字段 openId  varchar(32)  微信openId

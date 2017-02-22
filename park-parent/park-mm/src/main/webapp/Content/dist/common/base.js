@@ -1,0 +1,1 @@
+!function(n){n(".ww-logout").on("click",function(n){n.preventDefault(),location.assign("/passport/login")}),n(".ww-nav > li").not(".nav-home").hover(function(){n(this).addClass("nav-moon")},function(){n(this).removeClass("nav-moon")}),n.fn.serializeObject=function(){var n={};return this.serializeArray().map(function(o){n[o.name]=o.value}),n}}(jQuery);
