@@ -3,6 +3,7 @@ package com.park.service;
 import java.util.List;
 import java.util.Map;
 
+import com.park.common.po.OtherCollateInfo;
 import org.apache.poi.ss.usermodel.Workbook;
 
 import com.park.common.bean.DataInputView;
@@ -43,5 +44,11 @@ public interface IDataService {
 	public Map<String, Object> getBusinessSiteCount(DataInputView dataInputView);
 	
 	public Map<String, Object> getBusinessSiteSignCount(DataInputView dataInputView);
+
+	public void saveCollateInfo(OtherCollateInfo otherCollateInfo);
+
+	public List<OtherCollateInfo> getCollateInfos();
+
+	public Map<String, Object> getCollateInfosMap();
 	
 }

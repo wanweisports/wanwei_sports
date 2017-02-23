@@ -37,5 +37,25 @@
         }
     };
 
+    $(".confirm-check-money").on("click", function(e){
+        e.preventDefault();
+
+        if(!window.confirm("确认吗？")) return false;
+
+        var $this = $(this);
+
+        var collateType = $this.attr("data-type");
+        var collateStatus = $this.attr("data-status");
+        var collateRemark = $this.parent().prev().find("input").val();
+        var oldAmount = $this.parent().attr("data-old-amount");
+        var collateAmount = $this.parent().prev().prev().find("input").val();
+        $.post("/data/saveCollateInfo", {collateType: collateType, collateStatus: collateStatus, collateRemark: collateRemark, oldAmount: oldAmount, collateAmount: collateAmount}, function (res) {
+            alert(res.message);
+            if(res.code == 1){
+                window.location.reload(true);
+            }
+        });
+    });
+
     Business_Income.init();
 })(jQuery);

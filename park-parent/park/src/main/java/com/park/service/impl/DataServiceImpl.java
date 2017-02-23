@@ -6,12 +6,15 @@ import static com.park.common.constant.IPlatformConstant.YINLIAN;
 import static com.park.common.constant.IPlatformConstant.ZHIFUBAO;
 import static com.park.common.constant.IPlatformConstant.ZHIPIAO;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.park.common.exception.MessageException;
+import com.park.common.po.OtherCollateInfo;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -727,15 +730,15 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		
 		Map siteCounts = (Map)resultMap.get("siteCounts");
 		List siteList = (List) siteCounts.get("countList");
-		xlsExportImportService.writeWorkbook(StrUtil.zeroToLine(siteList), workbook, 0, 0, sheetAt0.getLastRowNum()+2, false);
-		xlsExportImportService.writeWorkbook(getSum(siteCounts, "场地收入小计"), workbook, 0, 0, sheetAt0.getLastRowNum()+1, false);
+		xlsExportImportService.writeWorkbook(StrUtil.zeroToLine(siteList), workbook, 0, 0, sheetAt0.getLastRowNum() + 2, false);
+		xlsExportImportService.writeWorkbook(getSum(siteCounts, "场地收入小计"), workbook, 0, 0, sheetAt0.getLastRowNum() + 1, false);
 		
 		Map goodsCounts = (Map)resultMap.get("goodsCounts");
 		List goodsList = (List) goodsCounts.get("countList");
-		xlsExportImportService.writeWorkbook(StrUtil.zeroToLine(goodsList), workbook, 0, 0, sheetAt0.getLastRowNum()+2, false);
-		xlsExportImportService.writeWorkbook(getSum(goodsCounts, "商品收入小计"), workbook, 0, 0, sheetAt0.getLastRowNum()+1, false);
+		xlsExportImportService.writeWorkbook(StrUtil.zeroToLine(goodsList), workbook, 0, 0, sheetAt0.getLastRowNum() + 2, false);
+		xlsExportImportService.writeWorkbook(getSum(goodsCounts, "商品收入小计"), workbook, 0, 0, sheetAt0.getLastRowNum() + 1, false);
 		
-		xlsExportImportService.writeWorkbook(getSum(resultMap, "金额总计"), workbook, 0, 0, sheetAt0.getLastRowNum()+1, true);
+		xlsExportImportService.writeWorkbook(getSum(resultMap, "金额总计"), workbook, 0, 0, sheetAt0.getLastRowNum() + 1, true);
 		return workbook;
 	}
 	
@@ -861,7 +864,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("sumSiteCount", sumSiteCount);
 		resultMap.put("emptySiteCount", sumSiteCount-sc);
-		resultMap.put("useRate", sc/sumSiteCount*1.0*100);
+		resultMap.put("useRate", sc / sumSiteCount * 1.0 * 100);
 		resultMap.put("parkBusiness", parkService.getBusiness());
 		return resultMap;
 	}
@@ -909,6 +912,56 @@ public class DataServiceImpl extends BaseService implements IDataService {
         resultMap.put("signStudentCount", signStudentCount);
         return resultMap;
 	}
-	
+
+	@Override
+	public void saveCollateInfo(OtherCollateInfo otherCollateInfo){
+		if(otherCollateInfo.getCollateAmount() == null) throw new MessageException("对账金额必填");
+		otherCollateInfo.setCreateTime(DateUtil.getNowDate());
+		baseDao.save(otherCollateInfo, otherCollateInfo.getCollateId());
+	}
+
+	@Override
+	public List<OtherCollateInfo> getCollateInfos(){
+		return baseDao.queryByHql("FROM OtherCollateInfo");
+	}
+
+	@Override
+	public Map<String, Object> getCollateInfosMap(){
+		Map<String, Object> data = new HashMap<String, Object>();
+
+		double collateAmount = 0;
+		List<OtherCollateInfo> collateInfos = getCollateInfos();
+		for (OtherCollateInfo otherCollateInfo : collateInfos){
+			collateAmount = otherCollateInfo.getCollateAmount().doubleValue();
+			switch (otherCollateInfo.getCollateType()){
+				case IDBConstant.BALANCE_STYLE_XJ:
+					data.put("xjCollateAmount", collateAmount);
+					data.put("xjCollateStatus", otherCollateInfo.getCollateStatus());
+					data.put("xjCollateRemark", otherCollateInfo.getCollateRemark());
+					break;
+				case IDBConstant.BALANCE_STYLE_ZFB:
+					data.put("zfbCollateAmount", collateAmount);
+					data.put("zfbCollateStatus", otherCollateInfo.getCollateStatus());
+					data.put("zfbCollateRemark", otherCollateInfo.getCollateRemark());
+					break;
+				case IDBConstant.BALANCE_STYLE_WX:
+					data.put("wxCollateAmount", collateAmount);
+					data.put("wxCollateStatus", otherCollateInfo.getCollateStatus());
+					data.put("wxCollateRemark", otherCollateInfo.getCollateRemark());
+					break;
+				case IDBConstant.BALANCE_STYLE_YINLIAN:
+					data.put("yinlianCollateAmount", collateAmount);
+					data.put("yinlianCollateStatus", otherCollateInfo.getCollateStatus());
+					data.put("yinlianCollateRemark", otherCollateInfo.getCollateRemark());
+					break;
+				case IDBConstant.BALANCE_STYLE_ZHIPIAO:
+					data.put("zhipiaoCollateAmount", collateAmount);
+					data.put("zhipiaoCollateStatus", otherCollateInfo.getCollateStatus());
+					data.put("zhipiaoCollateRemark", otherCollateInfo.getCollateRemark());
+					break;
+			}
+		}
+		return data;
+	}
 	
 }

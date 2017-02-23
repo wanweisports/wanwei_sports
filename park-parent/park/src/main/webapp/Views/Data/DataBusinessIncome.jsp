@@ -168,77 +168,114 @@
                     </button>
                     <h5 class="modal-title" id="check_money_modal_label">核对财务</h5>
                 </div>
+                <c:set var="s" value="0" />
+                <c:set var="sum" value="0" />
                 <div class="modal-body">
                     <p class="text-muted">请仔细核对相应的财务金额。</p>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
-                            <tr><th>支付类型</th><th>计算金额</th><th>核对金额</th><th></th></tr>
+                            <tr><th>支付类型</th><th>计算金额</th><th>核对金额</th><th>备注</th><th></th></tr>
                             </thead>
                             <tbody>
                             <tr>
                                 <td>现金</td><td>${xianjinSumPrice}元</td>
-                                <td><input type="text" class="form-control" placeholder="请输入" value="${xianjinSumPrice}"></td>
-                                <td>
-                                    <button type="button" class="btn btn-danger confirm-check-money">
-                                        <span class="glyphicon glyphicon-remove"></span> 有误
-                                    </button>
-                                    <button type="button" class="btn btn-primary confirm-check-money">
-                                        <span class="glyphicon glyphicon-ok"></span> 无误
-                                    </button>
+                                <td><input type="text" class="form-control" placeholder="请输入" value="${s = (xjCollateAmount>0 ? xjCollateAmount : xianjinSumPrice)}"></td>
+                                <td><input value="${xjCollateRemark}" /></td>
+                                <td data-old-amount="${xianjinSumPrice}">
+                                    <c:set var="sum" value="${s+sum}" />
+                                    <c:if test="${xjCollateStatus == null}">
+                                        <button type="button" class="btn btn-danger confirm-check-money" data-type="1" data-status="2">
+                                            <span class="glyphicon glyphicon-remove"></span> 有误
+                                        </button>
+                                        <button type="button" class="btn btn-primary confirm-check-money" data-type="1" data-status="1">
+                                            <span class="glyphicon glyphicon-ok"></span> 无误
+                                        </button>
+                                    </c:if>
+                                    <c:if test="${xjCollateStatus != null}">
+                                        已核对（${xjCollateStatus==1 ? '无误' : '有误'}）
+                                    </c:if>
                                 </td>
                             </tr>
                             <tr>
                                 <td>支付宝</td><td>${zhifubaoSumPrice}元</td>
-                                <td><input type="text" class="form-control" placeholder="请输入" value="${zhifubaoSumPrice}"></td>
-                                <td>
-                                    <button type="button" class="btn btn-danger confirm-check-money">
-                                        <span class="glyphicon glyphicon-remove"></span> 有误
-                                    </button>
-                                    <button type="button" class="btn btn-primary confirm-check-money">
-                                        <span class="glyphicon glyphicon-ok"></span> 无误
-                                    </button>
+                                <td><input type="text" class="form-control" placeholder="请输入" value="${s = (zfbCollateAmount>0 ? zfbCollateAmount : zhifubaoSumPrice)}"></td>
+                                <td><input value="${zfbCollateRemark}" /></td>
+                                <td data-old-amount="${zhifubaoSumPrice}">
+                                    <c:set var="sum" value="${s+sum}" />
+                                    <c:if test="${zfbCollateStatus == null}">
+                                        <button type="button" class="btn btn-danger confirm-check-money" data-type="2" data-status="2">
+                                            <span class="glyphicon glyphicon-remove"></span> 有误
+                                        </button>
+                                        <button type="button" class="btn btn-primary confirm-check-money" data-type="2" data-status="1">
+                                            <span class="glyphicon glyphicon-ok"></span> 无误
+                                        </button>
+                                    </c:if>
+                                    <c:if test="${zfbCollateStatus != null}">
+                                        已核对（${zfbCollateStatus==1 ? '无误' : '有误'}）
+                                    </c:if>
                                 </td>
                             </tr>
                             <tr>
                                 <td>微信</td><td>${weixinSumPrice}元</td>
-                                <td><input type="text" class="form-control" placeholder="请输入" value="${weixinSumPrice}"></td>
-                                <td>
-                                    <button type="button" class="btn btn-danger confirm-check-money">
-                                        <span class="glyphicon glyphicon-remove"></span> 有误
-                                    </button>
-                                    <button type="button" class="btn btn-primary confirm-check-money">
-                                        <span class="glyphicon glyphicon-ok"></span> 无误
-                                    </button>
+                                <td><input type="text" class="form-control" placeholder="请输入" value="${s = (wxCollateAmount>0 ? wxCollateAmount : weixinSumPrice)}"></td>
+                                <td><input value="${wxCollateRemark}" /></td>
+                                <td data-old-amount="${weixinSumPrice}">
+                                    <c:set var="sum" value="${s+sum}" />
+                                    <c:if test="${wxCollateStatus == null}">
+                                        <button type="button" class="btn btn-danger confirm-check-money" data-type="3" data-status="2">
+                                            <span class="glyphicon glyphicon-remove"></span> 有误
+                                        </button>
+                                        <button type="button" class="btn btn-primary confirm-check-money" data-type="3" data-status="1">
+                                            <span class="glyphicon glyphicon-ok"></span> 无误
+                                        </button>
+                                    </c:if>
+                                    <c:if test="${wxCollateStatus != null}">
+                                        已核对（${wxCollateStatus==1 ? '无误' : '有误'}）
+                                    </c:if>
                                 </td>
                             </tr>
                             <tr>
                                 <td>银联</td><td>${yinlianSumPrice}元</td>
-                                <td><input type="text" class="form-control" placeholder="请输入" value="${yinlianSumPrice}"></td>
-                                <td>
-                                    <button type="button" class="btn btn-danger confirm-check-money">
-                                        <span class="glyphicon glyphicon-remove"></span> 有误
-                                    </button>
-                                    <button type="button" class="btn btn-primary confirm-check-money">
-                                        <span class="glyphicon glyphicon-ok"></span> 无误
-                                    </button>
+                                <td><input type="text" class="form-control" placeholder="请输入" value="${s = (yinlianCollateAmount>0 ? yinlianCollateAmount : yinlianSumPrice)}"></td>
+                                <td><input value="${yinlianCollateRemark}" /></td>
+                                <td data-old-amount="${yinlianSumPrice}">
+                                    <c:set var="sum" value="${s+sum}" />
+                                    <c:if test="${yinlianCollateStatus == null}">
+                                        <button type="button" class="btn btn-danger confirm-check-money" data-type="4" data-status="2">
+                                            <span class="glyphicon glyphicon-remove"></span> 有误
+                                        </button>
+                                        <button type="button" class="btn btn-primary confirm-check-money" data-type="4" data-status="1">
+                                            <span class="glyphicon glyphicon-ok"></span> 无误
+                                        </button>
+                                    </c:if>
+                                    <c:if test="${yinlianCollateStatus != null}">
+                                        已核对（${yinlianCollateStatus==1 ? '无误' : '有误'}）
+                                    </c:if>
                                 </td>
                             </tr>
                             <tr>
                                 <td>支票</td><td>${zhipiaoSumPrice}元</td>
-                                <td><input type="text" class="form-control" placeholder="请输入" value="${zhipiaoSumPrice}"></td>
-                                <td>
-                                    <button type="button" class="btn btn-danger confirm-check-money">
-                                        <span class="glyphicon glyphicon-remove"></span> 有误
-                                    </button>
-                                    <button type="button" class="btn btn-primary confirm-check-money">
-                                        <span class="glyphicon glyphicon-ok"></span> 无误
-                                    </button>
+                                <td><input type="text" class="form-control" placeholder="请输入" value="${s = (zhipiaoCollateAmount>0 ? zhipiaoCollateAmount : zhipiaoSumPrice)}"></td>
+                                <td><input value="${zhipiaoCollateRemark}" /></td>
+                                <td data-old-amount="${zhipiaoSumPrice}">
+                                    <c:set var="sum" value="${s+sum}" />
+                                    <c:if test="${zhipiaoCollateStatus == null}">
+                                        <button type="button" class="btn btn-danger confirm-check-money" data-type="5" data-status="2">
+                                            <span class="glyphicon glyphicon-remove"></span> 有误
+                                        </button>
+                                        <button type="button" class="btn btn-primary confirm-check-money" data-type="5" data-status="1">
+                                            <span class="glyphicon glyphicon-ok"></span> 无误
+                                        </button>
+                                    </c:if>
+                                    <c:if test="${zhipiaoCollateStatus != null}">
+                                        已核对（${zhipiaoCollateStatus==1 ? '无误' : '有误'}）
+                                    </c:if>
                                 </td>
                             </tr>
                             <tr>
                                 <td>合计</td><td>${sumPrice}元</td>
-                                <td><input type="text" class="form-control" placeholder="请输入" value="${sumPrice}" readonly></td>
+                                <td><input type="text" class="form-control" placeholder="请输入" value="${sum}" readonly></td>
                                 <td></td>
                             </tr>
                             </tbody>
