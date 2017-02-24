@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.park.common.po.OtherCollateInfo;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -175,10 +176,27 @@ public class DataController extends BaseController {
     	try{
     		model.addAllAttributes(JsonUtils.fromJson(dataInputView));
     		model.addAllAttributes(dataService.getBusinessIncome(dataInputView));
+            model.addAllAttributes(dataService.getCollateInfosMap());
     	}catch (Exception e) {
 			e.printStackTrace();
 		}
         return "Data/DataBusinessIncome";
+    }
+
+    @ResponseBody
+    @RequestMapping("saveCollateInfo")
+    public ResponseBean saveCollateInfo(OtherCollateInfo collateInfo) {
+        try{
+            collateInfo.setSalesId(getUserInfo().getId());
+            dataService.saveCollateInfo(collateInfo);
+            return new ResponseBean(true);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
     }
 
     // 营业收支按照注册日期
