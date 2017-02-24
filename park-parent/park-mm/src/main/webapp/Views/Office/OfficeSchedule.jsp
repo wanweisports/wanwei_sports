@@ -228,7 +228,7 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
+<c:import url="../Shared/Layout.jsp">
     <c:param name="nav" value="office"/>
     <c:param name="subNav" value="schedule"/>
 </c:import>

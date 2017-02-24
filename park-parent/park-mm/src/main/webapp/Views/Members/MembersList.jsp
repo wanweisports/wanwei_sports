@@ -5,6 +5,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="/Content/style/home/index.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="/Content/app/members/members_list_query.js?v=${static_resource_version}"></script>
     <script>
@@ -49,7 +53,7 @@
                 <div class="table-responsive members-list">
                     <table class="table">
                         <thead>
-                        <tr class="bg-info">
+                        <tr class="bg-primary">
                             <th>姓名</th>
                             <th>手机号码</th>
                             <th>会员卡号</th>
@@ -106,7 +110,7 @@
                                         </a>
                                     </c:if>
                                     <c:if test="${member.tempCardNo != null}">
-                                        <a class="btn btn-warning" href="/member/bindMembersCard?memberId=${member.memberId}">
+                                        <a class="btn btn-danger" href="/member/bindMembersCard?memberId=${member.memberId}">
                                             <span class="glyphicon glyphicon-credit-card"></span> 绑卡
                                         </a>
                                     </c:if>
@@ -213,7 +217,7 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
+<c:import url="../Shared/Layout.jsp">
     <c:param name="nav" value="member"/>
     <c:param name="subNav" value="list"/>
 </c:import>

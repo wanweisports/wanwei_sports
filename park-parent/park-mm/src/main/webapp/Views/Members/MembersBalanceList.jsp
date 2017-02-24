@@ -68,7 +68,7 @@
                                 <td>${balance.balanceServiceTypeName}</td>
                                 <td>
                                     ${balance.balanceStyleName}
-                                    <span class="text-info">${balance.balanceCheckNo}</span>
+                                    <span class="text-muted">[${balance.balanceCheckNo}]</span>
                                 </td>
                                 <td>${balance.realAmount}</td>
                                 <td class="text-success">${balance.givingAmount}</td>
@@ -149,7 +149,7 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
+<c:import url="../Shared/Layout.jsp">
     <c:param name="nav" value="member"/>
     <c:param name="subNav" value="list"/>
 </c:import>

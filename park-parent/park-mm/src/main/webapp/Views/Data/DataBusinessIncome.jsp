@@ -250,7 +250,7 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
+<c:import url="../Shared/Layout.jsp">
     <c:param name="nav" value="data"/>
     <c:param name="subNav" value="business"/>
 </c:import>

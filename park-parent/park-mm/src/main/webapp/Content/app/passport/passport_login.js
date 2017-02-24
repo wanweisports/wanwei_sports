@@ -24,7 +24,7 @@
             $form.attr("submitting", "");
 
             if (res.code == 1) {
-                location.assign($('[name="return_url"]').val());
+                location.assign("/");
             } else {
                 console.log(res.message || "用户登录失败, 请稍后重试");
                 alert(res.message || "用户登录失败, 请稍后重试");

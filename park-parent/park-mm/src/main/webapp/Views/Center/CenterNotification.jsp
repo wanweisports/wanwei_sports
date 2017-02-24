@@ -237,7 +237,7 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
+<c:import url="../Shared/Layout.jsp">
     <c:param name="nav" value="passport"/>
     <c:param name="subNav" value="message"/>
 </c:import>

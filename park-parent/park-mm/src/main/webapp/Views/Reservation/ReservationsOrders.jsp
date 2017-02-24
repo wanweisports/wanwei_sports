@@ -386,7 +386,7 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
+<c:import url="../Shared/Layout.jsp">
     <c:param name="nav" value="site"/>
     <c:param name="subNav" value="order"/>
 </c:import>

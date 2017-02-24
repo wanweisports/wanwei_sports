@@ -1,5 +1,0 @@
-1，页面登录后，跳转地址被改变
--- 原页面地址：http://localhost:8080/member/getBalances?cardId=30&memberId=47
--- 登陆后就自动变成：http://localhost:8080/member/getBalances?cardId=30
-
-2，
