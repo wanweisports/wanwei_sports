@@ -28,7 +28,7 @@ public class EnterpriseController extends BaseController {
         return "Enterprise/Home/HomeIndex";
     }
 
-    // 建议
+    // 建议1
     @NotProtected
     @ResponseBody
     @RequestMapping(value = "saveOpinion", method = RequestMethod.POST)
