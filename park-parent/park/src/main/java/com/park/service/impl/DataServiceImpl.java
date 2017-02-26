@@ -6,15 +6,17 @@ import static com.park.common.constant.IPlatformConstant.YINLIAN;
 import static com.park.common.constant.IPlatformConstant.ZHIFUBAO;
 import static com.park.common.constant.IPlatformConstant.ZHIPIAO;
 
-import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.park.common.bean.SiteInputView;
 import com.park.common.exception.MessageException;
 import com.park.common.po.OtherCollateInfo;
+import com.park.service.ISiteService;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,9 @@ public class DataServiceImpl extends BaseService implements IDataService {
 	
 	@Autowired
 	private IParkService parkService;
+
+	@Autowired
+	private ISiteService siteService;
     
     @Override
     public Map<String, Object> getMembersRegisterNew(DataInputView dataInputView){
@@ -85,7 +90,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 	    		titleList.add(DateUtil.getWeekName(i)); 
 	    	}
     		dataInputView.setCreateTimeStart(DateUtil.getTimesWeekmorningStr());
-    		dataInputView.setCreateTimeEnd(DateUtil.getTimesWeeknight());
+    		dataInputView.setCreateTimeEnd(DateUtil.getTimesWeeknightStr());
     	} 
     	sql.append(" FROM member_card_type mct");
     	sql.append(" LEFT JOIN member_card mc ON(mct.cardTypeId = mc.cardTypeId AND mc.createTime BETWEEN :createTimeStart AND :createTimeEnd)"); 
@@ -213,8 +218,8 @@ public class DataServiceImpl extends BaseService implements IDataService {
     	Map<String, Object> resultMap = new HashMap<String, Object>();
     	
     	StringBuffer sql = new StringBuffer("SELECT mct.cardTypeName");
-    	sql.append(" ,SUM(CASE WHEN ob.balanceServiceType IN(100,200) THEN ob.realAmount ELSE 0 END) siteXF");
-    	sql.append(" ,SUM(CASE WHEN ob.balanceServiceType = 300 THEN ob.realAmount ELSE 0 END) goodsXF");
+    	sql.append(" ,SUM(CASE WHEN ob.balanceServiceType IN(100,200) THEN ob.realAmount-ob.xjAmount ELSE 0 END) siteXF");
+    	sql.append(" ,SUM(CASE WHEN ob.balanceServiceType = 300 THEN ob.realAmount-ob.xjAmount ELSE 0 END) goodsXF");
     	sql.append(" ,IFNULL((SELECT SUM(cardBalance) FROM member_card mc1 WHERE mc1.cardTypeId = mct.cardTypeId AND mc1.createTime BETWEEN :createTimeStart AND :createTimeEnd),0) cardBalance");
     	sql.append(" FROM member_card_type mct");
     	sql.append(" LEFT JOIN member_card mc ON(mct.cardTypeId = mc.cardTypeId AND mc.createTime BETWEEN :createTimeStart AND :createTimeEnd)");
@@ -265,7 +270,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		case IDBConstant.DATA_DATE_WEEK:
 		default:
 			dataInputView.setCreateTimeStart(DateUtil.getTimesWeekmorningStr());
-			dataInputView.setCreateTimeEnd(DateUtil.getTimesWeeknight());
+			dataInputView.setCreateTimeEnd(DateUtil.getTimesWeeknightStr());
 			break;
 		}
 
@@ -401,7 +406,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		}
 	}*/
 	
-	@Override
+	/*@Override
 	public Map<String, Object> getSitePercentage(DataInputView dataInputView){
 		
 		int page = dataInputView.getPage();
@@ -411,11 +416,11 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		String createTimeStart = dataInputView.getCreateTimeStart();
 		String createTimeEnd = dataInputView.getCreateTimeEnd();
 		
-		/**
+		*//**
 		 *    — 计算数据：场地预订率 = 预订场次数 / 总场次数
 			  — 计算数据：场地使用率 = 签到场次数 / 预订场次数
 			  — 检索条件：全部，今天，本周，本年，自定义的起止日期，场地类型
-		 */
+		 *//*
 		StringBuilder sql = new StringBuilder("SELECT ss.sportName, si.siteName, SUM(oi.sumCount) siteSumCount, SUM(oi.useCount) siteUseCount, SUM(oi.useCount)/SUM(oi.sumCount) siteUsePercentage");
 		if(StrUtil.isNotBlank(createTimeStart) && StrUtil.isNotBlank(createTimeEnd)){
 			sql.append(" ,DATEDIFF(':createTimeStart',':createTimeEnd') * (ss.`endTime`-ss.`startTime`) AS siteBusinessCount");
@@ -495,6 +500,16 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		resultMap.put("sportCountList", sportCountList);
 
 		return resultMap;
+	}*/
+
+	@Override
+	public Map<String, Object> getSitePercentage(DataInputView dataInputView) {
+
+		Integer countNum = dataInputView.getCountNum();
+
+
+
+		return null;
 	}
 	
 	@Override
@@ -712,7 +727,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		sumPriceMap.put("weixinSumPrice", weixinSum);
 		sumPriceMap.put("yinlianSumPrice", yinlianSum);
 		sumPriceMap.put("zhipiaoSumPrice", zhipiaoSum);
-		sumPriceMap.put("sumPrice", xianjinSum+zhifubaoSum+weixinSum+yinlianSum+zhipiaoSum);
+		sumPriceMap.put("sumPrice", xianjinSum + zhifubaoSum + weixinSum + yinlianSum + zhipiaoSum);
 		return sumPriceMap;
 	}
 	
@@ -836,7 +851,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		return resultMap;
 	}
 	
-	@Override
+	/*@Override
 	public Map<String, Object> getBusinessSiteCount(DataInputView dataInputView){
 		int sumSiteCount = parkService.getBusinessTimePeriod().size();
 		
@@ -866,6 +881,59 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		resultMap.put("emptySiteCount", sumSiteCount-sc);
 		resultMap.put("useRate", sc / sumSiteCount * 1.0 * 100);
 		resultMap.put("parkBusiness", parkService.getBusiness());
+		return resultMap;
+	}*/
+
+	@Override
+	public Map<String, Object> getBusinessSiteCount(DataInputView dataInputView){
+		SiteInputView siteInputView = new SiteInputView();
+		siteInputView.setSportId(StrUtil.objToInt(dataInputView.getSportId()));
+		siteInputView.setSiteStatus(IDBConstant.LOGIC_STATUS_YES);
+		List<Map<String, Object>> sites = siteService.getSiteNames(siteInputView);
+
+		int sumSiteCount = (parkService.getBusinessTimePeriod().size()) * sites.size();
+
+		String sportId = dataInputView.getSportId();
+		String createTimeStart = dataInputView.getCreateTimeStart();
+		String createTimeEnd = dataInputView.getCreateTimeEnd();
+
+		StringBuilder sql = new StringBuilder("SELECT srd.reserveDateId, srd.reserveStartDate, srd.reserveEndDate, srt.reserveTimeId, srt.siteEndTime, srt.siteStartTime, srd.reserveDates");
+		sql.append(" FROM site_reserve_time srt, site_reserve_date srd, site_info si, site_sport ss");
+		sql.append(" WHERE srt.reserveDateId = srd.reserveDateId AND srt.siteId = si.siteId AND si.siteType = ss.sportId");
+		if(StrUtil.isNotBlank(sportId)){
+			sql.append(" AND ss.sportId = :sportId");
+		}
+		if(StrUtil.isNotBlank(createTimeStart) && StrUtil.isNotBlank(createTimeEnd)){
+			sql.append(" AND ((DATE(srd.reserveStartDate) <= :createTimeStart AND DATE(srd.reserveEndDate) >= :createTimeStart) || (DATE(srd.reserveStartDate) <= :createTimeEnd AND DATE(srd.reserveEndDate) >= :createTimeEnd))");
+		}
+
+		List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
+		Map<String, Object> item = new HashMap<String, Object>();
+		int hasReservedSize = 0;
+		for (Map<String, Object> map : list) {
+			String reserveDates = StrUtil.objToStr(map.get("reserveDates"));
+
+			String[] reserveDatesList = reserveDates.split(",");
+			if (reserveDatesList.length > 1) {
+				for (int i = 0; i < reserveDatesList.length; i++) {
+					String reserveDate = reserveDatesList[i];
+
+					if(StrUtil.isNotBlank(createTimeStart) && StrUtil.isNotBlank(createTimeEnd)){
+						if (reserveDate.compareTo(createTimeStart) >= 0 && reserveDate.compareTo(createTimeEnd) <= 0) {
+							hasReservedSize++;
+						}
+					}
+				}
+			} else {
+				hasReservedSize++;
+			}
+		}
+
+		DecimalFormat df = new DecimalFormat("0.00");//格式化小数
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("sumSiteCount", sumSiteCount);
+		resultMap.put("emptySiteCount", sumSiteCount - hasReservedSize);
+		resultMap.put("useRate", df.format((hasReservedSize/(sumSiteCount*1.0))*100));
 		return resultMap;
 	}
 	
@@ -913,24 +981,68 @@ public class DataServiceImpl extends BaseService implements IDataService {
         return resultMap;
 	}
 
+	private String[] getCollateCountTime(Integer countNum){
+
+		String[] times = new String[2];
+		Date date = new Date();
+		switch (countNum) {
+			case IDBConstant.DATA_DATE_MONTH:
+				times[0] = DateUtil.getTimesMonthmorning();
+				times[1] = DateUtil.getTimesMonthnight();
+				break;
+			case IDBConstant.DATA_DATE_YEAR:
+				times[0] = DateUtil.getCurrentYearEndTime();
+				times[1] = DateUtil.getLastYearStartTime();
+				break;
+			case IDBConstant.DATA_DATE_WEEK:
+				times[0] = DateUtil.getTimesWeekmorningStr();
+				times[1] = DateUtil.getTimesWeeknightStr();
+				break;
+			case IDBConstant.DATA_DATE_PRE_DAY:
+				times[0] = DateUtil.dateToString(DateUtil.addDate(date, -1), null) + IPlatformConstant.time00;
+				times[1] = DateUtil.dateToString(date, null) + IPlatformConstant.time00;
+				break;
+			case IDBConstant.DATA_DATE_DAY:
+				String nowDay = DateUtil.dateToString(date, null) + IPlatformConstant.time00;
+				times[0] =nowDay;
+				times[1] =nowDay;
+				break;
+		}
+
+		return times;
+	}
+
 	@Override
 	public void saveCollateInfo(OtherCollateInfo otherCollateInfo){
 		if(otherCollateInfo.getCollateAmount() == null) throw new MessageException("对账金额必填");
+
+		String[] collateCountTime = getCollateCountTime(StrUtil.objToInt(otherCollateInfo.getCollateCountNum()));
+		otherCollateInfo.setCollateStartTime(collateCountTime[0]);
+		otherCollateInfo.setCollateEndTime(collateCountTime[1]);
+
 		otherCollateInfo.setCreateTime(DateUtil.getNowDate());
 		baseDao.save(otherCollateInfo, otherCollateInfo.getCollateId());
 	}
 
 	@Override
-	public List<OtherCollateInfo> getCollateInfos(){
-		return baseDao.queryByHql("FROM OtherCollateInfo");
+	public List<OtherCollateInfo> getCollateInfos(DataInputView dataInputView){
+
+		String[] collateCountTime = getCollateCountTime(dataInputView.getCountNum());
+		dataInputView.setCreateTimeStart(collateCountTime[0]);
+		dataInputView.setCreateTimeEnd(collateCountTime[1]);
+
+		StringBuilder sql = new StringBuilder("SELECT * FROM other_collate_info WHERE collateCountNum = :countNum");
+		sql.append(" AND collateStartTime = :createTimeStart");
+		sql.append(" AND collateEndTime = :createTimeEnd");
+		return JsonUtils.stringToArray(baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView)), OtherCollateInfo[].class);
 	}
 
 	@Override
-	public Map<String, Object> getCollateInfosMap(){
+	public Map<String, Object> getCollateInfosMap(DataInputView dataInputView){
 		Map<String, Object> data = new HashMap<String, Object>();
 
 		double collateAmount = 0;
-		List<OtherCollateInfo> collateInfos = getCollateInfos();
+		List<OtherCollateInfo> collateInfos = getCollateInfos(dataInputView);
 		for (OtherCollateInfo otherCollateInfo : collateInfos){
 			collateAmount = otherCollateInfo.getCollateAmount().doubleValue();
 			switch (otherCollateInfo.getCollateType()){
