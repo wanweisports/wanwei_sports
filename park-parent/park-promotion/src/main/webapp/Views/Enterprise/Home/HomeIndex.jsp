@@ -33,15 +33,15 @@
     <link href="Content/lib/bootstrap/bootstrap.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
     <link href="Content/lib/animate/animate.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
     <link href="Content/lib/jquery/swipebox/css/swipebox.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="Content/lib/jquery/ui.totop/css/ui.totop.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
     <link href="Content/lib/ecoicons.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="Content/lib/style.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/jquery/fullpage/jquery.fullpage.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/style.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 
     <!-- 全局js -->
     <script src="Content/lib/jquery/jquery-1.12.3.min.js?v=${static_resource_version}"></script>
     <script src="Content/lib/bootstrap/bootstrap.min.js?v=${static_resource_version}"></script>
     <script src="Content/lib/jquery/jquery.easing.1.3.js?v=${static_resource_version}"></script>
-    <script src="Content/lib/jquery/ui.totop/js/jquery.ui.totop.min.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/jquery/fullpage/jquery.fullpage.js?v=${static_resource_version}"></script>
 
     <!--/script-->
     <script type="text/javascript">
@@ -67,18 +67,26 @@
 </head>
 <body>
 
-    <%@ include file="../Section/SectionHeader.jsp"%>
+    <%@ include file="../Section/SectionNav.jsp"%>
+
+    <div id="dowebok">
+    <%@ include file="../Section/SectionHome.jsp"%>
     <%@ include file="../Section/SectionServices.jsp"%>
     <%@ include file="../Section/SectionAbout.jsp"%>
     <%@ include file="../Section/SectionGallery.jsp"%>
-    <%@ include file="../Section/SectionTeams.jsp"%>
     <%@ include file="../Section/SectionOpinion.jsp"%>
-    <%@ include file="../Section/SectionFooter.jsp"%>
+    </div>
 
     <!-- animation-effect -->
-    <script src="Content/lib/wow/wow.js?v=${static_resource_version}"></script>
     <script type="text/javascript">
-        new WOW().init();
+
+        $(function(){
+            $('#dowebok').fullpage({
+                anchors: ['home', 'services', 'about', 'gallery', 'contact'],
+                menu: '#menu'
+            });
+        });
+
     </script>
     <!-- //animation-effect -->
 

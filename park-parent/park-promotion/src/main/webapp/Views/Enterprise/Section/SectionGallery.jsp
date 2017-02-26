@@ -4,9 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!--Gallery-->
-<div class="gallery w3l-1" id="gallery">
+<div class="gallery w3l-1 section" data-anchor="gallery" id="gallery_page">
     <div class="container">
-        <h3 class="tittle">合作场馆</h3>
         <div class="gallery-grids">
             <div class="col-md-6 baner-top wow fadeInLeft animated animated" data-wow-delay=".5s"
                  style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">

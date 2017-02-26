@@ -11,12 +11,12 @@ import java.util.Set;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+//import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import org.apache.poi.ss.usermodel.Workbook;
+//import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.ui.Model;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -112,7 +112,7 @@ public class BaseController {
 		model.addAttribute("pageSize", pageBean.getPageSize());
     }
     
-    protected void outExcel(HttpServletResponse response, Workbook workbook, String excelName) throws IOException {
+    /*protected void outExcel(HttpServletResponse response, Workbook workbook, String excelName) throws IOException {
     	HttpServletRequest request = getRequest();
 		response.setHeader("Content-Disposition", "attachment;" + PoiUtil.getEncodingFileName(excelName + DateUtil.dateToString(new Date(), DateUtil.YYYYMMDD) + IPlatformConstant.EXCEL_EXTENSION_X, request.getHeader("User-Agent")));
 		response.setStatus(200);
@@ -121,7 +121,7 @@ public class BaseController {
 		workbook.close();
 		outputStream.flush();
 		outputStream.close();
-	}
+	}*/
     
     protected String getStreamResult(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		request.setCharacterEncoding("UTF-8");

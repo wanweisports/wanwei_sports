@@ -34,12 +34,12 @@ label{
 
 /*-- header --*/
 .banner {
-    background: url("../images/banner.jpg") no-repeat 0 0;
-    background-size: cover;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    min-height: 800px;
+    background: url("../images/banner.jpg") no-repeat center;
+    background-size: 100% 100%;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    height: 100%;
 	position: relative;
 }
 .down {
@@ -84,20 +84,19 @@ label{
 
 /*-- sticky-nav --*/
 .header-bottom {
-   padding: 1.5em 0;
-
+    padding: 1.5em 0;
     margin: 0 auto;
     width: 100%;
     text-align: center;
 }
-.fixed{
+.fixed {
 	position: fixed;
 	top: 0;
 	width: 100%;
 	margin: 0 auto;
-	left:0%;
+	left: 0;
 	z-index:9999;
-	  background-color: rgba(0, 0, 0, 0.59);
+    background-color: rgba(0, 0, 0, 0.59);
 }
 /*-- sticky-nav --*/
 .top-menu {
@@ -120,8 +119,11 @@ label{
 	font-weight: 400;
 	font-size: 1em;
 }
-.top-menu li a.active {
-    color: #fff200;
+.top-menu li.active a {
+    color: #31c59d;
+}
+.top-menu li:hover a {
+    color: #31c59d;
 }
 /*-- nav-hover --*/
 .link-effect-4 a {
@@ -357,9 +359,7 @@ label{
     border: 2px solid #31c59d;
 }
 .banner-info {
-       padding: 5em 2em;
-    margin: 15% auto 0;
-    width: 69%;
+    margin: 10% auto;
     text-align: center;
 }
 .banner-info h3 {
@@ -1459,9 +1459,6 @@ h2.sec-head {
 		font-size: 45px;
 		margin-bottom: 14px;
 	}
-	.banner {
-		min-height: 700px;
-}
 }
 @media (max-width:1024px) {
 	.link-effect-4 a {
@@ -1481,9 +1478,6 @@ h2.sec-head {
 	.callbacks_tabs {
 		bottom: -10%;
 		left: 45%;
-	}
-	.banner {
-      min-height:600px;
 	}
 	.down {
 		position: absolute;
@@ -1722,9 +1716,6 @@ h3.tittle{
 	.banner-info h3 {
     font-size: 2.7em;
 }
-.banner {
-    min-height: 540px;
-}
 .banner-info {
     margin: 13% auto 0;
 }
@@ -1812,9 +1803,6 @@ h3.tittle{
 		padding: 2% 0;
 		width: 96%;
 		z-index: 99999;
-	}
-	.banner {
-		min-height: 500px;
 	}
 	.banner-info {
 		padding: 2em 2em;
@@ -1912,9 +1900,6 @@ h3.tittle{
 }
 .banner-info p {
     font-size: 1.3em;
-}
-.banner {
-    min-height: 400px;
 }
 h3.title {
     font-size: 2em;
@@ -2202,9 +2187,6 @@ h4.tittle {
 .banner-info p {
     font-size: 1.1em;
 }
-.banner {
-    min-height: 330px;
-}
 h3.title {
     font-size: 1.7em;
 }
@@ -2361,9 +2343,6 @@ h3.tittle {
 }
 .banner-info {
     margin: 20% auto 0;
-}	
-.banner {
-    min-height: 320px;
 }
 .diff-grid {
     float: left;

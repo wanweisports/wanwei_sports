@@ -4,9 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!-- service-type-grid -->
-<div class="different agileits all_pad" id="services">
+<div class="different agileits all_pad section" data-anchor="services" id="services_page">
     <div class="container">
-        <h3 class="title">公司产品</h3>
         <div class="diff-grids">
             <div class="col-md-4 diff-grid diff-one bor-bot wow fadeInLeft animated animated" data-wow-delay=".5s"
                  style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
