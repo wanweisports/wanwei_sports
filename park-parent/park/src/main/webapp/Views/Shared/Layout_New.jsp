@@ -24,13 +24,13 @@
 
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
 
-    <link href="/Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon" />
-    <link href="/Content/lib/bootstrap/bootstrap.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/style/base_new.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon" />
+    <link href="Content/lib/bootstrap/bootstrap.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/base_new.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 
     <layout:block name="<%=Blocks.BLOCK_HEADER_CSS%>"/>
 
-    <script src="/Content/lib/html5shiv/html5.min.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/html5shiv/html5.min.js?v=${static_resource_version}"></script>
 </head>
 <body>
     <%@ include file="../Shared/Top_New.jsp"%>
@@ -53,7 +53,7 @@
                                             <table style="margin-top: 0; width: 100%; height: 100%;">
                                                 <tr>
                                                     <td style="vertical-align: top;">
-                                                        <table style="background: url('/Content/images/new/right_table_bg.jpg?v=${static_resource_version}') repeat-x; height:26px; border-bottom:1px solid #5BA8DE; width: 100%;">
+                                                        <table style="background: url('Content/images/new/right_table_bg.jpg?v=${static_resource_version}') repeat-x; height:26px; border-bottom:1px solid #5BA8DE; width: 100%;">
                                                             <tr>
                                                                 <td style="text-align: left; color: #004C7E; padding-left: 12px;">
                                                                     <a href="javascript:history.go(-1);" class="btn btn-primary"
@@ -144,12 +144,12 @@
         </div>
     </div>
 
-    <script src="/Content/lib/jquery/jquery-1.12.3.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/bootstrap/bootstrap.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/moment/moment.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/jquery/jquery.cookie/jquery.cookie-1.4.1.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/app/common/text_magnifier.js?v=${static_resource_version}"></script>
-    <script src="/Content/app/common/base_new.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/jquery/jquery-1.12.3.min.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/bootstrap/bootstrap.min.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/moment/moment.min.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/jquery/jquery.cookie/jquery.cookie-1.4.1.min.js?v=${static_resource_version}"></script>
+    <script src="Content/app/common/text_magnifier.js?v=${static_resource_version}"></script>
+    <script src="Content/app/common/base_new.js?v=${static_resource_version}"></script>
 
     <layout:block name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>"/>
     <layout:block name="<%=Blocks.BLOCK_TRACE_SCRIPTS%>"/>

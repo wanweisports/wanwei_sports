@@ -6,20 +6,20 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
-    <link href="/Content/lib/jquery/autosuggest/autosuggest.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/lib/jquery/jquery-steps/jquery.steps.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/style/reservations/reservations_sequence.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/jquery/autosuggest/autosuggest.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/jquery/jquery-steps/jquery.steps.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/reservations/reservations_sequence.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="/Content/lib/jquery/autosuggest/autosuggest.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/jquery/draggabilly/draggabilly.pkgd.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/jquery/jquery-steps/jquery.steps.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/app/reservations/reservations_sequence.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/jquery/autosuggest/autosuggest.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/jquery/draggabilly/draggabilly.pkgd.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/jquery/jquery-steps/jquery.steps.min.js?v=${static_resource_version}"></script>
+    <script src="Content/app/reservations/reservations_sequence.js?v=${static_resource_version}"></script>
     <script>
         $(document).ready(function () {
             // 配置表单校验
@@ -54,24 +54,24 @@
                            data-value="${sport.sportId}" data-text="${sport.sportName}">
                             <c:choose>
                                 <c:when test="${sport.sportName == shuttercock}">
-                                    <img class="sports-icon sports-active" src="/Content/images/sports/shuttercock-active.png?v=${static_resource_version}">
-                                    <img class="sports-icon sports-inactive" src="/Content/images/sports/shuttercock.png?v=${static_resource_version}">
+                                    <img class="sports-icon sports-active" src="Content/images/sports/shuttercock-active.png?v=${static_resource_version}">
+                                    <img class="sports-icon sports-inactive" src="Content/images/sports/shuttercock.png?v=${static_resource_version}">
                                 </c:when>
                                 <c:when test="${sport.sportName == basketball}">
-                                    <img class="sports-icon sports-active" src="/Content/images/sports/basketball-active.png?v=${static_resource_version}">
-                                    <img class="sports-icon sports-inactive" src="/Content/images/sports/basketball.png?v=${static_resource_version}">
+                                    <img class="sports-icon sports-active" src="Content/images/sports/basketball-active.png?v=${static_resource_version}">
+                                    <img class="sports-icon sports-inactive" src="Content/images/sports/basketball.png?v=${static_resource_version}">
                                 </c:when>
                                 <c:when test="${sport.sportName == swimming}">
-                                    <img class="sports-icon sports-active" src="/Content/images/sports/swimming-active.png?v=${static_resource_version}">
-                                    <img class="sports-icon sports-inactive" src="/Content/images/sports/swimming.png?v=${static_resource_version}">
+                                    <img class="sports-icon sports-active" src="Content/images/sports/swimming-active.png?v=${static_resource_version}">
+                                    <img class="sports-icon sports-inactive" src="Content/images/sports/swimming.png?v=${static_resource_version}">
                                 </c:when>
                                 <c:when test="${sport.sportName == football}">
-                                    <img class="sports-icon sports-active" src="/Content/images/sports/football-active.png?v=${static_resource_version}">
-                                    <img class="sports-icon sports-inactive" src="/Content/images/sports/football.png?v=${static_resource_version}">
+                                    <img class="sports-icon sports-active" src="Content/images/sports/football-active.png?v=${static_resource_version}">
+                                    <img class="sports-icon sports-inactive" src="Content/images/sports/football.png?v=${static_resource_version}">
                                 </c:when>
                                 <c:when test="${sport.sportName == pingpong}">
-                                    <img class="sports-icon sports-active" src="/Content/images/sports/pingpong-active.png?v=${static_resource_version}">
-                                    <img class="sports-icon sports-inactive" src="/Content/images/sports/pingpong.png?v=${static_resource_version}">
+                                    <img class="sports-icon sports-active" src="Content/images/sports/pingpong-active.png?v=${static_resource_version}">
+                                    <img class="sports-icon sports-inactive" src="Content/images/sports/pingpong.png?v=${static_resource_version}">
                                 </c:when>
                             </c:choose>
                                 ${sport.sportName}

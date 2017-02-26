@@ -6,7 +6,7 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
-    <link href="/Content/style/mobile/center/center_profile.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/mobile/center/center_profile.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -39,19 +39,19 @@
                         <div class="weui-uploader__bd">
                             <ul class="weui-uploader__files" id="uploaderFiles">
                                 <li class="weui-uploader__file"
-                                    style="background-image:url(/Content/images/demo/mp60650501_1456481736483_2.jpeg)"></li>
+                                    style="background-image:url(Content/images/demo/mp60650501_1456481736483_2.jpeg)"></li>
                                 <li class="weui-uploader__file"
-                                    style="background-image:url(/Content/images/demo/mp60650501_1456481736483_2.jpeg)"></li>
+                                    style="background-image:url(Content/images/demo/mp60650501_1456481736483_2.jpeg)"></li>
                                 <li class="weui-uploader__file"
-                                    style="background-image:url(/Content/images/demo/mp60650501_1456481736483_2.jpeg)"></li>
+                                    style="background-image:url(Content/images/demo/mp60650501_1456481736483_2.jpeg)"></li>
                                 <li class="weui-uploader__file weui-uploader__file_status"
-                                    style="background-image:url(/Content/images/demo/mp60650501_1456481736483_2.jpeg)">
+                                    style="background-image:url(Content/images/demo/mp60650501_1456481736483_2.jpeg)">
                                     <div class="weui-uploader__file-content">
                                         <i class="weui-icon-warn"></i>
                                     </div>
                                 </li>
                                 <li class="weui-uploader__file weui-uploader__file_status"
-                                    style="background-image:url(/Content/images/demo/mp60650501_1456481736483_2.jpeg)">
+                                    style="background-image:url(Content/images/demo/mp60650501_1456481736483_2.jpeg)">
                                     <div class="weui-uploader__file-content">50%</div>
                                 </li>
                             </ul>

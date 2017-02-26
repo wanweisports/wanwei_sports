@@ -6,11 +6,11 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
-    <link href="/Content/style/mobile/reservation/reservation_sequence.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/mobile/reservation/reservation_sequence.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="/Content/app/mobile/reservation/reservation_sequence.js?v=${static_resource_version}"></script>
+    <script src="Content/app/mobile/reservation/reservation_sequence.js?v=${static_resource_version}"></script>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -65,7 +65,7 @@
             <c:forEach var="site" items="${sites}">
                 <a href="javascript:;" class="weui-grid">
                     <div class="weui-grid__icon">
-                        <img src="/Content/images/mobile/stadium.png?v=${static_resource_version}">
+                        <img src="Content/images/mobile/stadium.png?v=${static_resource_version}">
                     </div>
                     <p class="weui-grid__label">${site.siteName}-${site.sportName}</p>
                 </a>

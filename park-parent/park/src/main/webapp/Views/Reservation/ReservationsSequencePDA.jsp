@@ -6,14 +6,14 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
-    <link href="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/style/reservations/reservations_sequence_pda.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/reservations/reservations_sequence_pda.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="Content/lib/echarts/echarts.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/app/reservations/reservations_sequence_pda.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
+    <script src="Content/app/reservations/reservations_sequence_pda.js?v=${static_resource_version}"></script>
     <script>
         function drawChart2() {
             var option = {

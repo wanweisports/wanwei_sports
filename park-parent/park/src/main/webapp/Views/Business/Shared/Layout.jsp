@@ -30,12 +30,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="flexible" content="initial-dpr=1">
 
-    <link href="/Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon" />
+    <link href="Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon" />
 
-    <script src="/Content/lib/amfe/flexible.js?v=${static_resource_version}"></script>
-    <link href="/Content/lib/reset.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/lib/amfe/flexible.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/lib/weui/weui.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <script src="Content/lib/amfe/flexible.js?v=${static_resource_version}"></script>
+    <link href="Content/lib/reset.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/amfe/flexible.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/weui/weui.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
     <layout:block name="<%=Blocks.BLOCK_HEADER_CSS%>"/>
 </head>
 <body>
@@ -64,9 +64,9 @@
         </div>
     </div>
 
-    <script src="/Content/lib/vue/vue.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/zepto/zepto.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/app/business/common/base.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/vue/vue.min.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/zepto/zepto.min.js?v=${static_resource_version}"></script>
+    <script src="Content/app/business/common/base.js?v=${static_resource_version}"></script>
     <layout:block name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>"/>
     <layout:block name="<%=Blocks.BLOCK_TRACE_SCRIPTS%>"/>
 </body>

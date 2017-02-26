@@ -6,11 +6,11 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
-    <link href="/Content/style/business/schedule/office_schedule.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/business/schedule/office_schedule.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="/Content/app/business/schedule/office_schedule.js?v=${static_resource_version}"></script>
+    <script src="Content/app/business/schedule/office_schedule.js?v=${static_resource_version}"></script>
     <script>
         $(document).ready(function () {
             $(".schedules-week.weui-bar__item_on").removeClass("weui-bar__item_on");

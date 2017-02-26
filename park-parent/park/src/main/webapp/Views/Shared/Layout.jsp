@@ -24,23 +24,23 @@
 
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
 
-    <link href="/Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon" />
+    <link href="Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon" />
 
-    <link href="/Content/lib/bootstrap/bootstrap.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/style/common/style.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/bootstrap/bootstrap.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/common/style.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 
     <layout:block name="<%=Blocks.BLOCK_HEADER_CSS%>"/>
 
-    <script src="/Content/lib/html5shiv/html5.min.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/html5shiv/html5.min.js?v=${static_resource_version}"></script>
 </head>
 <body>
     <%@ include file="../Shared/Navigator.jsp"%>
 
     <layout:block name="<%=Blocks.BLOCK_BODY%>"/>
 
-    <script src="/Content/lib/jquery/jquery-1.12.3.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/bootstrap/bootstrap.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/dist/common/base.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/jquery/jquery-1.12.3.min.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/bootstrap/bootstrap.min.js?v=${static_resource_version}"></script>
+    <script src="Content/dist/common/base.js?v=${static_resource_version}"></script>
 
     <layout:block name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>"/>
     <layout:block name="<%=Blocks.BLOCK_TRACE_SCRIPTS%>"/>

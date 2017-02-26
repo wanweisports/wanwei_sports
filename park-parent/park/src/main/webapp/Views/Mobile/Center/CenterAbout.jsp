@@ -6,7 +6,7 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
-    <link href="/Content/style/mobile/center/center_profile.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/mobile/center/center_profile.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -41,7 +41,7 @@
         <article class="weui-article">
             <section>
                 <section>
-                    <img src="/Content/images/mobile/about.jpg?v=${static_resource_version}" alt="北京市第一七一中学">
+                    <img src="Content/images/mobile/about.jpg?v=${static_resource_version}" alt="北京市第一七一中学">
                     <p>北京市第一七一中学位于首都核心功能区东城区，始建于1958年。1978年被定为东城区重点中学，北京市对外教育窗口校，2005年被评为北京市示范高中。学校现有南北两个教学点，初、高中78个教学班，在校学生3006人，在岗教职工336人。</p>
                 </section>
                 <section>

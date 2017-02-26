@@ -17,13 +17,13 @@
     <meta name="description" content="">
     <meta name="keywords" content="万维体育,wanweitiyu,智能体育场馆,体育场馆,预订,收银,万维">
     <meta name="author" content="北京万维体育">
-    <link href="/Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon" />
+    <link href="Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon" />
 
-    <link href="/Content/lib/bootstrap/bootstrap.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/style/base_new.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/bootstrap/bootstrap.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/base_new.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 
-    <script src="/Content/lib/html5shiv/html5.min.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/html5shiv/html5.min.js?v=${static_resource_version}"></script>
 </head>
 <body>
 <div class="container-fluid">
@@ -149,12 +149,12 @@
     </div>
 </div>
 
-<script src="/Content/lib/jquery/jquery-1.12.3.min.js?v=${static_resource_version}"></script>
-<script src="/Content/lib/bootstrap/bootstrap.min.js?v=${static_resource_version}"></script>
-<script src="/Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
-<script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
-<script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
-<script src="/Content/app/init/init_settings.js?v=${static_resource_version}"></script>
+<script src="Content/lib/jquery/jquery-1.12.3.min.js?v=${static_resource_version}"></script>
+<script src="Content/lib/bootstrap/bootstrap.min.js?v=${static_resource_version}"></script>
+<script src="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
+<script src="Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
+<script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
+<script src="Content/app/init/init_settings.js?v=${static_resource_version}"></script>
 <script>
     // 配置表单校验
     $(document).ready(function () {

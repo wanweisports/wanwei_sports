@@ -11,7 +11,7 @@
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
-        <img src="/Content/images/dashboard/welcome.jpg?v=${static_resource_version}"
+        <img src="Content/images/dashboard/welcome.jpg?v=${static_resource_version}"
              style="width: 100%; opacity: .8;">
     </div>
 </layout:override>

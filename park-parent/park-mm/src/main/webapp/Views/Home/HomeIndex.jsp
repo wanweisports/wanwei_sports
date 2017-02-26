@@ -28,12 +28,12 @@
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
 
-    <link href="/Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon">
+    <link href="Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon">
 
-    <link href="/Content/lib/bootstrap/bootstrap.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/lib/font-awesome/font-awesome.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/lib/animate/animate.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/lib/style.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/bootstrap/bootstrap.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/font-awesome/font-awesome.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/animate/animate.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/style.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </head>
 
 <body class="fixed-sidebar full-height-layout gray-bg pace-done" style="overflow:hidden">
@@ -47,7 +47,7 @@
                 <li class="nav-header">
                     <div class="dropdown profile-element">
                         <span>
-                            <img alt="image" class="img-circle" src="/Content/images/profile_small.jpg?v=${static_resource_version}">
+                            <img alt="image" class="img-circle" src="Content/images/profile_small.jpg?v=${static_resource_version}">
                         </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:" aria-expanded="false">
                         <span class="clear">
@@ -59,10 +59,10 @@
                         </span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a class="J_menuItem" href="#" data-index="0">修改头像</a></li>
-                            <li><a class="J_menuItem" href="#" data-index="1">个人资料</a></li>
-                            <li><a class="J_menuItem" href="#" data-index="2">联系我们</a></li>
-                            <li><a class="J_menuItem" href="#" data-index="3">修改密码</a></li>
+                            <li><a class="J_menuItem" href="#">修改头像</a></li>
+                            <li><a class="J_menuItem" href="#">个人资料</a></li>
+                            <li><a class="J_menuItem" href="#">联系我们</a></li>
+                            <li><a class="J_menuItem" href="#">修改密码</a></li>
                             <li class="divider"></li>
                             <li><a href="#">安全退出</a></li>
                         </ul>
@@ -72,7 +72,7 @@
                 <li class="line dk"></li>
 
                 <li>
-                    <a class="J_menuItem" href="#">
+                    <a class="J_menuItem" href="/member/memberList" data-index="0">
                         <i class="fa fa-home"></i>
                         <span class="nav-label">工作面板</span>
                     </a>
@@ -87,7 +87,7 @@
                     </a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="/member/regMember">会员办卡</a></li>
-                        <li><a class="J_menuItem" href="/member/memberList">会员查询</a></li>
+                        <li><a class="J_menuItem" href="/member/memberList" data-index="0">会员查询</a></li>
                         <li><a class="J_menuItem" href="/member/getMembersCardRecharge">会员卡充值</a></li>
                         <li><a class="J_menuItem" href="/member/getMembersCardRefresh">会员卡补办</a></li>
                         <li><a class="J_menuItem" href="/member/getMembersLoans">应收款管理</a></li>
@@ -201,7 +201,7 @@
                             <li class="m-t-xs">
                                 <div class="dropdown-messages-box">
                                     <a href="#" class="pull-left">
-                                        <img alt="image" class="img-circle" src="/Content/images/a7.jpg?v=${static_resource_version}">
+                                        <img alt="image" class="img-circle" src="Content/images/a7.jpg?v=${static_resource_version}">
                                     </a>
                                     <div class="media-body">
                                         <small class="pull-right">46小时前</small>
@@ -303,16 +303,16 @@
 </div>
 
 <!-- 全局js -->
-<script src="/Content/lib/jquery/jquery-1.12.3.min.js?v=${static_resource_version}"></script>
-<script src="/Content/lib/bootstrap/bootstrap.min.js?v=${static_resource_version}"></script>
-<script src="/Content/lib/plugins/metisMenu/jquery.metisMenu.js?v=${static_resource_version}"></script>
-<script src="/Content/lib/plugins/slimscroll/jquery.slimscroll.min.js?v=${static_resource_version}"></script>
-<script src="/Content/lib/plugins/layer/layer.min.js?v=${static_resource_version}"></script>
-<script src="/Content/lib/plugins/hplus.min.js?v=${static_resource_version}"></script>
+<script src="Content/lib/jquery/jquery-1.12.3.min.js?v=${static_resource_version}"></script>
+<script src="Content/lib/bootstrap/bootstrap.min.js?v=${static_resource_version}"></script>
+<script src="Content/lib/plugins/metisMenu/jquery.metisMenu.js?v=${static_resource_version}"></script>
+<script src="Content/lib/plugins/slimscroll/jquery.slimscroll.min.js?v=${static_resource_version}"></script>
+<script src="Content/lib/plugins/layer/layer.min.js?v=${static_resource_version}"></script>
+<script src="Content/lib/plugins/hplus.min.js?v=${static_resource_version}"></script>
 
 <!-- 第三方插件 -->
-<script src="/Content/lib/plugins/contabs.min.js?v=${static_resource_version}"></script>
-<script src="/Content/lib/plugins/pace/pace.min.js?v=${static_resource_version}"></script>
+<script src="Content/lib/plugins/contabs.min.js?v=${static_resource_version}"></script>
+<script src="Content/lib/plugins/pace/pace.min.js?v=${static_resource_version}"></script>
 </body>
 </html>
 

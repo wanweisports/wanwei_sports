@@ -28,19 +28,19 @@
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
 
-    <link href="/Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon">
+    <link href="Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon">
 
-    <link href="/Content/lib/bootstrap/bootstrap.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/lib/font-awesome/font-awesome.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/lib/animate/animate.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/lib/style.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/bootstrap/bootstrap.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/font-awesome/font-awesome.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/animate/animate.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/style.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 
     <!-- Morris -->
-    <link href="/Content/style/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+    <link href="Content/style/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
 
-    <link href="/Content/lib/animate/animate.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/lib/style.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/style/home/index.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/animate/animate.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/style.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/home/index.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 
     <layout:block name="<%=Blocks.BLOCK_HEADER_CSS%>"/>
 </head>
@@ -113,13 +113,13 @@
     </div>
 
     <!-- 全局js -->
-    <script src="/Content/lib/jquery/jquery-1.12.3.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/bootstrap/bootstrap.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/plugins/content.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/moment/moment.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/jquery/jquery.cookie/jquery.cookie-1.4.1.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/app/common/text_magnifier.js?v=${static_resource_version}"></script>
-    <script src="/Content/app/common/base_new.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/jquery/jquery-1.12.3.min.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/bootstrap/bootstrap.min.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/pluginsContent.min.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/moment/moment.min.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/jquery/jquery.cookie/jquery.cookie-1.4.1.min.js?v=${static_resource_version}"></script>
+    <script src="Content/app/common/text_magnifier.js?v=${static_resource_version}"></script>
+    <script src="Content/app/common/base_new.js?v=${static_resource_version}"></script>
 
     <layout:block name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>"/>
     <layout:block name="<%=Blocks.BLOCK_TRACE_SCRIPTS%>"/>
