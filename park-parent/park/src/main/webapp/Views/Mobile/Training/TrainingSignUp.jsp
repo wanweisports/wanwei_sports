@@ -6,11 +6,11 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
-    <link href="/Content/style/mobile/center/center_profile.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/mobile/center/center_profile.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="/Content/app/mobile/training/training_signup.js?v=${static_resource_version}"></script>
+    <script src="Content/app/mobile/training/training_signup.js?v=${static_resource_version}"></script>
     <script>
         $(document).ready(function () {
             $("#class_id").val("${classId}").trigger("change");

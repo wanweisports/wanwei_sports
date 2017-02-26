@@ -6,7 +6,7 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="/Content/app/settings/settings_roles.js?v=${static_resource_version}"></script>
+    <script src="Content/app/settings/settings_roles.js?v=${static_resource_version}"></script>
     <script>
         $(document).ready(function () {
             $("#role_state").val('${status}');

@@ -6,11 +6,11 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
-    <link href="/Content/style/mobile/center/center_profile.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/mobile/center/center_profile.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
-    <script src="/Content/app/mobile/training/training_class.js?v=${static_resource_version}"></script>
+    <script src="Content/app/mobile/training/training_class.js?v=${static_resource_version}"></script>
     <script>
         $(document).ready(function () {
             $(".class-status.weui-bar__item_on").removeClass("weui-bar__item_on");
@@ -44,13 +44,13 @@
                                 <div class="weui-media-box__hd">
                                     <c:choose>
                                         <c:when test="${item.courseName == shuttercock}">
-                                            <img class="weui-media-box__thumb" src="/Content/images/sports/shuttercock-filled-100.png?v=${static_resource_version}">
+                                            <img class="weui-media-box__thumb" src="Content/images/sports/shuttercock-filled-100.png?v=${static_resource_version}">
                                         </c:when>
                                         <c:when test="${item.courseName == basketball}">
-                                            <img class="weui-media-box__thumb" src="/Content/images/sports/basketball-filled-100.png?v=${static_resource_version}">
+                                            <img class="weui-media-box__thumb" src="Content/images/sports/basketball-filled-100.png?v=${static_resource_version}">
                                         </c:when>
                                         <c:when test="${item.courseName == pingpong}">
-                                            <img class="weui-media-box__thumb" src="/Content/images/sports/pingpong-filled-100.png?v=${static_resource_version}">
+                                            <img class="weui-media-box__thumb" src="Content/images/sports/pingpong-filled-100.png?v=${static_resource_version}">
                                         </c:when>
                                     </c:choose>
                                 </div>

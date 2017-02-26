@@ -586,7 +586,7 @@ function initialize(options)
  *         title: "Title",
  *         content: "", // optional
  *         contentMode: "async", // optional
- *         contentUrl: "/Content/Step/1" // optional
+ *         contentUrl: "Content/Step/1" // optional
  *     });
  * @chainable
  **/
@@ -1407,7 +1407,7 @@ $.fn.steps.getStep = function (index)
  *         title: "Title",
  *         content: "", // optional
  *         contentMode: "async", // optional
- *         contentUrl: "/Content/Step/1" // optional
+ *         contentUrl: "Content/Step/1" // optional
  *     });
  * @chainable
  **/

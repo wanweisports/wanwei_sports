@@ -6,18 +6,18 @@
 <header class="ww-header">
     <div class="header">
         <div class="ww-logo">
-            <img src="/Content/images/logo.png?v=${static_resource_version}" class="logo-icon">
+            <img src="Content/images/logo.png?v=${static_resource_version}" class="logo-icon">
         </div>
         <ul class="ww-nav">
             <li class="nav-home ${param.nav == "home" ? "nav-active" : ""}">
                 <a href="/">
-                    <img src="/Content/images/navigator/home.png?v=${static_resource_version}">
+                    <img src="Content/images/navigator/home.png?v=${static_resource_version}">
                     <span>工作平台</span>
                 </a>
             </li>
             <li class="${param.nav == "member" ? "nav-active" : ""}">
                 <a href="javascript:;">
-                    <img src="/Content/images/navigator/users.png?v=${static_resource_version}">
+                    <img src="Content/images/navigator/users.png?v=${static_resource_version}">
                     <span>会员管理</span>
                 </a>
                 <ul class="nav-sub">
@@ -31,7 +31,7 @@
             </li>
             <li class="${param.nav == "site" ? "nav-active" : ""}">
                 <a href="javascript:;">
-                    <img src="/Content/images/navigator/venue.png?v=${static_resource_version}">
+                    <img src="Content/images/navigator/venue.png?v=${static_resource_version}">
                     <span>场地预订</span>
                 </a>
                 <ul class="nav-sub">
@@ -46,7 +46,7 @@
             </li>
             <li class="${param.nav == "good" ? "nav-active" : ""}">
                 <a href="javascript:;">
-                    <img src="/Content/images/navigator/cart.png?v=${static_resource_version}">
+                    <img src="Content/images/navigator/cart.png?v=${static_resource_version}">
                     <span>商品管理</span>
                 </a>
                 <ul class="nav-sub">
@@ -58,7 +58,7 @@
             </li>
             <li class="${param.nav == "data" ? "nav-active" : ""}">
                 <a href="javascript:;">
-                    <img src="/Content/images/navigator/chart.png?v=${static_resource_version}">
+                    <img src="Content/images/navigator/chart.png?v=${static_resource_version}">
                     <span>数据统计</span>
                 </a>
                 <ul class="nav-sub">
@@ -72,7 +72,7 @@
             </li>
             <li class="${param.nav == "setting" ? "nav-active" : ""}">
                 <a href="javascript:;">
-                    <img src="/Content/images/navigator/settings.png?v=${static_resource_version}">
+                    <img src="Content/images/navigator/settings.png?v=${static_resource_version}">
                     <span>系统设置</span>
                 </a>
                 <ul class="nav-sub">
@@ -85,7 +85,7 @@
             </li>
             <li class="${param.nav == "center" ? "nav-active" : ""}">
                 <a href="javascript:;">
-                    <img src="/Content/images/navigator/user.png?v=${static_resource_version}">
+                    <img src="Content/images/navigator/user.png?v=${static_resource_version}">
                     <span>个人中心</span>
                 </a>
                 <ul class="nav-sub">

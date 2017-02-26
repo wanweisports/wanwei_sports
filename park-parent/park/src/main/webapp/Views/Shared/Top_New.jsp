@@ -10,7 +10,7 @@
                 <table class="top-header-logo">
                     <tr>
                         <td>
-                            <img src="/Content/images/new/logo.png?v=${static_resource_version}" alt="logo">
+                            <img src="Content/images/new/logo.png?v=${static_resource_version}" alt="logo">
                         </td>
                     </tr>
                 </table>

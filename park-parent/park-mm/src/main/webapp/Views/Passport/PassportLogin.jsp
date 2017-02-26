@@ -24,17 +24,17 @@
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
 
-    <link href="/Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon">
+    <link href="Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon">
 
-    <link href="/Content/lib/bootstrap/bootstrap.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/lib/font-awesome/font-awesome.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/lib/animate/animate.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/bootstrap/bootstrap.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/font-awesome/font-awesome.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/animate/animate.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 
     <!-- Morris -->
-    <link href="/Content/style/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
-    <link href="/Content/lib/animate/animate.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/lib/style.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/lib/login.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+    <link href="Content/lib/animate/animate.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/style.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/login.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 
     <script>
         if (window.top !== window.self) {
@@ -49,7 +49,7 @@
             <div class="col-sm-7">
                 <div class="signin-info">
                     <div class="logopanel m-b">
-                        <h1>场馆<img src="/Content/images/logo.png?v=${static_resource_version}">时代</h1>
+                        <h1>场馆<img src="Content/images/logo.png?v=${static_resource_version}">时代</h1>
                     </div>
                     <div class="m-b"></div>
                     <h4>欢迎使用 <strong>场馆运营管理系统</strong></h4>
@@ -81,10 +81,10 @@
         </div>
     </div>
 
-    <script src="/Content/lib/jquery/jquery-1.12.3.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/bootstrap/bootstrap.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
-    <script src="/Content/app/passport/passport_login.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/jquery/jquery-1.12.3.min.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/bootstrap/bootstrap.min.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
+    <script src="Content/app/passport/passport_login.js?v=${static_resource_version}"></script>
 </body>
 </html>

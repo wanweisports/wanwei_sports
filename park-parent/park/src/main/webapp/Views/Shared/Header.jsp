@@ -16,29 +16,29 @@
     <meta name="description" content="">
     <meta name="keywords" content="万维体育,wanweitiyu,智能体育场馆,体育场馆,预订,收银,万维">
     <meta name="author" content="北体高科技术有限公司">
-    <link href="/Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon" />
+    <link href="Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon" />
 
-    <link href="/Content/lib/bootstrap/bootstrap.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/style/common/style.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <script src="/Content/lib/html5shiv/html5.min.js?v=${static_resource_version}"></script>
+    <link href="Content/lib/bootstrap/bootstrap.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/common/style.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <script src="Content/lib/html5shiv/html5.min.js?v=${static_resource_version}"></script>
 </head>
 <body>
     <div class="container-fluid">
         <header class="ww-header">
         <div class="header">
             <div class="ww-logo">
-                <img src="/Content/images/logo.png?v=${static_resource_version}" class="logo-icon">
+                <img src="Content/images/logo.png?v=${static_resource_version}" class="logo-icon">
             </div>
             <ul class="ww-nav">
                 <li class="nav-home ">
                     <a href="/">
-                        <img src="/Content/images/navigator/home.png?v=${static_resource_version}">
+                        <img src="Content/images/navigator/home.png?v=${static_resource_version}">
                         <span>工作平台</span>
                     </a>
                 </li>
                 <li class="nav-active">
                     <a href="javascript:;">
-                        <img src="/Content/images/navigator/users.png?v=${static_resource_version}">
+                        <img src="Content/images/navigator/users.png?v=${static_resource_version}">
                         <span>会员管理</span>
                     </a>
                     <ul class="nav-sub">
@@ -52,7 +52,7 @@
                 </li>
                 <li class="">
                     <a href="javascript:;">
-                        <img src="/Content/images/navigator/venue.png?v=${static_resource_version}">
+                        <img src="Content/images/navigator/venue.png?v=${static_resource_version}">
                         <span>场地预订</span>
                     </a>
                     <ul class="nav-sub">
@@ -66,7 +66,7 @@
                 </li>
                 <li class="">
                     <a href="javascript:;">
-                        <img src="/Content/images/navigator/cart.png?v=${static_resource_version}">
+                        <img src="Content/images/navigator/cart.png?v=${static_resource_version}">
                         <span>商品管理</span>
                     </a>
                     <ul class="nav-sub">
@@ -78,7 +78,7 @@
                 </li>
                 <li class="">
                     <a href="javascript:;">
-                        <img src="/Content/images/navigator/chart.png?v=${static_resource_version}">
+                        <img src="Content/images/navigator/chart.png?v=${static_resource_version}">
                         <span>数据统计</span>
                     </a>
                     <ul class="nav-sub">
@@ -92,7 +92,7 @@
                 </li>
                 <li class="">
                     <a href="javascript:;">
-                        <img src="/Content/images/navigator/settings.png?v=${static_resource_version}">
+                        <img src="Content/images/navigator/settings.png?v=${static_resource_version}">
                         <span>系统设置</span>
                     </a>
                     <ul class="nav-sub">
@@ -105,7 +105,7 @@
                 </li>
                 <li class="">
                     <a href="javascript:;">
-                        <img src="/Content/images/navigator/user.png?v=${static_resource_version}">
+                        <img src="Content/images/navigator/user.png?v=${static_resource_version}">
                         <span>个人中心</span>
                     </a>
                     <ul class="nav-sub">
