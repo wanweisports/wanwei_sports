@@ -1,0 +1,21 @@
+1. 必须准备的前提：Tomcat7，JDK7，Mysql5.6以上版本数据库。
+
+2. 部署前提：阿里云服务器，SecureCRT，FTP上传工具。
+
+3.开始部署：
+	①：安装JDK7。
+	②：安装Tomcat7。
+	③：配置JDK环境变量。
+	④：使用IDEA 打包，把.war包放到Tomcat7的webapps文件夹下。
+		A.若.war包放到ROOT下，则访问：http://IP:端口。
+                B.若.war包放到webapps文件夹下，则访问：http://IP:端口/文件名(war的文件名，如promotion.war,则访问http://IP:端口/promotion)。
+		C.若0端口，则访问都不需要端口。
+		D.一般Tomcat启动会自动解压.war文件，一般不需要手动解压。
+
+4.改80端口：
+	①：打开tomcat7下的conf文件夹。
+	②：编辑server.xml，找到 <Connector port="8080" protocol="HTTP/1.1" 
+               				connectionTimeout="20000" 
+               				redirectPort="8443" />
+			    把8080修改成80端口，然后启动Tomcat,若之前已启动Tomcat,则需要重启。
+		
