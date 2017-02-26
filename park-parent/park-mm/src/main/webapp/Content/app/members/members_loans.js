@@ -1,7 +1,7 @@
 (function ($) {
     var Members_Loans = {
         opts: {
-            URL: '/member/getMembersLoans'
+            URL: 'member/getMembersLoans'
         },
         init: function () {
             this.initEvents();

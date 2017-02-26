@@ -1,7 +1,7 @@
 (function ($) {
     var Business_Income = {
         opts: {
-            URL: '/data/getBusinessIncome'
+            URL: 'data/getBusinessIncome'
         },
         init: function () {
             this.initEvents();

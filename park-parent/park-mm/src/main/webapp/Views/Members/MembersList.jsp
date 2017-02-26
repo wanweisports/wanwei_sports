@@ -85,7 +85,7 @@
                                 <td>
                                     <c:choose>
                                         <c:when test="${member.tempCardNo == null}">
-                                            <a href="/member/getBalances?cardId=${member.cardId}&memberId=${member.memberId}">${member.cardBalance}元</a>
+                                            <a href="<%=basePath%>member/getBalances?cardId=${member.cardId}&memberId=${member.memberId}">${member.cardBalance}元</a>
                                         </c:when>
                                         <c:otherwise> -- </c:otherwise>
                                     </c:choose>
@@ -93,10 +93,10 @@
                                 <td>
                                     <c:choose>
                                         <c:when test="${member.tempCardNo == null && member.childrenCount > 0}">
-                                            <a href="/member/getMembersChildren?memberId=${member.memberId}">${member.childrenCount}人</a>
+                                            <a href="<%=basePath%>member/getMembersChildren?memberId=${member.memberId}">${member.childrenCount}人</a>
                                         </c:when>
                                         <c:when test="${member.tempCardNo == null && member.childrenCount == 0}">
-                                            <a href="/member/getMembersChildren?memberId=${member.memberId}"> 无 </a>
+                                            <a href="<%=basePath%>member/getMembersChildren?memberId=${member.memberId}"> 无 </a>
                                         </c:when>
                                         <c:otherwise> -- </c:otherwise>
                                     </c:choose>
@@ -105,12 +105,12 @@
                                 <td>${member.createTime}</td>
                                 <td>
                                     <c:if test="${member.tempCardNo == null}">
-                                        <a class="btn btn-primary" href="/member/memberInfo?memberId=${member.memberId}">
+                                        <a class="btn btn-primary" href="<%=basePath%>member/memberInfo?memberId=${member.memberId}">
                                             <span class="glyphicon glyphicon-share-alt"></span> 查看
                                         </a>
                                     </c:if>
                                     <c:if test="${member.tempCardNo != null}">
-                                        <a class="btn btn-danger" href="/member/bindMembersCard?memberId=${member.memberId}">
+                                        <a class="btn btn-danger" href="<%=basePath%>member/bindMembersCard?memberId=${member.memberId}">
                                             <span class="glyphicon glyphicon-credit-card"></span> 绑卡
                                         </a>
                                     </c:if>

@@ -35,7 +35,7 @@
                     var cardNo = elm.data('label');
 
                     $('#card_no').val(cardNo);
-                    location.assign('/member/getMembersCardUpgrade?cardNo=' + cardNo);
+                    location.assign('member/getMembersCardUpgrade?cardNo=' + cardNo);
                 }
             });
 
@@ -55,7 +55,7 @@
 
                     if (res.code == 1) {
                         if (data && data.members && data.members.length > 0) {
-                            location.assign('/member/getMembersCardUpgrade?cardNo='
+                            location.assign('member/getMembersCardUpgrade?cardNo='
                                 + data.members[0].cardNo);
                         } else {
                             alert('没有搜索到会员');
@@ -67,7 +67,7 @@
             });
 
             function _getMemberCarType(id) {
-                $.post('/member/getMemberCarType', {cardTypeId: id}, function (res) {
+                $.post('member/getMemberCarType', {cardTypeId: id}, function (res) {
                     var data = res.data;
 
                     if (res.code == 1) {
@@ -108,7 +108,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/member/memberCardUpLevel', conditions, function (res) {
+                $.post('member/memberCardUpLevel', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {

@@ -23,7 +23,7 @@
         },
         // 计价
         calculateShoppingMoney: function (conditions) {
-            $.post('/good/calculateShoppingMoney', conditions, function (res) {
+            $.post('good/calculateShoppingMoney', conditions, function (res) {
                 var data = res.data;
 
                 if (res.code == 1) {
@@ -110,7 +110,7 @@
                     }
                     $form.attr("submitting", "submitting");
 
-                    $.post('/good/saveOrder', conditions, function (res) {
+                    $.post('good/saveOrder', conditions, function (res) {
                         var data = res.data;
                         $form.attr("submitting", "");
 
@@ -133,14 +133,14 @@
                     }
                     $form.attr("submitting", "submitting");
 
-                    $.post('/good/confirmOrder', conditions, function (res) {
+                    $.post('good/confirmOrder', conditions, function (res) {
                         $form.attr("submitting", "");
 
                         if (res.code == 1) {
                             // 打印小票
 
                             $.tipsSuccessAlert('支付订单成功！', function () {
-                                location.assign('/order/getOrderList?orderServiceTypes=300');
+                                location.assign('order/getOrderList?orderServiceTypes=300');
                             });
                         } else {
                             $.logConsole('支付订单失败', res.message);
@@ -162,7 +162,7 @@
 
                 var $this = $(this);
 
-                $.post("/good/deleteCart", {
+                $.post("good/deleteCart", {
                     shoppingId: $this.attr("data-sid")
                 }, function (res) {
                     if (res.code == 1) {
@@ -181,7 +181,7 @@
                 var $this = $(this);
                 var count = parseInt($this.parents(".input-group").find(".good-count").val());
 
-                $.post("/good/addGoodsToCart", {
+                $.post("good/addGoodsToCart", {
                     goodId: $this.attr("data-id"),
                     amount: 1
                 }, function (res) {
@@ -212,7 +212,7 @@
                     return false;
                 }
 
-                $.post("/good/addGoodsToCart", {
+                $.post("good/addGoodsToCart", {
                     goodId: $this.attr("data-id"),
                     amount: -1
                 }, function (res) {

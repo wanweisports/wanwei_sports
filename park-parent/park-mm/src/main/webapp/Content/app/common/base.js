@@ -6,7 +6,7 @@
         e.preventDefault();
 
         //alert("成功登出");
-        location.assign('/passport/login');
+        location.assign('passport/login');
     });
 
     // 导航切换

@@ -1,7 +1,7 @@
 (function ($) {
     var Good_STOCK = {
         opts: {
-            URL: '/good/getGoodsStock'
+            URL: 'good/getGoodsStock'
         },
         init: function () {
             $.datetimepicker.setLocale('zh');

@@ -10,7 +10,7 @@
 
                 var conditions = $("#card_filter_form").serialize();
 
-                location.assign('/member/getMemberCarTypes?' + conditions);
+                location.assign('member/getMemberCarTypes?' + conditions);
             });
 
             // 增加会员类型
@@ -53,7 +53,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/member/saveMemberCardType', conditions, function (res) {
+                $.post('member/saveMemberCardType', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {

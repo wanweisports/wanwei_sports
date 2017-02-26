@@ -4,7 +4,7 @@
             data: {}
         },
         calCartCount: function () {
-            $.post('/good/getCartCount', {}, function (res) {
+            $.post('good/getCartCount', {}, function (res) {
                 var data = res.data;
 
                 if (res.code == 1) {
@@ -31,7 +31,7 @@
                 var $this = $(this);
                 var goodId = $this.attr("data-id");
 
-                $.post('/good/addGoodsToCart', {goodId: goodId, amount: 1}, function (res) {
+                $.post('good/addGoodsToCart', {goodId: goodId, amount: 1}, function (res) {
                     if (res.code != 1) {
                         $.logConsole('添加购物车失败', res.message);
                         $.tipsWarningAlert('添加购物车失败');
@@ -46,7 +46,7 @@
             $btnCart.on("click", function (e) {
                 e.preventDefault();
 
-                location.assign("/good/getGoodsCart");
+                location.assign("good/getGoodsCart");
             });
         }
     };

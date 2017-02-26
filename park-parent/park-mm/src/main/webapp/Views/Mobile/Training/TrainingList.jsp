@@ -34,13 +34,13 @@
             </div>
             <div class="weui-tab__panel">
                 <div class="weui-btn-area">
-                    <a class="weui-btn weui-btn_primary" href="/mobile/training/signup?classId=0">我要报名</a>
+                    <a class="weui-btn weui-btn_primary" href="<%=basePath%>mobile/training/signup?classId=0">我要报名</a>
                 </div>
 
                 <c:forEach var="item" items="${list}">
                     <div class="weui-panel weui-panel_access">
                         <div class="weui-panel__bd">
-                            <a href="/mobile/training/students?classId=${item.id}" class="weui-media-box weui-media-box_appmsg">
+                            <a href="<%=basePath%>mobile/training/students?classId=${item.id}" class="weui-media-box weui-media-box_appmsg">
                                 <div class="weui-media-box__hd">
                                     <c:choose>
                                         <c:when test="${item.courseName == shuttercock}">
@@ -66,7 +66,7 @@
                             </a>
                         </div>
                         <div class="weui-panel__ft">
-                            <a href="/mobile/training/students?classId=${item.id}" class="weui-cell weui-cell_access weui-cell_link">
+                            <a href="<%=basePath%>mobile/training/students?classId=${item.id}" class="weui-cell weui-cell_access weui-cell_link">
                                 <c:if test="${item.unSignClass == 1}">
                                     <div class="weui-cell__bd">报名人数: 0</div>
                                     <span class="weui-cell__ft stress-color">未开始</span>

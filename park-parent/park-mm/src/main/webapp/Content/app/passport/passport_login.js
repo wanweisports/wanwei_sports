@@ -20,11 +20,11 @@
         }
         $form.attr("submitting", "submitting");
 
-        $.post('/passport/submitUserLogin', conditions, function (res) {
+        $.post('passport/submitUserLogin', conditions, function (res) {
             $form.attr("submitting", "");
 
             if (res.code == 1) {
-                location.assign("/");
+                location.assign("");
             } else {
                 console.log(res.message || "用户登录失败, 请稍后重试");
                 alert(res.message || "用户登录失败, 请稍后重试");

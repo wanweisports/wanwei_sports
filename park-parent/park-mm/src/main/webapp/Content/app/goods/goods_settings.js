@@ -14,7 +14,7 @@
 
                     if (res.code == 1) {
                         $.tipsSuccessAlert('商品设置提交成功！', function () {
-                            location.assign('/good/getGoods');
+                            location.assign('good/getGoods');
                         });
                     } else {
                         $.logConsole('商品设置提交失败', res.message);

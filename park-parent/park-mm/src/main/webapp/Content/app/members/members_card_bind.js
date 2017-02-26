@@ -1,10 +1,10 @@
 (function ($) {
     var Members_Card_Bind = {
         opts: {
-            ToURL: '/member/memberList'
+            ToURL: 'member/memberList'
         },
         init: function () {
-            $.post('/member/getMemberCarType', {cardTypeId: $('[name="cardTypeId"]').val()}, function (res) {
+            $.post('member/getMemberCarType', {cardTypeId: $('[name="cardTypeId"]').val()}, function (res) {
                 var data = res.data;
 
                 if (res.code == 1) {
@@ -49,7 +49,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/member/updateMemberName', conditions, function (res) {
+                $.post('member/updateMemberName', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
@@ -67,7 +67,7 @@
             /*$("#member_type").on("change", function (e) {
                 e.preventDefault();
 
-                $.post('/member/getMemberCarType', {cardTypeId: $(this).val()}, function (res) {
+                $.post('member/getMemberCarType', {cardTypeId: $(this).val()}, function (res) {
                     if (res.code == 1) {
                         var data = res.data;
 
@@ -117,7 +117,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/member/saveMemberCar', conditions, function (res) {
+                $.post('member/saveMemberCar', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
@@ -175,7 +175,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/member/saveInvoice', conditions, function (res) {
+                $.post('member/saveInvoice', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {

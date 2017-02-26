@@ -6,7 +6,7 @@
     });
 
     $('.logout-confirm').on('click', function(){
-        $.post('/mobile/passport/userLogout', {}, function (res) {
+        $.post('mobile/passport/userLogout', {}, function (res) {
             if (res.code == 1) {
                 location.reload();
             } else {
@@ -63,7 +63,7 @@
         }
         $form.attr("submitting", "submitting");
 
-        $.post('/mobile/passport/userLogin', conditions, function (res) {
+        $.post('mobile/passport/userLogin', conditions, function (res) {
             $form.attr("submitting", "");
 
             if (res.code == 1) {

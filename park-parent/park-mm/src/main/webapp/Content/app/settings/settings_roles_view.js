@@ -6,7 +6,7 @@
         },
         // 初始化树
         initTree: function () {
-            $.post('/system/getAllRoles', {}, function (res) {
+            $.post('system/getAllRoles', {}, function (res) {
                 var data = {
                     "id": "0",
                     "text" : "全部权限",
@@ -168,7 +168,7 @@
                 conditions.menuIds = conditions.limit.join(",");
                 delete conditions.limit;
 
-                $.post('/settings/saveRole', conditions, function (res) {
+                $.post('settings/saveRole', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
@@ -176,7 +176,7 @@
 
                         setTimeout(function () {
                             $("#tips_modal").modal("hide");
-                            location.assign("/settings/getRoles");
+                            location.assign("settings/getRoles");
                         }, 2000);
                     } else {
                         console.log(res.message || "员工权限设置失败, 请稍后重试");

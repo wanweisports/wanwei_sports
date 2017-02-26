@@ -94,12 +94,12 @@
         }
         $form.attr("submitting", "submitting");
 
-        $.post('/business/training/saveTrainsClassInfo', conditions, function (res) {
+        $.post('business/training/saveTrainsClassInfo', conditions, function (res) {
             $form.attr("submitting", "");
 
             if (res.code == 1) {
                 $.tipsSuccessAlert('班级创建成功！', function () {
-                    location.assign('/business/training/list');
+                    location.assign('business/training/list');
                 });
             } else {
                 $.logConsole('班级创建成功失败', res.message);

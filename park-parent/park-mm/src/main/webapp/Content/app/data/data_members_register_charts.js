@@ -1,7 +1,7 @@
 (function ($) {
     var Members_Register = {
         opts: {
-            URL: '/data/getMembersRegisterGroupByDate'
+            URL: 'data/getMembersRegisterGroupByDate'
         },
         init: function () {
             this.initEvents();

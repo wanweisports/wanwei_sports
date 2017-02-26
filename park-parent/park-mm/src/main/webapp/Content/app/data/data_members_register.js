@@ -1,7 +1,7 @@
 (function ($) {
     var Members_Register = {
         opts: {
-            URL: '/data/getMembersRegister',
+            URL: 'data/getMembersRegister',
             TPL: function (data) {
                 return ('<tr><td>#CARD_TYPE_NAME#</td><td>#ALL_WEEKS#</td>' +
                     '<td>#MONDAY#</td><td>#TUESDAY#</td><td>#WEDNESDAY#</td>' +
@@ -246,7 +246,7 @@
             var content = this;
             var $memberCount = $(".data-members-count");
 
-            $.post('/data/getMembersStoredData', content.opts.conditions, function (res) {
+            $.post('data/getMembersStoredData', content.opts.conditions, function (res) {
                 var data = res.data;
 
                 if (res.code == 1) {
@@ -316,7 +316,7 @@
             var content = this;
             var $memberCount = $(".data-members-count");
 
-            $.post('/data/getMembersConsumedData', content.opts.conditions, function (res) {
+            $.post('data/getMembersConsumedData', content.opts.conditions, function (res) {
                 var data = res.data;
 
                 if (res.code == 1) {
@@ -518,7 +518,7 @@
             var content = this;
             var $memberCount = $(".data-members-count");
 
-            $.post('/data/getMembersCountData', content.opts.conditions, function (res) {
+            $.post('data/getMembersCountData', content.opts.conditions, function (res) {
                 var data = res.data;
 
                 if (res.code == 1) {

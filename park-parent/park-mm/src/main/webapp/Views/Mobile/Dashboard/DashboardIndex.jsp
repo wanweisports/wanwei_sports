@@ -24,13 +24,13 @@
         </div>
         <div class="weui-flex">
             <div class="weui-grids">
-                <a href="/mobile/reservation/quick" class="weui-grid">
+                <a href="<%=basePath%>mobile/reservation/quick" class="weui-grid">
                     <div class="weui-grid__icon">
                         <img src="Content/images/mobile/stadium.png?v=${static_resource_version}" alt="场地预订">
                     </div>
                     <p class="weui-grid__label">场地预订</p>
                 </a>
-                <a href="/mobile/reservation/orders" class="weui-grid">
+                <a href="<%=basePath%>mobile/reservation/orders" class="weui-grid">
                     <div class="weui-grid__icon">
                         <img src="Content/images/mobile/purchase-order.png?v=${static_resource_version}" alt="场地预订">
                     </div>
@@ -43,13 +43,13 @@
                     <p class="weui-grid__label">培训报名</p>
                 </a>
                 <c:if test="${isLogin}">
-                    <a href="/mobile/center/profile" class="weui-grid">
+                    <a href="<%=basePath%>mobile/center/profile" class="weui-grid">
                         <div class="weui-grid__icon">
                             <img src="Content/images/mobile/user.png?v=${static_resource_version}" alt="用户信息">
                         </div>
                         <p class="weui-grid__label">完善信息</p>
                     </a>
-                    <a href="/mobile/center/password" class="weui-grid">
+                    <a href="<%=basePath%>mobile/center/password" class="weui-grid">
                         <div class="weui-grid__icon">
                             <img src="Content/images/mobile/key.png?v=${static_resource_version}" alt="用户信息">
                         </div>
@@ -61,14 +61,14 @@
                         </div>
                         <p class="weui-grid__label">子会员</p>
                     </a>
-                    <a href="/mobile/center/card" class="weui-grid">
+                    <a href="<%=basePath%>mobile/center/card" class="weui-grid">
                         <div class="weui-grid__icon">
                             <img src="Content/images/mobile/cards.png?v=${static_resource_version}" alt="用户信息">
                         </div>
                         <p class="weui-grid__label">会员卡</p>
                     </a>
                 </c:if>
-                <a href="/mobile/center/about" class="weui-grid">
+                <a href="<%=basePath%>mobile/center/about" class="weui-grid">
                     <div class="weui-grid__icon">
                         <img src="Content/images/mobile/about.png?v=${static_resource_version}" alt="系统消息">
                     </div>

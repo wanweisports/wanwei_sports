@@ -1,7 +1,7 @@
 (function ($) {
     var Venue_Percentage = {
         opts: {
-            URL: '/data/getVenuePercentage'
+            URL: 'data/getVenuePercentage'
         },
         init: function () {
             this.initEvents();

@@ -1,7 +1,7 @@
 (function ($) {
     var Members_Invoince_List = {
         opts: {
-            URL: '/member/getInvoices'
+            URL: 'member/getInvoices'
         },
         init: function () {
             this.initEvents();
@@ -48,7 +48,7 @@
                 }
                 $this.attr("working", "working");
 
-                $.post('/member/updateGetInvoices', {invoiceIds: invoiceIds}, function (res) {
+                $.post('member/updateGetInvoices', {invoiceIds: invoiceIds}, function (res) {
                     $this.attr("working", "");
 
                     if (res.code == 1) {
@@ -86,7 +86,7 @@
                     val.push($tickets.eq(i).val());
                 }
 
-                $.post('/member/updateGetInvoices', {invoiceIds: val.join(",")}, function (res) {
+                $.post('member/updateGetInvoices', {invoiceIds: val.join(",")}, function (res) {
                     $this.attr("working", "");
 
                     if (res.code == 1) {
@@ -115,7 +115,7 @@
                 }
                 $this.attr("working", "working");
 
-                $.post('/member/updateOpenInvoices', {invoiceIds: invoiceIds}, function (res) {
+                $.post('member/updateOpenInvoices', {invoiceIds: invoiceIds}, function (res) {
                     $this.attr("working", "");
 
                     if (res.code == 1) {
@@ -153,7 +153,7 @@
                     val.push($tickets.eq(i).val());
                 }
 
-                $.post('/member/updateOpenInvoices', {invoiceIds: val.join(",")}, function (res) {
+                $.post('member/updateOpenInvoices', {invoiceIds: val.join(",")}, function (res) {
                     $this.attr("working", "");
 
                     if (res.code == 1) {

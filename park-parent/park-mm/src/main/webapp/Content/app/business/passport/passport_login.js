@@ -11,7 +11,7 @@
         }
         $form.attr("submitting", "submitting");
 
-        $.post('/business/passport/userLogin', conditions, function (res) {
+        $.post('business/passport/userLogin', conditions, function (res) {
             $form.attr("submitting", "");
 
             if (res.code == 1) {

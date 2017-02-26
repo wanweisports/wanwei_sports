@@ -68,7 +68,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/member/saveMember', conditions, function (res) {
+                $.post('member/saveMember', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
@@ -124,7 +124,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/member/memberCardCZ', conditions, function (res) {
+                $.post('member/memberCardCZ', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
@@ -154,7 +154,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/member/memberCardBuBan', conditions, function (res) {
+                $.post('member/memberCardBuBan', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {

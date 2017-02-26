@@ -1,7 +1,7 @@
 (function ($) {
     var Members_List = {
         opts: {
-            URL: '/member/memberList'
+            URL: 'member/memberList'
         },
         init: function () {
             this.initEvents();
@@ -50,7 +50,7 @@
 
                 var memberId = $("#delete_memberId").val();
 
-                $.post('/teachers/lockTeacher', {memberId: memberId}, function (res) {
+                $.post('teachers/lockTeacher', {memberId: memberId}, function (res) {
                     if (res.code == 1) {
                         location.reload();
                     } else {

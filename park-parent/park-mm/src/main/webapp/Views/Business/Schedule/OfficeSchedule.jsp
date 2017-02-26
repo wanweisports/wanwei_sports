@@ -56,7 +56,7 @@
                 </div>
             </c:if>
             <div class="weui-btn-area">
-                <a class="weui-btn weui-btn_plain-primary" href="/business/dashboard">返回首页</a>
+                <a class="weui-btn weui-btn_plain-primary" href="<%=basePath%>business/dashboard">返回首页</a>
             </div>
         </div>
     </div>

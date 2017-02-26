@@ -1,7 +1,7 @@
 (function ($) {
     var Settings_Roles_List = {
         opts: {
-            URL: '/settings/getRoles'
+            URL: 'settings/getRoles'
         },
         init: function () {
             this.initEvents();

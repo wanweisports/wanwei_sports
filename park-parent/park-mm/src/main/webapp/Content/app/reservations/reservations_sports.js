@@ -37,7 +37,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post("/site/saveSiteSport", conditions, function (res) {
+                $.post("site/saveSiteSport", conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
@@ -77,7 +77,7 @@
 
                 _resetSportsForm();
 
-                $.post("/site/getSiteSport", {sportId: $this.attr("data-id")}, function (res) {
+                $.post("site/getSiteSport", {sportId: $this.attr("data-id")}, function (res) {
                     var data = res.data;
 
                     if (res.code == 1) {

@@ -18,13 +18,13 @@
         <div class="weui-flex class-buttons">
             <div class="weui-flex__item">
                 <div class="class-btn">
-                    <a class="weui-btn weui-btn_plain-primary" href="/business/dashboard">返回首页</a>
+                    <a class="weui-btn weui-btn_plain-primary" href="<%=basePath%>business/dashboard">返回首页</a>
                 </div>
             </div>
             <div class="weui-flex__item">&nbsp;</div>
             <div class="weui-flex__item">
                 <div class="class-btn">
-                    <a class="weui-btn weui-btn_primary" href="/business/training/list">返回列表</a>
+                    <a class="weui-btn weui-btn_primary" href="<%=basePath%>business/training/list">返回列表</a>
                 </div>
             </div>
         </div>

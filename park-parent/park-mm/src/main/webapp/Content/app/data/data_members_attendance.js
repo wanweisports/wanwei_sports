@@ -1,7 +1,7 @@
 (function ($) {
     var Members_Attendance = {
         opts: {
-            URL: '/data/getMembersRegister'
+            URL: 'data/getMembersRegister'
         },
         init: function () {
             this.initEvents();

@@ -59,7 +59,7 @@
                     </div>
 
                     <div class="weui-btn-area">
-                        <a class="weui-btn weui-btn_primary reg-btn" href="/mobile/passport/profile">立即注册</a>
+                        <a class="weui-btn weui-btn_primary reg-btn" href="<%=basePath%>mobile/passport/profile">立即注册</a>
                     </div>
                 </form>
             </div>

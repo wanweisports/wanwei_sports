@@ -118,7 +118,7 @@
                 return;
             }
 
-            $.post('/member/memberDetail', {memberId: memberId}, function (res) {
+            $.post('member/memberDetail', {memberId: memberId}, function (res) {
                 var data = res.data;
                 var originalPrice = $("#reservations_paid_money").val();
 
@@ -140,7 +140,7 @@
         calculateSiteMoney: function () {
             var content = this;
 
-            $.post('/site/calculateSiteMoney', {
+            $.post('site/calculateSiteMoney', {
                 siteOperationJson: JSON.stringify(content.opts.data)
             }, function (res) {
                 var data = res.data;
@@ -294,7 +294,7 @@
 
                 __saveOrder(function () {
                     var conditions = $("#reservations_paid_form").serialize();
-                    $.post('/site/confirmOrder', conditions, function (res) {
+                    $.post('site/confirmOrder', conditions, function (res) {
                         $form.attr("submitting", "");
 
                         if (res.code == 1) {

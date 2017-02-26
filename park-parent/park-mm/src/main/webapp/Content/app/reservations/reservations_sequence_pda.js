@@ -1,7 +1,7 @@
 (function ($) {
     var Reservations_PDA = {
         opts: {
-            URL: '/site/getReservationsSequencePDA'
+            URL: 'site/getReservationsSequencePDA'
         },
         init: function () {
             this.initEvents();

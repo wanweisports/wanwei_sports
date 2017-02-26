@@ -36,14 +36,14 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/init/saveInit', conditions, function (res) {
+                $.post('init/saveInit', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
                         $("#tips_success_modal").modal({show: true, backdrop: false});
                         setTimeout(function () {
                             $("#tips_success_modal").modal("hide");
-                            location.assign('/passport/login');
+                            location.assign('passport/login');
                         }, 3000);
                     } else {
                         console.log(res.message || "初始化失败, 请稍后重试");

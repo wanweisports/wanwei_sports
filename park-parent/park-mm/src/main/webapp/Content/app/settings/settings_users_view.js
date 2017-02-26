@@ -45,7 +45,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/settings/saveEmployee', conditions, function (res) {
+                $.post('settings/saveEmployee', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
@@ -53,7 +53,7 @@
 
                         setTimeout(function () {
                             $("#tips_modal").modal("hide");
-                            location.assign('/settings/getUsers');
+                            location.assign('settings/getUsers');
                         }, 2000);
                     } else {
                         console.log(res.message || "员工信息保存失败, 请稍后重试");

@@ -72,7 +72,7 @@
                 <li class="line dk"></li>
 
                 <li>
-                    <a class="J_menuItem" href="/member/memberList" data-index="0">
+                    <a class="J_menuItem" href="<%=basePath%>member/memberList" data-index="0">
                         <i class="fa fa-home"></i>
                         <span class="nav-label">工作面板</span>
                     </a>
@@ -86,13 +86,13 @@
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="/member/regMember">会员办卡</a></li>
-                        <li><a class="J_menuItem" href="/member/memberList" data-index="0">会员查询</a></li>
-                        <li><a class="J_menuItem" href="/member/getMembersCardRecharge">会员卡充值</a></li>
-                        <li><a class="J_menuItem" href="/member/getMembersCardRefresh">会员卡补办</a></li>
-                        <li><a class="J_menuItem" href="/member/getMembersLoans">应收款管理</a></li>
-                        <li><a class="J_menuItem" href="/member/getInvoices?invoiceOpenState=2&invoiceState=2">发票登记</a></li>
-                        <li><a class="J_menuItem" href="/member/getMemberCarTypes">会员类型设置</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>member/regMember">会员办卡</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>member/memberList" data-index="0">会员查询</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>member/getMembersCardRecharge">会员卡充值</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>member/getMembersCardRefresh">会员卡补办</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>member/getMembersLoans">应收款管理</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>member/getInvoices?invoiceOpenState=2&invoiceState=2">发票登记</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>member/getMemberCarTypes">会员类型设置</a></li>
                     </ul>
                 </li>
                 <li class="line dk"></li>
@@ -104,12 +104,12 @@
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="/site/getSiteReservationInfo">场地预订</a></li>
-                        <li><a class="J_menuItem" href="/site/getSiteReservationFixed">场地快捷预订</a></li>
-                        <li><a class="J_menuItem" href="/site/getSiteReservationBatch">场地批量预订</a></li>
-                        <li><a class="J_menuItem" href="/order/getOrderList?orderServiceTypes=100,200">场地预订订单</a></li>
-                        <li><a class="J_menuItem" href="/site/getSiteInfos">场地设置</a></li>
-                        <li><a class="J_menuItem" href="/site/getSiteSports">场地类型设置</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>site/getSiteReservationInfo">场地预订</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>site/getSiteReservationFixed">场地快捷预订</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>site/getSiteReservationBatch">场地批量预订</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>order/getOrderList?orderServiceTypes=100,200">场地预订订单</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>site/getSiteInfos">场地设置</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>site/getSiteSports">场地类型设置</a></li>
                     </ul>
                 </li>
                 <li>
@@ -119,13 +119,13 @@
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="/good/getGoodsMarket">商品销售</a></li>
-                        <li><a class="J_menuItem" href="/order/getOrderList?orderServiceTypes=300">商品订单</a></li>
-                        <li><a class="J_menuItem" href="/good/typeGood">商品类别设置</a></li>
-                        <li><a class="J_menuItem" href="/good/settingGood">商品设置</a></li>
-                        <li><a class="J_menuItem" href="/good/getGoods">商品查询</a></li>
-                        <li><a class="J_menuItem" href="/good/getGoodsStock?countNum=21">商品进销存</a></li>
-                        <li><a class="J_menuItem" href="/good/getGoodsStockDetails?countNum=21">商品操作明细</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>good/getGoodsMarket">商品销售</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>order/getOrderList?orderServiceTypes=300">商品订单</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>good/typeGood">商品类别设置</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>good/settingGood">商品设置</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>good/getGoods">商品查询</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>good/getGoodsStock?countNum=21">商品进销存</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>good/getGoodsStockDetails?countNum=21">商品操作明细</a></li>
                     </ul>
                 </li>
                 <li class="line dk"></li>
@@ -137,11 +137,11 @@
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="/data/getMembersRegister?countNum=21">会员办理统计</a></li>
-                        <li><a class="J_menuItem" href="/data/getBusinessIncomeLog?countNum=21">营业流水日志</a></li>
-                        <li><a class="J_menuItem" href="/data/getBusinessIncome?countNum=21">营业收支统计</a></li>
-                        <li><a class="J_menuItem" href="/data/getVenuePercentage?countNum=21">场地使用率</a></li>
-                        <li><a class="J_menuItem" href="/data/getMembersAttendance?countNum=21">场地签到记录</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>data/getMembersRegister?countNum=21">会员办理统计</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>data/getBusinessIncomeLog?countNum=21">营业流水日志</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>data/getBusinessIncome?countNum=21">营业收支统计</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>data/getVenuePercentage?countNum=21">场地使用率</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>data/getMembersAttendance?countNum=21">场地签到记录</a></li>
                     </ul>
                 </li>
                 <li class="line dk"></li>
@@ -153,9 +153,9 @@
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="/office/schedule?countNum=21">值班安排</a></li>
-                        <li><a class="J_menuItem" href="/office/getTrainsCourseList">培训课程管理</a></li>
-                        <li><a class="J_menuItem" href="/office/getTrainsClassList">培训班级管理</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>office/schedule?countNum=21">值班安排</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>office/getTrainsCourseList">培训课程管理</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>office/getTrainsClassList">培训班级管理</a></li>
                     </ul>
                 </li>
                 <li class="line dk"></li>
@@ -167,9 +167,9 @@
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="/settings/common">场馆设置</a></li>
-                        <li><a class="J_menuItem" href="/settings/getUsers">员工信息设置</a></li>
-                        <li><a class="J_menuItem" href="/settings/getRoles">员工权限设置</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>settings/common">场馆设置</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>settings/getUsers">员工信息设置</a></li>
+                        <li><a class="J_menuItem" href="<%=basePath%>settings/getRoles">员工权限设置</a></li>
                     </ul>
                 </li>
             </ul>
@@ -288,7 +288,7 @@
                     <li class="J_tabCloseOther"><a>关闭其他选项卡</a></li>
                 </ul>
             </div>
-            <a href="/passport/login" class="roll-nav roll-right J_tabExit"><i class="fa fa-sign-out"></i> 退出</a>
+            <a href="<%=basePath%>passport/login" class="roll-nav roll-right J_tabExit"><i class="fa fa-sign-out"></i> 退出</a>
         </div>
         <div class="row J_mainContent" id="content-main">
             <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="/member/memberList" frameborder="0"

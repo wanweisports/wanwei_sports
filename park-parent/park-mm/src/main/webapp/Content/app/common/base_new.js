@@ -6,7 +6,7 @@
         e.preventDefault();
 
         //alert("成功登出");
-        location.assign('/passport/login');
+        location.assign('passport/login');
     });*/
 
     // 初始化数据
@@ -21,7 +21,7 @@
             user = JSON.parse(user);
             $(".top-menu-username").text(user.operatorName);
         } else {
-            $.post('/passport/getUserProfile', function (res) {
+            $.post('passport/getUserProfile', function (res) {
                 var data = res.data;
 
                 if (res.code == 1) {
@@ -34,7 +34,7 @@
         // 获取营运时间
         var businessTime = $.cookie('wc-business-time');
         if (!businessTime) {
-            $.post('/settings/getBusinessTime', function (res) {
+            $.post('settings/getBusinessTime', function (res) {
                 var data = res.data;
 
                 if (res.code == 1) {
@@ -54,7 +54,7 @@
         }
 
         // 获取未读信息条数
-        $.post('/office/getNotReadMessageCount', function (res) {
+        $.post('office/getNotReadMessageCount', function (res) {
             var data = res.data;
 
             if (res.code == 1 && data.count > 0) {

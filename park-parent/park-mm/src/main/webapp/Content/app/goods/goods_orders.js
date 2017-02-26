@@ -1,7 +1,7 @@
 (function ($) {
     var Orders_List = {
         opts: {
-            URL: '/order/getOrderList?orderServiceTypes=300'
+            URL: 'order/getOrderList?orderServiceTypes=300'
         },
         init: function () {
             this.initEvents();
@@ -49,7 +49,7 @@
                 }
                 $(this).attr("working", "working");
 
-                $.post('/order/cancelOrder', conditions, function (res) {
+                $.post('order/cancelOrder', conditions, function (res) {
                     $(this).attr("working", "");
 
                     if (res.code == 1) {
@@ -74,7 +74,7 @@
                 }
                 $(this).attr("working", "working");
 
-                $.post('/order/deleteOrder', conditions, function (res) {
+                $.post('order/deleteOrder', conditions, function (res) {
                     $(this).attr("working", "");
 
                     if (res.code == 1) {
@@ -107,7 +107,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/good/confirmOrder', conditions, function (res) {
+                $.post('good/confirmOrder', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {

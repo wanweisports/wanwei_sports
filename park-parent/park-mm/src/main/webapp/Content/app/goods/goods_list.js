@@ -1,7 +1,7 @@
 (function ($) {
     var Good_List = {
         opts: {
-            URL: '/good/getGoods'
+            URL: 'good/getGoods'
         },
         init: function () {
             this.initEvents();
@@ -33,13 +33,13 @@
                         location.assign(location.href.replace(/page=\d+/, "") + '&page=' + $(this).attr("data-index"));
                     }
                 } else {
-                    location.assign('/good/getGoods?page=' + $(this).attr("data-index"));
+                    location.assign('good/getGoods?page=' + $(this).attr("data-index"));
                 }
             });
 
             // 上/下架
             function goodInOrOut(goodId, up){
-                $.post("/good/goodInOrOut", {goodId: goodId, up: up}, function (res) {
+                $.post("good/goodInOrOut", {goodId: goodId, up: up}, function (res) {
                     if(res.code == 1){
                         location.reload();
                     }else{
@@ -98,7 +98,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post("/good/addGoodCount", conditions, function (res) {
+                $.post("good/addGoodCount", conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
@@ -138,7 +138,7 @@
 
                 $form.attr("submitting", "submitting");
 
-                $.post("/good/minusGoodCount", conditions, function (res) {
+                $.post("good/minusGoodCount", conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {

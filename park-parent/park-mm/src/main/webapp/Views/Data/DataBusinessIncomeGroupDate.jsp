@@ -31,11 +31,11 @@
                 <form id="data_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="/data/getBusinessIncome?countNum=10" data-count="10" class="btn btn-primary member-date">全部</a>
-                            <a href="/data/getBusinessIncome?countNum=1" data-count="1" class="btn btn-default member-date">今日</a>
-                            <a href="/data/getBusinessIncome?countNum=2" data-count="2" class="btn btn-default member-date">昨日</a>
-                            <a href="/data/getBusinessIncome?countNum=3" data-count="3" class="btn btn-default member-date">本周</a>
-                            <a href="/data/getBusinessIncome?countNum=4" data-count="4" class="btn btn-default member-date">本月</a>
+                            <a href="<%=basePath%>data/getBusinessIncome?countNum=10" data-count="10" class="btn btn-primary member-date">全部</a>
+                            <a href="<%=basePath%>data/getBusinessIncome?countNum=1" data-count="1" class="btn btn-default member-date">今日</a>
+                            <a href="<%=basePath%>data/getBusinessIncome?countNum=2" data-count="2" class="btn btn-default member-date">昨日</a>
+                            <a href="<%=basePath%>data/getBusinessIncome?countNum=3" data-count="3" class="btn btn-default member-date">本周</a>
+                            <a href="<%=basePath%>data/getBusinessIncome?countNum=4" data-count="4" class="btn btn-default member-date">本月</a>
                         </div>
                     </div>
                     <div class="form-group">
@@ -55,7 +55,7 @@
                         <a href="javascript:;" class="btn btn-danger">
                             <span class="glyphicon glyphicon-download"></span> 下载图片
                         </a>
-                        <a href="/data/getMembersRegisterGroupDate" class="btn btn-primary">
+                        <a href="<%=basePath%>data/getMembersRegisterGroupDate" class="btn btn-primary">
                             <span class="glyphicon glyphicon-stats"></span> 图表显示
                         </a>
                     </div>

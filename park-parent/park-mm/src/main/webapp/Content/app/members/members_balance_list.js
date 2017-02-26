@@ -1,7 +1,7 @@
 (function ($) {
     var Members_Balance_List = {
         opts: {
-            URL: '/member/getBalances'
+            URL: 'member/getBalances'
         },
         init: function () {
             this.initEvents();

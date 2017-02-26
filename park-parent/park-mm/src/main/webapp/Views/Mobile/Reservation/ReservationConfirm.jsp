@@ -68,7 +68,7 @@
             </div>
         </div>
         <div class="weui-btn-area">
-            <a class="weui-btn weui-btn_primary" href="/mobile/reservation/result">确认支付</a>
+            <a class="weui-btn weui-btn_primary" href="<%=basePath%>mobile/reservation/result">确认支付</a>
             <a class="weui-btn weui-btn_default" href="javascript:">继续选择场地</a>
         </div>
     </div>

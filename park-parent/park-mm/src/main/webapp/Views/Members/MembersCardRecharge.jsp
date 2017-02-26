@@ -80,7 +80,7 @@
                                            value="<c:if test='${cardBalance != null}'>${cardBalance}元</c:if>" disabled>
                                     <span class="input-group-btn">
                                         <c:if test="${cardNo != null}">
-                                        <a class="btn btn-primary" href="/member/getBalances?cardId=${cardId}&memberId=${memberId}">
+                                        <a class="btn btn-primary" href="<%=basePath%>member/getBalances?cardId=${cardId}&memberId=${memberId}">
                                             <i class="glyphicon glyphicon-th-list"></i> 明细
                                         </a>
                                         </c:if>

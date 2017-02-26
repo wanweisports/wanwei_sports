@@ -37,7 +37,7 @@
                         </a>
                     </div>
                     <div class="form-group pull-right">
-                        <a href="/settings/getRolesView" class="btn btn-primary">
+                        <a href="<%=basePath%>settings/getRolesView" class="btn btn-primary">
                             <span class="glyphicon glyphicon-plus"></span> 添加员工权限
                         </a>
                     </div>
@@ -74,7 +74,7 @@
                                 <td>${role.operatorName}</td>
                                 <td>${role.createTime}</td>
                                 <td>
-                                    <a class="btn btn-primary" href="/settings/getRolesView?roleId=${role.roleId}">
+                                    <a class="btn btn-primary" href="<%=basePath%>settings/getRolesView?roleId=${role.roleId}">
                                         <span class="glyphicon glyphicon-share-alt"></span>  查看
                                     </a>
                                 </td>

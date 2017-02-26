@@ -105,14 +105,14 @@
                                 <c:if test="${item.signClass == 1}">
                                     <td class="text-success">${item.startTime} 至 ${item.endTime}</td>
                                     <td class="text-success">
-                                        <a href="/office/getTrainsStudents?classId=${item.id}">${item.studentsCount}名</a>
+                                        <a href="<%=basePath%>office/getTrainsStudents?classId=${item.id}">${item.studentsCount}名</a>
                                     </td>
                                     <td class="text-success">报名中</td>
                                 </c:if>
                                 <c:if test="${item.signedClass == 1}">
                                     <td class="text-muted">${item.startTime} 至 ${item.endTime}</td>
                                     <td class="text-muted">
-                                        <a href="/office/getTrainsStudents?classId=${item.id}">${item.studentsCount}名</a>
+                                        <a href="<%=basePath%>office/getTrainsStudents?classId=${item.id}">${item.studentsCount}名</a>
                                     </td>
                                     <td class="text-muted">已结束</td>
                                 </c:if>

@@ -51,7 +51,7 @@
         }
         $form.attr("submitting", "submitting");
 
-        $.post('/mobile/passport/userLogin', conditions, function (res) {
+        $.post('mobile/passport/userLogin', conditions, function (res) {
             $form.attr("submitting", "");
 
             if (res.code == 1) {

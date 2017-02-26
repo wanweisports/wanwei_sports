@@ -1,7 +1,7 @@
 (function ($) {
     var Orders_List = {
         opts: {
-            URL: '/order/getOrderList?orderServiceTypes=100,200'
+            URL: 'order/getOrderList?orderServiceTypes=100,200'
         },
         init: function () {
             this.initEvents();
@@ -50,7 +50,7 @@
                 }
                 $(this).attr("working", "working");
 
-                $.post('/order/cancelOrder', conditions, function (res) {
+                $.post('order/cancelOrder', conditions, function (res) {
                     $(this).attr("working", "");
 
                     if (res.code == 1) {
@@ -75,7 +75,7 @@
                 }
                 $(this).attr("working", "working");
 
-                $.post('/order/deleteOrder', conditions, function (res) {
+                $.post('order/deleteOrder', conditions, function (res) {
                     $(this).attr("working", "");
 
                     if (res.code == 1) {
@@ -101,7 +101,7 @@
                 }
                 $(this).attr("working", "working");
 
-                $.post('/order/getOrderToPay', conditions, function (res) {
+                $.post('order/getOrderToPay', conditions, function (res) {
                     $(this).attr("working", "");
 
                     var data = res.data;
@@ -135,7 +135,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/site/confirmOrder', conditions, function (res) {
+                $.post('site/confirmOrder', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
@@ -154,7 +154,7 @@
                 return;
             }
 
-            $.post('/member/memberDetail', {memberId: memberId}, function (res) {
+            $.post('member/memberDetail', {memberId: memberId}, function (res) {
                 var data = res.data;
                 var originalPrice = $("#reservations_paid_money").val();
 

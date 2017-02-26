@@ -1,7 +1,7 @@
 (function ($) {
     var Sites_List = {
         opts: {
-            URL: '/site/getSiteInfos'
+            URL: 'site/getSiteInfos'
         },
         init: function () {
             this.initEvents();
@@ -51,7 +51,7 @@
 
                 _resetSitesForm();
 
-                $.post("/site/getSiteInfo", {siteId: $this.attr("data-id")}, function (res) {
+                $.post("site/getSiteInfo", {siteId: $this.attr("data-id")}, function (res) {
                     var data = res.data;
 
                     if (res.code == 1) {
@@ -80,7 +80,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post("/site/saveSiteInfo", conditions, function (res) {
+                $.post("site/saveSiteInfo", conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {

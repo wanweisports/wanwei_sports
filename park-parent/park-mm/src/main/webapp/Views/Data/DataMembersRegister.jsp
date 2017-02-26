@@ -33,10 +33,10 @@
                 <form id="data_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <!--<a href="/data/getMembersRegister?countNum=1" data-count="1" class="btn btn-default member-date">今日</a>-->
-                            <a href="/data/getMembersRegister?countNum=21" data-count="21" class="btn btn-default member-date">本周</a>
-                            <a href="/data/getMembersRegister?countNum=31" data-count="31" class="btn btn-default member-date">本月</a>
-                            <a href="/data/getMembersRegister?countNum=41" data-count="41" class="btn btn-default member-date">本年</a>
+                            <!--<a href="<%=basePath%>data/getMembersRegister?countNum=1" data-count="1" class="btn btn-default member-date">今日</a>-->
+                            <a href="<%=basePath%>data/getMembersRegister?countNum=21" data-count="21" class="btn btn-default member-date">本周</a>
+                            <a href="<%=basePath%>data/getMembersRegister?countNum=31" data-count="31" class="btn btn-default member-date">本月</a>
+                            <a href="<%=basePath%>data/getMembersRegister?countNum=41" data-count="41" class="btn btn-default member-date">本年</a>
                         </div>
                     </div>
                     <!--<div class="form-group">

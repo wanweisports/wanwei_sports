@@ -1,7 +1,7 @@
 (function ($, moment) {
     var Goods_Stock_Detail = {
         opts: {
-            URL: '/good/getGoodsStockDetails'
+            URL: 'good/getGoodsStockDetails'
         },
         init: function () {
             this.initEvents();

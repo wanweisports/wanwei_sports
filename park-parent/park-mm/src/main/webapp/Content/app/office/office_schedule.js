@@ -1,7 +1,7 @@
 (function ($) {
     var Office_Schedule = {
         opts: {
-            URL: '/office/schedule'
+            URL: 'office/schedule'
         },
         init: function () {
             $.datetimepicker.setLocale('zh');

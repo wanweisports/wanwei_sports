@@ -22,9 +22,9 @@
     <div id="main" class="container">
         <div class="weui-tab">
             <div class="weui-navbar">
-                <a href="/business/oa/getNotifications?type=2" data-type="2" class="weui-navbar__item note-type weui-bar__item_on">发件箱</a>
-                <a href="/business/oa/getNotifications?type=1" data-type="1" class="weui-navbar__item note-type">草稿箱</a>
-                <a href="/business/oa/getNotifications?type=4" data-type="4" class="weui-navbar__item note-type">垃圾箱</a>
+                <a href="<%=basePath%>business/oa/getNotifications?type=2" data-type="2" class="weui-navbar__item note-type weui-bar__item_on">发件箱</a>
+                <a href="<%=basePath%>business/oa/getNotifications?type=1" data-type="1" class="weui-navbar__item note-type">草稿箱</a>
+                <a href="<%=basePath%>business/oa/getNotifications?type=4" data-type="4" class="weui-navbar__item note-type">垃圾箱</a>
             </div>
             <div class="weui-tab__panel">
                 <c:forEach var="note" items="${list}">
@@ -53,7 +53,7 @@
                             <a class="weui-form-preview__btn weui-form-preview__btn_default" data-id="${note.noteId}"
                                href="javascript:;">删 除</a>
                             <a class="weui-form-preview__btn weui-form-preview__btn_primary" data-id="${note.noteId}"
-                               href="/business/oa/notificationsDetail?noteId=${note.noteId}">查看消息</a>
+                               href="<%=basePath%>business/oa/notificationsDetail?noteId=${note.noteId}">查看消息</a>
                         </div>
                     </div>
                 </c:forEach>

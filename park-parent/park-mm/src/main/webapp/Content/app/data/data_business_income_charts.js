@@ -1,7 +1,7 @@
 (function ($) {
     var Members_Register = {
         opts: {
-            URL: '/data/getBusinessIncomeGroupByDate'
+            URL: 'data/getBusinessIncomeGroupByDate'
         },
         init: function () {
             this.initEvents();

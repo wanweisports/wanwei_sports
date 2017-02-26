@@ -32,11 +32,11 @@
                 <form id="data_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="/data/getBusinessIncome?countNum=11" data-count="11" class="btn btn-default member-date">今日</a>
-                            <a href="/data/getBusinessIncome?countNum=10" data-count="10" class="btn btn-default member-date">昨日</a>
-                            <a href="/data/getBusinessIncome?countNum=21" data-count="21" class="btn btn-default member-date">本周</a>
-                            <a href="/data/getBusinessIncome?countNum=31" data-count="31" class="btn btn-default member-date">本月</a>
-                            <a href="/data/getBusinessIncome?countNum=41" data-count="41" class="btn btn-default member-date">本年</a>
+                            <a href="<%=basePath%>data/getBusinessIncome?countNum=11" data-count="11" class="btn btn-default member-date">今日</a>
+                            <a href="<%=basePath%>data/getBusinessIncome?countNum=10" data-count="10" class="btn btn-default member-date">昨日</a>
+                            <a href="<%=basePath%>data/getBusinessIncome?countNum=21" data-count="21" class="btn btn-default member-date">本周</a>
+                            <a href="<%=basePath%>data/getBusinessIncome?countNum=31" data-count="31" class="btn btn-default member-date">本月</a>
+                            <a href="<%=basePath%>data/getBusinessIncome?countNum=41" data-count="41" class="btn btn-default member-date">本年</a>
                         </div>
                     </div>
                     <div class="form-group">
@@ -60,7 +60,7 @@
                         <a href="#check_money_modal" class="btn btn-warning" data-toggle="modal" data-backdrop="false">
                             <span class="glyphicon glyphicon-eye-open"></span> 核对财务
                         </a>
-                        <a href="/data/getBusinessIncomeGroupDate" class="btn btn-primary" style="display: none;">
+                        <a href="<%=basePath%>data/getBusinessIncomeGroupDate" class="btn btn-primary" style="display: none;">
                             <span class="glyphicon glyphicon-stats"></span> 图表显示
                         </a>
                     </div>

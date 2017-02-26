@@ -1,7 +1,7 @@
 (function ($) {
     var Business_Income = {
         opts: {
-            URL: '/data/getBusinessIncomeLog'
+            URL: 'data/getBusinessIncomeLog'
         },
         init: function () {
             this.initEvents();
@@ -48,7 +48,7 @@
                         location.assign(location.href.replace(/page=\d+/, "") + '&page=' + $(this).attr("data-index"));
                     }
                 } else {
-                    location.assign('/data/getBusinessIncomeLog?page=' + $(this).attr("data-index"));
+                    location.assign('data/getBusinessIncomeLog?page=' + $(this).attr("data-index"));
                 }
             });
         }

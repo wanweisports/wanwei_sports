@@ -61,7 +61,7 @@
                     var cardNo = elm.data('label');
 
                     $('#card_no').val(cardNo);
-                    location.assign('/member/getMembersCardRefresh?cardNo=' + cardNo);
+                    location.assign('member/getMembersCardRefresh?cardNo=' + cardNo);
                 }
             });
 
@@ -81,7 +81,7 @@
 
                     if (res.code == 1) {
                         if (data && data.members && data.members.length > 0) {
-                            location.assign('/member/getMembersCardRefresh?cardNo='
+                            location.assign('member/getMembersCardRefresh?cardNo='
                                 + data.members[0].cardNo);
                         } else {
                             $.tipsWarningAlert('没有搜索到会员');
@@ -119,7 +119,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/member/memberCardBuBan', conditions, function (res) {
+                $.post('member/memberCardBuBan', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {

@@ -45,8 +45,8 @@
                     </div>
 
                     <div class="weui-btn-area">
-                        <a class="weui-btn weui-btn_primary" href="/business/training/create">直接创建班级</a>
-                        <a class="weui-btn weui-btn_plain-primary" href="/business/dashboard">返回首页</a>
+                        <a class="weui-btn weui-btn_primary" href="<%=basePath%>business/training/create">直接创建班级</a>
+                        <a class="weui-btn weui-btn_plain-primary" href="<%=basePath%>business/dashboard">返回首页</a>
                     </div>
                 </c:if>
 
@@ -54,13 +54,13 @@
                     <div class="weui-flex class-buttons">
                         <div class="weui-flex__item">
                             <div class="class-btn">
-                                <a class="weui-btn weui-btn_plain-primary" href="/business/dashboard">返回首页</a>
+                                <a class="weui-btn weui-btn_plain-primary" href="<%=basePath%>business/dashboard">返回首页</a>
                             </div>
                         </div>
                         <div class="weui-flex__item">&nbsp;</div>
                         <div class="weui-flex__item">
                             <div class="class-btn">
-                                <a class="weui-btn weui-btn_primary" href="/business/training/create">创建班级</a>
+                                <a class="weui-btn weui-btn_primary" href="<%=basePath%>business/training/create">创建班级</a>
                             </div>
                         </div>
                     </div>
@@ -69,7 +69,7 @@
                 <c:forEach var="item" items="${list}">
                     <div class="weui-panel weui-panel_access">
                         <div class="weui-panel__bd">
-                            <a href="/business/training/students?classId=${item.id}" class="weui-media-box weui-media-box_appmsg">
+                            <a href="<%=basePath%>business/training/students?classId=${item.id}" class="weui-media-box weui-media-box_appmsg">
                                 <div class="weui-media-box__hd">
                                     <c:choose>
                                         <c:when test="${item.courseName == shuttercock}">
@@ -104,7 +104,7 @@
                             </a>
                         </div>
                         <div class="weui-panel__ft">
-                            <a href="/business/training/students?classId=${item.id}" class="weui-cell weui-cell_access weui-cell_link">
+                            <a href="<%=basePath%>business/training/students?classId=${item.id}" class="weui-cell weui-cell_access weui-cell_link">
                                 <c:if test="${item.unSignClass == 1}">
                                     <div class="weui-cell__bd">报名人数: 0</div>
                                     <span class="weui-cell__ft stress-color">未开始</span>

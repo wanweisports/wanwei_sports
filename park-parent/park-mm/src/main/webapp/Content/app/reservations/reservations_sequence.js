@@ -169,7 +169,7 @@
                 $sequence.find("tr.timing-body").find("td:not(.time)").removeClass().addClass("disabled").addClass("time-end").html("");
             }
 
-            $.post('/site/dynamicSiteReservation', {
+            $.post('site/dynamicSiteReservation', {
                 siteDate: content.opts.Current_Date,
                 sportId: content.opts.Current_Sport
             }, function (res) {
@@ -530,7 +530,7 @@
                         siteReserveTimeList: data
                     }]
                 };
-                $.post('/site/lockSite', {
+                $.post('site/lockSite', {
                     siteOperationJson: JSON.stringify(content.opts.data),
                     lock: true
                 }, function (res) {
@@ -568,7 +568,7 @@
                         siteReserveTimeList: data
                     }]
                 };
-                $.post('/site/lockSite', {
+                $.post('site/lockSite', {
                     siteOperationJson: JSON.stringify(content.opts.data),
                     lock: false
                 }, function (res) {
@@ -607,7 +607,7 @@
                     }]
                 };
 
-                $.post('/site/calculateSiteMoney', {
+                $.post('site/calculateSiteMoney', {
                     siteOperationJson: JSON.stringify(content.opts.data)
                 }, function (res) {
                     var data = res.data;
@@ -677,7 +677,7 @@
                     ids.push(data[i].timeId);
                 }
 
-                $.post('/memberSign/memberSign', {
+                $.post('memberSign/memberSign', {
                     signType: $("#attention_user_opType").val(),
                     signMobile: $("#attention_user_mobile").val(),
                     signName: $("#attention_user_name").val(),
@@ -722,7 +722,7 @@
                     data.reserveType = "1";
                     data.reserveModel = "1";
 
-                    $.post('/site/saveReservationSite', {
+                    $.post('site/saveReservationSite', {
                         siteOperationJson: JSON.stringify(data)
                     }, function (res) {
                         $form.attr("submitting", "");
@@ -747,7 +747,7 @@
                     }
                     $form.attr("submitting", "submitting");
 
-                    $.post('/site/confirmOrder', conditions, function (res) {
+                    $.post('site/confirmOrder', conditions, function (res) {
                         $form.attr("submitting", "");
 
                         if (res.code == 1) {
@@ -784,7 +784,7 @@
                 data.reserveType = "1";
                 data.reserveModel = "1";
 
-                $.post('/site/saveReservationSite', {
+                $.post('site/saveReservationSite', {
                     siteOperationJson: JSON.stringify(data)
                 }, function (res) {
                     $form.attr("submitting", "");
@@ -810,7 +810,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/site/confirmOrder', conditions, function (res) {
+                $.post('site/confirmOrder', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
@@ -873,7 +873,7 @@
                 return;
             }
 
-            $.post('/member/memberDetail', {memberId: memberId}, function (res) {
+            $.post('member/memberDetail', {memberId: memberId}, function (res) {
                 var data = res.data;
                 var originalPrice = $("#reservations_paid_money").val();
 

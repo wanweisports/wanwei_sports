@@ -1,7 +1,7 @@
 (function ($) {
     var Settings_Users_List = {
         opts: {
-            URL: '/settings/getUsers'
+            URL: 'settings/getUsers'
         },
         init: function () {
             this.initEvents();

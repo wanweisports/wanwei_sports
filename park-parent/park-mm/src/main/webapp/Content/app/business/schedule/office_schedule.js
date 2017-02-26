@@ -17,6 +17,6 @@
     $(".schedules-select").on('click', ".schedules-week", function (e) {
         e.preventDefault();
 
-        location.assign('/business/office/schedule?countNum=' + ($(this).attr("data-status") || ""));
+        location.assign('business/office/schedule?countNum=' + ($(this).attr("data-status") || ""));
     });
 })(Zepto);

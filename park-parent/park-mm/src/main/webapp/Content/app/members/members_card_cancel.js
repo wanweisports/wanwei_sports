@@ -15,7 +15,7 @@
                     return false;
                 }
 
-                location.assign('/member/getMembersCardCancel?' + conditions);
+                location.assign('member/getMembersCardCancel?' + conditions);
             });
 
             // 会员卡注销
@@ -35,7 +35,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/member/memberCardCancel', conditions, function (res) {
+                $.post('member/memberCardCancel', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {

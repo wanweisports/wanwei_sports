@@ -35,7 +35,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/settings/saveCommon', conditions, function (res) {
+                $.post('settings/saveCommon', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {

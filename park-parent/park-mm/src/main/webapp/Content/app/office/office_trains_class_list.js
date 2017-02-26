@@ -1,7 +1,7 @@
 (function ($, moment) {
     var Office_Trains_Class = {
         opts: {
-            URL: '/office/getTrainsClassList'
+            URL: 'office/getTrainsClassList'
         },
         init: function () {
             this.initEvents();

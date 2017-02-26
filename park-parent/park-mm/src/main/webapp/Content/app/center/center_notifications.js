@@ -1,7 +1,7 @@
 (function ($) {
     var Office_Notifications = {
         opts: {
-            URL: '/center/notifications'
+            URL: 'center/notifications'
         },
         init: function () {
             this.initEvents();

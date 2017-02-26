@@ -24,7 +24,7 @@
                 }
                 $form.attr("submitting", "submitting");
 
-                $.post('/good/saveGoodType', conditions, function (res) {
+                $.post('good/saveGoodType', conditions, function (res) {
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
@@ -44,7 +44,7 @@
 
                 var id = $(this).attr("data-id");
 
-                $.post('/good/goodTypeInfo', {goodTypeId: id}, function (res) {
+                $.post('good/goodTypeInfo', {goodTypeId: id}, function (res) {
                     var data = res.data;
 
                     if (res.code == 1) {

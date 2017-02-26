@@ -40,9 +40,9 @@
                 <form id="data_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="/office/schedule?countNum=20" data-date="20" class="btn btn-default schedule-date">上周</a>
-                            <a href="/office/schedule?countNum=21" data-date="21" class="btn btn-primary schedule-date">本周</a>
-                            <a href="/office/schedule?countNum=22" data-date="22" class="btn btn-default schedule-date">下周</a>
+                            <a href="<%=basePath%>office/schedule?countNum=20" data-date="20" class="btn btn-default schedule-date">上周</a>
+                            <a href="<%=basePath%>office/schedule?countNum=21" data-date="21" class="btn btn-primary schedule-date">本周</a>
+                            <a href="<%=basePath%>office/schedule?countNum=22" data-date="22" class="btn btn-default schedule-date">下周</a>
                         </div>
                     </div>
                     <div class="form-group">

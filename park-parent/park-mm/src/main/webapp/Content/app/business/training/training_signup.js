@@ -28,7 +28,7 @@
         } else {
             $(this).parents(".weui-cell").removeClass("weui-cell_warn");
 
-            $.post('/mobile/training/classInfo', {classId: $(this).val()}, function (res) {
+            $.post('mobile/training/classInfo', {classId: $(this).val()}, function (res) {
                 var data = res.data;
 
                 if (res.code == 1) {
@@ -72,13 +72,13 @@
         }
         $form.attr("submitting", "submitting");
 
-        $.post('/mobile/training/signTrainsStudents', conditions, function (res) {
+        $.post('mobile/training/signTrainsStudents', conditions, function (res) {
             $form.attr("submitting", "");
 
             if (res.code == 1) {
                 //支付
                 $.tipsSuccessAlert('报名成功！', function () {
-                    location.assign('/business/training/students?classId=' + $("#class_id").val());
+                    location.assign('business/training/students?classId=' + $("#class_id").val());
                 });
             } else {
                 $.logConsole('用户报名失败', res.message);
