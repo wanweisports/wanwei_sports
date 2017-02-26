@@ -42,6 +42,8 @@ public class BaseInputView implements Serializable {
     public void setPageSize(Double pageSize) {
         if(pageSize != null) {
             this.pageSize = Double.valueOf(pageSize).intValue();
+        }else{
+            this.pageSize = 0;
         }
     }
 

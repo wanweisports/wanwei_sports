@@ -44,12 +44,13 @@
 
         var $this = $(this);
 
+        var collateCountNum = $("#countNum").val();
         var collateType = $this.attr("data-type");
         var collateStatus = $this.attr("data-status");
         var collateRemark = $this.parent().prev().find("input").val();
         var oldAmount = $this.parent().attr("data-old-amount");
         var collateAmount = $this.parent().prev().prev().find("input").val();
-        $.post("/data/saveCollateInfo", {collateType: collateType, collateStatus: collateStatus, collateRemark: collateRemark, oldAmount: oldAmount, collateAmount: collateAmount}, function (res) {
+        $.post("/data/saveCollateInfo", {collateCountNum: collateCountNum, collateType: collateType, collateStatus: collateStatus, collateRemark: collateRemark, oldAmount: oldAmount, collateAmount: collateAmount}, function (res) {
             alert(res.message);
             if(res.code == 1){
                 window.location.reload(true);

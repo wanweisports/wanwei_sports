@@ -1,14 +1,14 @@
 package com.park.service.impl;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
+import com.park.common.constant.IPlatformConstant;
+import com.park.common.util.StrUtil;
+import com.park.service.IXlsExportImportService;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.POIXMLDocument;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -16,9 +16,12 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
-import com.park.common.constant.IPlatformConstant;
-import com.park.common.util.StrUtil;
-import com.park.service.IXlsExportImportService;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PushbackInputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class XlsExportImportServiceImpl implements IXlsExportImportService {
@@ -39,6 +42,23 @@ public class XlsExportImportServiceImpl implements IXlsExportImportService {
             throw new RuntimeException(e1);
         }
         return workbook;
+        /*try{
+            if (!fin.markSupported()) {
+                fin = new PushbackInputStream(fin, 8);
+            }
+            if (POIFSFileSystem.hasPOIFSHeader(fin)) {
+                return new HSSFWorkbook(fin);
+            }
+            if (POIXMLDocument.hasOOXMLHeader(fin)) {
+                return new XSSFWorkbook(OPCPackage.open(fin));
+            }
+
+            throw new IllegalArgumentException("你的excel版本目前poi解析不了");
+
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }*/
     }
 
     /**
@@ -63,6 +83,7 @@ public class XlsExportImportServiceImpl implements IXlsExportImportService {
 
     @Override
     public Workbook xlsExport(String templateName, List<Map<String, Object>> dataList) {
+        System.out.println(1);
         Workbook workbook = getWorkbook(XlsExportImportServiceImpl.class.getResourceAsStream(ROOT + templateName), templateName);
         writeWorkbook(dataList, workbook, 0, 0, 2, true);
         return workbook;

@@ -161,12 +161,12 @@
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
-            <version>3.12</version>
+            <version>3.15</version>
         </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
-            <version>3.12</version>
+            <version>3.15</version>
         </dependency>
 
 
@@ -545,12 +545,11 @@
             <resource>
                 <targetPath>${project.build.directory}/classes</targetPath>
                 <directory>src/main/resources</directory>
-                <filtering>true</filtering>
+                <filtering>false</filtering>
                 <includes>
                     <include>**/*.xml</include>
                     <include>**/*.properties</include>
                     <include>**/template/*.xlsx</include>
-                    <include>**/*.xlsx</include>
                 </includes>
             </resource>
 

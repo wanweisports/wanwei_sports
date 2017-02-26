@@ -176,7 +176,7 @@ public class DataController extends BaseController {
     	try{
     		model.addAllAttributes(JsonUtils.fromJson(dataInputView));
     		model.addAllAttributes(dataService.getBusinessIncome(dataInputView));
-            model.addAllAttributes(dataService.getCollateInfosMap());
+            model.addAllAttributes(dataService.getCollateInfosMap(dataInputView));
     	}catch (Exception e) {
 			e.printStackTrace();
 		}

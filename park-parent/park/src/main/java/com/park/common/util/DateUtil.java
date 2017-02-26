@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.park.common.constant.IPlatformConstant;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
@@ -298,6 +299,13 @@ public class DateUtil {
 	public static String getDayName(int i){
 		return DAYS[i];
 	}
+
+	public static Date addDate(Date date, int addDay){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, addDay);
+		return cal.getTime();
+	}
 	
 	/** 
      * 获取当月的 天数 
@@ -311,8 +319,11 @@ public class DateUtil {
     }
     
     // 获得本周一0点时间  Date
-    public static Date getTimesWeekmorning() {  
-        Calendar cal = sundaySubOneDay(Calendar.getInstance());
+    public static Date getTimesWeekmorning(Date date) {
+		if(date == null) date = new Date();
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		Calendar cal = sundaySubOneDay(c);
         cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);  
         cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);  
         return cal.getTime();  
@@ -320,16 +331,24 @@ public class DateUtil {
     
     // 获得本周一0点时间  Str
     public static String getTimesWeekmorningStr(){
-     	return dateToString(getTimesWeekmorning(), YYYYMMDDHHMMSS);
+     	return dateToString(getTimesWeekmorning(null), YYYYMMDDHHMMSS);
+	}
+
+	public static String getTimesWeeknightStr(){
+		return dateToString(getTimesWeeknight(null), YYYYMMDD) + IPlatformConstant.time24;
 	}
   
     // 获得本周日24点时间  Str
-    public static String getTimesWeeknight() {  
-        Calendar cal = sundaySubOneDay(Calendar.getInstance());  
-        cal.setTime(getTimesWeekmorning());  
-        cal.add(Calendar.DAY_OF_WEEK, 7);  
-        return dateToString(cal.getTime(), YYYYMMDDHHMMSS);  
-    }
+    public static Date getTimesWeeknight(Date date) {
+		if(date == null) date = new Date();
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+        Calendar cal = sundaySubOneDay(c);
+        cal.setTime(getTimesWeekmorning(null));
+        cal.add(Calendar.DAY_OF_WEEK, 7);
+		cal.add(Calendar.DATE, -1);
+        return cal.getTime();
+	}
     
     public static Calendar sundaySubOneDay(Calendar cal){
     	if(cal.get(Calendar.DAY_OF_WEEK) == 1){
@@ -367,8 +386,39 @@ public class DateUtil {
         cal.setTime(new Date());  
         cal.add(Calendar.YEAR, 1);  
         return dateToString(cal.getTime(), YYYY);
-    } 
-	
+    }
+
+
+	public static List<String> getWeekTimes(Date date) throws Exception{
+		List<String> weekDays = new ArrayList<>();
+
+		Calendar startCal = Calendar.getInstance();
+		startCal.setTime(getTimesWeekmorning(date));
+		Calendar endCal = Calendar.getInstance();
+		endCal.setTime(getTimesWeeknight(date));
+		while (dateToDate(startCal.getTime()).before(dateToDate(endCal.getTime()))) {
+			weekDays.add(dateToString(startCal.getTime(), YYYYMMDD));
+			startCal.add(Calendar.DATE, 1);
+		}
+		weekDays.add(dateToString(endCal.getTime(), YYYYMMDD));
+		return weekDays;
+	}
+
+	public static String getAddMonth(int month) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(new Date());
+		c.add(Calendar.MONTH, month);
+		return dateToString(c.getTime(), YYYYMM);
+	}
+
+	public static String getAddYear(int year) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(new Date());
+		c.add(Calendar.YEAR, year);
+		return dateToString(c.getTime(), YYYY);
+	}
+
+
 	/*
 	 * 注意事项：
 		Calendar 的 month 从 0 开始，也就是全年 12 个月由 0 ~ 11 进行表示。
@@ -381,10 +431,16 @@ public class DateUtil {
 		Calendar.FRIDAY = 6
 		Calendar.SATURDAY = 7 //周六
 	 */
-	public static void main(String[] args) throws ParseException {
-		  
-	    System.out.println(DateUtil.getTimesWeekmorningStr());
-	    System.out.println(DateUtil.getTimesWeeknight());
+	public static void main(String[] args) throws Exception {
+
+		System.out.println(getWeekTimes(null));
+		System.out.println(dateToString(addDate(new Date(), -1), YYYYMMDD));
+		System.out.println(getAddMonth(-1));
+		System.out.println(getAddMonth(0));
+		System.out.println(getAddYear(-1));
+
+		/*System.out.println(DateUtil.getTimesWeekmorningStr());
+	    System.out.println(DateUtil.getTimesWeeknightStr());*/
 		
 		/*Calendar cal = Calendar.getInstance();
 		System.out.println(cal.get(Calendar.DAY_OF_WEEK));

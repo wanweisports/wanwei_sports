@@ -47,8 +47,8 @@ public interface IDataService {
 
 	public void saveCollateInfo(OtherCollateInfo otherCollateInfo);
 
-	public List<OtherCollateInfo> getCollateInfos();
+	public List<OtherCollateInfo> getCollateInfos(DataInputView dataInputView);
 
-	public Map<String, Object> getCollateInfosMap();
+	public Map<String, Object> getCollateInfosMap(DataInputView dataInputView);
 	
 }
