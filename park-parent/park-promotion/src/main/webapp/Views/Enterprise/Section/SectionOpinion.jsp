@@ -23,5 +23,5 @@
 
     </div>
 </div>
-<script src="/Content/app/enterprise/enterprise_opinion.js?v=${static_resource_version}"></script>
+<script src="Content/app/enterprise/enterprise_opinion.js?v=${static_resource_version}"></script>
 <!--//联系我们和意见反馈-->

@@ -34,7 +34,7 @@ label{
 
 /*-- header --*/
 .banner {
-    background: url("/Content/images/banner.jpg") no-repeat 0 0;
+    background: url("../images/banner.jpg") no-repeat 0 0;
     background-size: cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -136,7 +136,7 @@ label{
 	span.menu {
 	  width: 35px;
 	  height: 35px;
-	  background: url(/Content/images/nav.png)no-repeat 0px 0px;
+	  background: url(../images/nav.png)no-repeat 0px 0px;
 	  display: inline-block;
 	  float: right;
 	  cursor: pointer;
@@ -244,7 +244,7 @@ label{
   text-decoration: none;
   width:52px;
   height: 52px;
-  background: transparent url("/Content/images/arrows.png") no-repeat left top;
+  background: transparent url("../images/arrows.png") no-repeat left top;
   margin-top: 4%;
 }
  .callbacks_nav:hover{
@@ -818,17 +818,17 @@ figure.effect-jazz:hover p {
 	transform: rotate(360deg);
 }
 .fb_icon1 {
-    background: url(/Content/images/social.png) no-repeat -2px -2px #55acee;
+    background: url(../images/social.png) no-repeat -2px -2px #55acee;
     width: 40px;
     height: 40px;
 }
 .fb_icon2 {
-    background:url(/Content/images/social.png) no-repeat -43px -2px #3b5998;
+    background:url(../images/social.png) no-repeat -43px -2px #3b5998;
     width: 40px;
     height: 40px;
 }
 .fb_icon3 {
-    background:url(/Content/images/social.png) no-repeat -125px -3px #ea4c89;
+    background:url(../images/social.png) no-repeat -125px -3px #ea4c89;
     width: 40px;
     height: 40px;
 }
@@ -987,7 +987,7 @@ figure.effect-jazz:hover p {
 }
 /*--/review--*/
 #review {
-    background: url("/Content/images/bottom.jpg") no-repeat 0px 0px;
+    background: url("../images/bottom.jpg") no-repeat 0px 0px;
     padding: 5em 0 0 0;
     background-size: cover;
     -o-background-size: cover;
@@ -1041,7 +1041,7 @@ h4.tittle{
     text-align: center;
 }
 .test-left-img{
-	background: url(/Content/images/banner.jpg) no-repeat 0px 0px;
+	background: url(../images/banner.jpg) no-repeat 0px 0px;
     background-size: cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -1262,7 +1262,7 @@ h4.tittle{
 }
 /*--bottom-*/
 .bottom{
-  background: url("/Content/images/bottom.jpg") no-repeat 0px 0px;
+  background: url("../images/bottom.jpg") no-repeat 0px 0px;
   padding: 0em 0 0 0;
   background-size: cover;
   -o-background-size: cover;
@@ -1327,19 +1327,19 @@ h2.sec-head {
 	transform:rotateY(360deg)
 }
 .contact_w3agile ul li a.fb-icon1 {
-    background: url("/Content/images/23.png") no-repeat -4px 0px;
+    background: url("../images/23.png") no-repeat -4px 0px;
 }
 .contact_w3agile ul li a.fb-icon2 {
-    background: url("/Content/images/23.png") no-repeat -5px -38px;
+    background: url("../images/23.png") no-repeat -5px -38px;
 }
 .contact_w3agile ul li a.fb-icon3 {
-    background: url("/Content/images/23.png") no-repeat -5px -73px;
+    background: url("../images/23.png") no-repeat -5px -73px;
 }
 .contact_w3agile ul li a.fb-icon4 {
-    background:url("/Content/images/23.png") no-repeat -8px -116px;
+    background:url("../images/23.png") no-repeat -8px -116px;
 }
 .contact_w3agile ul li a.fb-icon5 {
-    background:url("/Content/images/23.png") no-repeat -5px -154px;
+    background:url("../images/23.png") no-repeat -5px -154px;
 }
 .contact_w3agile form {
     width: 75%;
@@ -2162,7 +2162,7 @@ h4.tittle {
 	span.menu {
 		width: 35px;
 		height: 35px;
-		background: url(/Content/images/nav.png)no-repeat 0px 0px;
+		background: url(../images/nav.png)no-repeat 0px 0px;
 		display: inline-block;
 		float: right;
 		cursor: pointer;
@@ -2500,7 +2500,7 @@ h3.tittle {
 	span.menu {
 		width: 35px;
 		height: 35px;
-		background: url(/Content/images/nav.png)no-repeat 0px 0px;
+		background: url(../images/nav.png)no-repeat 0px 0px;
 		display: inline-block;
 		float: right;
 		cursor: pointer;

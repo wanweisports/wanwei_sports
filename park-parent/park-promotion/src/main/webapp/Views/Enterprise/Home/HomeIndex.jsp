@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <base href="<%= basePath %>">
+    <base href="<%=basePath %>">
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,20 +28,20 @@
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
 
-    <link href="/Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon">
+    <link href="Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon">
 
-    <link href="/Content/lib/bootstrap/bootstrap.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/lib/animate/animate.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/lib/jquery/swipebox/css/swipebox.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/lib/jquery/ui.totop/css/ui.totop.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/lib/ecoicons.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="/Content/lib/style.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/bootstrap/bootstrap.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/animate/animate.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/jquery/swipebox/css/swipebox.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/jquery/ui.totop/css/ui.totop.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/ecoicons.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/lib/style.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 
     <!-- 全局js -->
-    <script src="/Content/lib/jquery/jquery-1.12.3.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/bootstrap/bootstrap.min.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/jquery/jquery.easing.1.3.js?v=${static_resource_version}"></script>
-    <script src="/Content/lib/jquery/ui.totop/js/jquery.ui.totop.min.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/jquery/jquery-1.12.3.min.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/bootstrap/bootstrap.min.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/jquery/jquery.easing.1.3.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/jquery/ui.totop/js/jquery.ui.totop.min.js?v=${static_resource_version}"></script>
 
     <!--/script-->
     <script type="text/javascript">
@@ -57,7 +57,7 @@
     </script>
 
     <!-- swipe box js -->
-    <script src="/Content/lib/jquery/swipebox/js/jquery.swipebox.min.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/jquery/swipebox/js/jquery.swipebox.min.js?v=${static_resource_version}"></script>
     <script type="text/javascript">
         $(function ($) {
             $(".swipebox").swipebox();
@@ -76,7 +76,7 @@
     <%@ include file="../Section/SectionFooter.jsp"%>
 
     <!-- animation-effect -->
-    <script src="/Content/lib/wow/wow.js?v=${static_resource_version}"></script>
+    <script src="Content/lib/wow/wow.js?v=${static_resource_version}"></script>
     <script type="text/javascript">
         new WOW().init();
     </script>

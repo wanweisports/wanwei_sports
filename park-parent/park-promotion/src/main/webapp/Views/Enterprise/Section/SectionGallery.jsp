@@ -10,9 +10,9 @@
         <div class="gallery-grids">
             <div class="col-md-6 baner-top wow fadeInLeft animated animated" data-wow-delay=".5s"
                  style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
-                <a href="/Content/images/g1.jpg?v=${static_resource_version}" class="b-link-stripe b-animate-go  swipebox">
+                <a href="Content/images/g1.jpg?v=${static_resource_version}" class="b-link-stripe b-animate-go  swipebox">
                     <div class="gal-spin-effect vertical ">
-                        <img src="/Content/images/g1.jpg?v=${static_resource_version}" alt=" " />
+                        <img src="Content/images/g1.jpg?v=${static_resource_version}" alt=" " />
                         <div class="gal-text-box">
                             <div class="info-gal-con">
                                 <h4>Interior</h4>
@@ -26,9 +26,9 @@
             </div>
             <div class="col-md-6 baner-top wow fadeInRight animated animated" data-wow-delay=".5s"
                  style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInRight;">
-                <a href="/Content/images/g2.jpg?v=${static_resource_version}" class="b-link-stripe b-animate-go  swipebox">
+                <a href="Content/images/g2.jpg?v=${static_resource_version}" class="b-link-stripe b-animate-go  swipebox">
                     <div class="gal-spin-effect vertical ">
-                        <img src="/Content/images/g2.jpg?v=${static_resource_version}" alt=" " />
+                        <img src="Content/images/g2.jpg?v=${static_resource_version}" alt=" " />
                         <div class="gal-text-box">
                             <div class="info-gal-con">
                                 <h4>Interior</h4>
@@ -42,9 +42,9 @@
             </div>
             <div class="col-md-3 baner-top ban-mar wow fadeInLeft animated animated" data-wow-delay=".5s"
                  style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
-                <a href="/Content/images/c1.jpg?v=${static_resource_version}" class="b-link-stripe b-animate-go  swipebox">
+                <a href="Content/images/c1.jpg?v=${static_resource_version}" class="b-link-stripe b-animate-go  swipebox">
                     <div class="gal-spin-effect vertical ">
-                        <img src="/Content/images/c1.jpg?v=${static_resource_version}" alt=" " />
+                        <img src="Content/images/c1.jpg?v=${static_resource_version}" alt=" " />
                         <div class="gal-text-box">
                             <div class="info-gal-con">
                                 <h4>Interior</h4>
@@ -58,9 +58,9 @@
             </div>
             <div class="col-md-3 baner-top ban-mar wow fadeInLeft animated animated" data-wow-delay=".5s"
                  style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
-                <a href="/Content/images/c2.jpg?v=${static_resource_version}" class="b-link-stripe b-animate-go  swipebox">
+                <a href="Content/images/c2.jpg?v=${static_resource_version}" class="b-link-stripe b-animate-go  swipebox">
                     <div class="gal-spin-effect vertical ">
-                        <img src="/Content/images/c2.jpg?v=${static_resource_version}" alt=" " />
+                        <img src="Content/images/c2.jpg?v=${static_resource_version}" alt=" " />
                         <div class="gal-text-box">
                             <div class="info-gal-con">
                                 <h4>Interior</h4>
@@ -74,9 +74,9 @@
             </div>
             <div class="col-md-3 baner-top ban-mar wow fadeInRight animated animated" data-wow-delay=".5s"
                  style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInRight;">
-                <a href="/Content/images/c3.jpg?v=${static_resource_version}" class="b-link-stripe b-animate-go  swipebox">
+                <a href="Content/images/c3.jpg?v=${static_resource_version}" class="b-link-stripe b-animate-go  swipebox">
                     <div class="gal-spin-effect vertical ">
-                        <img src="/Content/images/c3.jpg?v=${static_resource_version}" alt=" " />
+                        <img src="Content/images/c3.jpg?v=${static_resource_version}" alt=" " />
                         <div class="gal-text-box">
                             <div class="info-gal-con">
                                 <h4>Interior</h4>
@@ -90,9 +90,9 @@
             </div>
             <div class="col-md-3 baner-top ban-mar wow fadeInRight animated animated" data-wow-delay=".5s"
                  style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInRight;">
-                <a href="/Content/images/c4.jpg?v=${static_resource_version}" class="b-link-stripe b-animate-go  swipebox">
+                <a href="Content/images/c4.jpg?v=${static_resource_version}" class="b-link-stripe b-animate-go  swipebox">
                     <div class="gal-spin-effect vertical ">
-                        <img src="/Content/images/c4.jpg?v=${static_resource_version}" alt=" " />
+                        <img src="Content/images/c4.jpg?v=${static_resource_version}" alt=" " />
                         <div class="gal-text-box">
                             <div class="info-gal-con">
                                 <h4>Interior</h4>
@@ -106,9 +106,9 @@
             </div>
             <div class="col-md-6 baner-top wow fadeInLeft animated animated" data-wow-delay=".5s"
                  style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
-                <a href="/Content/images/g7.jpg?v=${static_resource_version}" class="b-link-stripe b-animate-go  swipebox">
+                <a href="Content/images/g7.jpg?v=${static_resource_version}" class="b-link-stripe b-animate-go  swipebox">
                     <div class="gal-spin-effect vertical ">
-                        <img src="/Content/images/g7.jpg?v=${static_resource_version}" alt=" " />
+                        <img src="Content/images/g7.jpg?v=${static_resource_version}" alt=" " />
                         <div class="gal-text-box">
                             <div class="info-gal-con">
                                 <h4>Interior</h4>
@@ -122,9 +122,9 @@
             </div>
             <div class="col-md-6 baner-top wow fadeInRight animated animated" data-wow-delay=".5s"
                  style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInRight;">
-                <a href="/Content/images/g8.jpg?v=${static_resource_version}" class="b-link-stripe b-animate-go  swipebox">
+                <a href="Content/images/g8.jpg?v=${static_resource_version}" class="b-link-stripe b-animate-go  swipebox">
                     <div class="gal-spin-effect vertical ">
-                        <img src="/Content/images/g8.jpg?v=${static_resource_version}" alt=" " />
+                        <img src="Content/images/g8.jpg?v=${static_resource_version}" alt=" " />
                         <div class="gal-text-box">
                             <div class="info-gal-con">
                                 <h4>Interior</h4>

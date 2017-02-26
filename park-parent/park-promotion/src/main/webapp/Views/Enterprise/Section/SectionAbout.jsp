@@ -20,7 +20,7 @@
                 <div class="grid">
                     <div class="h-f">
                         <figure class="effect-jazz">
-                            <img src="/Content/images/s4.jpg?v=${static_resource_version}" alt="img25"/>
+                            <img src="Content/images/s4.jpg?v=${static_resource_version}" alt="img25"/>
                             <figcaption>
                                 <h4>2016.12.12</h4>
                                 <p>When Jazz starts to chase cars, the whole world stands still.</p>
@@ -29,7 +29,7 @@
                     </div>
                     <div class="h-f">
                         <figure class="effect-jazz">
-                            <img src="/Content/images/s3.jpg?v=${static_resource_version}" alt="img25"/>
+                            <img src="Content/images/s3.jpg?v=${static_resource_version}" alt="img25"/>
                             <figcaption>
                                 <h4>2016.12.12</h4>
                                 <p>When Jazz starts to chase cars, the whole world stands still.</p>
@@ -49,7 +49,7 @@
                 <div class="grid">
                     <div class="h-f">
                         <figure class="effect-jazz">
-                            <img src="/Content/images/s1.jpg?v=${static_resource_version}" alt="img25"/>
+                            <img src="Content/images/s1.jpg?v=${static_resource_version}" alt="img25"/>
                             <figcaption>
                                 <h4>2016.12.12</h4>
                                 <p>When Jazz starts to chase cars, the whole world stands still.</p>
@@ -58,7 +58,7 @@
                     </div>
                     <div class="h-f">
                         <figure class="effect-jazz">
-                            <img src="/Content/images/s2.jpg?v=${static_resource_version}" alt="img25"/>
+                            <img src="Content/images/s2.jpg?v=${static_resource_version}" alt="img25"/>
                             <figcaption>
                                 <h4>2016.12.12</h4>
                                 <p>When Jazz starts to chase cars, the whole world stands still.</p>

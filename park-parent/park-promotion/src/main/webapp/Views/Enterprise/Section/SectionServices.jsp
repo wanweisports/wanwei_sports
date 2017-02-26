@@ -12,7 +12,7 @@
                  style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
                 <div class="port-1 effect-3">
                     <div class="image-box">
-                        <img class="img-responsive" src="/Content/images/p4.jpg?v=${static_resource_version}" alt="Image-3">
+                        <img class="img-responsive" src="Content/images/p4.jpg?v=${static_resource_version}" alt="Image-3">
                     </div>
                     <div class="text-desc">
                         <h4>球馆运营管理系统</h4>
@@ -34,7 +34,7 @@
                  style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInRight;">
                 <div class="port-1 effect-3">
                     <div class="image-box">
-                        <img class="img-responsive" src="/Content/images/p2.jpg?v=${static_resource_version}" alt="Image-3">
+                        <img class="img-responsive" src="Content/images/p2.jpg?v=${static_resource_version}" alt="Image-3">
                     </div>
                     <div class="text-desc">
                         <h4>滑雪场运营管理系统</h4>
@@ -56,7 +56,7 @@
                  style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
                 <div class="port-1 effect-3">
                     <div class="image-box">
-                        <img class="img-responsive" src="/Content/images/p1.jpg?v=${static_resource_version}" alt="Image-3">
+                        <img class="img-responsive" src="Content/images/p1.jpg?v=${static_resource_version}" alt="Image-3">
                     </div>
                     <div class="text-desc">
                         <h4>游泳馆运营管理系统</h4>

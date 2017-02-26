@@ -12,7 +12,7 @@
                 <!--网站logo-->
                 <div class="logo">
                     <a href="/enterprise/index">
-                        <h1>场馆<img src="/Content/images/logo.png?v=${static_resource_version}">时代</h1>
+                        <h1>场馆<img src="Content/images/logo.png?v=${static_resource_version}">时代</h1>
                     </a>
                 </div>
                 <!--//网站logo-->
@@ -105,7 +105,7 @@
             </ul>
 
         </div>
-        <script src="/Content/lib/jquery/ResponsiveSlides/responsiveslides.min.js?v=${static_resource_version}"></script>
+        <script src="Content/lib/jquery/ResponsiveSlides/responsiveslides.min.js?v=${static_resource_version}"></script>
         <script>
             $(function () {
                 $("#slider4").responsiveSlides({

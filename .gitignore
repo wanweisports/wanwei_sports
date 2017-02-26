@@ -3,3 +3,6 @@
 park.iml
 park/target/
 park/src/main/webapp/node_modules
+target/
+.class
+.iml
