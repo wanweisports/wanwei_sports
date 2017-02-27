@@ -7,16 +7,13 @@ import static com.park.common.constant.IPlatformConstant.ZHIFUBAO;
 import static com.park.common.constant.IPlatformConstant.ZHIPIAO;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.park.common.bean.SiteInputView;
 import com.park.common.exception.MessageException;
 import com.park.common.po.OtherCollateInfo;
 import com.park.service.ISiteService;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,7 +117,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
     		map.put("data", values);
 		}
     	
-    	resultMap.put("num", num-1);
+    	resultMap.put("num", num - 1);
     	resultMap.put("list", list);
     	resultMap.put("titleList", titleList);
     	return resultMap;
@@ -503,13 +500,125 @@ public class DataServiceImpl extends BaseService implements IDataService {
 	}*/
 
 	@Override
-	public Map<String, Object> getSitePercentage(DataInputView dataInputView) {
+	public Map<String, Object> getSitePercentage(DataInputView dataInputView) throws Exception{
 
-		Integer countNum = dataInputView.getCountNum();
+		Map<String, Object> resultMap = new HashMap<>();
+		SiteInputView siteInputView = new SiteInputView();
+		siteInputView.setSportStatus(IDBConstant.LOGIC_STATUS_YES);
+		List<Map<String, Object>> sports = siteService.getSiteSportNames(siteInputView);
+		int sumSiteCount = (parkService.getBusinessTimePeriod().size()) * getDayNumByCountNum(dataInputView.getCountNum());
+		dataInputView.setSumSiteCount(sumSiteCount);
 
+		List<Map<String, Object>> sumCountList = new ArrayList<>();
+		int sumCountZ = 0, useCountZ = 0;
+		for(Map<String, Object> map : sports){
+			dataInputView.setSportId(StrUtil.objToStr(map.get("sportId")));
+			List<Map<String, Object>> siteUseList = getSiteUseList(dataInputView);
+			int sumCount = 0, useCount = 0;
+			for(Map<String, Object> s : siteUseList){
+				useCount += StrUtil.objToInt(s.get("useCount"));
+			}
+			map.put("sites", siteUseList);
+			map.put("sumSiteCount", sumSiteCount);
 
+			sumCount += StrUtil.objToInt(siteUseList.size()*sumSiteCount);
+			map.put("sumCount", sumCount);
+			map.put("sumUsePercentage", StrUtil.roundKeepTwo(useCount > 0  ? 1.0*useCount/sumCount*100 : 0));
+			sumCountList.add(map);
+			sumCountZ += sumCount;
+			useCountZ += useCount;
+		}
+		Map<String, Object> sumCountMap = new HashMap<>();
+		sumCountMap.put("sportName", "全部");
+		sumCountMap.put("sumCount", sumCountZ);
+		sumCountMap.put("sumUsePercentage", StrUtil.roundKeepTwo(useCountZ > 0  ? 1.0*useCountZ/sumCountZ*100 : 0));
+		sumCountList.add(0, sumCountMap);
 
-		return null;
+		resultMap.put("sports", sports);
+		resultMap.put("sumCountList", sumCountList);
+		return resultMap;
+	}
+
+	private List<Map<String, Object>> getSiteUseList(DataInputView dataInputView) throws Exception {
+
+		String sportId = dataInputView.getSportId();
+		Integer sumSiteCount = dataInputView.getSumSiteCount();
+
+		List<String> dates = getDatesByCountNum(dataInputView.getCountNum());
+		dataInputView.setDates(StrUtil.join(dates, "|"));
+
+		StringBuilder sql = new StringBuilder("SELECT mss.signId, si.siteId, si.siteName, ss.sportName, GROUP_CONCAT(DISTINCT srd.reserveDates) reserveDateStrs ,SUM(siteEndTime-siteStartTime) times, 0 ydCount, 0 ydPercentage, 0 useCount, 0 usePercentage");
+		sql.append(" FROM site_info si");
+		sql.append(" INNER JOIN site_sport ss ON(si.siteType = ss.sportId)");
+		sql.append(" LEFT JOIN site_reserve_time srt ON (si.siteId = srt.siteId)");
+		sql.append(" LEFT JOIN site_reserve_date srd ON(srt.reserveDateId = srd.reserveDateId AND srd.reserveDates REGEXP :dates)");
+		sql.append(" LEFT JOIN member_site_sign mss ON(mss.reserveTimeId = srt.reserveTimeId)");
+		sql.append(" WHERE 1=1");
+		if (StrUtil.isNotBlank(sportId)) {
+			sql.append(" AND ss.sportId = :sportId");
+		}
+		sql.append(" GROUP BY si.siteId ORDER BY si.createTime");
+
+		List<Map<String, Object>> list = baseDao.queryBySql(sql.toString(), JsonUtils.fromJson(dataInputView));
+		for (Map<String, Object> map : list) {
+			String reserveDateStrs = StrUtil.objToStr(map.get("reserveDateStrs"));
+			Integer times = StrUtil.objToInt(map.get("times"));
+			if (StrUtil.isNotBlank(reserveDateStrs)) {
+				List<String> datesClone = (List<String>) ((ArrayList) dates).clone();
+				datesClone.retainAll(Arrays.asList(reserveDateStrs.split(",")));
+				map.put("ydCount", datesClone.size() * times);
+				Double ydCount = StrUtil.objToDoubleDef0(map.get("ydCount"));
+				map.put("ydPercentage", sumSiteCount > 0 ? StrUtil.roundKeepTwo(ydCount / sumSiteCount * 100) : 0);
+				if(map.get("signId") != null) {
+					map.put("useCount", times);
+					map.put("usePercentage", ydCount > 0 ? StrUtil.roundKeepTwo(StrUtil.objToDouble(map.get("useCount")) / ydCount) * 100 : 0);
+				}
+			}
+		}
+		return list;
+	}
+
+	private List<String> getDatesByCountNum(Integer countNum) throws Exception{
+		List<String> dates = new ArrayList<>();
+		Date date = new Date();
+		switch (countNum){
+			case IDBConstant.DATA_DATE_PRE_DAY:
+				dates.add(DateUtil.dateToString(DateUtil.addDate(date, -1), DateUtil.YYYYMMDD));
+				break;
+			case IDBConstant.DATA_DATE_PRE_WEEK:
+				dates = DateUtil.getWeekTimes(DateUtil.addDate(date, -1));
+				break;
+			case IDBConstant.DATA_DATE_WEEK:
+				dates = DateUtil.getWeekTimes(date);
+				break;
+			case IDBConstant.DATA_DATE_PRE_MONTH:
+				dates.add(DateUtil.getAddMonth(-1));
+				break;
+			case IDBConstant.DATA_DATE_PRE_YEAR:
+				dates.add(DateUtil.getAddYear(-1));
+				break;
+		}
+		return dates;
+	}
+
+	private int getDayNumByCountNum(Integer countNum) throws Exception{
+		int days = 0;
+		switch (countNum){
+			case IDBConstant.DATA_DATE_PRE_DAY:
+				days = 1;
+				break;
+			case IDBConstant.DATA_DATE_PRE_WEEK:
+			case IDBConstant.DATA_DATE_WEEK:
+				days = 7;
+				break;
+			case IDBConstant.DATA_DATE_PRE_MONTH:
+				days = DateUtil.getMonthDay(DateUtil.stringToDate(DateUtil.getAddMonth(-1), DateUtil.YYYYMM));
+				break;
+			case IDBConstant.DATA_DATE_PRE_YEAR:
+				days = DateUtil.getYearDay(DateUtil.getAddYear(-1));
+				break;
+		}
+		return days;
 	}
 	
 	@Override

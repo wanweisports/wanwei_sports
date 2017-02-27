@@ -344,7 +344,7 @@ public class DateUtil {
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
         Calendar cal = sundaySubOneDay(c);
-        cal.setTime(getTimesWeekmorning(null));
+        cal.setTime(getTimesWeekmorning(date));
         cal.add(Calendar.DAY_OF_WEEK, 7);
 		cal.add(Calendar.DATE, -1);
         return cal.getTime();
@@ -418,6 +418,18 @@ public class DateUtil {
 		return dateToString(c.getTime(), YYYY);
 	}
 
+	public static int getYearDay(String year){
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, StrUtil.objToInt(year));
+		return cal.getActualMaximum(Calendar.DAY_OF_YEAR);
+	}
+
+	public static int getMonthDay(Date date){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		return calendar.getActualMaximum(Calendar.DATE);
+	}
+
 
 	/*
 	 * 注意事项：
@@ -433,11 +445,17 @@ public class DateUtil {
 	 */
 	public static void main(String[] args) throws Exception {
 
-		System.out.println(getWeekTimes(null));
+		Date date = addDate(new Date(), 2);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		System.out.println( calendar.getActualMaximum(Calendar.DATE));
+
+		/*System.out.println(getWeekTimes(addDate(new Date(), -1)));
 		System.out.println(dateToString(addDate(new Date(), -1), YYYYMMDD));
 		System.out.println(getAddMonth(-1));
 		System.out.println(getAddMonth(0));
 		System.out.println(getAddYear(-1));
+		System.out.println(dateToString(getTimesWeeknight(addDate(new Date(), -1)), null));*/
 
 		/*System.out.println(DateUtil.getTimesWeekmorningStr());
 	    System.out.println(DateUtil.getTimesWeeknightStr());*/

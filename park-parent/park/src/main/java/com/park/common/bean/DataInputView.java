@@ -14,6 +14,8 @@ public class DataInputView extends BaseInputView {
 	private String dictName;
 	private String memberName;
 	private String sportId;
+	private String dates;
+	private Integer sumSiteCount;
 	
 	private Integer[] balanceServiceTypeArr; 
 
@@ -120,5 +122,20 @@ public class DataInputView extends BaseInputView {
 	public void setBalanceServiceTypeArr(Integer[] balanceServiceTypeArr) {
 		this.balanceServiceTypeArr = balanceServiceTypeArr;
 	}
-	
+
+	public String getDates() {
+		return dates;
+	}
+
+	public void setDates(String dates) {
+		this.dates = dates;
+	}
+
+	public Integer getSumSiteCount() {
+		return sumSiteCount;
+	}
+
+	public void setSumSiteCount(Integer sumSiteCount) {
+		this.sumSiteCount = sumSiteCount;
+	}
 }
