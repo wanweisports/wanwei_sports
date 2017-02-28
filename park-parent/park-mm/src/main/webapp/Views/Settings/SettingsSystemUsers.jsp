@@ -46,7 +46,7 @@
                         </a>
                     </div>
                     <div class="form-group pull-right">
-                        <a href="<%=basePath%>settings/getUsersView" class="btn btn-primary">
+                        <a href="/settings/getUsersView" class="btn btn-primary">
                             <span class="glyphicon glyphicon-plus"></span> 添加员工
                         </a>
                     </div>
@@ -85,7 +85,7 @@
                                     <td class="text-danger">锁定</td>
                                 </c:if>
                                 <td>
-                                    <a class="btn btn-primary" href="<%=basePath%>settings/getUsersView?operatorId=${user.operatorId}">
+                                    <a class="btn btn-primary" href="/settings/getUsersView?operatorId=${user.operatorId}">
                                         <span class="glyphicon glyphicon-share-alt"></span>  查看
                                     </a>
                                     <c:if test="${user.status == 1}">

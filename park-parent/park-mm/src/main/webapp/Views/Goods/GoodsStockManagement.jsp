@@ -32,11 +32,11 @@
                 <form class="form-inline" id="goods_filter_form" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <%--<a href="<%=basePath%>good/getGoodsStock?countNum=100" data-count="100" class="btn btn-primary good-date">全部</a>--%>
-                            <a href="<%=basePath%>good/getGoodsStock?countNum=11" data-count="11" class="btn btn-default good-date">今日</a>
-                            <a href="<%=basePath%>good/getGoodsStock?countNum=21" data-count="21" class="btn btn-default good-date">本周</a>
-                            <a href="<%=basePath%>good/getGoodsStock?countNum=31" data-count="31" class="btn btn-default good-date">本月</a>
-                            <a href="<%=basePath%>good/getGoodsStock?countNum=41" data-count="41" class="btn btn-default good-date">本年</a>
+                            <%--<a href="/good/getGoodsStock?countNum=100" data-count="100" class="btn btn-primary good-date">全部</a>--%>
+                            <a href="/good/getGoodsStock?countNum=11" data-count="11" class="btn btn-default good-date">今日</a>
+                            <a href="/good/getGoodsStock?countNum=21" data-count="21" class="btn btn-default good-date">本周</a>
+                            <a href="/good/getGoodsStock?countNum=31" data-count="31" class="btn btn-default good-date">本月</a>
+                            <a href="/good/getGoodsStock?countNum=41" data-count="41" class="btn btn-default good-date">本年</a>
                         </div>
                     </div>
                     <div class="form-group">

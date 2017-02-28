@@ -20,55 +20,55 @@
     </div>
     <div class="weui-flex">
         <div class="weui-grids">
-            <a href="<%=basePath%>business/data/income?countNum=11" class="weui-grid">
+            <a href="/business/data/income?countNum=11" class="weui-grid">
                 <div class="weui-grid__icon">
                     <img src="Content/images/mobile/coins.png?v=${static_resource_version}" alt="营业数据">
                 </div>
                 <p class="weui-grid__label">营业数据</p>
             </a>
-            <a href="<%=basePath%>business/data/venuePercentage?countNum=11" class="weui-grid">
+            <a href="/business/data/venuePercentage?countNum=11" class="weui-grid">
                 <div class="weui-grid__icon">
                     <img src="Content/images/mobile/chart.png?v=${static_resource_version}" alt="场地数据">
                 </div>
                 <p class="weui-grid__label">场地数据</p>
             </a>
-            <a href="<%=basePath%>business/oa/getNotifications?type=2" class="weui-grid">
+            <a href="/business/oa/getNotifications?type=2" class="weui-grid">
                 <div class="weui-grid__icon">
                     <img src="Content/images/mobile/email.png?v=${static_resource_version}" alt="消息通知">
                 </div>
                 <p class="weui-grid__label">消息通知</p>
             </a>
-            <a href="<%=basePath%>business/office/schedule?countNum=21" class="weui-grid">
+            <a href="/business/office/schedule?countNum=21" class="weui-grid">
                 <div class="weui-grid__icon">
                     <img src="Content/images/mobile/calendar.png?v=${static_resource_version}" alt="值班安排">
                 </div>
                 <p class="weui-grid__label">值班安排</p>
             </a>
-            <a href="<%=basePath%>business/training/list" class="weui-grid">
+            <a href="/business/training/list" class="weui-grid">
                 <div class="weui-grid__icon">
                     <img src="Content/images/mobile/classroom.png?v=${static_resource_version}" alt="培训报名">
                 </div>
                 <p class="weui-grid__label">培训管理</p>
             </a>
-            <a href="<%=basePath%>business/passport/profile" class="weui-grid">
+            <a href="/business/passport/profile" class="weui-grid">
                 <div class="weui-grid__icon">
                     <img src="Content/images/mobile/user.png?v=${static_resource_version}" alt="完善信息">
                 </div>
                 <p class="weui-grid__label">完善信息</p>
             </a>
-            <a href="<%=basePath%>business/passport/modifyPassword" class="weui-grid">
+            <a href="/business/passport/modifyPassword" class="weui-grid">
                 <div class="weui-grid__icon">
                     <img src="Content/images/mobile/key.png?v=${static_resource_version}" alt="重置密码">
                 </div>
                 <p class="weui-grid__label">重置密码</p>
             </a>
-            <a href="<%=basePath%>business/oa/getMessage?type=3" class="weui-grid">
+            <a href="/business/oa/getMessage?type=3" class="weui-grid">
                 <div class="weui-grid__icon">
                     <img src="Content/images/mobile/message.png?v=${static_resource_version}" alt="我的消息">
                 </div>
                 <p class="weui-grid__label">我的消息</p>
             </a>
-            <a href="<%=basePath%>business/passport/logout" class="weui-grid">
+            <a href="/business/passport/logout" class="weui-grid">
                 <div class="weui-grid__icon">
                     <img src="Content/images/mobile/logout.png?v=${static_resource_version}" alt="退出登录">
                 </div>

@@ -37,9 +37,9 @@
                     <div class="form-group">
                         <div class="form-group">
                             <div class="btn-group">
-                                <a href="<%=basePath%>site/getSiteInfos" class="btn btn-default site-all">全部场地</a>
+                                <a href="/site/getSiteInfos" class="btn btn-default site-all">全部场地</a>
                                 <c:forEach var="sport" items="${siteSportNames}">
-                                    <a href="<%=basePath%>site/getSiteInfos?sportId=${sport.sportId}" data-id="${sport.sportId}"
+                                    <a href="/site/getSiteInfos?sportId=${sport.sportId}" data-id="${sport.sportId}"
                                        class="btn btn-default site-sport">${sport.sportName}</a>
                                 </c:forEach>
                             </div>

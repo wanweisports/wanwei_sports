@@ -28,11 +28,11 @@
                 <form class="form-inline col-sm-8" id="ticket_filter_form" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="<%=basePath%>member/getInvoices?invoiceOpenState=2&invoiceState=2" data-open="2" data-state="2"
+                            <a href="/member/getInvoices?invoiceOpenState=2&invoiceState=2" data-open="2" data-state="2"
                                class="btn btn-default invoice-status">已登记</a>
-                            <a href="<%=basePath%>member/getInvoices?invoiceOpenState=1&invoiceState=2" data-open="1" data-state="2"
+                            <a href="/member/getInvoices?invoiceOpenState=1&invoiceState=2" data-open="1" data-state="2"
                                class="btn btn-default invoice-status">已开票</a>
-                            <a href="<%=basePath%>member/getInvoices?invoiceOpenState=1&invoiceState=1" data-open="1" data-state="1"
+                            <a href="/member/getInvoices?invoiceOpenState=1&invoiceState=1" data-open="1" data-state="1"
                                class="btn btn-default invoice-status">已领取</a>
                         </div>
                     </div>

@@ -50,7 +50,7 @@
                 <span>场地预订  </span>
                 <div class="sports-list">
                     <c:forEach var="sport" items="${siteSports}">
-                        <a href="<%=basePath%>site/getSiteReservationInfo?sportId=${sport.sportId}" class="btn btn-default sports-item"
+                        <a href="/site/getSiteReservationInfo?sportId=${sport.sportId}" class="btn btn-default sports-item"
                            data-value="${sport.sportId}" data-text="${sport.sportName}">
                             <c:choose>
                                 <c:when test="${sport.sportName == shuttercock}">

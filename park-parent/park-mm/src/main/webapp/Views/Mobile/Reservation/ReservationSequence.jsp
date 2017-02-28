@@ -81,7 +81,7 @@
                     <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">删 除</a>
                 </div>
                 <div class="weui-actionsheet__btn">
-                    <a href="<%=basePath%>mobile/reservation/confirm"
+                    <a href="/mobile/reservation/confirm"
                        class="weui-btn weui-btn_mini weui-btn_primary float-right">支 付</a>
                 </div>
             </div>

@@ -249,7 +249,7 @@
             </div>
             <div class="weui-form-preview__ft">
                 <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:">今日营业数据</a>
-                <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="<%=basePath%>business/data/incomeCompare">历史数据对比</a>
+                <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="/business/data/incomeCompare">历史数据对比</a>
             </div>
         </div>
     </div>

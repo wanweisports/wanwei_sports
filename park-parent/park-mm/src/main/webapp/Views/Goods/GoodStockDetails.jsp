@@ -32,10 +32,10 @@
                 <form class="form-inline" id="goods_filter_form" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="<%=basePath%>good/getGoodsStockDetails?countNum=11" data-count="11" class="btn btn-default stock-date">今日</a>
-                            <a href="<%=basePath%>good/getGoodsStockDetails?countNum=21" data-count="21" class="btn btn-default stock-date">本周</a>
-                            <a href="<%=basePath%>good/getGoodsStockDetails?countNum=31" data-count="31" class="btn btn-default stock-date">本月</a>
-                            <a href="<%=basePath%>good/getGoodsStockDetails?countNum=41" data-count="41" class="btn btn-default stock-date">本年</a>
+                            <a href="/good/getGoodsStockDetails?countNum=11" data-count="11" class="btn btn-default stock-date">今日</a>
+                            <a href="/good/getGoodsStockDetails?countNum=21" data-count="21" class="btn btn-default stock-date">本周</a>
+                            <a href="/good/getGoodsStockDetails?countNum=31" data-count="31" class="btn btn-default stock-date">本月</a>
+                            <a href="/good/getGoodsStockDetails?countNum=41" data-count="41" class="btn btn-default stock-date">本年</a>
                         </div>
                     </div>
                     <div class="form-group">

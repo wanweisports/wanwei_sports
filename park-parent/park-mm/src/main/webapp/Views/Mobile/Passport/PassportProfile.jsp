@@ -73,7 +73,7 @@
         </label>
 
         <div class="weui-btn-area">
-            <a class="weui-btn weui-btn_primary" href="<%=basePath%>mobile/dashboard">保 存</a>
+            <a class="weui-btn weui-btn_primary" href="/mobile/dashboard">保 存</a>
         </div>
     </div>
 </layout:override>

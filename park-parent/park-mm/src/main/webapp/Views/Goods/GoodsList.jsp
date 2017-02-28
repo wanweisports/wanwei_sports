@@ -109,7 +109,7 @@
                                        data-id="${good.goodId}" data-count="${good.goodCount}" data-backdrop="false">
                                         <span class="glyphicon glyphicon-adjust"></span> 损耗
                                     </a>
-                                    <a href="<%=basePath%>good/viewGood?goodId=${good.goodId}" class="btn btn-primary">
+                                    <a href="/good/viewGood?goodId=${good.goodId}" class="btn btn-primary">
                                         <span class="glyphicon glyphicon-share-alt"></span> 查看
                                     </a>
                                 </td>

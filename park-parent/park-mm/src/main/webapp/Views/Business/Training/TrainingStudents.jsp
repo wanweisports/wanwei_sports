@@ -20,7 +20,7 @@
                     <p class="weui-media-box__desc">${classInfo.classRemark}</p>
                     <c:if test="${today >= classInfo.startTime && today <= classInfo.endTime}">
                         <div class="weui-btn-area">
-                            <a class="weui-btn weui-btn_primary" href="<%=basePath%>business/training/signup?classId=${classInfo.id}">学生报名</a>
+                            <a class="weui-btn weui-btn_primary" href="/business/training/signup?classId=${classInfo.id}">学生报名</a>
                         </div>
                     </c:if>
                 </div>
@@ -54,7 +54,7 @@
             </div>
         </div>
         <div class="weui-btn-area">
-            <a class="weui-btn weui-btn_plain-primary" href="<%=basePath%>business/training/list">返回班级列表</a>
+            <a class="weui-btn weui-btn_plain-primary" href="/business/training/list">返回班级列表</a>
         </div>
     </div>
 </layout:override>

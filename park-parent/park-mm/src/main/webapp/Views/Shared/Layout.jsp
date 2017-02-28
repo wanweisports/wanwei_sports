@@ -125,7 +125,7 @@
     <layout:block name="<%=Blocks.BLOCK_TRACE_SCRIPTS%>"/>
 
     <div class="gohome">
-        <a class="animated bounceInUp" href="<%=basePath%>" title="工作面板">
+        <a class="animated bounceInUp" href="/" title="工作面板">
             <i class="fa fa-home"></i>
         </a>
     </div>

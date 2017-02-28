@@ -172,7 +172,7 @@
                                 <div class="input-group">
                                     <input type="text" class="form-control" value="${cardBalance}元" disabled>
                                     <span class="input-group-btn">
-                                        <a class="btn btn-primary" href="<%=basePath%>member/getBalances?cardId=${cardId}&memberId=${memberId}">
+                                        <a class="btn btn-primary" href="/member/getBalances?cardId=${cardId}&memberId=${memberId}">
                                             <i class="glyphicon glyphicon-th-list"></i> 明细
                                         </a>
                                     </span>

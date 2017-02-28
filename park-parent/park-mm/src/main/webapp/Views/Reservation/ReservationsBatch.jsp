@@ -106,7 +106,7 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <div class="col-sm-offset-1 col-sm-11">
-                                <a href="<%=basePath%>members/list" class="btn btn-primary" title="选择会员">
+                                <a href="/members/list" class="btn btn-primary" title="选择会员">
                                     <span class="glyphicon glyphicon-th-list"></span> 选择会员
                                 </a>
                             </div>

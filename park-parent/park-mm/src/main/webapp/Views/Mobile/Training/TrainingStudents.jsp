@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="weui-btn-area">
-            <a class="weui-btn weui-btn_primary" href="<%=basePath%>mobile/training/signup?classId=${classInfo.id}">我要报名</a>
+            <a class="weui-btn weui-btn_primary" href="/mobile/training/signup?classId=${classInfo.id}">我要报名</a>
         </div>
     </div>
 </layout:override>

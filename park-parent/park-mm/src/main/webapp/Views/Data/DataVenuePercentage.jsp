@@ -32,11 +32,11 @@
                 <form class="form-inline" id="data_form" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="<%=basePath%>data/getVenuePercentage?countNum=10" data-count="10" class="btn btn-default venue-date">昨日</a>
-                            <a href="<%=basePath%>data/getVenuePercentage?countNum=20" data-count="20" class="btn btn-default venue-date">上周</a>
-                            <a href="<%=basePath%>data/getVenuePercentage?countNum=21" data-count="21" class="btn btn-default venue-date">本周</a>
-                            <a href="<%=basePath%>data/getVenuePercentage?countNum=30" data-count="30" class="btn btn-default venue-date">上月</a>
-                            <a href="<%=basePath%>data/getVenuePercentage?countNum=40" data-count="40" class="btn btn-default venue-date">去年</a>
+                            <a href="/data/getVenuePercentage?countNum=10" data-count="10" class="btn btn-default venue-date">昨日</a>
+                            <a href="/data/getVenuePercentage?countNum=20" data-count="20" class="btn btn-default venue-date">上周</a>
+                            <a href="/data/getVenuePercentage?countNum=21" data-count="21" class="btn btn-default venue-date">本周</a>
+                            <a href="/data/getVenuePercentage?countNum=30" data-count="30" class="btn btn-default venue-date">上月</a>
+                            <a href="/data/getVenuePercentage?countNum=40" data-count="40" class="btn btn-default venue-date">去年</a>
                         </div>
                     </div>
                     <div class="form-group">
