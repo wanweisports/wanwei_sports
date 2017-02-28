@@ -26,6 +26,8 @@ public interface IDataService {
 	public Map<String, Object> countMembersRegister(List<Map<String, Object>> dataList);
 	
 	public Map<String, Object> getSitePercentage(DataInputView dataInputView)throws Exception;
+
+	public Workbook exportVenuePercentage(DataInputView dataInputView) throws Exception;
 	
 	public PageBean getDataMembersAttendance(DataInputView dataInputView);
 	

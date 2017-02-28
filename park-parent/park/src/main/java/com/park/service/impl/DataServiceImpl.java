@@ -1,28 +1,12 @@
 package com.park.service.impl;
 
-import static com.park.common.constant.IPlatformConstant.WEIXIN;
-import static com.park.common.constant.IPlatformConstant.XIANJIN;
-import static com.park.common.constant.IPlatformConstant.YINLIAN;
-import static com.park.common.constant.IPlatformConstant.ZHIFUBAO;
-import static com.park.common.constant.IPlatformConstant.ZHIPIAO;
-
-import java.text.DecimalFormat;
-import java.util.*;
-
-import com.park.common.bean.SiteInputView;
-import com.park.common.exception.MessageException;
-import com.park.common.po.OtherCollateInfo;
-import com.park.service.ISiteService;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.park.common.bean.DataInputView;
 import com.park.common.bean.PageBean;
+import com.park.common.bean.SiteInputView;
 import com.park.common.constant.IDBConstant;
 import com.park.common.constant.IPlatformConstant;
+import com.park.common.exception.MessageException;
+import com.park.common.po.OtherCollateInfo;
 import com.park.common.util.DateUtil;
 import com.park.common.util.JsonUtils;
 import com.park.common.util.SQLUtil;
@@ -30,7 +14,18 @@ import com.park.common.util.StrUtil;
 import com.park.dao.IBaseDao;
 import com.park.service.IDataService;
 import com.park.service.IParkService;
+import com.park.service.ISiteService;
 import com.park.service.IXlsExportImportService;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.text.DecimalFormat;
+import java.util.*;
+
+import static com.park.common.constant.IPlatformConstant.*;
 
 @Service
 public class DataServiceImpl extends BaseService implements IDataService {
@@ -547,7 +542,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 		List<String> dates = getDatesByCountNum(dataInputView.getCountNum());
 		dataInputView.setDates(StrUtil.join(dates, "|"));
 
-		StringBuilder sql = new StringBuilder("SELECT mss.signId, si.siteId, si.siteName, ss.sportName, GROUP_CONCAT(DISTINCT srd.reserveDates) reserveDateStrs ,SUM(siteEndTime-siteStartTime) times, 0 ydCount, 0 ydPercentage, 0 useCount, 0 usePercentage");
+		StringBuilder sql = new StringBuilder("SELECT mss.signId, si.siteId, si.siteName, ss.sportName, GROUP_CONCAT(DISTINCT srd.reserveDates) reserveDateStrs ,SUM((siteEndTime-siteStartTime)*IF(srd.reserveDates IS NULL, 0, 1)) times, 0 ydCount, 0 ydPercentage, 0 useCount, 0 usePercentage");
 		sql.append(" FROM site_info si");
 		sql.append(" INNER JOIN site_sport ss ON(si.siteType = ss.sportId)");
 		sql.append(" LEFT JOIN site_reserve_time srt ON (si.siteId = srt.siteId)");
@@ -564,18 +559,49 @@ public class DataServiceImpl extends BaseService implements IDataService {
 			String reserveDateStrs = StrUtil.objToStr(map.get("reserveDateStrs"));
 			Integer times = StrUtil.objToInt(map.get("times"));
 			if (StrUtil.isNotBlank(reserveDateStrs)) {
-				List<String> datesClone = (List<String>) ((ArrayList) dates).clone();
-				datesClone.retainAll(Arrays.asList(reserveDateStrs.split(",")));
-				map.put("ydCount", datesClone.size() * times);
-				Double ydCount = StrUtil.objToDoubleDef0(map.get("ydCount"));
-				map.put("ydPercentage", sumSiteCount > 0 ? StrUtil.roundKeepTwo(ydCount / sumSiteCount * 100) : 0);
-				if(map.get("signId") != null) {
-					map.put("useCount", times);
-					map.put("usePercentage", ydCount > 0 ? StrUtil.roundKeepTwo(StrUtil.objToDouble(map.get("useCount")) / ydCount) * 100 : 0);
+				List<String> containsList = StrUtil.getListContainsValue(dates, Arrays.asList(reserveDateStrs.split(",")));
+				if(containsList.size() > 0) {
+					map.put("ydCount", containsList.size() * times);
+					Double ydCount = StrUtil.objToDoubleDef0(map.get("ydCount"));
+					map.put("ydPercentage", sumSiteCount > 0 ? StrUtil.roundKeepTwo(ydCount / sumSiteCount * 100) : 0);
+					if (map.get("signId") != null) {
+						map.put("useCount", times);
+						map.put("usePercentage", ydCount > 0 ? StrUtil.roundKeepTwo(StrUtil.objToDouble(map.get("useCount")) / ydCount) * 100 : 0);
+					}
 				}
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public Workbook exportVenuePercentage(DataInputView dataInputView) throws Exception{
+		Workbook workbook = xlsExportImportService.getWorkbook(XlsExportImportServiceImpl.class.getResourceAsStream(XlsExportImportServiceImpl.ROOT + "template_venue_percentage.xlsx"), IPlatformConstant.EXCEL_EXTENSION_X);
+
+		Map<String, Object> sitePercentage = getSitePercentage(dataInputView);
+		List<Map<String, Object>> sports = (List)sitePercentage.get("sports");
+		for(Map<String, Object> sss : sports){
+			Sheet sheetAt = workbook.createSheet(sss.get("sportName") + "场地");
+			Row row1 = sheetAt.createRow(0);
+			Row row2 = sheetAt.createRow(1);
+			Row row3 = sheetAt.createRow(2);
+			Row row4 = sheetAt.createRow(3);
+			List<Map<String, Object>> sis = (List)sss.get("sites");
+			row1.createCell(0).setCellValue("统计项");
+			row2.createCell(0).setCellValue("总场次");
+			row3.createCell(0).setCellValue("预订场次");
+			row4.createCell(0).setCellValue("使用场次");
+			int c = 1;
+			for(Map<String, Object> si : sis){
+				row1.createCell(c).setCellValue(si.get("siteName").toString());
+				row2.createCell(c).setCellValue(sss.get("sumSiteCount")+"时");
+				row3.createCell(c).setCellValue(si.get("ydCount")+"时("+si.get("ydPercentage")+"%)");
+				row4.createCell(c).setCellValue(si.get("useCount")+"时("+si.get("usePercentage")+"%)");
+				c++;
+			}
+		}
+		workbook.removeSheetAt(0);
+		return workbook;
 	}
 
 	private List<String> getDatesByCountNum(Integer countNum) throws Exception{
@@ -586,7 +612,7 @@ public class DataServiceImpl extends BaseService implements IDataService {
 				dates.add(DateUtil.dateToString(DateUtil.addDate(date, -1), DateUtil.YYYYMMDD));
 				break;
 			case IDBConstant.DATA_DATE_PRE_WEEK:
-				dates = DateUtil.getWeekTimes(DateUtil.addDate(date, -1));
+				dates = DateUtil.getWeekTimes(DateUtil.addDate(date, -7));
 				break;
 			case IDBConstant.DATA_DATE_WEEK:
 				dates = DateUtil.getWeekTimes(date);

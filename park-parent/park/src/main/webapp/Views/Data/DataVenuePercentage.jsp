@@ -48,6 +48,7 @@
                                value="${createTimeEnd}">
                     </div>--%>
                     <div class="form-group">
+                        <input type="hidden" name="countNum" value="${countNum}" />
                         <a href="javascript:;" class="btn btn-primary data-filter">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
