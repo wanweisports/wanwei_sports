@@ -99,7 +99,7 @@ public class TeachersController extends BaseController {
     		memberInputView.setCardTypeId(IDBConstant.CARD_TEACHERS);
     		PageBean pageBean = memberService.getTeachersData(memberInputView);
     		Workbook workbook = xlsExportImportService.xlsExport("template_teachers_venue_data.xlsx", pageBean.getList());
-    		outExcel(response, workbook, "教师用场流水");
+    		//outExcel(response, workbook, "教师用场流水");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -216,7 +216,7 @@ public class DataController extends BaseController {
     		dataInputView.setPageSize(null);
     		PageBean pageBean = dataService.getOtherBalances(dataInputView);
     		Workbook workbook = xlsExportImportService.xlsExport("123.xlsx", pageBean.getList());
-    		outExcel(response, workbook, "营业流水日志");
+    		//outExcel(response, workbook, "营业流水日志");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -239,7 +239,7 @@ public class DataController extends BaseController {
     public void exportBusinessIncome(DataInputView dataInputView, HttpServletResponse response){
     	try {
             Workbook workbook = dataService.exportBusinessIncome(dataInputView);
-            outExcel(response, workbook, "营业收支统计");
+            //outExcel(response, workbook, "营业收支统计");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -252,7 +252,7 @@ public class DataController extends BaseController {
     		dataInputView.setPageSize(null);
     		List list = dataService.getDataMembersAttendance(dataInputView).getList();
     		Workbook workbook = xlsExportImportService.xlsExport("template_members_attendance.xlsx", list);
-    		outExcel(response, workbook, "签到记录统计");
+    		//outExcel(response, workbook, "签到记录统计");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -265,7 +265,7 @@ public class DataController extends BaseController {
     		dataInputView.setPageSize(null);
     		List list = (List) dataService.getSitePercentage(dataInputView).get("list");
     		Workbook workbook = xlsExportImportService.xlsExport("template_venue_percentage.xlsx", list);
-    		outExcel(response, workbook, "场地使用率统计");
+    		//outExcel(response, workbook, "场地使用率统计");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

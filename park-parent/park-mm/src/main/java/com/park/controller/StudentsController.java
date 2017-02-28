@@ -120,7 +120,7 @@ public class StudentsController extends BaseController {
     		studentInputView.setPageSize(null);
     		PageBean pageBean = studentService.getStudentSites(studentInputView);
     		Workbook workbook = xlsExportImportService.xlsExport("template_students_venue_data.xlsx", pageBean.getList());
-    		outExcel(response, workbook, "学生用场流水");
+    		//outExcel(response, workbook, "学生用场流水");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
