@@ -165,4 +165,16 @@ public class StrUtil extends StringUtils {
         return amLong.toString(); 
 	}
 
+    public static List<String> getListContainsValue(List<String> listA, List<String> listB){
+        List<String> containsList = new ArrayList();
+        for (String a : listA){
+            for(String b : listB){
+                if(b.contains(a)){
+                    containsList.add(b);
+                }
+            }
+        }
+        return containsList;
+    }
+
 }

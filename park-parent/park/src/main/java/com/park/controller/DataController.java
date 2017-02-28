@@ -281,8 +281,7 @@ public class DataController extends BaseController {
     public void exportVenuePercentage(DataInputView dataInputView, HttpServletResponse response) {
     	try {
     		dataInputView.setPageSize(null);
-    		List list = (List) dataService.getSitePercentage(dataInputView).get("list");
-    		Workbook workbook = xlsExportImportService.xlsExport("template_venue_percentage.xlsx", list);
+            Workbook workbook = dataService.exportVenuePercentage(dataInputView);
     		outExcel(response, workbook, "场地使用率统计");
 		} catch (Exception e) {
 			e.printStackTrace();

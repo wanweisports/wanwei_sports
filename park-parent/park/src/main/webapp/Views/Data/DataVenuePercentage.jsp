@@ -39,21 +39,16 @@
                             <a href="/data/getVenuePercentage?countNum=40" data-count="40" class="btn btn-default venue-date">去年</a>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <select class="form-control" name="sportName">
-                            <option>场地类型</option>
-                            <option>羽毛球</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
+                    <%--<div class="form-group">
                         <input type="text" class="form-control" id="createTimeStart" name="createTimeStart" placeholder="开始日期"
                                value="${createTimeStart}">
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="createTimeEnd" name="createTimeEnd" placeholder="结束日期"
                                value="${createTimeEnd}">
-                    </div>
+                    </div>--%>
                     <div class="form-group">
+                        <input type="hidden" name="countNum" value="${countNum}" />
                         <a href="javascript:;" class="btn btn-primary data-filter">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
@@ -65,10 +60,10 @@
         <div class="alert alert-info clearfix">
             <ul class="nav nav-pills pull-left">
                 <li style="margin-right: 15px;">场地使用率总计:</li>
-                <c:forEach var="item" items="${sportCountList}">
+                <c:forEach var="item" items="${sumCountList}">
                     <li style="margin-right: 15px;">${item.sportName}
-                        <span class="badge">1000时</span>
-                        <span class="badge">${item.siteUsePercentage * 100}%</span></li>
+                        <span class="badge">${item.sumCount}时</span>
+                        <span class="badge">${item.sumUsePercentage}%</span></li>
                 </c:forEach>
             </ul>
             <div class="pull-right">
@@ -80,165 +75,45 @@
                 </a>
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">羽毛球场地</div>
+        <c:forEach var="c" items="${sports}">
+            <div class="panel panel-default">
+            <div class="panel-heading">${c.sportName}场地</div>
             <div class="panel-body">
                 <div class="table-responsive card-type-list">
                     <table class="table">
                         <thead>
                         <tr class="bg-info">
                             <th>统计项</th>
-                            <th>场地1</th>
-                            <th>场地2</th>
-                            <th>场地3</th>
-                            <th>场地4</th>
-                            <th>场地5</th>
-                            <th>场地6</th>
-                            <th>场地7</th>
+                            <c:forEach var="s" items="${c.sites}">
+                                <th>${s.siteName}</th>
+                            </c:forEach>
                         </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>总场次</td>
-                                <td>98时</td>
-                                <td>98时</td>
-                                <td>98时</td>
-                                <td>98时</td>
-                                <td>98时</td>
-                                <td>98时</td>
-                                <td>98时</td>
+                                <c:forEach var="s" items="${c.sites}">
+                                    <th>${c.sumSiteCount}时</th>
+                                </c:forEach>
                             </tr>
                             <tr>
                                 <td>预订场次</td>
-                                <td>18时(18.36%)</td>
-                                <td>18时(18.36%)</td>
-                                <td>18时(18.36%)</td>
-                                <td>18时(18.36%)</td>
-                                <td>18时(18.36%)</td>
-                                <td>18时(18.36%)</td>
-                                <td>18时(18.36%)</td>
+                                <c:forEach var="s" items="${c.sites}">
+                                    <th>${s.ydCount}时(${s.ydPercentage}%)</th>
+                                </c:forEach>
                             </tr>
                             <tr>
                                 <td>使用场次</td>
-                                <td>18时(100%)</td>
-                                <td>18时(100%)</td>
-                                <td>18时(100%)</td>
-                                <td>18时(100%)</td>
-                                <td>18时(100%)</td>
-                                <td>18时(100%)</td>
-                                <td>18时(100%)</td>
+                                <c:forEach var="s" items="${c.sites}">
+                                    <th>${s.useCount}时(${s.usePercentage}%)</th>
+                                </c:forEach>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">篮球场地</div>
-            <div class="panel-body">
-                <div class="table-responsive card-type-list">
-                    <table class="table">
-                        <thead>
-                        <tr class="bg-info">
-                            <th>统计项</th>
-                            <th>场地1</th>
-                            <th>场地2</th>
-                            <th>场地3</th>
-                            <th>场地4</th>
-                            <th>场地5</th>
-                            <th>场地6</th>
-                            <th>场地7</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>总场次</td>
-                            <td>98时</td>
-                            <td>98时</td>
-                            <td>98时</td>
-                            <td>98时</td>
-                            <td>98时</td>
-                            <td>98时</td>
-                            <td>98时</td>
-                        </tr>
-                        <tr>
-                            <td>预订场次</td>
-                            <td>18时(18.36%)</td>
-                            <td>18时(18.36%)</td>
-                            <td>18时(18.36%)</td>
-                            <td>18时(18.36%)</td>
-                            <td>18时(18.36%)</td>
-                            <td>18时(18.36%)</td>
-                            <td>18时(18.36%)</td>
-                        </tr>
-                        <tr>
-                            <td>使用场次</td>
-                            <td>18时(100%)</td>
-                            <td>18时(100%)</td>
-                            <td>18时(100%)</td>
-                            <td>18时(100%)</td>
-                            <td>18时(100%)</td>
-                            <td>18时(100%)</td>
-                            <td>18时(100%)</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">乒乓球场地</div>
-            <div class="panel-body">
-                <div class="table-responsive card-type-list">
-                    <table class="table">
-                        <thead>
-                        <tr class="bg-info">
-                            <th>统计项</th>
-                            <th>场地1</th>
-                            <th>场地2</th>
-                            <th>场地3</th>
-                            <th>场地4</th>
-                            <th>场地5</th>
-                            <th>场地6</th>
-                            <th>场地7</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>总场次</td>
-                            <td>98时</td>
-                            <td>98时</td>
-                            <td>98时</td>
-                            <td>98时</td>
-                            <td>98时</td>
-                            <td>98时</td>
-                            <td>98时</td>
-                        </tr>
-                        <tr>
-                            <td>预订场次</td>
-                            <td>18时(18.36%)</td>
-                            <td>18时(18.36%)</td>
-                            <td>18时(18.36%)</td>
-                            <td>18时(18.36%)</td>
-                            <td>18时(18.36%)</td>
-                            <td>18时(18.36%)</td>
-                            <td>18时(18.36%)</td>
-                        </tr>
-                        <tr>
-                            <td>使用场次</td>
-                            <td>18时(100%)</td>
-                            <td>18时(100%)</td>
-                            <td>18时(100%)</td>
-                            <td>18时(100%)</td>
-                            <td>18时(100%)</td>
-                            <td>18时(100%)</td>
-                            <td>18时(100%)</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        </c:forEach>
     </div>
 </layout:override>
 
