@@ -144,16 +144,4 @@ public class JsonUtils {
         return resultMap;
     }
 
-    //测试
-    /*public static void main(String[] args) {
-        ZLeidaInputView zLeidaInputView = new ZLeidaInputView();
-        zLeidaInputView.setPageSize(30D);
-        zLeidaInputView.setPage(null);
-        zLeidaInputView.setOrderBy("a");
-        Map<String, Object> map = ZleidaJsonUtils.fromJsonDF(zLeidaInputView);
-        System.out.println(map);
-        ZLeidaInputView zLeidaInputView1 = ZleidaJsonUtils.fromJson(map, ZLeidaInputView.class);
-        System.out.println(zLeidaInputView1.getPageSize());
-    }*/
-
 }

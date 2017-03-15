@@ -169,7 +169,7 @@ public class StrUtil extends StringUtils {
         List<String> containsList = new ArrayList();
         for (String a : listA){
             for(String b : listB){
-                if(b.contains(a)){
+                if(b.contains(a) && !containsList.contains(b)){
                     containsList.add(b);
                 }
             }
