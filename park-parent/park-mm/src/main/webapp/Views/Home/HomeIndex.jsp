@@ -72,7 +72,7 @@
                 <li class="line dk"></li>
 
                 <li>
-                    <a class="J_menuItem" href="/member/memberList" data-index="0">
+                    <a class="J_menuItem" href="/home/dashboard" data-index="0">
                         <i class="fa fa-home"></i>
                         <span class="nav-label">工作面板</span>
                     </a>
@@ -142,6 +142,7 @@
                         <li><a class="J_menuItem" href="/data/getBusinessIncome?countNum=21">营业收支统计</a></li>
                         <li><a class="J_menuItem" href="/data/getVenuePercentage?countNum=21">场地使用率</a></li>
                         <li><a class="J_menuItem" href="/data/getMembersAttendance?countNum=21">场地签到记录</a></li>
+                        <li><a class="J_menuItem" href="/data/getAllReports?countNum=21">常用报表</a></li>
                     </ul>
                 </li>
                 <li class="line dk"></li>
@@ -182,7 +183,7 @@
         <div class="row border-bottom">
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="javascript:;">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-success" href="javascript:;">
                         <i class="fa fa-bars"></i>
                     </a>
                     <form role="search" class="navbar-form-custom" method="post" action="">
@@ -275,7 +276,7 @@
             <button class="roll-nav roll-left J_tabLeft"><i class="fa fa-backward"></i></button>
             <nav class="page-tabs J_menuTabs">
                 <div class="page-tabs-content">
-                    <a href="javascript:;" class="active J_menuTab" data-id="/">首页</a>
+                    <a href="javascript:;" class="active J_menuTab" data-id="/home/dashboard">工作面板</a>
                 </div>
             </nav>
             <button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i></button>
@@ -291,8 +292,8 @@
             <a href="/passport/login" class="roll-nav roll-right J_tabExit"><i class="fa fa-sign-out"></i> 退出</a>
         </div>
         <div class="row J_mainContent" id="content-main">
-            <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="/member/memberList" frameborder="0"
-                    data-id="index_v1.html" seamless></iframe>
+            <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="/home/dashboard" frameborder="0"
+                    data-id="dashboard" seamless></iframe>
         </div>
         <div class="footer">
             <div class="pull-right">Copyright &copy; 2016. 北体高科技有限公司 All rights reserved.</a>

@@ -22,8 +22,8 @@
             $('#user_schedule_form').validate({
                 ignore: ":hidden"
             });
-            $(".schedule-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
-            $(".schedule-date[data-date='${countNum}']").addClass("btn-primary").removeClass("btn-default");
+            $(".schedule-date.btn-success").addClass("btn-default").removeClass("btn-success");
+            $(".schedule-date[data-date='${countNum}']").addClass("btn-success").removeClass("btn-default");
         });
     </script>
 </layout:override>
@@ -41,7 +41,7 @@
                     <div class="form-group">
                         <div class="btn-group">
                             <a href="/office/schedule?countNum=20" data-date="20" class="btn btn-default schedule-date">上周</a>
-                            <a href="/office/schedule?countNum=21" data-date="21" class="btn btn-primary schedule-date">本周</a>
+                            <a href="/office/schedule?countNum=21" data-date="21" class="btn btn-success schedule-date">本周</a>
                             <a href="/office/schedule?countNum=22" data-date="22" class="btn btn-default schedule-date">下周</a>
                         </div>
                     </div>
@@ -54,12 +54,12 @@
                                placeholder="结束日期" value="${createTimeEnd}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary data-filter">
+                        <a href="javascript:;" class="btn btn-success data-filter">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>
                     <div class="form-group pull-right">
-                        <a href="#schedule_modal" class="btn btn-primary add-schedule" data-toggle="modal"
+                        <a href="#schedule_modal" class="btn btn-success add-schedule" data-toggle="modal"
                            data-backdrop="false">
                             <span class="glyphicon glyphicon-plus"></span> 添加值班
                         </a>
@@ -99,7 +99,7 @@
                             <c:forEach var="schedule" items="${data.schedule}" varStatus="loop">
                                 <c:choose>
                                     <c:when test="${loop.index % 5 == 0}">
-                                        <c:set var="bgColor" value="bg-primary" />
+                                        <c:set var="bgColor" value="bg-success" />
                                     </c:when>
                                     <c:when test="${loop.index % 5 == 1}">
                                         <c:set var="bgColor" value="bg-success" />
@@ -219,7 +219,7 @@
                     <button type="button" class="btn btn-danger" id="user_schedule_delete">
                         <span class="glyphicon glyphicon-remove"></span> 删除值班
                     </button>
-                    <button type="button" class="btn btn-primary" id="user_schedule_submit">
+                    <button type="button" class="btn btn-success" id="user_schedule_submit">
                         <span class="glyphicon glyphicon-ok"></span> 保存值班
                     </button>
                 </div>

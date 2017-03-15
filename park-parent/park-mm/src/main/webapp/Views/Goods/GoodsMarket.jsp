@@ -26,12 +26,12 @@
                 <div class="col-sm-12 col-md-10">
                     <div class="btn-group btn-group-justified good-type-list">
                         <div class="btn-group">
-                            <a href="/good/getGoodsMarket?goodType=" class="btn btn-primary"
+                            <a href="/good/getGoodsMarket?goodType=" class="btn btn-success"
                                data-type="">全部商品</a>
                         </div>
                         <c:forEach var="type" items="${goodTypeNames}">
                             <div class="btn-group">
-                                <a href="/good/getGoodsMarket?goodType=${type.goodTypeId}" class="btn btn-primary"
+                                <a href="/good/getGoodsMarket?goodType=${type.goodTypeId}" class="btn btn-success"
                                        data-type="${type.goodTypeId}">${type.goodTypeName}</a>
                             </div>
                         </c:forEach>

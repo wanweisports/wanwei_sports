@@ -42,7 +42,7 @@
                                value="${orderNo}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary receipt-filter">
+                        <a href="javascript:;" class="btn btn-success receipt-filter">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>
@@ -76,7 +76,7 @@
                             <td>51场</td>
                             <td>50场(<span class="text-danger">1场欠款</span>)</td>
                             <td>
-                                <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
+                                <button type="button" class="btn btn-success receipt-dialog" data-toggle="modal"
                                         data-target="#receiptModal" data-backdrop="false">
                                     <span class="glyphicon glyphicon-usd"></span> 收 款
                                 </button>
@@ -91,7 +91,7 @@
                             <td>49场</td>
                             <td>50场</td>
                             <td>
-                                <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
+                                <button type="button" class="btn btn-success receipt-dialog" data-toggle="modal"
                                         data-target="#receiptModal" data-backdrop="false">
                                     <span class="glyphicon glyphicon-usd"></span> 收 款
                                 </button>
@@ -106,7 +106,7 @@
                             <td>15场</td>
                             <td>40场(<span class="text-danger">5场欠款</span>)</td>
                             <td>
-                                <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
+                                <button type="button" class="btn btn-success receipt-dialog" data-toggle="modal"
                                         data-target="#receiptModal" data-backdrop="false">
                                     <span class="glyphicon glyphicon-usd"></span> 收 款
                                 </button>
@@ -121,7 +121,7 @@
                             <td>26场</td>
                             <td>224场</td>
                             <td>
-                                <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
+                                <button type="button" class="btn btn-success receipt-dialog" data-toggle="modal"
                                         data-target="#receiptModal" data-backdrop="false">
                                     <span class="glyphicon glyphicon-usd"></span> 收 款
                                 </button>
@@ -149,7 +149,7 @@
                                         </button>
                                     </c:if>
                                     <c:if test="${loan.oweCount <= 0}">
-                                        <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
+                                        <button type="button" class="btn btn-success receipt-dialog" data-toggle="modal"
                                                 data-target="#receiptModal" data-backdrop="false" data-id="${loan.receivableId}">
                                             <span class="glyphicon glyphicon-usd"></span> 收款
                                         </button>
@@ -308,7 +308,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary receipt-confirm">
+                    <button type="button" class="btn btn-success receipt-confirm">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>

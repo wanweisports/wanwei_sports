@@ -48,7 +48,7 @@
                                 <div data-valmsg-for="search" data-valmsg-replace="true"></div>
                             </div>
                             <div class="col-sm-4">
-                                <a href="javascript:;" class="btn btn-primary member-card-filter">
+                                <a href="javascript:;" class="btn btn-success member-card-filter">
                                     <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                                 </a>
                             </div>
@@ -79,7 +79,7 @@
                                     <input type="text" class="form-control" value="<c:if test='${cardBalance!=null}'>${cardBalance}元</c:if>" disabled>
                                     <span class="input-group-btn">
                                         <c:if test="${cardNo != null}">
-                                        <a class="btn btn-primary" href="/member/getBalances?cardId=${cardId}&memberId=${memberId}">
+                                        <a class="btn btn-success" href="/member/getBalances?cardId=${cardId}&memberId=${memberId}">
                                             <i class="glyphicon glyphicon-th-list"></i> 明细
                                         </a>
                                         </c:if>
@@ -187,7 +187,7 @@
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
                                 <p class="sc-submit-tips"></p>
-                                <button type="button" class="btn btn-primary col-sm-4 refresh-card-submit">
+                                <button type="button" class="btn btn-success col-sm-4 refresh-card-submit">
                                     <span class="glyphicon glyphicon-ok"></span> 确认 & 收款
                                 </button>
                             </div>

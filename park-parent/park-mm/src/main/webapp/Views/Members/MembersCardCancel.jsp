@@ -42,7 +42,7 @@
                                 <div data-valmsg-for="cardNo" data-valmsg-replace="true"></div>
                             </div>
                             <div class="col-sm-4">
-                                <a href="javascript:;" class="btn btn-primary member-card-filter">
+                                <a href="javascript:;" class="btn btn-success member-card-filter">
                                     <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                                 </a>
                             </div>
@@ -135,7 +135,7 @@
                 </form>
             </div>
             <div class="panel-footer" style="overflow: hidden;">
-                <button type="button" class="btn btn-primary cancel-card-submit pull-right">
+                <button type="button" class="btn btn-success cancel-card-submit pull-right">
                     <span class="glyphicon glyphicon-ok"></span> 确认 & 退款
                 </button>
             </div>

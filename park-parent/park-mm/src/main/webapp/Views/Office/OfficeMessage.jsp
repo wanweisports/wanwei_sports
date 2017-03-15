@@ -9,8 +9,8 @@
     <script src="Content/app/office/office_message.js?v=${static_resource_version}"></script>
     <script>
         $(document).ready(function () {
-            $(".note-type.btn-primary").addClass("btn-default").removeClass("btn-primary");
-            $(".note-type[data-type='${type}']").addClass("btn-primary").removeClass("btn-default");
+            $(".note-type.btn-success").addClass("btn-default").removeClass("btn-success");
+            $(".note-type[data-type='${type}']").addClass("btn-success").removeClass("btn-default");
         });
     </script>
 </layout:override>
@@ -26,7 +26,7 @@
             <div class="panel-body">
                 <form id="message_filter_form" class="form-inline" novalidate onsubmit="return false;">
                     <div class="form-group">
-                        <a href="office/getMessage?type=3" data-type="3" class="btn btn-primary note-type">
+                        <a href="office/getMessage?type=3" data-type="3" class="btn btn-success note-type">
                             <span class="glyphicon glyphicon-envelope"></span> 全部消息
                         </a>
                         <a href="office/getMessage?type=31" data-type="31" class="btn btn-default note-type">
@@ -43,7 +43,7 @@
                         <input type="text" class="form-control" name="keywords" placeholder="全文检索..." value="${keywords}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary message-filter">
+                        <a href="javascript:;" class="btn btn-success message-filter">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>
@@ -93,7 +93,7 @@
                                 <td>${note.noteReadTime}</td>
 
                                 <td>
-                                    <a href="#message_content_modal" class="btn btn-primary message-view" data-toggle="modal"
+                                    <a href="#message_content_modal" class="btn btn-success message-view" data-toggle="modal"
                                        data-backdrop="false" data-note="${note.noteId}" data-id="${note.id}">
                                         <span class="glyphicon glyphicon-share-alt"></span> 查看
                                     </a>
@@ -249,7 +249,7 @@
                     <p class="text-danger">您确定要全部标记为已读状态吗?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>

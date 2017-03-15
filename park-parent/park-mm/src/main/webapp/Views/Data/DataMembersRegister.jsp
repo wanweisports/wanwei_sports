@@ -15,8 +15,8 @@
     <script src="Content/app/data/data_members_register.js?v=${static_resource_version}"></script>
     <script>
         $(document).ready(function () {
-            $(".member-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
-            $(".member-date[data-count='${countNum}']").addClass("btn-primary").removeClass("btn-default");
+            $(".member-date.btn-success").addClass("btn-default").removeClass("btn-success");
+            $(".member-date[data-count='${countNum}']").addClass("btn-success").removeClass("btn-default");
         });
     </script>
 </layout:override>
@@ -48,7 +48,7 @@
                                placeholder="结束日期" value="${createTimeEnd}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary data-filter">
+                        <a href="javascript:;" class="btn btn-success data-filter">
                             <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
                         </a>
                     </div>-->

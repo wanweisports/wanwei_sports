@@ -181,8 +181,59 @@ public class MobileController extends BaseController {
         return "Mobile/Reservation/ReservationSequence";
     }
 
+    @NotProtected
+    @ResponseBody
+    @RequestMapping(value = "reservation/query", method = RequestMethod.POST)
+    public ResponseBean queryReservationSites(SiteInputView siteInputView) {
+        try {
+            siteInputView.setSportStatus(IDBConstant.LOGIC_STATUS_YES);
+            List<Map<String, Object>> siteSports = siteService.getSiteSportNames(siteInputView);
+
+            if (siteSports.size() > 0) {
+
+                Integer sportId = siteInputView.getSportId();
+                siteInputView.setSportId(sportId);
+                siteInputView.setSiteStatus(IDBConstant.LOGIC_STATUS_YES);
+                siteInputView.setSportStatus(IDBConstant.LOGIC_STATUS_YES);
+                siteInputView.setPageSize(null); //暂不分页
+                PageBean pageBean = siteService.getMobileReservationSite(siteInputView);
+
+                Map<String, Object> data = new HashMap<String, Object>();
+                data.put("sites", pageBean.getList());
+
+                return new ResponseBean(data);
+
+            }
+            return new ResponseBean(false);
+        } catch (MessageException e) {
+            e.printStackTrace();
+            return new ResponseBean(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseBean(false);
+        }
+    }
+
     // 快速预订
     @NotProtected
+    @RequestMapping("reservation/quick")
+    public String renderReservationQuick(SiteInputView siteInputView, Model model) throws ParseException {
+        siteInputView.setSportStatus(IDBConstant.LOGIC_STATUS_YES);
+        List<Map<String, Object>> siteSports = siteService.getSiteSportNames(siteInputView);
+        if(siteSports.size() > 0){
+            ParkBusiness business = parkService.getBusiness();
+            List<Map<String, Object>> timePeriod = parkService.getTimePeriod(business);
+            model.addAttribute("siteSports", siteSports);
+            model.addAttribute("timePeriod", timePeriod);
+            model.addAttribute("curDate", DateUtil.dateToString(new Date(), null));
+            model.addAllAttributes(JsonUtils.fromJson(siteInputView));
+        }
+
+        return "Mobile/Reservation/ReservationSequence";
+    }
+
+    // 快速预订
+    /*@NotProtected
     @RequestMapping("reservation/quick")
     public String renderReservationQuick(SiteInputView siteInputView, Model model) throws ParseException {
         siteInputView.setSportStatus(IDBConstant.LOGIC_STATUS_YES);
@@ -215,7 +266,7 @@ public class MobileController extends BaseController {
         }
 
         return "Mobile/Reservation/ReservationSequence";
-    }
+    }*/
 
     // 预订支付结果
     @NotProtected

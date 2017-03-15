@@ -51,7 +51,7 @@
                         <input type="text" class="form-control" name="mobile" placeholder="手机号码" value="${mobile}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary order-filter">
+                        <a href="javascript:;" class="btn btn-success order-filter">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>
@@ -140,7 +140,7 @@
                                         </button>
                                     </c:if>
                                     <c:if test="${order.payStatus == 2}">
-                                        <button class="btn btn-primary btn-sm order-pay" data-id="${order.orderId}"
+                                        <button class="btn btn-success btn-sm order-pay" data-id="${order.orderId}"
                                                 data-price="${order.orderSumPrice}">
                                             <span class="glyphicon glyphicon-usd"></span> 支付
                                         </button>
@@ -282,7 +282,7 @@
                                 <div data-valmsg-for="paySumPrice" data-valmsg-replace="true"></div>
                             </div>
                             <div class="col-sm-3">
-                                <button class="btn btn-primary col-sm-12" id="goods_paid_confirm">
+                                <button class="btn btn-success col-sm-12" id="goods_paid_confirm">
                                     <span class="glyphicon glyphicon-ok"></span> 确 定
                                 </button>
                             </div>

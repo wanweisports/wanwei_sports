@@ -90,7 +90,7 @@
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
                                 <p class="sc-submit-tips"></p>
-                                <button type="submit" class="btn btn-primary col-sm-4 roles-save">
+                                <button type="submit" class="btn btn-success col-sm-4 roles-save">
                                     <span class="glyphicon glyphicon-ok"></span> 设置权限
                                 </button>
                             </div>

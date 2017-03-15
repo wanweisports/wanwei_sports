@@ -141,7 +141,7 @@
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
                                 <input type="hidden" name="goodDiscount" value="1">
-                                <button type="button" class="btn btn-primary col-sm-4 goods-setting">
+                                <button type="button" class="btn btn-success col-sm-4 goods-setting">
                                     <span class="glyphicon glyphicon-ok"></span> 设置商品
                                 </button>
                             </div>

@@ -49,7 +49,8 @@
             <div class="col-sm-7">
                 <div class="signin-info">
                     <div class="logopanel m-b">
-                        <h1>场馆<img src="Content/images/logo.png?v=${static_resource_version}">时代</h1>
+                        <h1 style="display: none;">场馆<img src="Content/images/logo.png?v=${static_resource_version}">时代</h1>
+                        <h1>北体</h1>
                     </div>
                     <div class="m-b"></div>
                     <h4>欢迎使用 <strong>场馆运营管理系统</strong></h4>

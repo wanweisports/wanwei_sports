@@ -106,7 +106,7 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <div class="col-sm-offset-1 col-sm-11">
-                                <a href="/members/list" class="btn btn-primary" title="选择会员">
+                                <a href="/members/list" class="btn btn-success" title="选择会员">
                                     <span class="glyphicon glyphicon-th-list"></span> 选择会员
                                 </a>
                             </div>
@@ -234,12 +234,12 @@
                             <p>总场次：<span class="text-danger reservations-batch-totalNum">0</span>时</p>
                         </div>
                         <div class="form-group col-sm-12">
-                            <button type="button" class="btn btn-primary col-sm-12" id="reservations_batch_add">
+                            <button type="button" class="btn btn-success col-sm-12" id="reservations_batch_add">
                                 <span class="glyphicon glyphicon-plus"></span> 预订加场
                             </button>
                         </div>
                         <div class="form-group col-sm-12">
-                            <button type="button" class="btn btn-primary col-sm-12" id="reservations_batch_confirm">
+                            <button type="button" class="btn btn-success col-sm-12" id="reservations_batch_confirm">
                                 <span class="glyphicon glyphicon-usd"></span> 预订确认
                             </button>
                         </div>
@@ -386,7 +386,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
-                                            <button type="button" class="btn btn-primary" id="reservations_paid_confirm">
+                                            <button type="button" class="btn btn-success" id="reservations_paid_confirm">
                                                 <span class="glyphicon glyphicon-ok"></span> 支付
                                             </button>
                                         </div>

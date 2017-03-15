@@ -14,8 +14,8 @@
     <script src="Content/app/goods/goods_stock_management.js?v=${static_resource_version}"></script>
     <script>
         $(document).ready(function () {
-            $(".good-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
-            $(".good-date[data-count='${countNum}']").addClass("btn-primary").removeClass("btn-default");
+            $(".good-date.btn-success").addClass("btn-default").removeClass("btn-success");
+            $(".good-date[data-count='${countNum}']").addClass("btn-success").removeClass("btn-default");
         });
     </script>
 </layout:override>
@@ -32,7 +32,7 @@
                 <form class="form-inline" id="goods_filter_form" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <%--<a href="/good/getGoodsStock?countNum=100" data-count="100" class="btn btn-primary good-date">全部</a>--%>
+                            <%--<a href="/good/getGoodsStock?countNum=100" data-count="100" class="btn btn-success good-date">全部</a>--%>
                             <a href="/good/getGoodsStock?countNum=11" data-count="11" class="btn btn-default good-date">今日</a>
                             <a href="/good/getGoodsStock?countNum=21" data-count="21" class="btn btn-default good-date">本周</a>
                             <a href="/good/getGoodsStock?countNum=31" data-count="31" class="btn btn-default good-date">本月</a>
@@ -57,7 +57,7 @@
                     </div>--%>
                     <div class="form-group">
                         <label>&nbsp;</label>
-                        <a href="javascript:;" class="btn btn-primary goods-filter">
+                        <a href="javascript:;" class="btn btn-success goods-filter">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>

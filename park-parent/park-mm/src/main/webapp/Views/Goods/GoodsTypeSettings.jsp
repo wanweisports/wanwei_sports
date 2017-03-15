@@ -28,7 +28,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">商品类别查询</div>
             <div class="panel-body">
-                <button type="button" class="btn btn-primary good-type-add" data-toggle="modal"
+                <button type="button" class="btn btn-success good-type-add" data-toggle="modal"
                         data-target="#add_modal" data-backdrop="false">
                     <span class="glyphicon glyphicon-plus"></span> 增加商品类别
                 </button>
@@ -55,7 +55,7 @@
                                 <td>${type.goodTypeDescribe}</td>
                                 <td>${type.createTime}</td>
                                 <td>
-                                    <a class="btn btn-primary type-item" href="#add_modal" data-toggle="modal"
+                                    <a class="btn btn-success type-item" href="#add_modal" data-toggle="modal"
                                        data-backdrop="false" data-id="${type.goodTypeId}">
                                         <span class="glyphicon glyphicon-share-alt"></span> 查看
                                     </a>
@@ -106,7 +106,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="save_good_type">
+                    <button type="button" class="btn btn-success" id="save_good_type">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>

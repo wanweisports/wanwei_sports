@@ -15,88 +15,73 @@
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div id="main" class="container">
-        <form class="weui-cells weui-cells_form" id="form">
+        <form class="weui-cells weui-cells_form" id="site_form" onsubmit="return false;">
             <div class="weui-cell weui-cell_select weui-cell_select-after">
                 <div class="weui-cell__hd">
                     <label class="weui-label">场地类型</label>
                 </div>
                 <div class="weui-cell__bd">
-                    <select class="weui-select" name="sportId">
+                    <select class="weui-select" name="sportId" id="site_sport_id">
                         <c:forEach var="sport" items="${siteSports}">
-                            <option <c:if test='${sport.sportId==sportId}'>selected</c:if> value="${sport.sportId}">${sport.sportName}</option>
+                            <option value="${sport.sportId}">${sport.sportName}</option>
                         </c:forEach>
                     </select>
                 </div>
             </div>
             <div class="weui-cell">
-                <div class="weui-cell__hd"><label class="weui-label">预订日期</label></div>
+                <div class="weui-cell__hd">
+                    <label class="weui-label">预订日期</label>
+                </div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="date" placeholder="预订日期" value="${siteDate}" name="siteDate">
+                    <input class="weui-input" type="date" value="${siteDate}" name="siteDate"
+                           id="site_date" placeholder="预订日期">
                 </div>
             </div>
             <div class="weui-cell weui-cell_select weui-cell_select-after">
-                <div class="weui-cell__hd"><label class="weui-label">开始时间</label></div>
+                <div class="weui-cell__hd">
+                    <label class="weui-label">开始时间</label>
+                </div>
                 <div class="weui-cell__bd">
-                    <select class="weui-select" name="startTime">
+                    <select class="weui-select" name="startTime" id="site_start_time">
                         <c:forEach var="time" items="${timePeriod}">
-                            <option <c:if test='${time.startTime==startTime}'>selected</c:if> value="${time.startTime}">${time.startTime}</option>
+                            <option value="${time.startTime}">${time.startTime}</option>
                         </c:forEach>
                     </select>
                 </div>
             </div>
             <div class="weui-cell weui-cell_select weui-cell_select-after">
-                <div class="weui-cell__hd"><label class="weui-label">结束时间</label></div>
+                <div class="weui-cell__hd">
+                    <label class="weui-label">结束时间</label>
+                </div>
                 <div class="weui-cell__bd">
-                    <select class="weui-select" name="endTime">
+                    <select class="weui-select" name="endTime" id="site_end_time">
                         <c:forEach var="time" items="${timePeriod}">
-                            <option <c:if test='${time.endTime==endTime}'>selected</c:if> value="${time.endTime}">${time.endTime}</option>
+                            <option value="${time.endTime}">${time.endTime}</option>
                         </c:forEach>
                     </select>
                 </div>
             </div>
         </form>
         <div class="weui-btn-area">
-            <a class="weui-btn weui-btn_warn" href="javascript:" onclick="window.location.href='/mobile/reservation/quick?'+$('#form').serialize()">确定</a>
+            <a class="weui-btn weui-btn_warn" href="javascript:" id="show_selected_sheet">查看选择结果</a>
         </div>
-        <div class="weui-btn-area">
-            <a class="weui-btn weui-btn_warn" href="javascript:" id="showIOSActionSheet">查看选择结果</a>
-        </div>
-        <div class="weui-grids">
-            <c:forEach var="site" items="${sites}">
-                <a href="javascript:;" class="weui-grid">
-                    <div class="weui-grid__icon">
-                        <img src="Content/images/mobile/stadium.png?v=${static_resource_version}">
-                    </div>
-                    <p class="weui-grid__label">${site.siteName}-${site.sportName}</p>
-                </a>
-            </c:forEach>
-        </div>
+        <div class="weui-grids" id="site_list"></div>
     </div>
 
     <div>
-        <div class="weui-mask" style="display: none;" id="iosMask"></div>
-        <div class="weui-actionsheet" id="iosActionsheet">
+        <div class="weui-mask" style="display: none;" id="show_selected_sheet_mask"></div>
+        <div class="weui-actionsheet" id="show_selected_sheet_action">
             <div class="weui-actionsheet__btns">
                 <div class="weui-actionsheet__btn">
-                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">删 除</a>
+                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn" id="cancel_selected_sheet">删 除</a>
                 </div>
                 <div class="weui-actionsheet__btn">
                     <a href="/mobile/reservation/confirm"
-                       class="weui-btn weui-btn_mini weui-btn_primary float-right">支 付</a>
+                       class="weui-btn weui-btn_mini weui-btn_primary float-right" id="pay_selected_sheet">支 付</a>
                 </div>
             </div>
             <div class="weui-actionsheet__menu">
-                <div class="weui-cells weui-cells_checkbox">
-                    <label class=" weui-cell weui-check__label" for="s11">
-                        <div class="weui-cell__hd">
-                            <input type="checkbox" class="weui-check" name="checkbox1" id="s11" checked="checked">
-                            <i class="weui-icon-checked"></i>
-                        </div>
-                        <div class="weui-cell__bd">
-                            <p>场地1</p>
-                        </div>
-                        <div class="weui-cell__ft">11:00-12:00</div>
-                    </label>
+                <div class="weui-cells weui-cells_checkbox" id="selected_site_list">
                     <label class=" weui-cell weui-check__label" for="s11">
                         <div class="weui-cell__hd">
                             <input type="checkbox" class="weui-check" name="checkbox1" id="s11" checked="checked">

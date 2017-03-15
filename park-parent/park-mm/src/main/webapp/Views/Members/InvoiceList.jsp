@@ -9,9 +9,9 @@
     <script src="Content/app/members/members_invoice_list.js?v=${static_resource_version}"></script>
     <script>
         (function ($) {
-            $(".invoice-status.btn-primary").addClass("btn-default").removeClass("btn-primary");
+            $(".invoice-status.btn-success").addClass("btn-default").removeClass("btn-success");
             $(".invoice-status[data-open='${invoiceOpenState}'][data-state='${invoiceState}']")
-                .addClass("btn-primary").removeClass("btn-default");
+                .addClass("btn-success").removeClass("btn-default");
         })(jQuery);
     </script>
 </layout:override>
@@ -41,7 +41,7 @@
                                placeholder="发票抬头" autocomplete="off" value="${invoiceHeader}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary ticket-filter">
+                        <a href="javascript:;" class="btn btn-success ticket-filter">
                             <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
                         </a>
                     </div>
@@ -53,7 +53,7 @@
                         </button>
                     </c:if>
                     <c:if test="${invoiceOpenState == 1 && invoiceState == 2}">
-                        <button type="button" class="btn btn-primary ticket-print">
+                        <button type="button" class="btn btn-success ticket-print">
                             <span class="glyphicon glyphicon-ok"></span> 确认领票
                         </button>
                     </c:if>
@@ -133,7 +133,7 @@
                                         </button>
                                     </c:if>
                                     <c:if test="${invoice.invoiceOpenState == 1 && invoice.invoiceState == 2}">
-                                        <button type="button" class="btn btn-primary invoice-get-confirm" data-id="${invoice.invoiceId}">
+                                        <button type="button" class="btn btn-success invoice-get-confirm" data-id="${invoice.invoiceId}">
                                             <span class="glyphicon glyphicon-ok"></span> 领票
                                         </button>
                                     </c:if>

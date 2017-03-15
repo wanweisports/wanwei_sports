@@ -78,7 +78,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-4">
-                                <button type="button" class="btn btn-primary col-sm-8 confirm-member">
+                                <button type="button" class="btn btn-success col-sm-8 confirm-member">
                                     <span class="glyphicon glyphicon-ok"></span> 确认添加
                                 </button>
                             </div>
@@ -213,7 +213,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">
                         <span class="glyphicon glyphicon-ok"></span> 导 入
                     </button>
                 </div>

@@ -54,12 +54,12 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary trains-filter">
+                        <a href="javascript:;" class="btn btn-success trains-filter">
                             <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
                         </a>
                     </div>
                     <div class="form-group pull-right">
-                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                        <button type="button" class="btn btn-success" data-toggle="modal"
                                 data-target="#add_class_modal" data-backdrop="false">
                             <span class="glyphicon glyphicon-plus"></span> 添加班级
                         </button>
@@ -119,7 +119,7 @@
                                 <td>${item.leaderName}</td>
                                 <td>${item.leaderMobile}</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary class-view" data-toggle="modal"
+                                    <button type="button" class="btn btn-success class-view" data-toggle="modal"
                                             data-target="#add_class_modal" data-backdrop="false" data-id="${item.id}">
                                         <span class="glyphicon glyphicon-share-alt"></span> 查看
                                     </button>
@@ -350,7 +350,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary class-confirm">
+                    <button type="button" class="btn btn-success class-confirm">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>

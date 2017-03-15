@@ -41,12 +41,12 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary users-filter">
+                        <a href="javascript:;" class="btn btn-success users-filter">
                             <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
                         </a>
                     </div>
                     <div class="form-group pull-right">
-                        <a href="/settings/getUsersView" class="btn btn-primary">
+                        <a href="/settings/getUsersView" class="btn btn-success">
                             <span class="glyphicon glyphicon-plus"></span> 添加员工
                         </a>
                     </div>
@@ -85,7 +85,7 @@
                                     <td class="text-danger">锁定</td>
                                 </c:if>
                                 <td>
-                                    <a class="btn btn-primary" href="/settings/getUsersView?operatorId=${user.operatorId}">
+                                    <a class="btn btn-success" href="/settings/getUsersView?operatorId=${user.operatorId}">
                                         <span class="glyphicon glyphicon-share-alt"></span>  查看
                                     </a>
                                     <c:if test="${user.status == 1}">
@@ -94,7 +94,7 @@
                                         </a>
                                     </c:if>
                                     <c:if test="${user.status != 1}">
-                                        <a href="javascript:;" class="btn btn-primary user-active" data-id="${user.operatorId}">
+                                        <a href="javascript:;" class="btn btn-success user-active" data-id="${user.operatorId}">
                                             <span class="glyphicon glyphicon-flash"></span> 激活
                                         </a>
                                     </c:if>
@@ -185,7 +185,7 @@
                     <p class="text-danger text-message">锁定员工后，会导致此员工无法登陆系统；您确定要锁定此用户吗? </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">取 消</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal">取 消</button>
                     <button type="button" class="btn btn-warning lock-confirm">确 认</button>
                 </div>
             </div>

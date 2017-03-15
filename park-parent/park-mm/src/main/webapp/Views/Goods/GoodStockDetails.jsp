@@ -14,8 +14,8 @@
     <script src="Content/app/goods/goods_stock_details.js?v=${static_resource_version}"></script>
     <script>
         $(document).ready(function () {
-            $(".stock-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
-            $(".stock-date[data-count='${countNum}']").addClass("btn-primary").removeClass("btn-default");
+            $(".stock-date.btn-success").addClass("btn-default").removeClass("btn-success");
+            $(".stock-date[data-count='${countNum}']").addClass("btn-success").removeClass("btn-default");
         });
     </script>
 </layout:override>
@@ -51,7 +51,7 @@
                                placeholder="商品编号" value="${goodNo}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary goods-filter">
+                        <a href="javascript:;" class="btn btn-success goods-filter">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>

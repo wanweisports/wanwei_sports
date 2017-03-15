@@ -83,7 +83,7 @@
                     <div class="alert alert-success tips-content" role="alert"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">
                         <span class="glyphicon glyphicon-ok"></span> 我知道了
                     </button>
                 </div>
@@ -104,7 +104,7 @@
                     <div class="alert alert-warning tips-content" role="alert"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>
@@ -115,8 +115,7 @@
     <!-- 全局js -->
     <script src="Content/lib/jquery/jquery-1.12.3.min.js?v=${static_resource_version}"></script>
     <script src="Content/lib/bootstrap/bootstrap.min.js?v=${static_resource_version}"></script>
-    <script src="Content/lib/pluginsContent.min.js?v=${static_resource_version}"></script>
-    <script src="Content/lib/moment/moment.min.js?v=${static_resource_version}"></script>
+   <script src="Content/lib/moment/moment.min.js?v=${static_resource_version}"></script>
     <script src="Content/lib/jquery/jquery.cookie/jquery.cookie-1.4.1.min.js?v=${static_resource_version}"></script>
     <script src="Content/app/common/text_magnifier.js?v=${static_resource_version}"></script>
     <script src="Content/app/common/base_new.js?v=${static_resource_version}"></script>
@@ -124,7 +123,7 @@
     <layout:block name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>"/>
     <layout:block name="<%=Blocks.BLOCK_TRACE_SCRIPTS%>"/>
 
-    <div class="gohome">
+    <div class="gohome" style="display: none;">
         <a class="animated bounceInUp" href="/" title="工作面板">
             <i class="fa fa-home"></i>
         </a>
