@@ -67,7 +67,7 @@
                 <div class="table-responsive">
                     <table class="table table-bordered data-members-count">
                         <thead>
-                        <tr class="bg-info">
+                        <tr>
                             <th>会员类型</th>
                             <c:forEach var="title" items="${register.titleList}">
                            	<th>${title}</th>

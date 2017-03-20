@@ -17,7 +17,7 @@
     <div id="main" class="container">
         <div class="weui-flex">
             <div class="weui-flex__item">
-                <div class="placeholder">
+                <div class="placeholder" style="display: none">
                     <img src="Content/images/new/logo.png?v=${static_resource_version}" alt="场地预订">
                 </div>
             </div>

@@ -206,7 +206,7 @@
                                     </a>
                                     <div class="media-body">
                                         <small class="pull-right">46小时前</small>
-                                        <strong>小四</strong> 是不是只有我死了,你们才不骂爵迹
+                                        <strong>李老师</strong> ...
                                         <br>
                                         <small class="text-muted">3天前 2014.11.8</small>
                                     </div>
@@ -220,7 +220,7 @@
                                     </a>
                                     <div class="media-body ">
                                         <small class="pull-right text-navy">25小时前</small>
-                                        <strong>二愣子</strong> 呵呵
+                                        <strong>张老师</strong> ...
                                         <br>
                                         <small class="text-muted">昨天</small>
                                     </div>
