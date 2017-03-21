@@ -52,7 +52,7 @@
     <link rel="stylesheet" type="text/css"
           href="Content/style/training/student/fontsIco.min.css?v=${static_resource_version}">
     <link rel="stylesheet" type="text/css"
-          href="Content/style/training/student/base.min.css?v=${static_resource_version}">
+          href="Content/style/training/student/base.css?v=${static_resource_version}">
     <link rel="stylesheet" type="text/css"
           href="Content/style/training/student/1003_1.min.css?v=${static_resource_version}">
 </head>
@@ -80,12 +80,12 @@
                                 <div class="loginContent">
                                     <div class="g_globalLine">
                                         <input type="text" maxlength="50" id="user" class="itemEdit g_input mustItem"
-                                               placeholder="请输入手机号">
+                                               placeholder="请输入账号或手机号">
                                         <span class="icon-userIcon g_mainColor"></span>
                                     </div>
                                     <div class="g_globalLine">
                                         <input type="password" maxlength="20" id="password"
-                                               class="itemEdit g_input  mustItem" placeholder="请输入密码">
+                                               class="itemEdit g_input mustItem" placeholder="请输入新密码">
                                         <span class="icon-pswIcon g_mainColor"></span>
                                     </div>
                                     <div class="loginCaptchaCtrl g_globalLine">
@@ -94,11 +94,15 @@
                                         <img id="loginCaptchaImg" class="captchaImg"
                                              src="/Content/images/training/student/captcha.jpg">
                                     </div>
-                                    <div class="g_globalLine">
+                                    <div class="g_globalLine" style="margin: .4rem 0 1rem; text-align: left; overflow: hidden;">
+                                        <a class="g_mainColor" href="/training/mobile/v1/pp/smsLogin" style="float: left;">手机号快捷登录</a>
+                                        <a class="g_mainColor" href="/training/mobile/v1/pp/forget" style="float: right;">忘记密码？</a>
+                                    </div>
+                                    <div class="g_globalLine" style="clear: both">
                                         <input type="button" class="g_button sendIcon" value="登 录">
                                     </div>
-                                    <div class="loginBottom g_globalLine">
-                                        <a class="g_mainColor freeRegister" href="/training/mobile/v1/pp/register">您还没有账户？</a>
+                                    <div class="loginBottom g_globalLine" style="text-align: center;">
+                                        <a class="g_mainColor" href="/training/mobile/v1/pp/register">还没有账户，请点击注册？</a>
                                     </div>
                                 </div>
                             </div>

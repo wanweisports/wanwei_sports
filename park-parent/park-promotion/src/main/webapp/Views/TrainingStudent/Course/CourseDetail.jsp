@@ -105,7 +105,7 @@
             <div class="">
                 <a class="g_button sendIcon" href="/training/mobile/v1/course/sign?courseId=121">我要报名</a>
             </div>
-            <div id="module308" class="form Handle  formStyle41">
+            <div id="module308" class="form Handle formStyle41">
                 <div class="formBannerTitle formBannerTitle308" style="height: 2rem;">
                     <div class="titleLeft titleLeft308"></div>
                     <div class="titleCenter titleCenter308">
@@ -141,6 +141,51 @@
                         </div>
                     </div>
                     <div class="middleRight middleRight308"></div>
+                </div>
+            </div>
+            <div id="module309" class="form Handle formStyle41">
+                <div class="formBannerTitle formBannerTitle309" style="height: 2rem;">
+                    <div class="titleLeft titleLeft309"></div>
+                    <div class="titleCenter titleCenter309">
+                        <div class="titleText titleText309">
+                            <div class="titleTextIcon icon-titleText">&nbsp;</div>
+                            <div class="textContent">课时安排</div>
+                        </div>
+                        <div class="formBannerMore formBannerMore309"></div>
+                    </div>
+                    <div class="titleRight titleRight309"></div>
+                </div>
+                <div class="formMiddle formMiddle309">
+                    <div class="middleLeft middleLeft309"></div>
+                    <div class="middleCenter middleCenter309">
+                        <div class="formMiddleContent formMiddleContent309 moduleContent">
+                            <table class="siteFormItemTable" border="1" cellpadding="0" cellspacing="0"
+                                   style="text-align: center; border-color: #ddd;">
+                                <tr class="siteFormItem siteFormName">
+                                    <th>课程名称</th><th>课时</th><th>教师</th>
+                                </tr>
+                                <tr class="siteFormItem">
+                                    <td>宣讲课程</td><td>2时</td><td>张老师</td>
+                                </tr>
+                                <tr class="siteFormItem">
+                                    <td>宣讲课程</td><td>2时</td><td>张老师</td>
+                                </tr>
+                                <tr class="siteFormItem">
+                                    <td>宣讲课程</td><td>2时</td><td>张老师</td>
+                                </tr>
+                                <tr class="siteFormItem">
+                                    <td>宣讲课程</td><td>2时</td><td>张老师</td>
+                                </tr>
+                                <tr class="siteFormItem">
+                                    <td>宣讲课程</td><td>2时</td><td>张老师</td>
+                                </tr>
+                                <tr class="siteFormItem">
+                                    <td>宣讲课程</td><td>2时</td><td>张老师</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="middleRight middleRight309"></div>
                 </div>
             </div>
         </div>

@@ -13,7 +13,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
 
-    <title>${param.title == null ? "报名结果" : param.title}</title>
+    <title>${param.title == null ? "课程内容" : param.title}</title>
 
     <meta name="keywords"
           content="${param.keyword == null ? "万为培训, 约课系统, 体育培训, 培训，万为, wanwei.com" : param.keyword}">
@@ -78,11 +78,7 @@
                         <div class="formMiddleContent formMiddleContent310 moduleContent">
                             <div class="J_richContentPanel310 f-contentPanel">
                                 <div class="textImg3">
-                                    <img src="/Content/images/training/student/banner2.jpg" style="width:100%">
-                                </div>
-                                <div class="richContent richContent3 richContent310">
-                                    <p style="text-align: center;text-indent: 0">您已经成功预约某某课程！稍后课程责任老师会电话与您沟通，以便更好地指导您；祝您上课愉快！</p>
-                                    <p style="text-align: center;text-indent: 0"><span style="color: #f00; margin-right: .4rem">5</span>秒后会自动跳转会员中心，或者直接点击返回首页</p>
+                                    <img src="/Content/images/training/student/banner1.jpg" style="width:100%">
                                 </div>
                                 <div class="clear"></div>
                             </div>
@@ -91,18 +87,20 @@
                     <div class="middleRight middleRight310"></div>
                 </div>
             </div>
-            <div class="">
-                <a class="g_button sendIcon" href="/training/mobile/v1/home/index">返回首页</a>
-            </div>
             <div id="module308" class="form Handle  formStyle41">
                 <div class="formBannerTitle formBannerTitle308" style="height: 2rem;">
                     <div class="titleLeft titleLeft308"></div>
                     <div class="titleCenter titleCenter308">
                         <div class="titleText titleText308">
                             <div class="titleTextIcon icon-titleText">&nbsp;</div>
-                            <div class="textContent">更多推荐</div>
+                            <div class="textContent">课程视频</div>
                         </div>
-                        <div class="formBannerMore formBannerMore308"></div>
+                        <div class="formBannerMore formBannerMore308">
+                            <a class="titleMoreLink titleMoreLink308" href="javascript:;">
+                                <span class="titleMoreIcon icon-titleMore titleMoreIcon308">&nbsp;</span>
+                                <span class="titleMore titleMore308">更多</span>
+                            </a>
+                        </div>
                     </div>
                     <div class="titleRight titleRight308"></div>
                 </div>
@@ -112,28 +110,113 @@
                         <div class="formMiddleContent formMiddleContent308 moduleContent">
                             <div class="photoModule styleForm1">
                                 <div class="g_background photoDiv photoBg">
-                                    <a href="/training/mobile/v1/course/detail?courseId=121">
+                                    <a href="javascript:;">
                                         <div class="imgClass_160" style="height: 4.56533rem;">
                                             <img class="photoListImg" src="/Content/images/training/student/banner1.jpg">
                                         </div>
                                     </a>
                                 </div>
                                 <div class="g_background photoDiv photoBg">
-                                    <a href="/training/mobile/v1/course/detail?courseId=121">
+                                    <a href="javascript:;">
                                         <div class="imgClass_160" style="height: 4.56533rem;">
                                             <img class="photoListImg" src="/Content/images/training/student/banner2.jpg">
                                         </div>
                                     </a>
                                 </div>
                                 <div class="g_background photoDiv photoBg">
-                                    <a href="/training/mobile/v1/course/detail?courseId=121">
+                                    <a href="javascript:;">
                                         <div class="imgClass_160" style="height: 4.56533rem;">
                                             <img class="photoListImg" src="/Content/images/training/student/banner2.jpg">
                                         </div>
                                     </a>
                                 </div>
                                 <div class="g_background photoDiv photoBg">
-                                    <a href="/training/mobile/v1/course/detail?courseId=121">
+                                    <a href="javascript:;">
+                                        <div class="imgClass_160" style="height: 4.56533rem;">
+                                            <img class="photoListImg" src="/Content/images/training/student/banner1.jpg">
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="g_background photoDiv photoBg">
+                                    <a href="javascript:;">
+                                        <div class="imgClass_160" style="height: 4.56533rem;">
+                                            <img class="photoListImg" src="/Content/images/training/student/banner2.jpg">
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="g_background photoDiv photoBg">
+                                    <a href="javascript:;">
+                                        <div class="imgClass_160" style="height: 4.56533rem;">
+                                            <img class="photoListImg" src="/Content/images/training/student/banner1.jpg">
+                                        </div>
+                                    </a>
+                                </div>
+                                <div style="clear:both;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="middleRight middleRight308"></div>
+                </div>
+            </div>
+            <div id="module308" class="form Handle  formStyle41">
+                <div class="formBannerTitle formBannerTitle308" style="height: 2rem;">
+                    <div class="titleLeft titleLeft308"></div>
+                    <div class="titleCenter titleCenter308">
+                        <div class="titleText titleText308">
+                            <div class="titleTextIcon icon-titleText">&nbsp;</div>
+                            <div class="textContent">课程课件</div>
+                        </div>
+                        <div class="formBannerMore formBannerMore308">
+                            <a class="titleMoreLink titleMoreLink308" href="javascript:;">
+                                <span class="titleMoreIcon icon-titleMore titleMoreIcon308">&nbsp;</span>
+                                <span class="titleMore titleMore308">更多</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="titleRight titleRight308"></div>
+                </div>
+                <div class="formMiddle formMiddle308">
+                    <div class="middleLeft middleLeft308"></div>
+                    <div class="middleCenter middleCenter308">
+                        <div class="formMiddleContent formMiddleContent308 moduleContent">
+                            <div class="photoModule styleForm1">
+                                <div class="g_background photoDiv photoBg">
+                                    <a href="javascript:;">
+                                        <div class="imgClass_160" style="height: 4.56533rem;">
+                                            <img class="photoListImg" src="/Content/images/training/student/banner1.jpg">
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="g_background photoDiv photoBg">
+                                    <a href="javascript:;">
+                                        <div class="imgClass_160" style="height: 4.56533rem;">
+                                            <img class="photoListImg" src="/Content/images/training/student/banner1.jpg">
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="g_background photoDiv photoBg">
+                                    <a href="javascript:;">
+                                        <div class="imgClass_160" style="height: 4.56533rem;">
+                                            <img class="photoListImg" src="/Content/images/training/student/banner2.jpg">
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="g_background photoDiv photoBg">
+                                    <a href="javascript:;">
+                                        <div class="imgClass_160" style="height: 4.56533rem;">
+                                            <img class="photoListImg" src="/Content/images/training/student/banner2.jpg">
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="g_background photoDiv photoBg">
+                                    <a href="javascript:;">
+                                        <div class="imgClass_160" style="height: 4.56533rem;">
+                                            <img class="photoListImg" src="/Content/images/training/student/banner1.jpg">
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="g_background photoDiv photoBg">
+                                    <a href="javascript:;">
                                         <div class="imgClass_160" style="height: 4.56533rem;">
                                             <img class="photoListImg" src="/Content/images/training/student/banner2.jpg">
                                         </div>

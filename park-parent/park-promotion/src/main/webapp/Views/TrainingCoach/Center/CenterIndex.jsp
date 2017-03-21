@@ -13,7 +13,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
 
-    <title>${param.title == null ? "会员中心" : param.title}</title>
+    <title>${param.title == null ? "个人中心" : param.title}</title>
 
     <meta name="keywords"
           content="${param.keyword == null ? "万为培训, 约课系统, 体育培训, 培训，万为, wanwei.com" : param.keyword}">
@@ -133,11 +133,11 @@
                              style="width: 3rem; height: 3rem; margin-top: .5rem; margin-left: .14rem;">
                     </div>
                     <div style="display: block; float: left; margin-top: 2.4rem; margin-left: .8rem; color: #FAFAFA;">
-                        <p style="margin-bottom: .6rem; font-size: .8rem;">张某某</p>
+                        <p style="margin-bottom: .6rem; font-size: .8rem;">王某某</p>
                         <p>110****1234</p>
                     </div>
                     <div style="display: block; float: right; margin-top: 2.7rem; margin-right: .6rem">
-                        <a href="/training/mobile/v1/center/profile">
+                        <a href="/training/coach/v1/center/profile">
                             <img src="/Content/images/training/student/settings.png" style="width: 1.6rem;">
                         </a>
                     </div>
@@ -161,7 +161,7 @@
                                     <div id="lineBody8" class="lineBody lineBodyTable">
                                         <div class="linkTableCell">
                                             <div class="linkTable">
-                                                <a href="/training/mobile/v1/center/course/list">已预约课程</a>
+                                                <a href="/training/coach/v1/center/course/list">我的课程</a>
                                             </div>
                                         </div>
                                     </div>
@@ -172,7 +172,29 @@
                                     <div id="lineBody7" class="lineBody lineBodyTable">
                                         <div class="linkTableCell">
                                             <div class="linkTable">
-                                                <a href="/training/mobile/v1/center/sign/weekLog">上课记录</a>
+                                                <a href="/training/coach/v1/center/sign/weekLog">学生签到记录</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="newsElementsPanel g_newsElementsPanel J_newsElementsPanel"></div>
+                                </div>
+                                <div class="g_separator separatorLine"></div>
+                                <div id="newsLine3" class="newsLine line icon-gline  wWLine  firstClass  wholeLine J_lineH j-lineH">
+                                    <div id="lineBody3" class="lineBody lineBodyTable">
+                                        <div class="linkTableCell">
+                                            <div class="linkTable">
+                                                <a href="/training/coach/v1/center/contact/list">通讯簿</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="newsElementsPanel g_newsElementsPanel J_newsElementsPanel"></div>
+                                </div>
+                                <div class="g_separator separatorLine"></div>
+                                <div id="newsLine4" class="newsLine line icon-gline  wWLine  firstClass  wholeLine J_lineH j-lineH">
+                                    <div id="lineBody4" class="lineBody lineBodyTable">
+                                        <div class="linkTableCell">
+                                            <div class="linkTable">
+                                                <a href="/training/coach/v1/center/honor">教练资质</a>
                                             </div>
                                         </div>
                                     </div>
@@ -183,7 +205,7 @@
                                     <div id="lineBody6" class="lineBody lineBodyTable">
                                         <div class="linkTableCell">
                                             <div class="linkTable">
-                                                <a href="/training/mobile/v1/center/about">关于万维培训</a>
+                                                <a href="/training/coach/v1/center/about">关于万维培训</a>
                                             </div>
                                         </div>
                                     </div>
@@ -208,7 +230,7 @@
                 </div>
             </div>
             <div class="">
-                <a  class="g_button sendIcon" href="/training/mobile/v1/home/index">退出登录</a>
+                <a  class="g_button sendIcon" href="/training/coach/v1/home/index">退出登录</a>
             </div>
         </div>
     </div>

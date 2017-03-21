@@ -1,6 +1,4 @@
-﻿@charset "utf8";
-
-@font-face {
+﻿@font-face {
     font-family: 'icomoon';
     src: url('fontsIco/icomoon.eot?-2mgmdr&v=133');
     src: url('fontsIco/icomoon.eot?#iefix-2mgmdr&v=133') format('embedded-opentype'), url('fontsIco/icomoon.woff?-2mgmdr&v=133') format('woff'), url('fontsIco/icomoon.ttf?-2mgmdr&v=133') format('truetype');
@@ -86,14 +84,18 @@ input[type="radio"], input[type="checkbox"] {
     font-size: .7rem;
     font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, "黑体", Arial, Tahoma;
     width: 100%;
-    border: none;
-    border-bottom: 1px solid #ccc;
+    border: 1px solid #ccc;
     background: #fff;
     -webkit-appearance: none;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    margin-top: -1px;
     outline: 0;
     z-index: 1;
     position: relative;
@@ -138,11 +140,15 @@ input[type="radio"], input[type="checkbox"] {
     line-height: normal;
     font-size: .7rem;
     background-color: #fff;
-    border: none;
-    border-bottom: 1px solid #ccc;
+    border: 1px solid #ccc;
+    margin-top: -1px;
     width: 100%;
     color: #999;
     font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, "黑体", Arial, Tahoma;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
@@ -159,11 +165,15 @@ input[type="radio"], input[type="checkbox"] {
     line-height: normal;
     font-size: .7rem;
     background-color: #fff;
-    border: none;
-    border-bottom: 1px solid #ccc;
+    border: 1px solid #ccc;
+    margin-top: -1px;
     width: 100%;
     color: #999;
     font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, "黑体", Arial, Tahoma;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
@@ -179,11 +189,12 @@ input[type="radio"], input[type="checkbox"] {
     color: #8c8c8c
 }
 
-.freeRegister {
-    display: block;
-    margin: 0 auto;
-    width: 80%;
-    text-align: center;
+.itemEdit {
+    padding-left: 2.1rem
+}
+
+.g_locale2052 .itemEdit {
+    padding-left: 2.85rem
 }
 
 .g_input:focus {
@@ -221,17 +232,17 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .icon-gClose:before {
-    Content: "\e60e";
+    content: "\e60e";
     display: table-cell;
     vertical-align: middle
 }
 
 .faisco-icons-logo:before {
-    Content: "\e904"
+    content: "\e904"
 }
 
 .faisco-icons-gwc6:before {
-    Content: "\ea7e"
+    content: "\ea7e"
 }
 
 #g_body {
@@ -389,7 +400,7 @@ input[type="radio"], input[type="checkbox"] {
     background-repeat: no-repeat;
     background-position: center;
     box-sizing: border-box;
-    background-image: url(url(/Content/images/training/student/default/1.png?v=201610211723))
+    background-image: url(url(/image/default/1.png?v=201610211723))
 }
 
 .header .cusLogo {
@@ -890,7 +901,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .loading .ui-icon-loading {
-    background-image: url(/Content/images/training/student/mobi/loading.png?v=201610211723);
+    background-image: url(/image/mobi/loading.png?v=201610211723);
     border-radius: 1rem;
     background-size: 3rem 3rem
 }
@@ -922,7 +933,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .swipe .customBanner {
-    background-size: 100% 100%;
+    background-size: cover
 }
 
 .bannerHidden {
@@ -948,6 +959,12 @@ input[type="radio"], input[type="checkbox"] {
     display: inline-block;
     width: 100%;
     height: 100%;
+    font-size: 0;
+    line-height: 0;
+    vertical-align: middle;
+    background-size: 100%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat
 }
 
 .bannerSwipeContainer > div {
@@ -1005,13 +1022,13 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .imageSliderNext {
-    background: url(/Content/images/training/student/PicRight.png?v=201610211723) rgba(0, 0, 0, .4) no-repeat;
+    background: url(/image/PicRight.png?v=201610211723) rgba(0, 0, 0, .4) no-repeat;
     background-size: 100%;
     right: .75rem
 }
 
 .imageSliderPrevious {
-    background: url(/Content/images/training/student/PicLeft.png?v=201610211723) rgba(0, 0, 0, .4) no-repeat;
+    background: url(/image/PicLeft.png?v=201610211723) rgba(0, 0, 0, .4) no-repeat;
     background-size: 100%;
     left: .75rem
 }
@@ -1178,21 +1195,21 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .matcherForm .icon-matchDownIcon::before {
-    Content: "\e656";
+    content: "\e656";
     font-size: .9rem;
     margin-left: .1rem;
     vertical-align: middle
 }
 
 .matcherForm .icon-matchUpIcon::before {
-    Content: "\e701";
+    content: "\e701";
     font-size: .9rem;
     margin-left: .1rem;
     vertical-align: middle
 }
 
 .matcherForm .icon-ScreenIcon::before {
-    Content: "\e900";
+    content: "\e900";
     font-size: .9rem;
     color: #636363;
     vertical-align: middle
@@ -1313,7 +1330,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .productScreenFilterPanel .productScreenFilterTitle .icon-screenFilterRt::before {
-    Content: "\e60e";
+    content: "\e60e";
     font-size: 1.6rem;
     color: #636363
 }
@@ -1378,7 +1395,7 @@ input[type="radio"], input[type="checkbox"] {
 
 .productScreenFilterPanel .icon-libNextMore::before {
     float: right;
-    Content: "\e672";
+    content: "\e672";
     color: #666;
     font-size: 1rem
 }
@@ -1390,7 +1407,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .productScreenFilterPanel .icon-nextMore::before {
-    Content: "\e672";
+    content: "\e672";
     color: #666;
     font-size: 1rem;
     vertical-align: bottom
@@ -1463,7 +1480,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .productScreenFilterPanel .icon-check::before {
-    Content: "\e777";
+    content: "\e777";
     color: #FFF;
     font-size: 1rem;
     font-weight: 900;
@@ -1651,7 +1668,7 @@ input[type="radio"], input[type="checkbox"] {
     margin-top: .25rem;
     width: 2.5rem;
     height: 2.5rem;
-    background: url(/Content/images/training/student/mall/chenggong.png?v=201610211723) no-repeat;
+    background: url(/image/mall/chenggong.png?v=201610211723) no-repeat;
     background-size: 2rem 2rem;
     background-position: .25rem .25rem
 }
@@ -1692,10 +1709,8 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .form .formMiddle .photoListImg {
-    display: block;
-    margin: 0 auto;
-    width: 100%;
-    height: 100%;
+    display: inline-block;
+    vertical-align: bottom
 }
 
 .form .formMiddle .stretchImg {
@@ -1718,7 +1733,7 @@ input[type="radio"], input[type="checkbox"] {
     display: inline-block;
     width: 1.75rem;
     height: 1.75rem;
-    background: url(/Content/images/training/student/mobi/searchBtn.jpg?v=201610211723) no-repeat;
+    background: url(/image/mobi/searchBtn.jpg?v=201610211723) no-repeat;
     background-size: 1.75rem 1.75rem;
     position: absolute;
     right: 0;
@@ -1757,7 +1772,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .icon-mSearchIcon::before {
-    Content: "\e6de";
+    content: "\e6de";
     font-size: 1.4rem;
     position: absolute;
     top: 50%;
@@ -1779,7 +1794,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .icon-mSearchBtn::before {
-    Content: "\e6de";
+    content: "\e6de";
     font-size: 1.4rem;
     position: absolute;
     top: 50%;
@@ -1802,7 +1817,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .searchType0 .icon-mSearchIcon::before {
-    Content: none
+    content: none
 }
 
 .searchType1 .mSearchInput {
@@ -1815,7 +1830,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .searchType1 .icon-mSearchBtn::before {
-    Content: "搜索";
+    content: "搜索";
     color: #fff;
     font-size: .7rem;
     height: .9rem
@@ -1832,13 +1847,13 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .searchType2 .icon-mSearchBtn::before {
-    Content: "GO";
+    content: "GO";
     color: #fff;
     font-size: .7rem
 }
 
 .searchType2 .icon-mSearchBtn::after {
-    Content: "";
+    content: "";
     position: absolute;
     top: .5rem;
     left: -0.4rem;
@@ -1863,7 +1878,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .searchType3 .icon-mSearchIcon::before {
-    Content: none
+    content: none
 }
 
 .searchType4 {
@@ -1882,7 +1897,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .searchType4 .icon-mSearchIcon::before {
-    Content: none
+    content: none
 }
 
 .searchType5 {
@@ -1902,7 +1917,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .searchType5 .icon-mSearchIcon::before {
-    Content: none
+    content: none
 }
 
 .searchWindow {
@@ -2058,7 +2073,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .icon-closeSearch::before {
-    Content: "\e60e";
+    content: "\e60e";
     font-size: 1.75rem;
     color: #a9aaac;
     position: absolute;
@@ -2082,7 +2097,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .icon-offSearch::before {
-    Content: "\e66f";
+    content: "\e66f";
     font-size: 1.75rem;
     color: #a9aaac;
     position: absolute;
@@ -2115,7 +2130,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .icon-popupSearchIcon::before {
-    Content: "\e6de";
+    content: "\e6de";
     text-align: center;
     font-size: 1.4rem;
     position: absolute;
@@ -2155,7 +2170,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .icon-popupSearchBtn::before {
-    Content: "\e6de";
+    content: "\e6de";
     font-size: 1.4rem;
     width: 100%;
     position: absolute;
@@ -2182,7 +2197,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .popupSearchWrap1 .icon-popupSearchBtn::before {
-    Content: "搜索";
+    content: "搜索";
     font-size: .7rem;
     color: #fff
 }
@@ -2197,7 +2212,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .popupSearchWrap2 .icon-popupSearchBtn::after {
-    Content: "";
+    content: "";
     position: absolute;
     top: .48rem;
     left: -0.4rem;
@@ -2210,7 +2225,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .popupSearchWrap2 .icon-popupSearchBtn::before {
-    Content: "GO";
+    content: "GO";
     font-size: .7rem;
     color: #fff
 }
@@ -2363,7 +2378,7 @@ input[type="radio"], input[type="checkbox"] {
     width: 1.6rem;
     height: 2.5rem;
     background-color: rgba(0, 0, 0, 0.3);
-    background-image: url(/Content/images/training/student/Pc.png?v=201610211723);
+    background-image: url(/image/Pc.png?v=201610211723);
     background-repeat: no-repeat;
     background-position: 2px -78px
 }
@@ -2376,7 +2391,7 @@ input[type="radio"], input[type="checkbox"] {
     width: 1.6rem;
     height: 2.5rem;
     background-color: rgba(0, 0, 0, 0.3);
-    background-image: url(/Content/images/training/student/Pc.png?v=201610211723);
+    background-image: url(/image/Pc.png?v=201610211723);
     background-repeat: no-repeat;
     background-position: -34px -78px
 }
@@ -2502,11 +2517,11 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .newsList .line:before {
- Content: ""
+    content: ""
 }
 
 .newsList .line.wWLineOne:before {
- Content: "";
+    content: "";
     background: 0;
     box-shadow: none;
     -webkit-box-shadow: none;
@@ -2514,7 +2529,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .newsList .line.wWLineOne:nth-last-child(2):before {
-    Content: "";
+    content: "";
     background: 0;
     box-shadow: none;
     -webkit-box-shadow: none;
@@ -2522,20 +2537,20 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .newsList .line.wWLineOne:after {
-    Content: "";
+    content: "";
     border: 0;
     background: 0
 }
 
 .newsList .line.wWLineOne:nth-last-child(2):after {
-    Content: "";
+    content: "";
     border: 0;
     background: 0;
     border: 0
 }
 
 .newsList .line.One:before {
-    Content: "";
+    content: "";
     background: 0;
     box-shadow: none;
     -webkit-box-shadow: none;
@@ -2543,7 +2558,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .newsList .line.One:nth-last-child(2):before {
-    Content: "";
+    content: "";
     background: 0;
     box-shadow: none;
     -webkit-box-shadow: none;
@@ -2551,13 +2566,13 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .newsList .line.One:after {
-    Content: "";
+    content: "";
     border: 0;
     background: 0
 }
 
 .newsList .line.One:nth-last-child(2):after {
-    Content: "";
+    content: "";
     border: 0;
     background: 0
 }
@@ -2629,22 +2644,22 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .g_topFlag1 {
-    background: url(/Content/images/training/student/mobi/newTopFlag1.gif?v=201610211723) no-repeat 0 0;
+    background: url(/image/mobi/newTopFlag1.gif?v=201610211723) no-repeat 0 0;
     background-size: 1rem 1rem
 }
 
 .g_topFlag2 {
-    background: url(/Content/images/training/student/mobi/newTopFlag2.gif?v=201610211723) no-repeat 0 0;
+    background: url(/image/mobi/newTopFlag2.gif?v=201610211723) no-repeat 0 0;
     background-size: 1rem 1rem
 }
 
 .g_topFlag3 {
-    background: url(/Content/images/training/student/mobi/newTopFlag3.gif?v=201610211723) no-repeat 0 0;
+    background: url(/image/mobi/newTopFlag3.gif?v=201610211723) no-repeat 0 0;
     background-size: 1rem 1rem
 }
 
 .g_topFlag4 {
-    background: url(/Content/images/training/student/mobi/g_topFlag4.gif?v=201610211723) no-repeat 0 4px
+    background: url(/image/mobi/g_topFlag4.gif?v=201610211723) no-repeat 0 4px
 }
 
 .newsList .line .lineBody .g_topFlag {
@@ -2927,7 +2942,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .newsList .mixNewsStyleLine .icon-noFigureB:before {
-    Content: "\e729";
+    content: "\e729";
     background-color: #f2f2f2;
     display: inline-block;
     font-size: 6.5rem;
@@ -3101,7 +3116,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .newsList .newsLine .icon-noFigureS:before {
-    Content: "\e729";
+    content: "\e729";
     display: inline-block;
     font-size: 40px;
     position: relative;
@@ -3113,7 +3128,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .newsList .newsLine .icon-noFigureM:before {
-    Content: "\e729";
+    content: "\e729";
     background-color: #f2f2f2;
     display: inline-block;
     font-size: 3.4rem;
@@ -3283,7 +3298,7 @@ input[type="radio"], input[type="checkbox"] {
 
 .newsList .mixNewsStyleImgBox5 .icon-noFigureB:before {
     height: 7.8rem;
-    Content: "\e729";
+    content: "\e729";
     background-color: #f2f2f2;
     display: inline-block;
     font-size: 6.5rem;
@@ -3296,11 +3311,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .newsList .largeImageNewsStyle {
-    margin-bottom: .4rem;
-}
-
-.newsList .largeImageNewsStyle:last-child {
-    margin-bottom: 0;
+    margin-bottom: .4rem
 }
 
 .newsList .largeImageNewsStyle .f_mixNewsStyleImgBox6_link {
@@ -3320,6 +3331,7 @@ input[type="radio"], input[type="checkbox"] {
 
 .newsList .largeImageNewsStyle .mixNewsStyleImgBox6 {
     clear: both;
+    padding: .13rem .7rem
 }
 
 .newsList .largeImageNewsStyle.wWLine .lineBody .g_topFlag {
@@ -3344,7 +3356,7 @@ input[type="radio"], input[type="checkbox"] {
 
 .newsList .largeImageNewsStyle .mixNewsStyleImgBox6 .newsTitlePic {
     width: 14.6rem;
-    height: 7rem;
+    height: 9rem;
     box-sizing: border-box;
     background-size: 100% 100%;
     background-color: #f2f2f2
@@ -3352,6 +3364,7 @@ input[type="radio"], input[type="checkbox"] {
 
 .newsList .largeImageNewsStyle .mixNewsStyleTitleContainer6 {
     position: absolute;
+    background: rgba(0, 0, 0, .65);
     max-height: 9rem;
     font-weight: normal;
     color: white;
@@ -3361,25 +3374,16 @@ input[type="radio"], input[type="checkbox"] {
     bottom: 0
 }
 
-.newsList .largeImageNewsStyle .mixNewsStyleTitleContainer6 img {
-    height: 100%;
-    display: block;
-    margin: 0 auto;
-}
-
 .newsList .largeImageNewsStyle .mixNewsStyleTitleContainer6 .mixNewsStyleTitle1 {
-    width: 40%; */
-display: block;
+    width: auto;
+    display: block;
     font-weight: normal;
     font-size: .78rem;
-    letter-spacing: .1rem;
+    letter-spacing: .04rem;
+    max-height: 2rem;
     overflow: hidden;
     text-align: center;
-    color: #fff;
-    margin: 0 auto;
-    text-align: center;
-    height: 100%;
-    line-height: 7rem;
+    color: #fff
 }
 
 .newsList .largeImageNewsStyle .mixNewsStyleTitleContainer6 .mixNewsStyleTitle2 {
@@ -3415,17 +3419,13 @@ display: block;
 }
 
 .newsList .largeImageNewsStyle .mixNewsStyleTitlePanel {
-    position: absolute;
-    width: 100%;
-    top: 0;
-    left: 0;
-    height: 100%;
-    background: rgba(0,0,0,0.6);
+    position: relative;
+    padding: 2.2rem 2rem .7rem
 }
 
 .newsList .largeImageNewsStyle .icon-noFigureB:before {
     height: 9rem;
-    Content: "\e729";
+    content: "\e729";
     background-color: #f2f2f2;
     display: inline-block;
     font-size: 8.5rem;
@@ -3514,7 +3514,7 @@ display: block;
     position: absolute;
     top: 1.15rem;
     left: 6.1rem;
-    Content: "";
+    content: "";
     width: .6rem;
     height: .6rem;
     background: #ededed;
@@ -3526,7 +3526,7 @@ display: block;
     position: absolute;
     top: 1.25rem;
     left: 6.2rem;
-    Content: "";
+    content: "";
     width: .4rem;
     height: .4rem;
     background: #c5c5c5;
@@ -3538,7 +3538,7 @@ display: block;
     position: absolute;
     left: 6.99rem;
     top: 0;
-    Content: "";
+    content: "";
     display: block;
     width: 1px;
     height: 100%;
@@ -3547,7 +3547,7 @@ display: block;
 
 .newsList .timeAxisNewsStyle .mixNewsStyleImgBox7 .icon-noFigureB:before {
     height: 4.4rem;
-    Content: "\e729";
+    content: "\e729";
     background-color: #f2f2f2;
     display: inline-block;
     font-size: 4.5rem;
@@ -3617,7 +3617,7 @@ display: block;
     position: absolute;
     left: 49.5%;
     top: 0;
-    Content: "";
+    content: "";
     display: block;
     width: 1px;
     height: 100%;
@@ -3629,7 +3629,7 @@ display: block;
 }
 
 .newsList .clearFix:before, .newsList .clearFix:after {
-    Content: "";
+    content: "";
     display: table
 }
 
@@ -3710,6 +3710,7 @@ display: block;
     display: inline-block;
     overflow: hidden;
     letter-spacing: 0;
+    max-width: 4.2rem;
     line-height: 1.1rem
 }
 
@@ -3731,7 +3732,7 @@ display: block;
 }
 
 .newsList .largeImageNewsStyle .mixNewsStyleImgBox6 .newsSortPanel:before {
-    Content: "";
+    content: "";
     display: inline-block;
     vertical-align: middle;
     width: .7rem;
@@ -3751,7 +3752,7 @@ display: block;
 }
 
 .newsList .largeImageNewsStyle .mixNewsStyleImgBox6 .newsSortPanel:after {
-    Content: "";
+    content: "";
     display: inline-block;
     vertical-align: middle;
     width: .7rem;
@@ -3764,7 +3765,7 @@ display: block;
     width: 100%;
     bottom: 0rem;
     font-size: .6rem;
-    color: #fff;
+    color: #ababab;
     padding-bottom: .4rem
 }
 
@@ -3788,11 +3789,11 @@ display: block;
 }
 
 .faisco-icons-comment:before {
-    Content: "\ea84"
+    content: "\ea84"
 }
 
 .faisco-icons-author:before {
-    Content: "\ea85"
+    content: "\ea85"
 }
 
 .newsList .newsArrayPanel.column2 .newsElementsPanel {
@@ -3837,77 +3838,77 @@ display: block;
 }
 
 .newsDetail .fileType-iconDoc {
-    background: url(/Content/images/training/student/comm/fai/filetype_word.png?v=201610211723) no-repeat;
+    background: url(/image/comm/fai/filetype_word.png?v=201610211723) no-repeat;
     width: 1.5rem;
     height: 1.5rem;
     background-size: contain
 }
 
 .newsDetail .fileType-iconPpt {
-    background: url(/Content/images/training/student/comm/fai/filetype_ppt.png?v=201610211723) no-repeat;
+    background: url(/image/comm/fai/filetype_ppt.png?v=201610211723) no-repeat;
     width: 1.5rem;
     height: 1.5rem;
     background-size: contain
 }
 
 .newsDetail .fileType-iconXls {
-    background: url(/Content/images/training/student/comm/fai/filetype_excel.png?v=201610211723) no-repeat;
+    background: url(/image/comm/fai/filetype_excel.png?v=201610211723) no-repeat;
     width: 1.5rem;
     height: 1.5rem;
     background-size: contain
 }
 
 .newsDetail .fileType-iconPdf {
-    background: url(/Content/images/training/student/comm/fai/filetype_pdf.png?v=201610211723) no-repeat;
+    background: url(/image/comm/fai/filetype_pdf.png?v=201610211723) no-repeat;
     width: 1.5rem;
     height: 1.5rem;
     background-size: contain
 }
 
 .newsDetail .fileType-iconJpg {
-    background: url(/Content/images/training/student/comm/fai/filetype_image.png?v=201610211723) no-repeat;
+    background: url(/image/comm/fai/filetype_image.png?v=201610211723) no-repeat;
     width: 1.5rem;
     height: 1.5rem;
     background-size: contain
 }
 
 .newsDetail .fileType-iconTxt {
-    background: url(/Content/images/training/student/comm/fai/filetype_txt.png?v=201610211723) no-repeat;
+    background: url(/image/comm/fai/filetype_txt.png?v=201610211723) no-repeat;
     width: 1.5rem;
     height: 1.5rem;
     background-size: contain
 }
 
 .newsDetail .fileType-iconUnknown {
-    background: url(/Content/images/training/student/comm/fai/filetype_unknown.png?v=201610211723) no-repeat;
+    background: url(/image/comm/fai/filetype_unknown.png?v=201610211723) no-repeat;
     width: 1.5rem;
     height: 1.5rem;
     background-size: contain
 }
 
 .newsDetail .fileType-iconAvi {
-    background: url(/Content/images/training/student/comm/fai/filetype_avi.png?v=201611281836) no-repeat;
+    background: url(/image/comm/fai/filetype_avi.png?v=201611281836) no-repeat;
     width: 1.5rem;
     height: 1.5rem;
     background-size: contain
 }
 
 .newsDetail .fileType-iconRar {
-    background: url(/Content/images/training/student/comm/fai/filetype_rar.png?v=201611281836) no-repeat;
+    background: url(/image/comm/fai/filetype_rar.png?v=201611281836) no-repeat;
     width: 1.5rem;
     height: 1.5rem;
     background-size: contain
 }
 
 .newsDetail .fileType-iconRm {
-    background: url(/Content/images/training/student/comm/fai/filetype_rm.png?v=201611281836) no-repeat;
+    background: url(/image/comm/fai/filetype_rm.png?v=201611281836) no-repeat;
     width: 1.5rem;
     height: 1.5rem;
     background-size: contain
 }
 
 .newsDetail .fileType-iconZip {
-    background: url(/Content/images/training/student/comm/fai/filetype_zip.png?v=201611281836) no-repeat;
+    background: url(/image/comm/fai/filetype_zip.png?v=201611281836) no-repeat;
     width: 1.5rem;
     height: 1.5rem;
     background-size: contain
@@ -4051,65 +4052,65 @@ display: block;
 }
 
 .navBaseIcon .icon-navItemIcon:before {
-    Content: "\e6df";
+    content: "\e6df";
     font-size: 1.5rem;
     color: #fff
 }
 
 .navItem_3 .icon-navItemIcon:before {
-    Content: "\e686"
+    content: "\e686"
 }
 
 .navItem_6 .icon-navItemIcon:before {
-    Content: "\e6ac"
+    content: "\e6ac"
 }
 
 .navItem_7 .icon-navItemIcon:before {
-    Content: "\e669"
+    content: "\e669"
 }
 
 .navItem_9 .icon-navItemIcon:before {
-    Content: "\e6b6"
+    content: "\e6b6"
 }
 
 .navItem_10 .icon-navItemIcon:before {
-    Content: "\e640"
+    content: "\e640"
 }
 
 .navItem_11 .icon-navItemIcon:before {
-    Content: "\e65d"
+    content: "\e65d"
 }
 
 .navItem_12 .icon-navItemIcon:before {
-    Content: "\e726"
+    content: "\e726"
 }
 
 .navItem_101 .icon-navItemIcon:before {
-    Content: "\e6a8"
+    content: "\e6a8"
 }
 
 .navItem_102 .icon-navItemIcon:before {
-    Content: "\e667"
+    content: "\e667"
 }
 
 .navItem_103 .icon-navItemIcon:before {
-    Content: "\e640"
+    content: "\e640"
 }
 
 .faisco-icons-contact1:before {
-    Content: "\e640"
+    content: "\e640"
 }
 
 .faisco-icons-edit1:before {
-    Content: "\e65d"
+    content: "\e65d"
 }
 
 .faisco-icons-cart1:before {
-    Content: "\e630"
+    content: "\e630"
 }
 
 .navButton .menuNav .icon-menuNavTip:before {
-    Content: "\e6b0";
+    content: "\e6b0";
     font-size: 2.7rem;
     color: #fff;
     display: block;
@@ -4203,7 +4204,7 @@ display: block;
 }
 
 .pagenation .icon-pageNext:before {
-    Content: "\e672";
+    content: "\e672";
     font-size: 1.2rem;
     display: inline-block;
     margin-left: .2rem;
@@ -4220,7 +4221,7 @@ display: block;
 }
 
 .pagenation .icon-pagePrev:before {
-    Content: "\e60e";
+    content: "\e60e";
     font-size: 1.2rem;
     display: inline-block;
     margin-right: .2rem;
@@ -4345,7 +4346,7 @@ display: block;
     overflow: visible
 }
 
-.richContent a, .Content a {
+.richContent a, .content a {
     text-decoration: underline
 }
 
@@ -4538,43 +4539,43 @@ display: block;
 
 .customerServiceDiv .icon {
     -webkit-backface-visibility: hidden;
-    height: 100%;
+    height: 1.5rem;
     margin: auto;
     font-size: 1.5rem;
-    color: #fff;
+    color: #fff
 }
 
 .faisco-icons-mail1:before {
-    Content: "\e6a0"
+    content: "\e6a0"
 }
 
 .faisco-icons-qq1:before {
-    Content: "\e6ca"
+    content: "\e6ca"
 }
 
 .faisco-icons-call1:before {
-    Content: "\e62c"
+    content: "\e62c"
 }
 
 .faisco-icons-gps1:before {
-    Content: "\e67c"
+    content: "\e67c"
 }
 
 .faisco-icons-message1:before {
-    Content: "\e6b2"
+    content: "\e6b2"
 }
 
 .faisco-icons-menu1:before {
-    Content: "\e6a8"
+    content: "\e6a8"
 }
 
 .customerServiceDiv .describe {
     color: #fff;
-    font-size: .8rem;
+    line-height: .8rem;
+    font-size: .5rem;
+    text-overflow: ellipsis;
     white-space: nowrap;
-    height: 2.4rem;
-    overflow: hidden;
-    line-height: 2.4rem;
+    overflow: hidden
 }
 
 .baidu_all_map {
@@ -4685,23 +4686,23 @@ display: block;
 }
 
 .icon-mpswIcon:before {
-    Content: "\e69b"
+    content: "\e69b"
 }
 
 .icon-mnameIcon:before {
-    Content: "\e641"
+    content: "\e641"
 }
 
 .icon-memailIcon:before {
-    Content: "\e6a1"
+    content: "\e6a1"
 }
 
 .icon-mphoneIcon:before {
-    Content: "\e62d"
+    content: "\e62d"
 }
 
 .icon-mmsgIcon:before {
-    Content: "\e6b3"
+    content: "\e6b3"
 }
 
 .mtitle {
@@ -4764,7 +4765,7 @@ display: block;
 }
 
 .icon-userMsgIcon:before {
-    Content: "\e6b4";
+    content: "\e6b4";
     padding-right: .2rem;
     font-size: 1rem;
     vertical-align: top;
@@ -4772,7 +4773,7 @@ display: block;
 }
 
 .icon-publishIcon:before {
-    Content: "\e72a";
+    content: "\e72a";
     padding-right: .2rem;
     font-size: .9rem;
     vertical-align: top
@@ -4911,10 +4912,9 @@ display: block;
 
 .captchaImg {
     width: 4.5rem;
-    height: 1.7rem;
     position: absolute;
-    top: .4rem;
-    right: .4rem;
+    top: 1rem;
+    right: .1rem;
     z-index: 2
 }
 
@@ -4953,7 +4953,7 @@ display: block;
     position: relative
 }
 
-.fk-mem-findPwStepOne .Content {
+.fk-mem-findPwStepOne .content {
     position: absolute;
     left: .8rem
 }
@@ -4982,7 +4982,7 @@ display: block;
 }
 
 .icon-update:before {
-    Content: "\e671";
+    content: "\e671";
     font-size: 1.2rem;
     font-weight: bold;
     position: absolute;
@@ -5015,7 +5015,7 @@ display: block;
 .admReq {
     font-weight: 500;
     padding-left: 1.1rem;
-    background: url(/Content/images/training/student/guanliyuan.png?v=201610211723) no-repeat;
+    background: url(/image/guanliyuan.png?v=201610211723) no-repeat;
     background-position: left;
     background-size: 1.1rem;
     height: 1.4rem;
@@ -5071,22 +5071,11 @@ display: block;
     height: 1.9rem;
     line-height: 1.9rem;
     font-weight: normal;
-    width: 70%;
+    width: 90%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, "黑体", Arial, Tahoma
-}
-
-.sortPanelList .pgRight {
-    float: right;
-    height: 1.9rem;
-    line-height: 1.9rem;
-    color: #0a6aa1;
-}
-
-.sortPanelList .pgRight.active {
-    color: #666;
 }
 
 .sortPanelList .pgMark {
@@ -5199,57 +5188,57 @@ display: block;
 }
 
 .payMode1:before {
-    Content: "\eaa3";
+    content: "\eaa3";
     color: #5bb741
 }
 
 .payMode2:before {
-    Content: "\eaa7";
+    content: "\eaa7";
     color: #e42a3a
 }
 
 .payMode3:before {
-    Content: "\eaa8";
+    content: "\eaa8";
     color: #ff8100
 }
 
 .payMode4:before {
-    Content: "\eaa6";
+    content: "\eaa6";
     color: #00a0e9
 }
 
 .payMode5:before {
-    Content: "\eaa6";
+    content: "\eaa6";
     color: #00a0e9
 }
 
 .payMode6:before {
-    Content: "\eaa6";
+    content: "\eaa6";
     color: #00a0e9
 }
 
 .payMode8:before {
-    Content: "\eaa6";
+    content: "\eaa6";
     color: #00a0e9
 }
 
 .payMode9:before {
-    Content: "\eaa4";
+    content: "\eaa4";
     color: #0066e4
 }
 
 .payMode7:before {
-    Content: "\eaa2";
+    content: "\eaa2";
     color: #00a0e9
 }
 
 .payMode10:before {
-    Content: "\eaa5";
+    content: "\eaa5";
     color: #75d42f
 }
 
 .payMode11:before {
-    Content: "\eaa5";
+    content: "\eaa5";
     color: #75d42f
 }
 
@@ -5522,51 +5511,51 @@ display: block;
 }
 
 .Icon2052 .lanIcon {
-    background-image: url(/Content/images/training/student/language/cn.png?v=201610211723)
+    background-image: url(/image/language/cn.png?v=201610211723)
 }
 
 .Icon1036 .lanIcon {
-    background-image: url(/Content/images/training/student/language/1036.png?v=201610211723)
+    background-image: url(/image/language/1036.png?v=201610211723)
 }
 
 .Icon1033 .lanIcon {
-    background-image: url(/Content/images/training/student/language/1033.png?v=201610211723)
+    background-image: url(/image/language/1033.png?v=201610211723)
 }
 
 .Icon1028 .lanIcon {
-    background-image: url(/Content/images/training/student/language/cn.png?v=201610211723)
+    background-image: url(/image/language/cn.png?v=201610211723)
 }
 
 .Icon1041 .lanIcon {
-    background-image: url(/Content/images/training/student/language/1041.png?v=201610211723)
+    background-image: url(/image/language/1041.png?v=201610211723)
 }
 
 .Icon1042 .lanIcon {
-    background-image: url(/Content/images/training/student/language/1042.png?v=201610211723)
+    background-image: url(/image/language/1042.png?v=201610211723)
 }
 
 .Icon1108 .lanIcon {
-    background-image: url(/Content/images/training/student/language/1108.png?v=201610211723)
+    background-image: url(/image/language/1108.png?v=201610211723)
 }
 
 .Icon1054 .lanIcon {
-    background-image: url(/Content/images/training/student/language/1054.png?v=201610211723)
+    background-image: url(/image/language/1054.png?v=201610211723)
 }
 
 .Icon11274 .lanIcon {
-    background-image: url(/Content/images/training/student/language/11274.png?v=201610211723)
+    background-image: url(/image/language/11274.png?v=201610211723)
 }
 
 .Icon1049 .lanIcon {
-    background-image: url(/Content/images/training/student/language/1049.png?v=201610211723)
+    background-image: url(/image/language/1049.png?v=201610211723)
 }
 
 .Icon1040 .lanIcon {
-    background-image: url(/Content/images/training/student/language/1040.png?v=201610211723)
+    background-image: url(/image/language/1040.png?v=201610211723)
 }
 
 .Icon1031 .lanIcon {
-    background-image: url(/Content/images/training/student/language/1031.png?v=201610211723)
+    background-image: url(/image/language/1031.png?v=201610211723)
 }
 
 .photoListDetailShow {
@@ -5593,7 +5582,7 @@ display: block;
 
 .photoListDetailShow .webPhotoListDetail .prevPhoto {
     position: absolute;
-    background: url(/Content/images/training/student/PicLeft.png?v=201610211723) 50% 50% no-repeat rgba(0, 0, 0, .5);
+    background: url(/image/PicLeft.png?v=201610211723) 50% 50% no-repeat rgba(0, 0, 0, .5);
     -moz-background-size: 1.2rem, auto;
     -ms-background-size: 1.2rem, auto;
     -o-background-size: 1.2rem, auto;
@@ -5634,7 +5623,7 @@ display: block;
 }
 
 .photoListDetailShow .webPhotoListDetail .nextPhoto {
-    background: url(/Content/images/training/student/PicRight.png?v=201610211723) no-repeat 50% 50% rgba(0, 0, 0, .4);
+    background: url(/image/PicRight.png?v=201610211723) no-repeat 50% 50% rgba(0, 0, 0, .4);
     -moz-background-size: 1.2rem, auto;
     -ms-background-size: 1.2rem, auto;
     -o-background-size: 1.2rem, auto;
@@ -5683,7 +5672,7 @@ display: block;
 }
 
 .photoListDetailLoadingDom .photoLoading {
-    background-image: url(/Content/images/training/student/mobi/loading.png?v=201610211723);
+    background-image: url(/image/mobi/loading.png?v=201610211723);
     border-radius: 1rem;
     width: 3rem;
     height: 3rem;
@@ -5711,7 +5700,7 @@ display: block;
 .photoListDetailShow .photoDetailClose {
     width: 1.75rem;
     height: 1.75rem;
-    background: url(/Content/images/training/student/PicClose.png?v=201610211723) 50% 50% no-repeat rgba(0, 0, 0, .5);
+    background: url(/image/PicClose.png?v=201610211723) 50% 50% no-repeat rgba(0, 0, 0, .5);
     -moz-background-size: 14px, auto;
     -ms-background-size: 14px, auto;
     -o-background-size: 14px, auto;
@@ -5757,7 +5746,7 @@ display: block;
 }
 
 .photoListDetailShow .photoDetailDescription .handleUp {
-    background: url(/Content/images/training/student/mobi/zhankai.png?v=201610211723);
+    background: url(/image/mobi/zhankai.png?v=201610211723);
     background-position: 50% 50%;
     background-repeat: no-repeat;
     -moz-background-size: 18px 18px;
@@ -5768,7 +5757,7 @@ display: block;
 }
 
 .photoListDetailShow .photoDetailDescription .handleDown {
-    background: url(/Content/images/training/student/mobi/shouqi.png?v=201610211723);
+    background: url(/image/mobi/shouqi.png?v=201610211723);
     background-position: 50% 50%;
     background-repeat: no-repeat;
     -moz-background-size: 18px 18px;
@@ -5812,7 +5801,7 @@ display: block;
     display: inline-block;
     margin-bottom: 1rem;
     vertical-align: top;
-    -webkit-backface-visibility: hidden;
+    -webkit-backface-visibility: hidden
 }
 
 .photoModule.styleForm1 .imgDiv {
@@ -5862,7 +5851,7 @@ display: block;
 }
 
 .exitButton {
-    background: url(/Content/images/training/student/PicClose.png?v=201610211723) no-repeat;
+    background: url(/image/PicClose.png?v=201610211723) no-repeat;
     width: 1rem;
     height: 1rem;
     right: 1rem;
@@ -5913,6 +5902,7 @@ display: block;
 
 .photoModule.styleForm7 {
     position: relative;
+    margin: .5rem auto;
     overflow: hidden;
     width: 100%
 }
@@ -5940,7 +5930,7 @@ display: block;
 }
 
 .photoModule.styleForm7 .prevPhoto {
-    background: url(/Content/images/training/student/PicLeft.png?v=201610211723) rgba(0, 0, 0, .4) no-repeat;
+    background: url(/image/PicLeft.png?v=201610211723) rgba(0, 0, 0, .4) no-repeat;
     width: 1.75rem;
     height: 1.75rem;
     float: left;
@@ -5954,7 +5944,7 @@ display: block;
 }
 
 .photoModule.styleForm7 .nextPhoto {
-    background: url(/Content/images/training/student/PicRight.png?v=201610211723) rgba(0, 0, 0, .4) no-repeat;
+    background: url(/image/PicRight.png?v=201610211723) rgba(0, 0, 0, .4) no-repeat;
     width: 1.75rem;
     height: 1.75rem;
     float: right;
@@ -5969,6 +5959,12 @@ display: block;
 
 .photoModule .styleForm7 .imgContainer {
     display: table-cell;
+    vertical-align: middle
+}
+
+.imageMiddleSpan {
+    display: inline-block;
+    height: 100%;
     vertical-align: middle
 }
 
@@ -6202,7 +6198,7 @@ display: block;
 }
 
 .icon-nameIcon:before, .icon-acctIcon:before, .icon-userIcon:before {
-    Content: "\e641";
+    content: "\e641";
     position: absolute;
     top: .8rem;
     left: .6rem;
@@ -6211,7 +6207,16 @@ display: block;
 }
 
 .icon-pswIcon:before {
-    Content: "\e69b";
+    content: "\e69b";
+    position: absolute;
+    top: .8rem;
+    left: .6rem;
+    font-size: .9rem;
+    z-index: 2
+}
+
+.icon-cpswIcon:before {
+    content: "\e69b";
     position: absolute;
     top: .8rem;
     left: .6rem;
@@ -6220,7 +6225,43 @@ display: block;
 }
 
 .icon-phoneIcon:before {
-    Content: "\e62d";
+    content: "\e62d";
+    position: absolute;
+    top: .8rem;
+    left: .6rem;
+    font-size: .9rem;
+    z-index: 2
+}
+
+.icon-mobileIcon:before {
+    content: "\e62d";
+    position: absolute;
+    top: .8rem;
+    left: .6rem;
+    font-size: .9rem;
+    z-index: 2
+}
+
+.icon-provIcon:before {
+    content: "\e62d";
+    position: absolute;
+    top: .8rem;
+    left: .6rem;
+    font-size: .9rem;
+    z-index: 2
+}
+
+.icon-cityIcon:before {
+    content: "\e62d";
+    position: absolute;
+    top: .8rem;
+    left: .6rem;
+    font-size: .9rem;
+    z-index: 2
+}
+
+.icon-addressIcon:before {
+    content: "\e62d";
     position: absolute;
     top: .8rem;
     left: .6rem;
@@ -6229,7 +6270,7 @@ display: block;
 }
 
 .icon-emailIcon:before {
-    Content: "\e6a1";
+    content: "\e6a1";
     position: absolute;
     top: .8rem;
     left: .6rem;
@@ -6275,7 +6316,7 @@ display: block;
 
 .loginIcon {
     display: none;
-    background: url(/Content/images/training/student/loading/loading.png?v=201610211723) no-repeat;
+    background: url(/image/loading/loading.png?v=201610211723) no-repeat;
     width: 1.2rem;
     height: 1.2rem;
     position: absolute;
@@ -6292,10 +6333,6 @@ display: block;
 .loginContent .loginBottom .freeRegister {
     font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, "黑体", Arial, Tahoma;
     color: #666
-}
-
-.loginContent .loginCaptchaCtrl {
-    display: none
 }
 
 .loginErrorLine {
@@ -6319,7 +6356,7 @@ display: block;
 
 .gohomeIcon {
     float: left;
-    background: url(/Content/images/training/student/loading/gohome.png?v=201610211723) no-repeat;
+    background: url(/image/loading/gohome.png?v=201610211723) no-repeat;
     width: 1.25rem;
     height: 1.25rem;
     background-size: 1.25rem;
@@ -6382,7 +6419,7 @@ display: block;
 .loginContent .oLgnPanel .oLgn .qqLgnPanel .qqLgn {
     width: 2.2rem;
     height: 2.2rem;
-    background: url("/Content/images/training/student/member/QQ.png?v=201610211723");
+    background: url("/image/member/QQ.png?v=201610211723");
     background-size: 2.2rem;
     margin-left: .3rem
 }
@@ -6390,7 +6427,7 @@ display: block;
 .loginContent .oLgnPanel .oLgn .sinaLgnPanel .sinaLgn {
     width: 2.2rem;
     height: 2.2rem;
-    background: url("/Content/images/training/student/member/weibo.png?v=201610211723");
+    background: url("/image/member/weibo.png?v=201610211723");
     background-size: 2.2rem;
     margin-left: .4rem
 }
@@ -6398,7 +6435,7 @@ display: block;
 .loginContent .oLgnPanel .oLgn .wxLgnPanel .wxLgn {
     width: 2.2rem;
     height: 2.2rem;
-    background: url("/Content/images/training/student/member/weixin.png?v=201611141729");
+    background: url("/image/member/weixin.png?v=201611141729");
     background-size: 2.2rem;
     margin-left: .4rem
 }
@@ -6425,7 +6462,7 @@ display: block;
 }
 
 .icon-msgIcon:before {
-    Content: "\e6b3";
+    content: "\e6b3";
     position: absolute;
     top: .8rem;
     left: .6rem;
@@ -6526,7 +6563,7 @@ display: block;
 }
 
 .icon-checkIcon:before {
-    Content: "\e6fd";
+    content: "\e6fd";
     display: inline-block;
     margin-right: .2rem;
     font-size: .7rem;
@@ -6535,7 +6572,7 @@ display: block;
 }
 
 .icon-uncheckIcon:before {
-    Content: "\e715";
+    content: "\e715";
     display: inline-block;
     margin-right: .2rem;
     font-size: .7rem;
@@ -6684,7 +6721,7 @@ display: block;
 }
 
 .profileContent li .clickIcon .icon-clickIcon:before {
-    Content: "\e672";
+    content: "\e672";
     font-size: .9rem
 }
 
@@ -6718,7 +6755,7 @@ display: block;
 }
 
 .icon-noLoginIcon:before {
- Content: "\e641";
+    content: "\e641";
     font-size: 4.5rem;
     color: #999
 }
@@ -6948,11 +6985,7 @@ display: block;
     overflow: hidden
 }
 
-#profile .profileContent .icon-pInfoIcon:before, #profile .profileContent .icon-cPswIcon:before,
-#profile .profileContent .icon-bangding:before, #profile .profileContent .icon-cLogoutIcon:before,
-#profile .profileContent .icon-orderIcon:before, #profile .profileContent .icon-addrInfoIcon:before,
-#profile .profileContent .icon-starIcon:before, #profile .profileContent .icon-integralIcon:before,
-#profile .profileContent .icon-noticeIcon:before, .icon-coupons:before {
+#profile .profileContent .icon-pInfoIcon:before, #profile .profileContent .icon-cPswIcon:before, #profile .profileContent .icon-bangding:before, #profile .profileContent .icon-cLogoutIcon:before, #profile .profileContent .icon-orderIcon:before, #profile .profileContent .icon-addrInfoIcon:before, #profile .profileContent .icon-starIcon:before, #profile .profileContent .icon-integralIcon:before, #profile .profileContent .icon-noticeIcon:before, .icon-coupons:before {
     display: inline-block;
     width: 2.3rem;
     text-align: center;
@@ -6967,52 +7000,52 @@ display: block;
 }
 
 #profile .profileContent .icon-pInfoIcon:before {
-    Content: "\e641";
+    content: "\e641";
     color: #96c4fe
 }
 
 #profile .profileContent .icon-cPswIcon:before {
- Content: "\e69b";
+    content: "\e69b";
     color: #e79bc6
 }
 
 #profile .profileContent .icon-cLogoutIcon:before {
- Content: "\e90c";
+    content: "\e90c";
     color: #777
 }
 
 #profile .profileContent .icon-orderIcon:before {
- Content: "\e66a";
+    content: "\e66a";
     color: #ffd670
 }
 
 #profile .profileContent .icon-addrInfoIcon:before {
- Content: "\e664";
+    content: "\e664";
     color: #ff8e7c
 }
 
 #profile .profileContent .icon-starIcon:before {
- Content: "\e6ee";
+    content: "\e6ee";
     color: #e3b170
 }
 
 #profile .profileContent .icon-coupons:before {
- Content: "\e903";
+    content: "\e903";
     color: #ea5a5a
 }
 
 #profile .profileContent .icon-integralIcon:before {
- Content: "\e800";
+    content: "\e800";
     color: #ffe317
 }
 
 #profile .profileContent .icon-noticeIcon:before {
- Content: "\e6c1";
+    content: "\e6c1";
     color: #c2b2ea
 }
 
 #profile .profileContent .icon-bangding:before {
- Content: "\eab1";
+    content: "\eab1";
     color: #666
 }
 
@@ -7093,7 +7126,7 @@ display: block;
 }
 
 #modifyCollection .profileContent .noCollIcon {
-    background: url(/Content/images/training/student/ss.png?v=201610211723) no-repeat;
+    background: url(/image/ss.png?v=201610211723) no-repeat;
     width: 3rem;
     height: 3rem;
     margin: 40% auto 1rem;
@@ -7268,7 +7301,7 @@ display: block;
     height: 3rem
 }
 
-.coupon-warp .coupon .coupon-Content {
+.coupon-warp .coupon .coupon-content {
     font-weight: normal;
     width: 4rem;
     height: 3rem;
@@ -7279,7 +7312,7 @@ display: block;
     display: inline-block
 }
 
-.coupon-warp .coupon-Content div {
+.coupon-warp .coupon-content div {
     width: 100%;
     line-height: 16px
 }
@@ -7338,7 +7371,7 @@ display: block;
 }
 
 .coupon-warp .icons-trash2:before {
-    Content: "\e6f8";
+    content: "\e6f8";
     color: #ccc
 }
 
@@ -7381,73 +7414,73 @@ display: block;
 }
 
 .coupon-warp .coupon .coupon-red-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine.png?v=201610211723) 0 0 no-repeat
+    background: url(/image/coupon/v_waveLine.png?v=201610211723) 0 0 no-repeat
 }
 
 .coupon-warp .coupon .coupon-red-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine.png?v=201610211723) -11px 0 no-repeat
+    background: url(/image/coupon/v_waveLine.png?v=201610211723) -11px 0 no-repeat
 }
 
 .coupon-warp .coupon .coupon-orange-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine.png?v=201610211723) -22px 0 no-repeat
+    background: url(/image/coupon/v_waveLine.png?v=201610211723) -22px 0 no-repeat
 }
 
 .coupon-warp .coupon .coupon-orange-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine.png?v=201610211723) -33px 0 no-repeat
+    background: url(/image/coupon/v_waveLine.png?v=201610211723) -33px 0 no-repeat
 }
 
 .coupon-warp .coupon .coupon-yellow-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine.png?v=201610211723) -44px 0 no-repeat
+    background: url(/image/coupon/v_waveLine.png?v=201610211723) -44px 0 no-repeat
 }
 
 .coupon-warp .coupon .coupon-yellow-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine.png?v=201610211723) -55px 0 no-repeat
+    background: url(/image/coupon/v_waveLine.png?v=201610211723) -55px 0 no-repeat
 }
 
 .coupon-warp .coupon .coupon-green-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine.png?v=201610211723) -66px 0 no-repeat
+    background: url(/image/coupon/v_waveLine.png?v=201610211723) -66px 0 no-repeat
 }
 
 .coupon-warp .coupon .coupon-green-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine.png?v=201610211723) -77px 0 no-repeat
+    background: url(/image/coupon/v_waveLine.png?v=201610211723) -77px 0 no-repeat
 }
 
 .coupon-warp .coupon .coupon-blue-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine.png?v=201610211723) -88px 0 no-repeat
+    background: url(/image/coupon/v_waveLine.png?v=201610211723) -88px 0 no-repeat
 }
 
 .coupon-warp .coupon .coupon-blue-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine.png?v=201610211723) -99px 0 no-repeat
+    background: url(/image/coupon/v_waveLine.png?v=201610211723) -99px 0 no-repeat
 }
 
 .coupon-warp .coupon .coupon-pink-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine.png?v=201610211723) -110px 0 no-repeat
+    background: url(/image/coupon/v_waveLine.png?v=201610211723) -110px 0 no-repeat
 }
 
 .coupon-warp .coupon .coupon-pink-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine.png?v=201610211723) -121px 0 no-repeat
+    background: url(/image/coupon/v_waveLine.png?v=201610211723) -121px 0 no-repeat
 }
 
 .coupon-warp .coupon .coupon-purple-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine.png?v=201610211723) -132px 0 no-repeat
+    background: url(/image/coupon/v_waveLine.png?v=201610211723) -132px 0 no-repeat
 }
 
 .coupon-warp .coupon .coupon-purple-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine.png?v=201610211723) -143px 0 no-repeat
+    background: url(/image/coupon/v_waveLine.png?v=201610211723) -143px 0 no-repeat
 }
 
 .coupon-warp .coupon .coupon-gray-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine.png?v=201610211723) -154px 0 no-repeat
+    background: url(/image/coupon/v_waveLine.png?v=201610211723) -154px 0 no-repeat
 }
 
 .coupon-warp .coupon .coupon-gray-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine.png?v=201610211723) -165px 0 no-repeat
+    background: url(/image/coupon/v_waveLine.png?v=201610211723) -165px 0 no-repeat
 }
 
 .coupon .fk-coupon-expired {
     width: 1.5rem;
     height: 1.5rem;
-    background: url(/Content/images/training/student/coupon/invalid.png?v=201610211723) no-repeat;
+    background: url(/image/coupon/invalid.png?v=201610211723) no-repeat;
     position: absolute;
     top: 0;
     right: 3px;
@@ -7470,7 +7503,7 @@ display: block;
 }
 
 .couponListPanel .icon-coupons1:before {
-    Content: "\e903";
+    content: "\e903";
     color: #fff
 }
 
@@ -7641,7 +7674,7 @@ display: block;
 
 .siteFormValidate .changeSiteFormValidate {
     line-height: 1.75rem;
-    background-image: url(/Content/images/training/student/refurbish.png?v=201610211723);
+    background-image: url(/image/refurbish.png?v=201610211723);
     background-repeat: no-repeat;
     width: 10%;
     height: 1.75rem;
@@ -7754,18 +7787,18 @@ display: block;
 }
 
 .webFooterBox .ui-calendar-header .ui-calendar-prev {
-    background: url(/Content/images/training/student/comm/calendar/timePre.png?v=201610211723) no-repeat;
+    background: url(/image/comm/calendar/timePre.png?v=201610211723) no-repeat;
     background-size: 90% 90%
 }
 
 .webFooterBox .ui-calendar-header .ui-calendar-next {
-    background: url(/Content/images/training/student/comm/calendar/timeNext.png?v=201610211723) no-repeat;
+    background: url(/image/comm/calendar/timeNext.png?v=201610211723) no-repeat;
     background-size: 90% 90%;
     margin-left: .75rem
 }
 
 .webFooterBox .ui-calendar-header .ui-calendar-return {
-    background: url(/Content/images/training/student/comm/calendar/return.png?v=201610211723) no-repeat;
+    background: url(/image/comm/calendar/return.png?v=201610211723) no-repeat;
     float: left;
     margin-left: .25rem;
     background-size: 90% 90%
@@ -7809,7 +7842,7 @@ select::-ms-expand {
 }
 
 select {
-    background: url(/Content/images/training/student/selectTriangle.png?v=201610211723), #f7f7f7;
+    background: url(/image/selectTriangle.png?v=201610211723), #f7f7f7;
     background-repeat: no-repeat;
     background-size: .6rem .6rem;
     cursor: pointer;
@@ -8015,7 +8048,7 @@ select {
     cursor: pointer;
     margin: .4rem .25rem 0 .25rem;
     margin: .3rem .25rem 0 .25rem;
-    background: url(/Content/images/training/student/close01.gif?v=201610211723) no-repeat;
+    background: url(/image/close01.gif?v=201610211723) no-repeat;
     width: .4rem;
     height: .4rem;
     font-size: .4rem
@@ -8026,12 +8059,12 @@ select {
 }
 
 .icon-errorTigs:before {
-    Content: "\e72b";
+    content: "\e72b";
     font-size: 2rem
 }
 
 .icon-succeedTigs:before {
-    Content: "\e778";
+    content: "\e778";
     font-size: 2rem
 }
 
@@ -8072,7 +8105,7 @@ select {
     transition: all 200ms linear
 }
 
-.mobiPrompt .mobiPrompt_Content {
+.mobiPrompt .mobiPrompt_content {
     padding: 2.4rem 1.5rem 1.5rem;
     position: relative;
     line-height: 1.2rem
@@ -8089,7 +8122,7 @@ select {
 }
 
 .mobiPrompt .icon-mobiPromptClose:before {
-    Content: '\e66f';
+    content: '\e66f';
     font-size: 1.2rem;
     color: #999
 }
@@ -8135,11 +8168,11 @@ select {
 }
 
 .mobiPrompt .icon-PromptCancel:before {
-    Content: '\e670'
+    content: '\e670'
 }
 
 .mobiPrompt .icon-PromptSave:before {
-    Content: '\e777'
+    content: '\e777'
 }
 
 .g_locale2052 .mobiPrompt .icon-PromptCancel {
@@ -8153,17 +8186,17 @@ select {
 }
 
 .g_locale2052 .mobiPrompt .icon-PromptCancel:before {
-    Content: '取消';
+    content: '取消';
     font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, "黑体", Arial, Tahoma
 }
 
 .g_locale2052 .mobiPrompt .icon-PromptSave:before {
-    Content: '确认收货';
+    content: '确认收货';
     font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, "黑体", Arial, Tahoma
 }
 
 .g_locale2052 .mobiPrompt .confirm.icon-PromptSave:before {
-    Content: '确定';
+    content: '确定';
     font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, "黑体", Arial, Tahoma
 }
 
@@ -8225,15 +8258,15 @@ select {
 }
 
 .notice-image0 {
-    background: url(/Content/images/training/student/mobi/noticeIco1.gif?v=201610211723) no-repeat left center
+    background: url(/image/mobi/noticeIco1.gif?v=201610211723) no-repeat left center
 }
 
 .notice-image1 {
-    background: url(/Content/images/training/student/mobi/noticeIco2.gif?v=201610211723) no-repeat left center
+    background: url(/image/mobi/noticeIco2.gif?v=201610211723) no-repeat left center
 }
 
 .notice-image2 {
-    background: url(/Content/images/training/student/mobi/noticeIco3.gif?v=201610211723) no-repeat left center
+    background: url(/image/mobi/noticeIco3.gif?v=201610211723) no-repeat left center
 }
 
 .notice-ico {
@@ -8276,14 +8309,9 @@ select {
 }
 
 .photoModule.styleForm1 .photoDiv {
-    width: 47%;
-    margin-left: 2%;
-    margin-right: 2%;
-    float: left;
-}
-
-.photoModule.styleForm1 .photoDiv:nth-child(2n) {
-    margin-left: 0;
+    width: 45%;
+    margin-left: 2.5%;
+    margin-right: 2.5%
 }
 
 .linkArea .link-p-container {
@@ -8542,7 +8570,7 @@ select {
 }
 
 .faiscoIconsGwc:before {
-    Content: "\ea7e"
+    content: "\ea7e"
 }
 
 .noProduct {
@@ -8561,7 +8589,7 @@ select {
 }
 
 .icon-noProduct:before {
-    Content: "\e631";
+    content: "\e631";
     font-size: 4.5rem;
     color: #666
 }
@@ -8765,13 +8793,13 @@ select {
 }
 
 .icon-plusIcon:before {
-    Content: "\e71d";
+    content: "\e71d";
     color: #666;
     font-size: .8rem
 }
 
 .icon-minisIcon:before {
-    Content: "\e724";
+    content: "\e724";
     color: #666;
     font-size: .8rem
 }
@@ -8821,7 +8849,7 @@ select {
 }
 
 .icon-delIcon:before {
-    Content: "\e6f8";
+    content: "\e6f8";
     color: #666;
     font-size: .75rem
 }
@@ -8837,7 +8865,7 @@ select {
 }
 
 .icon-shopping:before {
-    Content: "\e631";
+    content: "\e631";
     font-size: 1rem;
     vertical-align: middle
 }
@@ -8891,7 +8919,7 @@ select {
 .orderSettle .orderAssign_line .shipTopBg {
     width: 100%;
     height: .2rem;
-    background: url(/Content/images/training/student/mall/shipTopBg.jpg?v=201610211723);
+    background: url(/image/mall/shipTopBg.jpg?v=201610211723);
     background-size: 100% 100%;
     background-position: 0rem 0rem
 }
@@ -8979,7 +9007,7 @@ select {
 }
 
 .icon-rightIcon:before {
-    Content: "\e672";
+    content: "\e672";
     font-size: 1rem
 }
 
@@ -9191,7 +9219,7 @@ select {
 }
 
 .fk-coupon-panel .fk-select-layer span.faisco-icons-select:before {
-    Content: "\e777";
+    content: "\e777";
     color: #FFF;
     font-size: .75rem;
     font-weight: 900;
@@ -9354,7 +9382,7 @@ select {
 }
 
 .icon-addrSelect:before {
-    Content: "\e656";
+    content: "\e656";
     color: #666;
     font-size: 1rem;
     float: right;
@@ -9364,7 +9392,7 @@ select {
 }
 
 .icon-mobileCtSelect:before {
-    Content: "\e656";
+    content: "\e656";
     color: #666;
     font-size: 1rem;
     float: right;
@@ -9555,7 +9583,7 @@ select {
 }
 
 .orderDetail_line .bankDetail .chooseBank .icon-rightIcon:before {
-    Content: "\e672";
+    content: "\e672";
     font-size: 1rem;
     position: relative;
     margin-right: .3rem;
@@ -9661,7 +9689,7 @@ select {
 }
 
 .orderDetail .orderDetailTop .icon-SucceedIcon:before {
-    Content: "\e777";
+    content: "\e777";
     font-size: 2.5rem;
     font-weight: bold
 }
@@ -9902,7 +9930,7 @@ select {
 }
 
 .orderDetail .orderDetail_line .seeMore .icon-seemoreIcon:before {
-    Content: "\e656";
+    content: "\e656";
     font-size: .7rem;
     font-weight: bold;
     margin-left: .2rem;
@@ -9911,7 +9939,7 @@ select {
 }
 
 .orderDetail .orderDetail_line .seeMore .icon-hidemoreIcon:before {
-    Content: "\e701";
+    content: "\e701";
     font-size: .7rem;
     margin-left: .2rem;
     font-weight: bold;
@@ -9985,12 +10013,12 @@ select {
 }
 
 .icon-upIcon:before {
-    Content: "\e656";
+    content: "\e656";
     font-size: .75rem
 }
 
 .opened .icon-upIcon:before {
-    Content: "\e701";
+    content: "\e701";
     font-size: .75rem
 }
 
@@ -10049,7 +10077,7 @@ select {
 .ct-panel .img-area-item .uploadify-button {
     width: 2.5rem;
     height: 2.5rem;
-    background-image: url(/Content/images/training/student/mobi/msgUpImg/upload.png?v=201702131723);
+    background-image: url(/image/mobi/msgUpImg/upload.png?v=201702131723);
     background-repeat: no-repeat;
     padding: 0 !important;
     border-width: 0;
@@ -10084,7 +10112,7 @@ select {
     height: .8rem;
     position: absolute;
     z-index: 1;
-    background-image: url(/Content/images/training/student/mobi/msgUpImg/delete.png?v=201610211723);
+    background-image: url(/image/mobi/msgUpImg/delete.png?v=201610211723);
     background-repeat: no-repeat;
     margin-top: -2.9rem;
     margin-left: 1.95rem;
@@ -10113,7 +10141,7 @@ select {
     margin-left: .3rem;
     z-index: 2;
     background-size: .7rem;
-    background-image: url(/Content/images/training/student/mobi/tip.png?v=201610211723);
+    background-image: url(/image/mobi/tip.png?v=201610211723);
     background-repeat: no-repeat;
     width: .7rem;
     height: .6rem
@@ -10131,13 +10159,13 @@ select {
     margin-top: .55rem;
     z-index: 2;
     background-size: .6rem;
-    background-image: url(/Content/images/training/student/mobi/tip.png?v=201610211723);
+    background-image: url(/image/mobi/tip.png?v=201610211723);
     background-repeat: no-repeat;
     width: .7rem;
     height: .6rem
 }
 
-.ct-panel .l-s-item .ct-s-Content {
+.ct-panel .l-s-item .ct-s-content {
     line-height: 1rem;
     color: #333;
     word-wrap: break-word;
@@ -10310,45 +10338,45 @@ select {
     padding: 0 .4rem
 }
 
-.ct-panel .ct-Content {
+.ct-panel .ct-content {
     color: #333;
     padding: .7rem;
     line-height: 1rem
 }
 
-.ct-panel .ct-s-Content {
+.ct-panel .ct-s-content {
     line-height: 1rem;
     color: #333;
     word-wrap: break-word;
     padding: .3rem 0
 }
 
-.ct-panel .ct-s-Content-m {
+.ct-panel .ct-s-content-m {
     padding-bottom: .5rem;
     color: #333;
     line-height: 1rem;
     word-wrap: break-word
 }
 
-.ct-panel .ct-s-Content-m .s-img-f-tb {
+.ct-panel .ct-s-content-m .s-img-f-tb {
     width: 2.5rem;
     height: 2.5rem;
     padding-right: .15rem
 }
 
-.ct-panel .ct-s-Content-m .s-img-tb {
+.ct-panel .ct-s-content-m .s-img-tb {
     width: 100%;
     height: 100%;
     table-layout: fixed
 }
 
-.ct-panel .ct-s-Content-m .s-img-bd {
+.ct-panel .ct-s-content-m .s-img-bd {
     border: solid 1px #c3c3c3;
     width: 2.5rem;
     height: 2.5rem
 }
 
-.ct-panel .ct-s-Content-m .s-img-set {
+.ct-panel .ct-s-content-m .s-img-set {
     width: 2.5rem !important;
     display: block !important;
     max-height: 2.5rem !important
@@ -10400,12 +10428,12 @@ select {
 }
 
 .flowDetailPanel .icon-more:before {
-    Content: '\e656';
+    content: '\e656';
     font-size: 1.2rem
 }
 
 .flowDetailPanel .icon-less:before {
-    Content: '\e701';
+    content: '\e701';
     font-size: 1.2rem
 }
 
@@ -10430,7 +10458,7 @@ select {
 }
 
 .flowDetail .icon-noMsg:before {
-    Content: '\ea9d';
+    content: '\ea9d';
     font-size: 2rem
 }
 
@@ -10792,7 +10820,7 @@ select {
 }
 
 .flowInfo:after {
-    Content: '';
+    content: '';
     width: 1px;
     height: 100%;
     background: #DDD;
@@ -10813,7 +10841,7 @@ select {
 }
 
 .flowFlag:before {
-    Content: '';
+    content: '';
     width: .4rem;
     height: .4rem;
     border-radius: 50%;
@@ -10834,7 +10862,7 @@ select {
 }
 
 .flowInfo .icon-flowCurrent:before {
-    Content: '\e672';
+    content: '\e672';
     position: absolute;
     margin-top: .3rem
 }
@@ -10894,7 +10922,7 @@ select {
 }
 
 .cusFlowFlag:before {
-    Content: "\ea8d";
+    content: "\ea8d";
     width: .75rem;
     height: .75rem;
     background: 0;
@@ -10917,7 +10945,7 @@ select {
 }
 
 .icon-mallEdit:before {
-    Content: "\e67d";
+    content: "\e67d";
     line-height: 1.4rem;
     font-size: 1rem;
     position: relative;
@@ -10959,15 +10987,15 @@ select {
 }
 
 .liuyanIcon {
-    background: url(/Content/images/training/student/mall/liuyan.png?v=201610211723) no-repeat
+    background: url(/image/mall/liuyan.png?v=201610211723) no-repeat
 }
 
 .shuomingIcon {
-    background: url(/Content/images/training/student/mall/shuoming.png?v=201610211723) no-repeat
+    background: url(/image/mall/shuoming.png?v=201610211723) no-repeat
 }
 
 .rightArrow {
-    background: url(/Content/images/training/student/mall/jjtou.png?v=201610211723) no-repeat
+    background: url(/image/mall/jjtou.png?v=201610211723) no-repeat
 }
 
 .homeIcon {
@@ -10985,7 +11013,7 @@ select {
 }
 
 .icon-homeIcon:before {
-    Content: "\e687";
+    content: "\e687";
     display: table-cell;
     vertical-align: middle
 }
@@ -11078,7 +11106,7 @@ select {
 }
 
 .faisco-icons-star3:before {
-    Content: "\e901"
+    content: "\e901"
 }
 
 .postArea {
@@ -11131,7 +11159,7 @@ select {
 .vote .voteSubject .voteSubjectText {
     display: inline-block;
     padding-left: 1rem;
-    background: url(/Content/images/training/student/mobi/toupiaoicon.png?v=201610211723) no-repeat;
+    background: url(/image/mobi/toupiaoicon.png?v=201610211723) no-repeat;
     background-size: 1rem;
     background-position: 0 50%
 }
@@ -11249,7 +11277,7 @@ select {
 .progressBar {
     width: 0;
     height: 100%;
-    background: transparent url(/Content/images/training/student/mobi/pre.png?v=201610211723) 0 0 repeat
+    background: transparent url(/image/mobi/pre.png?v=201610211723) 0 0 repeat
 }
 
 .progressBar-box {
@@ -11279,7 +11307,7 @@ select {
 }
 
 .vote .progressBar-box .voteItemName.selected {
-    background: url(/Content/images/training/student/mobi/toupiaoselect.png?v=201610211723) no-repeat;
+    background: url(/image/mobi/toupiaoselect.png?v=201610211723) no-repeat;
     padding-left: 1.25rem;
     background-size: 10.3rem;
     background-position: .25rem
@@ -11326,7 +11354,7 @@ select {
 }
 
 .memberCard {
-    background: url(/Content/images/training/student/member/mobiCart2@2x.png?v=201610211723) no-repeat;
+    background: url(/image/member/mobiCart2@2x.png?v=201610211723) no-repeat;
     background-size: contain;
     width: 14rem;
     height: 3rem;
@@ -11353,7 +11381,7 @@ select {
 }
 
 .memberSignUpCard {
-    background: url(/Content/images/training/student/member/mobiCart1@2x.png?v=201610211723) no-repeat;
+    background: url(/image/member/mobiCart1@2x.png?v=201610211723) no-repeat;
     background-size: contain;
     width: 14rem;
     height: 3rem;
@@ -11459,7 +11487,7 @@ select {
 }
 
 .mobiAdvertiseClose .mobiAdClose {
-    background: url(/Content/images/training/student/mobi/closeIcon.png?v=201610211723) no-repeat;
+    background: url(/image/mobi/closeIcon.png?v=201610211723) no-repeat;
     width: 1.6rem;
     height: 1.6rem;
     background-size: 50% 50%;
@@ -11544,7 +11572,7 @@ select {
 }
 
 .fileDownloadPanel .iconAvi {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_01.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_01.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11553,7 +11581,7 @@ select {
 }
 
 .fileDownloadPanel .iconWmv {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_02.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_02.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11562,7 +11590,7 @@ select {
 }
 
 .fileDownloadPanel .icon3gp {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_03.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_03.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11571,7 +11599,7 @@ select {
 }
 
 .fileDownloadPanel .iconMkv {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_04.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_04.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11580,7 +11608,7 @@ select {
 }
 
 .fileDownloadPanel .iconFlv {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_05.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_05.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11589,7 +11617,7 @@ select {
 }
 
 .fileDownloadPanel .iconMp4 {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_06.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_06.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11598,7 +11626,7 @@ select {
 }
 
 .fileDownloadPanel .iconRmvb {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_07.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_07.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11607,7 +11635,7 @@ select {
 }
 
 .fileDownloadPanel .iconSwf {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_08.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_08.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11616,7 +11644,7 @@ select {
 }
 
 .fileDownloadPanel .iconMp3 {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_09.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_09.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11625,7 +11653,7 @@ select {
 }
 
 .fileDownloadPanel .iconWav {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_10.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_10.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11634,7 +11662,7 @@ select {
 }
 
 .fileDownloadPanel .downWma {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_11.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_11.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11643,7 +11671,7 @@ select {
 }
 
 .fileDownloadPanel .iconOgg {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_12.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_12.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11652,7 +11680,7 @@ select {
 }
 
 .fileDownloadPanel .iconApe {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_13.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_13.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11661,7 +11689,7 @@ select {
 }
 
 .fileDownloadPanel .iconAcc {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_14.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_14.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11670,7 +11698,7 @@ select {
 }
 
 .fileDownloadPanel .iconGif {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_15.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_15.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11679,7 +11707,7 @@ select {
 }
 
 .fileDownloadPanel .iconJpg {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_16.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_16.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11688,7 +11716,7 @@ select {
 }
 
 .fileDownloadPanel .iconPng {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_17.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_17.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11697,7 +11725,7 @@ select {
 }
 
 .fileDownloadPanel .iconBmp {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_18.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_18.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11706,7 +11734,7 @@ select {
 }
 
 .fileDownloadPanel .iconWps {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_19.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_19.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11715,7 +11743,7 @@ select {
 }
 
 .fileDownloadPanel .iconEpub {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_20.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_20.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11724,7 +11752,7 @@ select {
 }
 
 .fileDownloadPanel .iconTxt {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_21.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_21.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11733,7 +11761,7 @@ select {
 }
 
 .fileDownloadPanel .iconPpt {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_22.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_22.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11742,7 +11770,7 @@ select {
 }
 
 .fileDownloadPanel .iconPdf {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_23.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_23.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11751,7 +11779,7 @@ select {
 }
 
 .fileDownloadPanel .iconXls {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_24.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_24.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11760,7 +11788,7 @@ select {
 }
 
 .fileDownloadPanel .iconDoc {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_25.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_25.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11769,7 +11797,7 @@ select {
 }
 
 .fileDownloadPanel .iconHtml {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_26.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_26.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11778,7 +11806,7 @@ select {
 }
 
 .fileDownloadPanel .iconCss {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_27.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_27.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11787,7 +11815,7 @@ select {
 }
 
 .fileDownloadPanel .iconJs {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_28.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_28.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11796,7 +11824,7 @@ select {
 }
 
 .fileDownloadPanel .iconRar {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_29.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_29.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11805,7 +11833,7 @@ select {
 }
 
 .fileDownloadPanel .iconZip {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_30.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_30.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11814,7 +11842,7 @@ select {
 }
 
 .fileDownloadPanel .iconApk {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_31.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_31.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11823,7 +11851,7 @@ select {
 }
 
 .fileDownloadPanel .iconDefault {
-    background: url(/Content/images/training/student/fileDownload/Format_icon_32.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/Format_icon_32.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11832,7 +11860,7 @@ select {
 }
 
 .fileDownloadPanel .download {
-    background: url(/Content/images/training/student/fileDownload/download_icon2.png?v=201610211723) no-repeat;
+    background: url(/image/fileDownload/download_icon2.png?v=201610211723) no-repeat;
     background-size: contain !important;
     width: 1.75rem;
     height: 1.75rem;
@@ -11892,82 +11920,82 @@ select {
 }
 
 .shareInfo .sina_weibo {
-    background: url(/Content/images/training/student/share/sina_weibo.png?v=201610211723) 0 0 no-repeat;
+    background: url(/image/share/sina_weibo.png?v=201610211723) 0 0 no-repeat;
     background-size: 1.4rem 1.4rem
 }
 
 .shareInfo .qq_weibo {
-    background: url(/Content/images/training/student/share/qq_weibo.png?v=201610211723) 0 0 no-repeat;
+    background: url(/image/share/qq_weibo.png?v=201610211723) 0 0 no-repeat;
     background-size: 1.4rem 1.4rem
 }
 
 .shareInfo .qq_zone {
-    background: url(/Content/images/training/student/share/qq_zone.png?v=201610211723) 0 0 no-repeat;
+    background: url(/image/share/qq_zone.png?v=201610211723) 0 0 no-repeat;
     background-size: 1.4rem 1.4rem
 }
 
 .shareInfo .kaixin001 {
-    background: url(/Content/images/training/student/share/kaixin001.png?v=201610211723) 0 0 no-repeat;
+    background: url(/image/share/kaixin001.png?v=201610211723) 0 0 no-repeat;
     background-size: 1.4rem 1.4rem
 }
 
 .shareInfo .renren {
-    background: url(/Content/images/training/student/share/renren.png?v=201610211723) 0 0 no-repeat;
+    background: url(/image/share/renren.png?v=201610211723) 0 0 no-repeat;
     background-size: 1.4rem 1.4rem
 }
 
 .shareInfo .douban {
-    background: url(/Content/images/training/student/share/douban.png?v=201610211723) 0 0 no-repeat;
+    background: url(/image/share/douban.png?v=201610211723) 0 0 no-repeat;
     background-size: 1.4rem 1.4rem
 }
 
 .shareInfo .sohu_weibo {
-    background: url(/Content/images/training/student/share/sohu_weibo.png?v=201610211723) 0 0 no-repeat;
+    background: url(/image/share/sohu_weibo.png?v=201610211723) 0 0 no-repeat;
     background-size: 1.4rem 1.4rem
 }
 
 .shareInfo .netease_weibo {
-    background: url(/Content/images/training/student/share/lofter.png?v=201610211723) 0 0 no-repeat;
+    background: url(/image/share/lofter.png?v=201610211723) 0 0 no-repeat;
     background-size: 1.4rem 1.4rem
 }
 
 .shareInfo .baidu_hi {
-    background: url(/Content/images/training/student/share/baidu_hi.png?v=201610211723) 0 0 no-repeat;
+    background: url(/image/share/baidu_hi.png?v=201610211723) 0 0 no-repeat;
     background-size: 1.4rem 1.4rem
 }
 
 .shareInfo .baidu_tieba {
-    background: url(/Content/images/training/student/share/baidu_tieba.png?v=201610211723) 0 0 no-repeat;
+    background: url(/image/share/baidu_tieba.png?v=201610211723) 0 0 no-repeat;
     background-size: 1.4rem 1.4rem
 }
 
 .shareInfo .taojianghu {
-    background: url(/Content/images/training/student/share/taojianghu.png?v=201610211723) 0 0 no-repeat;
+    background: url(/image/share/taojianghu.png?v=201610211723) 0 0 no-repeat;
     background-size: 1.4rem 1.4rem
 }
 
 .shareInfo .FaceBook {
-    background: url(/Content/images/training/student/share/facebook.png?v=201610211723) 0 0 no-repeat;
+    background: url(/image/share/facebook.png?v=201610211723) 0 0 no-repeat;
     background-size: 1.4rem 1.4rem
 }
 
 .shareInfo .Twitter {
-    background: url(/Content/images/training/student/share/twitter.png?v=201610211723) 0 0 no-repeat;
+    background: url(/image/share/twitter.png?v=201610211723) 0 0 no-repeat;
     background-size: 1.4rem 1.4rem
 }
 
 .shareInfo .LinkedIn {
-    background: url(/Content/images/training/student/share/linkedin.png?v=201610211723) 0 0 no-repeat;
+    background: url(/image/share/linkedin.png?v=201610211723) 0 0 no-repeat;
     background-size: 1.4rem 1.4rem
 }
 
 .shareInfo .showIcon {
-    background: url(/Content/images/training/student/share/showicon.png?v=201610211723) 0 0 no-repeat;
+    background: url(/image/share/showicon.png?v=201610211723) 0 0 no-repeat;
     background-size: 1.4rem 1.4rem
 }
 
 .shareInfo .hideIcon {
-    background: url(/Content/images/training/student/share/hideicon.png?v=201610211723) 0 0 no-repeat;
+    background: url(/image/share/hideicon.png?v=201610211723) 0 0 no-repeat;
     background-size: 1.4rem 1.4rem
 }
 
@@ -12016,7 +12044,7 @@ select {
 }
 
 .shareToFriendIcon {
-    background: url(/Content/images/training/student/shareIcon.png?v_20140271750) 0 -679px no-repeat;
+    background: url(/image/shareIcon.png?v_20140271750) 0 -679px no-repeat;
     background-size: 28px 785px;
     height: 30px;
     width: 30px;
@@ -12036,7 +12064,7 @@ select {
 }
 
 .shareToWeiXinIcon {
-    background: url(/Content/images/training/student/shareIcon.png?v_20140271750) 0 -645px no-repeat;
+    background: url(/image/shareIcon.png?v_20140271750) 0 -645px no-repeat;
     background-size: 28px 785px;
     height: 30px;
     width: 30px;
@@ -12060,7 +12088,7 @@ select {
     top: 1rem;
     width: 254px;
     height: 11rem;
-    background: url(/Content/images/training/student/prompt.png?v_20140271750) 0 0 no-repeat;
+    background: url(/image/prompt.png?v_20140271750) 0 0 no-repeat;
     float: right
 }
 
@@ -12244,19 +12272,19 @@ select {
 }
 
 .productNewDetail .icon-collection:before {
-    Content: "\e6ee";
+    content: "\e6ee";
     color: #999;
     font-size: 1.3rem
 }
 
 .productNewDetail .icon-collectSelect:before {
-    Content: "\e6ed";
+    content: "\e6ed";
     color: #ebba35;
     font-size: 1.3rem
 }
 
 .productNewDetail .collectionIcon {
-    background: url(/Content/images/training/student/sc.png) no-repeat;
+    background: url(/image/sc.png) no-repeat;
     background-size: 1rem;
     width: 1rem;
     height: 1.4rem;
@@ -12265,7 +12293,7 @@ select {
 }
 
 .productNewDetail .collectionIconSelect {
-    background: url(/Content/images/training/student/sc-1.png) no-repeat;
+    background: url(/image/sc-1.png) no-repeat;
     background-size: 1rem
 }
 
@@ -12497,7 +12525,7 @@ select {
     z-index: 9;
     height: 5rem;
     background-color: #fff;
-    background-image: url(/Content/images/training/student/loading/loading_2.gif?v=201610211723);
+    background-image: url(/image/loading/loading_2.gif?v=201610211723);
     background-repeat: no-repeat;
     background-position: 50% 50%
 }
@@ -12798,7 +12826,7 @@ select {
 }
 
 .icon-shopCartIcon:before {
-    Content: "\e69d";
+    content: "\e69d";
     margin-left: .2rem;
     position: relative;
     top: .1rem
@@ -12909,23 +12937,23 @@ select {
 }
 
 .icon-Off:before {
-    Content: "\e66f";
+    content: "\e66f";
     font-size: .7rem
 }
 
 .icon-share:before {
-    Content: "\e6e2";
+    content: "\e6e2";
     font-size: 1.2rem
 }
 
 .icon-decrease:before {
-    Content: "\e724";
+    content: "\e724";
     color: #666;
     font-size: 1rem
 }
 
 .icon-increase:before {
-    Content: "\e71d";
+    content: "\e71d";
     color: #666;
     font-size: 1rem
 }
@@ -13019,7 +13047,7 @@ select {
 }
 
 .icon-gOther:before {
-    Content: "\e6b8";
+    content: "\e6b8";
     display: table-cell;
     vertical-align: middle;
     font-size: 1.2rem;
@@ -13034,7 +13062,7 @@ select {
 }
 
 .icon-gGoforward:before {
-    Content: "\e672";
+    content: "\e672";
     font-size: 1rem;
     left: 1.6rem
 }
@@ -13103,7 +13131,7 @@ select {
 }
 
 .icon-gHome:before {
-    Content: "\e687";
+    content: "\e687";
     display: table-cell;
     vertical-align: middle;
     font-size: 1.2rem
@@ -13161,7 +13189,7 @@ select {
 .userCommentInfo .uploadify-button {
     width: 2.5rem;
     height: 2.5rem;
-    background-image: url(/Content/images/training/student/mobi/msgUpImg/upload.png?v=201702131723);
+    background-image: url(/image/mobi/msgUpImg/upload.png?v=201702131723);
     background-repeat: no-repeat;
     padding: 0 !important;
     border-width: 0;
@@ -13196,7 +13224,7 @@ select {
     height: .8rem;
     position: absolute;
     z-index: 1;
-    background-image: url(/Content/images/training/student/mobi/msgUpImg/delete.png?v=201610211723);
+    background-image: url(/image/mobi/msgUpImg/delete.png?v=201610211723);
     background-repeat: no-repeat;
     margin-top: -2.9rem;
     margin-left: 1.95rem;
@@ -13341,85 +13369,85 @@ select {
 }
 
 .icon-sina_weibo:before {
-    Content: "\e717";
+    content: "\e717";
     background-color: #f34546;
     border-radius: 100%
 }
 
 .icon-qq_weibo:before {
-    Content: "\e716";
+    content: "\e716";
     background-color: #0590ce;
     border-radius: 100%
 }
 
 .icon-qq_zone:before {
-    Content: "\e718";
+    content: "\e718";
     background-color: #0a97f7;
     border-radius: 100%
 }
 
 .icon-kaixin001:before {
-    Content: "\e719";
+    content: "\e719";
     background-color: #ff9600;
     border-radius: 100%
 }
 
 .icon-renren:before {
-    Content: "\e71a";
+    content: "\e71a";
     background-color: #4a76c0;
     border-radius: 100%
 }
 
 .icon-douban:before {
-    Content: "\e71b";
+    content: "\e71b";
     background-color: #2d9918;
     border-radius: 100%
 }
 
 .icon-sohu_weibo:before {
-    Content: "\e71c";
+    content: "\e71c";
     background-color: #fdd100;
     border-radius: 100%
 }
 
 .icon-netease_weibo:before {
-    Content: "\e90b";
+    content: "\e90b";
     background-color: #028b6b;
     border-radius: 100%
 }
 
 .icon-baidu_hi:before {
-    Content: "\e71e";
+    content: "\e71e";
     background-color: #3f3fd8;
     border-radius: 100%
 }
 
 .icon-baidu_tieba:before {
-    Content: "\e71f";
+    content: "\e71f";
     background-color: #1e84e1;
     border-radius: 100%
 }
 
 .icon-taojianghu:before {
-    Content: "\e723";
+    content: "\e723";
     background-color: #ff5a00;
     border-radius: 100%
 }
 
 .icon-FaceBook:before {
-    Content: "\e720";
+    content: "\e720";
     background-color: #3b589c;
     border-radius: 100%
 }
 
 .icon-Twitter:before {
-    Content: "\e721";
+    content: "\e721";
     background-color: #1ab2e8;
     border-radius: 100%
 }
 
 .icon-LinkedIn:before {
-    Content: "\e722";
+    content: "\e722";
     background-color: #006a9a;
     border-radius: 100%
 }
@@ -13435,59 +13463,59 @@ select {
 }
 
 .g_locale2052 .icon-sina_weibo-text:after {
-    Content: "新浪微博"
+    content: "新浪微博"
 }
 
 .g_locale2052 .icon-qq_weibo-text:after {
-    Content: "腾讯微博"
+    content: "腾讯微博"
 }
 
 .g_locale2052 .icon-qq_zone-text:after {
-    Content: "QQ空间"
+    content: "QQ空间"
 }
 
 .g_locale2052 .icon-renren-text:after {
-    Content: "人人网"
+    content: "人人网"
 }
 
 .g_locale2052 .icon-douban-text:after {
-    Content: "豆瓣网"
+    content: "豆瓣网"
 }
 
 .g_locale2052 .icon-kaixin001-text:after {
-    Content: "开心网"
+    content: "开心网"
 }
 
 .g_locale2052 .icon-sohu_weibo-text:after {
-    Content: "搜狐网"
+    content: "搜狐网"
 }
 
 .g_locale2052 .icon-netease_weibo-text:after {
-    Content: "网易Lofter"
+    content: "网易Lofter"
 }
 
 .g_locale2052 .icon-baidu_hi-text:after {
-    Content: "百度HI"
+    content: "百度HI"
 }
 
 .g_locale2052 .icon-baidu_tieba-text:after {
-    Content: "百度贴吧"
+    content: "百度贴吧"
 }
 
 .g_locale2052 .icon-taojianghu-text:after {
-    Content: "淘江湖"
+    content: "淘江湖"
 }
 
 .g_locale2052 .icon-FaceBook-text:after {
-    Content: "脸书"
+    content: "脸书"
 }
 
 .g_locale2052 .icon-Twitter-text:after {
-    Content: "推特"
+    content: "推特"
 }
 
 .g_locale2052 .icon-LinkedIn-text:after {
-    Content: "领英"
+    content: "领英"
 }
 
 .g_locale2052 .shareText:after {
@@ -13673,14 +13701,14 @@ select {
 }
 
 .icon-views::before {
-    Content: "\e727";
+    content: "\e727";
     font-size: .75rem;
     position: relative;
     top: .1rem
 }
 
 .icon-group::before {
-    Content: "\e695";
+    content: "\e695";
     font-size: 1.42rem;
     top: .1rem;
     color: #c7c7c7
@@ -13752,7 +13780,7 @@ select {
 }
 
 .icon-postComm:before {
-    Content: "\e72a"
+    content: "\e72a"
 }
 
 .postComment {
@@ -13795,7 +13823,7 @@ select {
 }
 
 .icon-nUserMsgIcon:before {
-    Content: "\e6b3";
+    content: "\e6b3";
     padding-right: .2rem;
     font-size: 1rem;
     z-index: 2;
@@ -13834,7 +13862,7 @@ select {
 }
 
 .icon-noFigure:before {
-    Content: "\e729";
+    content: "\e729";
     display: inline-block;
     font-size: 6rem;
     position: relative;
@@ -13869,77 +13897,77 @@ select {
 }
 
 .newsNewDetailPanel .fileType-iconDoc {
-    background: url(/Content/images/training/student/comm/fai/filetype_word.png?v=201610211723) no-repeat;
+    background: url(/image/comm/fai/filetype_word.png?v=201610211723) no-repeat;
     width: 1.5rem;
     height: 1.5rem;
     background-size: contain
 }
 
 .newsNewDetailPanel .fileType-iconPpt {
-    background: url(/Content/images/training/student/comm/fai/filetype_ppt.png?v=201610211723) no-repeat;
+    background: url(/image/comm/fai/filetype_ppt.png?v=201610211723) no-repeat;
     width: 1.5rem;
     height: 1.5rem;
     background-size: contain
 }
 
 .newsNewDetailPanel .fileType-iconXls {
-    background: url(/Content/images/training/student/comm/fai/filetype_excel.png?v=201610211723) no-repeat;
+    background: url(/image/comm/fai/filetype_excel.png?v=201610211723) no-repeat;
     width: 1.5rem;
     height: 1.5rem;
     background-size: contain
 }
 
 .newsNewDetailPanel .fileType-iconPdf {
-    background: url(/Content/images/training/student/comm/fai/filetype_pdf.png?v=201610211723) no-repeat;
+    background: url(/image/comm/fai/filetype_pdf.png?v=201610211723) no-repeat;
     width: 1.5rem;
     height: 1.5rem;
     background-size: contain
 }
 
 .newsNewDetailPanel .fileType-iconJpg {
-    background: url(/Content/images/training/student/comm/fai/filetype_image.png?v=201610211723) no-repeat;
+    background: url(/image/comm/fai/filetype_image.png?v=201610211723) no-repeat;
     width: 1.5rem;
     height: 1.5rem;
     background-size: contain
 }
 
 .newsNewDetailPanel .fileType-iconTxt {
-    background: url(/Content/images/training/student/comm/fai/filetype_txt.png?v=201610211723) no-repeat;
+    background: url(/image/comm/fai/filetype_txt.png?v=201610211723) no-repeat;
     width: 1.5rem;
     height: 1.5rem;
     background-size: contain
 }
 
 .newsNewDetailPanel .fileType-iconUnknown {
-    background: url(/Content/images/training/student/comm/fai/filetype_unknown.png?v=201610211723) no-repeat;
+    background: url(/image/comm/fai/filetype_unknown.png?v=201610211723) no-repeat;
     width: 1.5rem;
     height: 1.5rem;
     background-size: contain
 }
 
 .newsNewDetailPanel .fileType-iconAvi {
-    background: url(/Content/images/training/student/comm/fai/filetype_avi.png?v=201611281836) no-repeat;
+    background: url(/image/comm/fai/filetype_avi.png?v=201611281836) no-repeat;
     width: 1.5rem;
     height: 1.5rem;
     background-size: contain
 }
 
 .newsNewDetailPanel .fileType-iconRar {
-    background: url(/Content/images/training/student/comm/fai/filetype_rar.png?v=201611281836) no-repeat;
+    background: url(/image/comm/fai/filetype_rar.png?v=201611281836) no-repeat;
     width: 1.5rem;
     height: 1.5rem;
     background-size: contain
 }
 
 .newsNewDetailPanel .fileType-iconRm {
-    background: url(/Content/images/training/student/comm/fai/filetype_rm.png?v=201611281836) no-repeat;
+    background: url(/image/comm/fai/filetype_rm.png?v=201611281836) no-repeat;
     width: 1.5rem;
     height: 1.5rem;
     background-size: contain
 }
 
 .newsNewDetailPanel .fileType-iconZip {
-    background: url(/Content/images/training/student/comm/fai/filetype_zip.png?v=201611281836) no-repeat;
+    background: url(/image/comm/fai/filetype_zip.png?v=201611281836) no-repeat;
     width: 1.5rem;
     height: 1.5rem;
     background-size: contain
@@ -14170,13 +14198,13 @@ select {
 .phoneOperImg {
     width: 1.75rem;
     height: 1.75rem;
-    background: url(/Content/images/training/student/phone.png?v_20140271750) 0 0 no-repeat;
+    background: url(/image/phone.png?v_20140271750) 0 0 no-repeat;
     background-size: 1.75rem 1.75rem;
     float: right
 }
 
 .phoneOperImg:active {
-    background: url(/Content/images/training/student/phone1.png?v_20140271750) 0 0 no-repeat rgba(0, 0, 0, .2);
+    background: url(/image/phone1.png?v_20140271750) 0 0 no-repeat rgba(0, 0, 0, .2);
     background-size: 1.75rem 1.75rem;
     border-radius: 9px
 }
@@ -14293,13 +14321,13 @@ select {
 .qqOperImg {
     width: 1.75rem;
     height: 1.75rem;
-    background: url(/Content/images/training/student/QQ.png?v_20140271750) 0 0 no-repeat;
+    background: url(/image/QQ.png?v_20140271750) 0 0 no-repeat;
     background-size: 1.75rem 1.75rem;
     float: right
 }
 
 .qqOperImg:active {
-    background: url(/Content/images/training/student/QQ1.png?v_20140271750) 0 0 no-repeat rgba(0, 0, 0, .2);
+    background: url(/image/QQ1.png?v_20140271750) 0 0 no-repeat rgba(0, 0, 0, .2);
     background-size: 1.75rem 1.75rem;
     border-radius: 9px
 }
@@ -14351,7 +14379,7 @@ select {
     width: 1.25rem;
     height: 1.25rem;
     border-radius: 50%;
-    background: url(/Content/images/training/student/musicIcon.png?v_20140271750) rgba(0, 0, 0, 0.4) no-repeat;
+    background: url(/image/musicIcon.png?v_20140271750) rgba(0, 0, 0, 0.4) no-repeat;
     background-size: 60%;
     background-position: .2rem .25rem
 }
@@ -14365,7 +14393,7 @@ select {
 }
 
 .bgm_on {
-    background-image: url(/Content/images/training/student/musicIcon.png?v_20140271750);
+    background-image: url(/image/musicIcon.png?v_20140271750);
     -webkit-animation: spin 2s linear infinite;
     -moz-animation: spin 2s linear infinite;
     -o-animation: spin 2s linear infinite;
@@ -14374,7 +14402,7 @@ select {
 }
 
 .bgm_off {
-    background-image: url(/Content/images/training/student/musicIcon.png?v_20140271750)
+    background-image: url(/image/musicIcon.png?v_20140271750)
 }
 
 body.ps-active, body.ps-building, div.ps-active, div.ps-building {
@@ -14412,7 +14440,7 @@ div.ps-carousel {
 }
 
 div.ps-carousel-item-loading {
-    background: url(/Content/images/training/student/mobi/loading.png?v=201610211723) no-repeat center center
+    background: url(/image/mobi/loading.png?v=201610211723) no-repeat center center
 }
 
 div.ps-carousel-item-error {
@@ -14437,18 +14465,18 @@ div.ps-caption-bottom {
     min-height: 2.2rem
 }
 
-div.ps-caption-Content {
+div.ps-caption-content {
     padding: .7rem;
     display: block
 }
 
-div.ps-caption-Content .ps-page {
+div.ps-caption-content .ps-page {
     display: block;
     text-align: right;
     color: #fff
 }
 
-div.ps-caption-Content .ps-comm-page {
+div.ps-caption-content .ps-comm-page {
     position: absolute;
     text-align: left;
     margin-left: 3rem;
@@ -14489,11 +14517,11 @@ div.ps-uidetail {
     display: none
 }
 
-div.ps-toolbar div div.ps-toolbar-Content {
+div.ps-toolbar div div.ps-toolbar-content {
     width: 2.2rem;
     height: 2.2rem;
     margin: 0 auto 0;
-    background-image: url(/Content/images/training/student/icons@2x.png?v=201610211723);
+    background-image: url(/image/icons@2x.png?v=201610211723);
     -moz-background-size: 8.8rem 4.4rem;
     -o-background-size: 8.8rem 4.4rem;
     -webkit-background-size: 8.8rem 4.4rem;
@@ -14536,7 +14564,7 @@ div.uiDetailTitle {
 }
 
 div.icon-uiDetailTitle:before {
-    Content: "\e701";
+    content: "\e701";
     font-size: 1rem;
     position: relative;
     left: .4rem;
@@ -14570,33 +14598,33 @@ div.ps-toolbar-base-detail {
 }
 
 div.icon-toolbar-base-detail:before {
-    Content: "\e701";
+    content: "\e701";
     font-size: 1rem;
     top: -2px;
     position: relative
 }
 
-div.ps-toolbar-close div.ps-toolbar-Content {
+div.ps-toolbar-close div.ps-toolbar-content {
     background-position: 0 0
 }
 
-div.ps-toolbar-previous div.ps-toolbar-Content {
+div.ps-toolbar-previous div.ps-toolbar-content {
     background-position: -2.2rem 0
 }
 
-div.ps-toolbar-previous-disabled div.ps-toolbar-Content {
+div.ps-toolbar-previous-disabled div.ps-toolbar-content {
     background-position: -44px -44px
 }
 
-div.ps-toolbar-next div.ps-toolbar-Content {
+div.ps-toolbar-next div.ps-toolbar-content {
     background-position: -6.6rem 0
 }
 
-div.ps-toolbar-next-disabled div.ps-toolbar-Content {
+div.ps-toolbar-next-disabled div.ps-toolbar-content {
     background-position: -132px -44px
 }
 
-div.ps-toolbar-play div.ps-toolbar-Content {
+div.ps-toolbar-play div.ps-toolbar-content {
     background-position: -88px 0
 }
 
@@ -14634,7 +14662,7 @@ div.ps-toolbar-close-style {
 }
 
 div.icon-toolbar-close-style:before {
-    Content: "\e60e";
+    content: "\e60e";
     font-size: 1.6rem
 }
 
@@ -14657,7 +14685,7 @@ div.icon-toolbar-close-style:before {
 }
 
 .g_viewMode, .g_viewMode * {
-    cursor: url(/Content/images/training/student/viewCursor.png?v=201610211723) 10 10, all !important
+    cursor: url(/image/viewCursor.png?v=201610211723) 10 10, all !important
 }
 
 .g_viewMode * {
@@ -14695,7 +14723,7 @@ div.icon-toolbar-close-style:before {
 }
 
 .pagenation .icon-pagePrev.icon-cnNewsP:before {
-    Content: '上一篇';
+    content: '上一篇';
     font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, "黑体", Arial, Tahoma;
     font-size: .7rem;
     line-height: 1.3rem;
@@ -14703,7 +14731,7 @@ div.icon-toolbar-close-style:before {
 }
 
 .pagenation .icon-pageNext.icon-cnNewsN:before {
-    Content: '下一篇';
+    content: '下一篇';
     font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, "黑体", Arial, Tahoma;
     font-size: .7rem;
     line-height: 1.3rem;
@@ -14711,7 +14739,7 @@ div.icon-toolbar-close-style:before {
 }
 
 .pagenation .icon-pagePrev.icon-cnListP:before {
-    Content: '上一页';
+    content: '上一页';
     font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, "黑体", Arial, Tahoma;
     font-size: .7rem;
     line-height: 1.3rem;
@@ -14719,14 +14747,14 @@ div.icon-toolbar-close-style:before {
 }
 
 .pagenation .icon-pageNext.icon-cnListN:before {
-    Content: '下一页';
+    content: '下一页';
     font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, "黑体", Arial, Tahoma;
     font-size: .7rem;
     line-height: 1.3rem;
     margin-left: 0
 }
 
-.g_locale2052 .icon-acctIcon:before, .g_locale2052 .icon-userIcon:before, .g_locale2052 .icon-pswIcon:before, .g_locale2052 .icon-emailIcon:before, .g_locale2052 .icon-phoneIcon:before, .g_locale2052 .icon-msgIcon:before, .g_locale2052 .icon-nameIcon:before, .g_locale2052 .icon-customIcon:before, .g_locale2052 .icon-codeIcon:before, .g_locale2052 .icon-npwdIcon:before, .g_locale2052 .customIcon {
+.g_locale2052 .icon-addressIcon:before, .g_locale2052 .icon-cityIcon:before, .g_locale2052 .icon-provIcon:before, .g_locale2052 .icon-mobileIcon:before, .g_locale2052 .icon-acctIcon:before, .g_locale2052 .icon-userIcon:before, .g_locale2052 .icon-pswIcon:before, .g_locale2052 .icon-cpswIcon:before, .g_locale2052 .icon-emailIcon:before, .g_locale2052 .icon-phoneIcon:before, .g_locale2052 .icon-msgIcon:before, .g_locale2052 .icon-nameIcon:before, .g_locale2052 .icon-customIcon:before, .g_locale2052 .icon-codeIcon:before, .g_locale2052 .icon-npwdIcon:before, .g_locale2052 .customIcon {
     font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, "黑体", Arial, Tahoma;
     font-size: .7rem;
     position: absolute;
@@ -14742,43 +14770,63 @@ div.icon-toolbar-close-style:before {
 }
 
 .g_locale2052 .icon-userIcon:before {
-    Content: '帐号'
+    content: '账号'
 }
 
 .g_locale2052 .icon-acctIcon:before {
-    Content: '帐号名'
+    content: '帐号名'
 }
 
 .g_locale2052 .icon-pswIcon:before {
-    Content: '密码'
+    content: '密码'
+}
+
+.g_locale2052 .icon-cpswIcon:before {
+    content: '确认'
 }
 
 .g_locale2052 .icon-emailIcon:before {
-    Content: '邮箱'
+    content: '邮箱'
 }
 
 .g_locale2052 .icon-phoneIcon:before {
-    Content: '电话'
+    content: '电话'
+}
+
+.g_locale2052 .icon-mobileIcon:before {
+    content: '手机'
+}
+
+.g_locale2052 .icon-provIcon:before {
+    content: '省份'
+}
+
+.g_locale2052 .icon-cityIcon:before {
+    content: '城市'
+}
+
+.g_locale2052 .icon-addressIcon:before {
+    content: '地址'
 }
 
 .g_locale2052 .icon-msgIcon:before {
-    Content: '留言'
+    content: '留言'
 }
 
 .g_locale2052 .icon-nameIcon:before {
-    Content: '姓名'
+    content: '姓名'
 }
 
 .g_locale2052 .fk-findPwByMobile .icon-codeIcon:before {
-    Content: '验证码'
+    content: '验证码'
 }
 
 .g_locale2052 .icon-codeIcon:before {
-    Content: '密保码'
+    content: '密保码'
 }
 
 .g_locale2052 .icon-npwdIcon:before {
-    Content: '新密码'
+    content: '新密码'
 }
 
 .g_locale2052 .customIcon {
@@ -14792,7 +14840,7 @@ div.icon-toolbar-close-style:before {
 }
 
 .icon-lockstarIcon:before {
-    Content: "\e733";
+    content: "\e733";
     vertical-align: middle;
     font-size: 7rem;
     text-align: center;
@@ -14807,7 +14855,7 @@ div.icon-toolbar-close-style:before {
 }
 
 .icon-customIcon:before {
-    Content: "\e6e0";
+    content: "\e6e0";
     position: absolute;
     top: .8rem;
     left: .6rem;
@@ -14823,8 +14871,12 @@ div.icon-toolbar-close-style:before {
     display: none
 }
 
+.g_locale2052 .modifyProfile .icon-cpswIcon {
+    display: none
+}
+
 .g_locale2052 .modifyProfile .icon-cnNewPsw:before {
-    Content: "新密码";
+    content: "新密码";
     font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, "黑体", Arial, Tahoma;
     font-size: .7rem;
     position: absolute;
@@ -14835,7 +14887,7 @@ div.icon-toolbar-close-style:before {
 }
 
 .g_locale2052 .modifyProfile .icon-cnOldPsw:before {
-    Content: "旧密码";
+    content: "旧密码";
     font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, "黑体", Arial, Tahoma;
     font-size: .7rem;
     position: absolute;
@@ -14925,7 +14977,7 @@ div.icon-toolbar-close-style:before {
 
 #addrInfoList .addrInfo .left .text:before {
     font-family: 'icomoon', 微软雅黑, 'microsoft yahei', 宋体, 新宋体;
-    Content: " ";
+    content: " ";
     vertical-align: middle;
     font-weight: bold;
     border-radius: 50%;
@@ -14943,7 +14995,7 @@ div.icon-toolbar-close-style:before {
 
 #addrInfoList .addrInfo .left .checkbox-comp:checked + .text:before {
     font-family: 'icomoon', 微软雅黑, 'microsoft yahei', 宋体, 新宋体;
-    Content: "\e777";
+    content: "\e777";
     color: #fff;
     font-weight: bold;
     border: 0
@@ -14965,7 +15017,7 @@ div.icon-toolbar-close-style:before {
 
 #addrInfoList .addrInfo .right .cutOut:before {
     font-family: 'icomoon', 微软雅黑, 'microsoft yahei', 宋体, 新宋体;
-    Content: "\e6f8";
+    content: "\e6f8";
     color: #666;
     font-size: 1rem;
     vertical-align: middle;
@@ -14974,7 +15026,7 @@ div.icon-toolbar-close-style:before {
 
 #addrInfoList .addrInfo .right .edit:before {
     font-family: 'icomoon', 微软雅黑, 'microsoft yahei', 宋体, 新宋体;
-    Content: "\e65e";
+    content: "\e65e";
     color: #666;
     font-size: 1rem;
     vertical-align: middle;
@@ -14994,7 +15046,7 @@ div.icon-toolbar-close-style:before {
 #addrInfoList .shipTopBg {
     width: 100%;
     height: .3rem;
-    background: url(/Content/images/training/student/mall/shipTopBg.jpg?v=201610211723);
+    background: url(/image/mall/shipTopBg.jpg?v=201610211723);
     background-size: 100% 100%;
     background-position: 0rem 0rem
 }
@@ -15110,13 +15162,13 @@ div.icon-toolbar-close-style:before {
 }
 
 #addrInfoList .addrInfo .opera .delete:before {
-    Content: "\e6f8";
+    content: "\e6f8";
     color: #666;
     font-size: 1rem
 }
 
 #addrInfoList .addrInfo .opera .edit:before {
-    Content: "\e65e";
+    content: "\e65e";
     color: #666;
     font-size: 1rem
 }
@@ -15234,7 +15286,7 @@ div.icon-toolbar-close-style:before {
 }
 
 .sysSearch .searchBackBtn:before {
-    Content: "\e60e";
+    content: "\e60e";
     font-size: 1.35rem;
     font-weight: bold;
     color: #3c414a
@@ -15472,7 +15524,7 @@ div.icon-toolbar-close-style:before {
     top: 2.05rem;
     right: 0;
     display: none;
-    background: url(/Content/images/training/student/bg02.png?v=201702201733) -314px -185px no-repeat;
+    background: url(/image/bg02.png?v=201702201733) -314px -185px no-repeat;
     background-color: #3b85d0
 }
 
@@ -15939,82 +15991,82 @@ div.icon-toolbar-close-style:before {
 }
 
 .coupon1 .coupon-red-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style1.png?v=201610211723) 0 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style1.png?v=201610211723) 0 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon1 .coupon-red-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style1.png?v=201610211723) 11% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style1.png?v=201610211723) 11% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon1 .coupon-orange-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style1.png?v=201610211723) 23% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style1.png?v=201610211723) 23% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon1 .coupon-orange-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style1.png?v=201610211723) 34% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style1.png?v=201610211723) 34% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon1 .coupon-yellow-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style1.png?v=201610211723) 45% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style1.png?v=201610211723) 45% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon1 .coupon-yellow-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style1.png?v=201610211723) 56% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style1.png?v=201610211723) 56% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon1 .coupon-green-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style1.png?v=201610211723) 66% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style1.png?v=201610211723) 66% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon1 .coupon-green-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style1.png?v=201610211723) 77% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style1.png?v=201610211723) 77% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon1 .coupon-blue-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style1.png?v=201610211723) 89% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style1.png?v=201610211723) 89% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon1 .coupon-blue-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style1.png?v=201610211723) 102% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style1.png?v=201610211723) 102% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon1 .coupon-pink-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style1.png?v=201610211723) 0 100% no-repeat;
+    background: url(/image/coupon/v_waveLine-style1.png?v=201610211723) 0 100% no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon1 .coupon-pink-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style1.png?v=201610211723) 11% 100% no-repeat;
+    background: url(/image/coupon/v_waveLine-style1.png?v=201610211723) 11% 100% no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon1 .coupon-purple-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style1.png?v=201610211723) 23% 100% no-repeat;
+    background: url(/image/coupon/v_waveLine-style1.png?v=201610211723) 23% 100% no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon1 .coupon-purple-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style1.png?v=201610211723) 34% 100% no-repeat;
+    background: url(/image/coupon/v_waveLine-style1.png?v=201610211723) 34% 100% no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon1 .coupon-invalid-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style1.png?v=201610211723) 45% 100% no-repeat;
+    background: url(/image/coupon/v_waveLine-style1.png?v=201610211723) 45% 100% no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon1 .coupon-invalid-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style1.png?v=201610211723) 56% 100% no-repeat;
+    background: url(/image/coupon/v_waveLine-style1.png?v=201610211723) 56% 100% no-repeat;
     background-size: 1000% 202%
 }
 
@@ -16045,7 +16097,7 @@ div.icon-toolbar-close-style:before {
     height: 2.7rem;
     top: .2rem;
     right: .1rem;
-    background: url(/Content/images/training/student/coupon/1-1.png?v=201610211723) no-repeat;
+    background: url(/image/coupon/1-1.png?v=201610211723) no-repeat;
     background-size: 100%;
     z-index: 10
 }
@@ -16056,7 +16108,7 @@ div.icon-toolbar-close-style:before {
     height: 2.7rem;
     top: .2rem;
     right: .1rem;
-    background: url(/Content/images/training/student/coupon/1-1-en.png?v=201610211723) no-repeat;
+    background: url(/image/coupon/1-1-en.png?v=201610211723) no-repeat;
     background-size: 100%;
     z-index: 10
 }
@@ -16067,7 +16119,7 @@ div.icon-toolbar-close-style:before {
     height: 2.7rem;
     top: .2rem;
     right: .1rem;
-    background: url(/Content/images/training/student/coupon/1-2.png?v=201610211723) no-repeat;
+    background: url(/image/coupon/1-2.png?v=201610211723) no-repeat;
     background-size: 100%;
     z-index: 10
 }
@@ -16078,7 +16130,7 @@ div.icon-toolbar-close-style:before {
     height: 2.7rem;
     top: .2rem;
     right: .1rem;
-    background: url(/Content/images/training/student/coupon/1-2-en.png?v=201610211723) no-repeat;
+    background: url(/image/coupon/1-2-en.png?v=201610211723) no-repeat;
     background-size: 100%;
     z-index: 10
 }
@@ -16089,7 +16141,7 @@ div.icon-toolbar-close-style:before {
     height: 2.7rem;
     top: .2rem;
     right: .1rem;
-    background: url(/Content/images/training/student/coupon/1-3.png?v=201610211723) no-repeat;
+    background: url(/image/coupon/1-3.png?v=201610211723) no-repeat;
     background-size: 100%;
     z-index: 10
 }
@@ -16100,7 +16152,7 @@ div.icon-toolbar-close-style:before {
     height: 2.7rem;
     top: .2rem;
     right: .1rem;
-    background: url(/Content/images/training/student/coupon/1-3-en.png) no-repeat;
+    background: url(/image/coupon/1-3-en.png) no-repeat;
     background-size: 100%;
     z-index: 10
 }
@@ -16141,7 +16193,7 @@ div.icon-toolbar-close-style:before {
     background-color: #c1c1c1
 }
 
-.coupon1 .coupon-Content1 {
+.coupon1 .coupon-content1 {
     width: 4.55rem;
     height: 3rem;
     vertical-align: top;
@@ -16223,82 +16275,82 @@ div.icon-toolbar-close-style:before {
 }
 
 .coupon2 .coupon-red-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style2.png?v=201610211723) 0 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style2.png?v=201610211723) 0 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon2 .coupon-red-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style2.png?v=201610211723) 11% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style2.png?v=201610211723) 11% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon2 .coupon-orange-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style2.png?v=201610211723) 23% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style2.png?v=201610211723) 23% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon2 .coupon-orange-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style2.png?v=201610211723) 34% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style2.png?v=201610211723) 34% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon2 .coupon-yellow-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style2.png?v=201610211723) 45% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style2.png?v=201610211723) 45% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon2 .coupon-yellow-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style2.png?v=201610211723) 56% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style2.png?v=201610211723) 56% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon2 .coupon-green-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style2.png?v=201610211723) 66% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style2.png?v=201610211723) 66% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon2 .coupon-green-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style2.png?v=201610211723) 77% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style2.png?v=201610211723) 77% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon2 .coupon-blue-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style2.png?v=201610211723) 89% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style2.png?v=201610211723) 89% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon2 .coupon-blue-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style2.png?v=201610211723) 102% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style2.png?v=201610211723) 102% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon2 .coupon-pink-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style2.png?v=201610211723) 0 100% no-repeat;
+    background: url(/image/coupon/v_waveLine-style2.png?v=201610211723) 0 100% no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon2 .coupon-pink-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style2.png?v=201610211723) 11% 100% no-repeat;
+    background: url(/image/coupon/v_waveLine-style2.png?v=201610211723) 11% 100% no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon2 .coupon-purple-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style2.png?v=201610211723) 23% 100% no-repeat;
+    background: url(/image/coupon/v_waveLine-style2.png?v=201610211723) 23% 100% no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon2 .coupon-purple-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style2.png?v=201610211723) 34% 100% no-repeat;
+    background: url(/image/coupon/v_waveLine-style2.png?v=201610211723) 34% 100% no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon2 .coupon-invalid-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style2.png?v=201610211723) 45% 100% no-repeat;
+    background: url(/image/coupon/v_waveLine-style2.png?v=201610211723) 45% 100% no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon2 .coupon-invalid-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style2.png?v=201610211723) 56% 100% no-repeat;
+    background: url(/image/coupon/v_waveLine-style2.png?v=201610211723) 56% 100% no-repeat;
     background-size: 1000% 202%
 }
 
@@ -16327,7 +16379,7 @@ div.icon-toolbar-close-style:before {
     height: 3.25rem;
     top: .5rem;
     right: .375rem;
-    background: url(/Content/images/training/student/coupon/2-1.png?v=201610211723) no-repeat;
+    background: url(/image/coupon/2-1.png?v=201610211723) no-repeat;
     background-size: 100%;
     z-index: 10
 }
@@ -16338,7 +16390,7 @@ div.icon-toolbar-close-style:before {
     height: 3.25rem;
     top: .5rem;
     right: .375rem;
-    background: url(/Content/images/training/student/coupon/2-1-en.png?v=201610211723) no-repeat;
+    background: url(/image/coupon/2-1-en.png?v=201610211723) no-repeat;
     background-size: 100%;
     z-index: 10
 }
@@ -16349,7 +16401,7 @@ div.icon-toolbar-close-style:before {
     height: 3.25rem;
     top: .5rem;
     right: .375rem;
-    background: url(/Content/images/training/student/coupon/2-2.png?v=201610211723) no-repeat;
+    background: url(/image/coupon/2-2.png?v=201610211723) no-repeat;
     background-size: 100%;
     z-index: 10
 }
@@ -16360,7 +16412,7 @@ div.icon-toolbar-close-style:before {
     height: 3.25rem;
     top: .5rem;
     right: .375rem;
-    background: url(/Content/images/training/student/coupon/2-2-en.png?v=201610211723) no-repeat;
+    background: url(/image/coupon/2-2-en.png?v=201610211723) no-repeat;
     background-size: 100%;
     z-index: 10
 }
@@ -16371,7 +16423,7 @@ div.icon-toolbar-close-style:before {
     height: 3.25rem;
     top: .5rem;
     right: .375rem;
-    background: url(/Content/images/training/student/coupon/2-3.png?v=201610211723) no-repeat;
+    background: url(/image/coupon/2-3.png?v=201610211723) no-repeat;
     background-size: 100%;
     z-index: 10
 }
@@ -16382,7 +16434,7 @@ div.icon-toolbar-close-style:before {
     height: 3.25rem;
     top: .5rem;
     right: .375rem;
-    background: url(/Content/images/training/student/coupon/2-3-en.png) no-repeat;
+    background: url(/image/coupon/2-3-en.png) no-repeat;
     background-size: 100%;
     z-index: 10
 }
@@ -16423,7 +16475,7 @@ div.icon-toolbar-close-style:before {
     background-color: #c1c1c1
 }
 
-.coupon2 .coupon-Content2 {
+.coupon2 .coupon-content2 {
     width: 7rem;
     height: 100%;
     vertical-align: top;
@@ -16528,82 +16580,82 @@ div.icon-toolbar-close-style:before {
 }
 
 .coupon3 .coupon-red-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style3.png?v=201610211723) 0 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style3.png?v=201610211723) 0 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon3 .coupon-red-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style3.png?v=201610211723) 11% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style3.png?v=201610211723) 11% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon3 .coupon-orange-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style3.png?v=201610211723) 23% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style3.png?v=201610211723) 23% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon3 .coupon-orange-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style3.png?v=201610211723) 34% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style3.png?v=201610211723) 34% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon3 .coupon-yellow-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style3.png?v=201610211723) 45% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style3.png?v=201610211723) 45% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon3 .coupon-yellow-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style3.png?v=201610211723) 56% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style3.png?v=201610211723) 56% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon3 .coupon-green-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style3.png?v=201610211723) 66% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style3.png?v=201610211723) 66% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon3 .coupon-green-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style3.png?v=201610211723) 77% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style3.png?v=201610211723) 77% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon3 .coupon-blue-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style3.png?v=201610211723) 89% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style3.png?v=201610211723) 89% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon3 .coupon-blue-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style3.png?v=201610211723) 102% 0 no-repeat;
+    background: url(/image/coupon/v_waveLine-style3.png?v=201610211723) 102% 0 no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon3 .coupon-pink-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style3.png?v=201610211723) 0 100% no-repeat;
+    background: url(/image/coupon/v_waveLine-style3.png?v=201610211723) 0 100% no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon3 .coupon-pink-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style3.png?v=201610211723) 11% 100% no-repeat;
+    background: url(/image/coupon/v_waveLine-style3.png?v=201610211723) 11% 100% no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon3 .coupon-purple-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style3.png?v=201610211723) 23% 100% no-repeat;
+    background: url(/image/coupon/v_waveLine-style3.png?v=201610211723) 23% 100% no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon3 .coupon-purple-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style3.png?v=201610211723) 34% 100% no-repeat;
+    background: url(/image/coupon/v_waveLine-style3.png?v=201610211723) 34% 100% no-repeat;
     background-size: 1000% 202%
 }
 
 .coupon3 .coupon-invalid-left {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style3.png?v=201610211723) 45% 100% no-repeat;
+    background: url(/image/coupon/v_waveLine-style3.png?v=201610211723) 45% 100% no-repeat;
     background-size: 1000% 224%
 }
 
 .coupon3 .coupon-invalid-right {
-    background: url(/Content/images/training/student/coupon/v_waveLine-style3.png?v=201610211723) 56% 100% no-repeat;
+    background: url(/image/coupon/v_waveLine-style3.png?v=201610211723) 56% 100% no-repeat;
     background-size: 1000% 224%
 }
 
@@ -16632,7 +16684,7 @@ div.icon-toolbar-close-style:before {
     height: 3.625rem;
     top: .5rem;
     right: .375rem;
-    background: url(/Content/images/training/student/coupon/3-1.png?v=201610211723) no-repeat;
+    background: url(/image/coupon/3-1.png?v=201610211723) no-repeat;
     background-size: 100%;
     z-index: 10
 }
@@ -16643,7 +16695,7 @@ div.icon-toolbar-close-style:before {
     height: 3.625rem;
     top: .5rem;
     right: .375rem;
-    background: url(/Content/images/training/student/coupon/3-1-en.png?v=201610211723) no-repeat;
+    background: url(/image/coupon/3-1-en.png?v=201610211723) no-repeat;
     background-size: 100%;
     z-index: 10
 }
@@ -16654,7 +16706,7 @@ div.icon-toolbar-close-style:before {
     height: 3.625rem;
     top: .5rem;
     right: .375rem;
-    background: url(/Content/images/training/student/coupon/3-2.png?v=201610211723) no-repeat;
+    background: url(/image/coupon/3-2.png?v=201610211723) no-repeat;
     background-size: 100%;
     z-index: 10
 }
@@ -16665,7 +16717,7 @@ div.icon-toolbar-close-style:before {
     height: 3.625rem;
     top: .5rem;
     right: .375rem;
-    background: url(/Content/images/training/student/coupon/3-2-en.png?v=201610211723) no-repeat;
+    background: url(/image/coupon/3-2-en.png?v=201610211723) no-repeat;
     background-size: 100%;
     z-index: 10
 }
@@ -16676,7 +16728,7 @@ div.icon-toolbar-close-style:before {
     height: 3.625rem;
     top: .5rem;
     right: .375rem;
-    background: url(/Content/images/training/student/coupon/3-3.png?v=201610211723) no-repeat;
+    background: url(/image/coupon/3-3.png?v=201610211723) no-repeat;
     background-size: 100%;
     z-index: 10
 }
@@ -16687,7 +16739,7 @@ div.icon-toolbar-close-style:before {
     height: 3.625rem;
     top: .5rem;
     right: .375rem;
-    background: url(/Content/images/training/student/coupon/3-3-en.png) no-repeat;
+    background: url(/image/coupon/3-3-en.png) no-repeat;
     background-size: 100%;
     z-index: 10
 }
@@ -16728,7 +16780,7 @@ div.icon-toolbar-close-style:before {
     background-color: #c1c1c1
 }
 
-.coupon3 .coupon-Content3 {
+.coupon3 .coupon-content3 {
     width: 14.75rem;
     height: 100%;
     float: left;
@@ -16737,7 +16789,7 @@ div.icon-toolbar-close-style:before {
     z-index: 4
 }
 
-.coupon3 .Content-left, .coupon3 .Content-right {
+.coupon3 .content-left, .coupon3 .content-right {
     width: 7rem;
     height: 100%;
     float: left;
@@ -16745,7 +16797,7 @@ div.icon-toolbar-close-style:before {
     text-align: center
 }
 
-.coupon3 .Content-right {
+.coupon3 .content-right {
     padding-top: .56rem;
     padding-left: .65rem;
     line-height: 100%;
@@ -16814,7 +16866,7 @@ div.icon-toolbar-close-style:before {
 .coupon3 .line {
     width: 5rem;
     height: .5rem;
-    background-image: url(/Content/images/training/student/coupon/coupon3Line.png?v=201610211723);
+    background-image: url(/image/coupon/coupon3Line.png?v=201610211723);
     background-repeat: no-repeat;
     background-size: 100% 26%;
     background-position: 0 .25rem;
@@ -16889,11 +16941,11 @@ div.icon-toolbar-close-style:before {
 }
 
 .faisco-icons-right:before {
-    Content: "\ea80"
+    content: "\ea80"
 }
 
 .faisco-icons-shape11:before {
-    Content: "\ea22"
+    content: "\ea22"
 }
 
 .fk-marqueeContainer {
@@ -16923,15 +16975,15 @@ div.icon-toolbar-close-style:before {
     opacity: 0
 }
 
-.fk-marqueeContainer .f-ContentPanel .richContent {
+.fk-marqueeContainer .f-contentPanel .richContent {
     margin: 0
 }
 
-.fk-marqueeContainer .f-ContentPanel {
+.fk-marqueeContainer .f-contentPanel {
     overflow: hidden
 }
 
-.formStyle2 .fk-marqueeContainer .f-ContentPanel {
+.formStyle2 .fk-marqueeContainer .f-contentPanel {
     padding-top: .5rem
 }
 
@@ -17427,23 +17479,23 @@ div.icon-toolbar-close-style:before {
 }
 
 .mallWaitPay:before {
-    Content: "\ea8e"
+    content: "\ea8e"
 }
 
 .waitShip:before {
-    Content: "\ea8b"
+    content: "\ea8b"
 }
 
 .toSignUp:before {
-    Content: "\ea8d"
+    content: "\ea8d"
 }
 
 .toComment:before {
-    Content: "\eaa1"
+    content: "\eaa1"
 }
 
 .toRefund:before {
-    Content: "\eaab"
+    content: "\eaab"
 }
 
 .mallItemText {
@@ -17547,7 +17599,7 @@ div.icon-toolbar-close-style:before {
 }
 
 .orderList .icon-seemoreIcon:before {
-    Content: "\e656";
+    content: "\e656";
     font-size: .7rem;
     font-weight: bold;
     margin-left: .2rem;
@@ -17556,7 +17608,7 @@ div.icon-toolbar-close-style:before {
 }
 
 .orderList .seeMore .icon-hidemoreIcon:before {
-    Content: "\e701";
+    content: "\e701";
     font-size: .7rem;
     margin-left: .2rem;
     font-weight: bold;
@@ -17690,12 +17742,12 @@ div.icon-toolbar-close-style:before {
     margin-right: 1.4rem
 }
 
-.province_box .group_Content {
+.province_box .group_content {
     float: left;
     width: 12rem
 }
 
-.province_box .pv_Content {
+.province_box .pv_content {
     float: left;
     line-height: 1.2rem;
     overflow-y: auto;
@@ -17724,7 +17776,7 @@ div.icon-toolbar-close-style:before {
     float: left
 }
 
-.city_box .city_Content {
+.city_box .city_content {
     float: left;
     font-size: .6rem;
     line-height: 1.2rem;
@@ -17734,14 +17786,14 @@ div.icon-toolbar-close-style:before {
     margin-top: .5rem
 }
 
-.city_box .city_Content .group_item {
+.city_box .city_content .group_item {
     float: left;
     margin-right: 1.2rem;
     cursor: pointer;
     margin-left: .2rem
 }
 
-.city_box .city_Content .group_item:hover {
+.city_box .city_content .group_item:hover {
     color: #ff6537
 }
 
@@ -17749,7 +17801,7 @@ div.icon-toolbar-close-style:before {
     float: left
 }
 
-.county_box .county_Content {
+.county_box .county_content {
     float: left;
     font-size: .6rem;
     line-height: 1.2rem;
@@ -17759,14 +17811,14 @@ div.icon-toolbar-close-style:before {
     margin-top: .5rem
 }
 
-.county_box .county_Content .group_item {
+.county_box .county_content .group_item {
     float: left;
     margin-right: 1.2rem;
     cursor: pointer;
     margin-left: .2rem
 }
 
-.county_box .county_Content .group_item:hover {
+.county_box .county_content .group_item:hover {
     color: #ff6537
 }
 
@@ -17825,7 +17877,7 @@ div.icon-toolbar-close-style:before {
     float: left
 }
 
-.sec_box .sec_Content {
+.sec_box .sec_content {
     float: left;
     font-size: .6rem;
     line-height: 1.2rem;
@@ -17835,18 +17887,18 @@ div.icon-toolbar-close-style:before {
     margin-top: .5rem
 }
 
-.sec_box .sec_Content .group_item {
+.sec_box .sec_content .group_item {
     float: left;
     margin-right: 1.2rem;
     cursor: pointer;
     margin-left: .2rem
 }
 
-.sec_box .sec_Content .group_item:hover {
+.sec_box .sec_content .group_item:hover {
     color: #ff6537
 }
 
-.thd_box .thd_Content {
+.thd_box .thd_content {
     float: left;
     font-size: .6rem;
     line-height: 1.2rem;
@@ -17856,14 +17908,14 @@ div.icon-toolbar-close-style:before {
     margin-top: .5rem
 }
 
-.thd_box .thd_Content .group_item {
+.thd_box .thd_content .group_item {
     float: left;
     margin-right: 1.2rem;
     cursor: pointer;
     margin-left: .2rem
 }
 
-.thd_box .thd_Content .group_item:hover {
+.thd_box .thd_content .group_item:hover {
     color: #ff6537
 }
 
@@ -17993,7 +18045,7 @@ div.icon-toolbar-close-style:before {
     width: 5.5rem;
     height: 4rem;
     margin: 4.3rem auto .8rem auto;
-    background: url(/Content/images/training/student/noOrderList.png?v=201702201702) no-repeat center center;
+    background: url(/image/noOrderList.png?v=201702201702) no-repeat center center;
     background-size: contain
 }
 
@@ -18041,21 +18093,21 @@ div.icon-toolbar-close-style:before {
 }
 
 .refundDetail .refundStatusContent .icon-edit:before {
-    Content: "\eaaa"
+    content: "\eaaa"
 }
 
 .refundDetail .refundStatusContent .icon-success:before {
-    Content: "\eab0";
+    content: "\eab0";
     color: #49b344
 }
 
 .refundDetail .refundStatusContent .icon-fail:before {
-    Content: "\eaaf";
+    content: "\eaaf";
     color: #f00
 }
 
 .refundDetail .refundStatusContent .icon-attention:before {
-    Content: "\ea9d";
+    content: "\ea9d";
     color: #ff7200
 }
 
@@ -18118,7 +18170,7 @@ div.icon-toolbar-close-style:before {
 }
 
 .refundDetail .refundDetailContent .refundRemark .icon-clickIcon:before {
-    Content: "\e672";
+    content: "\e672";
     font-size: .9rem
 }
 
@@ -18223,7 +18275,7 @@ div.icon-toolbar-close-style:before {
 }
 
 .remark .remarkList .userContent .icon-arrow:before {
-    Content: "\eaac"
+    content: "\eaac"
 }
 
 .remark .remarkList .memberContent {
@@ -18236,7 +18288,7 @@ div.icon-toolbar-close-style:before {
 }
 
 .remark .remarkList .memberContent .icon-arrow:before {
-    Content: "\eaad"
+    content: "\eaad"
 }
 
 .remark .remarkList .refundItem .remarkTitle {
@@ -18446,7 +18498,7 @@ div.icon-toolbar-close-style:before {
 }
 
 .refundEdit .icon-select:before, .refundFlowEdit .icon-select:before {
-    Content: "\e656";
+    content: "\e656";
     color: #666;
     font-size: 1rem;
     float: right;
@@ -18485,7 +18537,7 @@ div.icon-toolbar-close-style:before {
 .refundEdit .uploadify-button, .refundFlowEdit .uploadify-button {
     width: 2.5rem;
     height: 2.5rem;
-    background-image: url(/Content/images/training/student/mobi/msgUpImg/upload.png?v=201702131723);
+    background-image: url(/image/mobi/msgUpImg/upload.png?v=201702131723);
     background-repeat: no-repeat;
     padding: 0 !important;
     border-width: 0;
@@ -18552,7 +18604,7 @@ div.icon-toolbar-close-style:before {
     width: 6.5rem;
     height: 4.5rem;
     margin: 4.3rem auto .8rem auto;
-    background: url(/Content/images/training/student/mallDefultIcon.png?v=201703131749) no-repeat
+    background: url(/image/mallDefultIcon.png?v=201703131749) no-repeat
 }
 
 .refundDetail .noOrder {

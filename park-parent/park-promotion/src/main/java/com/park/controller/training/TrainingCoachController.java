@@ -6,143 +6,157 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("training/mobile/v1")
-public class TrainingStudentController extends BaseController {
+@RequestMapping("training/coach/v1")
+public class TrainingCoachController extends BaseController {
 
     // 首页
     @NotProtected
     @RequestMapping("home/index")
     public String renderHomeIndex(){
-        return "TrainingStudent/Home/HomeIndex";
+        return "TrainingCoach/Home/HomeIndex";
     }
 
     // 预约课程列表
     @NotProtected
     @RequestMapping("course/list")
     public String renderCourseList(){
-        return "TrainingStudent/Course/CourseList";
+        return "TrainingCoach/Course/CourseList";
     }
 
     // 课程详情
     @NotProtected
     @RequestMapping("course/detail")
     public String renderCourseDetail(){
-        return "TrainingStudent/Course/CourseDetail";
+        return "TrainingCoach/Course/CourseDetail";
     }
 
     // 我要报名
     @NotProtected
     @RequestMapping("course/sign")
-    public String renderCourseSign(){ return "TrainingStudent/Course/CourseSign"; }
+    public String renderCourseSign(){ return "TrainingCoach/Course/CourseSign"; }
 
     // 报名协议
     @NotProtected
     @RequestMapping("course/protocol")
     public String renderCourseSignProtocol(){
-        return "TrainingStudent/Course/CourseSignProtocol";
+        return "TrainingCoach/Course/CourseSignProtocol";
     }
 
     // 报名结果
     @NotProtected
     @RequestMapping("course/result")
-    public String renderCourseResult(){ return "TrainingStudent/Course/CourseResult"; }
+    public String renderCourseResult(){ return "TrainingCoach/Course/CourseResult"; }
 
     // 登录
     @NotProtected
     @RequestMapping("pp/login")
     public String renderPassportLogin(){
-        return "TrainingStudent/Passport/PassportLogin";
+        return "TrainingCoach/Passport/PassportLogin";
     }
 
     // 快捷登录
     @NotProtected
     @RequestMapping("pp/smsLogin")
     public String renderPassportSMSLogin(){
-        return "TrainingStudent/Passport/PassportSMSLogin";
+        return "TrainingCoach/Passport/PassportSMSLogin";
     }
 
     // 注册
     @NotProtected
     @RequestMapping("pp/register")
     public String renderPassportRegister(){
-        return "TrainingStudent/Passport/PassportRegister";
+        return "TrainingCoach/Passport/PassportRegister";
     }
 
     // 忘记密码
     @NotProtected
     @RequestMapping("pp/forget")
     public String renderPassportForgetPassword(){
-        return "TrainingStudent/Passport/PassportForgetPassword";
+        return "TrainingCoach/Passport/PassportForgetPassword";
     }
 
     // 重置密码
     @NotProtected
     @RequestMapping("pp/reset")
     public String renderPassportResetPassword(){
-        return "TrainingStudent/Passport/PassportResetPassword";
+        return "TrainingCoach/Passport/PassportResetPassword";
     }
 
     // 注册协议
     @NotProtected
     @RequestMapping("pp/protocol")
     public String renderPassportRegisterProtocol(){
-        return "TrainingStudent/Passport/PassportRegisterProtocol";
+        return "TrainingCoach/Passport/PassportRegisterProtocol";
     }
 
     // 个人中心
     @NotProtected
     @RequestMapping("center/index")
     public String renderCenterIndex(){
-        return "TrainingStudent/Center/CenterIndex";
+        return "TrainingCoach/Center/CenterIndex";
+    }
+
+    // 个人资质
+    @NotProtected
+    @RequestMapping("center/honor")
+    public String renderCenterHonor(){
+        return "TrainingCoach/Center/CenterHonor";
     }
 
     // 个人信息
     @NotProtected
     @RequestMapping("center/profile")
     public String renderCenterProfile(){
-        return "TrainingStudent/Center/CenterProfile";
+        return "TrainingCoach/Center/CenterProfile";
     }
 
     // 上传头像
     @NotProtected
     @RequestMapping("center/uploadHeader")
     public String renderCenterUploadHeader(){
-        return "TrainingStudent/Center/CenterUploadHeader";
+        return "TrainingCoach/Center/CenterUploadHeader";
     }
 
     // 关于我们
     @NotProtected
     @RequestMapping("center/about")
     public String renderCenterAbout(){
-        return "TrainingStudent/Center/CenterAbout";
+        return "TrainingCoach/Center/CenterAbout";
     }
 
-    // 已经预约的课程
+    // 我的课程
     @NotProtected
     @RequestMapping("center/course/list")
     public String renderCenterCourseList(){
-        return "TrainingStudent/Center/CenterCourseList";
+        return "TrainingCoach/Center/CenterCourseList";
     }
 
-    // 已经预约的课程内容
+    // 我的课程内容
     @NotProtected
     @RequestMapping("center/course/detail")
     public String renderCenterCourseDetail(){
-        return "TrainingStudent/Center/CenterCourseDetail";
+        return "TrainingCoach/Center/CenterCourseDetail";
     }
 
-    // 我的最近两周的上课记录
+    // 签到记录
     @NotProtected
     @RequestMapping("center/sign/weekLog")
     public String renderCenterSignWeekLog(){
-        return "TrainingStudent/Center/CenterSignWeekLog";
+        return "TrainingCoach/Center/CenterSignWeekLog";
     }
 
-    // 我的全部上课记录
+    // 全部签到记录
     @NotProtected
     @RequestMapping("center/sign/log")
     public String renderCenterSignLog(){
-        return "TrainingStudent/Center/CenterSignLog";
+        return "TrainingCoach/Center/CenterSignLog";
+    }
+
+    // 通讯簿
+    @NotProtected
+    @RequestMapping("center/contact/list")
+    public String renderCenterContactList(){
+        return "TrainingCoach/Center/CenterContactList";
     }
     
 }

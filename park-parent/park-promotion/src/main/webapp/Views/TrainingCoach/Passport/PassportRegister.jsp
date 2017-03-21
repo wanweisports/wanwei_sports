@@ -13,7 +13,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
 
-    <title>${param.title == null ? "教练登录" : param.title}</title>
+    <title>${param.title == null ? "教练注册" : param.title}</title>
 
     <meta name="keywords"
           content="${param.keyword == null ? "万为培训, 约课系统, 体育培训, 培训，万为, wanwei.com" : param.keyword}">
@@ -55,6 +55,25 @@
           href="Content/style/training/student/base.css?v=${static_resource_version}">
     <link rel="stylesheet" type="text/css"
           href="Content/style/training/student/1003_1.min.css?v=${static_resource_version}">
+
+    <style type="text/css">
+        .captchaImg {
+            width: 4.5rem;
+            height: 1.5rem;
+            position: absolute;
+            right: .4rem;
+            z-index: 2;
+        }
+
+        .g_button.captchaImg {
+            background: #fff;
+            border: 1px solid #2FAEF6;
+            color: #2FAEF6;
+            font-size: .7rem;
+            margin: 0;
+            line-height: 1;
+        }
+    </style>
 </head>
 
 <body id="g_body" class="g_locale2052 mobiCol3">
@@ -88,21 +107,30 @@
                                                class="itemEdit g_input mustItem" placeholder="请输入新密码">
                                         <span class="icon-pswIcon g_mainColor"></span>
                                     </div>
+                                    <div class="g_globalLine">
+                                        <input type="password" maxlength="20" id="confirm"
+                                               class="itemEdit g_input mustItem" placeholder="请输入确认密码">
+                                        <span class="icon-cpswIcon g_mainColor"></span>
+                                    </div>
                                     <div class="loginCaptchaCtrl g_globalLine">
                                         <input id="loginCaptcha" type="text" class="captchaText g_input" maxlength="4"
                                                placeholder="请输入验证码">
                                         <img id="loginCaptchaImg" class="captchaImg"
                                              src="/Content/images/training/student/captcha.jpg">
                                     </div>
-                                    <div class="g_globalLine" style="margin: .4rem 0 1rem; text-align: left; overflow: hidden;">
-                                        <a class="g_mainColor" href="/training/coach/v1/pp/smsLogin" style="float: left;">手机号快捷登录</a>
-                                        <a class="g_mainColor" href="/training/coach/v1/pp/forget" style="float: right;">忘记密码？</a>
+                                    <div class="loginCaptchaCtrl g_globalLine">
+                                        <input id="loginSmsCaptcha" type="text" class="captchaText g_input" maxlength="4"
+                                               placeholder="请输入验证码">
+                                        <input type="button" class="g_button captchaImg" value="获取验证码">
                                     </div>
-                                    <div class="g_globalLine" style="clear: both">
-                                        <input type="button" class="g_button sendIcon" value="登 录">
+                                    <div class="loginProtocol g_globalLine" style="margin: .4rem 0 1rem; text-align: left;">
+                                        <p style="color: #888">阅读并同意《<a class="g_mainColor" href="/training/coach/v1/pp/protocol">万为培训用户注册协议</a>》</p>
                                     </div>
-                                    <div class="loginBottom g_globalLine" style="text-align: center;">
-                                        <a class="g_mainColor" href="/training/coach/v1/pp/register">还没有账户，请点击注册？</a>
+                                    <div class="g_globalLine">
+                                        <input type="button" class=" g_button sendIcon" value="立即注册">
+                                    </div>
+                                    <div class="loginBottom g_globalLine" style="text-align: center">
+                                        <a class="g_mainColor" href="/training/coach/v1/pp/login">已有账户，请直接登录</a>
                                     </div>
                                 </div>
                             </div>
