@@ -33,7 +33,7 @@
     <meta name="wap-font-scale" content="no">
 
     <meta name="flexible" content="initial-dpr=1">
-    <link href="Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon"/>
+    <link href="Content/images/training/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon"/>
 
     <script type="text/javascript">
         // html root的字体计算应该放在最前面，这样计算就不会有误差了
@@ -50,15 +50,15 @@
     </script>
 
     <link rel="stylesheet" type="text/css"
-          href="Content/style/training/student/fontsIco.min.css?v=${static_resource_version}">
+          href="Content/style/training/coach/fontsIco.min.css?v=${static_resource_version}">
     <link rel="stylesheet" type="text/css"
-          href="Content/style/training/student/base.css?v=${static_resource_version}">
+          href="Content/style/training/coach/base.css?v=${static_resource_version}">
     <link rel="stylesheet" type="text/css"
-          href="Content/style/training/student/bannerAnimation.min.css?v=${static_resource_version}">
+          href="Content/style/training/coach/bannerAnimation.min.css?v=${static_resource_version}">
     <link rel="stylesheet" id="mobiStyleTemplateCss" type="text/css"
-          href="Content/style/training/student/1003_1.min.css?v=${static_resource_version}">
+          href="Content/style/training/coach/1003_1.min.css?v=${static_resource_version}">
     <link rel="stylesheet" id="mobiCubeNavigationCss" type="text/css"
-          href="Content/style/training/student/cubeNavigation.min.css?v=${static_resource_version}">
+          href="Content/style/training/coach/cubeNavigation.min.css?v=${static_resource_version}">
 </head>
 
 <body id="g_body" class="g_locale2052 mobiCol3">
@@ -131,7 +131,7 @@
                                             <option>上海市</option>
                                             <option>山东省</option>
                                         </select>
-                                        <span class="icon-provIcon g_mainColor"></span>
+                                        <span class="icon-emailIcon g_mainColor"></span>
                                     </div>
                                     <div class="g_globalLine">
                                         <select class="itemEdit g_select mustItem">
@@ -139,12 +139,12 @@
                                             <option>上海市</option>
                                             <option>济南市</option>
                                         </select>
-                                        <span class="icon-cityIcon g_mainColor"></span>
+                                        <span class="icon-emailIcon g_mainColor"></span>
                                     </div>
                                     <div class="g_globalLine">
                                         <input type="text" maxlength="50" id="address" class="itemEdit g_input mustItem"
                                                placeholder="海淀区上地软件园100号">
-                                        <span class="icon-addressIcon g_mainColor"></span>
+                                        <span class="icon-emailIcon g_mainColor"></span>
                                     </div>
                                     <div class="g_globalLine">
                                         <input type="button" class=" g_button sendIcon" value="保 存">

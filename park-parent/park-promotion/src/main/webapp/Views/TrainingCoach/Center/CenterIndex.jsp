@@ -33,7 +33,7 @@
     <meta name="wap-font-scale" content="no">
 
     <meta name="flexible" content="initial-dpr=1">
-    <link href="Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon"/>
+    <link href="Content/images/training/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon"/>
 
     <script type="text/javascript">
         // html root的字体计算应该放在最前面，这样计算就不会有误差了
@@ -50,66 +50,16 @@
     </script>
 
     <link rel="stylesheet" type="text/css"
-          href="Content/style/training/student/fontsIco.min.css?v=${static_resource_version}">
+          href="Content/style/training/coach/fontsIco.min.css?v=${static_resource_version}">
     <link rel="stylesheet" type="text/css"
-          href="Content/style/training/student/base.min.css?v=${static_resource_version}">
+          href="Content/style/training/coach/base.css?v=${static_resource_version}">
     <link rel="stylesheet" type="text/css"
-          href="Content/style/training/student/bannerAnimation.min.css?v=${static_resource_version}">
+          href="Content/style/training/coach/bannerAnimation.min.css?v=${static_resource_version}">
     <link rel="stylesheet" id="mobiStyleTemplateCss" type="text/css"
-          href="Content/style/training/student/1003_1.min.css?v=${static_resource_version}">
+          href="Content/style/training/coach/1003_1.min.css?v=${static_resource_version}">
     <link rel="stylesheet" id="mobiCubeNavigationCss" type="text/css"
-          href="Content/style/training/student/cubeNavigation.min.css?v=${static_resource_version}">
+          href="Content/style/training/coach/cubeNavigation.min.css?v=${static_resource_version}">
 
-    <!-- //输出模块样式css -->
-    <style type="text/css">
-        #module303 {
-            border: none;
-            padding: 0.5% 0;
-            background: none;
-            overflow: hidden;
-        }
-
-        #module303 .formMiddle303 {
-            border: none;
-            padding: 0;
-            background: none;
-        }
-
-        #module303 .formBannerTitle303 {
-            border: none;
-            padding: 0;
-        }
-
-        #module303 .formMiddleContent303 {
-            background: none;
-        }
-    </style>
-
-    <style id="mobiCubeStyleModule">
-        #cubeNavigation303_cubeLink1 .cubeLink_bg {
-            background: #000 url(/Content/images/training/student/AD0IpdPPBRACGAAg-_TwwAUoisrx8QYwsAI43AE.jpg) no-repeat center;
-            background-size: cover;
-            opacity: 1.0;
-        }
-
-        #cubeNavigation303_cubeLink2 .cubeLink_bg {
-            background: #000 url(/Content/images/training/student/AD0IpdPPBRACGAAg-uTwwAUo-MmK7AcwsAI43AE.jpg) no-repeat center;
-            background-size: cover;
-            opacity: 1.0;
-        }
-
-        #cubeNavigation303_cubeLink3 .cubeLink_bg {
-            background: #000 url(/Content/images/training/student/AD0IpdPPBRACGAAg5_7wwAUo-oLpvQcw3AI4tAE.jpg) no-repeat center;
-            background-size: cover;
-            opacity: 1.0;
-        }
-
-        #cubeNavigation303_cubeLink4 .cubeLink_bg {
-            background: #000 url(/Content/images/training/student/AD0IpdPPBRACGAAgrsfwwAUotP-s1gYwyQE4yQE.jpg) no-repeat center;
-            background-size: cover;
-            opacity: 1.0;
-        }
-    </style>
 </head>
 
 <body id="g_body" class="g_locale2052 mobiCol3">

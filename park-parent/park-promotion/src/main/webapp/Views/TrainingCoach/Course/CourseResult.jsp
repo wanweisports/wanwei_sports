@@ -33,7 +33,7 @@
     <meta name="wap-font-scale" content="no">
 
     <meta name="flexible" content="initial-dpr=1">
-    <link href="Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon"/>
+    <link href="Content/images/training/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon"/>
 
     <script type="text/javascript">
         // html root的字体计算应该放在最前面，这样计算就不会有误差了
@@ -50,11 +50,12 @@
     </script>
 
     <link rel="stylesheet" type="text/css"
-          href="Content/style/training/student/fontsIco.min.css?v=${static_resource_version}">
+          href="Content/style/training/coach/fontsIco.min.css?v=${static_resource_version}">
     <link rel="stylesheet" type="text/css"
-          href="Content/style/training/student/base.min.css?v=${static_resource_version}">
+          href="Content/style/training/coach/base.css?v=${static_resource_version}">
     <link rel="stylesheet" type="text/css"
-          href="Content/style/training/student/1003_1.min.css?v=${static_resource_version}">
+          href="Content/style/training/coach/1003_1.min.css?v=${static_resource_version}">
+
 </head>
 
 <body id="g_body" class="g_locale2052 mobiCol3">
@@ -92,7 +93,7 @@
                 </div>
             </div>
             <div class="">
-                <a class="g_button sendIcon" href="/training/mobile/v1/home/index">返回首页</a>
+                <a class="g_button sendIcon" href="/training/coach/v1/home/index">返回首页</a>
             </div>
             <div id="module308" class="form Handle  formStyle41">
                 <div class="formBannerTitle formBannerTitle308" style="height: 2rem;">
@@ -112,28 +113,28 @@
                         <div class="formMiddleContent formMiddleContent308 moduleContent">
                             <div class="photoModule styleForm1">
                                 <div class="g_background photoDiv photoBg">
-                                    <a href="/training/mobile/v1/course/detail?courseId=121">
+                                    <a href="/training/coach/v1/course/detail?courseId=121">
                                         <div class="imgClass_160" style="height: 4.56533rem;">
                                             <img class="photoListImg" src="/Content/images/training/student/banner1.jpg">
                                         </div>
                                     </a>
                                 </div>
                                 <div class="g_background photoDiv photoBg">
-                                    <a href="/training/mobile/v1/course/detail?courseId=121">
+                                    <a href="/training/coach/v1/course/detail?courseId=121">
                                         <div class="imgClass_160" style="height: 4.56533rem;">
                                             <img class="photoListImg" src="/Content/images/training/student/banner2.jpg">
                                         </div>
                                     </a>
                                 </div>
                                 <div class="g_background photoDiv photoBg">
-                                    <a href="/training/mobile/v1/course/detail?courseId=121">
+                                    <a href="/training/coach/v1/course/detail?courseId=121">
                                         <div class="imgClass_160" style="height: 4.56533rem;">
                                             <img class="photoListImg" src="/Content/images/training/student/banner2.jpg">
                                         </div>
                                     </a>
                                 </div>
                                 <div class="g_background photoDiv photoBg">
-                                    <a href="/training/mobile/v1/course/detail?courseId=121">
+                                    <a href="/training/coach/v1/course/detail?courseId=121">
                                         <div class="imgClass_160" style="height: 4.56533rem;">
                                             <img class="photoListImg" src="/Content/images/training/student/banner2.jpg">
                                         </div>

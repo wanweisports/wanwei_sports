@@ -33,7 +33,7 @@
     <meta name="wap-font-scale" content="no">
 
     <meta name="flexible" content="initial-dpr=1">
-    <link href="Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon"/>
+    <link href="Content/images/training/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon"/>
 
     <script type="text/javascript">
         // html root的字体计算应该放在最前面，这样计算就不会有误差了
@@ -50,16 +50,15 @@
     </script>
 
     <link rel="stylesheet" type="text/css"
-          href="Content/style/training/student/fontsIco.min.css?v=${static_resource_version}">
+          href="Content/style/training/coach/fontsIco.min.css?v=${static_resource_version}">
     <link rel="stylesheet" type="text/css"
-          href="Content/style/training/student/base.min.css?v=${static_resource_version}">
+          href="Content/style/training/coach/base.css?v=${static_resource_version}">
     <link rel="stylesheet" type="text/css"
-          href="Content/style/training/student/1003_1.min.css?v=${static_resource_version}">
+          href="Content/style/training/coach/1003_1.min.css?v=${static_resource_version}">
+
 </head>
 
 <body id="g_body" class="g_locale2052 mobiCol3">
-
-<div class="webLeft"></div>
 
 <div id="g_web" class="g_web">
     <!-- this is loading  -->
@@ -80,7 +79,7 @@
                                 <div id="newsLine8" class="wWLine largeImageNewsStyle newsLine J_picNum">
                                     <div id="lineBody8" class="lineBody">
                                         <div class="mixNewsStyleImgBox6">
-                                            <a class="f_mixNewsStyleImgBox6_link" href="/training/mobile/v1/course/detail?courseId=121">
+                                            <a class="f_mixNewsStyleImgBox6_link" href="/training/coach/v1/course/detail?courseId=121">
                                                 <div class="newsTitlePic icon-noFigureB"></div>
                                                 <div class="mixNewsStyleTitleContainer6">
                                                     <img src="/Content/images/training/student/timg1.jpg" class="newsBanner">
@@ -100,7 +99,7 @@
                                 <div id="newsLine7" class="wWLine largeImageNewsStyle newsLine J_picNum">
                                     <div id="lineBody7" class="lineBody">
                                         <div class="mixNewsStyleImgBox6">
-                                            <a class="f_mixNewsStyleImgBox6_link" href="/training/mobile/v1/course/detail?courseId=121">
+                                            <a class="f_mixNewsStyleImgBox6_link" href="/training/coach/v1/course/detail?courseId=121">
                                                 <div class="newsTitlePic icon-noFigureB"></div>
                                                 <div class="mixNewsStyleTitleContainer6">
                                                     <img src="/Content/images/training/student/timg2.jpg" class="newsBanner">
@@ -120,7 +119,7 @@
                                 <div id="newsLine6" class="wWLine largeImageNewsStyle newsLine J_picNum">
                                     <div id="lineBody6" class="lineBody">
                                         <div class="mixNewsStyleImgBox6">
-                                            <a class="f_mixNewsStyleImgBox6_link" href="/training/mobile/v1/course/detail?courseId=121">
+                                            <a class="f_mixNewsStyleImgBox6_link" href="/training/coach/v1/course/detail?courseId=121">
                                                 <div class="newsTitlePic icon-noFigureB"></div>
                                                 <div class="mixNewsStyleTitleContainer6">
                                                     <img src="/Content/images/training/student/timg3.jpg" class="newsBanner">
@@ -140,7 +139,7 @@
                                 <div id="newsLine5" class="wWLine largeImageNewsStyle newsLine J_picNum">
                                     <div id="lineBody5" class="lineBody">
                                         <div class="mixNewsStyleImgBox6">
-                                            <a class="f_mixNewsStyleImgBox6_link" href="/training/mobile/v1/course/detail?courseId=121">
+                                            <a class="f_mixNewsStyleImgBox6_link" href="/training/coach/v1/course/detail?courseId=121">
                                                 <div class="newsTitlePic icon-noFigureB"></div>
                                                 <div class="mixNewsStyleTitleContainer6">
                                                     <img src="/Content/images/training/student/timg3.jpg" class="newsBanner">
@@ -160,7 +159,7 @@
                                 <div id="newsLine4" class="wWLine largeImageNewsStyle newsLine J_picNum">
                                     <div id="lineBody4" class="lineBody">
                                         <div class="mixNewsStyleImgBox6">
-                                            <a class="f_mixNewsStyleImgBox6_link" href="/training/mobile/v1/course/detail?courseId=121">
+                                            <a class="f_mixNewsStyleImgBox6_link" href="/training/coach/v1/course/detail?courseId=121">
                                                 <div class="newsTitlePic icon-noFigureB"></div>
                                                 <div class="mixNewsStyleTitleContainer6">
                                                     <img src="/Content/images/training/student/timg3.jpg" class="newsBanner">
@@ -186,8 +185,6 @@
         </div>
     </div>
 </div>
-
-<div class="webRight"></div>
 
 </body>
 </html>

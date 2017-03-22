@@ -33,7 +33,7 @@
     <meta name="wap-font-scale" content="no">
 
     <meta name="flexible" content="initial-dpr=1">
-    <link href="Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon"/>
+    <link href="Content/images/training/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon"/>
 
     <script type="text/javascript">
         // html root的字体计算应该放在最前面，这样计算就不会有误差了
@@ -50,95 +50,71 @@
     </script>
 
     <link rel="stylesheet" type="text/css"
-          href="Content/style/training/student/fontsIco.min.css?v=${static_resource_version}">
+          href="Content/style/training/coach/fontsIco.min.css?v=${static_resource_version}">
     <link rel="stylesheet" type="text/css"
-          href="Content/style/training/student/base.min.css?v=${static_resource_version}">
+          href="Content/style/training/coach/base.css?v=${static_resource_version}">
     <link rel="stylesheet" type="text/css"
-          href="Content/style/training/student/bannerAnimation.min.css?v=${static_resource_version}">
-    <link rel="stylesheet" id="mobiStyleTemplateCss" type="text/css"
-          href="Content/style/training/student/1003_1.min.css?v=${static_resource_version}">
-    <link rel="stylesheet" id="mobiCubeNavigationCss" type="text/css"
-          href="Content/style/training/student/cubeNavigation.min.css?v=${static_resource_version}">
-
-    <!-- //输出模块样式css -->
-    <style type="text/css">
-        #module303 {
-            border: none;
-            padding: 0.5% 0;
-            background: none;
-            overflow: hidden;
-        }
-
-        #module303 .formMiddle303 {
-            border: none;
-            padding: 0;
-            background: none;
-        }
-
-        #module303 .formBannerTitle303 {
-            border: none;
-            padding: 0;
-        }
-
-        #module303 .formMiddleContent303 {
-            background: none;
-        }
-    </style>
+          href="Content/style/training/coach/bannerAnimation.min.css?v=${static_resource_version}">
+    <link rel="stylesheet" type="text/css"
+          href="Content/style/training/coach/entrance.css?v=${static_resource_version}">
+    <link rel="stylesheet" type="text/css"
+          href="Content/style/training/coach/style.css?v=${static_resource_version}">
 
     <style id="mobiCubeStyleModule">
         #cubeNavigation303_cubeLink1 .cubeLink_bg {
-            background: #000 url(/Content/images/training/student/AD0IpdPPBRACGAAg-_TwwAUoisrx8QYwsAI43AE.jpg) no-repeat center;
+            background: #000 url("/Content/images/training/coach/enter/enter1.jpg") no-repeat center;
             background-size: cover;
             opacity: 1.0;
         }
 
         #cubeNavigation303_cubeLink2 .cubeLink_bg {
-            background: #000 url(/Content/images/training/student/AD0IpdPPBRACGAAg-uTwwAUo-MmK7AcwsAI43AE.jpg) no-repeat center;
+            background: #000 url("/Content/images/training/coach/enter/enter2.jpg") no-repeat center;
             background-size: cover;
             opacity: 1.0;
         }
 
         #cubeNavigation303_cubeLink3 .cubeLink_bg {
-            background: #000 url(/Content/images/training/student/AD0IpdPPBRACGAAg5_7wwAUo-oLpvQcw3AI4tAE.jpg) no-repeat center;
+            background: #000 url("/Content/images/training/coach/enter/enter3.jpg") no-repeat center;
             background-size: cover;
             opacity: 1.0;
         }
 
         #cubeNavigation303_cubeLink4 .cubeLink_bg {
-            background: #000 url(/Content/images/training/student/AD0IpdPPBRACGAAgrsfwwAUotP-s1gYwyQE4yQE.jpg) no-repeat center;
+            background: #000 url("/Content/images/training/coach/enter/enter4.jpg") no-repeat center;
             background-size: cover;
             opacity: 1.0;
         }
     </style>
 </head>
 
-<body id="g_body" class="g_locale2052 mobiCol3">
-
-<div class="webLeft"></div>
+<body id="g_body" class="g_locale2052">
 
 <div id="g_web" class="g_web">
     <!-- this is loading  -->
-    <div id="webLoading" class="loading" style="display:none;">
-        <div id="splashscreen" class="splashscreen ui-loader">
+    <div class="loading" style="display: none;">
+        <div class="splashscreen ui-loader">
             <span class="ui-icon ui-icon-loading spin"></span>
         </div>
     </div>
 
     <div id="webBannerBox" class="webBannerBox moveAnimation">
-        <div id="webBanner" style="display:block;" class="webBanner hiddenDefaultBanner">
+        <div id="webBanner" class="webBanner hiddenDefaultBanner">
             <div id="bannerSwipe" class="swipe" style="height: 176px; visibility: visible;">
                 <div id="bannerSwipeContainer" class="bannerSwipeContainer defaultBanner">
                     <div>
-                        <a href="javascript:;" class="bannerImageDiv customBanner"
-                           style="display:block; background-image:url('/Content/images/training/student/banners/banner3.jpg');"></a>
+                        <a href="javascript:;" class="bannerImageDiv">
+                            <img src="/Content/images/training/student/banners/banner3.jpg?v=${static_resource_version}">
+                        </a>
                     </div>
                     <div>
-                        <a href="javascript:;" class="bannerImageDiv customBanner"
-                           style="display:block; background-image:url('/Content/images/training/student/banners/banner1.jpg');"></a>
+                        <a href="javascript:;" class="bannerImageDiv">
+                            <img src="/Content/images/training/student/banners/banner2.jpg?v=${static_resource_version}">
+                        </a>
                     </div>
                     <div>
-                        <a href="javascript:;" class="bannerImageDiv customBanner"
-                           style="display:block; background-image:url('/Content/images/training/student/banners/banner2.jpg');"></a>
+                        <a href="javascript:;" class="bannerImageDiv">
+                            <img src="/Content/images/training/student/banners/banner1.jpg?v=${static_resource_version}">
+                        </a>
                     </div>
                 </div>
                 <div id="bannerBullet" class="bannerBullet">
@@ -153,66 +129,63 @@
     </div>
     <div id="webContainerBox" class="webContainerBox moveAnimation">
         <div id="webModuleContainer" class="webModuleContainer" style="overflow: hidden;">
-            <div id="module303" class="form Handle template1003 formStyle31 moduleStyle15">
-                <div class="formBannerTitle formBannerTitle303">
-                    <div class="titleLeft titleLeft303"></div>
-                    <div class="titleCenter titleCenter303">
-                        <div class="titleText titleText303">
+            <div class="form Handle formStyle31 moduleStyle15">
+                <div class="formBannerTitle">
+                    <div class="titleLeft"></div>
+                    <div class="titleCenter">
+                        <div class="titleText">
                             <div class="titleTextIcon icon-titleText">&nbsp;</div>
                             <div class="textContent">服务项</div>
                         </div>
-                        <div class="formBannerMore formBannerMore303"></div>
+                        <div class="formBannerMore"></div>
                     </div>
-                    <div class="titleRight titleRight303"></div>
+                    <div class="titleRight"></div>
                 </div>
-                <div class="formMiddle formMiddle303">
-                    <div class="middleLeft middleLeft303"></div>
-                    <div class="middleCenter middleCenter303">
-                        <div class="formMiddleContent formMiddleContent303 moduleContent">
-                            <div class="cubeNavigationArea cubeNavigationArea15" id="cubeNavigation303">
-                                <div class="cubeLink cubeLink1 " id="cubeNavigation303_cubeLink1">
-                                    <a class="cubeLink_a" href="/training/coach/v1/course/list"
-                                       id="cubeLink_a1_cubeNav303">
+                <div class="formMiddle">
+                    <div class="middleLeft"></div>
+                    <div class="middleCenter">
+                        <div class="formMiddleContent moduleContent">
+                            <div class="cubeNavigationArea cubeNavigationArea15">
+                                <div class="cubeLink" id="cubeNavigation303_cubeLink1">
+                                    <a class="cubeLink_a" href="/training/coach/v1/course/list">
                                         <div class="cubeLink_bg"></div>
                                         <div class="cubeLink_curtain"></div>
                                         <div class="cubeLink_ico icon-cube"></div>
                                         <div class="cubeLink_text g_link">
-                                            <div class="cubeLink_text_p ">课程推荐<p class="cubeLink_subText_p"></p>
+                                            <div class="cubeLink_text_p">课程推荐<p class="cubeLink_subText_p"></p>
                                             </div>
                                         </div>
                                     </a>
                                 </div>
-                                <div class="cubeLink cubeLink2 " id="cubeNavigation303_cubeLink2">
-                                    <a class="cubeLink_a" href="/training/coach/v1/center/index"
-                                       id="cubeLink_a2_cubeNav303">
+                                <div class="cubeLink" id="cubeNavigation303_cubeLink2">
+                                    <a class="cubeLink_a" href="/training/coach/v1/center/index">
                                         <div class="cubeLink_bg"></div>
                                         <div class="cubeLink_curtain"></div>
                                         <div class="cubeLink_ico icon-cube"></div>
                                         <div class="cubeLink_text g_link">
-                                            <div class="cubeLink_text_p ">个人中心<p class="cubeLink_subText_p"></p>
+                                            <div class="cubeLink_text_p">个人中心<p class="cubeLink_subText_p"></p>
                                             </div>
                                         </div>
                                     </a>
                                 </div>
-                                <div class="cubeLink cubeLink3 " id="cubeNavigation303_cubeLink3">
-                                    <a class="cubeLink_a " href="/training/coach/v1/pp/login"
-                                       id="cubeLink_a3_cubeNav303">
+                                <div class="cubeLink" id="cubeNavigation303_cubeLink3">
+                                    <a class="cubeLink_a" href="/training/coach/v1/pp/login">
                                         <div class="cubeLink_bg"></div>
                                         <div class="cubeLink_curtain"></div>
                                         <div class="cubeLink_ico icon-cube"></div>
                                         <div class="cubeLink_text g_link">
-                                            <div class="cubeLink_text_p ">登录注册<p class="cubeLink_subText_p"></p>
+                                            <div class="cubeLink_text_p">登录注册<p class="cubeLink_subText_p"></p>
                                             </div>
                                         </div>
                                     </a>
                                 </div>
-                                <div class="cubeLink cubeLink4 " id="cubeNavigation303_cubeLink4">
-                                    <a class="cubeLink_a " href="tel:400-998-9898" id="cubeLink_a4_cubeNav303">
+                                <div class="cubeLink" id="cubeNavigation303_cubeLink4">
+                                    <a class="cubeLink_a" href="tel:400-998-9898">
                                         <div class="cubeLink_bg"></div>
                                         <div class="cubeLink_curtain"></div>
                                         <div class="cubeLink_ico icon-cube"></div>
                                         <div class="cubeLink_text g_link">
-                                            <div class="cubeLink_text_p ">客服咨询<p class="cubeLink_subText_p"></p>
+                                            <div class="cubeLink_text_p">客服咨询<p class="cubeLink_subText_p"></p>
                                             </div>
                                         </div>
                                     </a>
@@ -220,25 +193,25 @@
                             </div>
                         </div>
                     </div>
-                    <div class="middleRight middleRight303"></div>
+                    <div class="middleRight"></div>
                 </div>
             </div>
-            <div id="module308" class="form Handle  formStyle41">
-                <div class="formBannerTitle formBannerTitle308" style="height: 2rem;">
-                    <div class="titleLeft titleLeft308"></div>
-                    <div class="titleCenter titleCenter308">
-                        <div class="titleText titleText308">
+            <div class="form Handle">
+                <div class="formBannerTitle">
+                    <div class="titleLeft"></div>
+                    <div class="titleCenter">
+                        <div class="titleText">
                             <div class="titleTextIcon icon-titleText">&nbsp;</div>
                             <div class="textContent">优秀学生</div>
                         </div>
-                        <div class="formBannerMore formBannerMore308"></div>
+                        <div class="formBannerMore"></div>
                     </div>
-                    <div class="titleRight titleRight308"></div>
+                    <div class="titleRight"></div>
                 </div>
-                <div class="formMiddle formMiddle308">
-                    <div class="middleLeft middleLeft308"></div>
-                    <div class="middleCenter middleCenter308">
-                        <div class="formMiddleContent formMiddleContent308 moduleContent">
+                <div class="formMiddle">
+                    <div class="middleLeft"></div>
+                    <div class="middleCenter">
+                        <div class="formMiddleContent moduleContent">
                             <div class="photoModule styleForm1">
                                 <div class="g_background photoDiv photoBg">
                                     <a href="javascript:;">
@@ -302,8 +275,6 @@
         </div>
     </div>
 </div>
-
-<div class="webRight"></div>
 
 </body>
 </html>

@@ -1,0 +1,25 @@
+@font-face {
+    font-family: 'icomoon';
+    src: url('fontsIco/icomoon.eot?-2mgmdr&v=133');
+    src: url('fontsIco/icomoon.eot?#iefix-2mgmdr&v=133') format('embedded-opentype'), url('fontsIco/icomoon.woff?-2mgmdr&v=133') format('woff'), url('fontsIco/icomoon.ttf?-2mgmdr&v=133') format('truetype');
+    font-weight: normal;
+    font-style: normal
+}
+
+[class^="icon-"], [class*=" icon-"], [class*="faisco-icons-"] {
+    font-family: 'icomoon', 微软雅黑, 'microsoft yahei', 宋体, 新宋体;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+
+* {
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    -webkit-touch-callout: none;
+    margin: 0
+}

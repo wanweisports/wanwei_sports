@@ -33,7 +33,7 @@
     <meta name="wap-font-scale" content="no">
 
     <meta name="flexible" content="initial-dpr=1">
-    <link href="Content/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon"/>
+    <link href="Content/images/training/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon"/>
 
     <script type="text/javascript">
         // html root的字体计算应该放在最前面，这样计算就不会有误差了
@@ -50,11 +50,11 @@
     </script>
 
     <link rel="stylesheet" type="text/css"
-          href="Content/style/training/student/fontsIco.min.css?v=${static_resource_version}">
+          href="Content/style/training/coach/fontsIco.min.css?v=${static_resource_version}">
     <link rel="stylesheet" type="text/css"
-          href="Content/style/training/student/base.css?v=${static_resource_version}">
+          href="Content/style/training/coach/base.css?v=${static_resource_version}">
     <link rel="stylesheet" type="text/css"
-          href="Content/style/training/student/1003_1.min.css?v=${static_resource_version}">
+          href="Content/style/training/coach/1003_1.min.css?v=${static_resource_version}">
 
     <style type="text/css">
         .captchaImg {
@@ -104,12 +104,12 @@
                                     <div class="g_globalLine">
                                         <input type="text" maxlength="20" id="name"
                                                class="itemEdit g_input mustItem" placeholder="请输入姓名">
-                                        <span class="icon-pswIcon g_mainColor"></span>
+                                        <span class="icon-userIcon g_mainColor"></span>
                                     </div>
                                     <div class="g_globalLine">
                                         <input type="text" maxlength="50" id="user" class="itemEdit g_input mustItem"
                                                placeholder="请输入手机号">
-                                        <span class="icon-userIcon g_mainColor"></span>
+                                        <span class="icon-phoneIcon g_mainColor"></span>
                                     </div>
                                     <div class="loginCaptchaCtrl g_globalLine">
                                         <input id="loginCaptcha" type="text" class="captchaText g_input" maxlength="4"
@@ -123,10 +123,10 @@
                                         <input type="button" class="g_button captchaImg" value="获取验证码">
                                     </div>
                                     <div class="loginProtocol g_globalLine" style="margin: .4rem 0 1rem; text-align: left;">
-                                        <p style="color: #888">阅读并同意《<a class="g_mainColor" href="/training/mobile/v1/course/protocol">万为培训用户报名协议</a>》</p>
+                                        <p style="color: #888">阅读并同意《<a class="g_mainColor" href="/training/coach/v1/course/protocol">万为培训用户报名协议</a>》</p>
                                     </div>
                                     <div class="g_globalLine">
-                                        <a class="g_button sendIcon" href="/training/mobile/v1/course/result" style="color: #fff">立即报名</a>
+                                        <a class="g_button sendIcon" href="/training/coach/v1/course/result" style="color: #fff">立即报名</a>
                                     </div>
                                 </div>
                             </div>
