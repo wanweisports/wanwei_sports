@@ -141,7 +141,7 @@ public class StrUtil extends StringUtils {
 
 	/**
 	 * 元转换成分
-	 * @param money
+	 * @param amount
 	 * @return
 	 */
 	public static String getMoney(String amount) {
