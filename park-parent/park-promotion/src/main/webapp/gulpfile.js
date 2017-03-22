@@ -12,7 +12,7 @@ var nib = require('nib');
 var jshint = require('gulp-jshint');
 
 gulp.task('stylus-compile', function() {
-    gulp.src('./Content/style/**/*.styl')
+    gulp.src('./Content/style/**/**/**/**/*.styl')
         .pipe(plumber({errorHandler: notify.onError('error message: <%= error.message %>')}))
         .pipe(stylus({use: [nib()]}))
         .pipe(gulp.dest('./Content/style/'))

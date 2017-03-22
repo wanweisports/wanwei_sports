@@ -12,5 +12,11 @@ public class HomeController extends BaseController {
     public String getRota(){
         return "Home/HomeIndex";
     }
+
+    // 首页
+    @RequestMapping("dashboard")
+    public String dashboard(){
+        return "Home/HomeDashboard";
+    }
     
 }

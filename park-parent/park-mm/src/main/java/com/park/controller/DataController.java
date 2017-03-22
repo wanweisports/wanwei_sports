@@ -270,7 +270,13 @@ public class DataController extends BaseController {
 			e.printStackTrace();
 		}
     }
-    
+
+    // 所有报表
+    @RequestMapping("getAllReports")
+    public String getAllReports(DataInputView dataInputView, Model model) {
+        return "Data/DataAllReports";
+    }
+
 }
 
 

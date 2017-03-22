@@ -34,7 +34,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">场地类型设置</div>
             <div class="panel-body">
-                <button data-toggle="modal" class="btn btn-primary sports-add">
+                <button data-toggle="modal" class="btn btn-success sports-add">
                     <span class="glyphicon glyphicon-plus"></span> 增加场地类型
                 </button>
             </div>
@@ -72,7 +72,7 @@
                                 <td>${sport.operatorName}</td>
                                 <td>${sport.createTime}</td>
                                 <td>
-                                    <button data-toggle="modal" class="btn btn-primary sports-update"
+                                    <button data-toggle="modal" class="btn btn-success sports-update"
                                             data-id="${sport.sportId}">
                                         <i class="glyphicon glyphicon-edit"></i> 修改
                                     </button>
@@ -163,7 +163,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary sports-confirm">
+                    <button type="button" class="btn btn-success sports-confirm">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>

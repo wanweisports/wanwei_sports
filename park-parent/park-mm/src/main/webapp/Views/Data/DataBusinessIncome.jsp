@@ -14,8 +14,8 @@
     <script src="Content/app/data/data_business_income.js?v=${static_resource_version}"></script>
     <script>
         $(document).ready(function () {
-            $(".member-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
-            $(".member-date[data-count='${countNum}']").addClass("btn-primary").removeClass("btn-default");
+            $(".member-date.btn-success").addClass("btn-default").removeClass("btn-success");
+            $(".member-date[data-count='${countNum}']").addClass("btn-success").removeClass("btn-default");
         });
     </script>
 </layout:override>
@@ -48,7 +48,7 @@
                                placeholder="结束日期" value="${createTimeEnd}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary data-filter">
+                        <a href="javascript:;" class="btn btn-success data-filter">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>
@@ -60,7 +60,7 @@
                         <a href="#check_money_modal" class="btn btn-warning" data-toggle="modal" data-backdrop="false">
                             <span class="glyphicon glyphicon-eye-open"></span> 核对财务
                         </a>
-                        <a href="/data/getBusinessIncomeGroupDate" class="btn btn-primary" style="display: none;">
+                        <a href="/data/getBusinessIncomeGroupDate" class="btn btn-success" style="display: none;">
                             <span class="glyphicon glyphicon-stats"></span> 图表显示
                         </a>
                     </div>
@@ -183,7 +183,7 @@
                                     <button type="button" class="btn btn-danger confirm-check-money">
                                         <span class="glyphicon glyphicon-remove"></span> 有误
                                     </button>
-                                    <button type="button" class="btn btn-primary confirm-check-money">
+                                    <button type="button" class="btn btn-success confirm-check-money">
                                         <span class="glyphicon glyphicon-ok"></span> 无误
                                     </button>
                                 </td>
@@ -195,7 +195,7 @@
                                     <button type="button" class="btn btn-danger confirm-check-money">
                                         <span class="glyphicon glyphicon-remove"></span> 有误
                                     </button>
-                                    <button type="button" class="btn btn-primary confirm-check-money">
+                                    <button type="button" class="btn btn-success confirm-check-money">
                                         <span class="glyphicon glyphicon-ok"></span> 无误
                                     </button>
                                 </td>
@@ -207,7 +207,7 @@
                                     <button type="button" class="btn btn-danger confirm-check-money">
                                         <span class="glyphicon glyphicon-remove"></span> 有误
                                     </button>
-                                    <button type="button" class="btn btn-primary confirm-check-money">
+                                    <button type="button" class="btn btn-success confirm-check-money">
                                         <span class="glyphicon glyphicon-ok"></span> 无误
                                     </button>
                                 </td>
@@ -219,7 +219,7 @@
                                     <button type="button" class="btn btn-danger confirm-check-money">
                                         <span class="glyphicon glyphicon-remove"></span> 有误
                                     </button>
-                                    <button type="button" class="btn btn-primary confirm-check-money">
+                                    <button type="button" class="btn btn-success confirm-check-money">
                                         <span class="glyphicon glyphicon-ok"></span> 无误
                                     </button>
                                 </td>
@@ -231,7 +231,7 @@
                                     <button type="button" class="btn btn-danger confirm-check-money">
                                         <span class="glyphicon glyphicon-remove"></span> 有误
                                     </button>
-                                    <button type="button" class="btn btn-primary confirm-check-money">
+                                    <button type="button" class="btn btn-success confirm-check-money">
                                         <span class="glyphicon glyphicon-ok"></span> 无误
                                     </button>
                                 </td>

@@ -28,7 +28,7 @@
             });
 
             // 设置运动类型
-            $(".sports-item[data-value='${sportId}']").removeClass("btn-default").addClass("btn-primary");
+            $(".sports-item[data-value='${sportId}']").removeClass("btn-default").addClass("btn-success");
         });
     </script>
 </layout:override>
@@ -134,7 +134,7 @@
                         <button type="button" class="btn btn-default sequence-lock">
                             <span class="glyphicon glyphicon-lock"></span> 锁 场
                         </button>
-                        <button type="button" class="btn btn-primary sequence-order">
+                        <button type="button" class="btn btn-success sequence-order">
                             <span class="glyphicon glyphicon-ok"></span> 预 订
                         </button>
                     </div>
@@ -362,7 +362,7 @@
                 </div>
                 <div class="modal-footer">
                     <p class="text-danger pull-left">在"预订人"输入框中，尝试着输入会员卡号、姓名、手机号作为检索条件。</p>
-                    <button type="button" class="btn btn-primary" id="reservations_pay_order">
+                    <button type="button" class="btn btn-success" id="reservations_pay_order">
                         <span class="glyphicon glyphicon-ok"></span> 确认支付
                     </button>
                 </div>
@@ -411,7 +411,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <button class="btn btn-primary pull-right" id="attention_user_confirm" >
+                                <button class="btn btn-success pull-right" id="attention_user_confirm" >
                                     <span class="glyphicon glyphicon-ok"></span> 确 定
                                 </button>
                             </div>
@@ -516,7 +516,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-12">
-                                                <button class="btn btn-primary pull-right" id="reservations_user_pay" data-val="1">
+                                                <button class="btn btn-success pull-right" id="reservations_user_pay" data-val="1">
                                                     <span class="glyphicon glyphicon-arrow-right"></span> 去支付
                                                 </button>
                                             </div>
@@ -634,7 +634,7 @@
                                                            placeholder="实收金额(元)" autocomplete="off" value="0.00" disabled>
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    <button class="btn btn-primary" id="reservations_paid_confirm">
+                                                    <button class="btn btn-success" id="reservations_paid_confirm">
                                                         <span class="glyphicon glyphicon-ok"></span> 确 定
                                                     </button>
                                                 </div>

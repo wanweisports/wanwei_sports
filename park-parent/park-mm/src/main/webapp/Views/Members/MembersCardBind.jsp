@@ -73,7 +73,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
-                                <button type="button" class="btn btn-primary col-sm-4 genxin-submit"
+                                <button type="button" class="btn btn-success col-sm-4 genxin-submit"
                                         data-loading-text="更新中...">
                                     <span class="glyphicon glyphicon-refresh"></span> 更新信息
                                 </button>
@@ -197,7 +197,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-4 col-sm-8">
-                                    <button type="button" class="btn btn-primary col-sm-4 register-recahrge"
+                                    <button type="button" class="btn btn-success col-sm-4 register-recahrge"
                                             data-loading-text="绑定中...">
                                         <span class="glyphicon glyphicon-ok"></span> 确定 & 付款
                                     </button>
@@ -343,7 +343,7 @@
                     <label class="text-danger pull-left">
                         <input type="checkbox" value="1" name="is_print_ticket" id="is_print_ticket"> 登记发票吗?
                     </label>
-                    <button type="button" class="btn btn-primary print-ticket"
+                    <button type="button" class="btn btn-success print-ticket"
                             data-loading-text="登记中...">
                         <span class="glyphicon glyphicon-save"></span> 登记保存
                     </button>

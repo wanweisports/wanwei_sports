@@ -41,7 +41,7 @@
                                placeholder="身份证号" value="${memberIdcard}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary member-filter">
+                        <a href="javascript:;" class="btn btn-success member-filter">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>
@@ -53,7 +53,7 @@
                 <div class="table-responsive members-list">
                     <table class="table">
                         <thead>
-                        <tr class="bg-primary">
+                        <tr class="bg-info">
                             <th>姓名</th>
                             <th>手机号码</th>
                             <th>会员卡号</th>
@@ -105,7 +105,7 @@
                                 <td>${member.createTime}</td>
                                 <td>
                                     <c:if test="${member.tempCardNo == null}">
-                                        <a class="btn btn-primary" href="/member/memberInfo?memberId=${member.memberId}">
+                                        <a class="btn btn-success" href="/member/memberInfo?memberId=${member.memberId}">
                                             <span class="glyphicon glyphicon-share-alt"></span> 查看
                                         </a>
                                     </c:if>
@@ -208,7 +208,7 @@
                     <input type="hidden" id="delete_memberId">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary confirm-delete">
+                    <button type="button" class="btn btn-success confirm-delete">
                         <span class="glyphicon glyphicon-ok"></span> 确 认
                     </button>
                 </div>

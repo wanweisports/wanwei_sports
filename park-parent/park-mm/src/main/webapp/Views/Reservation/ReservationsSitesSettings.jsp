@@ -15,10 +15,10 @@
             $('#site_form').validate({
                 ignore: ":hidden"
             });
-            $(".site-sport.btn-primary").addClass("btn-default").removeClass("btn-primary");
-            $(".site-sport[data-id='${sportId}']").addClass("btn-primary").removeClass("btn-default");
+            $(".site-sport.btn-success").addClass("btn-default").removeClass("btn-success");
+            $(".site-sport[data-id='${sportId}']").addClass("btn-success").removeClass("btn-default");
             <c:if test="${sportId == null}">
-            $(".site-all").addClass("btn-primary").removeClass("btn-default");
+            $(".site-all").addClass("btn-success").removeClass("btn-default");
             </c:if>
         });
     </script>
@@ -47,7 +47,7 @@
                     </div>
                 </form>
                 <div class="col-sm-2 text-right">
-                    <button data-toggle="modal" class="btn btn-primary pull-right site-add">
+                    <button data-toggle="modal" class="btn btn-success pull-right site-add">
                         <span class="glyphicon glyphicon-plus"></span> 增加场地
                     </button>
                 </div>
@@ -85,7 +85,7 @@
                                 <td>${site.operatorName}</td>
                                 <td>${site.createTime}</td>
                                 <td>
-                                    <button data-toggle="modal" class="btn btn-primary site-update"
+                                    <button data-toggle="modal" class="btn btn-success site-update"
                                             data-id="${site.siteId}">
                                         <i class="glyphicon glyphicon-edit"></i> 修改
                                     </button>
@@ -225,7 +225,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary site-confirm">
+                    <button type="button" class="btn btn-success site-confirm">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>

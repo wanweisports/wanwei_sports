@@ -51,7 +51,7 @@
                         <input type="text" class="form-control" name="mobile" placeholder="手机号码" value="${mobile}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary orders-filter">
+                        <a href="javascript:;" class="btn btn-success orders-filter">
                             <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
                         </a>
                     </div>
@@ -143,7 +143,7 @@
                                         </button>
                                     </c:if>
                                     <c:if test="${order.payStatus == 2}">
-                                        <button class="btn btn-primary btn-sm order-pay" data-id="${order.orderId}"
+                                        <button class="btn btn-success btn-sm order-pay" data-id="${order.orderId}"
                                                 data-member="${order.memberId}">
                                             <span class="glyphicon glyphicon-usd"></span> 支付
                                         </button>
@@ -371,7 +371,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
-                                            <button type="button" class="btn btn-primary" id="reservations_pay_order">
+                                            <button type="button" class="btn btn-success" id="reservations_pay_order">
                                                 <span class="glyphicon glyphicon-ok"></span> 支付
                                             </button>
                                         </div>

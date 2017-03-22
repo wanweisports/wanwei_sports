@@ -13,8 +13,8 @@
     <script src="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
     <script src="Content/app/data/data_members_attendance.js?v=${static_resource_version}"></script>
     <script>
-        $(".member-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
-        $(".member-date[data-count='${countNum}']").addClass("btn-primary").removeClass("btn-default");
+        $(".member-date.btn-success").addClass("btn-default").removeClass("btn-success");
+        $(".member-date[data-count='${countNum}']").addClass("btn-success").removeClass("btn-default");
     </script>
 </layout:override>
 
@@ -30,7 +30,7 @@
                 <form id="data_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="/data/getMembersAttendance?countNum=1000" data-count="1000" class="btn btn-primary member-date">全部</a>
+                            <a href="/data/getMembersAttendance?countNum=1000" data-count="1000" class="btn btn-success member-date">全部</a>
                             <a href="/data/getMembersAttendance?countNum=11" data-count="11" class="btn btn-default member-date">今日</a>
                             <a href="/data/getMembersAttendance?countNum=10" data-count="10" class="btn btn-default member-date">昨日</a>
                             <a href="/data/getMembersAttendance?countNum=21" data-count="21" class="btn btn-default member-date">本周</a>
@@ -51,7 +51,7 @@
                                value="${createTimeEnd}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary data-filter">
+                        <a href="javascript:;" class="btn btn-success data-filter">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>

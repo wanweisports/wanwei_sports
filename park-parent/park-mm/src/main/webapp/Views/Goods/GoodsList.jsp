@@ -50,7 +50,7 @@
                     </div>
                     <div class="form-group">
                         <label>&nbsp;</label>
-                        <a href="javascript:;" class="btn btn-primary goods-filter">
+                        <a href="javascript:;" class="btn btn-success goods-filter">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>
@@ -90,7 +90,7 @@
                                 <td>${good.createTime}</td>
                                 <td>
                                     <c:if test="${good.goodStatus == 2}">
-                                        <a href="javascript:;" class="btn btn-primary goods-enter"
+                                        <a href="javascript:;" class="btn btn-success goods-enter"
                                            data-id="${good.goodId}">
                                             <span class="glyphicon glyphicon-arrow-up"></span> 上架
                                         </a>
@@ -101,7 +101,7 @@
                                             <span class="glyphicon glyphicon-arrow-down"></span> 下架
                                         </a>
                                     </c:if>
-                                    <a href="#plus_count_modal" class="btn btn-primary goods-count" data-toggle="modal"
+                                    <a href="#plus_count_modal" class="btn btn-success goods-count" data-toggle="modal"
                                        data-id="${good.goodId}" data-count="${good.goodCount}" data-backdrop="false">
                                         <span class="glyphicon glyphicon-plus"></span> 增加库存
                                     </a>
@@ -109,7 +109,7 @@
                                        data-id="${good.goodId}" data-count="${good.goodCount}" data-backdrop="false">
                                         <span class="glyphicon glyphicon-adjust"></span> 损耗
                                     </a>
-                                    <a href="/good/viewGood?goodId=${good.goodId}" class="btn btn-primary">
+                                    <a href="/good/viewGood?goodId=${good.goodId}" class="btn btn-success">
                                         <span class="glyphicon glyphicon-share-alt"></span> 查看
                                     </a>
                                 </td>
@@ -212,7 +212,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary confirm-plus-count" data-dismiss="modal">
+                    <button type="button" class="btn btn-success confirm-plus-count" data-dismiss="modal">
                         <span class="glyphicon glyphicon-ok"></span> 确 认
                     </button>
                 </div>
@@ -246,7 +246,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary confirm-minus-count" data-dismiss="modal">
+                    <button type="button" class="btn btn-success confirm-minus-count" data-dismiss="modal">
                         <span class="glyphicon glyphicon-ok"></span> 确 认
                     </button>
                 </div>

@@ -41,13 +41,13 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary card-type-filter">
+                        <a href="javascript:;" class="btn btn-success card-type-filter">
                             <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
                         </a>
                     </div>
                 </form>
                 <div class="col-sm-4 text-right" style="display: none;">
-                    <button type="button" class="btn btn-primary card-type-add" data-toggle="modal"
+                    <button type="button" class="btn btn-success card-type-add" data-toggle="modal"
                             data-target="#addModal" data-backdrop="false">
                         <span class="glyphicon glyphicon-plus"></span> 增加会员类型
                     </button>
@@ -105,7 +105,7 @@
                                 <td>${type.operatorName}</td>
                                 <td>${type.createTime}</td>
                                 <td>
-                                    <a class="btn btn-primary type-item" href="#addModal" data-toggle="modal"
+                                    <a class="btn btn-success type-item" href="#addModal" data-toggle="modal"
                                        data-backdrop="false" data-id="${type.cardTypeId}">
                                         <span class="glyphicon glyphicon-share-alt"></span> 查看
                                     </a>
@@ -427,7 +427,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="save_card_type">
+                    <button type="button" class="btn btn-success" id="save_card_type">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>

@@ -82,7 +82,7 @@
                                            data-val-regex-pattern="^\d{4}-\d{2}-\d{2}$"
                                            data-val-regex="会员生日格式错误" maxlength="10">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-primary member-birthday-select">
+                                        <button class="btn btn-success member-birthday-select">
                                             <i class="glyphicon glyphicon-calendar"></i> 日历
                                         </button>
                                     </span>
@@ -161,7 +161,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
-                                <button type="button" class="btn btn-primary col-sm-4 register-member"
+                                <button type="button" class="btn btn-success col-sm-4 register-member"
                                         data-loading-text="提交中...">
                                     <span class="glyphicon glyphicon-ok"></span>  注册 & 绑卡
                                 </button>

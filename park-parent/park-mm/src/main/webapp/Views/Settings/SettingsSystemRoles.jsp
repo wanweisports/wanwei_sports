@@ -32,12 +32,12 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary roles-filter">
+                        <a href="javascript:;" class="btn btn-success roles-filter">
                             <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
                         </a>
                     </div>
                     <div class="form-group pull-right">
-                        <a href="/settings/getRolesView" class="btn btn-primary">
+                        <a href="/settings/getRolesView" class="btn btn-success">
                             <span class="glyphicon glyphicon-plus"></span> 添加员工权限
                         </a>
                     </div>
@@ -74,7 +74,7 @@
                                 <td>${role.operatorName}</td>
                                 <td>${role.createTime}</td>
                                 <td>
-                                    <a class="btn btn-primary" href="/settings/getRolesView?roleId=${role.roleId}">
+                                    <a class="btn btn-success" href="/settings/getRolesView?roleId=${role.roleId}">
                                         <span class="glyphicon glyphicon-share-alt"></span>  查看
                                     </a>
                                 </td>

@@ -131,7 +131,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
-                                <button type="submit" class="btn btn-primary col-sm-4 profile-submit"
+                                <button type="submit" class="btn btn-success col-sm-4 profile-submit"
                                         data-loading-text="保存中...">
                                     <span class="glyphicon glyphicon-ok"></span> 保 存
                                 </button>
