@@ -33,7 +33,8 @@
     <meta name="wap-font-scale" content="no">
 
     <meta name="flexible" content="initial-dpr=1">
-    <link href="Content/images/training/favicon.ico?v=${static_resource_version}" rel="shortcut icon" type="image/x-icon"/>
+    <link href="Content/images/training/favicon.ico?v=${static_resource_version}" rel="shortcut icon"
+          type="image/x-icon"/>
 
     <script type="text/javascript">
         // html root的字体计算应该放在最前面，这样计算就不会有误差了
@@ -54,7 +55,7 @@
     <link rel="stylesheet" type="text/css"
           href="Content/style/training/coach/base.css?v=${static_resource_version}">
     <link rel="stylesheet" type="text/css"
-          href="Content/style/training/coach/1003_1.min.css?v=${static_resource_version}">
+          href="Content/style/training/coach/style.css?v=${static_resource_version}">
 </head>
 
 <body id="g_body" class="g_locale2052 mobiCol3">
@@ -195,8 +196,9 @@
             </div>
         </div>
     </div>
+</div>
 
-    <div class="webRight"></div>
+<div class="webRight"></div>
 
 </body>
 </html>

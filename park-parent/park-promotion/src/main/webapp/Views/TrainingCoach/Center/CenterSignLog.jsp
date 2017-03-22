@@ -54,7 +54,7 @@
     <link rel="stylesheet" type="text/css"
           href="Content/style/training/coach/base.css?v=${static_resource_version}">
     <link rel="stylesheet" type="text/css"
-          href="Content/style/training/coach/1003_1.min.css?v=${static_resource_version}">
+          href="Content/style/training/coach/style.css?v=${static_resource_version}">
 </head>
 
 <body id="g_body" class="g_locale2052 mobiCol3">
