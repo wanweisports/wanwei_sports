@@ -18,8 +18,8 @@
                                 <img src="/Content/images/training/banners/banner4.jpg?v=${static_resource_version}" style="width:100%">
                             </div>
                             <div class="richContent richContent3 richContent310">
-                                <p style="text-align: center;text-indent: 0">您已经成功预约某某课程！稍后课程责任老师会电话与您沟通，以便更好地指导您；祝您上课愉快！</p>
-                                <p style="text-align: center;text-indent: 0"><span style="color: #f00; margin-right: .4rem">5</span>秒后会自动跳转会员中心，或者直接点击返回首页</p>
+                                <p style="text-align: center;text-indent: 0;font-size: 0.6rem;">您已经成功预约某某课程！稍后课程责任老师会电话与您沟通，以便更好地指导您；祝您上课愉快！</p>
+                                <p style="text-align: center;text-indent: 0;font-size: 0.6rem;"><span style="color: #f00; margin-right: .4rem">5</span>秒后会自动跳转会员中心，或者直接点击返回首页</p>
                             </div>
                             <div class="clear"></div>
                         </div>
@@ -74,4 +74,5 @@
 
 <c:import url="../Shared/Layout.jsp">
     <c:param name="title" value="报名反馈"/>
+    <c:param name="footer" value="true"/>
 </c:import>

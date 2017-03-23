@@ -12,25 +12,25 @@
           href="Content/style/training/coach/entrance.css?v=${static_resource_version}">
     <style type="text/css">
         #cubeNavigation303_cubeLink1 .cubeLink_bg {
-            background: #000 url("/Content/images/training/coach/enter/enter1.jpg") no-repeat center;
+            background: #000 url(/Content/images/training/coach/enter/enter1.jpg) no-repeat center;
             background-size: cover;
             opacity: 1.0;
         }
 
         #cubeNavigation303_cubeLink2 .cubeLink_bg {
-            background: #000 url("/Content/images/training/coach/enter/enter2.jpg") no-repeat center;
+            background: #000 url(/Content/images/training/coach/enter/enter2.jpg) no-repeat center;
             background-size: cover;
             opacity: 1.0;
         }
 
         #cubeNavigation303_cubeLink3 .cubeLink_bg {
-            background: #000 url("/Content/images/training/coach/enter/enter3.jpg") no-repeat center;
+            background: #000 url(/Content/images/training/coach/enter/enter3.jpg) no-repeat center;
             background-size: cover;
             opacity: 1.0;
         }
 
         #cubeNavigation303_cubeLink4 .cubeLink_bg {
-            background: #000 url("/Content/images/training/coach/enter/enter4.jpg") no-repeat center;
+            background: #000 url(/Content/images/training/coach/enter/enter4.jpg) no-repeat center;
             background-size: cover;
             opacity: 1.0;
         }
@@ -206,4 +206,5 @@
 
 <c:import url="../Shared/Layout.jsp">
     <c:param name="title" value="万为培训"/>
+    <c:param name="footer" value="true"/>
 </c:import>

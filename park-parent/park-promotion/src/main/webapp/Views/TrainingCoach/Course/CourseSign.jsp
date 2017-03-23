@@ -62,7 +62,9 @@
                                         <input type="button" class="g_button captchaImg" value="获取验证码">
                                     </div>
                                     <div class="loginProtocol g_globalLine" style="margin: .4rem 0 1rem; text-align: left;">
-                                        <p style="color: #888">阅读并同意《<a class="g_mainColor" href="/training/coach/v1/course/protocol">万为培训用户报名协议</a>》</p>
+                                        <p style="color: #888; font-size: .6rem;">
+                                            阅读并同意《<a class="g_mainColor" href="/training/coach/v1/course/protocol">万为培训用户报名协议</a>》
+                                        </p>
                                     </div>
                                     <div class="g_globalLine">
                                         <a class="g_button sendIcon" href="/training/coach/v1/course/result" style="color: #fff">立即报名</a>
@@ -80,4 +82,5 @@
 
 <c:import url="../Shared/Layout.jsp">
     <c:param name="title" value="课程报名"/>
+    <c:param name="footer" value="true"/>
 </c:import>

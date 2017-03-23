@@ -2,6 +2,7 @@
 <%@ page import="com.park.layout.Blocks" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="layout" uri="http://www.wanwei.com/tags/tag" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%
     String path = request.getContextPath();
@@ -67,7 +68,10 @@
 <div id="g_web" class="g_web">
     <%@ include file="../Shared/Loading.jsp" %>
     <layout:block name="<%=Blocks.BLOCK_BODY%>"/>
-    <%@ include file="../Shared/Footer.jsp" %>
+
+    <c:if test="${param.footer != null}">
+        <%@ include file="../Shared/Footer.jsp" %>
+    </c:if>
 </div>
 
 <layout:block name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>"/>
