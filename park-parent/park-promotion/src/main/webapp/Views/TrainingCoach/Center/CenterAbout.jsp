@@ -15,7 +15,7 @@
                         <div class="formMiddleContent formMiddleContent310 moduleContent">
                             <div class="J_richContentPanel310 f-contentPanel">
                                 <div class="textImg3">
-                                    <img src="/Content/images/training/student/timg1.jpg" style="width:100%">
+                                    <img src="/Content/images/training/courses/timg1.jpg" style="width:100%">
                                 </div>
                                 <div class="formBannerTitle formBannerTitle310" style="height: 2rem;">
                                     <div class="titleLeft titleLeft310"></div>
