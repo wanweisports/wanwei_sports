@@ -197,7 +197,8 @@
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div id="main" class="container">
         <div class="weui-form-preview">
-            <div class="weui-form-preview__bd">
+            <div class="weui-form-preview__bd" style="position: relative;">
+                <div style="position: absolute; width: 100%; height: 100%; z-index: 1; opacity: 1;"></div>
                 <table>
                     <thead>
                     <tr>

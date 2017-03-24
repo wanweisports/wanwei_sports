@@ -11,24 +11,36 @@
 
             <ul class="rslides" id="slider4">
                 <li>
-                    <div class="banner-info wthree fadeInUp animated animated" data--delay=".5s"
+                    <div class="banner-info wthree fadeInUp animated" data--delay=".5s"
                          style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
-                        <h3>轮播1</h3>
-                        <p>轮播1描述轮播1描述轮播1描述，轮播1描述轮播1描述轮播1描述轮播1描述。</p>
+                        <img src="/Content/images/company/b1.jpg?v=${static_resource_version}">
+                        <div class="banner-content">
+                            <h3>携手共进，合作共赢</h3>
+                            <p>万为体育平台，是中国体育场馆，体育赛事，体育培训管理系统的领航者；招募全国的合作伙伴。</p>
+                            <div>
+                                <a class="btn btn-info" href="javascript:;">我要合作</a>
+                            </div>
+                        </div>
                     </div>
                 </li>
                 <li>
-                    <div class="banner-info wthree fadeInUp animated animated" data--delay=".5s"
+                    <div class="banner-info wthree fadeInUp animated" data--delay=".5s"
                          style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
-                        <h3>轮播2</h3>
-                        <p>轮播2描述轮播1描述轮播1描述，轮播1描述轮播1描述轮播1描述轮播1描述。</p>
+                        <img src="/Content/images/company/b2.jpg?v=${static_resource_version}">
+                        <div class="banner-content">
+                            <h3>活动推荐2</h3>
+                            <p>轮播1描述轮播1描述轮播1描述，轮播1描述轮播1描述轮播1描述轮播1描述。</p>
+                        </div>
                     </div>
                 </li>
                 <li>
-                    <div class="banner-info wthree fadeInUp animated animated" data--delay=".5s"
+                    <div class="banner-info wthree fadeInUp animated" data--delay=".5s"
                          style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
-                        <h3>轮播3</h3>
-                        <p>轮播3描述轮播1描述轮播1描述，轮播1描述轮播1描述轮播1描述轮播1描述。</p>
+                        <img src="/Content/images/company/b3.jpg?v=${static_resource_version}">
+                        <div class="banner-content">
+                            <h3>活动推荐3</h3>
+                            <p>轮播1描述轮播1描述轮播1描述，轮播1描述轮播1描述轮播1描述轮播1描述。</p>
+                        </div>
                     </div>
                 </li>
             </ul>
