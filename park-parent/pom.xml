@@ -6,9 +6,13 @@
   <packaging>pom</packaging>
   
    <modules>
-        <module>park</module>
+       <module>park</module>
        <module>park-mm</module>
        <module>park-promotion</module>
+       <module>park-platform</module>
+       <module>park-common</module>
+       <module>park-mobile</module>
+       <module>park-business</module>
    </modules>
 
 

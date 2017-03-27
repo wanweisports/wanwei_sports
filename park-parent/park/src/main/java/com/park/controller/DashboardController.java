@@ -1,10 +1,10 @@
 package com.park.controller;
 
+import com.park.platform.service.IOperatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.park.service.IOperatorService;
 
 /**
  * Created by wangjun on 16/11/21.

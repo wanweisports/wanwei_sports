@@ -1,16 +1,8 @@
 package com.park.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
-
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.park.common.po.OtherResource;
+import com.park.common.util.CustomizedPropertyConfigurer;
+import com.park.platform.dao.IBaseDao;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -19,9 +11,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.park.common.po.OtherResource;
-import com.park.common.util.CustomizedPropertyConfigurer;
-import com.park.dao.IBaseDao;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
 /**
 文件上传
 步骤:
@@ -38,7 +36,7 @@ public class ProcessUpload extends HttpServlet {
         super.init(servletConfig);   
         WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletConfig.getServletContext());   
   
-        baseDao=(IBaseDao) webApplicationContext.getBean("baseDao");   
+        baseDao=(IBaseDao) webApplicationContext.getBean("baseDao");
     }  
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

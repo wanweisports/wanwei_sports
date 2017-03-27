@@ -1,0 +1,1 @@
+!function(t){t(".class-status-select").on("click",".class-status",function(s){s.preventDefault(),location.assign("/mobile/training/list?classStatus="+(t(this).attr("data-status")||""))})}(Zepto);
