@@ -98,9 +98,8 @@
 			<ref local="dataSource" />
 		</property>
 	</bean>
-
 	<bean id="baseDao"
-		class="com.park.dao.hibernate.BaseDao">
+		  class="com.park.platform.dao.hibernate.BaseDao">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 </beans>

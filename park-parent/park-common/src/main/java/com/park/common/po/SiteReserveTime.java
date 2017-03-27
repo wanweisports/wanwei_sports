@@ -1,0 +1,96 @@
+package com.park.common.po;
+
+import javax.persistence.*;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
+/**
+ * SiteReserveTime entity. @author MyEclipse Persistence Tools
+ */
+@Entity
+@Table(name = "site_reserve_time", catalog = "park")
+public class SiteReserveTime implements java.io.Serializable {
+
+	// Fields
+
+	private Integer reserveTimeId;
+	private Integer reserveDateId;
+	private Integer siteId;
+	private String siteStartTime;
+	private String siteEndTime;
+	private String isUse;
+
+	// Constructors
+
+	/** default constructor */
+	public SiteReserveTime() {
+	}
+
+	/** full constructor */
+	public SiteReserveTime(Integer reserveDateId, Integer siteId,
+			String siteStartTime, String siteEndTime, String isUse) {
+		this.reserveDateId = reserveDateId;
+		this.siteId = siteId;
+		this.siteStartTime = siteStartTime;
+		this.siteEndTime = siteEndTime;
+		this.isUse = isUse;
+	}
+
+	// Property accessors
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "reserveTimeId", unique = true, nullable = false)
+	public Integer getReserveTimeId() {
+		return this.reserveTimeId;
+	}
+
+	public void setReserveTimeId(Integer reserveTimeId) {
+		this.reserveTimeId = reserveTimeId;
+	}
+
+	@Column(name = "reserveDateId")
+	public Integer getReserveDateId() {
+		return this.reserveDateId;
+	}
+
+	public void setReserveDateId(Integer reserveDateId) {
+		this.reserveDateId = reserveDateId;
+	}
+
+	@Column(name = "siteId")
+	public Integer getSiteId() {
+		return this.siteId;
+	}
+
+	public void setSiteId(Integer siteId) {
+		this.siteId = siteId;
+	}
+
+	@Column(name = "siteStartTime", length = 20)
+	public String getSiteStartTime() {
+		return this.siteStartTime;
+	}
+
+	public void setSiteStartTime(String siteStartTime) {
+		this.siteStartTime = siteStartTime;
+	}
+
+	@Column(name = "siteEndTime", length = 20)
+	public String getSiteEndTime() {
+		return this.siteEndTime;
+	}
+
+	public void setSiteEndTime(String siteEndTime) {
+		this.siteEndTime = siteEndTime;
+	}
+
+	@Column(name = "isUse", length = 1)
+	public String getIsUse() {
+		return this.isUse;
+	}
+
+	public void setIsUse(String isUse) {
+		this.isUse = isUse;
+	}
+
+}
