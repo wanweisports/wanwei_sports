@@ -16,11 +16,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-    <title>${param.title == null || param.title eq "" ? "万维体育 wanwei.com - 智能场馆管理系统" : param.title}</title>
+    <title>${param.title == null ? "万为场馆" : param.title}</title>
 
-    <meta name="keywords" content="${param.keyword == null || param.keyword eq '' ? "万维体育, 智能体育场馆, 体育场馆, 预订, 收银, 万维, wanwei.com" : param.keyword}"/>
-    <meta name="description" content="${param.desc == null || param.desc eq '' ? "万维体育 wanwei.com - 提供智能化的体育场馆运营服务。" : param.desc}"/>
-    <meta name="author" content="北体高科技术有限公司" />
+    <meta name="keywords"
+          content="${param.keyword == null ? "万为场馆, 管理系统, 体育场馆, 预订，万为, wanwei.com" : param.keyword}">
+    <meta name="description"
+          content="${param.desc == null ? "万为场馆 - 提供智能化的场馆运营管理服务平台。" : param.desc}">
+    <meta name="author" content="北体高科（北京）科技有限公司">
 
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta name="format-detection" content="telephone=no,address=no,email=no">
