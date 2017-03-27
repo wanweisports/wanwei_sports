@@ -28,6 +28,22 @@ gulp.task('stylus-compile', function() {
             title: 'minify css'}));
 });
 
+gulp.task('css-compile', function() {
+    gulp.src('./Content/style/**/*.css')
+        .pipe(plumber({errorHandler: notify.onError('error message: <%= error.message %>')}))
+        .pipe(gulp.dest('./Content/style/'))
+        .pipe(notify({
+            message: '<%= file.relative %> compiled successful',
+            title: 'minify css'}))
+        //.pipe(rename({suffix: '.min'}))
+        .pipe(minifycss())
+        .pipe(plumber.stop())
+        .pipe(gulp.dest('./Content/style/'))
+        .pipe(notify({
+            message: '<%= file.relative %> minified successful',
+            title: 'minify css'}));
+});
+
 gulp.task('clean-files', function() {
     gulp.src('./Content/dist/*', {read: false})
         .pipe(plumber({errorHandler: notify.onError('error message: <%= error.message %>')}))

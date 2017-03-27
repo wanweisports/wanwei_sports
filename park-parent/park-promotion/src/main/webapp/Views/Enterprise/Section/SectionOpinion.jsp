@@ -29,7 +29,8 @@
     <div class="footer">
         <div class="footer-info">
             <div class="container">
-                <p>Copyright &copy; 2016. 北体高科技有限公司 All rights reserved.</p>
+                <p>Copyright &copy; 2014-2017 北体高科（北京）科技有限公司</p>
+                <p>京ICP备15016022号-1</p>
             </div>
         </div>
     </div>

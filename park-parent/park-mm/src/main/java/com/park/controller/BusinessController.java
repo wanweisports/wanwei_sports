@@ -58,6 +58,20 @@ public class BusinessController extends BaseController {
 
     // 用户登录
     @NotProtected
+    @RequestMapping("passport/login1")
+    public String passportLogin1(String returnUrl, Model model) {
+        model.addAttribute("returnUrl", StrUtil.isBlank(returnUrl) ? "/business/dashboard" : returnUrl);
+        return "Business/Passport/PassportLogin1";
+    }
+
+    // 工作面板
+    @RequestMapping("home")
+    public String home() {
+        return "Business/Dashboard/HomeIndex";
+    }
+
+    // 用户登录
+    @NotProtected
     @ResponseBody
     @RequestMapping("/passport/userLogin")
     public ResponseBean userLogin(String name, String pwd) {

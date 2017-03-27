@@ -46,5 +46,4 @@ public class EnterpriseController extends BaseController {
             return new ResponseBean(false);
         }
     }
-    
 }
