@@ -15,7 +15,6 @@ gulp.task('stylus-compile', function() {
     gulp.src(['./Content/style/**/*.styl', '!./Content/style/base.styl'])
         .pipe(plumber({errorHandler: notify.onError('error message: <%= error.message %>')}))
         .pipe(stylus({use: [nib()]}))
-        //.pipe(gulp.dest('./Content/style/'))
         .pipe(notify({
             message: '<%= file.relative %> compiled successful',
             title: 'minify css'}))
@@ -39,7 +38,7 @@ gulp.task('clean-files', function() {
 
 gulp.task('js-compile', function(){
     gulp.src('./Content/app/**/*.js')
-        .pipe(uglifyJs())
+        //.pipe(uglifyJs())
         .pipe(notify({
             message: '<%= file.relative %> compiled successful',
             title: 'minify js'
@@ -52,7 +51,7 @@ gulp.task('js-compile', function(){
 });
 
 gulp.task('js-hint', function() {
-    gulp.src('./Content/app/**/*.js')
+    gulp.src(['./Content/app/**/*.js', '!./Content/app/**/*.min.js'])
     .pipe(watch(function(files) {
         return files.pipe(jshint())
             .pipe(jshint.reporter());
@@ -60,5 +59,5 @@ gulp.task('js-hint', function() {
 });
 
 gulp.task('default', ['build']);
-gulp.task('build', ['clean-files', 'stylus-compile', 'js-compile']);
+gulp.task('build', ['stylus-compile', 'js-compile']);
 gulp.task('clean', ['clean-files']);
