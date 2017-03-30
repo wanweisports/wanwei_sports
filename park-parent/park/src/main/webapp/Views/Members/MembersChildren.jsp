@@ -77,15 +77,13 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-4">
-                                <button type="button" class="btn btn-success col-sm-8 confirm-member">
-                                    <span class="glyphicon glyphicon-ok"></span> 确认添加
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="button" class="btn btn-success confirm-member">
+                                    <span class="glyphicon glyphicon-ok"></span> 确 认
                                 </button>
-                            </div>
-                            <div class="col-sm-4">
-                                <button type="button" class="btn btn-danger col-sm-8" data-toggle="modal"
+                                <button type="button" class="btn btn-danger" data-toggle="modal"
                                         data-target="#batch_import" data-backdrop="false">
-                                    <span class="glyphicon glyphicon-import"></span> 批量导入
+                                    <span class="glyphicon glyphicon-import"></span> 批 量
                                 </button>
                             </div>
                         </div>
@@ -100,10 +98,10 @@
                     <div class="table-responsive">
                         <table class="table member-children-list">
                             <thead>
-                            <tr>
+                            <tr class="bg-info">
                                 <th>会员姓名</th>
                                 <th>手机号码</th>
-                                <th></th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -114,7 +112,7 @@
                                     <td>
                                         <a class="btn btn-danger children-delete" href="javascript:;"
                                             data-id="${user.memberId}">
-                                            <span class="glyphicon glyphicon-trash"></span> 删除
+                                            <span class="glyphicon glyphicon-trash"></span>
                                         </a>
                                     </td>
                                 </tr>

@@ -42,12 +42,12 @@
                     </div>
                     <div class="form-group">
                         <a href="javascript:;" class="btn btn-success users-filter">
-                            <span class="glyphicon glyphicon-search"></span> 筛选
+                            <span class="glyphicon glyphicon-search"></span> 检 索
                         </a>
                     </div>
                     <div class="form-group pull-right">
                         <a href="/settings/getUsersView" class="btn btn-success">
-                            <span class="glyphicon glyphicon-plus"></span> 添加
+                            <span class="glyphicon glyphicon-plus"></span> 添 加
                         </a>
                     </div>
                 </form>
@@ -89,12 +89,12 @@
                                 <td>
                                     <c:if test="${user.status == 1}">
                                         <a href="javascript:;" class="btn btn-sm btn-danger user-lock" data-id="${user.operatorId}">
-                                            <span class="glyphicon glyphicon-lock"></span> 锁定
+                                            <span class="glyphicon glyphicon-lock"></span> 锁 定
                                         </a>
                                     </c:if>
                                     <c:if test="${user.status != 1}">
                                         <a href="javascript:;" class="btn btn-primary user-active" data-id="${user.operatorId}">
-                                            <span class="glyphicon glyphicon-flash"></span> 激活
+                                            <span class="glyphicon glyphicon-flash"></span> 激 活
                                         </a>
                                     </c:if>
                                 </td>
@@ -177,18 +177,12 @@
     <div class="modal fade" id="tips_modal" tabindex="-1" role="dialog" aria-labelledby="tipsModalLabel">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="tipsModalLabel">确认框</h5>
-                </div>
                 <div class="modal-body">
                     <p class="text-danger text-message">锁定员工后，会导致此员工无法登陆系统；您确定要锁定此用户吗? </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-dismiss="modal">取 消</button>
-                    <button type="button" class="btn btn-primary lock-confirm">确 认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+                    <button type="button" class="btn btn-success lock-confirm">确 认</button>
                 </div>
             </div>
         </div>

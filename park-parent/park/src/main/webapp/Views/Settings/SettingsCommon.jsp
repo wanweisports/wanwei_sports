@@ -183,8 +183,8 @@
                     </div>
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <div class="col-sm-offset-4 col-sm-8">
-                                <button type="button" class="btn btn-success col-sm-4 common-save">
+                            <div class="text-center">
+                                <button type="button" class="btn btn-success common-save">
                                     <span class="glyphicon glyphicon-ok"></span> 保 存
                                 </button>
                             </div>

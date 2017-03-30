@@ -102,24 +102,6 @@
         $("#tips_confirm_modal").modal({show: true, backdrop: false}).find(".tips-content").text(message);
     };
 
-    // 导航切换
-    $(".navigator-container").on("click", ".list-nav-header", function (e) {
-        e.preventDefault();
-
-        var $this = $(this);
-        var item = $this.attr("data-item");
-
-        if ($this.hasClass("active")) {
-            return false;
-        }
-
-        $(".navigator-container").find(".list-nav-header").removeClass("active");
-        $this.addClass("active");
-
-        $(".navigator-container").find(".list-nav-list").hide();
-        $(".navigator-container").find(".list-nav-list." + item).show();
-    });
-
     /* jQuery扩展 */
 
     // 将form表单数据序列化为json

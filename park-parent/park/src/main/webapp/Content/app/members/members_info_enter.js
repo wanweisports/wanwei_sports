@@ -42,8 +42,6 @@
             $(".register-member").on("click", function (e) {
                 e.preventDefault();
 
-                var $btn = $(this).button('loading');
-
                 var $form = $("#member_form");
                 var conditions = $form.serialize();
 
@@ -58,14 +56,12 @@
                     var data = res.data;
                     if (res.code == 1) {
                         $.tipsSuccessAlert('会员信息保存成功！', function () {
-                            location.assign(content.opts.ToURL + '?memberId=' + data.memberId);
+                            location.href = content.opts.ToURL + '?memberId=' + data.memberId;
                         });
                     } else {
                         $.logConsole('会员信息保存失败', res.message);
                         $.tipsWarningAlert('会员信息保存失败');
                     }
-
-                    $btn.button('reset');
                 });
             });
         }

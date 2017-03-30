@@ -75,10 +75,10 @@
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
                                 <a class="btn btn-default" href="/settings/getRoles">
-                                    <span class="glyphicon glyphicon-chevron-left"></span> 返回
+                                    <span class="glyphicon glyphicon-chevron-left"></span> 返 回
                                 </a>
                                 <button type="button" class="btn btn-success roles-save">
-                                    <span class="glyphicon glyphicon-ok"></span> 保存
+                                    <span class="glyphicon glyphicon-ok"></span> 保 存
                                 </button>
                             </div>
                         </div>

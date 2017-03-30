@@ -50,7 +50,7 @@
                     <table class="table">
                         <thead>
                         <tr class="bg-info">
-                            <th>序号</th>
+                            <th>编号</th>
                             <th>权限名称</th>
                             <th>权限说明</th>
                             <th>权限状态</th>
@@ -141,7 +141,7 @@
                         </ul>
                     </nav>
                     <c:if test="${fn:length(list) == 0}">
-                        <p class="text-muted text-center">没有检索到记录！</p>
+                        <p class="text-muted no-list-count">没有检索到记录！</p>
                     </c:if>
                 </div>
             </div>

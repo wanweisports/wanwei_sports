@@ -30,32 +30,7 @@
                 <div class="panel-heading">会员绑卡</div>
                 <div class="panel-body">
                     <input type="hidden" id="member_id" name="memberId" value="${memberId}">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="member_card_no" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 会员卡号
-                            </label>
-
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="member_card_no" name="cardNo"
-                                       placeholder="会员卡号" value="${tempCardNo}" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="member_mobile" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 手机号码
-                            </label>
-
-                            <div class="col-sm-8 input-parent-magnifier">
-                                <input type="text" class="form-control input-element-magnifier" id="member_mobile"
-                                       name="memberMobile" placeholder="请输入手机号码" autocomplete="off"
-                                       data-val="true" data-val-required="手机号码不能为空"
-                                       data-val-regex-pattern="^1\d{10}$"
-                                       data-val-regex="手机号码格式错误" value="${memberMobile}" maxlength="11">
-                                <div data-valmsg-for="memberMobile" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                    </div>
+                    <input type="hidden" id="member_card_no" name="cardNo" value="${tempCardNo}">
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="member_name" class="col-sm-4 control-label">
@@ -71,11 +46,26 @@
                                 <div data-valmsg-for="memberName" data-valmsg-replace="true"></div>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-sm-6">
                         <div class="form-group">
-                            <div class="col-sm-offset-4 col-sm-8">
-                                <button type="button" class="btn btn-success col-sm-4 genxin-submit"
+                            <label for="member_mobile" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 手机号码
+                            </label>
+
+                            <div class="col-sm-6 input-parent-magnifier">
+                                <input type="text" class="form-control input-element-magnifier" id="member_mobile"
+                                       name="memberMobile" placeholder="请输入手机号码" autocomplete="off"
+                                       data-val="true" data-val-required="手机号码不能为空"
+                                       data-val-regex-pattern="^1\d{10}$"
+                                       data-val-regex="手机号码格式错误" value="${memberMobile}" maxlength="11">
+                                <div data-valmsg-for="memberMobile" data-valmsg-replace="true"></div>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <button type="button" class="btn btn-success genxin-submit"
                                         data-loading-text="更新中...">
-                                    <span class="glyphicon glyphicon-refresh"></span> 更新信息
+                                    <span class="glyphicon glyphicon-refresh"></span> 更 新
                                 </button>
                             </div>
                         </div>
@@ -203,8 +193,8 @@
                                 </div>
                             </div>
                             <div class="form-group clearfix">
-                                <div class="col-sm-offset-4 col-sm-8">
-                                    <button type="button" class="btn btn-success col-sm-4 register-recahrge"
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-success register-recahrge"
                                             data-loading-text="绑定中...">
                                         <span class="glyphicon glyphicon-ok"></span> 确定 & 付款
                                     </button>

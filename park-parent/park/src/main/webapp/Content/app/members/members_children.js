@@ -10,10 +10,12 @@
 
                 $.post('member/delChildrenMember', {"memberId": $(this).attr("data-id")}, function (res) {
                     if (res.code == 1) {
-                        location.reload();
+                        $.tipsSuccessAlert('子会员删除成功！', function () {
+                            location.reload();
+                        });
                     } else {
-                        console.log(res.message || "子会员删除失败, 请稍后重试");
-                        alert(res.message || "子会员删除失败, 请稍后重试");
+                        $.logConsole('子会员删除失败', res.message);
+                        $.tipsWarningAlert('子会员删除失败');
                     }
                 });
             });
@@ -34,10 +36,12 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        location.reload();
+                        $.tipsSuccessAlert('子会员保存成功！', function () {
+                            location.reload();
+                        });
                     } else {
-                        console.log(res.message || "子会员保存失败, 请稍后重试");
-                        alert(res.message || "子会员保存失败, 请稍后重试");
+                        $.logConsole('子会员保存失败', res.message);
+                        $.tipsWarningAlert('子会员保存失败');
                     }
                 });
             });

@@ -6,8 +6,8 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
-    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
     <link href="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
@@ -157,10 +157,10 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-offset-4 col-sm-8">
-                                <button type="button" class="btn btn-success col-sm-4 register-member"
+                            <div class="text-center">
+                                <button type="button" class="btn btn-success register-member"
                                         data-loading-text="提交中...">
-                                    <span class="glyphicon glyphicon-ok"></span>  注册 & 绑卡
+                                    <span class="glyphicon glyphicon-ok"></span> 注册 & 绑卡
                                 </button>
                             </div>
                         </div>

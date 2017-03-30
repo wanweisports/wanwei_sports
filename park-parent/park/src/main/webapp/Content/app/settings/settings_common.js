@@ -40,7 +40,7 @@
 
                     if (res.code == 1) {
                         $.tipsSuccessAlert('场馆基础信息设置成功！', function () {
-                            location.reload();
+                            window.location.reload();
                         });
                     } else {
                         $.logConsole('场馆基础信息设置失败', res.message);
