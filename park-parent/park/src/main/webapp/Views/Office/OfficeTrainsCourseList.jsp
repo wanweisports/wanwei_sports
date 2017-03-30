@@ -34,12 +34,12 @@
                                value="${courseName}" autocomplete="off">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary course-filter">
+                        <a href="javascript:;" class="btn btn-success course-filter">
                             <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
                         </a>
                     </div>
                     <div class="form-group pull-right">
-                        <button type="button" class="btn btn-primary course-add" data-toggle="modal"
+                        <button type="button" class="btn btn-success course-add" data-toggle="modal"
                                 data-target="#add_course_modal" data-backdrop="false">
                             <span class="glyphicon glyphicon-plus"></span> 添加课程
                         </button>
@@ -82,7 +82,7 @@
                                 <td>${course.operatorName}</td>
                                 <td>${course.updateTime}</td>
                                 <td>
-                                    <a href="#add_course_modal" class="btn btn-primary course-view" data-toggle="modal"
+                                    <a href="#add_course_modal" class="btn btn-success course-view" data-toggle="modal"
                                        data-backdrop="false" data-id="${course.id}">
                                         <span class="glyphicon glyphicon-share-alt"></span> 查看
                                     </a>
@@ -222,7 +222,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary course-confirm">
+                    <button type="button" class="btn btn-success course-confirm">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>
@@ -231,7 +231,7 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
+<c:import url="../Shared/Layout.jsp">
     <c:param name="nav" value="office"/>
     <c:param name="subNav" value="course"/>
 </c:import>

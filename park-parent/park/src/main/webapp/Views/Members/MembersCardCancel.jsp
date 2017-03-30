@@ -5,6 +5,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
@@ -17,10 +21,6 @@
             });
         });
     </script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>会员管理</span> &gt;&gt; <span style="color: #f00;">会员卡注销[未完成]</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -42,7 +42,7 @@
                                 <div data-valmsg-for="cardNo" data-valmsg-replace="true"></div>
                             </div>
                             <div class="col-sm-4">
-                                <a href="javascript:;" class="btn btn-primary member-card-filter">
+                                <a href="javascript:;" class="btn btn-success member-card-filter">
                                     <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                                 </a>
                             </div>
@@ -135,7 +135,7 @@
                 </form>
             </div>
             <div class="panel-footer" style="overflow: hidden;">
-                <button type="button" class="btn btn-primary cancel-card-submit pull-right">
+                <button type="button" class="btn btn-success cancel-card-submit pull-right">
                     <span class="glyphicon glyphicon-ok"></span> 确认 & 退款
                 </button>
             </div>
@@ -143,7 +143,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="member"/>
-    <c:param name="subNav" value="cancel"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="会员卡注销"/>
 </c:import>

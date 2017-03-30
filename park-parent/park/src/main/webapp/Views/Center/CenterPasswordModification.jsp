@@ -76,7 +76,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
-                                <button type="submit" class="btn btn-primary col-sm-4 password-confirm"
+                                <button type="submit" class="btn btn-success col-sm-4 password-confirm"
                                         data-loading-text="保存中...">
                                     <span class="glyphicon glyphicon-ok"></span> 保 存
                                 </button>
@@ -89,7 +89,7 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
+<c:import url="../Shared/Layout.jsp">
     <c:param name="nav" value="passport"/>
     <c:param name="subNav" value="password"/>
 </c:import>

@@ -5,19 +5,19 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="Content/app/members/members_invoice_list.js?v=${static_resource_version}"></script>
     <script>
         (function ($) {
-            $(".invoice-status.btn-primary").addClass("btn-default").removeClass("btn-primary");
+            $(".invoice-status.btn-success").addClass("btn-default").removeClass("btn-success");
             $(".invoice-status[data-open='${invoiceOpenState}'][data-state='${invoiceState}']")
-                .addClass("btn-primary").removeClass("btn-default");
+                .addClass("btn-success").removeClass("btn-default");
         })(jQuery);
     </script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>会员管理</span> &gt;&gt; <span>发票登记查询</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -41,19 +41,19 @@
                                placeholder="发票抬头" autocomplete="off" value="${invoiceHeader}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary ticket-filter">
-                            <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
+                        <a href="javascript:;" class="btn btn-success ticket-filter">
+                            <span class="glyphicon glyphicon-search"></span> 筛选
                         </a>
                     </div>
                 </form>
                 <div class="col-sm-4 text-right">
                     <c:if test="${invoiceOpenState == 2 && invoiceState == 2}">
-                        <button type="button" class="btn btn-warning ticket-open">
+                        <button type="button" class="btn btn-primary ticket-open">
                             <span class="glyphicon glyphicon-thumbs-up"></span> 确认开票
                         </button>
                     </c:if>
                     <c:if test="${invoiceOpenState == 1 && invoiceState == 2}">
-                        <button type="button" class="btn btn-primary ticket-print">
+                        <button type="button" class="btn btn-success ticket-print">
                             <span class="glyphicon glyphicon-ok"></span> 确认领票
                         </button>
                     </c:if>
@@ -128,12 +128,12 @@
 
                                 <td>
                                     <c:if test="${invoice.invoiceOpenState == 2 && invoice.invoiceState == 2}">
-                                        <button type="button" class="btn btn-warning invoice-open-confirm" data-id="${invoice.invoiceId}">
+                                        <button type="button" class="btn btn-primary invoice-open-confirm" data-id="${invoice.invoiceId}">
                                             <span class="glyphicon glyphicon-thumbs-up"></span> 开票
                                         </button>
                                     </c:if>
                                     <c:if test="${invoice.invoiceOpenState == 1 && invoice.invoiceState == 2}">
-                                        <button type="button" class="btn btn-primary invoice-get-confirm" data-id="${invoice.invoiceId}">
+                                        <button type="button" class="btn btn-success invoice-get-confirm" data-id="${invoice.invoiceId}">
                                             <span class="glyphicon glyphicon-ok"></span> 领票
                                         </button>
                                     </c:if>
@@ -214,7 +214,7 @@
                         </ul>
                     </nav>
                     <c:if test="${fn:length(list) == 0}">
-                        <p class="text-muted no-list-count">没有检索到任何登记发票！</p>
+                        <p class="text-muted no-list-count">没有检索到任何记录！</p>
                     </c:if>
                 </div>
             </div>
@@ -238,7 +238,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="member"/>
-    <c:param name="subNav" value="invoice"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="发票登记查询"/>
 </c:import>

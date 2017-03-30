@@ -40,13 +40,16 @@ public class MemberServiceImpl extends BaseService implements IMemberService {
             if(getMemberByMobile(userMember.getMemberMobile()) != null) throw new MessageException("会员手机号重复，请重新输入！");
 			userMember.setCreateTime(nowDate);
 			userMember.setMemberStatus(IDBConstant.LOGIC_STATUS_YES);
+
 			UserOperator operator = new UserOperator();
 			operator.setOperatorMobile(userMember.getMemberMobile());
 			operator.setOperatorId(userMember.getTempCardNo()); //会员帐号暂时使用第一次注册的会员卡号
 			operator.setStatus(IDBConstant.LOGIC_STATUS_YES);
+            operator.setOperatorType(IDBConstant.OPERATOR_TYPE_USER);
 			operator.setCreateTime(nowDate);
 			operator.setOperatorName(userMember.getMemberName());
 			String operatorId = operatorService.saveOperator(operator, IDBConstant.ROLE_MEMBER);
+
 			userMember.setOperationId(operatorId);
 			baseDao.save(userMember, null);
 			return userMember.getMemberId();

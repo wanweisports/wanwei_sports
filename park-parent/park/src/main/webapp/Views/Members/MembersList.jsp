@@ -5,6 +5,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="Content/app/members/members_list_query.js?v=${static_resource_version}"></script>
     <script>
@@ -12,10 +16,6 @@
             $("#payment_type").val('${memberType}');
         })(jQuery);
     </script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>会员管理</span> &gt;&gt; <span>会员查询</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -37,8 +37,8 @@
                                placeholder="身份证号" value="${memberIdcard}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary member-filter">
-                            <span class="glyphicon glyphicon-search"></span> 检索 & 显示
+                        <a href="javascript:;" class="btn btn-success member-filter">
+                            <span class="glyphicon glyphicon-search"></span> 检索
                         </a>
                     </div>
                 </form>
@@ -50,7 +50,7 @@
                     <table class="table">
                         <thead>
                         <tr class="bg-info">
-                            <th>姓名</th>
+                            <th>会员姓名</th>
                             <th>手机号码</th>
                             <th>会员卡号</th>
                             <th>截止日期</th>
@@ -58,13 +58,18 @@
                             <th>子会员</th>
                             <th>操作人</th>
                             <th>注册时间</th>
-                            <th>操作</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         <c:forEach var="member" items="${list}">
                             <tr>
-                                <td>${member.memberName}</td>
+                                <td>
+                                    <c:if test="${member.tempCardNo == null}">
+                                        <a href="/member/memberInfo?memberId=${member.memberId}">${member.memberName}</a>
+                                    </c:if>
+                                    <c:if test="${member.tempCardNo != null}">${member.memberName}</c:if>
+                                </td>
                                 <td>${member.memberMobile}</td>
                                 <td>
                                     <c:choose>
@@ -100,13 +105,8 @@
                                 <td>${member.operatorName}</td>
                                 <td>${member.createTime}</td>
                                 <td>
-                                    <c:if test="${member.tempCardNo == null}">
-                                        <a class="btn btn-primary" href="/member/memberInfo?memberId=${member.memberId}">
-                                            <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                        </a>
-                                    </c:if>
                                     <c:if test="${member.tempCardNo != null}">
-                                        <a class="btn btn-warning" href="/member/bindMembersCard?memberId=${member.memberId}">
+                                        <a class="btn btn-primary" href="/member/bindMembersCard?memberId=${member.memberId}">
                                             <span class="glyphicon glyphicon-credit-card"></span> 绑卡
                                         </a>
                                     </c:if>
@@ -183,7 +183,7 @@
                         </ul>
                     </nav>
                     <c:if test="${fn:length(list) == 0}">
-                        <p class="text-muted no-list-count">没有检索到会员！</p>
+                        <p class="text-muted no-list-count">没有检索到任何记录！</p>
                     </c:if>
                 </div>
             </div>
@@ -204,7 +204,7 @@
                     <input type="hidden" id="delete_memberId">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary confirm-delete">
+                    <button type="button" class="btn btn-success confirm-delete">
                         <span class="glyphicon glyphicon-ok"></span> 确 认
                     </button>
                 </div>
@@ -213,7 +213,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="member"/>
-    <c:param name="subNav" value="list"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="会员查询"/>
 </c:import>

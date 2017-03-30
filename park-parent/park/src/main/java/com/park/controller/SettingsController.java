@@ -71,6 +71,7 @@ public class SettingsController extends BaseController {
     public String getUsersView(String operatorId, Model model) {
     	try {
     		model.addAttribute("roleNames", roleService.getRoleNames(IDBConstant.ROLE_EMPLOYEE));
+			model.addAttribute("newOperatorNo", operatorService.makeEmployeeNo());
     		if(StrUtil.isNotBlank(operatorId)){
     			model.addAllAttributes(operatorService.getEmployee(operatorId));
     		}

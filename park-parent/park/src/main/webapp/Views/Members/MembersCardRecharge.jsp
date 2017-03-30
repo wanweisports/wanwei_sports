@@ -6,6 +6,7 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
     <link href="Content/lib/jquery/autosuggest/autosuggest.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
@@ -22,10 +23,6 @@
             });
         });
     </script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>会员管理</span> &gt;&gt; <span>会员卡充值</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -48,8 +45,8 @@
                                 <div data-valmsg-for="search" data-valmsg-replace="true"></div>
                             </div>
                             <div class="col-sm-4">
-                                <a href="javascript:;" class="btn btn-primary member-card-filter">
-                                    <span class="glyphicon glyphicon-search"></span> 检索 & 显示
+                                <a href="javascript:;" class="btn btn-success member-card-filter">
+                                    <span class="glyphicon glyphicon-search"></span> 检索
                                 </a>
                             </div>
                         </div>
@@ -80,7 +77,7 @@
                                            value="<c:if test='${cardBalance != null}'>${cardBalance}元</c:if>" disabled>
                                     <span class="input-group-btn">
                                         <c:if test="${cardNo != null}">
-                                        <a class="btn btn-primary" href="/member/getBalances?cardId=${cardId}&memberId=${memberId}">
+                                        <a class="btn btn-success" href="/member/getBalances?cardId=${cardId}&memberId=${memberId}">
                                             <i class="glyphicon glyphicon-th-list"></i> 明细
                                         </a>
                                         </c:if>
@@ -182,13 +179,20 @@
                                       placeholder="请输入备注" autocomplete="off"></textarea>
                             </div>
                         </div>
-                        <div class="alert alert-info text-center" role="alert">
-                            合计金额：<span class="recharge-total-money text-danger">0</span>元（ = 充值金额 + 赠送金额）
+                    </div>
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <div class="alert alert-info" role="alert" style="overflow: hidden;">
+                            <div class="pull-left">
+                                预估增加金额：<span class="recharge-total-money text-danger">0</span>元（ = 充值金额 + 赠送金额）
+                            </div>
+                            <div class="pull-right">
+                                预估缴纳金额：<span class="recharge-pay-money text-danger">0</span>元（ = 充值金额）
+                            </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group clearfix">
                             <div class="col-sm-offset-4 col-sm-8">
                                 <p class="sc-submit-tips"></p>
-                                <button type="button" class="btn btn-primary col-sm-4 recharge-card-submit"
+                                <button type="button" class="btn btn-success col-sm-4 recharge-card-submit"
                                         data-loading-text="充值中...">
                                     <span class="glyphicon glyphicon-ok"></span> 确认 & 收款
                                 </button>
@@ -333,7 +337,7 @@
                     <label class="text-danger pull-left">
                         <input type="checkbox" value="1" name="is_print_ticket" id="is_print_ticket"> 登记发票吗?
                     </label>
-                    <button type="button" class="btn btn-primary print-ticket">
+                    <button type="button" class="btn btn-success print-ticket">
                         <span class="glyphicon glyphicon-save"></span> 登记保存
                     </button>
                 </div>
@@ -342,7 +346,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="member"/>
-    <c:param name="subNav" value="recharge"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="会员卡充值"/>
 </c:import>

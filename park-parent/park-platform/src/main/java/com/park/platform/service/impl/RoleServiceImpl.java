@@ -40,9 +40,9 @@ public class RoleServiceImpl extends BaseService implements IRoleService {
 	
 	@Override
 	public List<Map<String, Object>> getRoleNames(int minRoleId){
-		return baseDao.queryBySql("SELECT roleId, roleName FROM system_role WHERE roleId >= ? ORDER BY roleLevel", minRoleId);
+		return baseDao.queryBySql("SELECT roleId, roleName FROM system_role WHERE roleId > ? ORDER BY roleLevel", minRoleId);
 	}
-	
+
 	@Override
 	public PageBean getRoles(RoleInputView roleInputView){
 		String status = roleInputView.getStatus();
@@ -55,7 +55,7 @@ public class RoleServiceImpl extends BaseService implements IRoleService {
 		whereSql.append(" ORDER BY sr.roleLevel");
 		return super.getPageBean(headSql, bodySql, whereSql, roleInputView);
 	}
-	
+
 	@Override
 	public Map<String, Object> getRolesView(int roleId){
 		Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -78,7 +78,7 @@ public class RoleServiceImpl extends BaseService implements IRoleService {
 	public List<SystemMenu> getRoleMenus(int roleId){
 		return baseDao.queryByHql("SELECT sm FROM SystemMenu sm, SystemRoleMenu srm WHERE sm.menuId = srm.id.menuId AND parentMenuId != 0 AND srm.id.roleId = ?", roleId);
 	}
-	
+
 	@Override
 	public Integer saveRole(SystemRole systemRole, String menuIds){
 		

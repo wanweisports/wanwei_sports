@@ -24,7 +24,10 @@
             var money = parseFloat($money.val() || "0.00");
             var send = parseFloat($send.val() || "0.00");
 
-            return (money + send).toFixed(2);
+            return {
+                total: (send).toFixed(2),
+                pay: (money).toFixed(2)
+            };
         },
         initEvents: function () {
             var content = this;
@@ -97,14 +100,13 @@
             $("#refresh_money, #refresh_send").on("change", function (e) {
                 e.preventDefault();
 
-                $(".refresh-total-money").text(content.calculateRefreshMoney());
+                $(".refresh-total-money").text(content.calculateRefreshMoney().total);
+                $(".refresh-pay-money").text(content.calculateRefreshMoney().pay);
             });
 
             // 会员卡补办
             $(".refresh-card-submit").on("click", function (e) {
                 e.preventDefault();
-
-                var $btn = $(this).button('loading');
 
                 var $form = $("#refresh_card_form");
                 var conditions = $form.serialize();
@@ -129,8 +131,6 @@
                         $.logConsole('会员补办失败', res.message);
                         $.tipsWarningAlert('会员补办失败');
                     }
-
-                    $btn.button('reset');
                 });
             });
         }

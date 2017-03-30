@@ -482,7 +482,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		orderInfoDB.setOrderSumPrice(orderInfo.getOrderSumPrice());
 		orderInfoDB.setPayCount(orderInfo.getPayCount());
 		baseDao.save(orderInfoDB, orderId);
-		
+
 		orderId = orderService.updateConfirmOrder(orderInfo);
 		 //同步更新到序列图表的状态
 		siteReserveBasic.setSiteReserveStatus(IDBConstant.LOGIC_STATUS_YES);

@@ -10,7 +10,10 @@
             var money = parseFloat($money.val() || "0.00");
             var send = parseFloat($send.val() || "0.00");
 
-            return (money + send).toFixed(2);
+            return {
+                total: (money + send).toFixed(2),
+                pay: (money).toFixed(2)
+            };
         },
         initEvents: function () {
             var content = this;
@@ -83,14 +86,13 @@
             $("#recharge_money, #recharge_send").on("change", function (e) {
                 e.preventDefault();
 
-                $(".recharge-total-money").text(content.calculateRechargeMoney());
+                $(".recharge-total-money").text(content.calculateRechargeMoney().total);
+                $(".recharge-pay-money").text(content.calculateRechargeMoney().pay);
             });
 
             // 会员卡充值
             $(".recharge-card-submit").on("click", function (e) {
                 e.preventDefault();
-
-                var $btn = $(this).button('loading');
 
                 var $form = $("#recharge_card_form");
                 var conditions = $form.serialize();
@@ -124,8 +126,6 @@
                         $.logConsole('会员充值失败', res.message);
                         $.tipsWarningAlert('会员充值失败');
                     }
-
-                    $btn.button('reset');
                 });
             });
 

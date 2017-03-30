@@ -172,15 +172,12 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $("#tips_modal").modal({show: true, backdrop: false});
-
-                        setTimeout(function () {
-                            $("#tips_modal").modal("hide");
-                            location.assign("/settings/getRoles");
-                        }, 2000);
+                        $.tipsSuccessAlert('员工权限设置成功！', function () {
+                            location.href = "/settings/getRoles";
+                        });
                     } else {
-                        console.log(res.message || "员工权限设置失败, 请稍后重试");
-                        alert(res.message || "员工权限设置失败, 请稍后重试");
+                        $.logConsole('员工权限设置失败', res.message);
+                        $.tipsWarningAlert('员工权限设置失败');
                     }
                 });
             });

@@ -6,6 +6,7 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
     <link href="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
@@ -22,10 +23,6 @@
             });
         });
     </script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>会员管理</span> &gt;&gt; <span>新会员办理</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -47,7 +44,7 @@
                                            placeholder="会员卡号" value="${cardNo}"
                                            data-val="true" data-val-required="会员卡号不能为空">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-warning member-card-read">
+                                        <button class="btn btn-primary member-card-read">
                                             <i class="glyphicon glyphicon-transfer"></i> 读取
                                         </button>
                                     </span>
@@ -82,7 +79,7 @@
                                            data-val-regex-pattern="^\d{4}-\d{2}-\d{2}$"
                                            data-val-regex="会员生日格式错误" maxlength="10">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-primary member-birthday-select">
+                                        <button class="btn btn-success member-birthday-select">
                                             <i class="glyphicon glyphicon-calendar"></i> 日历
                                         </button>
                                     </span>
@@ -118,7 +115,7 @@
                                            data-val-regex-pattern="^\d{17}(\d|X|x)$"
                                            data-val-regex="身份证号格式错误" maxlength="18">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-warning">
+                                        <button class="btn btn-primary">
                                             <i class="glyphicon glyphicon-transfer"></i> 读取
                                         </button>
                                     </span>
@@ -161,7 +158,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
-                                <button type="button" class="btn btn-primary col-sm-4 register-member"
+                                <button type="button" class="btn btn-success col-sm-4 register-member"
                                         data-loading-text="提交中...">
                                     <span class="glyphicon glyphicon-ok"></span>  注册 & 绑卡
                                 </button>
@@ -174,7 +171,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="member"/>
-    <c:param name="subNav" value="register"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="会员办理"/>
 </c:import>

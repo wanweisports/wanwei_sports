@@ -43,7 +43,6 @@ public class PassportController extends BaseController {
     @RequestMapping("login")
     public String passportLogin(String returnUrl, Model model) {
         model.addAttribute("business", parkService.getParkBusiness());
-        model.addAttribute("returnUrl", StrUtil.isBlank(returnUrl) ? "/loginWelCome" : returnUrl);
         return "Passport/PassportLogin";
     }
 

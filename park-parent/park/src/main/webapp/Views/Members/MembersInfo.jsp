@@ -7,6 +7,7 @@
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
     <link href="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
@@ -24,10 +25,6 @@
             $('[name="memberSex"][value="${memberSex}"]').prop("checked", true);
         });
     </script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>会员管理</span> &gt;&gt; <span>会员查询</span> &gt;&gt; <span>会员详情</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -73,8 +70,10 @@
                                            value="${memberBirthday}" placeholder="会员生日"
                                            data-val-regex-pattern="^\d{4}-\d{2}-\d{2}$"
                                            data-val-regex="会员生日格式错误" maxlength="10">
-                                    <span class="input-group-addon member-birthday-select">
-                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success member-birthday-select">
+                                            <i class="glyphicon glyphicon-calendar"></i> 日历
+                                        </button>
                                     </span>
                                 </div>
                             </div>
@@ -109,7 +108,7 @@
                                            data-val-regex-pattern="^\d{17}(\d|X|x)$"
                                            data-val-regex="身份证号格式错误" value="${memberIdcard}" maxlength="18">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-warning">
+                                        <button class="btn btn-primary">
                                             <i class="glyphicon glyphicon-transfer"></i> 读取
                                         </button>
                                     </span>
@@ -172,7 +171,7 @@
                                 <div class="input-group">
                                     <input type="text" class="form-control" value="${cardBalance}元" disabled>
                                     <span class="input-group-btn">
-                                        <a class="btn btn-primary" href="/member/getBalances?cardId=${cardId}&memberId=${memberId}">
+                                        <a class="btn btn-success" href="/member/getBalances?cardId=${cardId}&memberId=${memberId}">
                                             <i class="glyphicon glyphicon-th-list"></i> 明细
                                         </a>
                                     </span>
@@ -225,19 +224,22 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <div class="text-center">
-                                <a href="javascript:;" class="btn btn-primary refresh-modal"
+                                <a href="/member/memberList" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-chevron-left"></span> 返回
+                                </a>
+                                <a href="javascript:;" class="btn btn-success refresh-modal"
                                     data-loading-text="更新中...">
-                                    <span class="glyphicon glyphicon-refresh"></span> 更新信息
+                                    <span class="glyphicon glyphicon-refresh"></span> 更新
                                 </a>
-                                <a href="#recharge_modal" class="btn btn-primary" data-toggle="modal" data-backdrop="false">
-                                    <span class="glyphicon glyphicon-usd"></span> 会员卡充值
+                                <a href="#recharge_modal" class="btn btn-success" data-toggle="modal" data-backdrop="false">
+                                    <span class="glyphicon glyphicon-usd"></span> 充值
                                 </a>
-                                <!--<a href="#shengjiModal" class="btn btn-primary shengji-modal" data-toggle="modal"
+                                <!--<a href="#shengjiModal" class="btn btn-success shengji-modal" data-toggle="modal"
                                     data-backdrop="false">
-                                    <span class="glyphicon glyphicon-flash"></span> 会员卡升级
+                                    <span class="glyphicon glyphicon-flash"></span> 升级
                                 </a>-->
-                                <a href="#bubanModal" class="btn btn-primary" data-toggle="modal" data-backdrop="false">
-                                    <span class="glyphicon glyphicon-refresh"></span> 会员卡补办
+                                <a href="#bubanModal" class="btn btn-success" data-toggle="modal" data-backdrop="false">
+                                    <span class="glyphicon glyphicon-refresh"></span> 补办
                                 </a>
                             </div>
                         </div>
@@ -331,7 +333,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary refresh-card-submit" data-dismiss="modal"
+                    <button type="button" class="btn btn-success refresh-card-submit" data-dismiss="modal"
                             data-loading-text="补办中...">
                         <span class="glyphicon glyphicon-ok"></span> 确认 & 补办
                     </button>
@@ -427,7 +429,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary recharge-card-submit" data-dismiss="modal"
+                    <button type="button" class="btn btn-success recharge-card-submit" data-dismiss="modal"
                             data-loading-text="充值中...">
                         <span class="glyphicon glyphicon-ok"></span> 确认 & 充值
                     </button>
@@ -541,7 +543,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary upgrade-card-submit" data-dismiss="modal">
+                    <button type="button" class="btn btn-success upgrade-card-submit" data-dismiss="modal">
                         <span class="glyphicon glyphicon-ok"></span> 确认 & 付款
                     </button>
                 </div>
@@ -682,7 +684,7 @@
                     <label class="text-danger pull-left">
                         <input type="checkbox" value="1" name="is_print_ticket" id="is_print_ticket"> 登记发票吗?
                     </label>
-                    <button type="button" class="btn btn-primary print-ticket">
+                    <button type="button" class="btn btn-success print-ticket">
                         <span class="glyphicon glyphicon-save"></span> 登记保存
                     </button>
                 </div>
@@ -691,7 +693,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="member"/>
-    <c:param name="subNav" value="list"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="会员详情"/>
 </c:import>

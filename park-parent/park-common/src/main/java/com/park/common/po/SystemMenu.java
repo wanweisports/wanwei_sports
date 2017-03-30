@@ -16,6 +16,7 @@ public class SystemMenu implements java.io.Serializable {
 
 	private Integer menuId;
 	private Integer parentMenuId;
+	private Integer parentMenuSort;
 	private String menuName;
 	private String menuCode;
 	private String menuUrl;
@@ -38,9 +39,10 @@ public class SystemMenu implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public SystemMenu(Integer parentMenuId, String menuName, String menuCode,
+	public SystemMenu(Integer parentMenuId, Integer parentMenuSort, String menuName, String menuCode,
 			String menuUrl, String menuStatus, Integer menuSort, String isQuick) {
 		this.parentMenuId = parentMenuId;
+		this.parentMenuSort = parentMenuSort;
 		this.menuName = menuName;
 		this.menuCode = menuCode;
 		this.menuUrl = menuUrl;
@@ -69,6 +71,15 @@ public class SystemMenu implements java.io.Serializable {
 	public void setParentMenuId(Integer parentMenuId) {
 		this.parentMenuId = parentMenuId;
 	}
+
+    @Column(name = "parentMenuSort")
+    public Integer getParentMenuSort() {
+        return this.parentMenuSort;
+    }
+
+    public void setParentMenuSort(Integer parentMenuSort) {
+        this.parentMenuSort = parentMenuSort;
+    }
 
 	@Column(name = "menuName", nullable = false, length = 32)
 	public String getMenuName() {

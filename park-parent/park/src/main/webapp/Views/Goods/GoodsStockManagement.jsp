@@ -7,6 +7,7 @@
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
     <link href="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
@@ -14,14 +15,10 @@
     <script src="Content/app/goods/goods_stock_management.js?v=${static_resource_version}"></script>
     <script>
         $(document).ready(function () {
-            $(".good-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
-            $(".good-date[data-count='${countNum}']").addClass("btn-primary").removeClass("btn-default");
+            $(".good-date.btn-success").addClass("btn-default").removeClass("btn-success");
+            $(".good-date[data-count='${countNum}']").addClass("btn-success").removeClass("btn-default");
         });
     </script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>商品管理</span> &gt;&gt; <span>商品进销存</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -32,7 +29,7 @@
                 <form class="form-inline" id="goods_filter_form" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <%--<a href="/good/getGoodsStock?countNum=100" data-count="100" class="btn btn-primary good-date">全部</a>--%>
+                            <%--<a href="/good/getGoodsStock?countNum=100" data-count="100" class="btn btn-success good-date">全部</a>--%>
                             <a href="/good/getGoodsStock?countNum=11" data-count="11" class="btn btn-default good-date">今日</a>
                             <a href="/good/getGoodsStock?countNum=21" data-count="21" class="btn btn-default good-date">本周</a>
                             <a href="/good/getGoodsStock?countNum=31" data-count="31" class="btn btn-default good-date">本月</a>
@@ -57,13 +54,13 @@
                     </div>--%>
                     <div class="form-group">
                         <label>&nbsp;</label>
-                        <a href="javascript:;" class="btn btn-primary goods-filter">
-                            <span class="glyphicon glyphicon-search"></span> 检索 & 显示
+                        <a href="javascript:;" class="btn btn-success goods-filter">
+                            <span class="glyphicon glyphicon-search"></span> 检索
                         </a>
                     </div>
                     <div class="form-group pull-right">
                         <a href="javascript:;" class="btn btn-danger">
-                            <span class="glyphicon glyphicon-export"></span> 导出数据
+                            <span class="glyphicon glyphicon-export"></span> 导出
                         </a>
                     </div>
                 </form>
@@ -88,7 +85,7 @@
                         </thead>
                         <tbody>
                         <c:forEach var="good" items="${stock}">
-                            <tr <c:if test="${good.goodNo == null}">class="bg-success"</c:if></tr>
+                            <tr <c:if test="${good.goodNo == null}">class="bg-primary"</c:if></tr>
                                 <td>${good.goodNo}</td>
                                 <td>${good.goodName}</td>
                                 <td>${good.goodPrice}</td>
@@ -97,14 +94,14 @@
                                     <td>0件</td>
                                 </c:if>
                                 <c:if test="${good.typeAdd != null}">
-                                    <td class="text-success">${good.typeAdd}件</td>
+                                    <td>${good.typeAdd}件</td>
                                 </c:if>
 
                                 <c:if test="${good.typeIn == null}">
                                     <td>0件</td>
                                 </c:if>
                                 <c:if test="${good.typeIn != null}">
-                                    <td class="text-success">${good.typeIn}件</td>
+                                    <td>${good.typeIn}件</td>
                                 </c:if>
 
                                 <c:if test="${good.typeOut == null}">
@@ -139,7 +136,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="good"/>
-    <c:param name="subNav" value="stock"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="商品进销存"/>
 </c:import>

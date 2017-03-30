@@ -9,15 +9,6 @@
         initEvents: function () {
             var content = this;
 
-            // 检索显示角色列表
-            $(".roles-filter").on("click", function (e) {
-                e.preventDefault();
-
-                var conditions = $("#roles_filter_form").serialize();
-
-                location.assign(content.opts.URL + '?' + conditions);
-            });
-
             // 分页
             $(".page-first, .page-prev, .page-index, .page-next, .page-last").on("click", function (e) {
                 e.preventDefault();

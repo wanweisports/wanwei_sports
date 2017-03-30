@@ -7,6 +7,7 @@
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
     <link href="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
@@ -14,14 +15,10 @@
     <script src="Content/app/goods/goods_stock_details.js?v=${static_resource_version}"></script>
     <script>
         $(document).ready(function () {
-            $(".stock-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
-            $(".stock-date[data-count='${countNum}']").addClass("btn-primary").removeClass("btn-default");
+            $(".stock-date.btn-success").addClass("btn-default").removeClass("btn-success");
+            $(".stock-date[data-count='${countNum}']").addClass("btn-success").removeClass("btn-default");
         });
     </script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>商品管理</span> &gt;&gt; <span>库存操作明细</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -51,13 +48,13 @@
                                placeholder="商品编号" value="${goodNo}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary goods-filter">
-                            <span class="glyphicon glyphicon-search"></span> 检索 & 显示
+                        <a href="javascript:;" class="btn btn-success goods-filter">
+                            <span class="glyphicon glyphicon-search"></span> 检索
                         </a>
                     </div>
                     <div class="form-group pull-right">
                         <a href="javascript:;" class="btn btn-danger">
-                            <span class="glyphicon glyphicon-export"></span> 导出数据
+                            <span class="glyphicon glyphicon-export"></span> 导出
                         </a>
                     </div>
                 </form>
@@ -171,13 +168,15 @@
                             </c:if>
                         </ul>
                     </nav>
+                    <c:if test="${fn:length(list) == 0}">
+                        <p class="text-muted no-list-count">没有检索到任何记录！</p>
+                    </c:if>
                 </div>
             </div>
         </div>
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="good"/>
-    <c:param name="subNav" value="detail"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="库存操作明细"/>
 </c:import>

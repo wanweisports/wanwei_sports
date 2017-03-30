@@ -53,7 +53,7 @@
 
                     if (res.code == 1) {
                         $.tipsSuccessAlert('教师信息保存成功！', function () {
-                            location.assign('/teachers/list');
+                            location.href = '/teachers/list';
                         });
                     } else {
                         $.logConsole('教师信息保存失败', res1.message);

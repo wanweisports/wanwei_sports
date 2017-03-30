@@ -16,8 +16,8 @@
                 ignore: ":hidden"
             });
 
-            $(".note-type.btn-primary").addClass("btn-default").removeClass("btn-primary");
-            $(".note-type[data-type='${type}']").addClass("btn-primary").removeClass("btn-default");
+            $(".note-type.btn-success").addClass("btn-default").removeClass("btn-success");
+            $(".note-type[data-type='${type}']").addClass("btn-success").removeClass("btn-default");
         });
     </script>
 </layout:override>
@@ -33,7 +33,7 @@
             <div class="panel-body">
                 <form id="notification_filter_form" class="form-inline" novalidate onsubmit="return false;">
                     <div class="form-group">
-                        <a href="office/getNotifications?type=1" data-type="1" class="btn btn-primary note-type">
+                        <a href="office/getNotifications?type=1" data-type="1" class="btn btn-success note-type">
                             <span class="glyphicon glyphicon-pencil"></span> 草稿箱
                         </a>
                         <a href="office/getNotifications?type=2" data-type="2" class="btn btn-default note-type">
@@ -47,12 +47,12 @@
                         <input type="text" class="form-control" name="keywords" placeholder="全文检索..." value="${keywords}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary notification-filter">
+                        <a href="javascript:;" class="btn btn-success notification-filter">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>
                     <div class="form-group pull-right">
-                        <a href="#notifications_view_modal" class="btn btn-primary add-notification" data-toggle="modal"
+                        <a href="#notifications_view_modal" class="btn btn-success add-notification" data-toggle="modal"
                            data-backdrop="false">
                             <span class="glyphicon glyphicon-plus"></span> 创建通知
                         </a>
@@ -112,18 +112,18 @@
                                 </c:if>
 
                                 <td>
-                                    <a href="#notifications_view_modal" class="btn btn-primary notifications-view" data-toggle="modal"
+                                    <a href="#notifications_view_modal" class="btn btn-success notifications-view" data-toggle="modal"
                                        data-backdrop="false" data-id="${note.noteId}">
                                         <span class="glyphicon glyphicon-share-alt"></span> 查看
                                     </a>
                                     <c:if test="${note.sendStatus == 2}">
-                                        <a href="#notifications_send_modal" class="btn btn-warning notifications-send" data-toggle="modal"
+                                        <a href="#notifications_send_modal" class="btn btn-primary notifications-send" data-toggle="modal"
                                            data-backdrop="false" data-id="${note.noteId}">
                                             <span class="glyphicon glyphicon-send"></span> 发送
                                         </a>
                                     </c:if>
                                     <c:if test="${note.sendStatus == 1}">
-                                        <a href="#notifications_send_modal" class="btn btn-warning notifications-send" data-toggle="modal"
+                                        <a href="#notifications_send_modal" class="btn btn-primary notifications-send" data-toggle="modal"
                                            data-backdrop="false" data-id="${note.noteId}">
                                             <span class="glyphicon glyphicon-send"></span> 转发
                                         </a>
@@ -264,7 +264,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary send-notification">
+                    <button type="button" class="btn btn-success send-notification">
                         <span class="glyphicon glyphicon-send"></span> 发 送
                     </button>
                 </div>
@@ -325,10 +325,10 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-warning save-notification">
+                    <button type="button" class="btn btn-primary save-notification">
                         <span class="glyphicon glyphicon-send"></span> 保 存
                     </button>
-                    <button type="button" class="btn btn-primary send-notification">
+                    <button type="button" class="btn btn-success send-notification">
                         <span class="glyphicon glyphicon-send"></span> 发 送
                     </button>
                 </div>
@@ -337,7 +337,7 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
+<c:import url="../Shared/Layout.jsp">
     <c:param name="nav" value="office"/>
     <c:param name="subNav" value="notification"/>
 </c:import>

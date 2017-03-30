@@ -5,6 +5,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
@@ -19,15 +23,11 @@
     </script>
 </layout:override>
 
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>学生管理</span> &gt;&gt; <span>学生办卡</span>
-</layout:override>
-
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <form id="student_form" class="form-horizontal" novalidate onsubmit="return false;">
             <div class="panel panel-default">
-                <div class="panel-heading">学生注册</div>
+                <div class="panel-heading">学生办卡</div>
                 <div class="panel-body">
                     <div class="alert alert-info text-center" role="alert">办卡押金：<span class="text-danger">${cardDeposit}</span>元</div>
                     <div class="col-sm-6">
@@ -137,7 +137,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
-                                <button type="button" class="btn btn-primary col-sm-4 register-student"
+                                <button type="button" class="btn btn-success col-sm-4 register-student"
                                         data-loading-text="提交中...">
                                     <span class="glyphicon glyphicon-ok"></span>  注册 & 办卡
                                 </button>
@@ -150,7 +150,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="student"/>
-    <c:param name="subNav" value="register"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="学生办卡"/>
 </c:import>

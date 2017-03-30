@@ -5,6 +5,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
@@ -15,17 +19,13 @@
             $('#site_form').validate({
                 ignore: ":hidden"
             });
-            $(".site-sport.btn-primary").addClass("btn-default").removeClass("btn-primary");
-            $(".site-sport[data-id='${sportId}']").addClass("btn-primary").removeClass("btn-default");
+            $(".site-sport.btn-success").addClass("btn-default").removeClass("btn-success");
+            $(".site-sport[data-id='${sportId}']").addClass("btn-success").removeClass("btn-default");
             <c:if test="${sportId == null}">
-            $(".site-all").addClass("btn-primary").removeClass("btn-default");
+            $(".site-all").addClass("btn-success").removeClass("btn-default");
             </c:if>
         });
     </script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>预订管理</span> &gt;&gt; <span>场地设置</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -47,7 +47,7 @@
                     </div>
                 </form>
                 <div class="col-sm-2 text-right">
-                    <button data-toggle="modal" class="btn btn-primary pull-right site-add">
+                    <button data-toggle="modal" class="btn btn-success pull-right site-add">
                         <span class="glyphicon glyphicon-plus"></span> 增加场地
                     </button>
                 </div>
@@ -85,7 +85,7 @@
                                 <td>${site.operatorName}</td>
                                 <td>${site.createTime}</td>
                                 <td>
-                                    <button data-toggle="modal" class="btn btn-primary site-update"
+                                    <button data-toggle="modal" class="btn btn-success site-update"
                                             data-id="${site.siteId}">
                                         <i class="glyphicon glyphicon-edit"></i> 修改
                                     </button>
@@ -225,7 +225,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary site-confirm">
+                    <button type="button" class="btn btn-success site-confirm">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>
@@ -234,7 +234,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="site"/>
-    <c:param name="subNav" value="site"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="场地设置"/>
 </c:import>

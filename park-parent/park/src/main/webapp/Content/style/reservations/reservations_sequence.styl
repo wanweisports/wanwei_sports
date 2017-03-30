@@ -1,3 +1,6 @@
+@charset "utf-8"
+@import "../base"
+
 #zhifuModal
     .wizard
         .content
@@ -19,10 +22,10 @@
                 display none
             .sports-inactive
                 display inline
-        &.btn-primary
+        &.btn-success
             padding 2px 6px
-            background-color #FFF
-            color #357ebd
+            background-color #FFF !important
+            color #357ebd !important
             .sports-active
                 display inline
             .sports-inactive
@@ -30,7 +33,7 @@
 .date-list
     float left
     min-height 25px
-    margin-bottom 10px
+    margin-bottom 0
     .navbar-collapse
         padding 0
         .nav
@@ -206,13 +209,13 @@
             line-height 20px
             dt
                 display block
-                width 50px
+                width 80px
                 float left
                 font-size 14px
-                color #666666
+                color #333
             dd
                 font-size 14px
-                color #222222
+                color #333
                 text-align left
         .selected-booking
             margin-top 30px
@@ -224,13 +227,14 @@
                 height 30px
                 line-height 30px
                 font-size 14px
-                color #222222
+                color #333
+                text-align center
         .court-display
             margin-top 20px
             float left
             margin-left 5px
             font-size 14px
-            color #222222
+            color #333
             .number
                 padding 5px
                 color #3187bf

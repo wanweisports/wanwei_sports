@@ -1,35 +1,50 @@
-body
-    background url("../../images/bg.jpg") 100% 0 no-repeat
-    background-size cover
+@charset "utf-8"
+@import "../base"
 
-.ww-login
-    width 100%
-    position absolute
-    /*top 10%*/
-    .login
-        background-color #a8d6f7
-        opacity 0.8
-        width 620px
-        overflow hidden
-        margin 40px auto 20px auto
-        padding 20px
-        border-radius 10px
-        box-shadow 4px 4px 4px
-        .login-brief
-            padding 40px 30px
-            img
-                width 160px
-                display block
-                margin 0 auto
-            p
-                font-size 12px
-                text-align center
-                margin-top 10px
-        .login-form
-            background-color #79bae4
-            padding 20px
-            margin-top 16px
-            border-radius 6px
-            border 1px solid #a8d6f7
-            .login-btn
-                width 120px
+html
+body
+    height 100%
+
+.login
+    height auto
+    background url("/Content/images/log_bg.jpg") no-repeat center fixed
+    background-size cover
+    color rgba(255, 255, 255, .95)
+    .login-panel
+        width 750px
+        margin 10% auto 0
+        .logo
+            float none
+            width auto
+            padding 0
+            background 0 0
+            h1
+                img
+                    height 30px
+                    margin -5px 2px 0
+        .login-info
+            ul
+                list-style none
+                padding 0
+                margin 20px 0
+        .form-control
+            display block
+            margin-top 15px
+            &.text-name
+                background #fff url("/Content/images/user.png") no-repeat 95% center
+                color #333
+            &.text-password
+                background #fff url("/Content/images/locked.png") no-repeat 95% center
+                color #333
+        .btn-login
+            margin-top 15px
+        form
+            background rgba(255, 255, 255, .4)
+            border 1px solid rgba(255, 255, 255, .4)
+            box-shadow 0 3px 0 rgba(12, 12, 12, .4)
+            border-radius 3px
+            padding 30px
+    .login-footer
+        border-top solid 1px rgba(255, 255, 255, .4)
+        margin 20px 0
+        padding-top 15px

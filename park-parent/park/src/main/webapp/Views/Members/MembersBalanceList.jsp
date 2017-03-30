@@ -7,15 +7,12 @@
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
     <link href="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
     <script src="Content/app/members/members_balance_list.js?v=${static_resource_version}"></script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>会员管理</span> &gt;&gt; <span>会员查询</span> &gt;&gt; <span>余额流水明细</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -34,8 +31,8 @@
                                value="${createTimeEnd}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary balance-filter">
-                            <span class="glyphicon glyphicon-search"></span> 检索 & 显示
+                        <a href="javascript:;" class="btn btn-success balance-filter">
+                            <span class="glyphicon glyphicon-search"></span> 检索
                         </a>
                     </div>
                 </form>
@@ -46,7 +43,7 @@
                 <div class="table-responsive card-type-list">
                     <table class="table">
                         <thead>
-                        <tr>
+                        <tr class="bg-info">
                             <th>交易流水号</th>
                             <th>会员卡号</th>
                             <th>会员姓名</th>
@@ -143,14 +140,16 @@
                             </c:if>
                         </ul>
                     </nav>
+                    <c:if test="${fn:length(list) == 0}">
+                        <p class="text-muted no-list-count">没有检索到任何记录！</p>
+                    </c:if>
                 </div>
             </div>
         </div>
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="member"/>
-    <c:param name="subNav" value="list"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="余额流水明细"/>
 </c:import>
 

@@ -9,6 +9,10 @@ public interface IDBConstant {
     public static final String LOGIC_STATUS_YES = "1";//是
     public static final String LOGIC_STATUS_NO = "2";//否
     public static final String LOGIC_STATUS_OTHER = "3"; //其他
+
+    public static final String OPERATOR_TYPE_ADMIN = "1";//管理员
+    public static final String OPERATOR_TYPE_WORK = "2";//操作员
+    public static final String OPERATOR_TYPE_USER = "3";//会员
     
     public static final String STATUS = "STATUS";//状态
 
@@ -69,8 +73,8 @@ public interface IDBConstant {
     public static final String ORDER_SERVICE_TYPE_SITE = "100";//场地预定
     public static final String ORDER_SERVICE_TYPE_BLOCK_SITE = "200";//包场预订
     public static final String ORDER_SERVICE_TYPE_GOODS = "300";//商品消费
-    
-    public static final int ROLE_EMPLOYEE = 4;//员工角色最低主键值
+
+    public static final int ROLE_EMPLOYEE = 1;//员工角色最低主键值
 
     // 通知
     public static final String NOTIFICATIONS_SENDER_YES = "1";//已发送

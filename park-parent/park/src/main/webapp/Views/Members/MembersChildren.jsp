@@ -5,6 +5,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
@@ -17,10 +21,6 @@
             });
         });
     </script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>会员管理</span> &gt;&gt; <span>会员查询</span> &gt;&gt; <span>子会员管理</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -78,7 +78,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-4">
-                                <button type="button" class="btn btn-primary col-sm-8 confirm-member">
+                                <button type="button" class="btn btn-success col-sm-8 confirm-member">
                                     <span class="glyphicon glyphicon-ok"></span> 确认添加
                                 </button>
                             </div>
@@ -103,7 +103,7 @@
                             <tr>
                                 <th>会员姓名</th>
                                 <th>手机号码</th>
-                                <th>操作</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -186,7 +186,7 @@
                             </ul>
                         </nav>
                         <c:if test="${fn:length(list) == 0}">
-                            <p class="text-muted no-list-count">没有检索到子会员！</p>
+                            <p class="text-muted no-list-count">没有检索到任何记录！</p>
                         </c:if>
                     </div>
                 </div>
@@ -213,7 +213,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">
                         <span class="glyphicon glyphicon-ok"></span> 导 入
                     </button>
                 </div>
@@ -222,7 +222,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="member"/>
-    <c:param name="subNav" value="list"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="子会员管理"/>
 </c:import>

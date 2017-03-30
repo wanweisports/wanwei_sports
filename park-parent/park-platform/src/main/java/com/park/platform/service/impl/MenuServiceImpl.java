@@ -29,8 +29,11 @@ public class MenuServiceImpl extends BaseService implements IMenuService {
 	@Override
 	public List<SystemMenu> getMenus(MenuInputView menuInputView){
 		SystemRoleOperator operatorRole = roleService.getOperatorRole(menuInputView.getOperatorId());
-		if(!super.isAdmin(menuInputView)) return getRoleMenuChilds((List)baseDao.queryByHql("SELECT sm FROM SystemMenu sm, SystemRoleMenu srm WHERE sm.menuId = srm.id.menuId AND parentMenuId != 0 AND srm.id.roleId = ?", operatorRole.getId().getRoleId()));
-		else return getAdminMenuChilds((List)baseDao.queryByHql("FROM SystemMenu WHERE parentMenuId = 0"));
+
+		if(!super.isAdmin(menuInputView)) {
+		    return getRoleMenuChilds((List)baseDao.queryByHql("SELECT sm FROM SystemMenu sm, SystemRoleMenu srm WHERE sm.menuId=srm.id.menuId AND parentMenuId != 0 AND srm.id.roleId = ? ORDER BY sm.parentMenuSort, sm.parentMenuId, sm.menuSort", operatorRole.getId().getRoleId()));
+        }
+		else return getAdminMenuChilds((List)baseDao.queryByHql("FROM SystemMenu WHERE parentMenuId = 0 ORDER BY parentMenuSort, parentMenuId, menuSort"));
 	}
 	
 	@Override

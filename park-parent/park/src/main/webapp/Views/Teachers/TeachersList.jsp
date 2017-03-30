@@ -5,6 +5,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
@@ -17,10 +21,6 @@
             });
         });
     </script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>教师管理</span> &gt;&gt; <span>教师查询</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -42,8 +42,8 @@
                                placeholder="身份证号" value="${memberIdcard}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary member-filter">
-                            <span class="glyphicon glyphicon-search"></span> 检索 & 显示
+                        <a href="javascript:;" class="btn btn-success member-filter">
+                            <span class="glyphicon glyphicon-search"></span> 检索
                         </a>
                     </div>
                 </form>
@@ -60,7 +60,6 @@
                             <th>教师卡号</th>
                             <th>截止日期</th>
                             <th>用场次数</th>
-                            <th>状态</th>
                             <th>操作人</th>
                             <th>操作时间</th>
                             <th>操作</th>
@@ -69,7 +68,9 @@
                         <tbody>
                         <c:forEach var="member" items="${list}">
                             <tr>
-                                <td>${member.memberName}</td>
+                                <td>
+                                    <a href="/teachers/view?memberId=${member.memberId}">${member.memberName}</a>
+                                </td>
                                 <td>${member.memberMobile}</td>
                                 <td>${member.cardNo}</td>
                                 <td>
@@ -79,19 +80,10 @@
                                     </c:choose>
                                 </td>
                                 <td>${member.siteCount}次</td>
-                                <c:if test="${member.cardStatus == 1}">
-                                    <td class="text-success">有效</td>
-                                </c:if>
-                                <c:if test="${member.cardStatus == 2}">
-                                    <td class="text-danger">锁定</td>
-                                </c:if>
                                 <td>${member.operatorName}</td>
                                 <td>${member.createTime}</td>
                                 <td>
-                                    <a class="btn btn-primary" href="/teachers/view?memberId=${member.memberId}">
-                                        <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                    </a>
-                                    <a href="#refresh_modal" class="btn btn-warning teachers-refresh" data-toggle="modal"
+                                    <a href="#refresh_modal" class="btn btn-primary teachers-refresh" data-toggle="modal"
                                        data-backdrop="false" data-cardId="${member.cardId}" data-cardNo="${member.cardNo}">
                                         <span class="glyphicon glyphicon-refresh"></span> 补办
                                     </a>
@@ -168,6 +160,9 @@
                             </c:if>
                         </ul>
                     </nav>
+                    <c:if test="${fn:length(list) == 0}">
+                        <p class="text-muted no-list-count">没有检索到任何记录！</p>
+                    </c:if>
                 </div>
             </div>
         </div>
@@ -209,7 +204,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary confirm-refresh" data-dismiss="modal"
+                    <button type="button" class="btn btn-success confirm-refresh" data-dismiss="modal"
                             data-loading-text="补办中...">
                         <span class="glyphicon glyphicon-ok"></span> 确 认
                     </button>
@@ -232,7 +227,7 @@
                     <input type="hidden" id="delete_teacherId">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary confirm-delete">
+                    <button type="button" class="btn btn-success confirm-delete">
                         <span class="glyphicon glyphicon-ok"></span> 确 认
                     </button>
                 </div>
@@ -241,7 +236,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="teacher"/>
-    <c:param name="subNav" value="list"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="教师查询"/>
 </c:import>

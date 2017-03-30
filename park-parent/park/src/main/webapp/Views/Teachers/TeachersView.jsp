@@ -6,6 +6,7 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
     <link href="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
@@ -23,10 +24,6 @@
             $('[name="memberSex"][value="${memberSex}"]').prop("checked", true);
         });
     </script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>教师管理</span> &gt;&gt; <span>教师查询</span> &gt;&gt; <span>教师信息</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -72,8 +69,10 @@
                                            placeholder="教师生日" value="${memberBirthday}"
                                            data-val-regex-pattern="^\d{4}-\d{2}-\d{2}$"
                                            data-val-regex="会员生日格式错误" maxlength="10">
-                                    <span class="input-group-addon member-birthday-select">
-                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success member-birthday-select">
+                                            <i class="glyphicon glyphicon-calendar"></i> 日历
+                                        </button>
                                     </span>
                                 </div>
                             </div>
@@ -108,7 +107,7 @@
                                            data-val-regex-pattern="^\d{17}(\d|X|x)$"
                                            data-val-regex="身份证号格式错误" maxlength="18" value="${memberIdcard}">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-warning">
+                                        <button class="btn btn-primary">
                                             <i class="glyphicon glyphicon-transfer"></i> 读取
                                         </button>
                                     </span>
@@ -151,7 +150,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
-                                <button type="button" class="btn btn-primary col-sm-4 save-member"
+                                <button type="button" class="btn btn-success col-sm-4 save-member"
                                         data-loading-text="保存中...">
                                     <span class="glyphicon glyphicon-ok"></span>  保 存
                                 </button>
@@ -162,25 +161,8 @@
             </div>
         </form>
     </div>
-
-    <div class="modal fade" id="tips_success_modal" tabindex="-1" role="dialog" aria-labelledby="tips_success_modal_label">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="tips_success_modal_label">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-success" role="alert">教师信息保存成功!</div>
-                </div>
-            </div>
-        </div>
-    </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="teacher"/>
-    <c:param name="subNav" value="list"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="教师信息"/>
 </c:import>

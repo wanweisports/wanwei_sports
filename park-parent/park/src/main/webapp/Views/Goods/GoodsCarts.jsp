@@ -28,10 +28,6 @@
     </script>
 </layout:override>
 
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>商品管理</span> &gt;&gt; <span>商品销售</span> &gt;&gt; <span>商品购物车</span>
-</layout:override>
-
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left;">
         <div class="panel panel-default">
@@ -74,21 +70,21 @@
                             </td>
                             <td class="good-total" style="vertical-align: middle;">${good.goodTotal}元</td>
                             <td style="vertical-align: middle;">
-                                <a href="javascript:;" class="btn btn-warning goods-remove" data-sid="${good.shoppingId}">
-                                    <span class="glyphicon glyphicon-trash"></span> 移除
+                                <a href="javascript:;" class="btn btn-primary goods-remove" data-sid="${good.shoppingId}">
+                                    <span class="glyphicon glyphicon-trash"></span>
                                 </a>
                             </td>
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
-                <div class="alert alert-info" style="overflow: hidden">
-                    <p class="pull-left" style="margin-top: 6px;">商品预估总价： <span class="text-danger money-num">2000.00</span>元（<small>以实际支付金额为准</small>）</p>
-                    <a href="#pay_model" class="btn btn-primary pull-right goods-buy-money" data-toggle="modal" data-backdrop="false">
-                        <span class="glyphicon glyphicon-usd"></span> 结 算
-                    </a>
-                </div>
             </div>
+        </div>
+        <div class="alert alert-info" style="overflow: hidden">
+            <p class="pull-left" style="margin-top: 6px;">商品预估总价： <span class="text-danger money-num">2000.00</span>元（<small>以实际支付金额为准</small>）</p>
+            <a href="#pay_model" class="btn btn-success pull-right goods-buy-money" data-toggle="modal" data-backdrop="false">
+                <span class="glyphicon glyphicon-usd"></span> 结算
+            </a>
         </div>
     </div>
 
@@ -105,7 +101,7 @@
                     <p class="text-success text-content">您确认要移除购物车吗?</p>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-warning" type="button" data-dismiss="modal">
+                    <button class="btn btn-primary" type="button" data-dismiss="modal">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>
@@ -166,9 +162,11 @@
                                 <input type="hidden" name="additionalPrice" id="goods_paid_additionalPrice" value="0">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="goods_paid_payType" class="col-sm-4 control-label">
-                                            <span class="text-danger">*</span> 支付方式
-                                        </label>
+                                        <div class="col-sm-4 checkbox" style="text-align: right;">
+                                            <label class="control-label" style="font-weight: 700; padding: 0;">
+                                                <input type="checkbox" value="1" style="margin-top: 2px;"> 余额
+                                            </label>
+                                        </div>
 
                                         <div class="col-sm-8">
                                             <select class="form-control" id="goods_paid_payType" name="payType"
@@ -177,6 +175,7 @@
                                                 <option value="1">现金</option>
                                                 <option value="2">支付宝</option>
                                                 <option value="3">微信</option>
+                                                <option value="4">银联</option>
                                             </select>
                                             <div data-valmsg-for="payType" data-valmsg-replace="true"></div>
                                         </div>
@@ -214,7 +213,7 @@
                 </div>
                 <div class="modal-footer">
                     <p class="text-danger pull-left">在"购买人"输入框中，尝试着输入会员卡号、姓名、手机号作为检索条件。</p>
-                    <button type="button" class="btn btn-primary" id="goods_pay_order">
+                    <button type="button" class="btn btn-success" id="goods_pay_order">
                         <span class="glyphicon glyphicon-ok"></span> 确认支付
                     </button>
                 </div>
@@ -223,7 +222,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="good"/>
-    <c:param name="subNav" value="market"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="商品购物车"/>
 </c:import>

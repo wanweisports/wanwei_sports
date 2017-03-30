@@ -7,6 +7,7 @@
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
     <link href="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
@@ -14,14 +15,10 @@
     <script src="Content/app/data/data_venue_percentage.js?v=${static_resource_version}"></script>
     <script>
         $(document).ready(function () {
-            $(".venue-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
-            $(".venue-date[data-count='${countNum}']").addClass("btn-primary").removeClass("btn-default");
+            $(".venue-date.btn-success").addClass("btn-default").removeClass("btn-success");
+            $(".venue-date[data-count='${countNum}']").addClass("btn-success").removeClass("btn-default");
         });
     </script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>数据统计</span> &gt;&gt; <span>场地使用率</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -46,11 +43,16 @@
                     <div class="form-group">
                         <input type="text" class="form-control" id="createTimeEnd" name="createTimeEnd" placeholder="结束日期"
                                value="${createTimeEnd}">
-                    </div>--%>
+                    </div>
                     <div class="form-group">
                         <input type="hidden" name="countNum" value="${countNum}" />
-                        <a href="javascript:;" class="btn btn-primary data-filter">
-                            <span class="glyphicon glyphicon-search"></span> 检索 & 显示
+                        <a href="javascript:;" class="btn btn-success data-filter">
+                            <span class="glyphicon glyphicon-search"></span> 检索
+                        </a>
+                    </div>--%>
+                    <div class="pull-right">
+                        <a href="javascript:;" class="btn btn-danger" onclick="window.open('/data/exportVenuePercentage?'+$('#data_form').serialize());">
+                            <span class="glyphicon glyphicon-export"></span> 导出
                         </a>
                     </div>
                 </form>
@@ -59,7 +61,7 @@
 
         <div class="alert alert-info clearfix">
             <ul class="nav nav-pills pull-left">
-                <li style="margin-right: 15px;">场地使用率总计:</li>
+                <li style="margin-right: 15px;">场地使用率:</li>
                 <c:forEach var="item" items="${sumCountList}">
                     <li style="margin-right: 15px;">${item.sportName}
                         <span class="badge">${item.sumCount}时</span>
@@ -67,10 +69,7 @@
                 </c:forEach>
             </ul>
             <div class="pull-right">
-                <a href="javascript:;" class="btn btn-danger" onclick="window.open('/data/exportVenuePercentage?'+$('#data_form').serialize());">
-                    <span class="glyphicon glyphicon-export"></span> 导出数据
-                </a>
-                <a href="javascript:;" class="btn btn-primary" style="display: none;">
+                <a href="javascript:;" class="btn btn-success" style="display: none;">
                     <span class="glyphicon glyphicon-stats"></span> 图表显示
                 </a>
             </div>
@@ -117,7 +116,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="data"/>
-    <c:param name="subNav" value="percent"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="场地使用率"/>
 </c:import>

@@ -26,7 +26,7 @@ public class DictServiceImpl implements IDictService {
         if(SystemDictList.isEmpty()) {
             logger.info("加载字典表开始...");
             long start = System.currentTimeMillis();
-            SystemDictList = JsonUtils.stringToArray(JsonUtils.toJsonDF(baseDao.queryBySql("SELECT * FROM system_dict")), SystemDict[].class);
+            SystemDictList = JsonUtils.stringToArray(JsonUtils.toJsonDF(baseDao.queryBySql("SELECT * FROM system_dict ORDER BY dictSort")), SystemDict[].class);
             logger.info("加载字典表结束...用时：" + ((System.currentTimeMillis()-start)/1000.0));
         }
     }

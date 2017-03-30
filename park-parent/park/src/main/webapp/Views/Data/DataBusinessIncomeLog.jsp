@@ -7,19 +7,16 @@
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
     <link href="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
     <script src="Content/app/data/data_business_income_log.js?v=${static_resource_version}"></script>
     <script>
-        $(".member-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
-        $(".member-date[data-count='${countNum}']").addClass("btn-primary").removeClass("btn-default");
+        $(".member-date.btn-success").addClass("btn-default").removeClass("btn-success");
+        $(".member-date[data-count='${countNum}']").addClass("btn-success").removeClass("btn-default");
     </script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>数据统计</span> &gt;&gt; <span>营业收支统计</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -30,7 +27,7 @@
                 <form id="data_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="/data/getBusinessIncomeLog?countNum=1000" data-count="1000" class="btn btn-primary member-date">全部</a>
+                            <a href="/data/getBusinessIncomeLog?countNum=1000" data-count="1000" class="btn btn-success member-date">全部</a>
                             <a href="/data/getBusinessIncomeLog?countNum=11" data-count="11" class="btn btn-default member-date">今日</a>
                             <a href="/data/getBusinessIncomeLog?countNum=10" data-count="10" class="btn btn-default member-date">昨日</a>
                             <a href="/data/getBusinessIncomeLog?countNum=21" data-count="21" class="btn btn-default member-date">本周</a>
@@ -56,8 +53,13 @@
                     </div>
                     <div class="form-group">
                         <input type="hidden" name="countNum" value="${countNum}" />
-                        <a href="javascript:;" class="btn btn-primary data-filter">
-                            <span class="glyphicon glyphicon-search"></span> 检索 & 显示
+                        <a href="javascript:;" class="btn btn-success data-filter">
+                            <span class="glyphicon glyphicon-search"></span> 检索
+                        </a>
+                    </div>
+                    <div class="form-group pull-right">
+                        <a href="javascript:;" class="btn btn-danger" onclick="window.open('/data/exportBusinessIncomeLog?'+$('#data_form').serialize());">
+                            <span class="glyphicon glyphicon-export"></span> 导出
                         </a>
                     </div>
                 </form>
@@ -72,14 +74,6 @@
                 </c:forEach>
                 
             </ul>
-            <div class="pull-right">
-                <a href="javascript:;" class="btn btn-danger" onclick="window.open('/data/exportBusinessIncomeLog?'+$('#data_form').serialize());">
-                    <span class="glyphicon glyphicon-export"></span> 导出数据
-                </a>
-                <a href="javascript:;" class="btn btn-primary" style="display: none;">
-                    <span class="glyphicon glyphicon-stats"></span> 图表显示
-                </a>
-            </div>
         </div>
 
         <div class="panel panel-default">
@@ -177,13 +171,15 @@
                             </c:if>
                         </ul>
                     </nav>
+                    <c:if test="${fn:length(list) == 0}">
+                        <p class="text-muted no-list-count">没有检索到任何记录！</p>
+                    </c:if>
                 </div>
             </div>
         </div>
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="data"/>
-    <c:param name="subNav" value="businessLog"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="营业流水日志"/>
 </c:import>

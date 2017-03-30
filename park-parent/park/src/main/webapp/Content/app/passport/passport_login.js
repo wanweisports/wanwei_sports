@@ -1,18 +1,16 @@
 (function ($) {
     // 表单校验配置
     $(document).ready(function () {
-        $('#login_form').validate({
+        $('#form_login').validate({
             ignore: ":hidden"
         });
     });
 
     // 登录跳转
-    $(".login-btn").on("click", function (e) {
+    $(".btn-login").on("click", function (e) {
         e.preventDefault();
 
-        var $btn = $(this).button('loading');
-
-        var $form = $("#login_form");
+        var $form = $("#form_login");
         var conditions = $form.serialize();
 
         if ($form.attr("submitting") == "submitting" || !$form.valid()) {
@@ -24,13 +22,10 @@
             $form.attr("submitting", "");
 
             if (res.code == 1) {
-                location.assign($('[name="return_url"]').val());
+                location.href = "/home/index";
             } else {
-                console.log(res.message || "用户登录失败, 请稍后重试");
                 alert(res.message || "用户登录失败, 请稍后重试");
             }
-
-            $btn.button('reset');
         });
     });
 })(jQuery);

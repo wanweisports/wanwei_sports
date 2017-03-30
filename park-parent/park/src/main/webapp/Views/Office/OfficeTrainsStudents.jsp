@@ -24,7 +24,7 @@
                 <p>${classInfo.classRemark}</p>
                 <c:if test="${isSigned}">
                     <p>
-                        <button type="button" class="btn btn-warning add-sign" data-toggle="modal"
+                        <button type="button" class="btn btn-primary add-sign" data-toggle="modal"
                                 data-target="#student_sign_modal" data-backdrop="false">
                             <span class="glyphicon glyphicon-user"></span> 我要报名
                         </button>
@@ -64,7 +64,7 @@
                                 <td>${student.remark}</td>
                                 <td>
                                     <c:if test="${student.payStatus == 2}">
-                                        <button type="button" class="btn btn-warning sign-pay" data-id="${student.id}"
+                                        <button type="button" class="btn btn-primary sign-pay" data-id="${student.id}"
                                                 data-toggle="modal" data-target="#student_pay_modal" data-backdrop="false"
                                                 data-price="${classInfo.classPrice}">
                                             <span class="glyphicon glyphicon-usd"></span> 支付
@@ -231,7 +231,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary sign-confirm">
+                    <button type="button" class="btn btn-success sign-confirm">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>
@@ -300,7 +300,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary pay-confirm">
+                    <button type="button" class="btn btn-success pay-confirm">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>
@@ -309,7 +309,7 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
+<c:import url="../Shared/Layout.jsp">
     <c:param name="nav" value="office"/>
     <c:param name="subNav" value="class"/>
 </c:import>

@@ -18,7 +18,7 @@
 
             var goodType = location.search.replace("?goodType=", "");
             $(".good-type-list").find('[data-type="' + goodType + '"]')
-                .addClass("btn-warning").removeClass("btn-primary");
+                .addClass("btn-primary").removeClass("btn-success");
         },
         initEvents: function () {
             var content = this;

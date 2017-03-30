@@ -14,8 +14,8 @@
     <script src="Content/lib/echarts/echarts.min.js?v=${static_resource_version}"></script>
     <script src="Content/app/data/data_members_register_charts.js?v=${static_resource_version}"></script>
     <script>
-        $(".member-date.btn-primary").addClass("btn-default").removeClass("btn-primary");
-        $(".member-date[data-count='${countNum}']").addClass("btn-primary").removeClass("btn-default");
+        $(".member-date.btn-success").addClass("btn-default").removeClass("btn-success");
+        $(".member-date[data-count='${countNum}']").addClass("btn-success").removeClass("btn-default");
     </script>
 </layout:override>
 
@@ -31,7 +31,7 @@
                 <form id="data_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="/data/getMembersRegister?countNum=10" data-count="10" class="btn btn-primary member-date">全部</a>
+                            <a href="/data/getMembersRegister?countNum=10" data-count="10" class="btn btn-success member-date">全部</a>
                             <a href="/data/getMembersRegister?countNum=1" data-count="1" class="btn btn-default member-date">今日</a>
                             <a href="/data/getMembersRegister?countNum=2" data-count="2" class="btn btn-default member-date">昨日</a>
                             <a href="/data/getMembersRegister?countNum=3" data-count="3" class="btn btn-default member-date">本周</a>
@@ -47,7 +47,7 @@
                                placeholder="结束日期" value="${createTimeEnd}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary data-filter">
+                        <a href="javascript:;" class="btn btn-success data-filter">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>
@@ -68,7 +68,7 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
+<c:import url="../Shared/Layout.jsp">
     <c:param name="nav" value="data"/>
     <c:param name="subNav" value="register"/>
 </c:import>

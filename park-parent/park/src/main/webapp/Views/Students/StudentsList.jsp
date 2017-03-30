@@ -5,6 +5,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
@@ -17,10 +21,6 @@
             });
         });
     </script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>学生管理</span> &gt;&gt; <span>学生查询</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -38,8 +38,8 @@
                                placeholder="请输入学生姓名">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary student-filter">
-                            <span class="glyphicon glyphicon-search"></span> 检索 & 显示
+                        <a href="javascript:;" class="btn btn-success student-filter">
+                            <span class="glyphicon glyphicon-search"></span> 检索
                         </a>
                     </div>
                 </form>
@@ -51,23 +51,25 @@
                     <table class="table">
                         <thead>
                         <tr class="bg-info">
-                            <th>学生卡号</th>
                             <th>学生姓名</th>
+                            <th>联系手机</th>
+                            <th>学生卡号</th>
                             <th>所在班级</th>
                             <th>截止日期</th>
                             <th>用场次数</th>
-                            <th>联系手机</th>
-                            <th>状态</th>
                             <th>操作人</th>
-                            <th>办卡时间</th>
-                            <th>操作</th>
+                            <th>操作时间</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         <c:forEach var="student" items="${list}">
                             <tr>
+                                <td>
+                                    <a href="/students/view?studentId=${student.studentId}">${student.studentName}</a>
+                                </td>
+                                <td>${student.studentMobile}</td>
                                 <td>${student.cardNo}</td>
-                                <td>${student.studentName}</td>
                                 <td>${student.studentGrade}级${student.studentClass}班</td>
                                 <td>
                                     <c:choose>
@@ -76,20 +78,10 @@
                                     </c:choose>
                                 </td>
                                 <td>${student.siteCount}次</td>
-                                <td>${student.studentMobile}</td>
-                                <c:if test="${student.studentStatus == 1}">
-                                    <td class="text-success">有效</td>
-                                </c:if>
-                                <c:if test="${student.studentStatus == 2}">
-                                    <td class="text-danger">锁定</td>
-                                </c:if>
                                 <td>${student.operatorName}</td>
                                 <td>${student.createTime}</td>
                                 <td>
-                                    <a class="btn btn-primary" href="/students/view?studentId=${student.studentId}">
-                                        <span class="glyphicon glyphicon-share-alt"></span> 查看
-                                    </a>
-                                    <a class="btn btn-warning students-refresh" href="#refresh_modal" data-toggle="modal"
+                                    <a class="btn btn-primary students-refresh" href="#refresh_modal" data-toggle="modal"
                                        data-backdrop="false" data-cardId="${student.cardId}" data-cardNo="${student.cardNo}">
                                         <span class="glyphicon glyphicon-refresh"></span> 补办
                                     </a>
@@ -177,6 +169,9 @@
                             </c:if>
                         </ul>
                     </nav>
+                    <c:if test="${fn:length(list) == 0}">
+                        <p class="text-muted no-list-count">没有检索到任何记录！</p>
+                    </c:if>
                 </div>
             </div>
         </div>
@@ -218,7 +213,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary confirm-refresh" data-dismiss="modal"
+                    <button type="button" class="btn btn-success confirm-refresh" data-dismiss="modal"
                             data-loading-text="补办中...">
                         <span class="glyphicon glyphicon-ok"></span> 确 认
                     </button>
@@ -241,7 +236,7 @@
                     <input type="hidden" id="delete_studentId">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary confirm-delete">
+                    <button type="button" class="btn btn-success confirm-delete">
                         <span class="glyphicon glyphicon-ok"></span> 确 认
                     </button>
                 </div>
@@ -285,7 +280,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary confirm-sign" data-dismiss="modal"
+                    <button type="button" class="btn btn-success confirm-sign" data-dismiss="modal"
                             data-loading-text="签到中...">
                         <span class="glyphicon glyphicon-ok"></span> 确 认
                     </button>
@@ -295,7 +290,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="student"/>
-    <c:param name="subNav" value="list"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="学生查询"/>
 </c:import>

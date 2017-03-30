@@ -54,5 +54,7 @@ public interface IOperatorService {
 	public UserOperator getUserOperatorByOpenId(String openId);
 	
 	public UserOperator updateUserOperatorOpenId(String operatorId, String openId);
+
+	public String makeEmployeeNo();
 	
 }

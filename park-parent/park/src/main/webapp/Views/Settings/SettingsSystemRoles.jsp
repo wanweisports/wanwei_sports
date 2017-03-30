@@ -5,17 +5,22 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="Content/app/settings/settings_roles.js?v=${static_resource_version}"></script>
     <script>
         $(document).ready(function () {
-            $("#role_state").val('${status}');
+            $(".role-status.btn-success").addClass("btn-default").removeClass("btn-success");
+            if (${status == 1 || status == 2}) {
+                $(".role-status[data-count='${status}']").addClass("btn-success").removeClass("btn-default");
+            } else {
+                $(".role-status[data-count='0']").addClass("btn-success").removeClass("btn-default");
+            }
         });
     </script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>系统设置</span> &gt;&gt; <span>员工权限查询</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -25,20 +30,15 @@
             <div class="panel-body">
                 <form id="roles_filter_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
-                        <select class="form-control" id="role_state" name="status" style="width: 160px;">
-                            <option value="">所有状态</option>
-                            <option value="1">正常</option>
-                            <option value="2">锁定</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary roles-filter">
-                            <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
-                        </a>
+                        <div class="btn-group">
+                            <a href="/settings/getRoles" data-count="0" class="btn btn-success role-status">全部</a>
+                            <a href="/settings/getRoles?status=1" data-count="1" class="btn btn-default role-status">正常</a>
+                            <a href="/settings/getRoles?status=2" data-count="2" class="btn btn-default role-status">锁定</a>
+                        </div>
                     </div>
                     <div class="form-group pull-right">
-                        <a href="/settings/getRolesView" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-plus"></span> 添加员工权限
+                        <a href="/settings/getRolesView" class="btn btn-success">
+                            <span class="glyphicon glyphicon-plus"></span> 添 加
                         </a>
                     </div>
                 </form>
@@ -54,30 +54,24 @@
                             <th>权限名称</th>
                             <th>权限说明</th>
                             <th>权限状态</th>
-                            <th>操作人</th>
                             <th>创建时间</th>
-                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         <c:forEach var="role" items="${list}" varStatus="loop">
                             <tr>
-                                <td>${loop.index + 1}</td>
-                                <td>${role.roleName}</td>
+                                <td>#${loop.index + 1}</td>
+                                <td>
+                                    <a href="/settings/getRolesView?roleId=${role.roleId}">${role.roleName}</a>
+                                </td>
                                 <td>${role.roleDescribe}</td>
                                 <c:if test="${role.roleStatus == 1}">
-                                    <td class="text-success">正常</td>
+                                    <td>正常</td>
                                 </c:if>
                                 <c:if test="${role.roleStatus == 2}">
                                     <td class="text-danger">锁定</td>
                                 </c:if>
-                                <td>${role.operatorName}</td>
                                 <td>${role.createTime}</td>
-                                <td>
-                                    <a class="btn btn-primary" href="/settings/getRolesView?roleId=${role.roleId}">
-                                        <span class="glyphicon glyphicon-share-alt"></span>  查看
-                                    </a>
-                                </td>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -146,13 +140,15 @@
                             </c:if>
                         </ul>
                     </nav>
+                    <c:if test="${fn:length(list) == 0}">
+                        <p class="text-muted text-center">没有检索到记录！</p>
+                    </c:if>
                 </div>
             </div>
         </div>
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="setting"/>
-    <c:param name="subNav" value="role"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="员工权限设置"/>
 </c:import>

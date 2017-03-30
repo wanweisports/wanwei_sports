@@ -6,6 +6,7 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
     <link href="Content/lib/jquery/autosuggest/autosuggest.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
@@ -22,10 +23,6 @@
             });
         });
     </script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>会员管理</span> &gt;&gt; <span>会员卡升级</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -48,7 +45,7 @@
                                 <div data-valmsg-for="search" data-valmsg-replace="true"></div>
                             </div>
                             <div class="col-sm-4">
-                                <a href="javascript:;" class="btn btn-primary member-card-filter">
+                                <a href="javascript:;" class="btn btn-success member-card-filter">
                                     <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                                 </a>
                             </div>
@@ -190,7 +187,7 @@
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
                                 <p class="sc-submit-tips"></p>
-                                <button type="button" class="btn btn-primary col-sm-4 upgrade-card-submit">
+                                <button type="button" class="btn btn-success col-sm-4 upgrade-card-submit">
                                     <span class="glyphicon glyphicon-ok"></span> 确认 & 收款
                                 </button>
                             </div>
@@ -202,7 +199,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="member"/>
-    <c:param name="subNav" value="upgrade"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="会员卡升级"/>
 </c:import>

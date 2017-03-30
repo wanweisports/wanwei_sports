@@ -63,7 +63,7 @@
 
                         if (res1.code == 1) {
                             $.tipsSuccessAlert('教师注册成功！', function () {
-                                location.assign('/teachers/list');
+                                location.href = '/teachers/list';
                             });
                         } else {
                             $.logConsole('教师绑卡失败', res1.message);

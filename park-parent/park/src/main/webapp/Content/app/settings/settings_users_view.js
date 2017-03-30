@@ -49,15 +49,12 @@
                     $form.attr("submitting", "");
 
                     if (res.code == 1) {
-                        $("#tips_modal").modal({show: true, backdrop: false});
-
-                        setTimeout(function () {
-                            $("#tips_modal").modal("hide");
-                            location.assign('/settings/getUsers');
-                        }, 2000);
+                        $.tipsSuccessAlert('员工信息设置成功！', function () {
+                            location.href = "/settings/getUsers";
+                        });
                     } else {
-                        console.log(res.message || "员工信息保存失败, 请稍后重试");
-                        alert(res.message || "员工信息保存失败, 请稍后重试");
+                        $.logConsole('员工信息设置失败', res.message);
+                        $.tipsWarningAlert('员工信息设置失败');
                     }
                 });
             });

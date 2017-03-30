@@ -25,16 +25,12 @@
     </script>
 </layout:override>
 
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>预订管理</span> &gt;&gt; <span>场地类型设置</span>
-</layout:override>
-
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left;">
         <div class="panel panel-default">
             <div class="panel-heading">场地类型设置</div>
             <div class="panel-body">
-                <button data-toggle="modal" class="btn btn-primary sports-add">
+                <button data-toggle="modal" class="btn btn-success sports-add">
                     <span class="glyphicon glyphicon-plus"></span> 增加场地类型
                 </button>
             </div>
@@ -72,7 +68,7 @@
                                 <td>${sport.operatorName}</td>
                                 <td>${sport.createTime}</td>
                                 <td>
-                                    <button data-toggle="modal" class="btn btn-primary sports-update"
+                                    <button data-toggle="modal" class="btn btn-success sports-update"
                                             data-id="${sport.sportId}">
                                         <i class="glyphicon glyphicon-edit"></i> 修改
                                     </button>
@@ -163,7 +159,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary sports-confirm">
+                    <button type="button" class="btn btn-success sports-confirm">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>
@@ -172,7 +168,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="site"/>
-    <c:param name="subNav" value="sports"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="场地类型设置"/>
 </c:import>

@@ -23,4 +23,4 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     var flag = isPCPlatform(); //true为PC端，false为手机端
 </script>
 
-<jsp:forward page="/passport/login"></jsp:forward>
+<jsp:forward page="Views/Home/HomeIndex.jsp"></jsp:forward>

@@ -8,6 +8,7 @@
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
     <link href="Content/lib/jquery/autosuggest/autosuggest.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
     <link href="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
@@ -26,10 +27,6 @@
     </script>
 </layout:override>
 
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>预订管理</span> &gt;&gt; <span>定场预订</span>
-</layout:override>
-
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left;">
         <form id="reservations_fixed_form" class="form-horizontal" novalidate onsubmit="return false;">
@@ -41,62 +38,6 @@
                     <input type="hidden" name="reserveType" value="1"><!--1PC-->
                     <input type="hidden" name="reserveModel" value="1"><!--1普通2批量-->
                     <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="reservations_fixed_name" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 预订人
-                            </label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="reservations_fixed_name" name="name"
-                                       placeholder="预订人姓名" autocomplete="off"
-                                       data-val="true" data-val-required="预订人不能为空"
-                                       data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,9}$"
-                                       data-val-regex="预订人长度只能2~12个字符">
-                                <div data-valmsg-for="name" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="reservations_fixed_site" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 场地类型
-                            </label>
-                            <div class="col-sm-8">
-                                <select class="form-control" id="reservations_fixed_site" name="siteClass"
-                                        data-val="true" data-val-required="请选择场地类型">
-                                    <option value="">请选择</option>
-                                    <c:forEach var="sport" items="${siteSportNames}">
-                                        <option value="${sport.sportId}">${sport.sportName}</option>
-                                    </c:forEach>
-                                </select>
-                                <div data-valmsg-for="siteClass" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="reservations_fixed_start" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 开始时间
-                            </label>
-                            <div class="col-sm-8">
-                                <input class="form-control" id="reservations_fixed_start" name="siteStartTime"
-                                       autocomplete="off" placeholder="开始时间"
-                                       data-val="true" data-val-required="开始时间不能为空"
-                                       data-val-regex-pattern="^(([0-1]\d)|(2[0-3])):[0-5]\d$"
-                                       data-val-regex="开始时间格式错误" maxlength="5">
-                                <div data-valmsg-for="siteStartTime" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="reservations_fixed_mobile" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 手机号码
-                            </label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="reservations_fixed_mobile" name="mobile"
-                                       placeholder="手机号码" autocomplete="off"
-                                       data-val="true" data-val-required="手机号码不能为空"
-                                       data-val-regex-pattern="^1\d{10}$"
-                                       data-val-regex="手机号码格式错误" maxlength="11">
-                                <div data-valmsg-for="mobile" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
                         <div class="form-group">
                             <label for="reservations_fixed_date" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 预订日期
@@ -116,25 +57,46 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="reservations_fixed_end" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 结束时间
+                            <label for="reservations_fixed_site" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 场地类型
                             </label>
                             <div class="col-sm-8">
-                                <input class="form-control" id="reservations_fixed_end" name="siteEndTime"
-                                       autocomplete="off" placeholder="结束时间"
-                                       data-val="true" data-val-required="结束时间不能为空"
-                                       data-val-regex-pattern="^(([0-1]\d)|(2[0-3])):[0-5]\d$"
-                                       data-val-regex="结束时间格式错误" maxlength="5">
-                                <div data-valmsg-for="siteEndTime" data-valmsg-replace="true"></div>
+                                <select class="form-control" id="reservations_fixed_site" name="siteClass"
+                                        data-val="true" data-val-required="请选择场地类型">
+                                    <option value="">请选择</option>
+                                    <c:forEach var="sport" items="${siteSportNames}">
+                                        <option value="${sport.sportId}">${sport.sportName}</option>
+                                    </c:forEach>
+                                </select>
+                                <div data-valmsg-for="siteClass" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="reservations_fixed_name" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 预订人
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="reservations_fixed_name" name="name"
+                                       placeholder="预订人姓名" autocomplete="off"
+                                       data-val="true" data-val-required="预订人不能为空"
+                                       data-val-regex-pattern="^[A-Za-z\u4e00-\u9fa5][A-Za-z0-9\u4e00-\u9fa5_]{1,9}$"
+                                       data-val-regex="预订人长度只能2~12个字符">
+                                <div data-valmsg-for="name" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <div class="col-sm-offset-1 col-sm-11">
-                                <a href="/members/memberList" class="btn btn-primary" title="选择会员">
-                                    <span class="glyphicon glyphicon-th-list"></span> 选择会员
-                                </a>
+                            <label for="reservations_fixed_start" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 开始时间
+                            </label>
+                            <div class="col-sm-8">
+                                <input class="form-control" id="reservations_fixed_start" name="siteStartTime"
+                                       autocomplete="off" placeholder="开始时间"
+                                       data-val="true" data-val-required="开始时间不能为空"
+                                       data-val-regex-pattern="^(([0-1]\d)|(2[0-3])):[0-5]\d$"
+                                       data-val-regex="开始时间格式错误" maxlength="5">
+                                <div data-valmsg-for="siteStartTime" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -147,6 +109,34 @@
                                     <option value="">请选择</option>
                                 </select>
                                 <div data-valmsg-for="siteId" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="reservations_fixed_mobile" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 手机号码
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="reservations_fixed_mobile" name="mobile"
+                                       placeholder="手机号码" autocomplete="off"
+                                       data-val="true" data-val-required="手机号码不能为空"
+                                       data-val-regex-pattern="^1\d{10}$"
+                                       data-val-regex="手机号码格式错误" maxlength="11">
+                                <div data-valmsg-for="mobile" data-valmsg-replace="true"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="reservations_fixed_end" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 结束时间
+                            </label>
+                            <div class="col-sm-8">
+                                <input class="form-control" id="reservations_fixed_end" name="siteEndTime"
+                                       autocomplete="off" placeholder="结束时间"
+                                       data-val="true" data-val-required="结束时间不能为空"
+                                       data-val-regex-pattern="^(([0-1]\d)|(2[0-3])):[0-5]\d$"
+                                       data-val-regex="结束时间格式错误" maxlength="5">
+                                <div data-valmsg-for="siteEndTime" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -174,12 +164,12 @@
                             <p>总场次：<span class="text-danger reservations-fixed-totalNum">0</span>时</p>
                         </div>
                         <div class="form-group col-sm-12">
-                            <button type="button" class="btn btn-primary col-sm-12" id="reservations_fixed_add">
+                            <button type="button" class="btn btn-success col-sm-12" id="reservations_fixed_add">
                                 <span class="glyphicon glyphicon-plus"></span> 预订加场
                             </button>
                         </div>
                         <div class="form-group col-sm-12">
-                            <button type="button" class="btn btn-primary col-sm-12" id="reservations_fixed_confirm">
+                            <button type="button" class="btn btn-success col-sm-12" id="reservations_fixed_confirm">
                                 <span class="glyphicon glyphicon-usd"></span> 预订确认
                             </button>
                         </div>
@@ -273,19 +263,20 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="reservations_money_type" class="col-sm-4 control-label">
-                                            <span class="text-danger">*</span> 支付方式
-                                        </label>
+                                        <div class="col-sm-4 checkbox" style="text-align: right;">
+                                            <label class="control-label" style="font-weight: 700; padding: 0;">
+                                                <input type="checkbox" value="1" style="margin-top: 2px;"> 余额
+                                            </label>
+                                        </div>
 
                                         <div class="col-sm-8">
-                                            <select class="form-control" id="reservations_money_type" name="payType"
-                                                    data-val="true" data-val-required="请选择支付方式">
+                                            <select class="form-control" id="reservations_money_type" name="payType">
                                                 <option value="">请选择</option>
                                                 <option value="1">现金</option>
                                                 <option value="2">支付宝</option>
                                                 <option value="3">微信</option>
+                                                <option value="4">银联</option>
                                             </select>
-                                            <div data-valmsg-for="payType" data-valmsg-replace="true"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -326,7 +317,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
-                                            <button type="button" class="btn btn-primary" id="reservations_paid_confirm">
+                                            <button type="button" class="btn btn-success" id="reservations_paid_confirm">
                                                 <span class="glyphicon glyphicon-ok"></span> 支付
                                             </button>
                                         </div>
@@ -341,7 +332,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="site"/>
-    <c:param name="subNav" value="fixed"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="定场预订"/>
 </c:import>

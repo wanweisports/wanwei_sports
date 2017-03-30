@@ -14,7 +14,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">小票打印设置</div>
             <div class="panel-body">
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-success">
                     <span class="glyphicon glyphicon-print"></span>添加新模板
                 </button>
             </div>
@@ -122,7 +122,7 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
+<c:import url="../Shared/Layout.jsp">
     <c:param name="nav" value="setting"/>
     <c:param name="subNav" value="print"/>
 </c:import>

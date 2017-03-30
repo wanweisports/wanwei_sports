@@ -103,7 +103,7 @@
                                placeholder="结束日期" value="${createTimeEnd}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary data-filter">
+                        <a href="javascript:;" class="btn btn-success data-filter">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>
@@ -352,7 +352,7 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
+<c:import url="../Shared/Layout.jsp">
     <c:param name="nav" value="site"/>
     <c:param name="subNav" value="pda"/>
 </c:import>

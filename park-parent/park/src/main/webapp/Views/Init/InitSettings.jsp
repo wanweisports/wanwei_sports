@@ -127,7 +127,7 @@
             </form>
         </div>
         <div class="panel-footer text-right">
-            <button type="button" class="btn btn-primary init-confirm">初始化系统</button>
+            <button type="button" class="btn btn-success init-confirm">初始化系统</button>
         </div>
     </div>
 </div>

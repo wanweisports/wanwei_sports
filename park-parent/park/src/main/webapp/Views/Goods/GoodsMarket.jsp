@@ -14,10 +14,6 @@
     <script src="Content/app/goods/goods_market.js?v=${static_resource_version}"></script>
 </layout:override>
 
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>商品管理</span> &gt;&gt; <span>商品销售</span>
-</layout:override>
-
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left;">
         <div class="panel panel-default">
@@ -26,12 +22,12 @@
                 <div class="col-sm-12 col-md-10">
                     <div class="btn-group btn-group-justified good-type-list">
                         <div class="btn-group">
-                            <a href="/good/getGoodsMarket?goodType=" class="btn btn-primary"
+                            <a href="/good/getGoodsMarket?goodType=" class="btn btn-success"
                                data-type="">全部商品</a>
                         </div>
                         <c:forEach var="type" items="${goodTypeNames}">
                             <div class="btn-group">
-                                <a href="/good/getGoodsMarket?goodType=${type.goodTypeId}" class="btn btn-primary"
+                                <a href="/good/getGoodsMarket?goodType=${type.goodTypeId}" class="btn btn-success"
                                        data-type="${type.goodTypeId}">${type.goodTypeName}</a>
                             </div>
                         </c:forEach>
@@ -39,7 +35,7 @@
                 </div>
                 <div>
                     <div class="col-sm-12 col-md-2">
-                        <a href="good/getGoodsCart" class="btn btn-warning pull-right good-cart-count">
+                        <a href="good/getGoodsCart" class="btn btn-primary pull-right good-cart-count">
                             <span class="glyphicon glyphicon-shopping-cart"></span> 购物车
                             <span class="badge"></span>
                         </a>
@@ -69,13 +65,15 @@
                             </div>
                         </div>
                     </c:forEach>
+                    <c:if test="${fn:length(goods) == 0}">
+                        <p class="text-muted no-list-count">没有检索到任何记录！</p>
+                    </c:if>
                 </div>
             </div>
         </div>
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="good"/>
-    <c:param name="subNav" value="market"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="商品销售"/>
 </c:import>

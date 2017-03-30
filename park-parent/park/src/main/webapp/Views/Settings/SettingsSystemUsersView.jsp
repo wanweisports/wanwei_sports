@@ -7,6 +7,7 @@
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
     <link href="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
@@ -26,10 +27,6 @@
     </script>
 </layout:override>
 
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>系统设置</span> &gt;&gt; <span>员工信息查询</span> &gt;&gt; <span>员工信息设置</span>
-</layout:override>
-
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <form id="users_form" class="form-horizontal" novalidate onsubmit="return false;">
@@ -44,9 +41,18 @@
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="user_no" name="operatorNo"
-                                       placeholder="员工编号" autocomplete="off" value="${operatorNo}"
-                                       data-val="true" data-val-required="员工编号不能为空">
+                                <c:choose>
+                                    <c:when test="${operatorNo != null}">
+                                        <input type="text" class="form-control" id="user_no" name="operatorNo"
+                                               placeholder="员工编号" autocomplete="off" value="${operatorNo}"
+                                               data-val="true" data-val-required="员工编号不能为空" readonly>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input type="text" class="form-control" id="user_no" name="operatorNo"
+                                               placeholder="员工编号" autocomplete="off" value="${newOperatorNo}"
+                                               data-val="true" data-val-required="员工编号不能为空" readonly>
+                                    </c:otherwise>
+                                </c:choose>
                                 <div data-valmsg-for="operatorNo" data-valmsg-replace="true"></div>
                             </div>
                         </div>
@@ -63,18 +69,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="start_date" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 生效日期
-                            </label>
-
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="start_date" name="operatorEffectDate"
-                                       placeholder="生效时间" autocomplete="off" value="${operatorEffectDate}"
-                                       data-val="true" data-val-required="生效时间不能为空">
-                                <div data-valmsg-for="operatorEffectDate" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label for="data_birthday" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 员工生日
                             </label>
@@ -87,15 +81,17 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="contact_name" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 联系人
+                            <label for="contact_phone" class="col-sm-4 control-label">
+                                <span class="text-danger">*</span> 联系电话
                             </label>
 
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="contact_name" name="operatorContact"
-                                       placeholder="联系人" autocomplete="off" value="${operatorContact}"
-                                       data-val="true" data-val-required="联系人不能为空">
-                                <div data-valmsg-for="operatorContact" data-valmsg-replace="true"></div>
+                                <input type="text" class="form-control" id="contact_phone" name="operatorMobile"
+                                       placeholder="联系电话" autocomplete="off" value="${operatorMobile}"
+                                       data-val="true" data-val-required="联系电话不能为空"
+                                       data-val-regex-pattern="^1\d{10}$"
+                                       data-val-regex="联系电话格式错误">
+                                <div data-valmsg-for="operatorMobile" data-valmsg-replace="true"></div>
                             </div>
                         </div>
                     </div>
@@ -141,20 +137,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="contact_phone" class="col-sm-4 control-label">
-                                <span class="text-danger">*</span> 联系电话
-                            </label>
-
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="contact_phone" name="operatorMobile"
-                                       placeholder="联系电话" autocomplete="off" value="${operatorMobile}"
-                                       data-val="true" data-val-required="联系电话不能为空"
-                                       data-val-regex-pattern="^1\d{10}$"
-                                       data-val-regex="联系电话格式错误">
-                                <div data-valmsg-for="operatorMobile" data-valmsg-replace="true"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label for="contact_address" class="col-sm-4 control-label">
                                 <span class="text-danger">*</span> 联系地址
                             </label>
@@ -168,9 +150,11 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
-                                <p class="sc-submit-tips"></p>
-                                <button type="button" class="btn btn-primary col-sm-4 users-save">
-                                    <span class="glyphicon glyphicon-ok"></span> 设置用户
+                                <a class="btn btn-default" href="/settings/getUsers">
+                                    <span class="glyphicon glyphicon-chevron-left"></span> 返回
+                                </a>
+                                <button type="button" class="btn btn-success users-save">
+                                    <span class="glyphicon glyphicon-ok"></span> 保存
                                 </button>
                             </div>
                         </div>
@@ -179,25 +163,8 @@
             </div>
         </form>
     </div>
-
-    <div class="modal fade" id="tips_modal" tabindex="-1" role="dialog" aria-labelledby="tipsModalLabel">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h5 class="modal-title" id="tipsModalLabel">提示框</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-success" role="alert">员工信息保存成功!</div>
-                </div>
-            </div>
-        </div>
-    </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="setting"/>
-    <c:param name="subNav" value="user"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="员工信息设置"/>
 </c:import>

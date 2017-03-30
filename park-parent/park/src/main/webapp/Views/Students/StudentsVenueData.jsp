@@ -7,14 +7,11 @@
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
     <link href="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.full.min.js?v=${static_resource_version}"></script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>学生管理</span> &gt;&gt; <span>学生用场统计</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -43,7 +40,7 @@
                                value="${createEndTime}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary">
+                        <a href="javascript:;" class="btn btn-success">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>
@@ -62,7 +59,7 @@
                 <a href="javascript:;" class="btn btn-danger" onclick="window.open('/students/exportStudentsVenueData?'+$('#data_filter_form').serialize());">
                     <span class="glyphicon glyphicon-export"></span> 导出数据
                 </a>
-                <a href="javascript:;" class="btn btn-primary" style="display: none;">
+                <a href="javascript:;" class="btn btn-success" style="display: none;">
                     <span class="glyphicon glyphicon-stats"></span> 图表显示
                 </a>
             </div>
@@ -166,7 +163,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="student"/>
-    <c:param name="subNav" value="data"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="学生用场明细"/>
 </c:import>

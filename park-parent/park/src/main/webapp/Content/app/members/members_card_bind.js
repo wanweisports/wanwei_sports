@@ -30,7 +30,10 @@
             var type = parseFloat($type.val());
             var deposit = parseFloat($deposit.val());
 
-            return (money + send - type - deposit).toFixed(2);
+            return {
+                total: (money + send - type - deposit).toFixed(2),
+                pay: (money + type + deposit).toFixed(2)
+            };
         },
         initEvents: function () {
             var content = this;
@@ -38,8 +41,6 @@
             //更新会员信息
             $(".genxin-submit").on("click", function (e) {
                 e.preventDefault();
-
-                var $btn = $(this).button('loading');
 
                 var $form = $("#member_form");
                 var conditions = $form.serialize();
@@ -58,8 +59,6 @@
                         $.logConsole('会员信息更新失败', res.message);
                         $.tipsWarningAlert('会员信息更新失败');
                     }
-
-                    $btn.button('reset');
                 });
             });
 
@@ -100,14 +99,13 @@
             $("#recharge_money, #recharge_send").on("change", function (e) {
                 e.preventDefault();
 
-                $(".total-money").text(content.calculateMoney());
+                $(".total-money").text(content.calculateMoney().total);
+                $(".pay-money").text(content.calculateMoney().pay);
             });
 
             // 会员绑卡
             $(".register-recahrge").on("click", function (e) {
                 e.preventDefault();
-
-                var $btn = $(this).button('loading');
 
                 var $form = $("#member_card_form");
                 var conditions = $form.serialize();
@@ -137,8 +135,6 @@
                         $.logConsole('会员绑卡失败', res.message);
                         $.tipsWarningAlert('会员绑卡失败');
                     }
-
-                    $btn.button('reset');
                 });
             });
 
@@ -165,8 +161,6 @@
                     return false;
                 }
 
-                var $btn = $(this).button('loading');
-
                 var $form = $("#member_card_ticket_form");
                 var conditions = $form.serialize();
 
@@ -185,8 +179,6 @@
                         $.logConsole('发票登记失败', res.message);
                         $.tipsWarningAlert('发票登记失败');
                     }
-
-                    $btn.button('reset');
                 });
             });
         }

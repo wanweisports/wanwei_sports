@@ -5,6 +5,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
@@ -22,10 +26,6 @@
     </script>
 </layout:override>
 
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>会员管理</span> &gt;&gt; <span>会员类型设置</span>
-</layout:override>
-
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left;">
         <div class="panel panel-default">
@@ -41,13 +41,13 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary card-type-filter">
-                            <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
+                        <a href="javascript:;" class="btn btn-success card-type-filter">
+                            <span class="glyphicon glyphicon-search"></span> 筛选
                         </a>
                     </div>
                 </form>
                 <div class="col-sm-4 text-right" style="display: none;">
-                    <button type="button" class="btn btn-primary card-type-add" data-toggle="modal"
+                    <button type="button" class="btn btn-success card-type-add" data-toggle="modal"
                             data-target="#addModal" data-backdrop="false">
                         <span class="glyphicon glyphicon-plus"></span> 增加会员类型
                     </button>
@@ -105,7 +105,7 @@
                                 <td>${type.operatorName}</td>
                                 <td>${type.createTime}</td>
                                 <td>
-                                    <a class="btn btn-primary type-item" href="#addModal" data-toggle="modal"
+                                    <a class="btn btn-success type-item" href="#addModal" data-toggle="modal"
                                        data-backdrop="false" data-id="${type.cardTypeId}">
                                         <span class="glyphicon glyphicon-share-alt"></span> 查看
                                     </a>
@@ -427,7 +427,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="save_card_type">
+                    <button type="button" class="btn btn-success" id="save_card_type">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>
@@ -436,8 +436,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="member"/>
-    <c:param name="subNav" value="setting"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="会员类型设置"/>
 </c:import>
-

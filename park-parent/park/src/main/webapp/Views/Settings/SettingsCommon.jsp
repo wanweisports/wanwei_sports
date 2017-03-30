@@ -7,7 +7,7 @@
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
     <link href="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
-    <link href="Content/style/settings/settings_common.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/settings/settings_common.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
@@ -25,10 +25,6 @@
             $("#site_province").val('${businessAreaName}');
         });
     </script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>系统设置</span> &gt;&gt; <span>场馆基础设置</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -188,7 +184,7 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
-                                <button type="button" class="btn btn-primary col-sm-4 common-save">
+                                <button type="button" class="btn btn-success col-sm-4 common-save">
                                     <span class="glyphicon glyphicon-ok"></span> 保 存
                                 </button>
                             </div>
@@ -200,7 +196,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="setting"/>
-    <c:param name="subNav" value="base"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="场馆基础设置"/>
 </c:import>

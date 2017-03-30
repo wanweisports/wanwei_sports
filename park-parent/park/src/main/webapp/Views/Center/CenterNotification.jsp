@@ -16,7 +16,7 @@
             <div class="panel-body">
                 <form id="notification_filter_form" class="form-inline" novalidate onsubmit="return false;">
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary">
+                        <a href="javascript:;" class="btn btn-success">
                             <span class="glyphicon glyphicon-envelope"></span> 收件箱
                         </a>
                         <a href="javascript:;" class="btn btn-default">
@@ -33,12 +33,12 @@
                         <input type="text" class="form-control" name="keywords" placeholder="全文检索..." value="${keywords}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary notification-filter">
+                        <a href="javascript:;" class="btn btn-success notification-filter">
                             <span class="glyphicon glyphicon-search"></span> 检索 & 显示
                         </a>
                     </div>
                     <div class="form-group pull-right">
-                        <a href="#markModal" class="btn btn-warning" data-toggle="modal"
+                        <a href="#markModal" class="btn btn-primary" data-toggle="modal"
                            data-backdrop="false">
                             <span class="glyphicon glyphicon-pushpin"></span> 标记已读
                         </a>
@@ -81,7 +81,7 @@
                                 <td>${note.noteReadTime}</td>
 
                                 <td>
-                                    <a href="#fasongModal" class="btn btn-primary notifications-view" data-toggle="modal"
+                                    <a href="#fasongModal" class="btn btn-success notifications-view" data-toggle="modal"
                                        data-backdrop="false" data-id="${note.noteId}">
                                         <span class="glyphicon glyphicon-share-alt"></span> 查看
                                     </a>
@@ -207,7 +207,7 @@
                     <p class="text-danger">您确定要标记为已读状态吗?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>
@@ -228,7 +228,7 @@
                     <p class="text-danger">您确定要删除此通知消息吗?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>
@@ -237,7 +237,7 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
+<c:import url="../Shared/Layout.jsp">
     <c:param name="nav" value="passport"/>
     <c:param name="subNav" value="message"/>
 </c:import>

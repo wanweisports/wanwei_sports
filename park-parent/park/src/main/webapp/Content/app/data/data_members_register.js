@@ -254,7 +254,7 @@
                     //var previous = data.previous;
                     content.renderMemberStoredCharts(current.titleList, current.list);
                     //content.renderMemberStoredCompareCharts(current.list, previous.list);
-                    $memberCount.find("tr:last-child").addClass("bg-success");
+                    //$memberCount.find("tbody tr:last-child").addClass("bg-success");
                 }
             });
         },
@@ -265,7 +265,7 @@
                 color: ['#59ADF3', '#FF999A', '#FFCC67'],
                 tooltip : {
                     trigger: 'item',
-                    formatter: "{b} <br/>金额：{c}元 <br/>比率：{d}%)"
+                    formatter: "{b} <br/>金额：{c}元 <br/>比率：{d}%"
                 },
                 toolbox: {
                     show: false,
@@ -324,7 +324,7 @@
                     //var previous = data.previous;
                     content.renderMemberConsumedCharts(current.list);
                     //content.renderMemberCountCompareCharts(current.list, previous.list);
-                    $memberCount.find("tr:last-child").addClass("bg-success");
+                    //$memberCount.find("tr:last-child").addClass("bg-success");
                 }
             });
         },
@@ -526,7 +526,7 @@
                     //var previous = data.previous;
                     content.renderMemberCountCharts(current.titleList, current.list);
                     //content.renderMemberCountCompareCharts(current.list, previous.list);
-                    $memberCount.find("tr:last-child").addClass("bg-success");
+                    //$memberCount.find("tr:last-child").addClass("bg-success");
                 }
             });
         }

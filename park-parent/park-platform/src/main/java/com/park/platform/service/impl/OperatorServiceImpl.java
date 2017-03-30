@@ -15,13 +15,12 @@ import com.park.platform.service.IDataService;
 import com.park.platform.service.IOperatorService;
 import com.park.platform.service.IParkService;
 import com.park.platform.service.IRoleService;
+import com.sun.xml.internal.bind.v2.model.core.ID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class OperatorServiceImpl extends BaseService implements IOperatorService {
@@ -46,7 +45,7 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 		if(userOperator.getId() == null){
 			if(getOperator(userOperator.getOperatorId()) != null) throw new MessageException("登录账户重复，请重新");
 			if(StrUtil.isBlank(userOperator.getOperatorPwd())){
-				userOperator.setOperatorPwd("123456"); //密码暂时设置为123456
+				userOperator.setOperatorPwd("q123456"); //密码暂时设置为q123456
 			}
 			userOperator.setCreateTime(DateUtil.getNowDate());
 			userOperator.setStatus(IDBConstant.LOGIC_STATUS_YES);
@@ -90,10 +89,11 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 		String roleId = operatorInputView.getRoleId();
 		String status = operatorInputView.getStatus();
 		
-		StringBuilder headSql = new StringBuilder("SELECT uo.operatorNo, uo.operatorId, uo.operatorName, sr.roleName, uo.operatorEffectDate, uo.operatorEndDate, uo.status");
+		StringBuilder headSql = new StringBuilder("SELECT uo.operatorNo, uo.operatorId, uo.operatorName, sr.roleName, uo.operatorMobile, uo.operatorEffectDate, uo.operatorEndDate, uo.status, uo.lastLoginTime");
 		StringBuilder bodySql = new StringBuilder(" FROM user_operator uo, system_role_operator sro, system_role sr");
 		StringBuilder whereSql = new StringBuilder(" WHERE uo.operatorId = sro.operatorId AND sro.roleId = sr.roleId");
-		whereSql.append(" AND sr.roleId >= ").append(IDBConstant.ROLE_EMPLOYEE);
+		whereSql.append(" AND sr.roleId > ").append(IDBConstant.ROLE_EMPLOYEE);
+		whereSql.append(" AND uo.operatorType = ").append(IDBConstant.OPERATOR_TYPE_WORK);
 		if(StrUtil.isNotBlank(status)){
 			whereSql.append(" AND uo.status = :status");
 		}
@@ -138,9 +138,7 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 			operatorDB.setOperatorNo(operator.getOperatorNo());
 			operatorDB.setOperatorName(operator.getOperatorName());
 			operatorDB.setOperatorBirthday(operator.getOperatorBirthday());
-			operatorDB.setOperatorContact(operator.getOperatorContact());
 			operatorDB.setOperatorMobile(operator.getOperatorMobile());
-			operatorDB.setOperatorEffectDate(operator.getOperatorEffectDate());
 			operatorDB.setOperatorEndDate(operator.getOperatorEndDate());
 			operatorDB.setOperatorAddress(operator.getOperatorAddress());
 			operatorDB.setUpdateTime(DateUtil.getNowDate());
@@ -152,8 +150,12 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 			if(points != null && points > 0){
 				if(getEmployeeCount() >= points) throw new MessageException("添加员工数量已超过上线，请联系管理员！");
 			}
+
+            operator.setOperatorContact(operator.getOperatorName());
+            operator.setOperatorEffectDate(DateUtil.getNowDate());
+            operator.setOperatorType(IDBConstant.OPERATOR_TYPE_WORK);
+            return saveOperator(operator, roleId);
 		}
-		return saveOperator(operator, roleId);
 	}
 	
 	@Override
@@ -335,5 +337,18 @@ public class OperatorServiceImpl extends BaseService implements IOperatorService
 		baseDao.save(userOperator, operatorId);
 		return userOperator;
 	}
+
+    // 生成员工编号
+    @Override
+    public String makeEmployeeNo() {
+        StringBuffer no = new StringBuffer();
+        no.append('u');
+
+        for (int i = 0; i < 6; i++) {
+            no.append((int)(Math.random() * 10));
+        }
+
+        return no.toString();
+    }
 	
 }

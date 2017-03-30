@@ -6,6 +6,7 @@
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
     <link href="Content/lib/jquery/autosuggest/autosuggest.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
     <link href="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
@@ -26,10 +27,6 @@
     </script>
 </layout:override>
 
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>教师管理</span> &gt;&gt; <span>教师订餐统计</span>
-</layout:override>
-
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left;">
         <div class="panel panel-default">
@@ -38,7 +35,7 @@
                 <form class="form-inline" id="data_filter_form" onsubmit="return false;">
                     <div class="form-group">
                         <div class="btn-group">
-                            <a href="javascript:;" class="btn btn-primary">今天</a>
+                            <a href="javascript:;" class="btn btn-success">今天</a>
                             <a href="javascript:;" class="btn btn-default">昨天</a>
                             <a href="javascript:;" class="btn btn-default">本周</a>
                             <a href="javascript:;" class="btn btn-default">本月</a>
@@ -57,12 +54,12 @@
                                value="${createTimeEnd}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-search"></span> 检索 & 显示
+                        <a href="javascript:;" class="btn btn-success">
+                            <span class="glyphicon glyphicon-search"></span> 检索
                         </a>
                     </div>
                     <div class="form-group pull-right">
-                        <a href="#meal_modal" class="btn btn-warning add-meal" data-toggle="modal"
+                        <a href="#meal_modal" class="btn btn-primary add-meal" data-toggle="modal"
                            data-backdrop="false">
                             <span class="glyphicon glyphicon-tag"></span> 订餐登记
                         </a>
@@ -80,7 +77,7 @@
                 <a href="javascript:;" class="btn btn-danger">
                     <span class="glyphicon glyphicon-export"></span> 导出数据
                 </a>
-                <a href="javascript:;" class="btn btn-primary" style="display: none;">
+                <a href="javascript:;" class="btn btn-success" style="display: none;">
                     <span class="glyphicon glyphicon-stats"></span> 图表显示
                 </a>
             </div>
@@ -212,6 +209,9 @@
                             </c:if>
                         </ul>
                     </nav>
+                    <c:if test="${fn:length(list) == 0}">
+                        <p class="text-muted no-list-count">没有检索到任何记录！</p>
+                    </c:if>
                 </div>
             </div>
         </div>
@@ -278,7 +278,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <button class="btn btn-primary pull-right" id="teacher_meal_confirm" >
+                                <button class="btn btn-success pull-right" id="teacher_meal_confirm" >
                                     <span class="glyphicon glyphicon-ok"></span> 确 定
                                 </button>
                             </div>
@@ -319,7 +319,7 @@
                     <input type="hidden" id="delete_teacherId">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary confirm-delete">
+                    <button type="button" class="btn btn-success confirm-delete">
                         <span class="glyphicon glyphicon-ok"></span> 确 认
                     </button>
                 </div>
@@ -328,7 +328,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="teacher"/>
-    <c:param name="subNav" value="meals"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="教师订餐统计"/>
 </c:import>

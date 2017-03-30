@@ -5,6 +5,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
@@ -17,10 +21,6 @@
             });
         });
     </script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>会员管理</span> &gt;&gt; <span>应收款管理</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -42,8 +42,8 @@
                                value="${orderNo}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary receipt-filter">
-                            <span class="glyphicon glyphicon-search"></span> 检索 & 显示
+                        <a href="javascript:;" class="btn btn-success receipt-filter">
+                            <span class="glyphicon glyphicon-search"></span> 检索
                         </a>
                     </div>
                 </form>
@@ -76,7 +76,7 @@
                             <td>51场</td>
                             <td>50场(<span class="text-danger">1场欠款</span>)</td>
                             <td>
-                                <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
+                                <button type="button" class="btn btn-success receipt-dialog" data-toggle="modal"
                                         data-target="#receiptModal" data-backdrop="false">
                                     <span class="glyphicon glyphicon-usd"></span> 收 款
                                 </button>
@@ -91,7 +91,7 @@
                             <td>49场</td>
                             <td>50场</td>
                             <td>
-                                <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
+                                <button type="button" class="btn btn-success receipt-dialog" data-toggle="modal"
                                         data-target="#receiptModal" data-backdrop="false">
                                     <span class="glyphicon glyphicon-usd"></span> 收 款
                                 </button>
@@ -106,7 +106,7 @@
                             <td>15场</td>
                             <td>40场(<span class="text-danger">5场欠款</span>)</td>
                             <td>
-                                <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
+                                <button type="button" class="btn btn-success receipt-dialog" data-toggle="modal"
                                         data-target="#receiptModal" data-backdrop="false">
                                     <span class="glyphicon glyphicon-usd"></span> 收 款
                                 </button>
@@ -121,7 +121,7 @@
                             <td>26场</td>
                             <td>224场</td>
                             <td>
-                                <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
+                                <button type="button" class="btn btn-success receipt-dialog" data-toggle="modal"
                                         data-target="#receiptModal" data-backdrop="false">
                                     <span class="glyphicon glyphicon-usd"></span> 收 款
                                 </button>
@@ -149,7 +149,7 @@
                                         </button>
                                     </c:if>
                                     <c:if test="${loan.oweCount <= 0}">
-                                        <button type="button" class="btn btn-primary receipt-dialog" data-toggle="modal"
+                                        <button type="button" class="btn btn-success receipt-dialog" data-toggle="modal"
                                                 data-target="#receiptModal" data-backdrop="false" data-id="${loan.receivableId}">
                                             <span class="glyphicon glyphicon-usd"></span> 收款
                                         </button>
@@ -224,7 +224,7 @@
                         </ul>
                     </nav>
                     <c:if test="${fn:length(list) == 0}">
-                        <p class="text-muted no-list-count">没有检索到任何应收款项！</p>
+                        <p class="text-muted no-list-count">没有检索到任何记录！</p>
                     </c:if>
                 </div>
             </div>
@@ -308,7 +308,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary receipt-confirm">
+                    <button type="button" class="btn btn-success receipt-confirm">
                         <span class="glyphicon glyphicon-ok"></span> 确 定
                     </button>
                 </div>
@@ -317,7 +317,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="member"/>
-    <c:param name="subNav" value="loan"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="应收款管理"/>
 </c:import>

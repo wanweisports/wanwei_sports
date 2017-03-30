@@ -24,14 +24,10 @@
     </script>
 </layout:override>
 
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>预订管理</span> &gt;&gt; <span>预订订单</span>
-</layout:override>
-
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="panel panel-default">
-            <div class="panel-heading">预订订单查询</div>
+            <div class="panel-heading">预订订单</div>
             <div class="panel-body">
                 <form id="orders_filter_form" class="form-inline" onsubmit="return false;">
                     <div class="form-group">
@@ -51,7 +47,7 @@
                         <input type="text" class="form-control" name="mobile" placeholder="手机号码" value="${mobile}">
                     </div>
                     <div class="form-group">
-                        <a href="javascript:;" class="btn btn-primary orders-filter">
+                        <a href="javascript:;" class="btn btn-success orders-filter">
                             <span class="glyphicon glyphicon-search"></span> 筛选 & 显示
                         </a>
                     </div>
@@ -130,7 +126,7 @@
                             合计金额: <strong class="text-danger">${order.orderSumPrice}</strong> 元
                             <div class="pull-right">
                                 <c:if test="${order.orderStatus == 1}">
-                                    <button class="btn btn-warning btn-sm order-delete" data-id="${order.orderId}"
+                                    <button class="btn btn-primary btn-sm order-delete" data-id="${order.orderId}"
                                             data-member="${order.memberId}" style="display: none;">
                                         <span class="glyphicon glyphicon-trash"></span> 删除
                                     </button>
@@ -143,7 +139,7 @@
                                         </button>
                                     </c:if>
                                     <c:if test="${order.payStatus == 2}">
-                                        <button class="btn btn-primary btn-sm order-pay" data-id="${order.orderId}"
+                                        <button class="btn btn-success btn-sm order-pay" data-id="${order.orderId}"
                                                 data-member="${order.memberId}">
                                             <span class="glyphicon glyphicon-usd"></span> 支付
                                         </button>
@@ -154,7 +150,7 @@
                                     </c:if>
                                 </c:if>
                                 <c:if test="${order.orderStatus == 3}">
-                                    <button class="btn btn-warning order-delete" data-id="${order.orderId}"
+                                    <button class="btn btn-primary order-delete" data-id="${order.orderId}"
                                             data-member="${order.memberId}" style="display: none;">
                                         <span class="glyphicon glyphicon-trash"></span> 删除
                                     </button>
@@ -371,7 +367,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
-                                            <button type="button" class="btn btn-primary" id="reservations_pay_order">
+                                            <button type="button" class="btn btn-success" id="reservations_pay_order">
                                                 <span class="glyphicon glyphicon-ok"></span> 支付
                                             </button>
                                         </div>
@@ -386,7 +382,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="site"/>
-    <c:param name="subNav" value="order"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="预订订单"/>
 </c:import>

@@ -5,6 +5,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
@@ -17,10 +21,6 @@
             });
         });
     </script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>商品管理</span> &gt;&gt; <span>商品查询</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -50,8 +50,8 @@
                     </div>
                     <div class="form-group">
                         <label>&nbsp;</label>
-                        <a href="javascript:;" class="btn btn-primary goods-filter">
-                            <span class="glyphicon glyphicon-search"></span> 检索 & 显示
+                        <a href="javascript:;" class="btn btn-success goods-filter">
+                            <span class="glyphicon glyphicon-search"></span> 检索
                         </a>
                     </div>
                 </form>
@@ -77,7 +77,9 @@
                         <c:forEach var="good" items="${list}">
                             <tr>
                                 <td>${good.goodNo}</td>
-                                <td>${good.goodName}</td>
+                                <td>
+                                    <a href="/good/viewGood?goodId=${good.goodId}">${good.goodName}</a>
+                                </td>
                                 <td>${good.goodCount}</td>
                                 <td>${good.goodPrice}</td>
                                 <c:if test="${good.goodStatus == 1}">
@@ -90,27 +92,24 @@
                                 <td>${good.createTime}</td>
                                 <td>
                                     <c:if test="${good.goodStatus == 2}">
-                                        <a href="javascript:;" class="btn btn-primary goods-enter"
+                                        <a href="javascript:;" class="btn btn-success goods-enter"
                                            data-id="${good.goodId}">
                                             <span class="glyphicon glyphicon-arrow-up"></span> 上架
                                         </a>
                                     </c:if>
                                     <c:if test="${good.goodStatus == 1}">
-                                        <a href="javascript:;" class="btn btn-warning goods-outer"
+                                        <a href="javascript:;" class="btn btn-primary goods-outer"
                                            data-id="${good.goodId}">
                                             <span class="glyphicon glyphicon-arrow-down"></span> 下架
                                         </a>
                                     </c:if>
-                                    <a href="#plus_count_modal" class="btn btn-primary goods-count" data-toggle="modal"
+                                    <a href="#plus_count_modal" class="btn btn-success goods-count" data-toggle="modal"
                                        data-id="${good.goodId}" data-count="${good.goodCount}" data-backdrop="false">
-                                        <span class="glyphicon glyphicon-plus"></span> 增加库存
+                                        <span class="glyphicon glyphicon-plus"></span> 库存
                                     </a>
                                     <a href="#minus_count_modal" class="btn btn-danger goods-minus-count" data-toggle="modal"
                                        data-id="${good.goodId}" data-count="${good.goodCount}" data-backdrop="false">
                                         <span class="glyphicon glyphicon-adjust"></span> 损耗
-                                    </a>
-                                    <a href="/good/viewGood?goodId=${good.goodId}" class="btn btn-primary">
-                                        <span class="glyphicon glyphicon-share-alt"></span> 查看
                                     </a>
                                 </td>
                             </tr>
@@ -181,6 +180,9 @@
                             </c:if>
                         </ul>
                     </nav>
+                    <c:if test="${fn:length(list) == 0}">
+                        <p class="text-muted no-list-count">没有检索到任何记录！</p>
+                    </c:if>
                 </div>
             </div>
         </div>
@@ -212,7 +214,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary confirm-plus-count" data-dismiss="modal">
+                    <button type="button" class="btn btn-success confirm-plus-count" data-dismiss="modal">
                         <span class="glyphicon glyphicon-ok"></span> 确 认
                     </button>
                 </div>
@@ -246,7 +248,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary confirm-minus-count" data-dismiss="modal">
+                    <button type="button" class="btn btn-success confirm-minus-count" data-dismiss="modal">
                         <span class="glyphicon glyphicon-ok"></span> 确 认
                     </button>
                 </div>
@@ -255,7 +257,6 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
-    <c:param name="nav" value="good"/>
-    <c:param name="subNav" value="list"/>
+<c:import url="../Shared/Layout.jsp">
+    <c:param name="title" value="商品查询"/>
 </c:import>

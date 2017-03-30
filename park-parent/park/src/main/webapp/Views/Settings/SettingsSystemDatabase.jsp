@@ -16,7 +16,7 @@
             <div class="panel-body">
                 <div class="alert alert-danger" role="alert">数据库清除功能是永久性清除数据库中的所有场馆表的数据，是不可恢复性的；请在操作前仔细确认每一操作步骤.<br>强烈建议您在清空数据表时先做“数据库导出备份”</div>
 
-                <button class="btn btn-primary">
+                <button class="btn btn-success">
                     <span class="glyphicon glyphicon-floppy-disk"></span> 数据库导出备份
                 </button>
             </div>
@@ -83,7 +83,7 @@
     </div>
 </layout:override>
 
-<c:import url="../Shared/Layout_New.jsp">
+<c:import url="../Shared/Layout.jsp">
     <c:param name="nav" value="setting"/>
     <c:param name="subNav" value="database"/>
 </c:import>
