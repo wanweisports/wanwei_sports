@@ -12,7 +12,7 @@ var nib = require('nib');
 var jshint = require('gulp-jshint');
 
 gulp.task('stylus-compile', function() {
-    gulp.src('./Content/style/**/*.styl')
+    gulp.src(['./Content/style/**/*.styl', '!./Content/style/base.styl', '!./Content/style/mixins.styl'])
         .pipe(plumber({errorHandler: notify.onError('error message: <%= error.message %>')}))
         .pipe(stylus({use: [nib()]}))
         .pipe(gulp.dest('./Content/style/'))
@@ -37,36 +37,6 @@ gulp.task('clean-files', function() {
             title: 'clean files'}));
 });
 
-gulp.task('stylus-watch', function() {
-    gulp.src('./Content/style/**/*.styl')
-    .pipe(watch(function(files) {
-        return files.pipe(plumber({errorHandler: notify.onError('error message: <%= error.message %>')}))
-            .pipe(stylus({use: [nib()]}))
-            .pipe(gulp.dest('./Content/style/'))
-            .pipe(notify({
-                message: '<%= file.relative %> compiled successful',
-                title: 'minify css'}))
-            //.pipe(rename({suffix: '.min'}))
-            //.pipe(minifycss())
-            .pipe(plumber.stop())
-            .pipe(gulp.dest('./Content/style/'))
-            .pipe(notify({
-                message: '<%= file.relative %> watch successful',
-                title: 'minify css'}));
-    }));
-});
-
-gulp.task('js-watch', function () {
-    gulp.src('./Content/app/**/*.js')
-        .pipe(jshint())
-        .pipe(jshint.reporter('default'))
-        .pipe(notify({
-            title: 'minify js',
-            message: '<%= file.relative %> watch successful'
-        }))
-        .pipe(gulp.dest('./Content/dist'));
-});
-
 gulp.task('js-compile', function(){
     gulp.src('./Content/app/**/*.js')
         .pipe(uglifyJs())
@@ -86,6 +56,5 @@ gulp.task('js-hint', function() {
 });
 
 gulp.task('default', ['build']);
-gulp.task('build', ['clean-files', 'stylus-compile', 'js-compile']);
-gulp.task('watch', ['stylus-watch', 'js-watch']);
+gulp.task('build', ['clean-files', 'stylus-compile']);
 gulp.task('clean', ['clean-files']);

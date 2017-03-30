@@ -27,7 +27,6 @@ import java.util.Map;
  * Created by wangjun on 16/11/11.
  */
 @Controller
-@RequestMapping("business")
 public class BusinessController extends BaseController {
 
     @Autowired
@@ -52,14 +51,14 @@ public class BusinessController extends BaseController {
     @NotProtected
     @RequestMapping("passport/login")
     public String passportLogin(String returnUrl, Model model) {
-        model.addAttribute("returnUrl", StrUtil.isBlank(returnUrl) ? "/business/dashboard" : returnUrl);
-        return "Business/Passport/PassportLogin";
+        model.addAttribute("returnUrl", StrUtil.isBlank(returnUrl) ? "/dashboard" : returnUrl);
+        return "Passport/PassportLogin";
     }
 
     // 用户登录
     @NotProtected
     @ResponseBody
-    @RequestMapping("/passport/userLogin")
+    @RequestMapping("passport/userLogin")
     public ResponseBean userLogin(String name, String pwd) {
         try{
             if(StrUtil.isBlank(name)) throw new MessageException("请输入用户名！");
@@ -87,28 +86,28 @@ public class BusinessController extends BaseController {
     @RequestMapping("passport/logout")
     public String logout() {
         super.getRequest().getSession().invalidate();
-        return redirect("/business/passport/login");
+        return redirect("/passport/login");
     }
 
     // 完善信息
-    @RequestMapping("/passport/profile")
+    @RequestMapping("passport/profile")
     public String passportProfile(Model model) {
         UserOperator operator = operatorService.getOperator(super.getUserInfo().getOperatorId());
         operator.setOperatorPwd(null);
         model.addAllAttributes(JsonUtils.fromJsonDF(operator));
-        return "Business/Center/CenterProfile";
+        return "Center/CenterProfile";
     }
 
     // 修改密码
-    @RequestMapping("/passport/modifyPassword")
+    @RequestMapping("passport/modifyPassword")
     public String modifyPassword() {
-        return "Business/Center/CenterPassword";
+        return "Center/CenterPassword";
     }
 
     // 工作面板
     @RequestMapping("dashboard")
     public String dashboard() {
-        return "Business/Dashboard/DashboardIndex";
+        return "Dashboard/DashboardIndex";
     }
 
     // 通知消息列表
@@ -141,7 +140,7 @@ public class BusinessController extends BaseController {
             e.printStackTrace();
         }
 
-        return "Business/OA/OANotifications";
+        return "OA/OANotifications";
     }
 
     // 通知消息详情
@@ -153,7 +152,7 @@ public class BusinessController extends BaseController {
             e.printStackTrace();
         }
 
-        return "Business/OA/OANotificationsDetail";
+        return "OA/OANotificationsDetail";
     }
 
     // 获取消息列表
@@ -191,19 +190,19 @@ public class BusinessController extends BaseController {
             e.printStackTrace();
         }
 
-        return "Business/OA/OAMessage";
+        return "OA/OAMessage";
     }
 
     // 通知消息创建
     @RequestMapping("oa/notificationsCreate")
     public String notificationsCreate() {
-        return "Business/OA/OANotificationsCreate";
+        return "OA/OANotificationsCreate";
     }
 
     // 通知员工列表
     @RequestMapping("oa/employees")
     public String employees() {
-        return "Business/OA/OAEmployees";
+        return "OA/OAEmployees";
     }
 
     // 收入统计
@@ -216,7 +215,7 @@ public class BusinessController extends BaseController {
             e.printStackTrace();
         }
 
-        return "Business/Data/DataIncome";
+        return "Data/DataIncome";
     }
 
     // 收入统计对比
@@ -242,7 +241,7 @@ public class BusinessController extends BaseController {
         model.addAttribute("compare", dataService.getMobileBusinessIncome(dataInputView));
         model.addAttribute("compareWeek", formatterWeek.format(compare));
 
-        return "Business/Data/DataIncomeCompare";
+        return "Data/DataIncomeCompare";
     }
 
     // 场地使用率
@@ -254,7 +253,7 @@ public class BusinessController extends BaseController {
     	}catch (Exception e) {
 			e.printStackTrace();
 		}
-        return "Business/Data/DataVenuePercentage";
+        return "Data/DataVenuePercentage";
     }
 
 
@@ -270,7 +269,7 @@ public class BusinessController extends BaseController {
             e.printStackTrace();
         }
 
-        return "Business/Schedule/OfficeSchedule";
+        return "Schedule/OfficeSchedule";
     }
 
     // 培训
@@ -289,7 +288,7 @@ public class BusinessController extends BaseController {
             e.printStackTrace();
         }
 
-        return "Business/Training/TrainingList";
+        return "Training/TrainingList";
     }
 
 
@@ -310,14 +309,14 @@ public class BusinessController extends BaseController {
             e.printStackTrace();
         }
 
-        return "Business/Training/TrainingStudents";
+        return "Training/TrainingStudents";
     }
     // 课程创建
     @RequestMapping("training/create")
     public String renderTrainingCreate(Model model) {
         model.addAttribute("courseNames", trainsCourseService.getTrainsCourseNames());
 
-        return "Business/Training/TrainingCreate";
+        return "Training/TrainingCreate";
     }
 
     // 培训班级保存
@@ -368,6 +367,6 @@ public class BusinessController extends BaseController {
         model.addAttribute("classId", classId);
         model.addAttribute("classList", trainsClassService.getTrainsSignClassList());
 
-        return "Business/Training/TrainingSignUp";
+        return "Training/TrainingSignUp";
     }
 }

@@ -1,35 +1,22 @@
-body
-    background url("../../images/bg.jpg") 100% 0 no-repeat
-    background-size cover
+@charset "utf-8"
+@import "../base"
 
-.ww-login
-    width 100%
-    position absolute
-    /*top 10%*/
-    .login
-        background-color #a8d6f7
-        opacity 0.8
-        width 620px
-        overflow hidden
-        margin 40px auto 20px auto
-        padding 20px
-        border-radius 10px
-        box-shadow 4px 4px 4px
-        .login-brief
-            padding 40px 30px
-            img
-                width 160px
-                display block
-                margin 0 auto
-            p
-                font-size 12px
-                text-align center
-                margin-top 10px
-        .login-form
-            background-color #79bae4
-            padding 20px
-            margin-top 16px
-            border-radius 6px
-            border 1px solid #a8d6f7
-            .login-btn
-                width 120px
+.container
+    .weui-flex
+        text-align center
+        margin-top rem(100px)
+
+#login_form
+    width 86%
+    margin 0 auto
+    background-color #fff
+    padding-bottom rem(20px)
+    .weui-cells
+        margin-top 0
+        line-height 2
+        .weui-input
+            padding-left 0
+            height 2em
+            line-height 2
+    .weui-btn
+        width 66%

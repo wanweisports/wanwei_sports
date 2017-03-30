@@ -1,1 +1,0 @@
-!function(o){function e(){i.removeClass("weui-actionsheet_toggle"),t.hide()}var i=o("#iosActionsheet"),t=o("#iosMask");t.on("click",e),o("#iosActionsheetCancel").on("click",e),o("#showIOSActionSheet").on("click",function(){i.addClass("weui-actionsheet_toggle"),t.show()})}(Zepto);
