@@ -12,7 +12,7 @@
           rel="stylesheet" type="text/css">
     <link href="Content/lib/jquery/jquery-steps/jquery.steps.css?v=${static_resource_version}" rel="stylesheet"
           type="text/css">
-    <link href="Content/style/reservations/reservations_sequence.css?v=${static_resource_version}" rel="stylesheet"
+    <link href="Content/style/reservations/reservations_sequence.min.css?v=${static_resource_version}" rel="stylesheet"
           type="text/css">
 </layout:override>
 
