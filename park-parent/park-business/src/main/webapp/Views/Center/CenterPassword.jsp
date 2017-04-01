@@ -11,37 +11,33 @@
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div id="main" class="container">
-        <div class="weui-panel">
-            <div class="weui-panel__hd" style="font-size: 16px;">修改密码</div>
-            <div class="weui-panel__bd">
-                <div class="weui-cells weui-cells_form" style="margin-top: 0;">
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd">
-                            <label class="weui-label">原密码</label>
-                        </div>
-                        <div class="weui-cell__bd">
-                            <input class="weui-input" type="password" placeholder="原密码">
-                        </div>
-                    </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd">
-                            <label class="weui-label">新密码</label>
-                        </div>
-                        <div class="weui-cell__bd">
-                            <input class="weui-input" type="password" placeholder="新密码">
-                        </div>
-                    </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd">
-                            <label class="weui-label">确认密码</label>
-                        </div>
-                        <div class="weui-cell__bd">
-                            <input class="weui-input" type="password" placeholder="确认密码">
-                        </div>
-                    </div>
+        <div class="weui-cells__title">修改密码</div>
+        <form class="weui-cells weui-cells_form" onsubmit="return false;" novalidate>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">原密码</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="password" placeholder="原密码">
                 </div>
             </div>
-        </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">新密码</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="password" placeholder="新密码">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">确认密码</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="password" placeholder="确认密码">
+                </div>
+            </div>
+        </form>
 
         <div class="weui-btn-area">
             <a class="weui-btn weui-btn_primary" href="javascript:;">确定修改</a>

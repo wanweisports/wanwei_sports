@@ -26,7 +26,7 @@ public class InterceptorHelp {
 		String requestURI = request.getRequestURI();
 		if(requestURI.startsWith(IPlatformConstant.LOGIN_TYPE_MOBILE))return ""; //C端
 		if(requestURI.startsWith(IPlatformConstant.LOGIN_TYPE_BUSINESS))return "/business/passport/login"; //移动端
-		else return "/passport/login"; //PC端
+		else return "/pp/login"; //PC端
 	}
 	
 }

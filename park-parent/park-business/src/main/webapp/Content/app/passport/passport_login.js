@@ -11,16 +11,13 @@
         }
         $form.attr("submitting", "submitting");
 
-        $.post('/passport/userLogin', conditions, function (res) {
+        $.post('/pp/userLogin', conditions, function (res) {
             $form.attr("submitting", "");
 
             if (res.code == 1) {
-                $.tipsSuccessAlert("用户登录成功！", function () {
-                    location.href = $('[name="return_url"]').val();
-                });
+                location.href = '/home/dashboard';
             } else {
-                $.logConsole("passport", res.message || "用户登录失败");
-                $.tipsWarningAlert(res.message || "用户登录失败");
+                alert(res.message || "用户登录失败");
             }
         });
     });

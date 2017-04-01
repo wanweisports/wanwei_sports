@@ -22,9 +22,9 @@
     <div id="main" class="container">
         <div class="weui-tab">
             <div class="weui-navbar">
-                <a href="/oa/getNotifications?type=2" data-type="2" class="weui-navbar__item note-type weui-bar__item_on">发件箱</a>
-                <a href="/oa/getNotifications?type=1" data-type="1" class="weui-navbar__item note-type">草稿箱</a>
-                <a href="/oa/getNotifications?type=4" data-type="4" class="weui-navbar__item note-type">垃圾箱</a>
+                <div href="/oa/getNotifications?type=2" data-type="2" class="weui-navbar__item note-type weui-bar__item_on">发件箱</div>
+                <div href="/oa/getNotifications?type=1" data-type="1" class="weui-navbar__item note-type">草稿箱</div>
+                <div href="/oa/getNotifications?type=4" data-type="4" class="weui-navbar__item note-type">垃圾箱</div>
             </div>
             <div class="weui-tab__panel">
                 <c:forEach var="note" items="${list}">
