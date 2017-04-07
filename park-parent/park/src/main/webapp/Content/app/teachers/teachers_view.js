@@ -38,8 +38,6 @@
             $(".save-member").on("click", function (e) {
                 e.preventDefault();
 
-                var $btn = $(this).button('loading');
-
                 var $form = $("#member_form");
                 var conditions = $form.serialize();
 
@@ -59,8 +57,6 @@
                         $.logConsole('教师信息保存失败', res1.message);
                         $.tipsWarningAlert('教师信息保存失败');
                     }
-
-                    $btn.button('reset');
                 });
             });
         }

@@ -82,7 +82,7 @@
                            value="${password}"
                            data-val="true" data-val-required="用户密码不能为空">
                     <div data-valmsg-for="pwd" data-valmsg-replace="true"></div>
-                    <a href="#">忘记密码</a>
+                    <a href="#" style="display: none;">忘记密码</a>
 
                     <button class="btn btn-success btn-block btn-login">登 录</button>
                 </form>

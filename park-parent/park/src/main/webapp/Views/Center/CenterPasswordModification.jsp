@@ -5,6 +5,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> <%-- 方法表达式（字符串截取，替换） --%>
 <%@ taglib uri="http://www.wanwei.com/tags/tag" prefix="layout" %>
 
+<layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+</layout:override>
+
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
     <script src="Content/lib/jquery/jquery.validate/jquery.validate.js?v=${static_resource_version}"></script>
     <script src="Content/lib/jquery/jquery.validate.unobtrusive/jquery.validate.unobtrusive.js?v=${static_resource_version}"></script>
@@ -17,10 +21,6 @@
             });
         });
     </script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>通行证</span> &gt;&gt; <span>密码重置</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -65,7 +65,7 @@
 
                             <div class="col-sm-8">
                                 <input type="password" class="form-control" id="confirm_password" name="confirmPwd"
-                                       placeholder="请选择确认密码" autocomplete="off"
+                                       placeholder="请输入确认密码" autocomplete="off"
                                        data-val="true" data-val-required="确认密码不能为空"
                                        data-val-regex-pattern="^[A-za-z][A-Za-z0-9_]{5,31}$"
                                        data-val-regex="确认密码格式错误"
@@ -75,9 +75,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-offset-4 col-sm-8">
-                                <button type="submit" class="btn btn-success col-sm-4 password-confirm"
-                                        data-loading-text="保存中...">
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-success password-confirm">
                                     <span class="glyphicon glyphicon-ok"></span> 保 存
                                 </button>
                             </div>
@@ -90,6 +89,5 @@
 </layout:override>
 
 <c:import url="../Shared/Layout.jsp">
-    <c:param name="nav" value="passport"/>
-    <c:param name="subNav" value="password"/>
+    <c:param name="title" value="修改密码"/>
 </c:import>

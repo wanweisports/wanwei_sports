@@ -8,8 +8,6 @@
             $(".register-student").on("click", function (e) {
                 e.preventDefault();
 
-                var $btn = $(this).button('loading');
-
                 var $form = $("#student_form");
                 var conditions = $form.serialize();
 
@@ -27,8 +25,6 @@
                         $.logConsole('学生办卡失败', res.message);
                         $.tipsWarningAlert('学生办卡失败');
                     }
-
-                    $btn.button('reset');
                 });
             });
         }

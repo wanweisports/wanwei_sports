@@ -149,9 +149,11 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-offset-4 col-sm-8">
-                                <button type="button" class="btn btn-success col-sm-4 save-member"
-                                        data-loading-text="保存中...">
+                            <div class="text-center">
+                                <a href="/teachers/list" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-chevron-left"></span> 返 回
+                                </a>
+                                <button type="button" class="btn btn-success save-member">
                                     <span class="glyphicon glyphicon-ok"></span>  保 存
                                 </button>
                             </div>

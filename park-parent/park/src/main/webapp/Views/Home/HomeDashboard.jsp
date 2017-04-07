@@ -147,10 +147,6 @@
     </script>
 </layout:override>
 
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>会员管理</span> &gt;&gt; <span>会员查询</span>
-</layout:override>
-
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
     <div class="container-fluid" style="text-align: left">
         <div class="wrapper wrapper-content">

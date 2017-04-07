@@ -225,21 +225,20 @@
                         <div class="form-group">
                             <div class="text-center">
                                 <a href="/member/memberList" class="btn btn-default">
-                                    <span class="glyphicon glyphicon-chevron-left"></span> 返回
+                                    <span class="glyphicon glyphicon-chevron-left"></span> 返 回
                                 </a>
-                                <a href="javascript:;" class="btn btn-success refresh-modal"
-                                    data-loading-text="更新中...">
-                                    <span class="glyphicon glyphicon-refresh"></span> 更新
+                                <a href="javascript:;" class="btn btn-success refresh-modal">
+                                    <span class="glyphicon glyphicon-refresh"></span> 保 存
                                 </a>
                                 <a href="#recharge_modal" class="btn btn-success" data-toggle="modal" data-backdrop="false">
-                                    <span class="glyphicon glyphicon-usd"></span> 充值
+                                    <span class="glyphicon glyphicon-usd"></span> 充 值
                                 </a>
                                 <!--<a href="#shengjiModal" class="btn btn-success shengji-modal" data-toggle="modal"
                                     data-backdrop="false">
                                     <span class="glyphicon glyphicon-flash"></span> 升级
                                 </a>-->
                                 <a href="#bubanModal" class="btn btn-success" data-toggle="modal" data-backdrop="false">
-                                    <span class="glyphicon glyphicon-refresh"></span> 补办
+                                    <span class="glyphicon glyphicon-refresh"></span> 补 办
                                 </a>
                             </div>
                         </div>

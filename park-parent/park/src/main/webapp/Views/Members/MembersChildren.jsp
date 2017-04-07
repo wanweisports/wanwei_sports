@@ -41,9 +41,15 @@
                         <div class="form-group">
                             <label for="member_name" class="col-sm-2 control-label">会员姓名</label>
 
-                            <div class="col-sm-10">
+                            <div class="col-sm-6">
                                 <input type="text" class="form-control" id="member_name" name="memberName"
                                        placeholder="会员姓名" value="${member.memberName}" disabled>
+                            </div>
+
+                            <div class="col-sm-4 text-right">
+                                <a href="/member/memberList" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-chevron-left"></span> 返 回
+                                </a>
                             </div>
                         </div>
                     </form>

@@ -158,8 +158,7 @@
                         </div>
                         <div class="form-group">
                             <div class="text-center">
-                                <button type="button" class="btn btn-success register-member"
-                                        data-loading-text="提交中...">
+                                <button type="button" class="btn btn-success register-member">
                                     <span class="glyphicon glyphicon-ok"></span> 注册 & 绑卡
                                 </button>
                             </div>

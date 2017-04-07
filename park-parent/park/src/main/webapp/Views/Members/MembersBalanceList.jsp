@@ -35,6 +35,11 @@
                             <span class="glyphicon glyphicon-search"></span> 检索
                         </a>
                     </div>
+                    <div class="form-group pull-right">
+                        <a href="/member/memberList" class="btn btn-default">
+                            <span class="glyphicon glyphicon-chevron-left"></span> 返 回
+                        </a>
+                    </div>
                 </form>
             </div>
         </div>
@@ -152,4 +157,3 @@
 <c:import url="../Shared/Layout.jsp">
     <c:param name="title" value="余额流水明细"/>
 </c:import>
-

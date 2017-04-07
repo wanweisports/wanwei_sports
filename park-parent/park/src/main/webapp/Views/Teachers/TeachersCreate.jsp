@@ -147,9 +147,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-offset-4 col-sm-8">
-                                <button type="button" class="btn btn-success col-sm-4 register-member"
-                                        data-loading-text="提交中...">
+                            <div class="text-center">
+                                <button type="button" class="btn btn-success register-member">
                                     <span class="glyphicon glyphicon-ok"></span>  注册 & 办卡
                                 </button>
                             </div>

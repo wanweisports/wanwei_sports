@@ -149,4 +149,16 @@ public class PassportController extends BaseController {
             return new ResponseBean(false);
         }
     }
+
+    // 关于我们
+    @RequestMapping("about")
+    public String about(Model model) {
+        try {
+            model.addAllAttributes(JsonUtils.fromJson(parkService.getParkBusiness()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "Center/CenterAbout";
+    }
 }

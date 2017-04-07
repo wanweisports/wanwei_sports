@@ -8,8 +8,6 @@
             $(".password-confirm").on("click", function (e) {
                 e.preventDefault();
 
-                var $btn = $(this).button('loading');
-
                 var $form = $("#center_form");
                 var conditions = $form.serialize();
 
@@ -20,7 +18,6 @@
 
                 $.post('passport/updatePwd', conditions, function (res) {
                     $form.attr("submitting", "");
-                    $btn.button('reset');
 
                     if (res.code == 1) {
                         $.tipsSuccessAlert('密码重置成功！', function () {

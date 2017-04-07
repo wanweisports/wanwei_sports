@@ -7,6 +7,7 @@
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_CSS%>">
     <link href="Content/lib/jquery/jquery-datetimepicker/jquery.datetimepicker.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <link href="Content/style/common/style.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_HEADER_SCRIPTS%>">
@@ -22,10 +23,6 @@
             });
         });
     </script>
-</layout:override>
-
-<layout:override name="<%=Blocks.BLOCK_NAV_PATH%>">
-    当前位置: <span>个人中心</span> &gt;&gt; <span>完善信息</span>
 </layout:override>
 
 <layout:override name="<%=Blocks.BLOCK_BODY%>">
@@ -130,9 +127,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-offset-4 col-sm-8">
-                                <button type="submit" class="btn btn-success col-sm-4 profile-submit"
-                                        data-loading-text="保存中...">
+                            <div class="text-center">
+                                <button type="button" class="btn btn-success profile-submit">
                                     <span class="glyphicon glyphicon-ok"></span> 保 存
                                 </button>
                             </div>
@@ -145,6 +141,5 @@
 </layout:override>
 
 <c:import url="../Shared/Layout.jsp">
-    <c:param name="nav" value="passport"/>
-    <c:param name="subNav" value="profile"/>
+    <c:param name="title" value="个人资料"/>
 </c:import>

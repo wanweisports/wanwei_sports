@@ -58,8 +58,6 @@
             $(".refresh-modal").on("click", function (e) {
                 e.preventDefault();
 
-                var $btn = $(this).button('loading');
-
                 var $form = $("#member_form");
                 var conditions = $form.serialize();
 
@@ -77,8 +75,6 @@
                         $.logConsole('会员信息更新失败', res.message);
                         $.tipsWarningAlert('会员信息更新失败');
                     }
-
-                    $btn.button('reset');
                 });
             });
 
@@ -114,8 +110,6 @@
             $(".recharge-card-submit").on("click", function (e) {
                 e.preventDefault();
 
-                var $btn = $(this).button('loading');
-
                 var $form = $(".recharge-card-form");
                 var conditions = $form.serialize();
 
@@ -135,15 +129,11 @@
                         $.tipsWarningAlert('会员卡充值失败');
                     }
                 });
-
-                $btn.button('reset');
             });
 
             // 会员卡补办
             $(".refresh-card-submit").on("click", function (e) {
                 e.preventDefault();
-
-                var $btn = $(this).button('loading');
 
                 // 生成新的会员卡号
                 var $form = $(".refresh-card-form");
@@ -165,8 +155,6 @@
                         $.tipsWarningAlert('会员补办失败');
                     }
                 });
-
-                $btn.button('reset');
             });
 
             function getMemberCarType(id) {

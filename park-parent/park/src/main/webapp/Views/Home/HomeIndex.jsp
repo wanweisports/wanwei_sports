@@ -34,6 +34,26 @@
     <link href="Content/lib/font-awesome/font-awesome.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
     <link href="Content/lib/animate/animate.min.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
     <link href="Content/lib/hplus.css?v=${static_resource_version}" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        .profile-element .profile-header {
+            background-color: rgba(255, 255, 255, 0.8);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin: 0 auto;
+        }
+        .profile-element .profile-header img {
+            width: 100%;
+        }
+        .profile-element .dropdown-toggle {
+            display: block;
+            margin-top: 6px;
+        }
+
+        .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+            background: inherit;
+        }
+    </style>
 </head>
 
 <body class="fixed-sidebar full-height-layout gray-bg pace-done" style="overflow:hidden">
@@ -46,23 +66,23 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element">
-                        <div style="background-color: rgba(255, 255, 255, 0.8); width: 70px; height: 70px; border-radius: 50%; margin: 0 auto;">
+                        <div class="profile-header">
                             <c:choose>
                                 <c:when test="${user.operatorSex == 2}">
-                                    <img alt="image" class="img-circle" src="Content/images/female.png?v=${static_resource_version}"
-                                         style="width: 100%;">
+                                    <img alt="场馆+" class="img-circle"
+                                         src="Content/images/female.png?v=${static_resource_version}">
                                 </c:when>
                                 <c:otherwise>
-                                    <img alt="image" class="img-circle" src="Content/images/male.png?v=${static_resource_version}"
-                                         style="width: 100%;">
+                                    <img alt="场馆+" class="img-circle"
+                                         src="Content/images/male.png?v=${static_resource_version}">
                                 </c:otherwise>
                             </c:choose>
                         </div>
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:" aria-expanded="false"
-                           style="display: block; margin-top: 6px;">
+                        <a href="javascript:void(0);" data-toggle="dropdown" class="dropdown-toggle"
+                            aria-expanded="false">
                         <span class="clear text-center">
                             <span class="block m-t-xs" style="display: none;">
-                                <strong>呵呵</strong>
+                                <strong>场馆+</strong>
                             </span>
                             <span class="text-muted text-xs block">${user.operatorName}<b class="caret"></b></span>
                         </span>
@@ -70,10 +90,9 @@
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
                             <li><a class="J_menuItem" href="/passport/profile">个人资料</a></li>
                             <li><a class="J_menuItem" href="/passport/modifyPassword">修改密码</a></li>
-                            <li><a class="J_menuItem" href="#">我的消息</a></li>
-                            <li><a class="J_menuItem" href="#">联系我们</a></li>
+                            <li><a class="J_menuItem" href="/passport/about">联系我们</a></li>
                             <li class="divider"></li>
-                            <li><a href="#">安全退出</a></li>
+                            <li><a href="/passport/logout">安全退出</a></li>
                         </ul>
                     </div>
                     <div class="logo-element">场馆+</div>
@@ -350,7 +369,9 @@
                     <li class="J_tabCloseOther"><a>关闭其他选项卡</a></li>
                 </ul>
             </div>
-            <a href="/passport/login" class="roll-nav roll-right J_tabExit"><i class="fa fa-sign-out"></i> 退出</a>
+            <a href="/passport/logout" class="roll-nav roll-right J_tabExit">
+                <i class="fa fa-sign-out"></i> 退出
+            </a>
         </div>
         <div class="row J_mainContent" id="content-main">
             <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="/home/dashboard" frameborder="0"

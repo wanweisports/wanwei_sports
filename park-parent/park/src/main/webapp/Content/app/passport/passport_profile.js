@@ -23,8 +23,6 @@
             $(".profile-submit").on("click", function (e) {
                 e.preventDefault();
 
-                var $btn = $(this).button('loading');
-
                 var $form = $("#center_form");
                 var conditions = $form.serialize();
 
@@ -35,7 +33,6 @@
 
                 $.post('passport/updateProfile', conditions, function (res) {
                     $form.attr("submitting", "");
-                    $btn.button('reset');
 
                     if (res.code == 1) {
                         $.tipsSuccessAlert('完善信息成功！', function () {
