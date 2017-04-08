@@ -201,5 +201,5 @@ public class SiteInputView extends BaseInputView {
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
-	
+
 }

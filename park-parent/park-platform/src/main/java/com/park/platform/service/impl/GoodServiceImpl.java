@@ -363,11 +363,11 @@ public class GoodServiceImpl extends BaseService implements IGoodService {
 	}
 	
 	@Override
-	public void updateConfirmOrder(OrderInfo orderInfo) throws Exception{
+	public void updateConfirmOrder(OrderInfo orderInfo, String memberCardPay) throws Exception{
 		if(orderInfo.getOrderId() == null) throw new MessageException("订单id为空");
         orderInfo.setOrderStatus(IDBConstant.LOGIC_STATUS_YES); //商品支付后，直接已完成
 		orderInfo.setPayStatus(IDBConstant.LOGIC_STATUS_YES); //商品支付后，直接已完成
-		Integer orderId = orderService.updateConfirmOrder(orderInfo);
+		Integer orderId = orderService.updateConfirmOrder(orderInfo, memberCardPay);
 		baseDao.updateBySql("UPDATE order_detail SET orderDetailStatus = ? WHERE orderId = ?", IDBConstant.LOGIC_STATUS_YES, orderId);
 		
 		List<OrderDetail> orderDetails = orderService.getOrderDetails(orderId);

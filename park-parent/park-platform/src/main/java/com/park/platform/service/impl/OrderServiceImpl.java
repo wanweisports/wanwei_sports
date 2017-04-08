@@ -67,7 +67,7 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 	}
 	
 	@Override
-	public Integer updateConfirmOrder(OrderInfo orderInfo){
+	public Integer updateConfirmOrder(OrderInfo orderInfo, String memberCardPay){
 		int orderId = orderInfo.getOrderId();
 		OrderInfo orderInfoDB = getOrderInfo(orderId);
 		if(orderInfoDB == null) throw new MessageException("订单不存在");
@@ -78,7 +78,7 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 		//会员付款--->应收款（散客无应收款）
 		Integer memberId = orderInfoDB.getMemberId();
 		orderInfoDB.setXjAmount(paySumPrice);
-		if(memberId != null && memberId > 0 && (IDBConstant.ORDER_SERVICE_TYPE_SITE.equals(orderInfoDB.getOrderServiceType())||IDBConstant.ORDER_SERVICE_TYPE_BLOCK_SITE.equals(orderInfoDB.getOrderServiceType()))){
+		if(memberId != null && memberId > 0 /*&& (IDBConstant.ORDER_SERVICE_TYPE_SITE.equals(orderInfoDB.getOrderServiceType())||IDBConstant.ORDER_SERVICE_TYPE_BLOCK_SITE.equals(orderInfoDB.getOrderServiceType()))*/){
 			//之前的逻辑
 			/*//扣除订单orderSumPrice金额：先扣除用户支付输入的金额
 			//不够：再扣会员卡金额
@@ -102,18 +102,22 @@ public class OrderServiceImpl extends BaseService implements IOrderService {
 			//新逻辑
 			List<MemberCard> memberCards = memberService.getMemberCards(memberId);
 			if(memberCards.size() > 0){
-				
-				MemberCard memberCard = memberCards.get(0);
-				double remainingCardPrice = memberCard.getCardBalance() - paySumPrice;
-				double realAmount = remainingCardPrice > 0 ? remainingCardPrice : 0;  //最低扣到0
-				
-				orderInfoDB.setXjAmount(realAmount > 0 ? 0 : paySumPrice-memberCard.getCardBalance());
-				
-				memberCard.setCardBalance(realAmount);
-				baseDao.save(memberCard, memberCard.getCardId());
-				
-				if(orderInfo.getPayCount() < orderInfoDB.getSumCount()){ //场次不是最大，生成应收款
-					memberReceivableService.saveMemberReceivable(new MemberReceivable(memberId, orderId, null, null, orderInfo.getSalesId()), 0, 0, StrUtil.EMPTY);
+				if(IDBConstant.LOGIC_STATUS_YES.equals(memberCardPay)) { //卡余额支付
+					MemberCard memberCard = memberCards.get(0);
+					double remainingCardPrice = memberCard.getCardBalance() - paySumPrice;
+					double realAmount = remainingCardPrice > 0 ? remainingCardPrice : 0;  //最低扣到0
+
+					orderInfoDB.setXjAmount(realAmount > 0 ? 0 : paySumPrice - memberCard.getCardBalance());
+
+					memberCard.setCardBalance(realAmount);
+					baseDao.save(memberCard, memberCard.getCardId());
+				}
+
+				//预定与批量预定---应收款
+				if(IDBConstant.ORDER_SERVICE_TYPE_SITE.equals(orderInfoDB.getOrderServiceType())||IDBConstant.ORDER_SERVICE_TYPE_BLOCK_SITE.equals(orderInfoDB.getOrderServiceType())){
+					if(orderInfo.getPayCount() < orderInfoDB.getSumCount()) { //场次不是最大，生成应收款
+						memberReceivableService.saveMemberReceivable(new MemberReceivable(memberId, orderId, null, null, orderInfo.getSalesId()), 0, 0, StrUtil.EMPTY);
+					}
 				}
 			}else throw new MessageException("该会员未绑定会员卡");
 			orderInfoDB.setPaySumPrice(paySumPrice);

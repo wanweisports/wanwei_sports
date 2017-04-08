@@ -52,7 +52,7 @@ public interface IGoodService {
 	
 	public Integer saveOrder(GoodInputView goodInputView);
 	
-	public void updateConfirmOrder(OrderInfo orderInfo) throws Exception;
+	public void updateConfirmOrder(OrderInfo orderInfo, String memberCardPay) throws Exception;
 	
 	public PageBean getGoodsStockDetails(GoodInputView goodInputView);
 	

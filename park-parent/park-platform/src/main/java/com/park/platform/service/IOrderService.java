@@ -13,7 +13,7 @@ public interface IOrderService {
 
 	public Integer saveOrderInfo(OrderInfo orderInfo, List<OrderDetail> orderDetails);
 	
-	public Integer updateConfirmOrder(OrderInfo orderInfo);
+	public Integer updateConfirmOrder(OrderInfo orderInfo, String memberCardPay);
 	
 	public OrderInfo getOrderInfo(Integer orderId);
 	

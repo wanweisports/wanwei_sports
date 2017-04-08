@@ -152,9 +152,6 @@ public class SiteController extends BaseController {
 			model.addAttribute("timePeriod", timePeriod);
 			model.addAttribute("curDate", DateUtil.dateToString(new Date(), null));
 			model.addAttribute("curSportId", sportId);
-			System.out.println(JsonUtils.toJson(siteSports));
-			System.out.println(JsonUtils.toJson(sites));
-			System.out.println(JsonUtils.toJson(timePeriod));
 		}
 		return "Reservation/ReservationsSequence";
 		
@@ -163,11 +160,9 @@ public class SiteController extends BaseController {
 	//Ajax动态显示场地序列图
 	@ResponseBody
 	@RequestMapping("dynamicSiteReservation")
-	public ResponseBean dynamicSiteReservation(SiteInputView siteInputView, Model model){
+	public ResponseBean dynamicSiteReservation(SiteInputView siteInputView){
 		try {
-			Map<String, Object> data = new HashMap<String, Object>();
-			data.putAll(JsonUtils.fromJson(siteService.getSiteReservationInfo(siteInputView)));
-			return new ResponseBean(data);
+			return new ResponseBean(JsonUtils.fromJson(siteService.getSiteReservationInfo(siteInputView)));
 		} catch (MessageException e) {
 			e.printStackTrace();
 			return new ResponseBean(e.getMessage());
@@ -261,11 +256,11 @@ public class SiteController extends BaseController {
 	//确认场地订单
 	@ResponseBody
 	@RequestMapping("confirmOrder")
-	public ResponseBean confirmOrder(OrderInfo orderInfo){
+	public ResponseBean confirmOrder(OrderInfo orderInfo, String memberCardPay){
 		try {
 			Map<String, Object> data = new HashMap<String, Object>();
 			orderInfo.setSalesId(getUserInfo().getId());
-			data.put("orderId", siteService.updateConfirmOrder(orderInfo));
+			data.put("orderId", siteService.updateConfirmOrder(orderInfo, memberCardPay));
 			return new ResponseBean(data);
 		} catch (MessageException e) {
 			e.printStackTrace();

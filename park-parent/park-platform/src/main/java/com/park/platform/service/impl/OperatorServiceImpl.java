@@ -15,11 +15,9 @@ import com.park.platform.service.IDataService;
 import com.park.platform.service.IOperatorService;
 import com.park.platform.service.IParkService;
 import com.park.platform.service.IRoleService;
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service

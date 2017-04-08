@@ -164,7 +164,7 @@
                                     <div class="form-group">
                                         <div class="col-sm-4 checkbox" style="text-align: right;">
                                             <label class="control-label" style="font-weight: 700; padding: 0;">
-                                                <input type="checkbox" value="1" style="margin-top: 2px;"> 余额
+                                                <input type="checkbox" id="memberCardPay" name="memberCardPay" value="1" style="margin-top: 2px;"> 余额
                                             </label>
                                         </div>
 

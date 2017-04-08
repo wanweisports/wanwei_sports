@@ -469,7 +469,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 	}
 	
 	@Override
-	public Integer updateConfirmOrder(OrderInfo orderInfo) throws ParseException{
+	public Integer updateConfirmOrder(OrderInfo orderInfo, String memberCardPay) throws ParseException{
 		Integer orderId = orderInfo.getOrderId();
 		if(orderId == null) throw new MessageException("订单id为空");
 		//找到打折价，进行计算覆盖订单应付总价和打折价字段
@@ -483,7 +483,7 @@ public class SiteServiceImpl extends BaseService implements ISiteService {
 		orderInfoDB.setPayCount(orderInfo.getPayCount());
 		baseDao.save(orderInfoDB, orderId);
 
-		orderId = orderService.updateConfirmOrder(orderInfo);
+		orderId = orderService.updateConfirmOrder(orderInfo, memberCardPay);
 		 //同步更新到序列图表的状态
 		siteReserveBasic.setSiteReserveStatus(IDBConstant.LOGIC_STATUS_YES);
 		baseDao.save(siteReserveBasic, siteReserveBasic.getSiteReserveId());

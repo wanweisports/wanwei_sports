@@ -385,9 +385,9 @@ public class GoodController extends BaseController {
     
     @ResponseBody
     @RequestMapping("confirmOrder")
-    public ResponseBean confirmOrder(OrderInfo orderInfo){
+    public ResponseBean confirmOrder(OrderInfo orderInfo, String memberCardPay){
     	try {
-            goodService.updateConfirmOrder(orderInfo);
+            goodService.updateConfirmOrder(orderInfo, memberCardPay);
             return new ResponseBean(true);
         } catch (MessageException e) {
             e.printStackTrace();
